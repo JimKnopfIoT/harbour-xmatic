@@ -1,0 +1,42 @@
+# Build output
+Makefile
+*.o
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+.qmake.stash
+RPMS/
+installroot/
+build/
+*.rpm
+documentation.list
+translations/*.qm
+
+# The linked application binary, dropped in the repo root by the qmake build
+/harbour-xmatic
+
+# Rust core: the cross-built static library and the cbindgen-generated header
+core/target/
+src/generated/
+
+# Sailfish SDK / Qt Creator local state
+.mb2/
+*.pro.user*
+
+# Python
+__pycache__/
+*.pyc
+
+# Local / private notes — never publish (contain personal or device data)
+CLAUDE.md
+HANDOFF.md
+STATUS.md
+PUBLISH.md
+docs/
+research/
+.claude/
+*.local.sh
+tools/
+
+# Local data / captures
+*.log

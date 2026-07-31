@@ -1,0 +1,5 @@
+# Pinned so the cross build is reproducible. matrix-rust-sdk requires >= 1.88.
+[toolchain]
+channel = "1.97.1"
+targets = ["aarch64-unknown-linux-gnu"]
+profile = "minimal"

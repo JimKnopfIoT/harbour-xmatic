@@ -1,0 +1,46 @@
+[Desktop Entry]
+Type=Application
+# generic = start the binary directly instead of through the Qt booster.
+# mapplauncherd loads a boosted app via dlopen from a preforked process, and
+# the Rust core's tokio runtime does not survive that environment on 32-bit
+# (spurious nested-runtime panics, then SIGBUS — seen on the Gemini PDA on
+# 4.6). The direct start costs a moment of Qt loading and works everywhere.
+X-Nemo-Application-Type=generic
+Icon=harbour-xmatic
+Name=xmatic
+Comment=Matrix client
+Exec=harbour-xmatic
+# Share targets. The system has no plugin of its own for this: the generic
+# app-share plugin walks the installed desktop files, and an application is a
+# share target exactly if this key names at least one method. The method's own
+# group below describes it. Both are needed — `sailfish-share-update-cache`
+# builds its list from this key alone and never looks at the groups, so an
+# application that carries only the group is silently never offered.
+X-Share-Methods=room
+
+[X-Sailjail]
+OrganizationName=org.xmatic
+ApplicationName=xmatic
+# Everything the client stores lives under its own data and cache directories,
+# which Sailjail grants by default. Internet is for the homeserver.
+#
+# Sending an attachment needs the folder it lives in — a file the picker can
+# show but the sandbox cannot read fails as "invalid attachment data" — plus
+# MediaIndexing, which allows talking to Tracker, the database the picker
+# actually queries.
+#
+# Audio is needed to play voice messages and videos: without it the player
+# runs and the position advances, but the connection to the sound server is
+# refused and nothing is audible.
+Permissions=Internet;Audio;Microphone;Camera;Pictures;Documents;Downloads;Music;Videos;PublicDir;RemovableMedia;MediaIndexing;Sharing;Notifications
+
+# What the share dialog offers xmatic for. A link arrives as text/x-url and is
+# sent as a message; everything else arrives as a file and is uploaded like an
+# attachment picked in the app. One method rather than one per kind: the target
+# is always the same, a room, and every extra method would be another identical
+# row in the dialog.
+[X-Share Method room]
+Description=Send to a room
+Description[de]=In einen Raum senden
+Capabilities=text/x-url;text/plain;image/*;video/*;audio/*;application/*
+SupportsMultipleFiles=no

@@ -1,0 +1,47 @@
+[package]
+name = "xmatic-core"
+version = "0.2.0"
+edition = "2021"
+license = "Apache-2.0"
+publish = false
+description = "Matrix protocol core for xmatic, exposed over a C ABI"
+
+[lib]
+name = "xmatic_core"
+# staticlib only: the final link happens inside the Sailfish SDK against the
+# device sysroot, so cargo never needs a cross linker of its own.
+crate-type = ["staticlib"]
+
+[dependencies]
+# Pinned exactly: the SDK's API moves between releases, and this project has no
+# CI to catch drift. Cargo.lock is committed for the same reason.
+# TLS is rustls throughout — no OpenSSL, so nothing has to match the device's
+# libssl. SQLite is compiled from bundled sources instead of linking the
+# device's library, which keeps the cross build self-contained.
+matrix-sdk = { version = "=0.18.0", default-features = false, features = [
+    "local-server",
+    "e2e-encryption",
+    "sqlite",
+    "bundled-sqlite",
+] }
+matrix-sdk-ui = "=0.18.0"
+# For the device-code login (RFC 8628), which the SDK only wires up for its
+# QR flow. Versions mirror what the SDK already pulls in, so nothing new
+# enters the tree; reqwest stays rustls-only like everything else.
+oauth2 = { version = "=5.0.0", default-features = false }
+oauth2-reqwest = "=0.1.0-alpha.3"
+reqwest = { version = "0.13", default-features = false, features = ["rustls", "json"] }
+tokio = { version = "1", features = ["rt-multi-thread", "time"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+futures-util = "0.3"
+url = "2"
+mime = "0.3"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+# Deliberately NOT panic = "abort": the FFI boundary catches unwinds so a panic
+# in the core surfaces as an error message instead of killing the UI process.
+panic = "unwind"
+overflow-checks = true
