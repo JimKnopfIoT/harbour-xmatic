@@ -1,0 +1,13 @@
+# D-Bus activation, so sharing works when xmatic is not running.
+#
+# The name is not free: Sailjail derives it from the OrganizationName and
+# ApplicationName in the desktop file, the same pair that decides where the
+# app's data lives, and the share dialog looks the app up under exactly that
+# name. Renaming it here would move the state store on the next start.
+#
+# Started through sailjail rather than the booster for the same reason the
+# desktop file uses a generic application type: the Rust core's runtime does
+# not survive being dlopened from a preforked process.
+[D-BUS Service]
+Name=org.xmatic.xmatic
+Exec=/usr/bin/sailjail -p harbour-xmatic.desktop /usr/bin/harbour-xmatic

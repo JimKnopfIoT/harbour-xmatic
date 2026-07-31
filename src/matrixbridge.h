@@ -1,0 +1,531 @@
+#ifndef MATRIXBRIDGE_H
+#define MATRIXBRIDGE_H
+
+#include <QHash>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QStandardPaths>
+#include <QObject>
+#include <QVariantList>
+#include <QVariant>
+#include <QVariantMap>
+#include <QString>
+
+#include "roomlistmodel.h"
+#include "roomsortmodel.h"
+#include "directorymodel.h"
+#include "membermodel.h"
+#include "callengine.h"
+#include "voicerecorder.h"
+#include "timelinemodel.h"
+#include "xmatic_core.h"
+
+/// The single point of contact between QML and the Rust core.
+///
+/// Commands are JSON objects with a running id; replies and events come back
+/// through one callback that fires on a core worker thread. The trampoline
+/// therefore does nothing but re-post the message into the Qt event loop, so
+/// everything below runs on the UI thread.
+class MatrixBridge : public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QString coreVersion READ coreVersion CONSTANT)
+    Q_PROPERTY(QString sessionState READ sessionState NOTIFY sessionChanged)
+    Q_PROPERTY(QString syncState READ syncState NOTIFY syncStateChanged)
+    Q_PROPERTY(QString userId READ userId NOTIFY sessionChanged)
+    Q_PROPERTY(QString deviceId READ deviceId NOTIFY sessionChanged)
+    Q_PROPERTY(bool ready READ ready CONSTANT)
+    Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
+    Q_PROPERTY(QString lastError READ lastError NOTIFY lastErrorChanged)
+    Q_PROPERTY(QObject *rooms READ rooms CONSTANT)
+    Q_PROPERTY(QObject *spaces READ spaces CONSTANT)
+    Q_PROPERTY(QObject *spaceRooms READ spaceRooms CONSTANT)
+    Q_PROPERTY(QString startPage READ startPage WRITE setStartPage NOTIFY startPageChanged)
+    Q_PROPERTY(int spaceCounts READ spaceCounts NOTIFY spaceCountsChanged)
+    Q_PROPERTY(QObject *timeline READ timeline CONSTANT)
+    Q_PROPERTY(QObject *recorder READ recorder CONSTANT)
+    Q_PROPERTY(QObject *calls READ calls CONSTANT)
+    Q_PROPERTY(QString openRoomId READ openRoomId NOTIFY openRoomChanged)
+    Q_PROPERTY(QStringList pinnedEventIds READ pinnedEventIds NOTIFY pinnedChanged)
+    Q_PROPERTY(QString pinnedPreview READ pinnedPreview NOTIFY pinnedChanged)
+    Q_PROPERTY(bool timelineAtStart READ timelineAtStart NOTIFY timelineAtStartChanged)
+    Q_PROPERTY(bool timelineReady READ timelineReady NOTIFY timelineReadyChanged)
+    Q_PROPERTY(QString verificationState READ verificationState NOTIFY verificationChanged)
+    Q_PROPERTY(QString verificationUser READ verificationUser NOTIFY verificationChanged)
+    Q_PROPERTY(bool verificationIsSelf READ verificationIsSelf NOTIFY verificationChanged)
+    Q_PROPERTY(bool verificationWeStarted READ verificationWeStarted NOTIFY verificationChanged)
+    Q_PROPERTY(QVariantList verificationEmoji READ verificationEmoji NOTIFY verificationChanged)
+    Q_PROPERTY(QVariantMap encryptionStatus READ encryptionStatus NOTIFY encryptionChanged)
+    Q_PROPERTY(QString profileName READ profileName NOTIFY profileChanged)
+    Q_PROPERTY(QString profileAvatar READ profileAvatar NOTIFY profileChanged)
+    Q_PROPERTY(QObject *directory READ directory CONSTANT)
+    Q_PROPERTY(bool directoryAtEnd READ directoryAtEnd NOTIFY directoryStateChanged)
+    Q_PROPERTY(QString directoryServer READ directoryServer WRITE setDirectoryServer
+               NOTIFY directoryServerChanged)
+    Q_PROPERTY(QStringList directoryServers READ directoryServers NOTIFY directoryServersChanged)
+    Q_PROPERTY(QObject *members READ members CONSTANT)
+
+public:
+    explicit MatrixBridge(const QString &dataDirectory,
+                          const QString &cacheDirectory,
+                          QObject *parent = nullptr);
+    ~MatrixBridge() override;
+
+    QString coreVersion() const { return m_coreVersion; }
+    QString sessionState() const { return m_sessionState; }
+
+    /// One of "idle", "running", "offline", "terminated", "error". "offline"
+    /// means the core noticed the network is gone and reconnects on its own.
+    QString syncState() const { return m_syncState; }
+    QString userId() const { return m_userId; }
+    QString deviceId() const { return m_deviceId; }
+    bool ready() const { return m_core != nullptr; }
+    bool busy() const { return !m_pending.isEmpty() || m_loginRunning; }
+    QString lastError() const { return m_lastError; }
+    // The UI sees the grouped view (favourites up, low priority down); the
+    // core still drives the flat source underneath.
+    QObject *rooms() { return &m_roomsSorted; }
+    QObject *spaces() { return &m_spaces; }
+    QObject *spaceRooms() { return &m_spaceRooms; }
+    int spaceCounts() const { return m_spaceCountsRevision; }
+    QObject *timeline() { return &m_timeline; }
+    QObject *recorder() { return m_recorder; }
+    QObject *calls() { return m_calls; }
+    QString openRoomId() const { return m_openRoomId; }
+
+    /// Event ids of the open room's pinned messages, for the banner and the
+    /// per-row markers.
+    QStringList pinnedEventIds() const { return m_pinnedEventIds; }
+
+    /// Body of the newest pinned message; empty when there is nothing usable.
+    QString pinnedPreview() const { return m_pinnedPreview; }
+    bool timelineAtStart() const { return m_timelineAtStart; }
+
+    /// False between asking for a room's timeline and its first batch.
+    bool timelineReady() const { return m_timelineReady; }
+
+    /// One of "none", "requested", "comparing", "done", "cancelled".
+    QString verificationState() const { return m_verificationState; }
+    QString verificationUser() const { return m_verificationUser; }
+    bool verificationIsSelf() const { return m_verificationIsSelf; }
+
+    /// True when this side asked for the verification — it then waits for the
+    /// other side to accept instead of offering accept/decline itself.
+    bool verificationWeStarted() const { return m_verificationWeStarted; }
+    QVariantList verificationEmoji() const { return m_verificationEmoji; }
+
+    /// Members: recovery, backup, backupEnabled, backupOnServer, crossSigned.
+    QVariantMap encryptionStatus() const { return m_encryptionStatus; }
+
+    QString profileName() const { return m_profileName; }
+    QString profileAvatar() const { return m_profileAvatar; }
+    QObject *directory() { return &m_directory; }
+    bool directoryAtEnd() const { return m_directoryAtEnd; }
+    QObject *members() { return &m_members; }
+
+    /// Looks for a persisted session and signs in with it if there is one.
+    Q_INVOKABLE void restoreSession();
+
+    /// Begins the browser login against `homeserver`, which may be a server
+    /// name such as "matrix.org" or a full URL.
+    Q_INVOKABLE void startLogin(const QString &homeserver);
+
+    /// Begins the device-code login against `homeserver`: the answer arrives
+    /// as deviceCodeReady() with a URL and a code to show, and the sign-in
+    /// itself happens in a browser on any other device.
+    Q_INVOKABLE void startDeviceCodeLogin(const QString &homeserver);
+
+    /// Asks where an account can be created on `homeserver`; the answer
+    /// arrives as registrationUrlReady().
+    Q_INVOKABLE void requestRegistrationUrl(const QString &homeserver);
+
+    /// Cancels a login that is waiting for the browser.
+    Q_INVOKABLE void abortLogin();
+
+    /// Ends the session and forgets the stored credentials.
+    Q_INVOKABLE void logout();
+
+    /// Starts syncing and streaming the room list.
+    Q_INVOKABLE void startRoomList();
+
+    /// Stops syncing.
+    Q_INVOKABLE void stopRoomList();
+
+    /// Narrows the room list; an empty pattern shows everything again.
+    Q_INVOKABLE void setRoomFilter(const QString &pattern);
+
+    /// Starts streaming the joined spaces into the `spaces` model.
+    Q_INVOKABLE void startSpaces();
+
+    /// Stops streaming the space list.
+    Q_INVOKABLE void stopSpaces();
+
+    /// Streams one space's rooms into the `spaceRooms` model. Only one space
+    /// is open at a time; opening another replaces it.
+    Q_INVOKABLE void openSpace(const QString &roomId);
+
+    /// Stops streaming the open space's rooms.
+    Q_INVOKABLE void closeSpace();
+
+    /// Creates a new, empty space with the given name.
+    Q_INVOKABLE void createSpace(const QString &name);
+
+    /// Leaves a space and forgets it — how a space is "deleted" client-side.
+    Q_INVOKABLE void leaveSpace(const QString &roomId);
+
+    /// Adds a room to a space.
+    Q_INVOKABLE void addRoomToSpace(const QString &spaceId, const QString &roomId);
+
+    /// Moves a room from one space to another: added to the target first, so a
+    /// failure cannot leave the room in neither space.
+    Q_INVOKABLE void moveRoomToSpace(const QString &fromSpaceId,
+                                     const QString &toSpaceId,
+                                     const QString &roomId);
+
+    /// Removes a room from a space.
+    Q_INVOKABLE void removeRoomFromSpace(const QString &spaceId, const QString &roomId);
+
+    /// The badge text for a space in the overview: "(messages)", or
+    /// "(subspaces/messages)" when the space has sub-spaces, or empty when
+    /// there is nothing to show. Recomputed live as unread counts change.
+    Q_INVOKABLE QString spaceBadge(const QString &spaceId) const;
+
+    /// Opens a room's timeline. Only one is open at a time. `focus` selects
+    /// the view: empty for the live timeline, "pinned" for the room's pinned
+    /// messages, or an event id to show the history around one event.
+    Q_INVOKABLE void openRoom(const QString &roomId, const QString &focus = QString());
+
+    /// Pins a message of the open room, or unpins it.
+    Q_INVOKABLE void pinMessage(const QString &eventId, bool pin);
+
+    /// Mutes a room's notifications, or returns it to the default.
+    Q_INVOKABLE void setRoomMuted(const QString &roomId, bool muted);
+
+    /// Marks a room as a favourite, or clears the tag. Clears low priority.
+    Q_INVOKABLE void setRoomFavourite(const QString &roomId, bool favourite);
+
+    /// Marks a room as low priority, or clears the tag. Clears favourite. Low
+    /// priority also stops the room from raising notifications.
+    Q_INVOKABLE void setRoomLowPriority(const QString &roomId, bool lowPriority);
+
+    /// Asks the core which recipients of an encrypted room still have
+    /// unverified devices. The answer comes back as `recipientsChecked`.
+    Q_INVOKABLE void checkRecipients(const QString &roomId);
+
+    /// Whether the user chose to stop being warned about this recipient's
+    /// unverified devices (the "remember for this user" tick).
+    Q_INVOKABLE bool isRecipientTrusted(const QString &userId) const;
+
+    /// Remembers that unverified devices of this recipient should no longer
+    /// raise the pre-send warning. Persisted in the app config.
+    Q_INVOKABLE void trustRecipient(const QString &userId);
+
+    /// Turns on end-to-end encryption in a room; there is no way back, so the
+    /// UI asks first.
+    Q_INVOKABLE void enableEncryption(const QString &roomId);
+
+    /// Asks for the account's display name and avatar; the answer lands in
+    /// profileName / profileAvatar.
+    Q_INVOKABLE void fetchProfile();
+
+    /// Changes the display name. An empty name removes it.
+    Q_INVOKABLE void setDisplayName(const QString &name);
+
+    /// Uploads a picture and makes it the account's avatar.
+    Q_INVOKABLE void setAvatarFile(const QString &path);
+
+    /// Searches a public room directory; results stream into `directory`.
+    /// An empty pattern lists the most popular rooms. An empty server means
+    /// the own homeserver; any other is fetched over federation.
+    Q_INVOKABLE void searchDirectory(const QString &pattern,
+                                     const QString &server = QString());
+
+    /// Loads the next page of the current directory search.
+    Q_INVOKABLE void directoryLoadMore();
+
+    /// Drops the directory search and empties the model.
+    Q_INVOKABLE void stopDirectory();
+
+    /// Loads a room's members into `members`. The list arrives as one reset.
+    Q_INVOKABLE void loadMembers(const QString &roomId);
+
+    /// Removes (kicks) a member from a room; the row disappears on success.
+    Q_INVOKABLE void removeMember(const QString &roomId, const QString &userId);
+
+    /// Asks the server for a space's linked children, including rooms the
+    /// user has not joined; the answer arrives as spaceHierarchyReady().
+    Q_INVOKABLE void fetchSpaceHierarchy(const QString &spaceId);
+
+    /// Closes the open timeline.
+    Q_INVOKABLE void closeRoom();
+
+    /// Which room the user is actually looking at, or empty.
+    ///
+    /// Deliberately not the same as the open room. The core keeps one timeline
+    /// subscription alive after leaving a room so stepping back into it is
+    /// instant, so `openRoomId` names the room last visited — not the one on
+    /// screen. Using it to suppress notifications made the last room visited
+    /// stay silent for good, which is exactly the room someone tests with.
+    Q_INVOKABLE void setVisibleRoom(const QString &roomId) { m_visibleRoomId = roomId; }
+
+    /// Loads a page of older messages.
+    Q_INVOKABLE void loadOlder();
+
+    /// Sends a plain text message to the open room.
+    Q_INVOKABLE void sendMessage(const QString &body);
+
+    /// Sends a read receipt for the open room.
+    Q_INVOKABLE void markRead();
+
+    /// Accepts an invitation or joins a known room.
+    Q_INVOKABLE void joinRoom(const QString &roomId);
+
+    /// Joins a room by its address, for example "#room:server".
+    Q_INVOKABLE void joinRoomByAlias(const QString &alias);
+
+    /// Creates a room. A public room is listed in the server's directory, a
+    /// private one is invite-only; encryption can only be decided here.
+    Q_INVOKABLE void createRoom(const QString &name, bool encrypted, bool isPublic);
+
+    /// Leaves a room and forgets it. On an invitation this declines it.
+    Q_INVOKABLE void leaveRoom(const QString &roomId);
+
+    /// Invites a user into a room.
+    Q_INVOKABLE void inviteToRoom(const QString &roomId, const QString &userId);
+
+    /// Opens, or creates, a direct chat with a user.
+    Q_INVOKABLE void startDirectChat(const QString &userId);
+
+    /// Asks a user to verify. An empty id means one's own other devices.
+    Q_INVOKABLE void requestVerification(const QString &userId);
+
+    /// Agrees to the verification request on screen.
+    Q_INVOKABLE void acceptVerification();
+
+    /// Confirms that the emoji match on both devices.
+    Q_INVOKABLE void confirmVerification();
+
+    /// Rejects the request or aborts the comparison.
+    Q_INVOKABLE void cancelVerification();
+
+    /// Forgets a finished verification so the page can close.
+    Q_INVOKABLE void clearVerification();
+
+    /// Asks the core for the state of key backup and recovery.
+    Q_INVOKABLE void refreshEncryptionStatus();
+
+    /// Unlocks the key backup with a recovery key or passphrase.
+    Q_INVOKABLE void recoverKeys(const QString &key);
+
+    /// Sets up key backup; the new recovery key arrives via recoveryKeyReady().
+    Q_INVOKABLE void enableKeyBackup();
+
+    /// Pulls one room's keys out of the backup.
+    Q_INVOKABLE void fetchRoomKeys(const QString &roomId);
+
+    /// Sends a reply to an earlier message.
+    Q_INVOKABLE void replyToMessage(const QString &eventId, const QString &body);
+
+    /// Replaces the body of a message that was already sent.
+    Q_INVOKABLE void editMessage(const QString &eventId, const QString &body);
+
+    /// Deletes a message.
+    Q_INVOKABLE void deleteMessage(const QString &eventId);
+
+    /// Sends a file from disk as an attachment.
+    Q_INVOKABLE void sendMedia(const QString &path, const QString &mimeType);
+
+    /// Downloads an attachment. The result arrives as mediaReady(key, path);
+    /// an already downloaded file is reported immediately.
+    Q_INVOKABLE void requestMedia(const QString &key, const QVariant &source, bool thumbnail);
+
+    /// The local path of an attachment that was already downloaded, or empty.
+    Q_INVOKABLE QString mediaPath(const QString &key) const { return m_media.value(key); }
+
+    /// Downloads a profile picture, keyed by its own address.
+    ///
+    /// Separate from requestMedia for two reasons: an avatar is a bare MXC
+    /// address rather than the media object an event carries, and it is always
+    /// wanted as a thumbnail — a picture uploaded at full camera resolution
+    /// would otherwise be decoded in every row of a list. Keying by the
+    /// address is what makes one download serve every message of a sender.
+    Q_INVOKABLE void requestAvatar(const QString &url);
+
+    /// Sends a copy of a picture or a text to another room.
+    Q_INVOKABLE void forwardToRoom(const QString &roomId,
+                                   const QString &body,
+                                   const QString &path,
+                                   const QString &mimeType);
+
+    /// The type of a file on disk, guessed from its name and content.
+    ///
+    /// A file picked in the app comes with its type from the picker, but one
+    /// handed over by another application through the share dialog does not,
+    /// and an attachment sent without a type is not shown as a picture by the
+    /// receiving client.
+    Q_INVOKABLE QString mimeTypeForPath(const QString &path) const;
+
+    /// Copies a downloaded attachment into the user's picture folder.
+    /// Returns the new path, or an empty string on failure.
+    Q_INVOKABLE QString saveToPictures(const QString &path, const QString &suggestedName);
+
+    /// Same, but into the download folder — for anything that is not a picture.
+    Q_INVOKABLE QString saveToDownloads(const QString &path, const QString &suggestedName);
+
+    /// Which page opens first after sign-in: "rooms" or "spaces". Persisted so
+    /// the choice survives a restart.
+    QString startPage() const;
+    void setStartPage(const QString &page);
+
+    /// The directory server the search page last used; empty means the own
+    /// homeserver. Persisted so the choice survives a restart.
+    QString directoryServer() const;
+    void setDirectoryServer(const QString &server);
+
+    /// Directory servers the user added, next to the built-in suggestions.
+    QStringList directoryServers() const;
+    Q_INVOKABLE void addDirectoryServer(const QString &server);
+    Q_INVOKABLE void removeDirectoryServer(const QString &server);
+
+signals:
+    void startPageChanged();
+    void spaceCountsChanged();
+
+    void sessionChanged();
+    void syncStateChanged();
+    void busyChanged();
+    void lastErrorChanged();
+    void openRoomChanged();
+    void pinnedChanged();
+    void timelineAtStartChanged();
+    void timelineReadyChanged();
+    void verificationChanged();
+    void encryptionChanged();
+    void profileChanged();
+    void directoryStateChanged();
+    void directoryServerChanged();
+    void directoryServersChanged();
+
+    /// A space's linked children as maps with id, name, topic, members,
+    /// avatar, space and joined.
+    void spaceHierarchyReady(const QString &spaceId, const QVariantList &rooms);
+
+    /// The result of a `checkRecipients` call: the joined recipients of the
+    /// room that still have unverified devices, as maps with userId, name and
+    /// devices. Empty when there is nothing to warn about.
+    void recipientsChecked(const QString &roomId, const QVariantList &users);
+
+    /// The freshly created recovery key. Shown once, never stored.
+    void recoveryKeyReady(const QString &key);
+
+    /// An attachment finished downloading.
+    void mediaReady(const QString &key, const QString &path);
+
+    /// A direct chat is ready to be opened.
+    void directChatReady(const QString &roomId);
+
+    /// A room was created and can be opened. Name and encryption state come
+    /// back with it, so the room opens correctly before the first sync diff.
+    void roomCreated(const QString &roomId, const QString &name, bool encrypted);
+
+    /// Unread messages arrived in a room that is not on screen.
+    void roomActivity(const QString &roomId,
+                      const QString &roomName,
+                      int unread,
+                      int mentions);
+
+    /// The URL that has to be opened in the browser to continue a login.
+    void loginUrlReady(const QString &url);
+
+    /// A device-code login started: show `url` and `code`; the core keeps
+    /// waiting until the user approves on another device.
+    void deviceCodeReady(const QString &url, const QString &code);
+
+    /// The sign-up page of the chosen homeserver.
+    void registrationUrlReady(const QString &url);
+
+    /// A login did not complete. `message` is safe to show.
+    void loginFailed(const QString &message);
+
+private slots:
+    /// Receives one JSON message from the core, already back on the UI thread.
+    void handleMessage(const QString &json);
+
+private:
+    static void deliver(void *userData, const char *json);
+
+    quint64 send(const QString &command, const QJsonObject &arguments = QJsonObject());
+    void applySession(const QJsonObject &data);
+    void reportNewMessages(const QJsonArray &operations);
+    void updateSpaceChildren(const QJsonObject &spaces);
+    void bumpSpaceCounts();
+    QString saveInto(QStandardPaths::StandardLocation location,
+                     const QString &path,
+                     const QString &suggestedName);
+    void setLastError(const QString &message);
+    void setLoginRunning(bool running);
+    void setTimelineAtStart(bool atStart);
+    void setTimelineReady(bool ready);
+
+    XmCore *m_core = nullptr;
+    QString m_coreVersion;
+    QString m_sessionState = QStringLiteral("none");
+    QString m_syncState = QStringLiteral("idle");
+    QString m_userId;
+    QString m_deviceId;
+    QString m_lastError;
+    bool m_loginRunning = false;
+
+    RoomListModel m_rooms;
+    RoomSortModel m_roomsSorted;
+    RoomListModel m_spaces;
+    RoomListModel m_spaceRooms;
+    VoiceRecorder *m_recorder = nullptr;
+    CallEngine *m_calls = nullptr;
+    TimelineModel m_timeline;
+    QString m_openRoomId;
+    /// The room actually on screen; see setVisibleRoom.
+    QString m_visibleRoomId;
+    /// Empty for the live view; "pinned" or an event id for a focused one.
+    QString m_timelineFocus;
+    QStringList m_pinnedEventIds;
+    QString m_pinnedPreview;
+    bool m_timelineAtStart = false;
+    bool m_timelineReady = false;
+    QString m_verificationState = QStringLiteral("none");
+    QString m_verificationUser;
+    bool m_verificationIsSelf = false;
+    bool m_verificationWeStarted = false;
+    QVariantList m_verificationEmoji;
+    QVariantMap m_encryptionStatus;
+
+    /// Downloaded attachments by request key, and the requests in flight.
+    QHash<QString, QString> m_media;
+    QHash<quint64, QString> m_mediaRequests;
+
+    /// Last seen unread count per room, for spotting new activity.
+    QHash<QString, int> m_unread;
+
+    /// Per-space child structure from the core: the member rooms whose unread
+    /// counts make up a space's badge, and how many children are sub-spaces.
+    QHash<QString, QStringList> m_spaceChildRooms;
+    QHash<QString, int> m_spaceSubspaces;
+    /// Bumped whenever a space badge may have changed, so QML re-evaluates.
+    int m_spaceCountsRevision = 0;
+
+    QString m_profileName;
+    QString m_profileAvatar;
+    /// Which space a pending `space.hierarchy` request was made for.
+    QHash<quint64, QString> m_hierarchyRequests;
+    DirectoryModel m_directory;
+    bool m_directoryAtEnd = true;
+    MemberModel m_members;
+    /// Which user a pending `member.remove` request is for.
+    QHash<quint64, QString> m_removeRequests;
+
+    quint64 m_nextId = 1;
+    QHash<quint64, QString> m_pending;
+};
+
+#endif // MATRIXBRIDGE_H
