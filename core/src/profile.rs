@@ -44,6 +44,15 @@ pub async fn set_display_name(client: &Client, name: &str) -> Result<(), String>
 
 /// Uploads a picture from disk and makes it the avatar.
 pub async fn set_avatar(client: &Client, path: &str) -> Result<Value, String> {
+    // Asked before it is read, for the same reason as an attachment: the upload
+    // API takes the bytes, so an outsized file would already be in memory by
+    // the time anything could object.
+    crate::media::check_size(
+        crate::media::file_size(path)?,
+        crate::media::MAX_AVATAR_BYTES,
+        "picture",
+    )?;
+
     let data = tokio::fs::read(path)
         .await
         .map_err(|error| format!("could not read the picture: {error}"))?;

@@ -767,6 +767,21 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
         GstElement *convert = gst_element_factory_make("videoconvert", nullptr);
         GstElement *sink = gst_element_factory_make("appsink", nullptr);
         if (!queue || !convert || !sink) {
+            // Whatever was created has to be released by hand: the elements are
+            // only handed to the bin further down, so leaving here would drop
+            // the last reference to them without anyone taking ownership.
+            // Missing plugins are the only way in, so this is a small and
+            // deterministic leak — but it sits in the path that exists to
+            // survive exactly that.
+            if (queue) {
+                gst_object_unref(queue);
+            }
+            if (convert) {
+                gst_object_unref(convert);
+            }
+            if (sink) {
+                gst_object_unref(sink);
+            }
             return;
         }
         g_object_set(queue, "leaky", 2, "max-size-buffers", 3, nullptr);

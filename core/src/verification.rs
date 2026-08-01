@@ -15,7 +15,7 @@ use matrix_sdk::{
     encryption::verification::{
         SasState, SasVerification, Verification, VerificationRequest, VerificationRequestState,
     },
-    ruma::UserId,
+    ruma::{OwnedRoomId, UserId},
     ruma::events::{
         key::verification::{
             accept::ToDeviceKeyVerificationAcceptEvent, cancel::ToDeviceKeyVerificationCancelEvent,
@@ -77,6 +77,23 @@ impl ActiveVerification {
             .cancel()
             .await
             .map_err(|error| format!("could not cancel: {error}"))
+    }
+}
+
+/// Cancels whatever verification is being tracked and empties the slot.
+///
+/// This has to happen before a new request goes out. When a second request for
+/// the same user appears while the first is still alive, the SDK cancels *both*
+/// of them — "Received a new verification request whilst another request with
+/// the same user is ongoing. Cancelling both requests", `matrix-sdk-crypto`,
+/// `verification/machine.rs`. So the obvious way out of a verification the
+/// other side never noticed, simply asking again, used to kill the new attempt
+/// together with the stale one: two cancellations arrived and nothing worked
+/// again short of restarting the app.
+pub async fn cancel_active(slot: &Slot) {
+    let active = slot.lock().await.take();
+    if let Some(active) = active {
+        let _ = active.cancel().await;
     }
 }
 
@@ -304,7 +321,7 @@ pub async fn request(
     sink: Arc<Sink>,
     slot: Slot,
     user_id: &str,
-) -> Result<(), String> {
+) -> Result<Option<OwnedRoomId>, String> {
     let user_id = UserId::parse(user_id).map_err(|_| "not a user identifier".to_owned())?;
 
     // Local store first; on a miss ask the homeserver. Without the second
@@ -334,8 +351,17 @@ pub async fn request(
         .await
         .map_err(|error| format!("could not ask for verification: {error}"))?;
 
+    // The room the flow runs in, handed back so the caller can subscribe the
+    // sliding sync to it. Deliberately taken from the request rather than
+    // looked up afterwards with `get_dm_room`: verifying a new contact makes
+    // the SDK create the direct chat (`identities/users.rs`), and a room only
+    // counts as a direct chat once the `m.direct` account data has come back
+    // through a sync. For exactly the contact whose events matter most, the
+    // lookup would therefore find nothing.
+    let room_id = request.room_id().map(|room| room.to_owned());
+
     tokio::spawn(track(sink, request, slot));
-    Ok(())
+    Ok(room_id)
 }
 
 /// Logs that a verification message reached this device.

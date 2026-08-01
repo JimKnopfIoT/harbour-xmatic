@@ -9,12 +9,19 @@
 //! This is therefore both the answer to "my history is unreadable on the new
 //! phone" and the insurance against losing it entirely when a device dies.
 
+use std::sync::Arc;
+
+use futures_util::StreamExt;
 use matrix_sdk::{
     encryption::{backups::BackupState, recovery::RecoveryState},
     ruma::RoomId,
     Client,
 };
 use serde_json::{json, Value};
+use tokio::task::JoinHandle;
+
+use crate::protocol::event;
+use crate::runtime::Sink;
 
 fn recovery_state_name(state: RecoveryState) -> &'static str {
     match state {
@@ -37,13 +44,59 @@ fn backup_state_name(state: BackupState) -> &'static str {
     }
 }
 
+/// Forwards every change of the backup and recovery state to the front end.
+///
+/// Neither is a value that can be read once and kept. The backup key normally
+/// arrives *after* a successful verification, as an `m.secret.send` to-device
+/// message, and the SDK acts on it entirely by itself: it resumes the backup
+/// and flips the state (`encryption/backups/mod.rs`,
+/// `encryption/recovery/mod.rs`). Nothing informs the caller, and there is no
+/// reply to hang a refresh off.
+///
+/// Without this the front end kept the snapshot it took while signing in, when
+/// the backup was still off — and then skipped fetching the room keys for every
+/// room opened afterwards, because that is gated on the cached flag. Verifying
+/// a device, whose entire purpose is making the old messages readable, changed
+/// nothing at all until the app was restarted.
+pub fn watch(client: &Client, sink: Arc<Sink>) -> JoinHandle<()> {
+    let client = client.clone();
+    tokio::spawn(async move {
+        let mut backups = client.encryption().backups().state_stream();
+        let mut recovery = client.encryption().recovery().state_stream();
+
+        loop {
+            // Either stream ending means the client is going away.
+            let alive = tokio::select! {
+                next = backups.next() => next.is_some(),
+                next = recovery.next() => next.is_some(),
+            };
+            if !alive {
+                break;
+            }
+
+            // The whole status rather than the one value that changed: the two
+            // states are read together by the page that shows them, and one
+            // extra field costs nothing next to a to-device round trip.
+            sink.emit(event("encryption.changed", status(&client).await));
+        }
+    })
+}
+
 /// What the encryption page shows.
 pub async fn status(client: &Client) -> Value {
     let encryption = client.encryption();
 
+    // `fetch_exists_on_server`, not `exists_on_server`: the latter caches its
+    // answer for the lifetime of the process and only forgets it when this
+    // device creates or deletes a backup itself. The SDK's own documentation
+    // says "Do not use this method if you need an accurate answer". Setting
+    // recovery up on another client while xmatic runs would otherwise leave
+    // this page offering "Set up backup" for the rest of the session — and the
+    // button then fails, because enabling checks the uncached answer and
+    // refuses with "backup exists on server".
     let exists_on_server = encryption
         .backups()
-        .exists_on_server()
+        .fetch_exists_on_server()
         .await
         .unwrap_or(false);
 

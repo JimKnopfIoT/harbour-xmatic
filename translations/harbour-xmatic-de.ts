@@ -909,6 +909,10 @@
         <translation>bearbeitet</translation>
     </message>
     <message>
+        <source>not sent</source>
+        <translation>nicht gesendet</translation>
+    </message>
+    <message>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
@@ -1200,6 +1204,10 @@
     <message>
         <source>Both devices must show the same emoji, in the same order.</source>
         <translation>Beide Geräte müssen dieselben Emoji in derselben Reihenfolge zeigen.</translation>
+    </message>
+    <message>
+        <source>Your answer is in. Waiting for the other device.</source>
+        <translation>Deine Antwort ist raus. Warte auf das andere Gerät.</translation>
     </message>
     <message>
         <source>Verified.</source>

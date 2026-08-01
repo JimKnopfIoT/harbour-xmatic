@@ -8,6 +8,9 @@
 //! Encrypted rooms need no special handling at this level: the crypto machine
 //! sits below the timeline and hands decrypted content out the same way.
 
+use std::collections::hash_map::DefaultHasher;
+use std::collections::HashSet;
+use std::hash::{Hash, Hasher};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 
@@ -23,15 +26,16 @@ use matrix_sdk::{
             },
             InitialStateEvent,
         },
-        EventId, OwnedServerName, RoomId, RoomOrAliasId, ServerName, UserId,
+        EventId, OwnedEventId, OwnedServerName, RoomId, RoomOrAliasId, ServerName, UserId,
     },
     Client,
 };
 use matrix_sdk_ui::{
     eyeball_im::VectorDiff,
     timeline::{
-        EventTimelineItem, MembershipChange, MsgLikeKind, RoomExt, TimelineDetails,
-        TimelineEventItemId, TimelineItem, TimelineItemContent, VirtualTimelineItem,
+        EventSendState, EventTimelineItem, MembershipChange, MsgLikeKind, RoomExt,
+        TimelineDetails, TimelineEventItemId, TimelineItem, TimelineItemContent,
+        VirtualTimelineItem,
     },
 };
 use serde_json::{json, Value};
@@ -51,6 +55,8 @@ const SUSPICIOUSLY_SHORT: usize = PAGE_SIZE as usize;
 pub struct TimelineHandle {
     room_id: String,
     live: bool,
+    /// The pinned-messages view, which cannot be paginated at all.
+    pinned: bool,
     timeline: Arc<matrix_sdk_ui::timeline::Timeline>,
     task: tokio::task::JoinHandle<()>,
     /// Whether the one permitted cache reset (see `paginate`) was already used.
@@ -100,7 +106,27 @@ impl TimelineHandle {
     }
 
     /// Loads older events. Returns whether the start of the room was reached.
+    ///
+    /// It deliberately does not report how many rows this added, although the
+    /// UI would like to know: `paginate_backwards` hands the new items to the
+    /// subscriber stream rather than having them in place when it returns — for
+    /// a lazy pagination it only lowers a skip count and returns at once
+    /// (`matrix-sdk-ui`, `timeline/pagination.rs`). Counting items around the
+    /// call therefore reports zero for a page that did arrive, a moment later,
+    /// through the diff stream. The growth is judged where the diffs have
+    /// landed, which is the model on the Qt side.
     pub async fn paginate(&self) -> Result<bool, String> {
+        // The pinned view holds exactly the pinned events and has no history
+        // behind it; the SDK answers any pagination on it with
+        // `PaginationError::NotSupported` unconditionally
+        // (`matrix-sdk-ui`, `timeline/pagination.rs`). Passed on, that became a
+        // user-facing error banner every time the pinned page was opened with
+        // too few pins to fill the screen — an error where the honest answer is
+        // simply "that is all of them".
+        if self.pinned {
+            return Ok(true);
+        }
+
         let reached_start = self
             .timeline
             .paginate_backwards(PAGE_SIZE)
@@ -201,7 +227,10 @@ impl TimelineHandle {
             .map_err(|error| format!("read receipt could not be sent: {error}"))
     }
 
-    pub fn close(self) {
+    /// Takes `&self` rather than consuming the handle: the runtime keeps it
+    /// behind an `Arc` so a command can work on it without holding the state
+    /// lock, and an `Arc` cannot hand out ownership.
+    pub fn close(&self) {
         self.task.abort();
     }
 }
@@ -283,6 +312,33 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
         "width": width.map(u64::from),
         "height": height.map(u64::from),
     }))
+}
+
+/// Event ids of the reply rows in `diff` whose quoted message was never loaded,
+/// so their details can be asked for.
+fn replies_needing_details(diff: &VectorDiff<Arc<TimelineItem>>) -> Vec<OwnedEventId> {
+    fn wanted(item: &TimelineItem) -> Option<OwnedEventId> {
+        let event = item.as_event()?;
+        let TimelineItemContent::MsgLike(content) = event.content() else {
+            return None;
+        };
+        let in_reply_to = content.in_reply_to.as_ref()?;
+        if !matches!(in_reply_to.event, TimelineDetails::Unavailable) {
+            return None;
+        }
+        event.event_id().map(|id| id.to_owned())
+    }
+
+    match diff {
+        VectorDiff::Append { values } | VectorDiff::Reset { values } => {
+            values.iter().filter_map(|item| wanted(item)).collect()
+        }
+        VectorDiff::PushBack { value }
+        | VectorDiff::PushFront { value }
+        | VectorDiff::Insert { value, .. }
+        | VectorDiff::Set { value, .. } => wanted(value).into_iter().collect(),
+        _ => Vec::new(),
+    }
 }
 
 /// Describes the message a reply refers to, as far as it is already known.
@@ -394,6 +450,34 @@ fn encode_item(item: &TimelineItem) -> Value {
             MsgLikeKind::Redacted => {
                 ("redacted", String::new(), String::new(), false, None, None, "", String::new())
             }
+            // Stickers and polls are ordinary timeline items — the SDK's
+            // default filter admits both — but they used to fall into "other",
+            // which the UI draws with a height of zero. They were therefore
+            // invisible, the same silent hole in the conversation that the
+            // handling of undecryptable and redacted events exists to avoid.
+            // Their own message type is passed on; the UI does not draw either
+            // specially yet and falls back to text, so at least the sticker's
+            // name and the poll's question are there.
+            MsgLikeKind::Sticker(sticker) => (
+                "message",
+                sticker.content().body.clone(),
+                "m.sticker".to_owned(),
+                false,
+                None,
+                reply_info(content),
+                "",
+                String::new(),
+            ),
+            MsgLikeKind::Poll(poll) => (
+                "message",
+                poll.fallback_text().unwrap_or_default(),
+                "m.poll".to_owned(),
+                false,
+                None,
+                reply_info(content),
+                "",
+                String::new(),
+            ),
             _ => ("other", String::new(), String::new(), false, None, None, "", String::new()),
         },
         // Only m.call.invite / m.rtc.notification surface as timeline items;
@@ -452,7 +536,25 @@ fn encode_item(item: &TimelineItem) -> Value {
         "own": event.is_own(),
         "timestamp": u64::from(event.timestamp().get()),
         "pending": event.send_state().is_some(),
+        "sendState": send_state(event),
     })
+}
+
+/// How far a message of our own has got: "" once the server has it, "sending"
+/// while it waits, "failed" when the attempt did not work.
+///
+/// "failed" is not the exception it sounds like. The SDK reports it for an
+/// ordinary network gap as well — a recoverable failure sets exactly this state
+/// (`timeline/controller/mod.rs`, `RoomSendQueueUpdate::SendError`) — and the
+/// message stays in the queue waiting for another try. Without showing it, a
+/// message that never left looks exactly like one that arrived, which is how a
+/// tester came to send the same text twice.
+fn send_state(event: &EventTimelineItem) -> &'static str {
+    match event.send_state() {
+        None | Some(EventSendState::Sent { .. }) => "",
+        Some(EventSendState::NotSentYet { .. }) => "sending",
+        Some(EventSendState::SendingFailed { .. }) => "failed",
+    }
 }
 
 fn encode_items<'a>(items: impl IntoIterator<Item = &'a Arc<TimelineItem>>) -> Vec<Value> {
@@ -486,6 +588,27 @@ fn encode(diff: &VectorDiff<Arc<TimelineItem>>) -> Value {
     }
 }
 
+/// A short, stable stand-in for the room and the view an item belongs to, put
+/// in front of every item id of that timeline.
+///
+/// Without it the SDK numbers items from zero for every timeline it builds —
+/// `internal_id_prefix` defaults to `None` and the id is `"{prefix}{counter}"`
+/// (`matrix-sdk-ui`, `timeline/builder.rs` and `controller/metadata.rs`) — so
+/// the first picture of one room and the first picture of the next both get the
+/// id "0". The front end keys its cache of downloaded attachments on that id,
+/// which made a picture from the room just left show up in the room just
+/// opened, without so much as a request going out. The pinned view of a room
+/// collides with its live view the same way, hence `focus` in the hash.
+///
+/// Hashed rather than spelled out, so no full room identifier travels in a
+/// field that might one day be logged.
+fn id_prefix(room_id: &str, focus: &str) -> String {
+    let mut hasher = DefaultHasher::new();
+    room_id.hash(&mut hasher);
+    focus.hash(&mut hasher);
+    format!("{:x}/", hasher.finish())
+}
+
 /// Opens the timeline of `room_id` and starts streaming updates.
 ///
 /// `focus` selects the view: empty for the live timeline, `"pinned"` for the
@@ -504,9 +627,13 @@ pub async fn open(
         .get_room(&parsed)
         .ok_or_else(|| "room is not known yet".to_owned())?;
 
+    let prefix = id_prefix(room_id, focus);
+
     let live = focus.is_empty();
     let timeline = if live {
-        room.timeline()
+        room.timeline_builder()
+            .with_internal_id_prefix(prefix)
+            .build()
             .await
             .map_err(|error| format!("timeline unavailable: {error}"))?
     } else {
@@ -525,6 +652,7 @@ pub async fn open(
         };
         room.timeline_builder()
             .with_focus(focus)
+            .with_internal_id_prefix(prefix)
             .build()
             .await
             .map_err(|error| format!("timeline unavailable: {error}"))?
@@ -585,13 +713,34 @@ pub async fn open(
     }
 
     let room_id_owned = room_id.to_owned();
+    let detail_source = timeline.clone();
     let task = tokio::spawn(async move {
+        // Reply targets already asked for, so a row that is rewritten several
+        // times does not send the same request again.
+        let mut requested: HashSet<OwnedEventId> = HashSet::new();
+
         while let Some(diffs) = stream.next().await {
             let ops: Vec<Value> = diffs.iter().map(encode).collect();
             sink.emit(event(
                 "timeline.diff",
                 json!({ "roomId": room_id_owned, "ops": ops }),
             ));
+
+            // A reply whose quoted message is not in the loaded window comes
+            // with its details `Unavailable`, and the SDK means that literally:
+            // "not available yet, and have not been requested". Nothing fetches
+            // them by itself. Without this the quote box stayed on screen with
+            // both its lines empty — for good, not "until it arrives", which is
+            // what the comment on `reply_info` used to promise.
+            for id in diffs.iter().flat_map(replies_needing_details) {
+                if !requested.insert(id.clone()) {
+                    continue;
+                }
+                let source = detail_source.clone();
+                tokio::spawn(async move {
+                    let _ = source.fetch_details_for_event(&id).await;
+                });
+            }
         }
     });
 
@@ -612,6 +761,7 @@ pub async fn open(
     Ok(TimelineHandle {
         room_id: room_id.to_owned(),
         live,
+        pinned: focus == "pinned",
         timeline,
         task,
         retried_from_end: AtomicBool::new(false),

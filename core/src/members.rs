@@ -95,8 +95,18 @@ pub async fn load(client: &Client, room_id: &str) -> Result<Vec<Value>, String> 
 /// checked. One entry per user, with how many of their devices are unverified.
 ///
 /// Empty for an unencrypted room and when everything is verified. This device
-/// is skipped — it is always trusted to itself. The lookups hit the local
-/// crypto store, so this is cheap enough to run every time a room is opened.
+/// is skipped — it is always trusted to itself.
+///
+/// A member whose devices this client has never downloaded is asked for
+/// explicitly. `get_user_devices` reads the local crypto store and nothing
+/// else: it passes no timeout, and without one the SDK's `wait_if_user_pending`
+/// returns at once (`matrix-sdk-crypto`, `machine/mod.rs`). Loading the member
+/// list only *marks* those users for a later `/keys/query`. So on the first
+/// open of a room, and right after someone joins, the store is empty for them
+/// and this used to report "nothing unverified" — a warning that says everything
+/// was checked when nothing was, which is worse than no warning at all. The SDK
+/// itself waits for the query at the equivalent point, with the comment that it
+/// "may not yet have seen any devices for the user".
 pub async fn unverified_recipients(client: &Client, room_id: &str) -> Result<Vec<Value>, String> {
     let room = known_room(client, room_id)?;
     if !room.encryption_state().is_encrypted() {
@@ -115,10 +125,23 @@ pub async fn unverified_recipients(client: &Client, room_id: &str) -> Result<Vec
     let mut out = Vec::new();
     for member in members {
         let user_id = member.user_id();
-        let devices = encryption
+        let mut devices = encryption
             .get_user_devices(user_id)
             .await
             .map_err(|error| format!("could not read the devices: {error}"))?;
+
+        // Nothing known about this member yet: ask the server before drawing
+        // any conclusion. A failure here is left to fall through to the empty
+        // list rather than failing the whole check — one unreachable user must
+        // not suppress the warning about the others.
+        if devices.devices().next().is_none() {
+            if encryption.request_user_identity(user_id).await.is_ok() {
+                devices = encryption
+                    .get_user_devices(user_id)
+                    .await
+                    .map_err(|error| format!("could not read the devices: {error}"))?;
+            }
+        }
 
         let unverified = devices
             .devices()

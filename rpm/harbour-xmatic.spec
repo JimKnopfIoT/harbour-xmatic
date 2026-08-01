@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.13.0
+Version:    0.14.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -81,6 +81,36 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Aug 01 2026 harbour-xmatic contributors 0.14.0-1
+- A message written while the network was gone now leaves as soon as it comes
+  back. The send queue switches itself off after a failed send and waits for
+  the client to switch it on again; nothing did, so the message sat there until
+  the app was restarted — and it looked sent the whole time. Messages that did
+  not get out are marked as such.
+- Pictures can no longer appear in the wrong room. Attachments were remembered
+  under a row number that started again from zero in every room, so the first
+  picture of one room could be shown in place of the first picture of the next.
+- The timeline no longer freezes. Opening a room could deadlock the core, after
+  which nothing in the conversation worked until the app was restarted.
+- Verifying a device now unlocks the old messages it was verified for: the key
+  backup announces itself through a stream the app did not listen to, so the
+  keys were never fetched afterwards.
+- A verification can be started again after one stalled. Asking a second time
+  used to cancel both attempts.
+- The warning before sending into an encrypted room no longer says "everything
+  checked" when nothing was: a member whose devices were never downloaded is
+  now asked for instead of counted as verified.
+- Reading a room and running a verification or a call no longer cancel each
+  other's event subscription, which had made calls unreliable and left
+  verifications looking stalled.
+- The sync service is restarted when it gives up, instead of leaving the app
+  quietly offline until the next start.
+- "Load older messages" is no longer greyed out because something unrelated is
+  loading, and the automatic history fetch stops instead of asking forever.
+- Stickers and polls are visible instead of empty rows; quotes of older
+  messages fill in; the room directory survives a dropped page; the pinned view
+  no longer reports an error when there is nothing more to load.
+
 * Fri Jul 31 2026 harbour-xmatic contributors 0.13.0-1
 - Rooms can be created. "New room" in the chat list's pulldown asks for a name
   and settles the two things that cannot be changed the same way afterwards:

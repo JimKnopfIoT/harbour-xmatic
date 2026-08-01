@@ -24,6 +24,38 @@ use serde_json::Value;
 /// enough that scrolling does not pull megabytes per row.
 const THUMBNAIL_EDGE: u32 = 800;
 
+/// Largest attachment this app will put in memory to send. Generous next to
+/// what a homeserver accepts (matrix.org allows 50 MiB), and far below what a
+/// phone can lose to a single allocation.
+const MAX_ATTACHMENT_BYTES: u64 = 100 * 1024 * 1024;
+
+/// Largest avatar. A profile picture is scaled down by everything that shows
+/// it, so anything past this is a mistake rather than an intention.
+pub const MAX_AVATAR_BYTES: u64 = 10 * 1024 * 1024;
+
+/// How big a file is, without opening it.
+pub fn file_size(path: &str) -> Result<u64, String> {
+    std::fs::metadata(path)
+        .map(|data| data.len())
+        .map_err(|error| format!("could not read the file: {error}"))
+}
+
+/// Refuses a file that is too large to hold in memory, before it is read.
+///
+/// Every one of these paths reads its file in one piece — the SDK's attachment
+/// API wants the bytes, not a path — so the only place to stop an outsized file
+/// is before the read, not after it.
+pub fn check_size(size: u64, limit: u64, what: &str) -> Result<(), String> {
+    if size > limit {
+        return Err(format!(
+            "{what} too large: {} MiB, the limit is {} MiB",
+            size / (1024 * 1024),
+            limit / (1024 * 1024)
+        ));
+    }
+    Ok(())
+}
+
 /// Turns a request into a file name that survives a file system.
 fn cache_name(request: &MediaRequestParameters) -> String {
     let key = request.unique_key();
@@ -53,7 +85,16 @@ pub async fn fetch(
     let source: MediaSource = serde_json::from_value(source)
         .map_err(|_| "media source is neither a plain address nor an encrypted file".to_owned())?;
 
-    let format = if thumbnail {
+    // Encrypted media has no server-side thumbnail and cannot have one — the
+    // homeserver only ever sees ciphertext. The SDK honours
+    // `MediaFormat::Thumbnail` on the plain arm alone and silently ignores it
+    // for an encrypted file, downloading and decrypting the original either
+    // way. Asking for a thumbnail regardless did not shrink a single byte; it
+    // only filed the very same bytes under a second cache name, so every
+    // encrypted picture was stored twice. Saying so here keeps the request and
+    // the file that comes back describing the same thing.
+    let encrypted = matches!(source, MediaSource::Encrypted(_));
+    let format = if thumbnail && !encrypted {
         let edge = UInt::from(THUMBNAIL_EDGE);
         MediaFormat::Thumbnail(MediaThumbnailSettings::new(edge, edge))
     } else {
@@ -118,6 +159,7 @@ pub async fn forward_file(
         .map_err(|_| format!("not a media type: {mime_type}"))?;
 
     let local = path.trim_start_matches("file://");
+    check_size(file_size(local)?, MAX_ATTACHMENT_BYTES, "attachment")?;
     let data = std::fs::read(local).map_err(|error| format!("could not read the file: {error}"))?;
     let filename = std::path::Path::new(local)
         .file_name()
@@ -157,8 +199,15 @@ pub async fn send(timeline: &Timeline, path: &str, mime_type: &str) -> Result<()
         .parse()
         .map_err(|_| format!("not a media type: {mime_type}"))?;
 
-    // Read here rather than handing the path over, so an unreadable file and a
-    // rejected upload cannot produce the same message.
+    // Size first, contents second. Reading before asking how big the file is
+    // means a picked file of any size lands in memory in one piece, and on a
+    // phone that is the app being killed rather than an error the user can act
+    // on. The server's own limit is asked for below, but only after this: that
+    // question needs the network, and there is no reason to hold a gigabyte in
+    // memory while waiting for the answer.
+    let size = file_size(path)?;
+    check_size(size, MAX_ATTACHMENT_BYTES, "attachment")?;
+
     let bytes = std::fs::read(path).map_err(|error| format!("could not read the file: {error}"))?;
     let size = bytes.len();
 

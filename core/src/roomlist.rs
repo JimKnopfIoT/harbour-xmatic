@@ -7,6 +7,7 @@
 //! Rust: nothing here reimplements sync, ordering or unread counting.
 
 use std::sync::Arc;
+use std::time::Duration;
 
 use futures_util::StreamExt;
 use matrix_sdk::deserialized_responses::SyncOrStrippedState;
@@ -31,8 +32,10 @@ use matrix_sdk_ui::{
     sync_service::{State as SyncState, SyncService},
 };
 use serde_json::{json, Value};
+use tokio::sync::broadcast::error::RecvError;
 use tokio::sync::mpsc;
 use tokio::task::JoinHandle;
+use tokio::time::{sleep, Instant};
 
 use crate::protocol::event;
 use crate::runtime::Sink;
@@ -47,6 +50,7 @@ pub struct RoomListHandle {
     filters: mpsc::UnboundedSender<String>,
     task: tokio::task::JoinHandle<()>,
     states: tokio::task::JoinHandle<()>,
+    queue: tokio::task::JoinHandle<()>,
 }
 
 impl RoomListHandle {
@@ -63,6 +67,7 @@ impl RoomListHandle {
     pub async fn stop(self) {
         self.task.abort();
         self.states.abort();
+        self.queue.abort();
         self.sync.stop().await;
     }
 }
@@ -177,6 +182,7 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
     sync.start().await;
 
     let states = spawn_sync_state(sync.clone(), client.clone(), sink.clone());
+    let queue = spawn_send_queue_recovery(client.clone(), sink.clone());
 
     let room_list = sync
         .room_list_service()
@@ -216,6 +222,80 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
         filters,
         task,
         states,
+        queue,
+    })
+}
+
+/// Puts a room's send queue back to work after a failure it can recover from.
+///
+/// The SDK switches a room's queue off after *any* failed send — "Disable the
+/// queue for this room after any kind of error happened", `send_queue/mod.rs` —
+/// and for a recoverable failure it deliberately leaves the message sitting in
+/// the queue. Switching the queue back on is the caller's job, and the SDK
+/// announces the moment through `subscribe_errors`.
+///
+/// Doing it only on a `Running` state of the sync service, which is what this
+/// used to rely on, misses the ordinary case. The queue goes off when a *send*
+/// fails, which has nothing to do with the sync service; the service only
+/// enters `Offline` if one of *its* requests fails, and the state stream yields
+/// on changes alone. A network gap short enough that no sync request failed
+/// therefore produced no state change, no `Running`, and no revival — the queue
+/// stayed off for the rest of the session and every message written afterwards
+/// silently stayed put. Only restarting the app got them out, which is exactly
+/// what a tester reported: two identical messages, both delivered at restart.
+fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
+    /// How long to wait before the first revival. Long enough that a queue is
+    /// not woken into a network that is still gone, short enough to be over
+    /// before anyone reaches for the app menu.
+    const FIRST_DELAY: Duration = Duration::from_secs(5);
+
+    /// Ceiling for the doubling, so a long outage settles at one attempt a
+    /// minute instead of hammering a dead network.
+    const MAX_DELAY: Duration = Duration::from_secs(60);
+
+    /// A failure this long after the previous one counts as a new problem
+    /// rather than the same one still going, so the waiting starts over.
+    const SETTLED: Duration = Duration::from_secs(180);
+
+    tokio::spawn(async move {
+        let mut errors = client.send_queue().subscribe_errors();
+        let mut delay = FIRST_DELAY;
+        let mut previous: Option<Instant> = None;
+
+        loop {
+            let failure = match errors.recv().await {
+                Ok(failure) => failure,
+                // Lagged means some failures were missed while this task was
+                // busy waiting. That changes nothing about what has to happen
+                // — the queue still needs switching back on.
+                Err(RecvError::Lagged(_)) => continue,
+                Err(RecvError::Closed) => break,
+            };
+
+            let now = Instant::now();
+            if previous.map_or(true, |last| now.duration_since(last) > SETTLED) {
+                delay = FIRST_DELAY;
+            }
+            previous = Some(now);
+
+            // Unrecoverable failures are revived too. The SDK marks the
+            // offending message as wedged and skips it from then on, but it
+            // switches the room's queue off just the same — leaving it off
+            // would strand every *other* message in that room behind one that
+            // will never be sent.
+            sink.emit(event(
+                "send.queue",
+                json!({
+                    "state": "retrying",
+                    "recoverable": failure.is_recoverable,
+                    "inSeconds": delay.as_secs(),
+                }),
+            ));
+
+            sleep(delay).await;
+            client.send_queue().set_enabled(true).await;
+            delay = (delay * 2).min(MAX_DELAY);
+        }
     })
 }
 
@@ -236,14 +316,47 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
             SyncState::Error(_) => "error",
         }
     }
+    /// Wait before restarting a service that gave up, doubling up to this.
+    const FIRST_RESTART: Duration = Duration::from_secs(2);
+    const MAX_RESTART: Duration = Duration::from_secs(60);
+
     tokio::spawn(async move {
         let mut states = sync.state();
         let mut current = states.get();
+        let mut restart_in = FIRST_RESTART;
+
         loop {
             sink.emit(event("sync.state", json!({ "state": name(&current) })));
-            if matches!(current, SyncState::Running) {
-                client.send_queue().set_enabled(true).await;
+
+            match current {
+                SyncState::Running => {
+                    restart_in = FIRST_RESTART;
+                    client.send_queue().set_enabled(true).await;
+                }
+
+                // The offline mode does not cover these. Its recovery sits
+                // inside the branch for a termination that carries an error;
+                // a termination *without* one sets `Idle` or `Terminated` and
+                // leaves the supervisor loop for good
+                // (`matrix-sdk-ui`, `sync_service.rs`). The service is then
+                // simply dead, the app quietly stops receiving, and only a
+                // restart of the app brings it back — which is why the SDK
+                // says the caller "MUST" watch this state and call `start()`
+                // again. Nothing here did.
+                //
+                // `start()` is safe to call repeatedly: it only does anything
+                // when the service is stopped or offline.
+                SyncState::Idle | SyncState::Terminated | SyncState::Error(_) => {
+                    sleep(restart_in).await;
+                    restart_in = (restart_in * 2).min(MAX_RESTART);
+                    sync.start().await;
+                }
+
+                // Recovers on its own; the state is forwarded only so the UI
+                // can say that reconnecting is in progress.
+                SyncState::Offline => {}
             }
+
             match states.next().await {
                 Some(next) => current = next,
                 None => break,

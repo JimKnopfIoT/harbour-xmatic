@@ -25,6 +25,7 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(TimestampRole, "timestamp");
     names.insert(EditedRole, "edited");
     names.insert(PendingRole, "pending");
+    names.insert(SendStateRole, "sendState");
     return names;
 }
 
