@@ -11,8 +11,11 @@ use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::sync::{Arc, Mutex as StdMutex};
 
 use matrix_sdk::{
-    authentication::oauth::CsrfToken, store::RoomLoadSettings,
-    utils::local_server::LocalServerShutdownHandle, Client, SessionChange,
+    authentication::oauth::CsrfToken,
+    ruma::{OwnedRoomId, RoomId},
+    store::RoomLoadSettings,
+    utils::local_server::LocalServerShutdownHandle,
+    Client, SessionChange,
 };
 use serde_json::{json, Value};
 use tokio::sync::{broadcast::error::RecvError, mpsc, Mutex};
@@ -94,10 +97,56 @@ struct State {
     rooms: Mutex<Option<RoomListHandle>>,
     spaces: Mutex<Option<tokio::task::JoinHandle<()>>>,
     open_space: Mutex<Option<tokio::task::JoinHandle<()>>>,
-    timeline: Mutex<Option<TimelineHandle>>,
+    /// Behind an `Arc` so a command can clone the handle out and release the
+    /// lock before going to the server — see `State::timeline`.
+    timeline: Mutex<Option<Arc<TimelineHandle>>>,
+    /// Serialises `open_timeline` against itself. Held for the whole open,
+    /// including the network part, which is why it cannot be `timeline`.
+    opening: Mutex<()>,
+    /// Every room that currently needs a sliding-sync subscription. See
+    /// `Subscriptions` — they have to be requested together or not at all.
+    subscriptions: Mutex<Subscriptions>,
     directory: Mutex<Option<DirectoryHandle>>,
     verification: verification::Slot,
     sink: Arc<Sink>,
+}
+
+/// The rooms that need a sliding-sync subscription, by what wants them.
+///
+/// They live together because `subscribe_to_rooms` is not additive: "All
+/// previous room subscriptions will be forgotten" (`matrix-sdk-ui`,
+/// `room_list_service/mod.rs`), and the sliding sync clears its whole
+/// subscription map on every call. Requesting one room therefore cancels
+/// whatever was requested before, which is why these three used to knock each
+/// other out — starting a verification dropped the open room back to one
+/// timeline event per sync, and opening a room dropped the verification's
+/// direct chat, leaving the flow apparently stalled.
+///
+/// A subscription is not a nicety: an unsubscribed room delivers a single
+/// timeline event per sync response (`DEFAULT_LIST_TIMELINE_LIMIT`), so a burst
+/// — a call's ICE candidates, several quick messages — arrives as its last
+/// event alone.
+#[derive(Default)]
+struct Subscriptions {
+    /// The room whose conversation is on screen.
+    open: Option<OwnedRoomId>,
+    /// The direct chat a running verification talks through.
+    verification: Option<OwnedRoomId>,
+    /// The room of a call being set up or running.
+    call: Option<OwnedRoomId>,
+}
+
+impl Subscriptions {
+    fn wanted(&self) -> Vec<OwnedRoomId> {
+        let mut rooms: Vec<OwnedRoomId> = [&self.open, &self.verification, &self.call]
+            .into_iter()
+            .flatten()
+            .cloned()
+            .collect();
+        rooms.sort();
+        rooms.dedup();
+        rooms
+    }
 }
 
 /// The directory-search task and the channel its orders go in through.
@@ -111,6 +160,44 @@ impl State {
     /// await point.
     async fn client(&self) -> Option<Client> {
         self.client.lock().await.clone()
+    }
+
+    /// The open timeline, or `None`. Cloned for the same reason as the client:
+    /// every timeline command is a network round trip, and the lock must not
+    /// be held across it. It used to be — a pagination that the server left
+    /// hanging (matrix.org answers `M_LIMIT_EXCEEDED`, and the SDK then retries
+    /// for up to fifteen minutes) blocked not just the next pagination but
+    /// `open_timeline` as well, so switching rooms froze until the server
+    /// relented.
+    async fn timeline(&self) -> Option<Arc<TimelineHandle>> {
+        self.timeline.lock().await.clone()
+    }
+
+    /// Records what a part of the app needs subscribed and asks the sliding
+    /// sync for the whole set. Always the whole set: a call with fewer rooms
+    /// silently unsubscribes the rest.
+    async fn subscribe(&self, change: impl FnOnce(&mut Subscriptions)) {
+        // The lock is held across the request, not just across the bookkeeping.
+        // Releasing it first would leave a window in which a second caller
+        // records its own change and gets its list out ahead of this one; since
+        // the request replaces the entire subscription list rather than adding
+        // to it, the older list would then be the one left standing and a room
+        // would silently lose its subscription. Nothing waits on the network
+        // inside here — the sliding sync only rewrites its map and nudges its
+        // loop — so holding it costs nothing.
+        let mut subscriptions = self.subscriptions.lock().await;
+        change(&mut subscriptions);
+        let wanted = subscriptions.wanted();
+
+        let service = self.rooms.lock().await.as_ref().map(|handle| handle.service());
+        let Some(service) = service else {
+            // No sync service yet; whatever was recorded is applied by the next
+            // change once there is one.
+            return;
+        };
+
+        let borrowed: Vec<&RoomId> = wanted.iter().map(|room| room.as_ref()).collect();
+        service.subscribe_to_rooms(&borrowed).await;
     }
 
     /// Describes the current session for a reply or an event.
@@ -146,6 +233,8 @@ pub fn spawn(
         spaces: Mutex::new(None),
         open_space: Mutex::new(None),
         timeline: Mutex::new(None),
+        opening: Mutex::new(()),
+        subscriptions: Mutex::new(Subscriptions::default()),
         directory: Mutex::new(None),
         verification: Arc::new(Mutex::new(None)),
         sink,
@@ -239,6 +328,11 @@ async fn handle(state: Arc<State>, command: Command) {
             sdp,
             ..
         } => {
+            // A call's signalling rides the room's timeline, and an
+            // unsubscribed room hands out one event per sync response — a
+            // burst of ICE candidates then arrives as its last one alone,
+            // which is a call that connects and stays silent.
+            set_call_room(&state, Some(&room_id)).await;
             call_step(&state, id, move |client| async move {
                 call::invite(&client, &room_id, &call_id, &party_id, sdp).await
             })
@@ -251,6 +345,7 @@ async fn handle(state: Arc<State>, command: Command) {
             sdp,
             ..
         } => {
+            set_call_room(&state, Some(&room_id)).await;
             call_step(&state, id, move |client| async move {
                 call::answer(&client, &room_id, &call_id, &party_id, sdp).await
             })
@@ -277,7 +372,10 @@ async fn handle(state: Arc<State>, command: Command) {
             call_step(&state, id, move |client| async move {
                 call::hangup(&client, &room_id, &call_id, &party_id).await
             })
-            .await
+            .await;
+            // Released after the goodbye is on its way, not before, or the
+            // hangup itself could go out on an unsubscribed room.
+            set_call_room(&state, None).await;
         }
         Command::CallTurnServers { .. } => turn_servers(&state, id).await,
         Command::VerificationRequest { user_id, .. } => {
@@ -413,8 +511,7 @@ async fn room_set_low_priority(state: &Arc<State>, id: u64, room_id: String, low
 }
 
 async fn pin_message(state: &Arc<State>, id: u64, event_id: String, pin: bool) {
-    let timeline = state.timeline.lock().await;
-    let Some(handle) = timeline.as_ref() else {
+    let Some(handle) = state.timeline().await else {
         state.sink.emit(reply_error(id, "no open room"));
         return;
     };
@@ -623,6 +720,10 @@ async fn request_verification(state: &Arc<State>, id: u64, user_id: String) {
         user_id.trim().to_owned()
     };
 
+    // A stale flow has to be taken down before a new one is asked for, or the
+    // SDK cancels both and the retry is dead on arrival.
+    verification::cancel_active(&state.verification).await;
+
     match verification::request(
         &client,
         state.sink.clone(),
@@ -631,30 +732,19 @@ async fn request_verification(state: &Arc<State>, id: u64, user_id: String) {
     )
     .await
     {
-        Ok(()) => {
-            subscribe_direct_chat(state, &client, &target).await;
+        Ok(room_id) => {
+            // Verifying another user runs in-room inside the direct chat, and
+            // an unsubscribed room delivers one timeline event per sync — the
+            // other side's acceptance would only turn up if the user happened
+            // to open that chat, and the flow would look stalled at "created".
+            if let Some(room_id) = room_id {
+                state
+                    .subscribe(move |rooms| rooms.verification = Some(room_id))
+                    .await;
+            }
             state.sink.emit(reply_ok(id, json!({ "requested": true })));
         }
         Err(message) => state.sink.emit(reply_error(id, message)),
-    }
-}
-
-/// Subscribes the sliding sync to the direct chat with `user_id`, if both
-/// exist. Verifying another user runs in-room inside that chat (the SDK finds
-/// or creates it), and sliding sync only reliably delivers a room's events
-/// once the room is subscribed — without this, the other side's acceptance
-/// only arrives if the user happens to open the direct chat, and the flow
-/// looks stalled at "created".
-async fn subscribe_direct_chat(state: &Arc<State>, client: &Client, user_id: &str) {
-    let Ok(user) = matrix_sdk::ruma::UserId::parse(user_id) else {
-        return;
-    };
-    let Some(room) = client.get_dm_room(&user) else {
-        return;
-    };
-    let service = state.rooms.lock().await.as_ref().map(|handle| handle.service());
-    if let Some(service) = service {
-        service.subscribe_to_rooms(&[room.room_id()]).await;
     }
 }
 
@@ -694,33 +784,49 @@ async fn open_timeline(state: &Arc<State>, id: u64, room_id: String, focus: Stri
         return;
     };
 
+    // One open at a time. Every command runs in its own task, so leaving a room
+    // and stepping straight back into it puts a close and an open in flight
+    // together; without this, both could find an empty slot, neither would shut
+    // the other's stream down, and whichever finished last would decide which
+    // room the next message is sent to. A lock of its own rather than the
+    // timeline's, which must stay free for the commands that are running.
+    let _opening = state.opening.lock().await;
+
     // Opening a different room replaces the previous timeline: a phone shows
     // one room at a time, and keeping stale streams alive only costs memory.
     // A focused open always rebuilds, even for the same room — the view is a
     // different one.
-    if let Some(previous) = state.timeline.lock().await.take() {
-        if previous.room_id() == room_id && focus.is_empty() && previous.is_live() {
-            state.timeline.lock().await.replace(previous);
-            state.sink.emit(reply_ok(id, json!({ "open": true })));
-            return;
+    //
+    // The guard is bound to a name on purpose. Written as
+    // `if let Some(previous) = state.timeline.lock().await.take()`, the
+    // temporary guard lives until the end of the `if let` body in edition 2021,
+    // so locking again inside it deadlocks a mutex that is not reentrant — and
+    // that mutex is the one every other timeline command needs.
+    {
+        let mut open = state.timeline.lock().await;
+        if let Some(previous) = open.take() {
+            if previous.room_id() == room_id && focus.is_empty() && previous.is_live() {
+                open.replace(previous);
+                state.sink.emit(reply_ok(id, json!({ "open": true })));
+                return;
+            }
+            previous.close();
         }
-        previous.close();
     }
 
-    // Sliding sync only sends a minimal timeline for rooms in the list. A room
-    // that is being read has to be subscribed explicitly, or its newer
-    // messages never arrive — the view then shows whatever the event cache
-    // happened to hold.
-    let service = state.rooms.lock().await.as_ref().map(|handle| handle.service());
-    if let Some(service) = service {
-        if let Ok(parsed) = matrix_sdk::ruma::RoomId::parse(&room_id) {
-            service.subscribe_to_rooms(&[&parsed]).await;
-        }
+    // Sliding sync only sends a minimal timeline for rooms in the list — one
+    // event per response. A room that is being read has to be subscribed
+    // explicitly, or its newer messages never arrive and the view shows
+    // whatever the event cache happened to hold.
+    if let Ok(parsed) = matrix_sdk::ruma::RoomId::parse(&room_id) {
+        state
+            .subscribe(move |rooms| rooms.open = Some(parsed))
+            .await;
     }
 
     match timeline::open(&client, &room_id, &focus, state.sink.clone()).await {
         Ok(handle) => {
-            *state.timeline.lock().await = Some(handle);
+            *state.timeline.lock().await = Some(Arc::new(handle));
             state.sink.emit(reply_ok(id, json!({ "open": true })));
         }
         Err(message) => state.sink.emit(reply_error(id, message)),
@@ -735,7 +841,7 @@ async fn close_timeline(state: &Arc<State>, id: u64) {
 }
 
 async fn paginate_timeline(state: &Arc<State>, id: u64) {
-    let outcome = match &*state.timeline.lock().await {
+    let outcome = match state.timeline().await {
         Some(handle) => handle.paginate().await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -754,7 +860,7 @@ async fn send_message(state: &Arc<State>, id: u64, body: String) {
         return;
     }
 
-    let outcome = match &*state.timeline.lock().await {
+    let outcome = match state.timeline().await {
         Some(handle) => handle.send_text(body).await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -771,7 +877,7 @@ async fn reply_message(state: &Arc<State>, id: u64, event_id: String, body: Stri
         return;
     }
 
-    let outcome = match &*state.timeline.lock().await {
+    let outcome = match state.timeline().await {
         Some(handle) => handle.reply(&event_id, body).await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -788,7 +894,7 @@ async fn edit_message(state: &Arc<State>, id: u64, event_id: String, body: Strin
         return;
     }
 
-    let outcome = match &*state.timeline.lock().await {
+    let outcome = match state.timeline().await {
         Some(handle) => handle.edit(&event_id, body).await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -800,7 +906,7 @@ async fn edit_message(state: &Arc<State>, id: u64, event_id: String, body: Strin
 }
 
 async fn redact_message(state: &Arc<State>, id: u64, event_id: String) {
-    let outcome = match &*state.timeline.lock().await {
+    let outcome = match state.timeline().await {
         Some(handle) => handle.redact(&event_id).await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -814,10 +920,7 @@ async fn redact_message(state: &Arc<State>, id: u64, event_id: String) {
 async fn send_media(state: &Arc<State>, id: u64, path: String, mime_type: String) {
     // Cloned out of the guard: the attachment upload takes a while and must
     // not hold the lock.
-    let timeline = {
-        let guard = state.timeline.lock().await;
-        guard.as_ref().map(|handle| handle.timeline())
-    };
+    let timeline = state.timeline().await.map(|handle| handle.timeline());
 
     let Some(timeline) = timeline else {
         state.sink.emit(reply_error(id, "no timeline is open"));
@@ -877,7 +980,7 @@ async fn fetch_media(state: &Arc<State>, id: u64, source: Value, thumbnail: bool
 }
 
 async fn mark_read(state: &Arc<State>, id: u64) {
-    let outcome = match &*state.timeline.lock().await {
+    let outcome = match state.timeline().await {
         Some(handle) => handle.mark_read().await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -890,6 +993,20 @@ async fn mark_read(state: &Arc<State>, id: u64) {
 
 /// Shared shape of the call commands: they all need a signed-in client and
 /// answer with either ok or the reason.
+/// Keeps the room of a call being set up or running in the subscription set.
+///
+/// Only the outgoing side and the moment of answering pass through here, so an
+/// invitation that arrives while the app is idle is still read from the
+/// unsubscribed stream until the user picks up. Handling that would mean giving
+/// `call::install`'s event handlers a way back into this state.
+async fn set_call_room(state: &Arc<State>, room_id: Option<&str>) {
+    let parsed = room_id.and_then(|room| RoomId::parse(room).ok());
+    if room_id.is_some() && parsed.is_none() {
+        return;
+    }
+    state.subscribe(move |rooms| rooms.call = parsed).await;
+}
+
 async fn call_step<F, Fut>(state: &Arc<State>, id: u64, action: F)
 where
     F: FnOnce(Client) -> Fut,
@@ -1257,6 +1374,9 @@ async fn restore_session(state: &Arc<State>, id: u64) {
 
     verification::install(&client, state.sink.clone(), state.verification.clone());
     call::install(&client, state.sink.clone());
+    // The backup unlocks itself once a verification hands over the key; only
+    // this stream says so.
+    recovery::watch(&client, state.sink.clone());
     watch_session(state, &client, homeserver);
 
     *state.client.lock().await = Some(client);
@@ -1324,6 +1444,7 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
             Ok(true) => {
                 verification::install(&client, waiter.sink.clone(), waiter.verification.clone());
                 call::install(&client, waiter.sink.clone());
+                recovery::watch(&client, waiter.sink.clone());
                 persist(&waiter, &client, homeserver.clone()).await;
                 watch_session(&waiter, &client, homeserver);
                 let data = waiter.session_data().await;
@@ -1405,6 +1526,7 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
             Ok(()) => {
                 verification::install(&client, waiter.sink.clone(), waiter.verification.clone());
                 call::install(&client, waiter.sink.clone());
+                recovery::watch(&client, waiter.sink.clone());
                 persist(&waiter, &client, homeserver.clone()).await;
                 watch_session(&waiter, &client, homeserver);
                 let data = waiter.session_data().await;

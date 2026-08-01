@@ -1,11 +1,13 @@
 #ifndef MATRIXBRIDGE_H
 #define MATRIXBRIDGE_H
 
+#include <QElapsedTimer>
 #include <QHash>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStandardPaths>
 #include <QObject>
+#include <QTimer>
 #include <QVariantList>
 #include <QVariant>
 #include <QVariantMap>
@@ -37,6 +39,7 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QString deviceId READ deviceId NOTIFY sessionChanged)
     Q_PROPERTY(bool ready READ ready CONSTANT)
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
+    Q_PROPERTY(bool paginating READ paginating NOTIFY paginatingChanged)
     Q_PROPERTY(QString lastError READ lastError NOTIFY lastErrorChanged)
     Q_PROPERTY(QObject *rooms READ rooms CONSTANT)
     Q_PROPERTY(QObject *spaces READ spaces CONSTANT)
@@ -82,6 +85,14 @@ public:
     QString deviceId() const { return m_deviceId; }
     bool ready() const { return m_core != nullptr; }
     bool busy() const { return !m_pending.isEmpty() || m_loginRunning; }
+
+    /// Whether a request for older messages is in flight.
+    ///
+    /// Deliberately separate from `busy`. `busy` means "some command, any
+    /// command, is waiting for an answer" — an avatar thumbnail counts — and
+    /// hanging the timeline's controls off that made them dead whenever the
+    /// homeserver was slow with something entirely unrelated.
+    bool paginating() const { return m_paginateId != 0; }
     QString lastError() const { return m_lastError; }
     // The UI sees the grouped view (favourites up, low priority down); the
     // core still drives the flat source underneath.
@@ -395,6 +406,7 @@ signals:
     void sessionChanged();
     void syncStateChanged();
     void busyChanged();
+    void paginatingChanged();
     void lastErrorChanged();
     void openRoomChanged();
     void pinnedChanged();
@@ -418,6 +430,13 @@ signals:
 
     /// The freshly created recovery key. Shown once, never stored.
     void recoveryKeyReady(const QString &key);
+
+    /// A request for older messages came back. Carries no row count on
+    /// purpose: the rows it fetched reach the model through the diff stream,
+    /// which is a separate path from this reply and regularly arrives after it.
+    /// Whether the timeline grew can only be judged from the model, one round
+    /// later.
+    void paginated();
 
     /// An attachment finished downloading.
     void mediaReady(const QString &key, const QString &path);
@@ -452,8 +471,16 @@ private slots:
     /// Receives one JSON message from the core, already back on the UI thread.
     void handleMessage(const QString &json);
 
+    /// Names commands that have been waiting far too long, once each. The
+    /// point is the journal: a stalled request otherwise leaves no trace at
+    /// all, and "the app does nothing" is not something a tester can report.
+    void checkStalledCommands();
+
 private:
     static void deliver(void *userData, const char *json);
+
+    /// Runs the stall watch exactly while there is something to watch.
+    void updateStallWatch();
 
     quint64 send(const QString &command, const QJsonObject &arguments = QJsonObject());
     void applySession(const QJsonObject &data);
@@ -525,7 +552,25 @@ private:
     QHash<quint64, QString> m_removeRequests;
 
     quint64 m_nextId = 1;
-    QHash<quint64, QString> m_pending;
+
+    /// A command waiting for its answer. The timestamp is the diagnostic part:
+    /// a request the homeserver leaves hanging is invisible otherwise — the
+    /// SDK retries a rate-limited request for up to fifteen minutes without
+    /// ever failing, and all the user sees is that the app went quiet.
+    struct PendingCommand {
+        QString command;
+        qint64 sentAt = 0;
+        /// Whether the stall was already logged, so it is said once and not
+        /// on every tick of the watch.
+        bool reported = false;
+    };
+
+    QHash<quint64, PendingCommand> m_pending;
+    /// Id of the pagination in flight, 0 when there is none.
+    quint64 m_paginateId = 0;
+    /// Runs only while something is pending; see checkStalledCommands.
+    QTimer *m_stallWatch = nullptr;
+    QElapsedTimer m_uptime;
 };
 
 #endif // MATRIXBRIDGE_H

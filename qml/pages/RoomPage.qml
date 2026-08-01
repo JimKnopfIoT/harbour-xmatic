@@ -151,22 +151,63 @@ Page {
     // freshly joined room arrives with nothing but its own join event and would
     // sit there forever showing two rows. Keep asking for history until there
     // is something to scroll or the room's beginning is reached.
+    //
+    // Bounded, because "the list did not grow" and "there is no more history"
+    // are two different things. A page can come back full of events that render
+    // as nothing — a stretch of membership changes is enough — and an unbounded
+    // fill then asks again for as long as the room has history. Against a
+    // homeserver that rate-limits (matrix.org does) each of those requests is
+    // retried by the SDK for minutes, so the app ends up waiting on a queue it
+    // produced itself, and the room looks frozen. After a few fruitless rounds
+    // the automatic fill stops and leaves it to the user, who still has the
+    // pull-down entry and the pull-to-top.
+    property int fillEmptyRounds: 0
+    readonly property int fillEmptyLimit: 3
+    /// Row count when the last automatic round was started, -1 for none yet.
+    property int fillLastCount: -1
+
     function fillScreen() {
-        if (page.invited || !matrix.timelineReady || matrix.busy
+        if (page.invited || !matrix.timelineReady || matrix.paginating
                 || matrix.timelineAtStart || timelineView.count === 0) {
             return
         }
-        if (timelineView.contentHeight <= timelineView.height) {
-            matrix.loadOlder()
+        if (timelineView.contentHeight > timelineView.height) {
+            return
         }
+
+        // Whether the last round brought anything is decided here and not when
+        // its reply arrived. The rows reach the model through the diff stream,
+        // a path separate from the reply, and they regularly arrive after it —
+        // measured on the device: "0 new rows" and thirty rows in the same
+        // second. By the time the fill is asked again, they are applied.
+        if (page.fillLastCount >= 0 && timelineView.count <= page.fillLastCount) {
+            if (++page.fillEmptyRounds >= page.fillEmptyLimit) {
+                return
+            }
+        } else {
+            page.fillEmptyRounds = 0
+        }
+
+        page.fillLastCount = timelineView.count
+        matrix.loadOlder()
     }
 
     Connections {
         target: matrix
-        // Every answered command is a chance that the list grew — and the moment
-        // a pagination finished, so the next one may start.
-        onBusyChanged: page.fillScreen()
-        onTimelineReadyChanged: page.fillScreen()
+
+        // The round is over, so the next one may start — and if this one
+        // brought nothing at all, no diff will arrive to trigger the fill, so
+        // this is the only thing that keeps a short room moving. This used to
+        // hang off busyChanged, which fires for every command in the whole
+        // application: a downloading avatar then drove the history fetching.
+        onPaginated: page.fillScreen()
+
+        // A different room, a fresh start.
+        onTimelineReadyChanged: {
+            page.fillEmptyRounds = 0
+            page.fillLastCount = -1
+            page.fillScreen()
+        }
     }
 
     Connections {
@@ -286,7 +327,11 @@ Page {
             MenuItem {
                 text: qsTr("Load older messages")
                 visible: !page.invited && !matrix.timelineAtStart
-                enabled: !matrix.busy
+                // Only a running pagination disables this. It used to be the
+                // global busy flag, which is true while *any* command waits for
+                // an answer — the entry then sat grey because some unrelated
+                // thumbnail was still downloading.
+                enabled: !matrix.paginating
                 onClicked: matrix.loadOlder()
             }
 
@@ -904,11 +949,18 @@ Page {
                                             implicitWidth)
                             horizontalAlignment: Text.AlignRight
                             font.pixelSize: Theme.fontSizeTiny
-                            color: Theme.secondaryColor
+                            // A message that did not get out is the one thing in
+                            // this line worth a colour: half opacity alone reads
+                            // as "still going" and let someone send the same text
+                            // a second time.
+                            color: model.sendState === "failed"
+                                   ? Theme.errorColor : Theme.secondaryColor
                             // Only messages carry a timestamp; the shared delegate
                             // instantiates this label for every row regardless.
                             text: row.isBubble
                                   ? (matrix.pinnedEventIds.indexOf(model.eventId) >= 0 ? "📌 " : "")
+                                    + (model.sendState === "failed"
+                                       ? qsTr("not sent") + " · " : "")
                                     + (model.edited === true ? qsTr("edited") + " · " : "")
                                     + Format.formatDate(new Date(model.timestamp), Formatter.TimeValue)
                                   : ""
@@ -964,8 +1016,15 @@ Page {
             onMovementEnded: page.followTail = atYEnd
 
             // Reaching the top is the natural moment to fetch older messages.
+            // Asked for by the user, so the fill's give-up counter does not
+            // apply here — only a pagination already running holds it back, and
+            // a room whose beginning is already loaded, where there is nothing
+            // left to ask for. Without that second test every touch of the top
+            // edge sent another request into the void; harmless against a fast
+            // homeserver, another rate-limited round trip against a busy one.
             onAtYBeginningChanged: {
-                if (atYBeginning && count > 0 && !matrix.busy) {
+                if (atYBeginning && count > 0 && !matrix.paginating
+                        && !matrix.timelineAtStart) {
                     matrix.loadOlder()
                 }
             }

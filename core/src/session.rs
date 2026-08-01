@@ -84,13 +84,23 @@ pub async fn build_client(server: &str, paths: &Paths) -> Result<Client, matrix_
             std::process::id()
         )))
         // Without this the SDK never touches the key backup on its own: the
-        // default strategy is Manual. OneShot pulls everything down as soon as
-        // the backup key arrives — either from unlocking recovery or from a
-        // successful verification — and the per-event fallback covers keys
-        // that appear later.
+        // default strategy is Manual.
+        //
+        // `AfterDecryptionFailure` rather than `OneShot`, which this used to
+        // be. `OneShot` downloads the whole backup once, the moment the key
+        // arrives, and nothing else ever: its failure is only logged and the
+        // backup still reports itself as enabled (`encryption/backups/mod.rs`),
+        // so one bad moment on mobile data leaves the history permanently
+        // unreadable while the UI claims all is well. The SDK says of that call
+        // itself that it "is not paginated" and "doesn't work for any sizeable
+        // account". Only `AfterDecryptionFailure` registers the per-event
+        // handler that fetches a missing key when a message actually cannot be
+        // read — the two are an exact equality check in the SDK
+        // (`encryption/mod.rs`), not a fallback chain, which is what the
+        // comment here used to claim.
         .with_encryption_settings(EncryptionSettings {
             auto_enable_cross_signing: false,
-            backup_download_strategy: BackupDownloadStrategy::OneShot,
+            backup_download_strategy: BackupDownloadStrategy::AfterDecryptionFailure,
             auto_enable_backups: false,
         })
         .build()

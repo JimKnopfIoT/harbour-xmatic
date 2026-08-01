@@ -42,12 +42,17 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                            QObject *parent)
     : QObject(parent)
 {
+    // Started before anything can be sent: every pending command is stamped
+    // against this clock, and reading an unstarted QElapsedTimer is undefined.
+    m_uptime.start();
+
     m_coreVersion = takeCoreString(xm_version());
 
     QJsonObject config;
     config.insert(QStringLiteral("dataDir"), dataDirectory);
     config.insert(QStringLiteral("cacheDir"), cacheDirectory);
-    m_core = xm_core_new(jsonToCompactString(config).toUtf8().constData());
+    const QByteArray configJson = jsonToCompactString(config).toUtf8();
+    m_core = xm_core_new(configJson.constData());
 
     if (!m_core) {
         setLastError(tr("The protocol core could not be started."));
@@ -55,6 +60,12 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     }
 
     xm_core_set_callback(m_core, &MatrixBridge::deliver, this);
+
+    // Runs only while commands are outstanding, so an idle app does not wake
+    // up for this.
+    m_stallWatch = new QTimer(this);
+    m_stallWatch->setInterval(5000);
+    connect(m_stallWatch, &QTimer::timeout, this, &MatrixBridge::checkStalledCommands);
 
     // Recordings are throwaway files; they live in the cache next to the
     // downloaded attachments.
@@ -159,11 +170,53 @@ quint64 MatrixBridge::send(const QString &command, const QJsonObject &arguments)
     message.insert(QStringLiteral("id"), static_cast<double>(id));
     message.insert(QStringLiteral("cmd"), command);
 
-    m_pending.insert(id, command);
+    PendingCommand entry;
+    entry.command = command;
+    entry.sentAt = m_uptime.elapsed();
+    m_pending.insert(id, entry);
     emit busyChanged();
+    updateStallWatch();
 
-    xm_core_send(m_core, jsonToCompactString(message).toUtf8().constData());
+    // Held in a named variable rather than chained: the pointer belongs to the
+    // temporary QByteArray, which would otherwise live only to the end of the
+    // statement. That is long enough today, because the core copies the string
+    // before returning — but it is a lifetime that depends on a detail of the
+    // callee, and nothing here would notice if that changed.
+    const QByteArray payload = jsonToCompactString(message).toUtf8();
+    xm_core_send(m_core, payload.constData());
     return id;
+}
+
+void MatrixBridge::updateStallWatch()
+{
+    if (!m_stallWatch) {
+        return;
+    }
+    if (m_pending.isEmpty()) {
+        m_stallWatch->stop();
+    } else if (!m_stallWatch->isActive()) {
+        m_stallWatch->start();
+    }
+}
+
+void MatrixBridge::checkStalledCommands()
+{
+    // Ten seconds is well past anything a healthy homeserver takes and well
+    // short of the SDK's retry budget, so a rate-limited request is named while
+    // it is still being retried rather than a quarter of an hour later.
+    static const qint64 threshold = 10000;
+
+    const qint64 now = m_uptime.elapsed();
+    for (auto it = m_pending.begin(); it != m_pending.end(); ++it) {
+        const qint64 waited = now - it->sentAt;
+        if (it->reported || waited < threshold) {
+            continue;
+        }
+        it->reported = true;
+        qWarning("xmatic: %s has been waiting %d s for an answer",
+                 qPrintable(it->command),
+                 static_cast<int>(waited / 1000));
+    }
 }
 
 void MatrixBridge::restoreSession()
@@ -392,6 +445,14 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
         m_pinnedPreview.clear();
         emit pinnedChanged();
     }
+    if (m_openRoomId != roomId) {
+        // Downloaded attachments are remembered under the timeline row's id,
+        // and those ids are only unique within one timeline. The core now
+        // prefixes them per room, so a stale entry can no longer be mistaken
+        // for this room's — but nothing would ever drop them either, and a
+        // long session would keep every attachment of every room it visited.
+        m_media.clear();
+    }
     m_openRoomId = roomId;
     m_timelineFocus = focus;
     setTimelineAtStart(false);
@@ -432,7 +493,20 @@ void MatrixBridge::closeRoom()
 
 void MatrixBridge::loadOlder()
 {
-    send(QStringLiteral("timeline.paginate"));
+    // One at a time. The core serialises paginations on the open timeline
+    // anyway, and a second request in flight would make the first one's answer
+    // impossible to attribute — which is what the automatic fill needs it for.
+    if (m_paginateId != 0) {
+        return;
+    }
+
+    qInfo("xmatic: loading older messages, %d rows so far", m_timeline.count());
+    const quint64 id = send(QStringLiteral("timeline.paginate"));
+    if (id == 0) {
+        return;
+    }
+    m_paginateId = id;
+    emit paginatingChanged();
 }
 
 void MatrixBridge::pinMessage(const QString &eventId, bool pin)
@@ -1037,8 +1111,26 @@ void MatrixBridge::handleMessage(const QString &json)
 
     if (type == QLatin1String("reply")) {
         const quint64 id = static_cast<quint64>(message.value(QStringLiteral("id")).toDouble());
-        const QString command = m_pending.take(id);
+        const PendingCommand entry = m_pending.take(id);
+        const QString command = entry.command;
         emit busyChanged();
+        updateStallWatch();
+
+        // The other half of the stall report: how long it took in the end.
+        // Without it the journal says a command hung and never says whether it
+        // came back, which is the difference between slow and broken.
+        if (entry.reported) {
+            qWarning("xmatic: %s answered after %d s",
+                     qPrintable(command),
+                     static_cast<int>((m_uptime.elapsed() - entry.sentAt) / 1000));
+        }
+
+        // Released before anything else looks at the reply, so a handler that
+        // reacts to the result already sees the timeline as idle.
+        if (id != 0 && id == m_paginateId) {
+            m_paginateId = 0;
+            emit paginatingChanged();
+        }
 
         if (!message.value(QStringLiteral("ok")).toBool()) {
             const QString error = message.value(QStringLiteral("error")).toString();
@@ -1189,6 +1281,13 @@ void MatrixBridge::handleMessage(const QString &json)
 
         if (command == QLatin1String("timeline.paginate")) {
             setTimelineAtStart(data.value(QStringLiteral("reachedStart")).toBool());
+            // The count is the model's at this moment, not the page's yield —
+            // the rows of this pagination may still be on their way through the
+            // diff stream. Two of these lines with the same count and no diff
+            // between them is what a fruitless round looks like.
+            qInfo("xmatic: older messages answered, %d rows in the model, at start %d",
+                  m_timeline.count(), m_timelineAtStart ? 1 : 0);
+            emit paginated();
             return;
         }
 

@@ -110,17 +110,18 @@ pub fn start(client: Client, sink: Arc<Sink>) -> (JoinHandle<()>, mpsc::Unbounde
                         }
                         Order::More => search.next_page().await,
                     };
-                    if let Err(error) = outcome {
-                        sink.emit(event(
-                            "directory.state",
-                            json!({ "atEnd": true, "error": format!("{error}") }),
-                        ));
-                    } else {
-                        sink.emit(event(
-                            "directory.state",
-                            json!({ "atEnd": search.is_at_last_page() }),
-                        ));
-                    }
+                    // `atEnd` says whether there is more to fetch, never whether
+                    // this attempt worked. A failed page leaves the search
+                    // state untouched — the SDK still holds the `since` token
+                    // and only advances it after a good response — so the very
+                    // same request can be tried again. Reporting a dropped
+                    // request as the end of the list ended the directory for
+                    // good and made the user redo the whole search.
+                    let error = outcome.err().map(|error| format!("{error}"));
+                    sink.emit(event(
+                        "directory.state",
+                        json!({ "atEnd": search.is_at_last_page(), "error": error }),
+                    ));
                 }
                 diffs = stream.next() => {
                     let Some(diffs) = diffs else { break };

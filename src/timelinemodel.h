@@ -28,6 +28,7 @@ public:
         TimestampRole,
         EditedRole,
         PendingRole,
+        SendStateRole,
     };
 
     explicit TimelineModel(QObject *parent = nullptr);
