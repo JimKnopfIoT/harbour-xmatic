@@ -22,6 +22,7 @@ QHash<int, QByteArray> RoomListModel::roleNames() const
     names.insert(MutedRole, "muted");
     names.insert(FavouriteRole, "favourite");
     names.insert(LowPriorityRole, "lowPriority");
+    names.insert(TombstonedRole, "tombstoned");
     return names;
 }
 

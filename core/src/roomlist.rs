@@ -110,6 +110,10 @@ fn summarize(item: &RoomListItem) -> Value {
         // priority additionally suppresses notifications.
         "favourite": item.is_favourite(),
         "lowPriority": item.is_low_priority(),
+        // Upgraded away: the room still lists and still opens, but nothing new
+        // arrives in it. The list says so, because a dead room is otherwise
+        // indistinguishable from a quiet one.
+        "tombstoned": item.is_tombstoned(),
         "muted": matches!(
             item.cached_user_defined_notification_mode(),
             Some(matrix_sdk::notification_settings::RoomNotificationMode::Mute)

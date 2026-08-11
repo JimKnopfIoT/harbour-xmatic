@@ -50,6 +50,10 @@ Page {
     // warning. Each entry is { userId, name, devices }.
     property var unverifiedUsers: []
 
+    // Set while the join into the room that replaced this one is in flight.
+    // Its own flag, not `busy`: that one is true for any command at all.
+    property bool followingSuccessor: false
+
     // What the message-actions page chose, applied once this page is on top
     // again: reply and edit put the cursor in the composer, and focus set
     // while the stack is still animating does not stick.
@@ -231,6 +235,15 @@ Page {
         }
     }
 
+    // The switch into the replacement room is over — the application window
+    // opens it. A failed join has to clear the banner's wait just as well, or
+    // it keeps announcing a move that is no longer happening.
+    Connections {
+        target: matrix
+        onSuccessorReady: page.followingSuccessor = false
+        onLastErrorChanged: page.followingSuccessor = false
+    }
+
     // Unlocking the backup makes keys available that this room was missing.
     Connections {
         target: matrix
@@ -267,15 +280,18 @@ Page {
         // with it, and the page ends up with no way out.
         PullDownMenu {
 
+            // Everything about the room rather than about the running
+            // conversation lives one page further in: members, pinned
+            // messages, inviting, encryption, the room's own details. This
+            // menu had grown to ten entries, which is barely draggable on a
+            // small screen in landscape.
             MenuItem {
-                // One-way: Matrix cannot turn encryption off again, hence the
-                // remorse timer instead of acting instantly.
-                text: qsTr("Turn on encryption")
-                visible: !page.encrypted && !page.invited
-                onClicked: Remorse.popupAction(page, qsTr("Turning on encryption"), function() {
-                    matrix.enableEncryption(page.roomId)
-                    page.encrypted = true
-                })
+                text: qsTr("Room info")
+                onClicked: pageStack.push(Qt.resolvedUrl("RoomInfoPage.qml"), {
+                                              roomId: page.roomId,
+                                              roomName: page.roomName,
+                                              invited: page.invited
+                                          })
             }
 
             MenuItem {
@@ -306,22 +322,17 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("CallPage.qml"))
             }
 
+            // The banner is the obvious way, but a menu entry is the one a user
+            // looks for — and the banner sits above a conversation that is
+            // scrolled to its end, where nothing draws the eye upwards.
             MenuItem {
-                text: qsTr("Pinned messages")
-                visible: !page.invited
-                onClicked: pageStack.push(Qt.resolvedUrl("PinnedMessagesPage.qml"), {
-                                              roomId: page.roomId,
-                                              roomName: page.roomName
-                                          })
-            }
-
-            MenuItem {
-                text: qsTr("Members")
-                visible: !page.invited
-                onClicked: pageStack.push(Qt.resolvedUrl("MemberListPage.qml"), {
-                                              roomId: page.roomId,
-                                              roomName: page.roomName
-                                          })
+                text: matrix.replacementJoined ? qsTr("Go to the new room")
+                                               : qsTr("Join the new room")
+                visible: !page.invited && matrix.roomReplaced
+                onClicked: {
+                    page.followingSuccessor = true
+                    matrix.followSuccessor(page.roomId)
+                }
             }
 
             MenuItem {
@@ -333,15 +344,6 @@ Page {
                 // thumbnail was still downloading.
                 enabled: !matrix.paginating
                 onClicked: matrix.loadOlder()
-            }
-
-            MenuItem {
-                text: qsTr("Invite")
-                visible: !page.invited
-                onClicked: pageStack.push(Qt.resolvedUrl("InviteToRoomDialog.qml"), {
-                                              roomId: page.roomId,
-                                              roomName: page.roomName
-                                          })
             }
 
             MenuItem {
@@ -375,11 +377,13 @@ Page {
                 top: parent.top
             }
             height: headerColumn.height + 2 * Theme.paddingMedium
-            // An invitation has no member list to open yet.
-            enabled: !page.invited
-            onClicked: pageStack.push(Qt.resolvedUrl("MemberListPage.qml"), {
+            // The room's name leads to what the room is — including, for an
+            // invitation, the topic that decides whether to accept it. The
+            // member list sits one level further in.
+            onClicked: pageStack.push(Qt.resolvedUrl("RoomInfoPage.qml"), {
                                           roomId: page.roomId,
-                                          roomName: page.roomName
+                                          roomName: page.roomName,
+                                          invited: page.invited
                                       })
 
             Column {
@@ -430,6 +434,75 @@ Page {
             }
         }
 
+        // An upgraded room takes no new messages: the upgrade raises the power
+        // level for sending, so the conversation just stops while the room goes
+        // on looking alive. This says so and leads to the room that replaced it
+        // — above the pinned banner, because everything else about this room is
+        // history now.
+        BackgroundItem {
+            id: tombstoneBanner
+
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: roomHeader.bottom
+            }
+            height: visible ? Theme.itemSizeSmall : 0
+            visible: !page.invited && matrix.roomReplaced
+            clip: true
+            onClicked: {
+                page.followingSuccessor = true
+                matrix.followSuccessor(page.roomId)
+            }
+
+            Rectangle {
+                anchors.fill: parent
+                z: -1
+                color: Theme.rgba(Theme.errorColor, 0.15)
+            }
+
+            Column {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.horizontalPageMargin
+                    right: parent.right
+                    rightMargin: Theme.horizontalPageMargin
+                    verticalCenter: parent.verticalCenter
+                }
+
+                Label {
+                    width: parent.width
+                    truncationMode: TruncationMode.Fade
+                    wrapMode: Text.NoWrap
+                    maximumLineCount: 1
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: tombstoneBanner.highlighted ? Theme.highlightColor
+                                                       : Theme.primaryColor
+                    text: qsTr("This room has been replaced")
+                }
+
+                Label {
+                    width: parent.width
+                    truncationMode: TruncationMode.Fade
+                    wrapMode: Text.NoWrap
+                    maximumLineCount: 1
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: tombstoneBanner.highlighted ? Theme.secondaryHighlightColor
+                                                       : Theme.secondaryColor
+                    // The reason is free text from whoever upgraded the room and
+                    // may well say nothing useful, so the way out comes first
+                    // and the reason only fills what is left of the line.
+                    text: page.followingSuccessor
+                          ? qsTr("Switching to the new room…")
+                          : (matrix.replacementJoined
+                             ? qsTr("Tap to open the new room")
+                             : qsTr("Tap to join the new room"))
+                            + (matrix.replacementReason.length > 0
+                               ? " · " + matrix.replacementReason : "")
+                }
+            }
+        }
+
         // Pinned messages sit directly under the room's name while the
         // conversation scrolls underneath — the banner lives outside the list,
         // so it never moves.
@@ -439,7 +512,7 @@ Page {
             anchors {
                 left: parent.left
                 right: parent.right
-                top: roomHeader.bottom
+                top: tombstoneBanner.bottom
             }
             height: visible ? Theme.itemSizeExtraSmall : 0
             visible: !page.invited && matrix.pinnedEventIds.length > 0

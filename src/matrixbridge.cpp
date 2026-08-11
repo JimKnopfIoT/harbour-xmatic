@@ -445,6 +445,14 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
         m_pinnedPreview.clear();
         emit pinnedChanged();
     }
+    if (m_openRoomId != roomId && !m_successorRoomId.isEmpty()) {
+        // The core answers for the new room within the same open, but the
+        // banner must not stand over the wrong conversation until it does.
+        m_successorRoomId.clear();
+        m_replacementReason.clear();
+        m_replacementJoined = false;
+        emit tombstoneChanged();
+    }
     if (m_openRoomId != roomId) {
         // Downloaded attachments are remembered under the timeline row's id,
         // and those ids are only unique within one timeline. The core now
@@ -515,6 +523,20 @@ void MatrixBridge::pinMessage(const QString &eventId, bool pin)
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("pin"), pin);
     send(QStringLiteral("timeline.pin"), arguments);
+}
+
+void MatrixBridge::followSuccessor(const QString &roomId)
+{
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    send(QStringLiteral("room.followSuccessor"), arguments);
+}
+
+void MatrixBridge::loadRoomInfo(const QString &roomId)
+{
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    send(QStringLiteral("room.info"), arguments);
 }
 
 void MatrixBridge::setRoomMuted(const QString &roomId, bool muted)
@@ -1240,6 +1262,16 @@ void MatrixBridge::handleMessage(const QString &json)
             return;
         }
 
+        if (command == QLatin1String("room.followSuccessor")) {
+            emit successorReady(data.value(QStringLiteral("roomId")).toString());
+            return;
+        }
+
+        if (command == QLatin1String("room.info")) {
+            emit roomInfoReady(data.toVariantMap());
+            return;
+        }
+
         if (command == QLatin1String("room.create")) {
             emit roomCreated(data.value(QStringLiteral("roomId")).toString(),
                              data.value(QStringLiteral("name")).toString(),
@@ -1413,6 +1445,23 @@ void MatrixBridge::handleMessage(const QString &json)
                 m_pinnedEventIds = ids;
                 m_pinnedPreview = preview;
                 emit pinnedChanged();
+            }
+        }
+    } else if (name == QLatin1String("timeline.tombstone")) {
+        if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
+            // Sent for every room opened, the negative answer included: an
+            // absent successor is what clears the banner of the room before.
+            const QJsonObject successor =
+                data.value(QStringLiteral("successor")).toObject();
+            const QString roomId = successor.value(QStringLiteral("roomId")).toString();
+            const QString reason = successor.value(QStringLiteral("reason")).toString();
+            const bool joined = successor.value(QStringLiteral("joined")).toBool();
+            if (roomId != m_successorRoomId || reason != m_replacementReason
+                || joined != m_replacementJoined) {
+                m_successorRoomId = roomId;
+                m_replacementReason = reason;
+                m_replacementJoined = joined;
+                emit tombstoneChanged();
             }
         }
     } else if (name == QLatin1String("directory.diff")) {
