@@ -126,13 +126,19 @@ ListItem {
             font.pixelSize: Theme.fontSizeExtraSmall
             color: roomItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
             truncationMode: TruncationMode.Fade
+            // A room that was upgraded away takes no new messages, so its time
+            // of last activity says the least of anything that could stand
+            // here — and it is the one state the row cannot show otherwise: a
+            // dead room looks exactly like a quiet one.
             text: model.membership === "invited"
                   ? qsTr("Invitation")
-                  : (model.space
-                     ? qsTr("Space")
-                     : (model.timestamp > 0
-                        ? Format.formatDate(new Date(model.timestamp), Formatter.TimepointRelative)
-                        : ""))
+                  : (model.tombstoned === true
+                     ? qsTr("Replaced by a new room")
+                     : (model.space
+                        ? qsTr("Space")
+                        : (model.timestamp > 0
+                           ? Format.formatDate(new Date(model.timestamp), Formatter.TimepointRelative)
+                           : "")))
         }
     }
 

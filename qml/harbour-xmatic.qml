@@ -251,6 +251,16 @@ ApplicationWindow {
             }
         }
 
+        // Following a room upgrade lands here for the same reason: the old room
+        // may have been reached from the chat list, a space or a search, and
+        // the new one has to open from any of them.
+        onSuccessorReady: {
+            if (roomId.length > 0) {
+                pageStack.push(Qt.resolvedUrl("pages/RoomPage.qml"),
+                               { roomId: roomId, roomName: "" })
+            }
+        }
+
         // A freshly created room opens right away — creating one is the start
         // of writing in it. Its name comes back with the reply, so the header
         // is right before the first sync diff arrives. Encryption was decided

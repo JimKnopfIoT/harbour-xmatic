@@ -325,6 +325,23 @@ pub enum Command {
         room_id: String,
     },
 
+    /// Everything the room-info page shows, read from local state.
+    #[serde(rename = "room.info")]
+    RoomInfo {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
+    /// Join the room that replaced a tombstoned one and answer with its id.
+    /// `roomId` is the old room's.
+    #[serde(rename = "room.followSuccessor")]
+    RoomFollowSuccessor {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
     /// Create a room with the given name. `public` lists it in the server's
     /// room directory instead of making it invite-only, `encrypted` turns on
     /// end-to-end encryption from the first message.
@@ -499,6 +516,8 @@ impl Command {
             | Command::MediaFetch { id, .. }
             | Command::RoomForward { id, .. }
             | Command::RoomJoin { id, .. }
+            | Command::RoomFollowSuccessor { id, .. }
+            | Command::RoomInfo { id, .. }
             | Command::RoomJoinByAlias { id, .. }
             | Command::RoomDirectChat { id, .. }
             | Command::CallInvite { id, .. }

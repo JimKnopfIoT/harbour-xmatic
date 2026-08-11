@@ -712,6 +712,20 @@ pub async fn open(
         });
     }
 
+    // Whether this room was replaced by a newer one. Read from the room's own
+    // state, so it costs nothing and is known before the first message renders.
+    // Always sent for a live view, the negative answer included: it is what
+    // clears the banner of the room visited before this one.
+    if live {
+        sink.emit(event(
+            "timeline.tombstone",
+            json!({
+                "roomId": room_id,
+                "successor": successor(&room).await,
+            }),
+        ));
+    }
+
     let room_id_owned = room_id.to_owned();
     let detail_source = timeline.clone();
     let task = tokio::spawn(async move {
@@ -943,4 +957,160 @@ pub async fn join(client: &Client, room_id: &str) -> Result<(), String> {
     room.join()
         .await
         .map_err(|error| format!("could not join: {error}"))
+}
+
+/// Everything the room-info page shows, in one reply.
+///
+/// All of it is read from the room's local state — no request goes out, so the
+/// page is filled the moment it opens. The counts are the server's summary
+/// (the "heroes" summary of sliding sync), not a member list this would have to
+/// fetch: opening the info page must not pull several hundred members.
+///
+/// The room id and the room version are in here because they are what tells a
+/// user that a room is old — the reporter of the upgrade case worked that out
+/// from those two lines in another client before any client said it outright.
+pub async fn room_info(client: &Client, room_id: &str) -> Result<Value, String> {
+    let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
+    let room = client
+        .get_room(&parsed)
+        .ok_or_else(|| "room is not known".to_owned())?;
+
+    let predecessor = room.predecessor_room().map(|predecessor| {
+        let joined = matches!(
+            client_room_state(client.clone(), &predecessor.room_id),
+            Some(matrix_sdk::RoomState::Joined)
+        );
+        json!({ "roomId": predecessor.room_id.as_str(), "joined": joined })
+    });
+
+    Ok(json!({
+        "roomId": room_id,
+        "name": room.cached_display_name().map(|name| name.to_string()).unwrap_or_default(),
+        "topic": room.topic().unwrap_or_default(),
+        "avatar": room.avatar_url().map(|url| url.to_string()),
+        "alias": room.canonical_alias().map(|alias| alias.to_string()).unwrap_or_default(),
+        "altAliases": room
+            .alt_aliases()
+            .iter()
+            .map(|alias| alias.to_string())
+            .collect::<Vec<_>>(),
+        "joinedMembers": room.joined_members_count(),
+        "invitedMembers": room.invited_members_count(),
+        "encrypted": room.encryption_state().is_encrypted(),
+        // `None` means the join rule says nothing either way; the UI then keeps
+        // quiet rather than claiming a room is private.
+        //
+        // Not named "public": a JSON field becomes a property name in QML, and
+        // `public` is a reserved word there — `info.public` does not fail at
+        // run time, it refuses to parse the whole page.
+        "isPublic": room.is_public(),
+        "direct": room.is_direct().await.unwrap_or(false),
+        "space": room.is_space(),
+        "version": room
+            .clone_info()
+            .room_version()
+            .map(|version| version.to_string())
+            .unwrap_or_default(),
+        "favourite": room.is_favourite(),
+        "lowPriority": room.is_low_priority(),
+        "muted": matches!(
+            room.cached_user_defined_notification_mode(),
+            Some(matrix_sdk::notification_settings::RoomNotificationMode::Mute)
+        ),
+        "successor": successor(&room).await,
+        "predecessor": predecessor,
+    }))
+}
+
+/// What a tombstoned room says about its replacement, as the UI needs it.
+///
+/// A room that was upgraded keeps its history but takes no new messages: the
+/// upgrade raises the power level for sending, so the conversation simply stops
+/// while the room still looks alive. Without this the user sits in a room where
+/// nothing arrives any more and nothing says why.
+async fn successor(room: &matrix_sdk::Room) -> Option<Value> {
+    let successor = room.successor_room()?;
+    let joined = matches!(
+        client_room_state(room.client(), &successor.room_id),
+        Some(matrix_sdk::RoomState::Joined)
+    );
+    Some(json!({
+        "roomId": successor.room_id.as_str(),
+        "reason": successor.reason.unwrap_or_default(),
+        "joined": joined,
+    }))
+}
+
+/// The membership of a room the client may or may not know at all.
+fn client_room_state(
+    client: Client,
+    room_id: &matrix_sdk::ruma::RoomId,
+) -> Option<matrix_sdk::RoomState> {
+    client.get_room(room_id).map(|room| room.state())
+}
+
+/// Follows a room upgrade: joins the room that replaced `room_id` and answers
+/// with its id, so the caller can open it.
+///
+/// Joining by id alone only works for a room the own homeserver already knows.
+/// The replacement usually lives elsewhere, so this collects routing hints the
+/// way a permalink would carry them — and it cannot lean on the room id for
+/// that: from room version 12 on a room id is a plain hash with no server part
+/// left in it (`!hash`, not `!local:server`). The server of whoever wrote the
+/// tombstone is the reliable hint; it is by definition a server in both rooms.
+pub async fn follow_successor(client: &Client, room_id: &str) -> Result<String, String> {
+    use matrix_sdk::ruma::events::room::tombstone::RoomTombstoneEventContent;
+    use matrix_sdk::ruma::OwnedUserId;
+
+    let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
+    let room = client
+        .get_room(&parsed)
+        .ok_or_else(|| "room is not known".to_owned())?;
+    let replacement = room
+        .successor_room()
+        .ok_or_else(|| "this room has no successor".to_owned())?
+        .room_id;
+
+    // Already a member — the upgrade was followed before, or on another
+    // device. Nothing to join, only somewhere to go.
+    if matches!(
+        client_room_state(client.clone(), &replacement),
+        Some(matrix_sdk::RoomState::Joined)
+    ) {
+        return Ok(replacement.as_str().to_owned());
+    }
+
+    let mut servers: Vec<OwnedServerName> = Vec::new();
+    let mut add = |server: Option<OwnedServerName>| {
+        if let Some(server) = server {
+            if !servers.contains(&server) {
+                servers.push(server);
+            }
+        }
+    };
+    add(replacement.server_name().map(|name| name.to_owned()));
+    let sender = room
+        .get_state_event_static::<RoomTombstoneEventContent>()
+        .await
+        .ok()
+        .flatten()
+        .and_then(|raw| match raw {
+            matrix_sdk::deserialized_responses::RawSyncOrStrippedState::Sync(raw) => {
+                raw.get_field::<OwnedUserId>("sender").ok().flatten()
+            }
+            matrix_sdk::deserialized_responses::RawSyncOrStrippedState::Stripped(raw) => {
+                raw.get_field::<OwnedUserId>("sender").ok().flatten()
+            }
+        });
+    add(sender.map(|user| user.server_name().to_owned()));
+    add(parsed.server_name().map(|name| name.to_owned()));
+
+    let target = RoomOrAliasId::parse(replacement.as_str())
+        .map_err(|_| "the successor is not a room identifier".to_owned())?;
+    let joined = client
+        .join_room_by_id_or_alias(&target, &servers)
+        .await
+        .map_err(|error| format!("could not join the new room: {error}"))?;
+
+    Ok(joined.room_id().as_str().to_owned())
 }

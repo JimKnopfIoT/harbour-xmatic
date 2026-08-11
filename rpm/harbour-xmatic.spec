@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.14.0
+Version:    0.15.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -81,6 +81,17 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Aug 11 2026 harbour-xmatic contributors 0.15.0-1
+- A room that has been replaced now says so. When a room outgrows its version
+  it is not migrated but replaced by a new one, and the old room keeps its
+  history while silently accepting no new messages - it looked like a
+  conversation that had merely gone quiet. The room list marks it, the room
+  itself shows a banner, and one tap joins the room that took its place.
+- New room-info page, opened by tapping the room's name: topic, address,
+  members, encryption, access, room version and the internal room id, plus
+  mute, favourite and low priority. The room's pull-down menu is shorter for
+  it - ten entries were barely draggable on a small screen in landscape.
+
 * Sat Aug 01 2026 harbour-xmatic contributors 0.14.0-1
 - A message written while the network was gone now leaves as soon as it comes
   back. The send queue switches itself off after a failed send and waits for

@@ -739,8 +739,131 @@
         <translation>Einladung</translation>
     </message>
     <message>
+        <source>Replaced by a new room</source>
+        <translation>Durch einen neuen Raum ersetzt</translation>
+    </message>
+    <message>
         <source>Space</source>
         <translation>Space</translation>
+    </message>
+</context>
+<context>
+    <name>RoomInfoPage</name>
+    <message>
+        <source>Leave room</source>
+        <translation>Raum verlassen</translation>
+    </message>
+    <message>
+        <source>Leaving room</source>
+        <translation>Raum wird verlassen</translation>
+    </message>
+    <message>
+        <source>Room</source>
+        <translation>Raum</translation>
+    </message>
+    <message>
+        <source>Replaced — open the new room</source>
+        <translation>Ersetzt — neuen Raum öffnen</translation>
+    </message>
+    <message>
+        <source>Replaced — join the new room</source>
+        <translation>Ersetzt — neuem Raum beitreten</translation>
+    </message>
+    <message>
+        <source>Older messages in the previous room</source>
+        <translation>Ältere Nachrichten im Vorgängerraum</translation>
+    </message>
+    <message>
+        <source>People and messages</source>
+        <translation>Personen und Nachrichten</translation>
+    </message>
+    <message>
+        <source>Members: %1 (%2 invited)</source>
+        <translation>Mitglieder: %1 (%2 eingeladen)</translation>
+    </message>
+    <message>
+        <source>Members: %1</source>
+        <translation>Mitglieder: %1</translation>
+    </message>
+    <message>
+        <source>Pinned messages</source>
+        <translation>Angepinnte Nachrichten</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Einladen</translation>
+    </message>
+    <message>
+        <source>This room for me</source>
+        <translation>Dieser Raum für mich</translation>
+    </message>
+    <message>
+        <source>Mute notifications</source>
+        <translation>Benachrichtigungen stummschalten</translation>
+    </message>
+    <message>
+        <source>Favourite</source>
+        <translation>Favorit</translation>
+    </message>
+    <message>
+        <source>Low priority</source>
+        <translation>Niedrige Priorität</translation>
+    </message>
+    <message>
+        <source>Sorts to the bottom of the list and stays quiet</source>
+        <translation>Sortiert ans Ende der Liste und bleibt still</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Details</translation>
+    </message>
+    <message>
+        <source>Encryption</source>
+        <translation>Verschlüsselung</translation>
+    </message>
+    <message>
+        <source>End-to-end encrypted</source>
+        <translation>Ende-zu-Ende-verschlüsselt</translation>
+    </message>
+    <message>
+        <source>Not encrypted</source>
+        <translation>Nicht verschlüsselt</translation>
+    </message>
+    <message>
+        <source>Turn on encryption</source>
+        <translation>Verschlüsselung einschalten</translation>
+    </message>
+    <message>
+        <source>Turning on encryption</source>
+        <translation>Verschlüsselung wird eingeschaltet</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Adresse</translation>
+    </message>
+    <message>
+        <source>Access</source>
+        <translation>Zugang</translation>
+    </message>
+    <message>
+        <source>Public</source>
+        <translation>Öffentlich</translation>
+    </message>
+    <message>
+        <source>On invitation</source>
+        <translation>Auf Einladung</translation>
+    </message>
+    <message>
+        <source>Room version</source>
+        <translation>Raumversion</translation>
+    </message>
+    <message>
+        <source>Room ID</source>
+        <translation>Raum-ID</translation>
+    </message>
+    <message>
+        <source>Room ID copied</source>
+        <translation>Raum-ID kopiert</translation>
     </message>
 </context>
 <context>
@@ -841,16 +964,36 @@
 <context>
     <name>RoomPage</name>
     <message>
+        <source>Room info</source>
+        <translation>Rauminfo</translation>
+    </message>
+    <message>
         <source>More…</source>
         <translation>Weitere …</translation>
     </message>
     <message>
-        <source>Turn on encryption</source>
-        <translation>Verschlüsselung einschalten</translation>
+        <source>This room has been replaced</source>
+        <translation>Dieser Raum wurde ersetzt</translation>
     </message>
     <message>
-        <source>Invite</source>
-        <translation>Einladen</translation>
+        <source>Switching to the new room…</source>
+        <translation>Wechsel in den neuen Raum …</translation>
+    </message>
+    <message>
+        <source>Tap to open the new room</source>
+        <translation>Antippen, um den neuen Raum zu öffnen</translation>
+    </message>
+    <message>
+        <source>Tap to join the new room</source>
+        <translation>Antippen, um dem neuen Raum beizutreten</translation>
+    </message>
+    <message>
+        <source>Go to the new room</source>
+        <translation>Zum neuen Raum</translation>
+    </message>
+    <message>
+        <source>Join the new room</source>
+        <translation>Neuem Raum beitreten</translation>
     </message>
     <message>
         <source>Leave room</source>
@@ -867,10 +1010,6 @@
     <message>
         <source>Declining</source>
         <translation>Wird abgelehnt</translation>
-    </message>
-    <message>
-        <source>Turning on encryption</source>
-        <translation>Verschlüsselung wird eingeschaltet</translation>
     </message>
     <message>
         <source>Invitation</source>
@@ -1012,14 +1151,6 @@
     <message>
         <source>Pin</source>
         <translation>Anpinnen</translation>
-    </message>
-    <message>
-        <source>Pinned messages</source>
-        <translation>Angepinnte Nachrichten</translation>
-    </message>
-    <message>
-        <source>Members</source>
-        <translation>Mitglieder</translation>
     </message>
     <message numerus="yes">
         <source>%n pinned message(s)</source>

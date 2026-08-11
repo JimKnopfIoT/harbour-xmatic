@@ -309,6 +309,10 @@ async fn handle(state: Arc<State>, command: Command) {
             ..
         } => forward(&state, id, room_id, body, path, mime_type).await,
         Command::RoomJoin { room_id, .. } => join_room(&state, id, room_id).await,
+        Command::RoomFollowSuccessor { room_id, .. } => {
+            follow_successor(&state, id, room_id).await
+        }
+        Command::RoomInfo { room_id, .. } => room_info(&state, id, room_id).await,
         Command::RoomCreate {
             name,
             encrypted,
@@ -1071,6 +1075,35 @@ async fn join_room(state: &Arc<State>, id: u64, room_id: String) {
 
     match timeline::join(&client, &room_id).await {
         Ok(()) => state.sink.emit(reply_ok(id, json!({ "joined": true }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// Answers with everything the room-info page shows.
+async fn room_info(state: &Arc<State>, id: u64, room_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+
+    match timeline::room_info(&client, &room_id).await {
+        Ok(info) => state.sink.emit(reply_ok(id, info)),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// Joins the room a tombstoned one points at, and answers with its id so the
+/// front end can open it.
+async fn follow_successor(state: &Arc<State>, id: u64, room_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+
+    match timeline::follow_successor(&client, &room_id).await {
+        Ok(new_room_id) => state
+            .sink
+            .emit(reply_ok(id, json!({ "roomId": new_room_id }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }

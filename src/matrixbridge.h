@@ -52,6 +52,9 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QString openRoomId READ openRoomId NOTIFY openRoomChanged)
     Q_PROPERTY(QStringList pinnedEventIds READ pinnedEventIds NOTIFY pinnedChanged)
     Q_PROPERTY(QString pinnedPreview READ pinnedPreview NOTIFY pinnedChanged)
+    Q_PROPERTY(bool roomReplaced READ roomReplaced NOTIFY tombstoneChanged)
+    Q_PROPERTY(QString replacementReason READ replacementReason NOTIFY tombstoneChanged)
+    Q_PROPERTY(bool replacementJoined READ replacementJoined NOTIFY tombstoneChanged)
     Q_PROPERTY(bool timelineAtStart READ timelineAtStart NOTIFY timelineAtStartChanged)
     Q_PROPERTY(bool timelineReady READ timelineReady NOTIFY timelineReadyChanged)
     Q_PROPERTY(QString verificationState READ verificationState NOTIFY verificationChanged)
@@ -111,6 +114,19 @@ public:
 
     /// Body of the newest pinned message; empty when there is nothing usable.
     QString pinnedPreview() const { return m_pinnedPreview; }
+
+    /// Whether the open room was upgraded away — replaced by a newer room that
+    /// carries the conversation on. Such a room keeps its history but takes no
+    /// new messages, which is invisible without saying so.
+    bool roomReplaced() const { return !m_successorRoomId.isEmpty(); }
+
+    /// The reason the tombstone gives, if any. Free text written by whoever
+    /// upgraded the room.
+    QString replacementReason() const { return m_replacementReason; }
+
+    /// Whether the replacement room is one this account already joined — then
+    /// following the upgrade is navigation, not a join.
+    bool replacementJoined() const { return m_replacementJoined; }
     bool timelineAtStart() const { return m_timelineAtStart; }
 
     /// False between asking for a room's timeline and its first batch.
@@ -209,6 +225,14 @@ public:
 
     /// Pins a message of the open room, or unpins it.
     Q_INVOKABLE void pinMessage(const QString &eventId, bool pin);
+
+    /// Follows a room upgrade: joins the room that replaced this one, if
+    /// needed, and answers with `successorReady` so the UI can open it.
+    Q_INVOKABLE void followSuccessor(const QString &roomId);
+
+    /// Asks for everything the room-info page shows; the answer arrives as
+    /// `roomInfoReady`. Read from local state, so it comes back at once.
+    Q_INVOKABLE void loadRoomInfo(const QString &roomId);
 
     /// Mutes a room's notifications, or returns it to the default.
     Q_INVOKABLE void setRoomMuted(const QString &roomId, bool muted);
@@ -410,6 +434,7 @@ signals:
     void lastErrorChanged();
     void openRoomChanged();
     void pinnedChanged();
+    void tombstoneChanged();
     void timelineAtStartChanged();
     void timelineReadyChanged();
     void verificationChanged();
@@ -443,6 +468,14 @@ signals:
 
     /// A direct chat is ready to be opened.
     void directChatReady(const QString &roomId);
+
+    /// The room that replaced an upgraded one is joined and can be opened.
+    void successorReady(const QString &roomId);
+
+    /// A room's details, for the room-info page: name, topic, alias, member
+    /// counts, encryption, version, tags, and the predecessor / successor of a
+    /// room upgrade.
+    void roomInfoReady(const QVariantMap &info);
 
     /// A room was created and can be opened. Name and encryption state come
     /// back with it, so the room opens correctly before the first sync diff.
@@ -518,6 +551,9 @@ private:
     QString m_timelineFocus;
     QStringList m_pinnedEventIds;
     QString m_pinnedPreview;
+    QString m_successorRoomId;
+    QString m_replacementReason;
+    bool m_replacementJoined = false;
     bool m_timelineAtStart = false;
     bool m_timelineReady = false;
     QString m_verificationState = QStringLiteral("none");

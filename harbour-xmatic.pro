@@ -113,6 +113,7 @@ DISTFILES += \
     qml/pages/AddToSpacePage.qml \
     qml/pages/MoveToSpacePage.qml \
     qml/pages/RoomPage.qml \
+    qml/pages/RoomInfoPage.qml \
     qml/pages/VerificationPage.qml \
     qml/pages/EncryptionPage.qml \
     qml/pages/LogoutDialog.qml \
