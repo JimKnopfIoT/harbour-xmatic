@@ -36,6 +36,20 @@ Page {
     property bool lowPriority: false
     property bool encrypted: false
 
+    // Leaving the foreground aborts a running countdown at once, instead of only
+    // suppressing it when it expires. Suppressing at expiry was not enough:
+    // minimising the app and coming back inside the four seconds left the
+    // countdown running, and it fired on return. The remorse object has to be
+    // kept for that - Remorse.popupAction() hands it back.
+    property var activeRemorse: null
+    readonly property bool appForeground: Qt.application.active
+    onAppForegroundChanged: {
+        if (!appForeground && activeRemorse && activeRemorse.pending) {
+            activeRemorse.cancel()
+        }
+    }
+
+
     allowedOrientations: Orientation.All
 
     Component.onCompleted: matrix.loadRoomInfo(roomId)
@@ -61,11 +75,11 @@ Page {
     }
 
     function startLeave() {
-        Remorse.popupAction(page, qsTr("Leaving room"), function() {
+        page.activeRemorse = Remorse.popupAction(page, qsTr("Leaving room"), function() {
             // A remorse whose page went away was executed by Silica, not by
             // the user (RemorsePopup.qml deliberately fires on
             // PageStatus.Deactivating). Going back means abort.
-            if (page.status !== PageStatus.Active) {
+            if (page.status !== PageStatus.Active || !Qt.application.active) {
                 return
             }
             matrix.leaveRoom(page.roomId)
@@ -329,11 +343,11 @@ Page {
                 width: parent.width
                 height: visible ? Theme.itemSizeSmall : 0
                 visible: page.infoLoaded && !page.encrypted
-                onClicked: Remorse.popupAction(page, qsTr("Turning on encryption"), function() {
+                onClicked: page.activeRemorse = Remorse.popupAction(page, qsTr("Turning on encryption"), function() {
                     // Leaving the page aborts; Silica's own behaviour is to
                     // execute on PageStatus.Deactivating, which for a one-way
                     // switch is the wrong direction.
-                    if (page.status !== PageStatus.Active) {
+                    if (page.status !== PageStatus.Active || !Qt.application.active) {
                         return
                     }
                     matrix.enableEncryption(page.roomId)
