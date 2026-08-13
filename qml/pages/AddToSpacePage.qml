@@ -46,9 +46,17 @@ Page {
             menu: ContextMenu {
                 MenuItem {
                     text: qsTr("Add to space")
-                    onClicked: roomItem.remorseAction(qsTr("Adding to space"), function() {
-                        matrix.addRoomToSpace(page.spaceId, model.id)
-                    })
+                    onClicked: {
+                        var roomId = model.id
+                        roomItem.remorseAction(qsTr("Adding to space"), function() {
+                            // Leaving the page aborts. Silica would otherwise
+                            // execute the action on PageStatus.Deactivating.
+                            if (page.status !== PageStatus.Active) {
+                                return
+                            }
+                            matrix.addRoomToSpace(page.spaceId, roomId)
+                        })
+                    }
                 }
             }
 

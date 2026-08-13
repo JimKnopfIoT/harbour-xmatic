@@ -196,6 +196,12 @@ Page {
                             onClicked: {
                                 var roomId = model.id
                                 linkedItem.remorseAction(qsTr("Joining"), function() {
+                                    // Silica completes a running remorse when
+                                    // its page deactivates, so leaving the
+                                    // page would join rather than abort.
+                                    if (page.status !== PageStatus.Active) {
+                                        return
+                                    }
                                     matrix.joinRoomByAlias(roomId)
                                     refreshTimer.restart()
                                 })

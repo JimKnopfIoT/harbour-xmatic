@@ -198,9 +198,18 @@ Page {
                 MenuItem {
                     text: model.canJoin ? qsTr("Join") : qsTr("Join (invitation required)")
                     enabled: model.canJoin
-                    onClicked: resultItem.remorseAction(qsTr("Joining"), function() {
-                        matrix.joinRoomByAlias(model.alias.length > 0 ? model.alias : model.id)
-                    })
+                    onClicked: {
+                        var target = model.alias.length > 0 ? model.alias : model.id
+                        resultItem.remorseAction(qsTr("Joining"), function() {
+                            // Leaving the page has to abort the countdown.
+                            // Silica's default is the opposite: it executes
+                            // the action on PageStatus.Deactivating.
+                            if (page.status !== PageStatus.Active) {
+                                return
+                            }
+                            matrix.joinRoomByAlias(target)
+                        })
+                    }
                 }
             }
         }
