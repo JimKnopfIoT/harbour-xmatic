@@ -17,6 +17,31 @@ Page {
 
     Component.onCompleted: matrix.loadMembers(roomId)
 
+    // Throwing somebody out asks first and says who — a display name is not
+    // unique, so the address goes underneath it. The remorse afterwards is the
+    // undo; it hangs on the page rather than on the row, because a RemorseItem
+    // inside a delegate executes when that delegate is destroyed, and it only
+    // acts while this page is active: Silica completes a running countdown on
+    // PageStatus.Deactivating, which would make going back a confirmation.
+    function confirmRemove(userId, displayName) {
+        var dialog = pageStack.push(
+                    Qt.resolvedUrl("ConfirmDialog.qml"),
+                    {
+                        question: qsTr("Really remove this member?"),
+                        subject: displayName,
+                        explanation: qsTr("%1 is removed from the room. They can come back if they are invited again or the room is public.").arg(userId),
+                        acceptLabel: qsTr("Remove")
+                    })
+        dialog.accepted.connect(function() {
+            Remorse.popupAction(page, qsTr("Removing"), function() {
+                if (page.status !== PageStatus.Active) {
+                    return
+                }
+                matrix.removeMember(page.roomId, userId)
+            })
+        })
+    }
+
     SilicaListView {
         id: memberList
 
@@ -129,9 +154,7 @@ Page {
                 MenuItem {
                     text: qsTr("Remove from room")
                     visible: model.canRemove
-                    onClicked: memberItem.remorseAction(qsTr("Removing"), function() {
-                        matrix.removeMember(page.roomId, model.userId)
-                    })
+                    onClicked: page.confirmRemove(model.userId, model.displayName)
                 }
             }
         }

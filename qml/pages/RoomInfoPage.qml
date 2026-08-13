@@ -40,6 +40,47 @@ Page {
 
     Component.onCompleted: matrix.loadRoomInfo(roomId)
 
+    // The name shown to the user, which is what the confirmation has to say
+    // back to them — the push site may not have known it.
+    readonly property string displayName: page.roomName.length > 0
+                                          ? page.roomName
+                                          : (page.info.name || qsTr("this room"))
+
+    // Two steps, because leaving cannot be undone: a dialog that names the
+    // room, then the remorse as the undo.
+    function confirmLeave() {
+        var dialog = pageStack.push(
+                    Qt.resolvedUrl("ConfirmDialog.qml"),
+                    {
+                        question: qsTr("Really leave this room?"),
+                        subject: page.displayName,
+                        explanation: qsTr("The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address."),
+                        acceptLabel: qsTr("Leave")
+                    })
+        dialog.accepted.connect(function() { page.startLeave() })
+    }
+
+    function startLeave() {
+        Remorse.popupAction(page, qsTr("Leaving room"), function() {
+            // A remorse whose page went away was executed by Silica, not by
+            // the user (RemorsePopup.qml deliberately fires on
+            // PageStatus.Deactivating). Going back means abort.
+            if (page.status !== PageStatus.Active) {
+                return
+            }
+            matrix.leaveRoom(page.roomId)
+            // Two levels: the conversation of a room just left must not stay
+            // behind this page.
+            var roomPage = pageStack.previousPage(page)
+            var below = roomPage ? pageStack.previousPage(roomPage) : null
+            if (below) {
+                pageStack.pop(below)
+            } else {
+                pageStack.pop()
+            }
+        })
+    }
+
     Connections {
         target: matrix
         onRoomInfoReady: {
@@ -68,23 +109,7 @@ Page {
             // must not sit between the taps that merely inspect the room.
             MenuItem {
                 text: qsTr("Leave room")
-                onClicked: Remorse.popupAction(page, qsTr("Leaving room"), function() {
-                    matrix.leaveRoom(page.roomId)
-                    if (pageStack.currentPage !== page) {
-                        // The user moved on while the remorse ran; only this
-                        // page's own pop is ours to make.
-                        return
-                    }
-                    // Two levels: the conversation of a room just left must not
-                    // stay behind this page.
-                    var roomPage = pageStack.previousPage(page)
-                    var below = roomPage ? pageStack.previousPage(roomPage) : null
-                    if (below) {
-                        pageStack.pop(below)
-                    } else {
-                        pageStack.pop()
-                    }
-                })
+                onClicked: page.confirmLeave()
             }
         }
 
@@ -305,6 +330,12 @@ Page {
                 height: visible ? Theme.itemSizeSmall : 0
                 visible: page.infoLoaded && !page.encrypted
                 onClicked: Remorse.popupAction(page, qsTr("Turning on encryption"), function() {
+                    // Leaving the page aborts; Silica's own behaviour is to
+                    // execute on PageStatus.Deactivating, which for a one-way
+                    // switch is the wrong direction.
+                    if (page.status !== PageStatus.Active) {
+                        return
+                    }
                     matrix.enableEncryption(page.roomId)
                     page.encrypted = true
                 })

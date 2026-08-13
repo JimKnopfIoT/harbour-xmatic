@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.15.0
+Version:    0.15.1
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -81,6 +81,20 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Aug 13 2026 harbour-xmatic contributors 0.15.1-1
+- Cancelling a countdown now cancels it. Leaving a page while a remorse timer
+  was running used to complete the action instead of stopping it, which is how
+  rooms were left by accident - swiping back to the room list counted as
+  confirmation. Going back, opening another room or swiping to the spaces now
+  aborts. Tapping the bar to cancel and swiping it away to act at once are
+  unchanged.
+- Leaving a room, declining an invitation, deleting a space and removing a
+  member now ask first, on a page that shows the name in full. The name was the
+  thing missing before: a room left by accident could not be rejoined because
+  nothing had ever said which room it was.
+- In the room's pull-down menu, "Leave room" moved from the bottom - where a
+  short tug lands - to the top, and "Room info" took the bottom place.
+
 * Tue Aug 11 2026 harbour-xmatic contributors 0.15.0-1
 - A room that has been replaced now says so. When a room outgrows its version
   it is not migrated but replaced by a new one, and the old room keeps its

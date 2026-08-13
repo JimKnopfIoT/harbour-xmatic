@@ -208,6 +208,13 @@
     </message>
 </context>
 <context>
+    <name>ConfirmDialog</name>
+    <message>
+        <source>Keep</source>
+        <translation>Behalten</translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>signing in…</source>
@@ -628,6 +635,18 @@
         <source>The people in this room show up here.</source>
         <translation>Die Personen in diesem Raum erscheinen hier.</translation>
     </message>
+    <message>
+        <source>Really remove this member?</source>
+        <translation>Mitglied wirklich entfernen?</translation>
+    </message>
+    <message>
+        <source>%1 is removed from the room. They can come back if they are invited again or the room is public.</source>
+        <translation>%1 wird aus dem Raum entfernt. Zurück kommt die Person nur über eine neue Einladung oder wenn der Raum öffentlich ist.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Entfernen</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -865,6 +884,22 @@
         <source>Room ID copied</source>
         <translation>Raum-ID kopiert</translation>
     </message>
+    <message>
+        <source>this room</source>
+        <translation>dieser Raum</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Raum wirklich verlassen?</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Der Raum wird verlassen und vergessen. Er verschwindet aus der Chat-Liste, und zurück kommst du nur über eine neue Einladung oder eine öffentliche Adresse.</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Verlassen</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -959,6 +994,30 @@
     <message>
         <source>Declining</source>
         <translation>Wird abgelehnt</translation>
+    </message>
+    <message>
+        <source>Really decline this invitation?</source>
+        <translation>Einladung wirklich ablehnen?</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Raum wirklich verlassen?</translation>
+    </message>
+    <message>
+        <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
+        <translation>Die Einladung ist danach weg. Du kommst nur wieder hinein, wenn dich jemand erneut einlädt.</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Der Raum wird verlassen und vergessen. Er verschwindet aus der Chat-Liste, und zurück kommst du nur über eine neue Einladung oder eine öffentliche Adresse.</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Ablehnen</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Verlassen</translation>
     </message>
 </context>
 <context>
@@ -1171,6 +1230,30 @@
         <source>Not encrypted</source>
         <translation>Nicht verschlüsselt</translation>
     </message>
+    <message>
+        <source>Really decline this invitation?</source>
+        <translation>Einladung wirklich ablehnen?</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Raum wirklich verlassen?</translation>
+    </message>
+    <message>
+        <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
+        <translation>Die Einladung ist danach weg. Du kommst nur wieder hinein, wenn dich jemand erneut einlädt.</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Der Raum wird verlassen und vergessen. Er verschwindet aus der Chat-Liste, und zurück kommst du nur über eine neue Einladung oder eine öffentliche Adresse.</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Ablehnen</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Verlassen</translation>
+    </message>
 </context>
 <context>
     <name>ShareToRoomPage</name>
@@ -1266,6 +1349,18 @@
     <message>
         <source>Offline — waiting for the network</source>
         <translation>Offline — warte auf das Netzwerk</translation>
+    </message>
+    <message>
+        <source>Really delete this space?</source>
+        <translation>Space wirklich löschen?</translation>
+    </message>
+    <message>
+        <source>The space is left and forgotten. The rooms in it are not touched — they stay in the chat list.</source>
+        <translation>Der Space wird verlassen und vergessen. Die Räume darin bleiben unangetastet in der Chat-Liste.</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Löschen</translation>
     </message>
 </context>
 <context>

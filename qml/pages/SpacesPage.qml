@@ -31,6 +31,31 @@ Page {
         }
     }
 
+    // Asks first and names the space, then runs the remorse as the undo. The
+    // remorse hangs on the page rather than on the row — a RemorseItem in a
+    // delegate fires when that delegate is destroyed, and this list re-sorts
+    // on its own — and it only acts while the page is still the active one:
+    // Silica otherwise completes a running countdown on
+    // PageStatus.Deactivating, which turns swiping away into a confirmation.
+    function confirmDelete(spaceId, spaceName) {
+        var dialog = pageStack.push(
+                    Qt.resolvedUrl("ConfirmDialog.qml"),
+                    {
+                        question: qsTr("Really delete this space?"),
+                        subject: spaceName,
+                        explanation: qsTr("The space is left and forgotten. The rooms in it are not touched — they stay in the chat list."),
+                        acceptLabel: qsTr("Delete")
+                    })
+        dialog.accepted.connect(function() {
+            Remorse.popupAction(page, qsTr("Deleting space"), function() {
+                if (page.status !== PageStatus.Active) {
+                    return
+                }
+                matrix.leaveSpace(spaceId)
+            })
+        })
+    }
+
     SilicaListView {
         id: spaceList
 
@@ -76,9 +101,7 @@ Page {
                     // Leaves and forgets the space. The rooms inside it are
                     // not touched — they stay in the chat list.
                     text: qsTr("Delete space")
-                    onClicked: spaceItem.remorseAction(qsTr("Deleting space"), function() {
-                        matrix.leaveSpace(model.id)
-                    })
+                    onClicked: page.confirmDelete(model.id, model.name)
                 }
             }
         }

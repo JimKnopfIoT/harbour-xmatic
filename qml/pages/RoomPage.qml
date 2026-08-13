@@ -125,6 +125,46 @@ Page {
         }
     }
 
+    // Leaving is irreversible and used to be one accidental tug away, so it
+    // takes two deliberate steps: a dialog that names the room, then the
+    // remorse as the undo.
+    function confirmLeave() {
+        var dialog = pageStack.push(
+                    Qt.resolvedUrl("ConfirmDialog.qml"),
+                    {
+                        question: page.invited ? qsTr("Really decline this invitation?")
+                                               : qsTr("Really leave this room?"),
+                        subject: page.roomName,
+                        explanation: page.invited
+                                     ? qsTr("The invitation is gone afterwards. You can only get back in if somebody invites you again.")
+                                     : qsTr("The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address."),
+                        acceptLabel: page.invited ? qsTr("Decline") : qsTr("Leave")
+                    })
+        dialog.accepted.connect(function() { page.startLeave() })
+    }
+
+    function startLeave() {
+        Remorse.popupAction(
+                    page,
+                    page.invited ? qsTr("Declining") : qsTr("Leaving room"),
+                    function() {
+                        // Silica executes a running remorse the moment its
+                        // page deactivates ("if the page is changed then
+                        // execute immediately", RemorsePopup.qml), so going
+                        // back used to *complete* the countdown instead of
+                        // stopping it — the reported way to lose a room by
+                        // accident. Only a countdown that ran out on the page
+                        // it was started on counts.
+                        if (page.status !== PageStatus.Active) {
+                            return
+                        }
+                        matrix.leaveRoom(page.roomId)
+                        if (pageStack.currentPage === page) {
+                            pageStack.pop()
+                        }
+                    })
+    }
+
     // Asks this page to scroll to a message; called by the pinned overview
     // before it pops back.
     function jumpToPinned(eventId) {
@@ -280,18 +320,18 @@ Page {
         // with it, and the page ends up with no way out.
         PullDownMenu {
 
-            // Everything about the room rather than about the running
-            // conversation lives one page further in: members, pinned
-            // messages, inviting, encryption, the room's own details. This
-            // menu had grown to ten entries, which is barely draggable on a
-            // small screen in landscape.
+            // Order matters here, and it is the reverse of reading order: the
+            // *last* entry declared is the bottom one, the one a short tug
+            // lands on. Leaving used to sit there and was picked by accident;
+            // it is now the topmost entry, so reaching it means pulling the
+            // menu all the way open. The harmless everyday entry has the
+            // short tug instead.
             MenuItem {
-                text: qsTr("Room info")
-                onClicked: pageStack.push(Qt.resolvedUrl("RoomInfoPage.qml"), {
-                                              roomId: page.roomId,
-                                              roomName: page.roomName,
-                                              invited: page.invited
-                                          })
+                // Deliberately without a visibility condition: an unwanted
+                // invitation has to be refusable and a joined room has to be
+                // leavable, so this entry is the way out in either state.
+                text: page.invited ? qsTr("Decline invitation") : qsTr("Leave room")
+                onClicked: page.confirmLeave()
             }
 
             MenuItem {
@@ -346,23 +386,19 @@ Page {
                 onClicked: matrix.loadOlder()
             }
 
+            // Everything about the room rather than about the running
+            // conversation lives one page further in: members, pinned
+            // messages, inviting, encryption, the room's own details. This
+            // menu had grown to ten entries, which is barely draggable on a
+            // small screen in landscape. Last in the list, so the short tug
+            // reaches it.
             MenuItem {
-                // Deliberately without a visibility condition: an unwanted
-                // invitation has to be refusable and a joined room has to be
-                // leavable, so this entry is the way out in either state.
-                text: page.invited ? qsTr("Decline invitation") : qsTr("Leave room")
-                onClicked: Remorse.popupAction(
-                               page,
-                               page.invited ? qsTr("Declining") : qsTr("Leaving room"),
-                               function() {
-                                   matrix.leaveRoom(page.roomId)
-                                   // The user may have moved on while the
-                                   // remorse ran; only this page's own pop is
-                                   // ours to make.
-                                   if (pageStack.currentPage === page) {
-                                       pageStack.pop()
-                                   }
-                               })
+                text: qsTr("Room info")
+                onClicked: pageStack.push(Qt.resolvedUrl("RoomInfoPage.qml"), {
+                                              roomId: page.roomId,
+                                              roomName: page.roomName,
+                                              invited: page.invited
+                                          })
             }
         }
 

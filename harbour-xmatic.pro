@@ -117,6 +117,7 @@ DISTFILES += \
     qml/pages/VerificationPage.qml \
     qml/pages/EncryptionPage.qml \
     qml/pages/LogoutDialog.qml \
+    qml/pages/ConfirmDialog.qml \
     qml/pages/ImageViewPage.qml \
     qml/pages/ForwardPage.qml \
     qml/pages/ShareToRoomPage.qml \

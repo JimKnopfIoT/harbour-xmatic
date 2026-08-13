@@ -22,6 +22,43 @@ Page {
         }
     }
 
+    // Leaving asks first and says which room, then runs the remorse as the
+    // undo. Two details are deliberate.
+    //
+    // The remorse hangs on the page, not on the row: a RemorseItem inside a
+    // delegate executes its action when that delegate is destroyed, and this
+    // list re-sorts on every incoming message — an unrelated message in an
+    // unrelated room could therefore have completed the countdown.
+    //
+    // And the callback checks that the page is still the active one. Silica
+    // fires a running remorse on PageStatus.Deactivating by design ("if the
+    // page is changed then execute immediately"), so swiping over to the
+    // spaces or opening another room used to count as confirmation. Here it
+    // counts as the abort the user meant.
+    function confirmLeave(roomId, roomName, invited) {
+        var dialog = pageStack.push(
+                    Qt.resolvedUrl("ConfirmDialog.qml"),
+                    {
+                        question: invited ? qsTr("Really decline this invitation?")
+                                          : qsTr("Really leave this room?"),
+                        subject: roomName,
+                        explanation: invited
+                                     ? qsTr("The invitation is gone afterwards. You can only get back in if somebody invites you again.")
+                                     : qsTr("The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address."),
+                        acceptLabel: invited ? qsTr("Decline") : qsTr("Leave")
+                    })
+        dialog.accepted.connect(function() {
+            Remorse.popupAction(page,
+                                invited ? qsTr("Declining") : qsTr("Leaving room"),
+                                function() {
+                                    if (page.status !== PageStatus.Active) {
+                                        return
+                                    }
+                                    matrix.leaveRoom(roomId)
+                                })
+        })
+    }
+
     SilicaListView {
         id: roomList
 
@@ -95,17 +132,12 @@ Page {
 
                 MenuItem {
                     // On an invitation this declines it, so the entry says so.
-                    // The row is read before the remorse fires: by then the
-                    // model may already have moved on.
+                    // The row is read here, before anything asynchronous
+                    // starts: by then the model may already have moved on.
                     text: model.membership === "invited"
                           ? qsTr("Decline invitation") : qsTr("Leave room")
-                    onClicked: {
-                        var leavingId = model.id
-                        roomEntry.remorseAction(
-                                    model.membership === "invited"
-                                    ? qsTr("Declining") : qsTr("Leaving room"),
-                                    function() { matrix.leaveRoom(leavingId) })
-                    }
+                    onClicked: page.confirmLeave(model.id, model.name,
+                                                 model.membership === "invited")
                 }
             }
         }
