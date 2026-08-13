@@ -13,6 +13,20 @@ Page {
     property string roomId
     property string roomName
 
+    // Leaving the foreground aborts a running countdown at once, instead of only
+    // suppressing it when it expires. Suppressing at expiry was not enough:
+    // minimising the app and coming back inside the four seconds left the
+    // countdown running, and it fired on return. The remorse object has to be
+    // kept for that - Remorse.popupAction() hands it back.
+    property var activeRemorse: null
+    readonly property bool appForeground: Qt.application.active
+    onAppForegroundChanged: {
+        if (!appForeground && activeRemorse && activeRemorse.pending) {
+            activeRemorse.cancel()
+        }
+    }
+
+
     allowedOrientations: Orientation.All
 
     Component.onCompleted: matrix.loadMembers(roomId)
@@ -33,8 +47,8 @@ Page {
                         acceptLabel: qsTr("Remove")
                     })
         dialog.accepted.connect(function() {
-            Remorse.popupAction(page, qsTr("Removing"), function() {
-                if (page.status !== PageStatus.Active) {
+            page.activeRemorse = Remorse.popupAction(page, qsTr("Removing"), function() {
+                if (page.status !== PageStatus.Active || !Qt.application.active) {
                     return
                 }
                 matrix.removeMember(page.roomId, userId)

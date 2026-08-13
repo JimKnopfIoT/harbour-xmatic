@@ -59,6 +59,20 @@ Page {
     // while the stack is still animating does not stick.
     property var pendingAction: null
 
+    // Leaving the foreground aborts a running countdown at once, instead of only
+    // suppressing it when it expires. Suppressing at expiry was not enough:
+    // minimising the app and coming back inside the four seconds left the
+    // countdown running, and it fired on return. The remorse object has to be
+    // kept for that - Remorse.popupAction() hands it back.
+    property var activeRemorse: null
+    readonly property bool appForeground: Qt.application.active
+    onAppForegroundChanged: {
+        if (!appForeground && activeRemorse && activeRemorse.pending) {
+            activeRemorse.cancel()
+        }
+    }
+
+
     Component.onCompleted: {
         if (!invited) {
             matrix.openRoom(roomId)
@@ -144,7 +158,7 @@ Page {
     }
 
     function startLeave() {
-        Remorse.popupAction(
+        page.activeRemorse = Remorse.popupAction(
                     page,
                     page.invited ? qsTr("Declining") : qsTr("Leaving room"),
                     function() {
@@ -153,9 +167,13 @@ Page {
                         // execute immediately", RemorsePopup.qml), so going
                         // back used to *complete* the countdown instead of
                         // stopping it — the reported way to lose a room by
-                        // accident. Only a countdown that ran out on the page
-                        // it was started on counts.
-                        if (page.status !== PageStatus.Active) {
+                        // accident. Closing the app is the same story from the
+                        // other side: the page is destroyed without ever
+                        // reaching Deactivating, and minimising leaves the page
+                        // untouched while the countdown runs out unseen. Only a
+                        // countdown that ran out on its own page, with the app
+                        // in front of the user, counts.
+                        if (page.status !== PageStatus.Active || !Qt.application.active) {
                             return
                         }
                         matrix.leaveRoom(page.roomId)

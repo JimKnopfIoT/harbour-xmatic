@@ -9,6 +9,20 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
+    // Leaving the foreground aborts a running countdown at once, instead of only
+    // suppressing it when it expires. Suppressing at expiry was not enough:
+    // minimising the app and coming back inside the four seconds left the
+    // countdown running, and it fired on return. The remorse object has to be
+    // kept for that - Remorse.popupAction() hands it back.
+    property var activeRemorse: null
+    readonly property bool appForeground: Qt.application.active
+    onAppForegroundChanged: {
+        if (!appForeground && activeRemorse && activeRemorse.pending) {
+            activeRemorse.cancel()
+        }
+    }
+
+
     allowedOrientations: Orientation.All
 
     // Index 0 is always the own homeserver, taken from the session; the
@@ -200,11 +214,11 @@ Page {
                     enabled: model.canJoin
                     onClicked: {
                         var target = model.alias.length > 0 ? model.alias : model.id
-                        resultItem.remorseAction(qsTr("Joining"), function() {
+                        page.activeRemorse = resultItem.remorseAction(qsTr("Joining"), function() {
                             // Leaving the page has to abort the countdown.
                             // Silica's default is the opposite: it executes
                             // the action on PageStatus.Deactivating.
-                            if (page.status !== PageStatus.Active) {
+                            if (page.status !== PageStatus.Active || !Qt.application.active) {
                                 return
                             }
                             matrix.joinRoomByAlias(target)

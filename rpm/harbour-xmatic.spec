@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.15.1
+Version:    0.15.2
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -81,6 +81,13 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Aug 13 2026 harbour-xmatic contributors 0.15.2-1
+- Leaving the app now aborts a running countdown too, not only leaving the page.
+  0.15.1 checked the page when the timer fired, which missed the two ways out a
+  user reads as the same gesture: closing the app destroys the page without it
+  ever going through Deactivating, and minimising leaves the page untouched, so
+  the countdown ran out unseen and acted on return.
+
 * Thu Aug 13 2026 harbour-xmatic contributors 0.15.1-1
 - Cancelling a countdown now cancels it. Leaving a page while a remorse timer
   was running used to complete the action instead of stopping it, which is how

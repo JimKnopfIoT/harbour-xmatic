@@ -19,6 +19,20 @@ Page {
     property string spaceId
     property string spaceName
 
+    // Leaving the foreground aborts a running countdown at once, instead of only
+    // suppressing it when it expires. Suppressing at expiry was not enough:
+    // minimising the app and coming back inside the four seconds left the
+    // countdown running, and it fired on return. The remorse object has to be
+    // kept for that - Remorse.popupAction() hands it back.
+    property var activeRemorse: null
+    readonly property bool appForeground: Qt.application.active
+    onAppForegroundChanged: {
+        if (!appForeground && activeRemorse && activeRemorse.pending) {
+            activeRemorse.cancel()
+        }
+    }
+
+
     allowedOrientations: Orientation.All
 
     onStatusChanged: {
@@ -195,11 +209,11 @@ Page {
                             text: qsTr("Join")
                             onClicked: {
                                 var roomId = model.id
-                                linkedItem.remorseAction(qsTr("Joining"), function() {
+                                page.activeRemorse = linkedItem.remorseAction(qsTr("Joining"), function() {
                                     // Silica completes a running remorse when
                                     // its page deactivates, so leaving the
                                     // page would join rather than abort.
-                                    if (page.status !== PageStatus.Active) {
+                                    if (page.status !== PageStatus.Active || !Qt.application.active) {
                                         return
                                     }
                                     matrix.joinRoomByAlias(roomId)
