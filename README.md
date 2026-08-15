@@ -6,7 +6,7 @@ interface and a protocol core built on
 
 Sailfish OS 5 still ships Qt 5.6, which rules out the existing Qt Matrix
 libraries. Rather than hand-writing another Client-Server API implementation,
-xmatic links the same Rust core that Element X uses and keeps Qt as the view
+xmatic links the same Rust core that modern clients use and keeps Qt as the view
 layer. Sliding sync, end-to-end encryption, cross-signing, device verification
 and key backup therefore come from upstream rather than from this repository.
 
@@ -71,14 +71,15 @@ and key backup therefore come from upstream rather than from this repository.
 
 ## What does not
 
-* **Calling Element X.** It dropped the classic 1:1 call flow (MSC2746) for
-  MatrixRTC. Element Desktop's "legacy" call button interoperates; the other
-  one does not.
+* **Calling clients that only speak MatrixRTC.** They dropped the classic 1:1
+  call flow (MSC2746). Where a client still offers a "legacy" call button,
+  that one interoperates; the MatrixRTC one does not.
 * Received video is converted frame by frame on the CPU, because this device
   has no GStreamer sink that draws into a QML scene. It works, but it is not
   as smooth as the outgoing direction.
 * The app has to stay open — its cover on the home screen is the running
-  process. There is no background daemon, the same way Fernschreiber works.
+  process. There is no background daemon, the same way other messengers on
+  this platform work.
 
 ## Requirements
 
