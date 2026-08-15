@@ -317,7 +317,7 @@ Page {
     // message, arbitrarily far away — but on a page-sized flickable that
     // cannot scroll. Dragging the fixed strip below opens the menu; dragging
     // the conversation scrolls it, because the list is a flickable of its own.
-    // This is how Fernschreiber solves the same problem.
+    // This is how other chat clients on this platform solve the same problem.
     SilicaFlickable {
         id: roomView
 
@@ -326,7 +326,7 @@ Page {
         contentWidth: width
         // Nothing scrolls here except the pulley's own overdrag. A stray
         // positive contentY would shift the whole page up and leave it there,
-        // which is why Fernschreiber clamps it too.
+        // which is why other clients clamp it too.
         onContentYChanged: {
             if (contentY > 0) {
                 contentY = 0

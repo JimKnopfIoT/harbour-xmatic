@@ -15,8 +15,8 @@ class QTimer;
 /// name, moves it onto the real output sink and unmutes it. It retries until
 /// the stream appears, since that happens a moment after the call connects.
 ///
-/// The libpulse calls here are ordinary API use; the approach was learned from
-/// the sibling Fernschreiber project, but no code is shared, so this file
+/// The libpulse calls here are ordinary API use; the approach is the one
+/// other messengers on this platform use, but no code is shared, so this file
 /// stays under the project's own licence.
 class CallAudioRouter : public QObject
 {
