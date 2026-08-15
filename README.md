@@ -157,25 +157,6 @@ streams map one-to-one onto `QAbstractListModel` insert/remove/change signals �
 that mapping is the whole reason for this design. The FFI surface is six C
 functions; everything else is a JSON message type.
 
-## Status & responsible use
-
-**Proof of concept / work in progress.** This is a hobby project, shared **as is**
-with **no warranty** of any kind (see the Apache-2.0 licence). It may be
-incomplete, rough around the edges, or change without notice — use it at your own
-risk.
-
-xmatic handles end-to-end-encrypted conversations and the keys that protect
-them. Encryption, cross-signing, verification and key backup come from
-matrix-rust-sdk, but the client around them has not been audited. **How you use
-it is your responsibility:**
-
-- Do not rely on it where a compromise would be serious. Verify your devices and
-  keep your recovery key.
-- Session, crypto and state data live under the app's own data directory,
-  protected only by the device — treat the phone as the trust boundary.
-- Test with an account you can afford to lose before trusting it with your main
-  one.
-
 ## Licence
 
 Apache-2.0, matching matrix-rust-sdk. The Rust core links a number of upstream
