@@ -4309,8 +4309,10 @@ dependencies = [
 name = "xmatic-core"
 version = "0.14.0"
 dependencies = [
+ "base64",
  "futures-util",
  "matrix-sdk",
+ "matrix-sdk-store-encryption",
  "matrix-sdk-ui",
  "mime",
  "oauth2",
@@ -4320,6 +4322,7 @@ dependencies = [
  "serde_json",
  "tokio",
  "url",
+ "zeroize",
 ]
 
 [[package]]

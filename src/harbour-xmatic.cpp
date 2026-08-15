@@ -14,7 +14,10 @@
 
 #include <sailfishapp.h>
 
+#include <sys/prctl.h>
+
 #include "matrixbridge.h"
+#include "secretskeeper.h"
 
 // Set by the spec file at package build time as bare tokens (quotes do not
 // survive the rpm/shell/qmake chain); stringified here. A plain qmake build
@@ -45,6 +48,14 @@ QString ensureDirectory(QStandardPaths::StandardLocation location)
 
 int main(int argc, char *argv[])
 {
+    // This process holds an access token, the crypto store's keys and — for
+    // the password login — briefly a password. Non-dumpable means no core
+    // dumps and no ptrace/`/proc/<pid>/mem` access by other processes of the
+    // same user; only root can still look inside. The price is that a crash
+    // leaves no core dump for debugging — the journal is the diagnostic tool
+    // on the device anyway.
+    prctl(PR_SET_DUMPABLE, 0);
+
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
     const QString dataDirectory = ensureDirectory(QStandardPaths::AppDataLocation);
@@ -55,7 +66,15 @@ int main(int argc, char *argv[])
     // the system may reclaim the space.
     const QString cacheDirectory = ensureDirectory(QStandardPaths::CacheLocation);
 
-    MatrixBridge bridge(dataDirectory, cacheDirectory);
+    // The store key from Sailfish Secrets encrypts the SQLite stores and the
+    // session file. Empty when the secrets service is unavailable — the app
+    // then runs as before, with unencrypted stores, and the keeper has said
+    // so in the journal.
+    QString storeKey = obtainStoreKey();
+    MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey);
+    if (!storeKey.isEmpty()) {
+        storeKey.fill(QChar('0'));
+    }
     qInfo("xmatic: %s", qPrintable(bridge.coreVersion()));
 
     QScopedPointer<QQuickView> view(SailfishApp::createView());

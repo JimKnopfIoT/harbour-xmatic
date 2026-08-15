@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.15.2
+Version:    0.16.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -37,6 +37,7 @@ BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(Qt5DBus)
 BuildRequires: pkgconfig(Qt5Multimedia)
+BuildRequires: pkgconfig(sailfishsecrets)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-sdp-1.0)
 BuildRequires: pkgconfig(gstreamer-webrtc-1.0)
@@ -48,8 +49,8 @@ BuildRequires: desktop-file-utils
 Native Matrix client for Sailfish OS with a Silica interface. The protocol
 core is built on matrix-rust-sdk, so sliding sync and end-to-end encryption
 including cross-signing, device verification and key backup work the same way
-they do in Element X. Voice calls run over WebRTC via GStreamer. The Rust core
-is linked in statically and is built ahead of packaging by
+they do in modern clients. Voice calls run over WebRTC via GStreamer. The
+Rust core is linked in statically and is built ahead of packaging by
 scripts/build-core.sh.
 
 %prep
@@ -81,37 +82,25 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
-* Thu Aug 13 2026 harbour-xmatic contributors 0.15.2-1
-- Leaving the app now aborts a running countdown too, not only leaving the page.
-  0.15.1 checked the page when the timer fired, which missed the two ways out a
-  user reads as the same gesture: closing the app destroys the page without it
-  ever going through Deactivating, and minimising leaves the page untouched, so
-  the countdown ran out unseen and acted on return.
-
-* Thu Aug 13 2026 harbour-xmatic contributors 0.15.1-1
-- Cancelling a countdown now cancels it. Leaving a page while a remorse timer
-  was running used to complete the action instead of stopping it, which is how
-  rooms were left by accident - swiping back to the room list counted as
-  confirmation. Going back, opening another room or swiping to the spaces now
-  aborts. Tapping the bar to cancel and swiping it away to act at once are
-  unchanged.
-- Leaving a room, declining an invitation, deleting a space and removing a
-  member now ask first, on a page that shows the name in full. The name was the
-  thing missing before: a room left by accident could not be rejoined because
-  nothing had ever said which room it was.
-- In the room's pull-down menu, "Leave room" moved from the bottom - where a
-  short tug lands - to the top, and "Room info" took the bottom place.
+* Fri Aug 15 2026 harbour-xmatic contributors 0.16.0-1
+- Sign in with username and password on homeservers without OAuth. The login
+  page detects what the server speaks and only then offers the password form;
+  the password is never stored, logged or kept, and the process now refuses
+  debugger and memory access from other apps.
+- The session file and newly created local stores are encrypted with a key
+  held in the device's secrets storage. The first start asks for permission
+  once; without it the app keeps working exactly as before.
 
 * Tue Aug 11 2026 harbour-xmatic contributors 0.15.0-1
 - A room that has been replaced now says so. When a room outgrows its version
   it is not migrated but replaced by a new one, and the old room keeps its
-  history while silently accepting no new messages - it looked like a
+  history while silently accepting no new messages — it looked like a
   conversation that had merely gone quiet. The room list marks it, the room
   itself shows a banner, and one tap joins the room that took its place.
 - New room-info page, opened by tapping the room's name: topic, address,
   members, encryption, access, room version and the internal room id, plus
   mute, favourite and low priority. The room's pull-down menu is shorter for
-  it - ten entries were barely draggable on a small screen in landscape.
+  it — ten entries were barely draggable on a small screen in landscape.
 
 * Sat Aug 01 2026 harbour-xmatic contributors 0.14.0-1
 - A message written while the network was gone now leaves as soon as it comes

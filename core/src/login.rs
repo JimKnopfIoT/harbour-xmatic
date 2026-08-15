@@ -1,4 +1,4 @@
-//! OAuth 2.0 authorization code login, the way Element X does it.
+//! OAuth 2.0 authorization code login, the way modern Matrix clients do it.
 //!
 //! matrix.org has moved to the Matrix Authentication Service, so there is no
 //! password endpoint to talk to: the user authenticates in a browser and the
@@ -318,4 +318,44 @@ pub async fn finish(client: &Client, redirect: LocalServerRedirectHandle) -> Res
         .map_err(|error| format!("login could not be completed: {error}"))?;
 
     Ok(true)
+}
+
+/// True if the server offers the classic password login (`m.login.password`).
+///
+/// Only consulted after OAuth discovery answered `NotSupported` — the two
+/// answers together are the affirmative finding that allows the front end to
+/// show a password form at all. A transport error here is an error, never a
+/// reason to fall back.
+pub async fn password_offered(client: &Client) -> Result<bool, String> {
+    use matrix_sdk::ruma::api::client::session::get_login_types::v3::LoginType;
+
+    let response = client
+        .matrix_auth()
+        .get_login_types()
+        .await
+        .map_err(|error| format!("could not ask for the sign-in methods: {error}"))?;
+
+    Ok(response
+        .flows
+        .iter()
+        .any(|flow| matches!(flow, LoginType::Password(_))))
+}
+
+/// Signs in with `m.login.password` and activates the session on `client`.
+///
+/// The refresh token is requested on purpose (MSC2918): where the server
+/// supports it, the stored access token is short-lived and rotates, the same
+/// at-rest property the OAuth sessions have. The password crosses this
+/// function as a borrow and is wiped by its owner; nothing here copies it.
+pub async fn password(client: &Client, user: &str, password: &str) -> Result<(), String> {
+    client
+        .matrix_auth()
+        .login_username(user, password)
+        .initial_device_display_name(CLIENT_NAME)
+        .request_refresh_token()
+        .send()
+        .await
+        .map_err(|error| format!("sign-in failed: {error}"))?;
+
+    Ok(())
 }

@@ -14,6 +14,11 @@ and key backup therefore come from upstream rather than from this repository.
 
 * Sign-in through the homeserver's own page (OAuth 2.0 / MAS), session survives
   restarts
+* Classic password sign-in on homeservers without OAuth — the login page
+  detects what the server speaks; the password is never stored or logged
+* Session tokens and new local stores encrypted with a key from Sailfish
+  Secrets (the first start asks once; declining keeps the app working
+  unencrypted)
 * Room list over Simplified Sliding Sync, with search and unread counts,
   grouped so favourites sit at the top and low-priority rooms at the bottom
 * Timeline in encrypted rooms: send, reply, edit, delete, paginate, read

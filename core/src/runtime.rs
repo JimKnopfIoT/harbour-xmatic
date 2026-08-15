@@ -11,7 +11,7 @@ use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::sync::{Arc, Mutex as StdMutex};
 
 use matrix_sdk::{
-    authentication::oauth::CsrfToken,
+    authentication::oauth::{error::OAuthDiscoveryError, CsrfToken},
     ruma::{OwnedRoomId, RoomId},
     store::RoomLoadSettings,
     utils::local_server::LocalServerShutdownHandle,
@@ -24,7 +24,7 @@ use crate::call;
 use crate::directory;
 use crate::login;
 use crate::profile;
-use crate::protocol::{event, reply_error, reply_ok, Command};
+use crate::protocol::{event, reply_error, reply_ok, Command, Secret};
 use crate::media;
 use crate::members;
 use crate::recovery;
@@ -90,6 +90,8 @@ struct PendingLogin {
 
 struct State {
     paths: Paths,
+    /// The store key from Sailfish Secrets; `None` degrades to unencrypted.
+    store_key: Option<session::StoreKey>,
     client: Mutex<Option<Client>>,
     pending: Mutex<Option<PendingLogin>>,
     /// A device-code login polling for approval, kept so it can be cancelled.
@@ -220,12 +222,14 @@ impl State {
 pub fn spawn(
     runtime: &tokio::runtime::Runtime,
     paths: Paths,
+    store_key: Option<session::StoreKey>,
     sink: Arc<Sink>,
 ) -> mpsc::UnboundedSender<Command> {
     let (sender, mut receiver) = mpsc::unbounded_channel::<Command>();
 
     let state = Arc::new(State {
         paths,
+        store_key,
         client: Mutex::new(None),
         pending: Mutex::new(None),
         pending_device: Mutex::new(None),
@@ -257,6 +261,12 @@ async fn handle(state: Arc<State>, command: Command) {
     match command {
         Command::SessionRestore { .. } => restore_session(&state, id).await,
         Command::LoginStart { homeserver, .. } => start_login(&state, id, homeserver).await,
+        Command::LoginPassword {
+            homeserver,
+            user,
+            password,
+            ..
+        } => password_login(&state, id, homeserver, user, password).await,
         Command::LoginDeviceCode { homeserver, .. } => {
             start_device_login(&state, id, homeserver).await
         }
@@ -1378,13 +1388,25 @@ async fn remove_space_child(state: &Arc<State>, id: u64, space_id: String, room_
 }
 
 async fn restore_session(state: &Arc<State>, id: u64) {
-    let Some(stored) = session::load(&state.paths.session_file) else {
+    let Some(stored) = session::load(&state.paths.session_file, state.store_key.as_ref()) else {
         state.sink.emit(reply_ok(id, json!({ "state": "none" })));
         return;
     };
 
-    let homeserver = stored.homeserver.clone();
-    let client = match session::build_client(&homeserver, &state.paths).await {
+    let homeserver = stored.homeserver().to_owned();
+
+    // An encrypted store without its key must fail with a sentence that names
+    // the actual problem — opening it anyway would surface as decryption
+    // garbage three layers further down.
+    if session::store_marked_encrypted(&state.paths) && state.store_key.is_none() {
+        state.sink.emit(reply_error(
+            id,
+            "the local store is encrypted but its key is not available from the device's secrets storage",
+        ));
+        return;
+    }
+
+    let client = match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
         Ok(client) => client,
         Err(error) => {
             state
@@ -1395,8 +1417,7 @@ async fn restore_session(state: &Arc<State>, id: u64) {
     };
 
     if let Err(error) = client
-        .oauth()
-        .restore_session(stored.into_oauth(), RoomLoadSettings::default())
+        .restore_session_with(stored.into_auth_session(), RoomLoadSettings::default())
         .await
     {
         state
@@ -1410,6 +1431,11 @@ async fn restore_session(state: &Arc<State>, id: u64) {
     // The backup unlocks itself once a verification hands over the key; only
     // this stream says so.
     recovery::watch(&client, state.sink.clone());
+    // Rewritten once per restore so a plaintext session.json from before the
+    // store key existed becomes encrypted now — token refreshes would do it
+    // eventually for OAuth, but a classic session without refresh tokens
+    // would otherwise stay plaintext forever.
+    persist(state, &client, homeserver.clone()).await;
     watch_session(state, &client, homeserver);
 
     *state.client.lock().await = Some(client);
@@ -1422,7 +1448,7 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
     // A login without a stored session starts a new device, so anything the
     // previous one left behind has to go first — otherwise the crypto store
     // still describes a device this session is not.
-    if session::load(&state.paths.session_file).is_none() {
+    if session::load(&state.paths.session_file, state.store_key.as_ref()).is_none() {
         if let Err(error) = session::reset_store(&state.paths) {
             state
                 .sink
@@ -1438,7 +1464,7 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
         return;
     }
 
-    let client = match session::build_client(&homeserver, &state.paths).await {
+    let client = match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
         Ok(client) => client,
         Err(error) => {
             state
@@ -1447,6 +1473,45 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
             return;
         }
     };
+
+    // Which sign-in does this server speak? OAuth discovery decides. The
+    // password form is only ever offered on the affirmative `NotSupported`
+    // answer — a transport error, a timeout or a broken authentication
+    // service is an error, never a downgrade to asking for a password.
+    match client.oauth().server_metadata().await {
+        Ok(_) => {}
+        Err(OAuthDiscoveryError::NotSupported) => {
+            match login::password_offered(&client).await {
+                Ok(true) => {
+                    if client.homeserver().scheme() != "https" {
+                        state.sink.emit(reply_error(
+                            id,
+                            "the password sign-in needs an https homeserver",
+                        ));
+                        return;
+                    }
+                    // Kept so `login.password` reuses this client — and with
+                    // it this discovery result — instead of trusting the UI.
+                    *state.client.lock().await = Some(client);
+                    state
+                        .sink
+                        .emit(reply_ok(id, json!({ "passwordLogin": true })));
+                }
+                Ok(false) => state.sink.emit(reply_error(
+                    id,
+                    "this server offers no sign-in method this app supports",
+                )),
+                Err(message) => state.sink.emit(reply_error(id, message)),
+            }
+            return;
+        }
+        Err(error) => {
+            state
+                .sink
+                .emit(reply_error(id, format!("sign-in discovery failed: {error}")));
+            return;
+        }
+    }
 
     let pending = match login::start(&client, homeserver).await {
         Ok(pending) => pending,
@@ -1497,13 +1562,24 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
     });
 }
 
-/// Begins the device-code login: like `start_login`, but instead of a browser
-/// URL the reply carries a short verification URL and a code, and completion
-/// means the user approved the login on some other device.
-async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
-    // Same rule as the browser flow: a fresh login is a fresh device, so a
-    // leftover crypto store from a previous device has to go.
-    if session::load(&state.paths.session_file).is_none() {
+/// Signs in with `m.login.password`. Unlike the browser and device-code
+/// flows there is nothing external to wait for, so the reply is the complete
+/// outcome: an error for a wrong password, `session.changed` on success.
+///
+/// The password arrives as a `Secret` — wiped on drop, unprintable — and is
+/// only borrowed onwards. The UI is not trusted with the flow decision: the
+/// checks that put the password form on screen are repeated here, so a UI
+/// bug cannot send a password to an OAuth server or over plain http.
+async fn password_login(
+    state: &Arc<State>,
+    id: u64,
+    homeserver: String,
+    user: String,
+    password: Secret,
+) {
+    // Same rule as the other flows: a login without a stored session starts a
+    // new device, so a previous device's crypto store has to go first.
+    if session::load(&state.paths.session_file, state.store_key.as_ref()).is_none() {
         if let Err(error) = session::reset_store(&state.paths) {
             state
                 .sink
@@ -1519,7 +1595,87 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
         return;
     }
 
-    let client = match session::build_client(&homeserver, &state.paths).await {
+    // Reuse the client `login.start` built and vetted; build one only if the
+    // UI skipped that step, and then vet it the same way.
+    let cached = state.client.lock().await.clone();
+    let client = match cached {
+        Some(client) => client,
+        None => match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
+            Ok(client) => client,
+            Err(error) => {
+                state
+                    .sink
+                    .emit(reply_error(id, format!("homeserver unreachable: {error}")));
+                return;
+            }
+        },
+    };
+
+    if client.homeserver().scheme() != "https" {
+        state.sink.emit(reply_error(
+            id,
+            "the password sign-in needs an https homeserver",
+        ));
+        return;
+    }
+
+    match client.oauth().server_metadata().await {
+        Err(OAuthDiscoveryError::NotSupported) => {}
+        Ok(_) => {
+            state.sink.emit(reply_error(
+                id,
+                "this server signs in through its own page, not with a password here",
+            ));
+            return;
+        }
+        Err(error) => {
+            state
+                .sink
+                .emit(reply_error(id, format!("sign-in discovery failed: {error}")));
+            return;
+        }
+    }
+
+    if let Err(message) = login::password(&client, &user, password.as_str()).await {
+        state.sink.emit(reply_error(id, message));
+        return;
+    }
+
+    verification::install(&client, state.sink.clone(), state.verification.clone());
+    call::install(&client, state.sink.clone());
+    recovery::watch(&client, state.sink.clone());
+    persist(state, &client, homeserver.clone()).await;
+    watch_session(state, &client, homeserver);
+    *state.client.lock().await = Some(client);
+
+    let data = state.session_data().await;
+    state.sink.emit(reply_ok(id, data.clone()));
+    state.sink.emit(event("session.changed", data));
+}
+
+/// Begins the device-code login: like `start_login`, but instead of a browser
+/// URL the reply carries a short verification URL and a code, and completion
+/// means the user approved the login on some other device.
+async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
+    // Same rule as the browser flow: a fresh login is a fresh device, so a
+    // leftover crypto store from a previous device has to go.
+    if session::load(&state.paths.session_file, state.store_key.as_ref()).is_none() {
+        if let Err(error) = session::reset_store(&state.paths) {
+            state
+                .sink
+                .emit(reply_error(id, format!("could not clear old data: {error}")));
+            return;
+        }
+    }
+
+    if let Err(error) = state.paths.prepare() {
+        state
+            .sink
+            .emit(reply_error(id, format!("could not prepare storage: {error}")));
+        return;
+    }
+
+    let client = match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
         Ok(client) => client,
         Err(error) => {
             state
@@ -1579,16 +1735,21 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
 /// the running session, only for surviving a restart, so it is reported as an
 /// event rather than aborting the login.
 async fn persist(state: &Arc<State>, client: &Client, homeserver: String) {
-    let Some(oauth_session) = client.oauth().full_session() else {
+    // Whichever auth API owns the session: OAuth for the browser and
+    // device-code logins, the Matrix API for the password login. Only the
+    // tokens are stored either way — a password never reaches this function.
+    let stored = if let Some(oauth_session) = client.oauth().full_session() {
+        StoredSession::from_oauth(homeserver, &oauth_session)
+    } else if let Some(matrix_session) = client.matrix_auth().session() {
+        StoredSession::from_matrix(homeserver, matrix_session)
+    } else {
         state.sink.emit(event(
             "session.warning",
             json!({ "message": "session could not be persisted" }),
         ));
         return;
     };
-
-    let stored = StoredSession::from_oauth(homeserver, &oauth_session);
-    if let Err(error) = session::store(&stored, &state.paths.session_file) {
+    if let Err(error) = session::store(&stored, &state.paths.session_file, state.store_key.as_ref()) {
         state.sink.emit(event(
             "session.warning",
             json!({ "message": format!("session could not be saved: {error}") }),
@@ -1645,7 +1806,7 @@ async fn registration_url(state: &Arc<State>, id: u64, homeserver: String) {
         return;
     }
 
-    let client = match session::build_client(&homeserver, &state.paths).await {
+    let client = match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
         Ok(client) => client,
         Err(error) => {
             state
@@ -1694,8 +1855,9 @@ async fn logout(state: &Arc<State>, id: u64) {
     let client = state.client.lock().await.take();
     if let Some(client) = client {
         // Best effort: even if the server cannot be reached, the local session
-        // must go away.
-        let _ = client.oauth().logout().await;
+        // must go away. The generic call dispatches to whichever auth API owns
+        // the session — OAuth or, since the password login, the Matrix one.
+        let _ = client.logout().await;
     }
     session::forget(&state.paths.session_file);
     if let Err(error) = session::reset_store(&state.paths) {

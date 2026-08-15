@@ -41,6 +41,16 @@ serde_json = "1"
 futures-util = "0.3"
 url = "2"
 mime = "0.3"
+# Wipes the password login's owned copies on drop. Already in the tree as a
+# dependency of the SDK's crypto crates; pinned to the version the lock file
+# resolved for them.
+zeroize = "=1.9.0"
+# Encrypts session.json with the store key from Sailfish Secrets — the same
+# cipher the SDK's SQLite stores use internally. Already in the tree via
+# matrix-sdk-sqlite; base64 carries the key across the C ABI and wraps the
+# envelope fields. Both pinned to what the lock file already resolved.
+matrix-sdk-store-encryption = "=0.18.0"
+base64 = "=0.22.1"
 
 [profile.release]
 lto = "thin"

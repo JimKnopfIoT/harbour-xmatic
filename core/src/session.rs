@@ -7,13 +7,35 @@
 
 use std::path::{Path, PathBuf};
 
+use base64::Engine;
 use matrix_sdk::{
+    authentication::matrix::MatrixSession,
     authentication::oauth::{ClientId, OAuthSession, UserSession},
     cross_process_lock::CrossProcessLockConfig,
     encryption::{BackupDownloadStrategy, EncryptionSettings},
-    Client,
+    AuthSession, Client, SqliteStoreConfig,
 };
+use matrix_sdk_store_encryption::StoreCipher;
 use serde::{Deserialize, Serialize};
+use zeroize::{Zeroize, Zeroizing};
+
+/// The 32-byte store key the front end fetched from Sailfish Secrets.
+/// Wiped on drop. When it is absent — no secrets daemon, denied permission —
+/// everything below degrades to the unencrypted behaviour instead of
+/// blocking, and says so once.
+pub type StoreKey = Zeroizing<[u8; 32]>;
+
+/// Decodes the base64 key from the front end. `None` for anything that is
+/// not exactly 32 bytes — a truncated key must not silently become a
+/// different key.
+pub fn decode_key(encoded: &str) -> Option<StoreKey> {
+    let mut bytes = base64::engine::general_purpose::STANDARD
+        .decode(encoded.trim())
+        .ok()?;
+    let result = <[u8; 32]>::try_from(bytes.as_slice()).ok().map(Zeroizing::new);
+    bytes.zeroize();
+    result
+}
 
 /// Where the core keeps its state. Derived once from the data directory the
 /// front end passes in, so no path is hard-coded here.
@@ -41,39 +63,118 @@ impl Paths {
     }
 }
 
-/// The persisted form of a session. `OAuthSession` itself is not serialisable,
-/// so its two halves are stored explicitly, together with the homeserver the
-/// client has to be rebuilt against.
+/// The persisted form of a session, in one of two shapes: OAuth (browser and
+/// device-code logins) or classic (`m.login.password`).
+///
+/// `untagged`, and the OAuth variant first, because every `session.json`
+/// written before the password login existed is OAuth-shaped and has to keep
+/// parsing — a tag would invalidate all of them. The variants cannot be
+/// confused: OAuth carries `client_id` + `user`, the classic shape carries
+/// `matrix`. `OAuthSession` itself is not serialisable, so its two halves are
+/// stored explicitly; the SDK's `MatrixSession` is.
 #[derive(Debug, Serialize, Deserialize)]
-pub struct StoredSession {
-    pub homeserver: String,
-    pub client_id: String,
-    pub user: UserSession,
+#[serde(untagged)]
+pub enum StoredSession {
+    OAuth {
+        homeserver: String,
+        client_id: String,
+        user: UserSession,
+    },
+    Matrix {
+        homeserver: String,
+        matrix: MatrixSession,
+    },
 }
 
 impl StoredSession {
     pub fn from_oauth(homeserver: String, session: &OAuthSession) -> Self {
-        Self {
+        Self::OAuth {
             homeserver,
             client_id: session.client_id.as_str().to_owned(),
             user: session.user.clone(),
         }
     }
 
-    pub fn into_oauth(self) -> OAuthSession {
-        OAuthSession {
-            client_id: ClientId::new(self.client_id),
-            user: self.user,
+    pub fn from_matrix(homeserver: String, session: MatrixSession) -> Self {
+        Self::Matrix {
+            homeserver,
+            matrix: session,
         }
+    }
+
+    pub fn homeserver(&self) -> &str {
+        match self {
+            Self::OAuth { homeserver, .. } | Self::Matrix { homeserver, .. } => homeserver,
+        }
+    }
+
+    /// The SDK session to restore, whichever auth API owns it.
+    pub fn into_auth_session(self) -> AuthSession {
+        match self {
+            Self::OAuth {
+                client_id, user, ..
+            } => AuthSession::OAuth(
+                OAuthSession {
+                    client_id: ClientId::new(client_id),
+                    user,
+                }
+                .into(),
+            ),
+            Self::Matrix { matrix, .. } => AuthSession::Matrix(matrix),
+        }
+    }
+}
+
+/// Whether the SQLite stores were created under the store key.
+///
+/// The marker matters because a store created *without* encryption has no
+/// cipher row at all: opening it with a key would silently mint a fresh
+/// cipher and turn every existing value into garbage. So the key is only
+/// applied to stores born encrypted — a fresh (empty) store directory with a
+/// key available gets the marker and starts encrypted, an existing store
+/// without the marker keeps opening unencrypted until a sign-out clears it.
+pub fn store_marked_encrypted(paths: &Paths) -> bool {
+    paths.store.join(".encrypted").exists()
+}
+
+fn store_key_applies(paths: &Paths, key: Option<&StoreKey>) -> bool {
+    if key.is_none() {
+        return false;
+    }
+    if store_marked_encrypted(paths) {
+        return true;
+    }
+    let fresh = match std::fs::read_dir(&paths.store) {
+        Ok(mut entries) => entries.next().is_none(),
+        Err(_) => true,
+    };
+    if fresh {
+        // Losing the marker while keeping the store would flip the store
+        // back to "open without key" and shred it — so it is written before
+        // the store exists, and a failed write means staying unencrypted.
+        std::fs::write(paths.store.join(".encrypted"), b"xmatic store key v1\n").is_ok()
+    } else {
+        false
     }
 }
 
 /// Builds a client for `server`, which may be a server name such as
 /// `matrix.org` or a full homeserver URL.
-pub async fn build_client(server: &str, paths: &Paths) -> Result<Client, matrix_sdk::ClientBuildError> {
+///
+/// `key` encrypts the SQLite stores — applied under the rules of
+/// `store_key_applies`, so existing unencrypted stores keep working.
+pub async fn build_client(
+    server: &str,
+    paths: &Paths,
+    key: Option<&StoreKey>,
+) -> Result<Client, matrix_sdk::ClientBuildError> {
+    let store_key = if store_key_applies(paths, key) { key } else { None };
+    let store_config =
+        SqliteStoreConfig::new(&paths.store).key(store_key.map(|key| &**key));
+
     Client::builder()
         .server_name_or_homeserver_url(server)
-        .sqlite_store(&paths.store, None)
+        .sqlite_store_with_config_and_cache_path(store_config, None::<&Path>)
         .handle_refresh_tokens()
         // The holder name has to differ per process. OAuth refresh tokens are
         // single-use: if two instances share one identity, whichever refreshes
@@ -107,20 +208,81 @@ pub async fn build_client(server: &str, paths: &Paths) -> Result<Client, matrix_
         .await
 }
 
-/// Writes the session to disk with owner-only permissions.
-pub fn store(session: &StoredSession, path: &Path) -> Result<(), std::io::Error> {
-    let json = serde_json::to_vec_pretty(session)
-        .map_err(|error| std::io::Error::new(std::io::ErrorKind::InvalidData, error))?;
+/// The encrypted shape of `session.json`: a fresh `StoreCipher` per write,
+/// exported under the store key, next to the data it encrypted. The same
+/// cipher the SDK's SQLite stores use — no second cryptography to audit.
+#[derive(Serialize, Deserialize)]
+struct EncryptedSession {
+    cipher: String,
+    data: String,
+}
+
+#[derive(Serialize, Deserialize)]
+struct EncryptedEnvelope {
+    encrypted: EncryptedSession,
+}
+
+/// Writes the session to disk with owner-only permissions — encrypted under
+/// the store key when there is one, plaintext otherwise (degrade, not block).
+pub fn store(
+    session: &StoredSession,
+    path: &Path,
+    key: Option<&StoreKey>,
+) -> Result<(), std::io::Error> {
+    let invalid = |error: String| std::io::Error::new(std::io::ErrorKind::InvalidData, error);
+
+    let json = if let Some(key) = key {
+        let cipher = StoreCipher::new().map_err(|error| invalid(error.to_string()))?;
+        let engine = base64::engine::general_purpose::STANDARD;
+        let envelope = EncryptedEnvelope {
+            encrypted: EncryptedSession {
+                cipher: engine.encode(
+                    cipher
+                        .export_with_key(&**key)
+                        .map_err(|error| invalid(error.to_string()))?,
+                ),
+                data: engine.encode(
+                    cipher
+                        .encrypt_value(session)
+                        .map_err(|error| invalid(error.to_string()))?,
+                ),
+            },
+        };
+        serde_json::to_vec_pretty(&envelope).map_err(|error| invalid(error.to_string()))?
+    } else {
+        serde_json::to_vec_pretty(session).map_err(|error| invalid(error.to_string()))?
+    };
+
     std::fs::write(path, json)?;
     restrict_permissions(path)
 }
 
 /// Reads a previously stored session, or `None` if there is none or it can no
-/// longer be parsed — a stale file must never block the user from logging in
+/// longer be read — a stale file must never block the user from logging in
 /// again.
-pub fn load(path: &Path) -> Option<StoredSession> {
+///
+/// Both shapes are accepted regardless of the key: a plaintext file from
+/// before the store key existed still loads (and is rewritten encrypted after
+/// the next successful restore), and an encrypted file without a key is
+/// simply gone — the user signs in again, which is the honest outcome when
+/// the secrets store lost the key.
+pub fn load(path: &Path, key: Option<&StoreKey>) -> Option<StoredSession> {
     let bytes = std::fs::read(path).ok()?;
-    serde_json::from_slice(&bytes).ok()
+    if let Ok(session) = serde_json::from_slice::<StoredSession>(&bytes) {
+        return Some(session);
+    }
+
+    let envelope = serde_json::from_slice::<EncryptedEnvelope>(&bytes).ok()?;
+    let key = key?;
+    let engine = base64::engine::general_purpose::STANDARD;
+    let cipher = StoreCipher::import_with_key(
+        &**key,
+        &engine.decode(envelope.encrypted.cipher).ok()?,
+    )
+    .ok()?;
+    cipher
+        .decrypt_value(&engine.decode(envelope.encrypted.data).ok()?)
+        .ok()
 }
 
 /// Removes the stored session. Missing files are not an error.
