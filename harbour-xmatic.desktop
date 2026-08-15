@@ -32,7 +32,7 @@ ApplicationName=xmatic
 # Audio is needed to play voice messages and videos: without it the player
 # runs and the position advances, but the connection to the sound server is
 # refused and nothing is audible.
-Permissions=Internet;Audio;Microphone;Camera;Pictures;Documents;Downloads;Music;Videos;PublicDir;RemovableMedia;MediaIndexing;Sharing;Notifications
+Permissions=Internet;Audio;Microphone;Camera;Pictures;Documents;Downloads;Music;Videos;PublicDir;RemovableMedia;MediaIndexing;Sharing;Notifications;Secrets
 
 # What the share dialog offers xmatic for. A link arrives as text/x-url and is
 # sent as a message; everything else arrives as a file and is uploaded like an

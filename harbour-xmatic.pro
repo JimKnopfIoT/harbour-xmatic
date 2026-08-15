@@ -19,6 +19,10 @@ GST_MODULES = gstreamer-1.0 gstreamer-sdp-1.0 gstreamer-webrtc-1.0 gstreamer-vid
 QMAKE_CXXFLAGS += $$system(pkg-config --cflags $$GST_MODULES)
 QMAKE_CXXFLAGS += $$system(pkg-config --cflags libpulse)
 
+# The store key lives in Sailfish Secrets; same direct pkg-config route as
+# GStreamer, for the same sailfishapp.prf reason.
+QMAKE_CXXFLAGS += $$system(pkg-config --cflags sailfishsecrets)
+
 # Keep the build machine out of the binary: __FILE__ and Qt's assertions would
 # otherwise embed the absolute source path of whoever compiled it.
 QMAKE_CXXFLAGS += -ffile-prefix-map=$$PWD=/build
@@ -32,6 +36,7 @@ QMAKE_CXXFLAGS += -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 QMAKE_LFLAGS += -Wl,-z,relro -Wl,-z,now
 LIBS += $$system(pkg-config --libs $$GST_MODULES)
 LIBS += $$system(pkg-config --libs libpulse)
+LIBS += $$system(pkg-config --libs sailfishsecrets)
 
 SOURCES += \
     src/harbour-xmatic.cpp \
@@ -46,11 +51,13 @@ SOURCES += \
     src/camerasource.cpp \
     src/callaudiorouter.cpp \
     src/videostream.cpp \
-    src/voicerecorder.cpp
+    src/voicerecorder.cpp \
+    src/secretskeeper.cpp
 
 HEADERS += \
     src/difflistmodel.h \
     src/matrixbridge.h \
+    src/secretskeeper.h \
     src/roomlistmodel.h \
     src/roomsortmodel.h \
     src/directorymodel.h \
@@ -97,6 +104,13 @@ TRANSLATIONS += translations/harbour-xmatic-de.ts
 DISTFILES += \
     LICENSE \
     README.md \
+    docs/README.md \
+    docs/ARCHITECTURE.md \
+    docs/BUILD.md \
+    docs/FEATURES.md \
+    docs/CALLS.md \
+    docs/SECURITY.md \
+    docs/PITFALLS.md \
     harbour-xmatic.desktop \
     rpm/harbour-xmatic.spec \
     icons/xmatic-logo.svg \

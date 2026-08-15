@@ -39,6 +39,7 @@ QString jsonToCompactString(const QJsonObject &object)
 
 MatrixBridge::MatrixBridge(const QString &dataDirectory,
                            const QString &cacheDirectory,
+                           const QString &storeKey,
                            QObject *parent)
     : QObject(parent)
 {
@@ -51,8 +52,14 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     QJsonObject config;
     config.insert(QStringLiteral("dataDir"), dataDirectory);
     config.insert(QStringLiteral("cacheDir"), cacheDirectory);
-    const QByteArray configJson = jsonToCompactString(config).toUtf8();
+    if (!storeKey.isEmpty()) {
+        config.insert(QStringLiteral("storeKey"), storeKey);
+    }
+    // Not const: the buffer holds the store key and is wiped once the core
+    // has taken its copy. Same rule as the password command's payload.
+    QByteArray configJson = jsonToCompactString(config).toUtf8();
     m_core = xm_core_new(configJson.constData());
+    configJson.fill('\0');
 
     if (!m_core) {
         setLastError(tr("The protocol core could not be started."));
@@ -158,7 +165,7 @@ void MatrixBridge::deliver(void *userData, const char *json)
                               Q_ARG(QString, QString::fromUtf8(json)));
 }
 
-quint64 MatrixBridge::send(const QString &command, const QJsonObject &arguments)
+quint64 MatrixBridge::send(const QString &command, const QJsonObject &arguments, bool wipePayload)
 {
     if (!m_core) {
         setLastError(tr("The protocol core is not available."));
@@ -182,8 +189,15 @@ quint64 MatrixBridge::send(const QString &command, const QJsonObject &arguments)
     // statement. That is long enough today, because the core copies the string
     // before returning — but it is a lifetime that depends on a detail of the
     // callee, and nothing here would notice if that changed.
-    const QByteArray payload = jsonToCompactString(message).toUtf8();
+    QByteArray payload = jsonToCompactString(message).toUtf8();
     xm_core_send(m_core, payload.constData());
+    if (wipePayload) {
+        // The buffer held a password; the core has taken its copy (and wipes
+        // its own), so this copy must not linger on the heap. The transient
+        // QString and QJsonObject copies above cannot be reached from here —
+        // that residual is documented in docs/PASSWORD-LOGIN.md.
+        payload.fill('\0');
+    }
     return id;
 }
 
@@ -238,6 +252,30 @@ void MatrixBridge::startLogin(const QString &homeserver)
     QJsonObject arguments;
     arguments.insert(QStringLiteral("homeserver"), trimmed);
     send(QStringLiteral("login.start"), arguments);
+}
+
+void MatrixBridge::startPasswordLogin(const QString &homeserver,
+                                      const QString &user,
+                                      const QString &password)
+{
+    const QString trimmedServer = homeserver.trimmed();
+    const QString trimmedUser = user.trimmed();
+    // The password is deliberately not trimmed: whitespace in it is the
+    // user's business. It is also deliberately not validated, logged or kept
+    // — it goes into one command and the send buffer is wiped.
+    if (trimmedServer.isEmpty() || trimmedUser.isEmpty() || password.isEmpty()) {
+        setLastError(tr("Enter username and password first."));
+        return;
+    }
+
+    setLastError(QString());
+    setLoginRunning(true);
+
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("homeserver"), trimmedServer);
+    arguments.insert(QStringLiteral("user"), trimmedUser);
+    arguments.insert(QStringLiteral("password"), password);
+    send(QStringLiteral("login.password"), arguments, true);
 }
 
 void MatrixBridge::startDeviceCodeLogin(const QString &homeserver)
@@ -1158,7 +1196,8 @@ void MatrixBridge::handleMessage(const QString &json)
             const QString error = message.value(QStringLiteral("error")).toString();
             qWarning("xmatic: %s failed: %s", qPrintable(command), qPrintable(error));
             if (command == QLatin1String("login.start")
-                || command == QLatin1String("login.deviceCode")) {
+                || command == QLatin1String("login.deviceCode")
+                || command == QLatin1String("login.password")) {
                 setLoginRunning(false);
                 emit loginFailed(error);
             }
@@ -1204,6 +1243,14 @@ void MatrixBridge::handleMessage(const QString &json)
         }
 
         if (command == QLatin1String("login.start")) {
+            // A server without OAuth that offers the classic password flow
+            // answers with a flag instead of a browser URL; the login page
+            // then shows the credentials form. Not busy while the user types.
+            if (data.value(QStringLiteral("passwordLogin")).toBool()) {
+                setLoginRunning(false);
+                emit passwordLoginNeeded();
+                return;
+            }
             const QString url = data.value(QStringLiteral("url")).toString();
             if (url.isEmpty()) {
                 setLoginRunning(false);
@@ -1211,6 +1258,12 @@ void MatrixBridge::handleMessage(const QString &json)
             } else {
                 emit loginUrlReady(url);
             }
+            return;
+        }
+
+        if (command == QLatin1String("login.password")) {
+            // The session.changed event that follows this reply carries the
+            // whole outcome; nothing to do here.
             return;
         }
 

@@ -8,6 +8,31 @@
 
 use serde::Deserialize;
 use serde_json::{json, Value};
+use zeroize::Zeroizing;
+
+/// A password on its way to the homeserver. Exists so that the two easy
+/// leaks are impossible by construction: the heap copy is wiped on drop
+/// (`Zeroizing`), and `{:?}` — `Command` derives `Debug` — prints a
+/// placeholder instead of the value.
+pub struct Secret(Zeroizing<String>);
+
+impl Secret {
+    pub fn as_str(&self) -> &str {
+        &self.0
+    }
+}
+
+impl std::fmt::Debug for Secret {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("<redacted>")
+    }
+}
+
+impl<'de> Deserialize<'de> for Secret {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        Ok(Secret(Zeroizing::new(String::deserialize(deserializer)?)))
+    }
+}
 
 /// A command sent from the UI to the core.
 #[derive(Debug, Deserialize)]
@@ -34,6 +59,19 @@ pub enum Command {
     /// the user has approved the login on another device.
     #[serde(rename = "login.deviceCode")]
     LoginDeviceCode { id: u64, homeserver: String },
+
+    /// Sign in with username and password (`m.login.password`), for
+    /// homeservers without OAuth. Only sent after `login.start` answered
+    /// `passwordLogin: true`; the core verifies that again before it sends
+    /// the password anywhere. The reply is the complete outcome — there is
+    /// no browser to wait for — and echoes nothing back.
+    #[serde(rename = "login.password")]
+    LoginPassword {
+        id: u64,
+        homeserver: String,
+        user: String,
+        password: Secret,
+    },
 
     /// Ask where accounts can be created on `homeserver`.
     #[serde(rename = "login.registrationUrl")]
@@ -488,6 +526,7 @@ impl Command {
         match self {
             Command::SessionRestore { id }
             | Command::LoginStart { id, .. }
+            | Command::LoginPassword { id, .. }
             | Command::LoginDeviceCode { id, .. }
             | Command::LoginRegistrationUrl { id, .. }
             | Command::LoginAbort { id }

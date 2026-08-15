@@ -73,8 +73,12 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *members READ members CONSTANT)
 
 public:
+    /// `storeKey` is the base64 store key from Sailfish Secrets, or empty
+    /// when the secrets service is unavailable — the core then runs with
+    /// unencrypted stores. It goes into the core's config and nowhere else.
     explicit MatrixBridge(const QString &dataDirectory,
                           const QString &cacheDirectory,
+                          const QString &storeKey = QString(),
                           QObject *parent = nullptr);
     ~MatrixBridge() override;
 
@@ -155,8 +159,17 @@ public:
     Q_INVOKABLE void restoreSession();
 
     /// Begins the browser login against `homeserver`, which may be a server
-    /// name such as "matrix.org" or a full URL.
+    /// name such as "matrix.org" or a full URL. On a server without OAuth
+    /// that offers the classic password sign-in, the answer arrives as
+    /// passwordLoginNeeded() instead of a browser URL.
     Q_INVOKABLE void startLogin(const QString &homeserver);
+
+    /// Signs in with username and password, after startLogin() answered
+    /// passwordLoginNeeded(). The password is passed straight through to the
+    /// core and the send buffer is wiped; it is never stored or logged.
+    Q_INVOKABLE void startPasswordLogin(const QString &homeserver,
+                                        const QString &user,
+                                        const QString &password);
 
     /// Begins the device-code login against `homeserver`: the answer arrives
     /// as deviceCodeReady() with a URL and a code to show, and the sign-in
@@ -490,6 +503,10 @@ signals:
     /// The URL that has to be opened in the browser to continue a login.
     void loginUrlReady(const QString &url);
 
+    /// The homeserver has no OAuth and signs in with the classic password
+    /// flow; the login page has to show the username and password form.
+    void passwordLoginNeeded();
+
     /// A device-code login started: show `url` and `code`; the core keeps
     /// waiting until the user approves on another device.
     void deviceCodeReady(const QString &url, const QString &code);
@@ -515,7 +532,11 @@ private:
     /// Runs the stall watch exactly while there is something to watch.
     void updateStallWatch();
 
-    quint64 send(const QString &command, const QJsonObject &arguments = QJsonObject());
+    /// `wipePayload` overwrites the serialized command buffer after the core
+    /// has taken its copy — for the one command that carries a password.
+    quint64 send(const QString &command,
+                 const QJsonObject &arguments = QJsonObject(),
+                 bool wipePayload = false);
     void applySession(const QJsonObject &data);
     void reportNewMessages(const QJsonArray &operations);
     void updateSpaceChildren(const QJsonObject &spaces);

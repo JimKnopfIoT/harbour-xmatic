@@ -54,6 +54,12 @@ struct CoreConfig {
     /// Directory for data that may be thrown away at any time.
     #[serde(rename = "cacheDir")]
     cache_dir: PathBuf,
+
+    /// Base64 of the 32-byte store key from Sailfish Secrets. Absent when the
+    /// secrets store is unavailable — the core then runs unencrypted rather
+    /// than refusing to start. Never logged, wiped after decoding.
+    #[serde(rename = "storeKey", default)]
+    store_key: Option<String>,
 }
 
 /// Hands out a heap-allocated C string, or NULL if the value could not be
@@ -103,10 +109,21 @@ pub extern "C" fn xm_version() -> *mut c_char {
 pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore {
     let result = catch_unwind(AssertUnwindSafe(|| {
         let raw = unsafe { borrow_str(config_json) }?;
-        let config: CoreConfig = serde_json::from_str(raw).ok()?;
+        let mut config: CoreConfig = serde_json::from_str(raw).ok()?;
 
         let paths = session::Paths::new(&config.data_dir, &config.cache_dir);
         paths.prepare().ok()?;
+
+        let store_key = config
+            .store_key
+            .take()
+            .and_then(|mut encoded| {
+                let key = session::decode_key(&encoded);
+                // The base64 copy is as much the key as the key itself.
+                use zeroize::Zeroize;
+                encoded.zeroize();
+                key
+            });
 
         let runtime = tokio::runtime::Builder::new_multi_thread()
             .worker_threads(2)
@@ -116,7 +133,7 @@ pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore 
             .ok()?;
 
         let sink = Arc::new(Sink::new());
-        let commands = runtime::spawn(&runtime, paths, sink.clone());
+        let commands = runtime::spawn(&runtime, paths, store_key, sink.clone());
 
         Some(Box::into_raw(Box::new(XmCore {
             runtime,
@@ -173,10 +190,17 @@ pub unsafe extern "C" fn xm_core_send(core: *mut XmCore, command_json: *const c_
         };
 
         // The id is parsed separately so a malformed command can still be
-        // answered with the right id where one was given.
-        let id = serde_json::from_str::<serde_json::Value>(raw)
-            .ok()
-            .and_then(|value| value.get("id").and_then(|id| id.as_u64()))
+        // answered with the right id where one was given. Into a struct that
+        // holds nothing but the id: a full `Value` would copy every field of
+        // the command onto the heap unwiped — since the password login, one
+        // of those fields can be a password.
+        #[derive(serde::Deserialize)]
+        struct CommandId {
+            #[serde(default)]
+            id: u64,
+        }
+        let id = serde_json::from_str::<CommandId>(raw)
+            .map(|command| command.id)
             .unwrap_or(0);
 
         match serde_json::from_str::<Command>(raw) {

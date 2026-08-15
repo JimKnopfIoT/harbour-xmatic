@@ -538,6 +538,18 @@
         <source>This page signs in by itself as soon as the login is approved there.</source>
         <translation>Diese Seite meldet sich von selbst an, sobald du die Anmeldung dort bestätigt hast.</translation>
     </message>
+    <message>
+        <source>Username</source>
+        <translation>Benutzername</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <source>This server uses the classic password sign-in. The password is sent only to this server and is never saved on the device.</source>
+        <translation>Dieser Server verwendet die klassische Anmeldung mit Passwort. Das Passwort geht nur an diesen Server und wird nie auf dem Gerät gespeichert.</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -571,6 +583,10 @@
     <message>
         <source>Enter a homeserver first.</source>
         <translation>Gib zuerst einen Heimserver an.</translation>
+    </message>
+    <message>
+        <source>Enter username and password first.</source>
+        <translation>Gib zuerst Benutzername und Passwort ein.</translation>
     </message>
     <message>
         <source>The homeserver did not return a login page.</source>
