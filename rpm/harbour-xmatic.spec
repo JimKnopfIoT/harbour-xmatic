@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.17.1
+Version:    0.17.2
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -82,6 +82,15 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Aug 16 2026 harbour-xmatic contributors 0.17.2-1
+- Notifications follow the account's push rules. A room set to "mentions
+  only" — in any client, the rule lives on the account — no longer banners
+  and sounds for every message: only the events the rules say should notify
+  raise the banner, and the banner counts those. The unread badge and the
+  cover deliberately keep counting everything.
+- The message text no longer reads its own laid-out width back, which the
+  device journal reported as a binding loop on every wrapped message.
+
 * Sun Aug 16 2026 harbour-xmatic contributors 0.17.1-1
 - The bar of a reply quote now runs down its left side instead of across its
   top. The horizontal bar separated two identically styled names in a

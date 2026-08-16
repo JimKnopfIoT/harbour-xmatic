@@ -598,6 +598,11 @@ private:
     /// Last seen unread count per room, for spotting new activity.
     QHash<QString, int> m_unread;
 
+    /// Last seen notifying-events count per room (counted against the push
+    /// rules). The banner follows this one, not `m_unread` — see
+    /// reportNewMessages.
+    QHash<QString, int> m_notified;
+
     /// Per-space child structure from the core: the member rooms whose unread
     /// counts make up a space's badge, and how many children are sub-spaces.
     QHash<QString, QStringList> m_spaceChildRooms;
