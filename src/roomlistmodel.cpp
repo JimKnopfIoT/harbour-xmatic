@@ -62,17 +62,18 @@ QHash<int, QByteArray> RoomListModel::roleNames() const
     return names;
 }
 
-void RoomListModel::setMuted(const QString &roomId, bool muted)
+void RoomListModel::setNotifyMode(const QString &roomId, const QString &mode)
 {
     for (int i = 0; i < rows().count(); ++i) {
         QJsonObject row = rows().at(i);
         if (row.value(QStringLiteral("id")).toString() != roomId) {
             continue;
         }
-        if (row.value(QStringLiteral("muted")).toBool() == muted) {
+        if (row.value(QStringLiteral("notifyMode")).toString() == mode) {
             return;
         }
-        row.insert(QStringLiteral("muted"), muted);
+        row.insert(QStringLiteral("notifyMode"), mode);
+        row.insert(QStringLiteral("muted"), mode == QLatin1String("mute"));
 
         // Goes through the same path a diff from the core takes, so the row
         // stays a plain replacement and the indices cannot drift.

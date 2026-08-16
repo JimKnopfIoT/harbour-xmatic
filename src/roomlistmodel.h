@@ -36,14 +36,15 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
-    /// Writes a room's mute state into the row that carries it.
+    /// Writes a room's notification mode ("default", "all", "mentions",
+    /// "mute") into the row that carries it.
     ///
-    /// The core cannot push this: muting changes the account's push rules, and
-    /// the SDK's room list only emits a diff for changes it considers notable,
-    /// which that is not. Without this the row keeps the state it had when it
-    /// last arrived, so the marker never appears and the menu keeps offering
-    /// the action that was just carried out.
-    void setMuted(const QString &roomId, bool muted);
+    /// The core cannot push this: the mode changes the account's push rules,
+    /// and the SDK's room list only emits a diff for changes it considers
+    /// notable, which that is not. Without this the row keeps the state it
+    /// had when it last arrived, so the marker never appears and the menu
+    /// keeps offering the action that was just carried out.
+    void setNotifyMode(const QString &roomId, const QString &mode);
 
     int unreadRooms() const { return m_unreadRooms; }
     int unreadMessages() const { return m_unreadMessages; }

@@ -841,15 +841,23 @@ Page {
                     width: bubbleColumn.width + 2 * Theme.paddingMedium
                     height: bubbleColumn.height + 2 * Theme.paddingMedium
                     radius: Theme.paddingMedium
-                    // Both fills stay faint on purpose: the theme's text
+                    // Both fills stay faint by default: the theme's text
                     // palette is tuned to the page background, and an opaque
                     // secondaryHighlightColor fill can land on any lightness
                     // depending on the ambience — one tester's own bubble was
                     // light under a light palette and swallowed every colour
                     // on it. A tint keeps the palette readable everywhere;
-                    // the stronger one marks the own side.
-                    color: row.isOwn ? Theme.rgba(Theme.highlightBackgroundColor, 0.35)
-                                     : Theme.rgba(Theme.highlightBackgroundColor, 0.15)
+                    // the stronger one marks the own side. Colour and opacity
+                    // can be overridden per side on the appearance page.
+                    color: row.isOwn
+                           ? Theme.rgba(appearance.ownBubbleColor.length > 0
+                                        ? appearance.ownBubbleColor
+                                        : Theme.highlightBackgroundColor,
+                                        appearance.ownBubbleOpacity)
+                           : Theme.rgba(appearance.otherBubbleColor.length > 0
+                                        ? appearance.otherBubbleColor
+                                        : Theme.highlightBackgroundColor,
+                                        appearance.otherBubbleOpacity)
                     opacity: model.pending === true ? 0.5 : 1.0
 
                     Column {
@@ -880,7 +888,8 @@ Page {
                             width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
                             visible: !row.isOwn
                             font.pixelSize: Theme.fontSizeExtraSmall
-                            color: Theme.highlightColor
+                            color: appearance.nameColor.length > 0
+                                   ? appearance.nameColor : Theme.highlightColor
                             truncationMode: TruncationMode.Fade
                             textFormat: Text.PlainText
                             text: model.senderName || ""
@@ -933,7 +942,8 @@ Page {
                                     // known.
                                     visible: text.length > 0
                                     font.pixelSize: Theme.fontSizeExtraSmall
-                                    color: Theme.highlightColor
+                                    color: appearance.nameColor.length > 0
+                                           ? appearance.nameColor : Theme.highlightColor
                                     truncationMode: TruncationMode.Fade
                                     textFormat: Text.PlainText
                                     text: model.replyTo ? (model.replyTo.sender || "") : ""
@@ -1102,7 +1112,14 @@ Page {
                             wrapMode: Text.Wrap
                             font.pixelSize: Theme.fontSizeSmall
                             font.italic: model.kind !== "message"
-                            color: model.kind === "message" ? Theme.primaryColor : Theme.secondaryColor
+                            color: {
+                                if (model.kind !== "message") {
+                                    return Theme.secondaryColor
+                                }
+                                var own = row.isOwn ? appearance.ownTextColor
+                                                    : appearance.otherTextColor
+                                return own.length > 0 ? own : Theme.primaryColor
+                            }
                             MouseArea {
                                 anchors.fill: parent
                                 // Only for a video without a preview; with one the

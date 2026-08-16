@@ -582,10 +582,17 @@ void MatrixBridge::loadRoomInfo(const QString &roomId)
 
 void MatrixBridge::setRoomMuted(const QString &roomId, bool muted)
 {
+    // The quick toggle in the room list: muting sets the explicit rule,
+    // unmuting returns the room to the account default.
+    setRoomNotifyMode(roomId, muted ? QStringLiteral("mute") : QStringLiteral("default"));
+}
+
+void MatrixBridge::setRoomNotifyMode(const QString &roomId, const QString &mode)
+{
     QJsonObject arguments;
     arguments.insert(QStringLiteral("roomId"), roomId);
-    arguments.insert(QStringLiteral("muted"), muted);
-    send(QStringLiteral("room.setMuted"), arguments);
+    arguments.insert(QStringLiteral("mode"), mode);
+    send(QStringLiteral("room.setNotifyMode"), arguments);
 }
 
 void MatrixBridge::setRoomFavourite(const QString &roomId, bool favourite)
@@ -1301,15 +1308,15 @@ void MatrixBridge::handleMessage(const QString &json)
             return;
         }
 
-        if (command == QLatin1String("room.setMuted")) {
-            // Muting writes a push rule, which the SDK's room list does not
+        if (command == QLatin1String("room.setNotifyMode")) {
+            // The mode writes a push rule, which the SDK's room list does not
             // consider a notable change, so no diff follows and the row would
             // keep the old state until something else touched the room —
             // entering it, for instance. Write it into the models directly.
             const QString roomId = data.value(QStringLiteral("roomId")).toString();
-            const bool muted = data.value(QStringLiteral("muted")).toBool();
-            m_rooms.setMuted(roomId, muted);
-            m_spaceRooms.setMuted(roomId, muted);
+            const QString mode = data.value(QStringLiteral("mode")).toString();
+            m_rooms.setNotifyMode(roomId, mode);
+            m_spaceRooms.setNotifyMode(roomId, mode);
             return;
         }
 

@@ -123,6 +123,7 @@ fn summarize(item: &RoomListItem) -> Value {
             item.cached_user_defined_notification_mode(),
             Some(matrix_sdk::notification_settings::RoomNotificationMode::Mute)
         ),
+        "notifyMode": notify_mode_string(item.cached_user_defined_notification_mode()),
         "membership": match item.state() {
             RoomState::Joined => "joined",
             RoomState::Invited => "invited",
@@ -687,16 +688,38 @@ pub async fn remove_child(client: &Client, space_id: &str, child_id: &str) -> Re
 /// applies again. The change lands in the account's push rules and syncs to
 /// every client.
 ///
-/// Unmuting goes through the SDK's `unmute_room` rather than just deleting the
-/// per-room rules: when the account default is itself "mute", deleting the
-/// override leaves the room muted, and the room has to be given an explicit
-/// "all messages" rule instead.
+/// A room's per-room notification override in the UI's vocabulary,
+/// `"default"` when the room follows the account.
+pub fn notify_mode_string(
+    mode: Option<matrix_sdk::notification_settings::RoomNotificationMode>,
+) -> &'static str {
+    use matrix_sdk::notification_settings::RoomNotificationMode;
+    match mode {
+        None => "default",
+        Some(RoomNotificationMode::AllMessages) => "all",
+        Some(RoomNotificationMode::MentionsAndKeywordsOnly) => "mentions",
+        Some(RoomNotificationMode::Mute) => "mute",
+    }
+}
+
+/// Sets how a room may notify: `"default"` removes the per-room override and
+/// returns the room to the account default; `"all"`, `"mentions"` and
+/// `"mute"` set an explicit per-room rule.
+///
+/// Leaving "mute" for "default" goes through the SDK's `unmute_room` rather
+/// than just deleting the per-room rules: when the account default is itself
+/// "mute", deleting the override leaves the room muted, and the room has to
+/// be given an explicit "all messages" rule instead.
 ///
 /// The room's cached notification mode is written back afterwards. The SDK
 /// keeps that cache — which is what the room list reads — but only refreshes
 /// it while processing a sync response, so without this the list would keep
 /// showing the old state until the next restart.
-pub async fn set_muted(client: &Client, room_id: &str, muted: bool) -> Result<(), String> {
+pub async fn set_notification_mode(
+    client: &Client,
+    room_id: &str,
+    mode: &str,
+) -> Result<(), String> {
     use matrix_sdk::notification_settings::{IsEncrypted, IsOneToOne, RoomNotificationMode};
 
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
@@ -705,30 +728,55 @@ pub async fn set_muted(client: &Client, room_id: &str, muted: bool) -> Result<()
         .ok_or_else(|| "room not found".to_owned())?;
     let settings = client.notification_settings().await;
 
-    if muted {
-        settings
-            .set_room_notification_mode(&parsed, RoomNotificationMode::Mute)
+    let explicit = match mode {
+        "all" => Some(RoomNotificationMode::AllMessages),
+        "mentions" => Some(RoomNotificationMode::MentionsAndKeywordsOnly),
+        "mute" => Some(RoomNotificationMode::Mute),
+        "default" => None,
+        _ => return Err("unknown notification mode".to_owned()),
+    };
+
+    match explicit {
+        Some(wanted) => settings
+            .set_room_notification_mode(&parsed, wanted)
             .await
-            .map_err(|error| format!("could not mute the room: {error}"))?;
-    } else {
-        // From the push rules' point of view a "one to one" room is one with
-        // exactly two members, encrypted and unencrypted rooms have separate
-        // defaults, so both have to be passed to find the right default.
-        settings
-            .unmute_room(
-                &parsed,
-                IsEncrypted::from(room.encryption_state().is_encrypted()),
-                IsOneToOne::from(room.active_members_count() == 2),
-            )
-            .await
-            .map_err(|error| format!("could not unmute the room: {error}"))?;
+            .map_err(|error| format!("could not change the room's notifications: {error}"))?,
+        None => {
+            let was_muted = matches!(
+                settings
+                    .get_user_defined_room_notification_mode(&parsed)
+                    .await,
+                Some(RoomNotificationMode::Mute)
+            );
+            if was_muted {
+                // From the push rules' point of view a "one to one" room is
+                // one with exactly two members, encrypted and unencrypted
+                // rooms have separate defaults, so both have to be passed to
+                // find the right default.
+                settings
+                    .unmute_room(
+                        &parsed,
+                        IsEncrypted::from(room.encryption_state().is_encrypted()),
+                        IsOneToOne::from(room.active_members_count() == 2),
+                    )
+                    .await
+                    .map_err(|error| format!("could not unmute the room: {error}"))?;
+            } else {
+                settings
+                    .delete_user_defined_room_rules(&parsed)
+                    .await
+                    .map_err(|error| {
+                        format!("could not restore the room's notifications: {error}")
+                    })?;
+            }
+        }
     }
 
     match settings
         .get_user_defined_room_notification_mode(&parsed)
         .await
     {
-        Some(mode) => room.update_cached_user_defined_notification_mode(mode),
+        Some(current) => room.update_cached_user_defined_notification_mode(current),
         None => room.clear_user_defined_notification_mode(),
     }
     Ok(())

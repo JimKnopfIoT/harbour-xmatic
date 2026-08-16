@@ -16,6 +16,7 @@
 
 #include <sys/prctl.h>
 
+#include "appearancesettings.h"
 #include "matrixbridge.h"
 #include "secretskeeper.h"
 
@@ -74,8 +75,11 @@ int main(int argc, char *argv[])
     }
     qInfo("xmatic: %s", qPrintable(bridge.coreVersion()));
 
+    AppearanceSettings appearance;
+
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     view->rootContext()->setContextProperty(QStringLiteral("matrix"), &bridge);
+    view->rootContext()->setContextProperty(QStringLiteral("appearance"), &appearance);
     view->rootContext()->setContextProperty(QStringLiteral("appVersion"),
                                             QStringLiteral(XMATIC_VERSION_STRING));
     view->setSource(SailfishApp::pathTo(QStringLiteral("qml/harbour-xmatic.qml")));

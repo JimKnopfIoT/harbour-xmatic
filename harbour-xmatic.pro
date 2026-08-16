@@ -40,6 +40,7 @@ LIBS += $$system(pkg-config --libs sailfishsecrets)
 
 SOURCES += \
     src/harbour-xmatic.cpp \
+    src/appearancesettings.cpp \
     src/difflistmodel.cpp \
     src/matrixbridge.cpp \
     src/roomlistmodel.cpp \
@@ -55,6 +56,7 @@ SOURCES += \
     src/secretskeeper.cpp
 
 HEADERS += \
+    src/appearancesettings.h \
     src/difflistmodel.h \
     src/matrixbridge.h \
     src/secretskeeper.h \
@@ -163,6 +165,8 @@ DISTFILES += \
     qml/pages/MoveToSpacePage.qml \
     qml/pages/RoomPage.qml \
     qml/pages/RoomInfoPage.qml \
+    qml/pages/AppearancePage.qml \
+    qml/pages/ColorField.qml \
     qml/pages/VerificationPage.qml \
     qml/pages/EncryptionPage.qml \
     qml/pages/LogoutDialog.qml \
