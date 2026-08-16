@@ -74,6 +74,14 @@
         <source>An avatar is set. Other people see it next to your name.</source>
         <translation>Ein Avatar ist gesetzt. Andere sehen ihn neben deinem Namen.</translation>
     </message>
+    <message>
+        <source>This app</source>
+        <translation>Diese App</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>Darstellung</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -115,6 +123,66 @@
     <message>
         <source>Adding to space</source>
         <translation>Füge zum Space hinzu</translation>
+    </message>
+</context>
+<context>
+    <name>AppearancePage</name>
+    <message>
+        <source>Follow the ambience again</source>
+        <translation>Wieder der Ambience folgen</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>Darstellung</translation>
+    </message>
+    <message>
+        <source>Somebody</source>
+        <comment>sample sender on the appearance page</comment>
+        <translation>Jemand</translation>
+    </message>
+    <message>
+        <source>A received message looks like this.</source>
+        <translation>So sieht eine empfangene Nachricht aus.</translation>
+    </message>
+    <message>
+        <source>And one of my own like this.</source>
+        <translation>Und so eine eigene.</translation>
+    </message>
+    <message>
+        <source>Bubble opacity</source>
+        <translation>Deckkraft der Sprechblase</translation>
+    </message>
+    <message>
+        <source>Sender name</source>
+        <translation>Absendername</translation>
+    </message>
+    <message>
+        <source>Colouring</source>
+        <translation>Es wird gefärbt</translation>
+    </message>
+    <message>
+        <source>Their bubble</source>
+        <translation>Sprechblase der anderen</translation>
+    </message>
+    <message>
+        <source>My bubble</source>
+        <translation>Meine Sprechblase</translation>
+    </message>
+    <message>
+        <source>Their text</source>
+        <translation>Text der anderen</translation>
+    </message>
+    <message>
+        <source>My text</source>
+        <translation>Mein Text</translation>
+    </message>
+    <message>
+        <source>Follow the ambience</source>
+        <translation>Der Ambience folgen</translation>
+    </message>
+    <message>
+        <source>Off, the colour below applies</source>
+        <translation>Ausgeschaltet gilt die Farbe darunter</translation>
     </message>
 </context>
 <context>
@@ -205,6 +273,13 @@
     <message>
         <source>Hang up</source>
         <translation>Auflegen</translation>
+    </message>
+</context>
+<context>
+    <name>ColorField</name>
+    <message>
+        <source>Hex code</source>
+        <translation>Hex-Code</translation>
     </message>
 </context>
 <context>
@@ -833,10 +908,6 @@
         <translation>Dieser Raum für mich</translation>
     </message>
     <message>
-        <source>Mute notifications</source>
-        <translation>Benachrichtigungen stummschalten</translation>
-    </message>
-    <message>
         <source>Favourite</source>
         <translation>Favorit</translation>
     </message>
@@ -915,6 +986,30 @@
     <message>
         <source>Leave</source>
         <translation>Verlassen</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Benachrichtigungen</translation>
+    </message>
+    <message>
+        <source>Stored with the account, so it holds in every client</source>
+        <translation>Wird beim Konto gespeichert und gilt so in jedem Client</translation>
+    </message>
+    <message>
+        <source>Account default</source>
+        <translation>Kontostandard</translation>
+    </message>
+    <message>
+        <source>Every message</source>
+        <translation>Jede Nachricht</translation>
+    </message>
+    <message>
+        <source>Only mentions and keywords</source>
+        <translation>Nur Erwähnungen und Stichwörter</translation>
+    </message>
+    <message>
+        <source>Nothing (muted)</source>
+        <translation>Keine (stumm)</translation>
     </message>
 </context>
 <context>

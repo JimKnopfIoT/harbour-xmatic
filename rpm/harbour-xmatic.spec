@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.17.2
+Version:    0.18.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -82,6 +82,19 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Aug 16 2026 harbour-xmatic contributors 0.18.0-1
+- A room can ask for mentions only, right here: the room page's mute switch
+  became a four-way choice — account default, every message, mentions and
+  keywords only, muted. Stored with the account's push rules, so it holds in
+  every client, and the banner already follows it.
+- The conversation's colours are the user's now. A new appearance page under
+  Account offers one spectrum field with a circle marker, a grey ramp, a hex
+  code that reads and types, and RGB sliders for the fine end; a selector
+  says what is being coloured — either bubble, the sender name, either text
+  colour — plus an opacity slider for the bubble fills. Everything defaults
+  to following the ambience, a live preview shows the effect first, and one
+  pull-down entry resets the lot.
+
 * Sun Aug 16 2026 harbour-xmatic contributors 0.17.2-1
 - Notifications follow the account's push rules. A room set to "mentions
   only" — in any client, the rule lives on the account — no longer banners

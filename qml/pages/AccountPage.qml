@@ -86,6 +86,16 @@ Page {
                 text: qsTr("An avatar is set. Other people see it next to your name.")
             }
 
+            SectionHeader {
+                text: qsTr("This app")
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Appearance")
+                onClicked: pageStack.push(Qt.resolvedUrl("AppearancePage.qml"))
+            }
+
             Item {
                 width: 1
                 height: Theme.paddingLarge

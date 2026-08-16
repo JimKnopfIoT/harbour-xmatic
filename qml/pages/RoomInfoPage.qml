@@ -31,8 +31,16 @@ Page {
     property bool infoLoaded: false
 
     // Held separately because they are written from this page.
-    property bool muted: false
+    property string notifyMode: "default"
     property bool favourite: false
+
+    function applyNotifyMode(mode) {
+        if (mode === notifyMode) {
+            return
+        }
+        notifyMode = mode
+        matrix.setRoomNotifyMode(roomId, mode)
+    }
     property bool lowPriority: false
     property bool encrypted: false
 
@@ -102,7 +110,7 @@ Page {
                 return
             }
             page.info = info
-            page.muted = info.muted === true
+            page.notifyMode = info.notifyMode || "default"
             page.favourite = info.favourite === true
             page.lowPriority = info.lowPriority === true
             page.encrypted = info.encrypted === true
@@ -282,15 +290,37 @@ Page {
             // action on the row. Here they additionally show their state — the
             // list can only show that something is set, not offer the reverse
             // reading at a glance.
-            TextSwitch {
+            ComboBox {
                 visible: !page.invited
-                text: qsTr("Mute notifications")
-                checked: page.muted
-                automaticCheck: false
                 enabled: page.infoLoaded
-                onClicked: {
-                    page.muted = !page.muted
-                    matrix.setRoomMuted(page.roomId, page.muted)
+                label: qsTr("Notifications")
+                description: qsTr("Stored with the account, so it holds in every client")
+
+                // Index follows the page state, never the other way round: a
+                // binding on currentIndex would fire during load and write
+                // the first entry into every room that was merely opened.
+                currentIndex: ["default", "all", "mentions", "mute"]
+                              .indexOf(page.notifyMode)
+
+                // Each entry applies itself: a handler on currentIndex would
+                // also run when the loaded state arrives and re-send it.
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Account default")
+                        onClicked: page.applyNotifyMode("default")
+                    }
+                    MenuItem {
+                        text: qsTr("Every message")
+                        onClicked: page.applyNotifyMode("all")
+                    }
+                    MenuItem {
+                        text: qsTr("Only mentions and keywords")
+                        onClicked: page.applyNotifyMode("mentions")
+                    }
+                    MenuItem {
+                        text: qsTr("Nothing (muted)")
+                        onClicked: page.applyNotifyMode("mute")
+                    }
                 }
             }
 

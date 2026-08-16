@@ -424,13 +424,15 @@ pub enum Command {
     #[serde(rename = "account.setAvatar")]
     AccountSetAvatar { id: u64, path: String },
 
-    /// Mute a room's notifications, or return it to the account default.
-    #[serde(rename = "room.setMuted")]
-    RoomSetMuted {
+    /// Set how a room may notify: the account default ("default"),
+    /// everything ("all"), mentions and keywords only ("mentions"), or
+    /// nothing ("mute").
+    #[serde(rename = "room.setNotifyMode")]
+    RoomSetNotifyMode {
         id: u64,
         #[serde(rename = "roomId")]
         room_id: String,
-        muted: bool,
+        mode: String,
     },
 
     /// Mark a room as a favourite, or clear the tag. Clears low priority.
@@ -575,7 +577,7 @@ impl Command {
             | Command::AccountGet { id }
             | Command::AccountSetDisplayName { id, .. }
             | Command::AccountSetAvatar { id, .. }
-            | Command::RoomSetMuted { id, .. }
+            | Command::RoomSetNotifyMode { id, .. }
             | Command::RoomSetFavourite { id, .. }
             | Command::RoomSetLowPriority { id, .. }
             | Command::TimelinePin { id, .. }

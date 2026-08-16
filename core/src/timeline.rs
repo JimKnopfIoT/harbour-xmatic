@@ -1058,6 +1058,9 @@ pub async fn room_info(client: &Client, room_id: &str) -> Result<Value, String> 
             room.cached_user_defined_notification_mode(),
             Some(matrix_sdk::notification_settings::RoomNotificationMode::Mute)
         ),
+        "notifyMode": crate::roomlist::notify_mode_string(
+            room.cached_user_defined_notification_mode()
+        ),
         "successor": successor(&room).await,
         "predecessor": predecessor,
     }))

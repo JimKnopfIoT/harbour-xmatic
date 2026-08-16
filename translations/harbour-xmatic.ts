@@ -83,12 +83,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AccountPage.qml" line="107"/>
+        <location filename="../qml/pages/AccountPage.qml" line="90"/>
+        <source>This app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AccountPage.qml" line="95"/>
+        <source>Appearance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AccountPage.qml" line="117"/>
         <source>Sign out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AccountPage.qml" line="112"/>
+        <location filename="../qml/pages/AccountPage.qml" line="122"/>
         <source>Encryption</source>
         <translation type="unfinished"></translation>
     </message>
@@ -141,6 +151,80 @@
     <message>
         <location filename="../qml/pages/AddToSpacePage.qml" line="95"/>
         <source>Join or start a chat first, then add it to a space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AppearancePage</name>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="79"/>
+        <source>Follow the ambience again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="94"/>
+        <source>Appearance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="119"/>
+        <source>Somebody</source>
+        <comment>sample sender on the appearance page</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="125"/>
+        <source>A received message looks like this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="144"/>
+        <source>And one of my own like this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="151"/>
+        <source>Colouring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="155"/>
+        <source>Their bubble</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="156"/>
+        <source>My bubble</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="158"/>
+        <source>Their text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="159"/>
+        <source>My text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="173"/>
+        <source>Follow the ambience</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="174"/>
+        <source>Off, the colour below applies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="197"/>
+        <source>Bubble opacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="157"/>
+        <source>Sender name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -253,6 +337,14 @@
     <message>
         <location filename="../qml/pages/CallPage.qml" line="98"/>
         <source>Hang up</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ColorField</name>
+    <message>
+        <location filename="../qml/pages/ColorField.qml" line="233"/>
+        <source>Hex code</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -735,23 +827,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="935"/>
+        <location filename="../src/matrixbridge.cpp" line="942"/>
         <source>Enter your recovery key first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1062"/>
-        <location filename="../src/matrixbridge.cpp" line="1090"/>
+        <location filename="../src/matrixbridge.cpp" line="1069"/>
+        <location filename="../src/matrixbridge.cpp" line="1097"/>
         <source>The file could not be saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1260"/>
+        <location filename="../src/matrixbridge.cpp" line="1267"/>
         <source>The homeserver did not return a login page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1280"/>
+        <location filename="../src/matrixbridge.cpp" line="1287"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -975,167 +1067,192 @@
 <context>
     <name>RoomInfoPage</name>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="125"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="133"/>
         <source>Leave room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="78"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="86"/>
         <source>Leaving room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="138"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="146"/>
         <source>Room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="179"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="187"/>
         <source>Replaced — open the new room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="180"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="188"/>
         <source>Replaced — join the new room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="204"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="212"/>
         <source>Older messages in the previous room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="210"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="218"/>
         <source>People and messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="231"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="239"/>
         <source>Members: %1 (%2 invited)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="234"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="242"/>
         <source>Members: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="253"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="261"/>
         <source>Pinned messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="272"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="280"/>
         <source>Invite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="278"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="286"/>
         <source>This room for me</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="287"/>
-        <source>Mute notifications</source>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="296"/>
+        <source>Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="299"/>
-        <source>Favourite</source>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="297"/>
+        <source>Stored with the account, so it holds in every client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="316"/>
-        <source>Low priority</source>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="309"/>
+        <source>Account default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="313"/>
+        <source>Every message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/RoomInfoPage.qml" line="317"/>
-        <source>Sorts to the bottom of the list and stays quiet</source>
+        <source>Only mentions and keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="331"/>
-        <source>Details</source>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="321"/>
+        <source>Nothing (muted)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="335"/>
-        <source>Encryption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="336"/>
-        <source>End-to-end encrypted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="337"/>
-        <source>Not encrypted</source>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="329"/>
+        <source>Favourite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/RoomInfoPage.qml" line="346"/>
+        <source>Low priority</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="347"/>
+        <source>Sorts to the bottom of the list and stays quiet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="361"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="365"/>
+        <source>Encryption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="366"/>
+        <source>End-to-end encrypted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="367"/>
+        <source>Not encrypted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="376"/>
         <source>Turning on encryption</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="364"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="394"/>
         <source>Turn on encryption</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="369"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="399"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="375"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="405"/>
         <source>Access</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="377"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="407"/>
         <source>Public</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="377"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="407"/>
         <source>On invitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="382"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="412"/>
         <source>Room version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="403"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="433"/>
         <source>Room ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="417"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="447"/>
         <source>Room ID copied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="61"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="69"/>
         <source>this room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="69"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="77"/>
         <source>Really leave this room?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="71"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="79"/>
         <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomInfoPage.qml" line="72"/>
+        <location filename="../qml/pages/RoomInfoPage.qml" line="80"/>
         <source>Leave</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1434,32 +1551,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1070"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1080"/>
         <source>Voice message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1117"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1134"/>
         <source>Cannot be decrypted — this device is missing the key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1120"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1137"/>
         <source>Message deleted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1153"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1170"/>
         <source>not sent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1154"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1171"/>
         <source>edited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1232"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1249"/>
         <source>No messages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1519,32 +1636,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1283"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1300"/>
         <source>Accept invitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1309"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1326"/>
         <source>Recording… %1 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1324"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1341"/>
         <source>Reply to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1347"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1364"/>
         <source>Editing message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1384"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1401"/>
         <source>New text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1385"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1402"/>
         <source>Message</source>
         <translation type="unfinished"></translation>
     </message>

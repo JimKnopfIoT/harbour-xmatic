@@ -407,8 +407,8 @@ async fn handle(state: Arc<State>, command: Command) {
             account_set_display_name(&state, id, name).await
         }
         Command::AccountSetAvatar { path, .. } => account_set_avatar(&state, id, path).await,
-        Command::RoomSetMuted { room_id, muted, .. } => {
-            room_set_muted(&state, id, room_id, muted).await
+        Command::RoomSetNotifyMode { room_id, mode, .. } => {
+            room_set_notify_mode(&state, id, room_id, mode).await
         }
         Command::RoomSetFavourite {
             room_id, favourite, ..
@@ -484,15 +484,16 @@ async fn emit_profile(state: &Arc<State>) {
     }
 }
 
-async fn room_set_muted(state: &Arc<State>, id: u64, room_id: String, muted: bool) {
+async fn room_set_notify_mode(state: &Arc<State>, id: u64, room_id: String, mode: String) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
-    match roomlist::set_muted(&client, &room_id, muted).await {
-        Ok(()) => state
-            .sink
-            .emit(reply_ok(id, json!({ "roomId": room_id, "muted": muted }))),
+    match roomlist::set_notification_mode(&client, &room_id, &mode).await {
+        Ok(()) => state.sink.emit(reply_ok(
+            id,
+            json!({ "roomId": room_id, "mode": mode, "muted": mode == "mute" }),
+        )),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }

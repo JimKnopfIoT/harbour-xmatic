@@ -255,6 +255,9 @@ public:
 
     /// Mutes a room's notifications, or returns it to the default.
     Q_INVOKABLE void setRoomMuted(const QString &roomId, bool muted);
+    /// "default", "all", "mentions" or "mute" — the per-room override on the
+    /// account's push rules, so it holds in every client.
+    Q_INVOKABLE void setRoomNotifyMode(const QString &roomId, const QString &mode);
 
     /// Marks a room as a favourite, or clears the tag. Clears low priority.
     Q_INVOKABLE void setRoomFavourite(const QString &roomId, bool favourite);
