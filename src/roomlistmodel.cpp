@@ -5,6 +5,42 @@
 RoomListModel::RoomListModel(QObject *parent)
     : DiffListModel(parent)
 {
+    // Every way a row can change goes through these four signals, so the
+    // totals can only be recomputed here — no caller has to remember to.
+    connect(this, &QAbstractItemModel::rowsInserted,
+            this, &RoomListModel::recountUnread);
+    connect(this, &QAbstractItemModel::rowsRemoved,
+            this, &RoomListModel::recountUnread);
+    connect(this, &QAbstractItemModel::modelReset,
+            this, &RoomListModel::recountUnread);
+    connect(this, &QAbstractItemModel::dataChanged,
+            this, &RoomListModel::recountUnread);
+}
+
+void RoomListModel::recountUnread()
+{
+    int roomsWithNews = 0;
+    int messages = 0;
+    for (const QJsonObject &row : rows()) {
+        if (row.value(QStringLiteral("space")).toBool()
+                || row.value(QStringLiteral("muted")).toBool()
+                || row.value(QStringLiteral("membership")).toString()
+                   != QLatin1String("joined")) {
+            continue;
+        }
+        const int unread = row.value(QStringLiteral("unread")).toInt();
+        if (unread <= 0) {
+            continue;
+        }
+        ++roomsWithNews;
+        messages += unread;
+    }
+    if (roomsWithNews == m_unreadRooms && messages == m_unreadMessages) {
+        return;
+    }
+    m_unreadRooms = roomsWithNews;
+    m_unreadMessages = messages;
+    emit unreadTotalsChanged();
 }
 
 QHash<int, QByteArray> RoomListModel::roleNames() const

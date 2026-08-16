@@ -9,6 +9,12 @@ class RoomListModel : public DiffListModel
 {
     Q_OBJECT
 
+    /// Totals for the cover: in how many rooms is something new, and how many
+    /// messages is that. Spaces, invitations and muted rooms stay out of both
+    /// — a muted room asked not to be advertised.
+    Q_PROPERTY(int unreadRooms READ unreadRooms NOTIFY unreadTotalsChanged)
+    Q_PROPERTY(int unreadMessages READ unreadMessages NOTIFY unreadTotalsChanged)
+
 public:
     enum Role {
         IdRole = Qt::UserRole + 1,
@@ -39,8 +45,20 @@ public:
     /// the action that was just carried out.
     void setMuted(const QString &roomId, bool muted);
 
+    int unreadRooms() const { return m_unreadRooms; }
+    int unreadMessages() const { return m_unreadMessages; }
+
+signals:
+    void unreadTotalsChanged();
+
 protected:
     QVariant valueFor(const QJsonObject &row, int role) const override;
+
+private:
+    void recountUnread();
+
+    int m_unreadRooms = 0;
+    int m_unreadMessages = 0;
 };
 
 #endif // ROOMLISTMODEL_H

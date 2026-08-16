@@ -48,9 +48,23 @@ CoverBackground {
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
             wrapMode: Text.Wrap
-            text: matrix.sessionState === "signed-in"
-                  ? matrix.userId
-                  : (matrix.busy ? qsTr("signing in…") : qsTr("not signed in"))
+            // Only while there is no session: the cover sits on the home
+            // screen, and the account's identifier is nobody's business
+            // there. Signed in, the tile shows the mark and nothing else.
+            visible: matrix.sessionState !== "signed-in"
+            text: matrix.busy ? qsTr("signing in…") : qsTr("not signed in")
+        }
+
+        Label {
+            // Rooms with news over the messages they hold, 2/7 say — the
+            // compact notation the daemonless messengers on this platform
+            // use, and deliberately free of any account detail: the cover
+            // sits on the home screen.
+            width: parent.width
+            font.pixelSize: Theme.fontSizeHuge
+            color: Theme.highlightColor
+            visible: matrix.sessionState === "signed-in" && matrix.unreadRooms > 0
+            text: matrix.unreadRooms + "/" + matrix.unreadMessages
         }
     }
 }
