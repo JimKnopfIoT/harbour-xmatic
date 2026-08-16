@@ -1074,8 +1074,27 @@ Page {
                         Label {
                             id: bodyLabel
 
-                            width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
+                            // Measured by the invisible twin below, never by
+                            // the own implicit width: with wrap the implicit
+                            // width follows the laid-out width in this Qt,
+                            // and reading it back is the width binding loop
+                            // the device journal kept reporting. The twin
+                            // never wraps, so its implicit width is the
+                            // text's natural width and depends on nothing
+                            // but text and font.
+                            width: Math.min(bodyMeasure.implicitWidth,
+                                            bubbleColumn.maxTextWidth)
                             visible: !row.hasPreview && !row.isAudio
+
+                            Label {
+                                id: bodyMeasure
+
+                                visible: false
+                                textFormat: Text.PlainText
+                                font.pixelSize: bodyLabel.font.pixelSize
+                                font.italic: bodyLabel.font.italic
+                                text: bodyLabel.text
+                            }
                             // Plain text on purpose: a message body is untrusted,
                             // and AutoText would render anything that looks like
                             // HTML — including <img> that phones home.

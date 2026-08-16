@@ -102,6 +102,11 @@ fn summarize(item: &RoomListItem) -> Value {
             .map(|name| name.to_string())
             .unwrap_or_default(),
         "unread": item.num_unread_messages(),
+        // Counted client-side against the account's push rules: only events
+        // whose rules say "notify". This is the number a banner may follow —
+        // `unread` counts everything and would ignore a room set to
+        // mentions-only.
+        "notifications": item.num_unread_notifications(),
         "mentions": item.num_unread_mentions(),
         "encrypted": item.encryption_state().is_encrypted(),
         "space": item.is_space(),

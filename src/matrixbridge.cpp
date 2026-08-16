@@ -1556,6 +1556,7 @@ void MatrixBridge::handleMessage(const QString &json)
             m_spaces.clear();
             m_spaceRooms.clear();
             m_unread.clear();
+            m_notified.clear();
             m_spaceChildRooms.clear();
             m_spaceSubspaces.clear();
             bumpSpaceCounts();
@@ -1606,8 +1607,16 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
             continue;
         }
         const int unread = room.value(QStringLiteral("unread")).toInt();
-        const int previous = m_unread.value(id, unread);
         m_unread.insert(id, unread);
+
+        // The banner follows the notifying events, counted client-side
+        // against the account's push rules — `unread` counts everything, so
+        // a room set to "mentions only" (here or in any other client) kept
+        // notifying for every message. The unread badge deliberately keeps
+        // counting everything; only the banner is governed by the rules.
+        const int notifications = room.value(QStringLiteral("notifications")).toInt();
+        const int previous = m_notified.value(id, notifications);
+        m_notified.insert(id, notifications);
 
         // Muted and low-priority rooms still count their unread badge but
         // never raise a banner — that is the whole point of both.
@@ -1630,10 +1639,13 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
         // precisely the room someone tests with, which is how it was found.
         const bool onScreen = !m_visibleRoomId.isEmpty() && id == m_visibleRoomId
                 && QGuiApplication::applicationState() == Qt::ApplicationActive;
-        if (unread > previous && !onScreen) {
+        // The count shown is the notifying one too: in a mentions-only room
+        // "50 new messages" over one lone mention would point at the wrong
+        // thing.
+        if (notifications > previous && !onScreen) {
             emit roomActivity(id,
                               room.value(QStringLiteral("name")).toString(),
-                              unread,
+                              notifications,
                               room.value(QStringLiteral("mentions")).toInt());
         }
     }
