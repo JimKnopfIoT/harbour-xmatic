@@ -132,6 +132,9 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     // The UI reads the grouped proxy; the core keeps filling the flat source.
     m_roomsSorted.setSourceModel(&m_rooms);
 
+    connect(&m_rooms, &RoomListModel::unreadTotalsChanged,
+            this, &MatrixBridge::unreadTotalsChanged);
+
     // Diagnostics only, and only the number of rooms — never their names or
     // identifiers.
     connect(&m_rooms, &RoomListModel::countChanged, this, [this]() {

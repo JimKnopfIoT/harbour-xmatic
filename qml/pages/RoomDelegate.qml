@@ -153,18 +153,30 @@ ListItem {
             verticalCenter: parent.verticalCenter
         }
         visible: model.unread > 0 || model.mentions > 0
-        width: Math.max(Theme.itemSizeExtraSmall / 2, badgeLabel.implicitWidth + Theme.paddingMedium)
-        height: Theme.itemSizeExtraSmall / 2
+        // Sized from the number so pill and digits grow together; the
+        // fixed-height form kept the count near the smallest font size
+        // and it read as a speck on the device.
+        width: Math.max(height, badgeLabel.implicitWidth + Theme.paddingMedium)
+        height: badgeLabel.implicitHeight + Theme.paddingSmall
         radius: height / 2
-        color: model.mentions > 0 ? Theme.highlightColor : Theme.secondaryHighlightColor
-        opacity: model.mentions > 0 ? 1.0 : 0.4
+        // highlightBackgroundColor at the pressed-item opacity is the one
+        // highlight fill the ambience guarantees to sit under primary text —
+        // Silica paints pressed list items exactly this way. Only at that
+        // opacity: the full-strength fill looked fine on a dark ambience and
+        // swallowed the number on a light one, the same trap as every other
+        // strong fill before it. A mention therefore marks itself with a
+        // ring, not a stronger fill.
+        color: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
+        border.color: Theme.highlightColor
+        border.width: model.mentions > 0 ? Math.max(2, Theme.paddingSmall / 3) : 0
 
         Label {
             id: badgeLabel
 
             anchors.centerIn: parent
-            font.pixelSize: Theme.fontSizeTiny
-            color: Theme.highlightDimmerColor
+            font.pixelSize: Theme.fontSizeSmall
+            font.bold: true
+            color: Theme.primaryColor
             text: model.mentions > 0 ? model.mentions : model.unread
         }
     }

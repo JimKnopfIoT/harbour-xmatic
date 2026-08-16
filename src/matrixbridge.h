@@ -42,6 +42,10 @@ class MatrixBridge : public QObject
     Q_PROPERTY(bool paginating READ paginating NOTIFY paginatingChanged)
     Q_PROPERTY(QString lastError READ lastError NOTIFY lastErrorChanged)
     Q_PROPERTY(QObject *rooms READ rooms CONSTANT)
+    // Forwarded from the room list so the cover, which only sees the bridge,
+    // can show "rooms with news / messages" without touching a model.
+    Q_PROPERTY(int unreadRooms READ unreadRooms NOTIFY unreadTotalsChanged)
+    Q_PROPERTY(int unreadMessages READ unreadMessages NOTIFY unreadTotalsChanged)
     Q_PROPERTY(QObject *spaces READ spaces CONSTANT)
     Q_PROPERTY(QObject *spaceRooms READ spaceRooms CONSTANT)
     Q_PROPERTY(QString startPage READ startPage WRITE setStartPage NOTIFY startPageChanged)
@@ -104,6 +108,8 @@ public:
     // The UI sees the grouped view (favourites up, low priority down); the
     // core still drives the flat source underneath.
     QObject *rooms() { return &m_roomsSorted; }
+    int unreadRooms() const { return m_rooms.unreadRooms(); }
+    int unreadMessages() const { return m_rooms.unreadMessages(); }
     QObject *spaces() { return &m_spaces; }
     QObject *spaceRooms() { return &m_spaceRooms; }
     int spaceCounts() const { return m_spaceCountsRevision; }
@@ -439,6 +445,7 @@ public:
 signals:
     void startPageChanged();
     void spaceCountsChanged();
+    void unreadTotalsChanged();
 
     void sessionChanged();
     void syncStateChanged();

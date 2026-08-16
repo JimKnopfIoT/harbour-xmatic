@@ -26,6 +26,21 @@ ROOT="$(dirname "$HERE")"
 . "$HERE/sdk-env.sh"
 sdk_env_check
 
+# The core reports its own version via xm_version(), taken from Cargo.toml.
+# That string once trailed the package version by eleven releases and sent a
+# debugging round after the wrong build — so a mismatch stops the build here.
+SPEC_VERSION="$(sed -n 's/^Version:[[:space:]]*//p' "$ROOT/rpm/harbour-xmatic.spec")"
+CARGO_VERSION="$(sed -n 's/^version = "\(.*\)"$/\1/p' "$ROOT/core/Cargo.toml" | head -1)"
+if [ -z "$SPEC_VERSION" ] || [ -z "$CARGO_VERSION" ]; then
+    echo "error: could not read the version from rpm/harbour-xmatic.spec or core/Cargo.toml" >&2
+    exit 1
+fi
+if [ "$SPEC_VERSION" != "$CARGO_VERSION" ]; then
+    echo "error: version mismatch — rpm/harbour-xmatic.spec says $SPEC_VERSION," >&2
+    echo "       core/Cargo.toml says $CARGO_VERSION. Align both before building." >&2
+    exit 1
+fi
+
 PROFILE=release
 CARGO_PROFILE_FLAG=(--release)
 if [ "${1:-}" = "--debug" ]; then
@@ -79,6 +94,10 @@ cargo build "${CARGO_PROFILE_FLAG[@]}" \
 
 LIB="$ROOT/core/target/$RUST_TARGET/$PROFILE/libxmatic_core.a"
 [ -f "$LIB" ] || { echo "error: expected $LIB to exist" >&2; exit 1; }
+
+# Stamp the archive with the version it carries; the .pro refuses to link a
+# stale core against a newer spec (the mb2-only half of the mismatch guard).
+printf '%s\n' "$CARGO_VERSION" > "$LIB.version"
 
 echo "→ cbindgen → src/generated/xmatic_core.h"
 if ! command -v cbindgen >/dev/null; then

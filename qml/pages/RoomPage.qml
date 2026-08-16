@@ -841,7 +841,15 @@ Page {
                     width: bubbleColumn.width + 2 * Theme.paddingMedium
                     height: bubbleColumn.height + 2 * Theme.paddingMedium
                     radius: Theme.paddingMedium
-                    color: row.isOwn ? Theme.secondaryHighlightColor : Theme.rgba(Theme.highlightBackgroundColor, 0.15)
+                    // Both fills stay faint on purpose: the theme's text
+                    // palette is tuned to the page background, and an opaque
+                    // secondaryHighlightColor fill can land on any lightness
+                    // depending on the ambience — one tester's own bubble was
+                    // light under a light palette and swallowed every colour
+                    // on it. A tint keeps the palette readable everywhere;
+                    // the stronger one marks the own side.
+                    color: row.isOwn ? Theme.rgba(Theme.highlightBackgroundColor, 0.35)
+                                     : Theme.rgba(Theme.highlightBackgroundColor, 0.15)
                     opacity: model.pending === true ? 0.5 : 1.0
 
                     Column {
@@ -882,19 +890,26 @@ Page {
                         Column {
                             id: replyQuote
 
-                            // Sized from the quoted texts, never from its own
-                            // implicit width — the children read this width, so
-                            // deriving it from them would close the loop.
-                            width: visible
-                                   ? Math.min(bubbleColumn.maxTextWidth,
-                                              Math.max(quoteSender.implicitWidth,
-                                                       quoteBody.implicitWidth))
-                                   : 0
+                            // No explicit width: like every sibling, the box
+                            // is as wide as its widest child and each child
+                            // sizes from its own implicit width. An earlier
+                            // form derived this width from the children's
+                            // implicit widths while the children read it back
+                            // — the mixed directions the width rule forbids,
+                            // and the device journal duly reported the loop.
                             visible: !!model.replyTo
                             spacing: 0
 
                             Rectangle {
-                                width: parent.width
+                                // The floor keeps the quote visible while the
+                                // quoted message is still being fetched: with
+                                // both texts near empty it would otherwise
+                                // shrink to a speck and the message would not
+                                // look like a reply at all.
+                                width: Math.min(bubbleColumn.maxTextWidth,
+                                                Math.max(quoteSender.width,
+                                                         quoteBody.width,
+                                                         Theme.itemSizeLarge))
                                 height: Theme.paddingSmall / 4
                                 color: Theme.rgba(Theme.highlightColor, 0.4)
                             }
@@ -902,7 +917,11 @@ Page {
                             Label {
                                 id: quoteSender
 
-                                width: parent.width
+                                width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
+                                // An empty line above the quote reads as a
+                                // rendering glitch; the box collapses to the
+                                // body line until the sender is known.
+                                visible: text.length > 0
                                 font.pixelSize: Theme.fontSizeExtraSmall
                                 color: Theme.highlightColor
                                 truncationMode: TruncationMode.Fade
@@ -913,14 +932,17 @@ Page {
                             Label {
                                 id: quoteBody
 
-                                width: parent.width
+                                width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
                                 font.pixelSize: Theme.fontSizeExtraSmall
                                 color: Theme.secondaryColor
                                 maximumLineCount: 2
                                 wrapMode: Text.Wrap
                                 elide: Text.ElideRight
                                 textFormat: Text.PlainText
-                                text: model.replyTo ? (model.replyTo.body || "") : ""
+                                // The ellipsis stands in while the quoted
+                                // message is being fetched — and stays for one
+                                // that has no text, a redacted original say.
+                                text: model.replyTo ? (model.replyTo.body || "…") : ""
                             }
                         }
 

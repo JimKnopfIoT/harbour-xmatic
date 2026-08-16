@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.16.0
+Version:    0.17.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -82,7 +82,24 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
-* Fri Aug 15 2026 harbour-xmatic contributors 0.16.0-1
+* Sun Aug 16 2026 harbour-xmatic contributors 0.17.0-1
+- A reply shows what it answers even when that message first has to be
+  fetched: the quote holds its place while loading instead of collapsing,
+  and a fetch the server refused gets one more try instead of staying empty
+  forever.
+- Own message bubbles, the quote inside them and the unread counters are
+  readable on every ambience. Strong highlight fills swallowed their text on
+  some colour schemes; bubbles and counter are now soft tints, a mention
+  marks itself with a ring around the counter, and the number grew to a
+  readable size.
+- The cover no longer shows the account's identifier. Instead it counts what
+  is new: rooms with unread messages over the messages themselves — 2/7 says
+  seven new messages across two rooms.
+- The About page can no longer name a build it is not: both of its version
+  lines are forced into step with the package at build time, each having
+  quietly gone stale once.
+
+* Sat Aug 15 2026 harbour-xmatic contributors 0.16.0-1
 - Sign in with username and password on homeservers without OAuth. The login
   page detects what the server speaks and only then offers the password form;
   the password is never stored, logged or kept, and the process now refuses

@@ -9,7 +9,7 @@
 //! sits below the timeline and hands decrypted content out the same way.
 
 use std::collections::hash_map::DefaultHasher;
-use std::collections::HashSet;
+use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
@@ -314,30 +314,63 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
     }))
 }
 
+/// The event id of `item` if it is a reply whose quoted message still has to
+/// be asked for: `Unavailable` was never requested, `Error` was requested and
+/// failed — a failure is worth another try, not a final answer.
+fn reply_needing_details(item: &TimelineItem) -> Option<OwnedEventId> {
+    let event = item.as_event()?;
+    let TimelineItemContent::MsgLike(content) = event.content() else {
+        return None;
+    };
+    let in_reply_to = content.in_reply_to.as_ref()?;
+    if !matches!(
+        in_reply_to.event,
+        TimelineDetails::Unavailable | TimelineDetails::Error(_)
+    ) {
+        return None;
+    }
+    event.event_id().map(|id| id.to_owned())
+}
+
 /// Event ids of the reply rows in `diff` whose quoted message was never loaded,
 /// so their details can be asked for.
 fn replies_needing_details(diff: &VectorDiff<Arc<TimelineItem>>) -> Vec<OwnedEventId> {
-    fn wanted(item: &TimelineItem) -> Option<OwnedEventId> {
-        let event = item.as_event()?;
-        let TimelineItemContent::MsgLike(content) = event.content() else {
-            return None;
-        };
-        let in_reply_to = content.in_reply_to.as_ref()?;
-        if !matches!(in_reply_to.event, TimelineDetails::Unavailable) {
-            return None;
-        }
-        event.event_id().map(|id| id.to_owned())
-    }
-
     match diff {
         VectorDiff::Append { values } | VectorDiff::Reset { values } => {
-            values.iter().filter_map(|item| wanted(item)).collect()
+            values.iter().filter_map(|item| reply_needing_details(item)).collect()
         }
         VectorDiff::PushBack { value }
         | VectorDiff::PushFront { value }
         | VectorDiff::Insert { value, .. }
-        | VectorDiff::Set { value, .. } => wanted(value).into_iter().collect(),
+        | VectorDiff::Set { value, .. } => reply_needing_details(value).into_iter().collect(),
         _ => Vec::new(),
+    }
+}
+
+/// How often one reply's details are asked for over a timeline's lifetime.
+///
+/// A failed fetch comes back through the stream as a `Set` diff carrying
+/// `Error`, which qualifies for another request — unbounded, that is a
+/// request loop against a homeserver that answers 429, so the second attempt
+/// is also the last.
+const DETAIL_ATTEMPTS: u8 = 2;
+
+/// Spawns a detail fetch for each reply target that has attempts left.
+fn request_reply_details(
+    ids: impl IntoIterator<Item = OwnedEventId>,
+    requested: &mut HashMap<OwnedEventId, u8>,
+    timeline: &Arc<matrix_sdk_ui::timeline::Timeline>,
+) {
+    for id in ids {
+        let attempts = requested.entry(id.clone()).or_insert(0);
+        if *attempts >= DETAIL_ATTEMPTS {
+            continue;
+        }
+        *attempts += 1;
+        let source = timeline.clone();
+        tokio::spawn(async move {
+            let _ = source.fetch_details_for_event(&id).await;
+        });
     }
 }
 
@@ -728,10 +761,22 @@ pub async fn open(
 
     let room_id_owned = room_id.to_owned();
     let detail_source = timeline.clone();
+    let initial_empty = initial.is_empty();
     let task = tokio::spawn(async move {
-        // Reply targets already asked for, so a row that is rewritten several
-        // times does not send the same request again.
-        let mut requested: HashSet<OwnedEventId> = HashSet::new();
+        // How often each reply target was asked for, so a row that is
+        // rewritten several times does not send the same request again.
+        let mut requested: HashMap<OwnedEventId, u8> = HashMap::new();
+
+        // The initial batch went out as a reset before this task started, and
+        // it needs the same treatment as the diffs below: a room reopened
+        // during the session arrives entirely out of the event cache, so its
+        // reply rows never pass through the stream — their quotes stayed
+        // empty for good.
+        request_reply_details(
+            initial.iter().filter_map(|item| reply_needing_details(item)),
+            &mut requested,
+            &detail_source,
+        );
 
         while let Some(diffs) = stream.next().await {
             let ops: Vec<Value> = diffs.iter().map(encode).collect();
@@ -746,15 +791,11 @@ pub async fn open(
             // them by itself. Without this the quote box stayed on screen with
             // both its lines empty — for good, not "until it arrives", which is
             // what the comment on `reply_info` used to promise.
-            for id in diffs.iter().flat_map(replies_needing_details) {
-                if !requested.insert(id.clone()) {
-                    continue;
-                }
-                let source = detail_source.clone();
-                tokio::spawn(async move {
-                    let _ = source.fetch_details_for_event(&id).await;
-                });
-            }
+            request_reply_details(
+                diffs.iter().flat_map(replies_needing_details),
+                &mut requested,
+                &detail_source,
+            );
         }
     });
 
@@ -765,7 +806,7 @@ pub async fn open(
     // join event, which this check would miss. Spawned, not awaited — the
     // events come back through the stream task above as ordinary diffs.
     // Focused views load their own content and do not paginate this way.
-    if live && initial.is_empty() {
+    if live && initial_empty {
         let timeline = timeline.clone();
         tokio::spawn(async move {
             let _ = timeline.paginate_backwards(PAGE_SIZE).await;
