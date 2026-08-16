@@ -886,63 +886,85 @@ Page {
                             text: model.senderName || ""
                         }
 
-                        // What this message answers, as a compact quote.
-                        Column {
+                        // What this message answers, as a compact quote. The
+                        // bar stands to the LEFT of the quoted lines, the way
+                        // the other messengers draw it, so name and text
+                        // visibly hang off it — a bar across the top made the
+                        // quoted sender and the author's name above look
+                        // interchangeable in a received bubble.
+                        Row {
                             id: replyQuote
 
-                            // No explicit width: like every sibling, the box
-                            // is as wide as its widest child and each child
-                            // sizes from its own implicit width. An earlier
-                            // form derived this width from the children's
-                            // implicit widths while the children read it back
-                            // — the mixed directions the width rule forbids,
-                            // and the device journal duly reported the loop.
+                            // No explicit width: like every sibling, the row
+                            // is as wide as its content and each child sizes
+                            // bottom-up. An earlier form derived a width from
+                            // the children's implicit widths while the
+                            // children read it back — the mixed directions
+                            // the width rule forbids, and the device journal
+                            // duly reported the loop.
                             visible: !!model.replyTo
-                            spacing: 0
+                            spacing: Theme.paddingSmall
 
                             Rectangle {
-                                // The floor keeps the quote visible while the
-                                // quoted message is still being fetched: with
-                                // both texts near empty it would otherwise
-                                // shrink to a speck and the message would not
-                                // look like a reply at all.
-                                width: Math.min(bubbleColumn.maxTextWidth,
-                                                Math.max(quoteSender.width,
-                                                         quoteBody.width,
-                                                         Theme.itemSizeLarge))
-                                height: Theme.paddingSmall / 4
-                                color: Theme.rgba(Theme.highlightColor, 0.4)
+                                width: Theme.paddingSmall / 2
+                                // The texts' height, not the parent's —
+                                // reading the parent back would close the
+                                // loop again.
+                                height: quoteTexts.height
+                                radius: width / 2
+                                color: Theme.rgba(Theme.highlightColor, 0.6)
                             }
 
-                            Label {
-                                id: quoteSender
+                            Column {
+                                id: quoteTexts
 
-                                width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
-                                // An empty line above the quote reads as a
-                                // rendering glitch; the box collapses to the
-                                // body line until the sender is known.
-                                visible: text.length > 0
-                                font.pixelSize: Theme.fontSizeExtraSmall
-                                color: Theme.highlightColor
-                                truncationMode: TruncationMode.Fade
-                                textFormat: Text.PlainText
-                                text: model.replyTo ? (model.replyTo.sender || "") : ""
-                            }
+                                // What the labels may use once the bar and
+                                // the spacing took their share.
+                                readonly property real maxWidth: bubbleColumn.maxTextWidth
+                                                                 - Theme.paddingSmall * 1.5
 
-                            Label {
-                                id: quoteBody
+                                Label {
+                                    id: quoteSender
 
-                                width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
-                                font.pixelSize: Theme.fontSizeExtraSmall
-                                color: Theme.secondaryColor
-                                maximumLineCount: 2
-                                wrapMode: Text.Wrap
-                                elide: Text.ElideRight
-                                textFormat: Text.PlainText
-                                // The ellipsis stands in while the quoted
-                                // message is being fetched — and stays for one
-                                // that has no text, a redacted original say.
-                                text: model.replyTo ? (model.replyTo.body || "…") : ""
+                                    width: Math.min(implicitWidth, quoteTexts.maxWidth)
+                                    // An empty line above the quote reads as
+                                    // a rendering glitch; the box collapses
+                                    // to the body line until the sender is
+                                    // known.
+                                    visible: text.length > 0
+                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    color: Theme.highlightColor
+                                    truncationMode: TruncationMode.Fade
+                                    textFormat: Text.PlainText
+                                    text: model.replyTo ? (model.replyTo.sender || "") : ""
+                                }
+
+                                Label {
+                                    id: quoteBody
+
+                                    // Fixed to the full text width, never to
+                                    // the own implicit width: with wrap and
+                                    // elide the implicit width follows the
+                                    // set width in this Qt, and reading it
+                                    // back is a binding loop (the journal
+                                    // caught the churn). A reply bubble is
+                                    // therefore always full width — which is
+                                    // also how the quote reads best — and
+                                    // the box cannot collapse while the
+                                    // quoted message is still being fetched.
+                                    width: quoteTexts.maxWidth
+                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    color: Theme.secondaryColor
+                                    maximumLineCount: 2
+                                    wrapMode: Text.Wrap
+                                    elide: Text.ElideRight
+                                    textFormat: Text.PlainText
+                                    // The ellipsis stands in while the quoted
+                                    // message is being fetched — and stays
+                                    // for one that has no text, a redacted
+                                    // original say.
+                                    text: model.replyTo ? (model.replyTo.body || "…") : ""
+                                }
                             }
                         }
 

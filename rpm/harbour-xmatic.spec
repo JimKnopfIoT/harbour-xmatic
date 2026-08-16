@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.17.0
+Version:    0.17.1
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -82,6 +82,12 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Aug 16 2026 harbour-xmatic contributors 0.17.1-1
+- The bar of a reply quote now runs down its left side instead of across its
+  top. The horizontal bar separated two identically styled names in a
+  received bubble — the author above it, the quoted sender below — and which
+  was which was anyone's guess.
+
 * Sun Aug 16 2026 harbour-xmatic contributors 0.17.0-1
 - A reply shows what it answers even when that message first has to be
   fetched: the quote holds its place while loading instead of collapsing,
