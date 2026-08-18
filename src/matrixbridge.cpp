@@ -429,6 +429,31 @@ void MatrixBridge::setStartPage(const QString &page)
     emit startPageChanged();
 }
 
+bool MatrixBridge::notificationPreview() const
+{
+    QSettings settings(settingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("ui/notificationPreview"), false).toBool();
+}
+
+void MatrixBridge::setNotificationPreview(bool enabled)
+{
+    if (enabled == notificationPreview()) {
+        return;
+    }
+    const QString path = settingsPath();
+    QDir().mkpath(QFileInfo(path).absolutePath());
+    QSettings settings(path, QSettings::IniFormat);
+    settings.setValue(QStringLiteral("ui/notificationPreview"), enabled);
+    settings.sync();
+    if (settings.status() != QSettings::NoError) {
+        qWarning("xmatic: could not save the notification preview setting (status %d)",
+                 static_cast<int>(settings.status()));
+    } else {
+        qInfo("xmatic: notification preview %s", enabled ? "on" : "off");
+    }
+    emit notificationPreviewChanged();
+}
+
 void MatrixBridge::leaveSpace(const QString &roomId)
 {
     if (roomId.isEmpty()) {
@@ -1671,7 +1696,10 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
             emit roomActivity(id,
                               room.value(QStringLiteral("name")).toString(),
                               notifications,
-                              room.value(QStringLiteral("mentions")).toInt());
+                              room.value(QStringLiteral("mentions")).toInt(),
+                              room.value(QStringLiteral("previewKind")).toString(),
+                              room.value(QStringLiteral("previewText")).toString(),
+                              room.value(QStringLiteral("previewSender")).toString());
         }
     }
 }

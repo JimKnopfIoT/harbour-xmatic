@@ -96,6 +96,14 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AppearancePage.qml"))
             }
 
+            TextSwitch {
+                text: qsTr("Message text in notifications")
+                description: qsTr("Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.")
+                checked: matrix.notificationPreview
+                automaticCheck: false
+                onClicked: matrix.notificationPreview = !matrix.notificationPreview
+            }
+
             Item {
                 width: 1
                 height: Theme.paddingLarge

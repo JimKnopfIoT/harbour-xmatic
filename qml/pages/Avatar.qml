@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtGraphicalEffects 1.0
 import Sailfish.Silica 1.0
 
 // One profile picture, used by the chat list, the member list and the
@@ -74,9 +75,12 @@ Item {
         }
     }
 
-    // Round without a mask: an OpacityMask would need QtGraphicalEffects on
-    // every row, which is far more expensive than a border drawn over the
-    // picture. The image is clipped by the rounded frame above it.
+    // Genuinely round. `clip` on an Image clips to its rectangle, never to a
+    // radius, so the earlier "rounded frame over the picture" left every
+    // picture square with a highlight-coloured ring drawn across it — on the
+    // stock ambience a light-blue circle on each room icon. The mask costs a
+    // small offscreen layer per visible picture, which is nothing next to the
+    // decode; the placeholder needs none.
     Image {
         id: picture
 
@@ -87,14 +91,14 @@ Item {
         sourceSize.width: avatar.size
         sourceSize.height: avatar.size
         source: avatar._path.length > 0 ? "file://" + avatar._path : ""
-        clip: true
 
-        Rectangle {
-            anchors.fill: parent
-            radius: width / 2
-            color: "transparent"
-            border.width: Math.max(1, avatar.size / 24)
-            border.color: Theme.rgba(Theme.highlightBackgroundColor, Theme.opacityLow)
+        layer.enabled: visible
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                width: picture.width
+                height: picture.height
+                radius: width / 2
+            }
         }
     }
 }

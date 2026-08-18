@@ -82,6 +82,14 @@
         <source>Appearance</source>
         <translation>Darstellung</translation>
     </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Nachrichtentext in Benachrichtigungen</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Aus: eine Benachrichtigung sagt nur, wie viele Nachrichten angekommen sind. An: sie zeigt die letzte Nachricht — auch auf dem Sperrbildschirm.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -127,10 +135,6 @@
 </context>
 <context>
     <name>AppearancePage</name>
-    <message>
-        <source>Follow the ambience again</source>
-        <translation>Wieder der Ambience folgen</translation>
-    </message>
     <message>
         <source>Appearance</source>
         <translation>Darstellung</translation>
@@ -183,6 +187,10 @@
     <message>
         <source>Off, the colour below applies</source>
         <translation>Ausgeschaltet gilt die Farbe darunter</translation>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation>Auf Standard zurücksetzen</translation>
     </message>
 </context>
 <context>
@@ -1631,6 +1639,30 @@
             <numerusform>%n Erwähnung</numerusform>
             <numerusform>%n Erwähnungen</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Bild</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Sprachnachricht</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Datei</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Standort</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Verschlüsselte Nachricht</translation>
     </message>
 </context>
 </TS>

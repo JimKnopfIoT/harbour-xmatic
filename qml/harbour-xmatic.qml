@@ -98,6 +98,21 @@ ApplicationWindow {
         }
     }
 
+    // One line for a notification body from the core's preview fields.
+    function previewLine(kind, text) {
+        switch (kind) {
+        case "text": return text
+        case "emote": return "* " + text
+        case "image": return qsTr("Picture")
+        case "video": return qsTr("Video")
+        case "audio": return qsTr("Voice message")
+        case "file": return qsTr("File")
+        case "location": return qsTr("Location")
+        case "encrypted": return qsTr("Encrypted message")
+        default: return ""
+        }
+    }
+
     Component.onCompleted: matrix.restoreSession()
 
     Notification {
@@ -235,9 +250,17 @@ ApplicationWindow {
         onRoomActivity: {
             notification.close()
             notification.summary = roomName
-            notification.body = mentions > 0
-                    ? qsTr("%n mention(s)", "", mentions)
-                    : qsTr("%n new message(s)", "", unread)
+            // The count is the default; the message itself only when the user
+            // switched that on (Account → This app), because the banner also
+            // shows on the lock screen. Non-text events are named by kind, so
+            // a picture says "picture" in the UI's language, and an event this
+            // device could not decrypt says so instead of pretending to be a
+            // count.
+            var preview = matrix.notificationPreview ? app.previewLine(previewKind, previewText) : ""
+            notification.body = preview.length > 0 ? preview
+                    : mentions > 0
+                      ? qsTr("%n mention(s)", "", mentions)
+                      : qsTr("%n new message(s)", "", unread)
             // summary and body alone only fill the event feed. The banner that
             // slides in over whatever is on screen is the preview pair, and it
             // is also what makes the arrival noticeable at all when the phone
