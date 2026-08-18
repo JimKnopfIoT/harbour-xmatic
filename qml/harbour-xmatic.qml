@@ -47,6 +47,12 @@ ApplicationWindow {
     }
 
     function rootFor(state) {
+        // An encrypted session whose key is not at hand is not "no session":
+        // its page retries the unlock, and never leads into a login that
+        // would clear the store.
+        if (state === "locked") {
+            return Qt.resolvedUrl("pages/SessionLockedPage.qml")
+        }
         if (state !== "signed-in") {
             return Qt.resolvedUrl("pages/LoginPage.qml")
         }
@@ -56,9 +62,11 @@ ApplicationWindow {
                                              : Qt.resolvedUrl("pages/RoomListPage.qml")
     }
 
-    // Only a home page carries `isHome`; the login page has no such property.
+    // Only a home page carries `isHome`; the login and locked pages have no
+    // such property.
     function propsFor(root) {
-        return root === Qt.resolvedUrl("pages/LoginPage.qml") ? {} : { isHome: true }
+        return root === Qt.resolvedUrl("pages/LoginPage.qml")
+                || root === Qt.resolvedUrl("pages/SessionLockedPage.qml") ? {} : { isHome: true }
     }
 
     function showPageFor(state) {

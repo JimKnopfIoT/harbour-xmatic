@@ -805,45 +805,45 @@
 <context>
     <name>MatrixBridge</name>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="65"/>
+        <location filename="../src/matrixbridge.cpp" line="68"/>
         <source>The protocol core could not be started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="174"/>
+        <location filename="../src/matrixbridge.cpp" line="177"/>
         <source>The protocol core is not available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="248"/>
-        <location filename="../src/matrixbridge.cpp" line="288"/>
-        <location filename="../src/matrixbridge.cpp" line="304"/>
+        <location filename="../src/matrixbridge.cpp" line="266"/>
+        <location filename="../src/matrixbridge.cpp" line="306"/>
+        <location filename="../src/matrixbridge.cpp" line="322"/>
         <source>Enter a homeserver first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="270"/>
+        <location filename="../src/matrixbridge.cpp" line="288"/>
         <source>Enter username and password first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="942"/>
+        <location filename="../src/matrixbridge.cpp" line="960"/>
         <source>Enter your recovery key first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1069"/>
-        <location filename="../src/matrixbridge.cpp" line="1097"/>
+        <location filename="../src/matrixbridge.cpp" line="1087"/>
+        <location filename="../src/matrixbridge.cpp" line="1115"/>
         <source>The file could not be saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1267"/>
+        <location filename="../src/matrixbridge.cpp" line="1285"/>
         <source>The homeserver did not return a login page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1287"/>
+        <location filename="../src/matrixbridge.cpp" line="1305"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1697,6 +1697,39 @@
     </message>
 </context>
 <context>
+    <name>SessionLockedPage</name>
+    <message>
+        <location filename="../qml/pages/SessionLockedPage.qml" line="22"/>
+        <source>Sign out and delete local data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SessionLockedPage.qml" line="34"/>
+        <source>Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SessionLockedPage.qml" line="35"/>
+        <source>Matrix for Sailfish OS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SessionLockedPage.qml" line="43"/>
+        <source>Your session is stored encrypted, and the key was not available when xmatic started.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SessionLockedPage.qml" line="52"/>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SessionLockedPage.qml" line="57"/>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ShareToRoomPage</name>
     <message>
         <location filename="../qml/pages/ShareToRoomPage.qml" line="29"/>
@@ -1970,14 +2003,14 @@
 <context>
     <name>harbour-xmatic</name>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="231"/>
+        <location filename="../qml/harbour-xmatic.qml" line="239"/>
         <source>%n mention(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="232"/>
+        <location filename="../qml/harbour-xmatic.qml" line="240"/>
         <source>%n new message(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>

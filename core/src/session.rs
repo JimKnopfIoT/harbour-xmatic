@@ -266,23 +266,56 @@ pub fn store(
 /// the next successful restore), and an encrypted file without a key is
 /// simply gone — the user signs in again, which is the honest outcome when
 /// the secrets store lost the key.
-pub fn load(path: &Path, key: Option<&StoreKey>) -> Option<StoredSession> {
-    let bytes = std::fs::read(path).ok()?;
+/// What the session file on disk amounts to.
+///
+/// `Locked` is the case that must never be mistaken for `None`: the file is
+/// there and is an encryption envelope, but the store key is missing or does
+/// not open it. Treating that as "no session" put the login page on screen
+/// and let the next login reset the store — a transient failure of the
+/// secrets service (a locked collection after a reboot) became a lost device
+/// and a recovery-key re-login for every affected user.
+pub enum LoadOutcome {
+    /// No session file.
+    None,
+    /// A readable session.
+    Session(StoredSession),
+    /// An encrypted session that the available key (if any) does not open.
+    Locked,
+}
+
+pub fn load(path: &Path, key: Option<&StoreKey>) -> LoadOutcome {
+    let Ok(bytes) = std::fs::read(path) else {
+        return LoadOutcome::None;
+    };
     if let Ok(session) = serde_json::from_slice::<StoredSession>(&bytes) {
-        return Some(session);
+        return LoadOutcome::Session(session);
     }
 
-    let envelope = serde_json::from_slice::<EncryptedEnvelope>(&bytes).ok()?;
-    let key = key?;
+    let Ok(envelope) = serde_json::from_slice::<EncryptedEnvelope>(&bytes) else {
+        // Neither shape: not a session this build can read. Reported as
+        // locked rather than absent for the same reason — nothing here may
+        // lead to a reset the user did not ask for.
+        return LoadOutcome::Locked;
+    };
+    let Some(key) = key else {
+        return LoadOutcome::Locked;
+    };
     let engine = base64::engine::general_purpose::STANDARD;
-    let cipher = StoreCipher::import_with_key(
-        &**key,
-        &engine.decode(envelope.encrypted.cipher).ok()?,
-    )
-    .ok()?;
-    cipher
-        .decrypt_value(&engine.decode(envelope.encrypted.data).ok()?)
-        .ok()
+    let decoded_cipher = match engine.decode(envelope.encrypted.cipher) {
+        Ok(bytes) => bytes,
+        Err(_) => return LoadOutcome::Locked,
+    };
+    let Ok(cipher) = StoreCipher::import_with_key(&**key, &decoded_cipher) else {
+        return LoadOutcome::Locked;
+    };
+    let decoded_data = match engine.decode(envelope.encrypted.data) {
+        Ok(bytes) => bytes,
+        Err(_) => return LoadOutcome::Locked,
+    };
+    match cipher.decrypt_value(&decoded_data) {
+        Ok(session) => LoadOutcome::Session(session),
+        Err(_) => LoadOutcome::Locked,
+    }
 }
 
 /// Removes the stored session. Missing files are not an error.

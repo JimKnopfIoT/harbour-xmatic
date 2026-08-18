@@ -39,8 +39,16 @@ impl<'de> Deserialize<'de> for Secret {
 #[serde(tag = "cmd")]
 pub enum Command {
     /// Restore a previously persisted session, if there is one.
+    ///
+    /// `storeKey` (base64, optional) hands the core a store key it did not
+    /// have at start — the front end obtains it again when the user retries
+    /// after a locked secrets collection. Absent, the key from start applies.
     #[serde(rename = "session.restore")]
-    SessionRestore { id: u64 },
+    SessionRestore {
+        id: u64,
+        #[serde(rename = "storeKey", default)]
+        store_key: Option<String>,
+    },
 
     /// Begin the OAuth 2.0 authorization code flow against `homeserver`.
     ///
@@ -526,7 +534,7 @@ impl Command {
     /// The `id` this command must be answered with.
     pub fn id(&self) -> u64 {
         match self {
-            Command::SessionRestore { id }
+            Command::SessionRestore { id, .. }
             | Command::LoginStart { id, .. }
             | Command::LoginPassword { id, .. }
             | Command::LoginDeviceCode { id, .. }

@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     // session file. Empty when the secrets service is unavailable — the app
     // then runs as before, with unencrypted stores, and the keeper has said
     // so in the journal.
-    QString storeKey = obtainStoreKey();
+    QString storeKey = obtainStoreKey(dataDirectory);
     MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey);
     if (!storeKey.isEmpty()) {
         storeKey.fill(QChar('0'));
