@@ -68,6 +68,11 @@ Page {
     SilicaListView {
         id: resultList
 
+        // Same field-in-header layout as the room list, same model reset when
+        // results arrive: without an explicitly cleared index the view would
+        // hand focus to row 0 on every reset and close the keyboard mid-typing.
+        currentIndex: -1
+
         anchors.fill: parent
         model: matrix.directory
 

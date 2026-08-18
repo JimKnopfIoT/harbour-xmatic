@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.18.1
+Version:    0.18.2
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -13,6 +13,8 @@ Vendor:     harbour-xmatic contributors
 Packager:   harbour-xmatic contributors
 
 Requires:   sailfishsilica-qt5
+# Round profile pictures are masked with QtGraphicalEffects (Avatar.qml).
+Requires:   qt5-qtgraphicaleffects
 Requires:   sailfish-content-graphics
 Requires:   nemo-qml-plugin-notifications-qt5
 # Calls load these at run time rather than linking them, so they have to be
@@ -82,6 +84,27 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Aug 18 2026 harbour-xmatic contributors 0.18.2-1
+- The room search keeps the keyboard. Every letter re-filters the list and
+  the list comes back as a full reset; on each reset the list view recreated
+  its current row and handed that row the focus, taking the keyboard from the
+  search field in the header. The list has no current row any more, so there
+  is nothing to hand the focus to - measured on the device, no loss in thirty
+  keystrokes where before it was every one. The room directory search had the
+  same layout and gets the same fix. (The 0.9.1 hand-back ran before the
+  focus was taken and therefore never did anything.)
+- Profile pictures are round. They were square with a highlight-coloured ring
+  drawn across them - on the stock ambience a light-blue circle on every room
+  icon - because a rectangular clip cannot round an image. A proper mask does.
+- A notification can carry the message. Off by default, because the banner
+  also lands on the lock screen; the switch is under Account -> This app. On,
+  the banner shows the latest text (a picture, file, voice message or
+  location is named as such, an undecryptable event says so) instead of the
+  count.
+- The appearance page has a visible "Reset to defaults" button - the entry
+  in its pull-down was easy to miss - and the opacity slider follows a reset
+  and a change of element instead of keeping its last dragged position.
+
 * Tue Aug 18 2026 harbour-xmatic contributors 0.18.1-1
 - Password sign-in no longer flickers into an empty room list: the sign-in
   reset the local store a second time, under the client it went on to use.

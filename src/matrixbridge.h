@@ -49,6 +49,9 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *spaces READ spaces CONSTANT)
     Q_PROPERTY(QObject *spaceRooms READ spaceRooms CONSTANT)
     Q_PROPERTY(QString startPage READ startPage WRITE setStartPage NOTIFY startPageChanged)
+    /// Whether a notification may carry the message itself, not just a count.
+    /// Off by default: the banner also lands on the lock screen.
+    Q_PROPERTY(bool notificationPreview READ notificationPreview WRITE setNotificationPreview NOTIFY notificationPreviewChanged)
     Q_PROPERTY(int spaceCounts READ spaceCounts NOTIFY spaceCountsChanged)
     Q_PROPERTY(QObject *timeline READ timeline CONSTANT)
     Q_PROPERTY(QObject *recorder READ recorder CONSTANT)
@@ -440,6 +443,8 @@ public:
     /// the choice survives a restart.
     QString startPage() const;
     void setStartPage(const QString &page);
+    bool notificationPreview() const;
+    void setNotificationPreview(bool enabled);
 
     /// The directory server the search page last used; empty means the own
     /// homeserver. Persisted so the choice survives a restart.
@@ -453,6 +458,7 @@ public:
 
 signals:
     void startPageChanged();
+    void notificationPreviewChanged();
     void spaceCountsChanged();
     void unreadTotalsChanged();
 
@@ -510,11 +516,19 @@ signals:
     /// back with it, so the room opens correctly before the first sync diff.
     void roomCreated(const QString &roomId, const QString &name, bool encrypted);
 
-    /// Unread messages arrived in a room that is not on screen.
+    /// Unread messages arrived in a room that is not on screen. The preview
+    /// describes the room's latest event — `previewKind` is one of text,
+    /// emote, image, video, audio, file, location, encrypted, or empty when
+    /// there is nothing to say; `previewText` is set for text and emote only;
+    /// `previewSender` is the sender's Matrix ID. Whether any of it is shown
+    /// is the UI's decision (see `notificationPreview`).
     void roomActivity(const QString &roomId,
                       const QString &roomName,
                       int unread,
-                      int mentions);
+                      int mentions,
+                      const QString &previewKind,
+                      const QString &previewText,
+                      const QString &previewSender);
 
     /// The URL that has to be opened in the browser to continue a login.
     void loginUrlReady(const QString &url);

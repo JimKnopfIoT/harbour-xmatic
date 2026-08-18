@@ -76,6 +76,18 @@ Page {
     SilicaListView {
         id: roomList
 
+        // No current item, ever. Qt Quick auto-selects row 0 as soon as the
+        // model has rows unless the index was cleared explicitly, and on every
+        // model reset it recreates that current item and gives it focus inside
+        // the view's focus scope (QQuickItemViewPrivate::updateCurrent →
+        // setFocus(true)). The search field lives in this view's header, so
+        // each keystroke — the core answers a filter with a full reset — took
+        // the keyboard away from it. Measured on the device: with the index
+        // left at Qt's default the focus fell after every reset; with -1 set
+        // here it never did. (The 0.9.1 hand-back on `modelReset` ran before
+        // the theft and therefore never fired.)
+        currentIndex: -1
+
         anchors.fill: parent
         model: matrix.rooms
 
@@ -96,19 +108,6 @@ Page {
                 width: parent.width
                 placeholderText: qsTr("Search rooms")
                 onTextChanged: matrix.setRoomFilter(text)
-            }
-
-            // The core re-filters on every keystroke and the list comes back as
-            // a full model reset, which drops keyboard focus from the field in
-            // the header. Hand it straight back so typing is not interrupted
-            // letter by letter.
-            Connections {
-                target: matrix.rooms
-                onModelReset: {
-                    if (searchField.text.length > 0 && !searchField.activeFocus) {
-                        searchField.forceActiveFocus()
-                    }
-                }
             }
         }
 

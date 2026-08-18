@@ -10,7 +10,12 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use futures_util::StreamExt;
-use matrix_sdk::deserialized_responses::SyncOrStrippedState;
+use matrix_sdk::deserialized_responses::{SyncOrStrippedState, TimelineEventKind};
+use matrix_sdk::latest_events::LatestEventValue;
+use matrix_sdk::ruma::events::room::message::MessageType;
+use matrix_sdk::ruma::events::{
+    AnySyncMessageLikeEvent, AnySyncTimelineEvent, SyncMessageLikeEvent,
+};
 use matrix_sdk::ruma::api::client::room::{create_room, Visibility};
 use matrix_sdk::ruma::events::{
     room::encryption::RoomEncryptionEventContent, space::child::SpaceChildEventContent,
@@ -92,9 +97,83 @@ fn room_avatar(item: &RoomListItem) -> Option<String> {
     }
 }
 
+/// The room's latest event as one banner line: what kind of thing it is, and
+/// for text the text itself, cut to a length a notification can show. The
+/// kind lets the UI word the non-text cases in its own language ("picture",
+/// "voice message") instead of the core guessing at one.
+///
+/// Only remote events count — a preview exists so a notification can say what
+/// arrived, and what arrived is never the user's own unsent message. Anything
+/// that is not a message (state, reactions, redacted) yields no preview, and
+/// an event this device could not decrypt says so as its kind, so the banner
+/// can still be honest about it.
+fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>, Option<String>) {
+    let LatestEventValue::Remote(event) = item.latest_event() else {
+        return (None, None, None);
+    };
+    if matches!(event.kind, TimelineEventKind::UnableToDecrypt { .. }) {
+        return (Some("encrypted"), None, None);
+    }
+    let Ok(AnySyncTimelineEvent::MessageLike(message_like)) = event.raw().deserialize() else {
+        return (None, None, None);
+    };
+    let sender = Some(message_like.sender().to_string());
+    match message_like {
+        AnySyncMessageLikeEvent::RoomMessage(SyncMessageLikeEvent::Original(message)) => {
+            match &message.content.msgtype {
+                MessageType::Text(content) => {
+                    (Some("text"), Some(preview_text(&content.body)), sender)
+                }
+                MessageType::Notice(content) => {
+                    (Some("text"), Some(preview_text(&content.body)), sender)
+                }
+                MessageType::Emote(content) => {
+                    (Some("emote"), Some(preview_text(&content.body)), sender)
+                }
+                MessageType::Image(_) => (Some("image"), None, sender),
+                MessageType::Video(_) => (Some("video"), None, sender),
+                MessageType::Audio(_) => (Some("audio"), None, sender),
+                MessageType::File(_) => (Some("file"), None, sender),
+                MessageType::Location(_) => (Some("location"), None, sender),
+                _ => (None, None, None),
+            }
+        }
+        AnySyncMessageLikeEvent::Sticker(SyncMessageLikeEvent::Original(_)) => {
+            (Some("image"), None, sender)
+        }
+        _ => (None, None, None),
+    }
+}
+
+/// A body reduced to what a banner can hold: the quoted-reply fallback that
+/// older clients still prepend ("> <@…> …" lines and the blank line after
+/// them) dropped, line breaks folded to spaces, and the whole cut to a
+/// length that fits two lines of a notification.
+fn preview_text(body: &str) -> String {
+    const PREVIEW_CHARS: usize = 160;
+    let mut lines = body.lines().peekable();
+    if lines.peek().map_or(false, |line| line.starts_with("> ")) {
+        while lines.peek().map_or(false, |line| line.starts_with('>')) {
+            lines.next();
+        }
+        if lines.peek().map_or(false, |line| line.trim().is_empty()) {
+            lines.next();
+        }
+    }
+    let folded = lines.collect::<Vec<_>>().join(" ");
+    let folded = folded.split_whitespace().collect::<Vec<_>>().join(" ");
+    if folded.chars().count() > PREVIEW_CHARS {
+        let cut: String = folded.chars().take(PREVIEW_CHARS - 1).collect();
+        format!("{}…", cut.trim_end())
+    } else {
+        folded
+    }
+}
+
 /// One room as the UI needs it. Deliberately flat and small — this crosses the
 /// FFI on every change.
 fn summarize(item: &RoomListItem) -> Value {
+    let (preview_kind, preview_text, preview_sender) = latest_preview(item);
     json!({
         "id": item.room_id().as_str(),
         "name": item
@@ -135,6 +214,11 @@ fn summarize(item: &RoomListItem) -> Value {
         "timestamp": item
             .latest_event_timestamp()
             .map(|ts| u64::from(ts.get())),
+        // What the latest event is, for a notification that wants to say
+        // more than a count. Absent when there is nothing to say.
+        "previewKind": preview_kind,
+        "previewText": preview_text,
+        "previewSender": preview_sender,
     })
 }
 

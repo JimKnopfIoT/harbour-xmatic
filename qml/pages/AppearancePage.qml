@@ -50,6 +50,13 @@ Page {
     function syncField() {
         colorField.setColor(storedValue !== "" ? storedValue
                                                : String(ambienceFor(element)))
+        // The slider stops following its binding once it has been dragged, so
+        // both a change of element and a reset have to place it by hand, or
+        // it keeps showing a position the bubble no longer has.
+        if (opacitySlider) {
+            opacitySlider.value = element === "ownBubble" ? appearance.ownBubbleOpacity
+                                                          : appearance.otherBubbleOpacity
+        }
     }
 
     // The same fallbacks RoomPage applies, in one place for the preview.
@@ -76,11 +83,8 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("Follow the ambience again")
-                onClicked: {
-                    appearance.resetAll()
-                    page.syncField()
-                }
+                text: qsTr("Reset to defaults")
+                onClicked: page.resetAll()
             }
         }
 
@@ -192,6 +196,8 @@ Page {
             }
 
             Slider {
+                id: opacitySlider
+
                 width: parent.width
                 visible: page.element === "otherBubble" || page.element === "ownBubble"
                 label: qsTr("Bubble opacity")
@@ -212,8 +218,27 @@ Page {
                 width: 1
                 height: Theme.paddingLarge
             }
+
+            // The way back, in plain sight: every colour to the ambience, both
+            // opacities to their defaults. The pull-down carries the same
+            // entry, but a reset that has to be found is not a safety net.
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Reset to defaults")
+                onClicked: page.resetAll()
+            }
+
+            Item {
+                width: 1
+                height: Theme.paddingLarge
+            }
         }
 
         VerticalScrollDecorator { }
+    }
+
+    function resetAll() {
+        appearance.resetAll()
+        syncField()
     }
 }
