@@ -91,7 +91,10 @@ struct PendingLogin {
 struct State {
     paths: Paths,
     /// The store key from Sailfish Secrets; `None` degrades to unencrypted.
-    store_key: Option<session::StoreKey>,
+    /// Behind a lock because the front end may hand it in later: after a
+    /// locked secrets collection the user retries, and `session.restore`
+    /// then carries the key the start did not have.
+    store_key: std::sync::RwLock<Option<session::StoreKey>>,
     client: Mutex<Option<Client>>,
     pending: Mutex<Option<PendingLogin>>,
     /// A device-code login polling for approval, kept so it can be cancelled.
@@ -203,6 +206,14 @@ impl State {
     }
 
     /// Describes the current session for a reply or an event.
+    /// A copy of the store key, if there is one; the copy is zeroized on drop.
+    fn store_key(&self) -> Option<session::StoreKey> {
+        self.store_key
+            .read()
+            .unwrap_or_else(|poisoned| poisoned.into_inner())
+            .clone()
+    }
+
     async fn session_data(&self) -> Value {
         match &*self.client.lock().await {
             Some(client) => match (client.user_id(), client.device_id()) {
@@ -229,7 +240,7 @@ pub fn spawn(
 
     let state = Arc::new(State {
         paths,
-        store_key,
+        store_key: std::sync::RwLock::new(store_key),
         client: Mutex::new(None),
         pending: Mutex::new(None),
         pending_device: Mutex::new(None),
@@ -259,7 +270,7 @@ pub fn spawn(
 async fn handle(state: Arc<State>, command: Command) {
     let id = command.id();
     match command {
-        Command::SessionRestore { .. } => restore_session(&state, id).await,
+        Command::SessionRestore { store_key, .. } => restore_session(&state, id, store_key).await,
         Command::LoginStart { homeserver, .. } => start_login(&state, id, homeserver).await,
         Command::LoginPassword {
             homeserver,
@@ -1388,26 +1399,52 @@ async fn remove_space_child(state: &Arc<State>, id: u64, space_id: String, room_
     }
 }
 
-async fn restore_session(state: &Arc<State>, id: u64) {
-    let Some(stored) = session::load(&state.paths.session_file, state.store_key.as_ref()) else {
-        state.sink.emit(reply_ok(id, json!({ "state": "none" })));
-        return;
+async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>) {
+    // A key handed in with the command replaces the one from start. Only a
+    // well-formed key does — a garbled one must not silently turn into "no
+    // key" and open an unencrypted path.
+    if let Some(mut encoded) = store_key {
+        use zeroize::Zeroize;
+        let decoded = session::decode_key(&encoded);
+        encoded.zeroize();
+        if decoded.is_some() {
+            *state
+                .store_key
+                .write()
+                .unwrap_or_else(|poisoned| poisoned.into_inner()) = decoded;
+        }
+    }
+    let key = state.store_key();
+
+    let stored = match session::load(&state.paths.session_file, key.as_ref()) {
+        session::LoadOutcome::Session(stored) => stored,
+        session::LoadOutcome::None => {
+            state.sink.emit(reply_ok(id, json!({ "state": "none" })));
+            return;
+        }
+        // The session is there, the key is not: a state of its own, never
+        // "no session". The UI shows a retry, not the login page, and no
+        // login may reset the store while the file is on disk.
+        session::LoadOutcome::Locked => {
+            let data = json!({ "state": "locked" });
+            state.sink.emit(reply_ok(id, data.clone()));
+            state.sink.emit(event("session.changed", data));
+            return;
+        }
     };
 
     let homeserver = stored.homeserver().to_owned();
 
-    // An encrypted store without its key must fail with a sentence that names
-    // the actual problem — opening it anyway would surface as decryption
-    // garbage three layers further down.
-    if session::store_marked_encrypted(&state.paths) && state.store_key.is_none() {
-        state.sink.emit(reply_error(
-            id,
-            "the local store is encrypted but its key is not available from the device's secrets storage",
-        ));
+    // An encrypted store without its key is the same locked state — opening
+    // it anyway would surface as decryption garbage three layers further down.
+    if session::store_marked_encrypted(&state.paths) && key.is_none() {
+        let data = json!({ "state": "locked" });
+        state.sink.emit(reply_ok(id, data.clone()));
+        state.sink.emit(event("session.changed", data));
         return;
     }
 
-    let client = match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
+    let client = match session::build_client(&homeserver, &state.paths, key.as_ref()).await {
         Ok(client) => client,
         Err(error) => {
             state
@@ -1445,27 +1482,49 @@ async fn restore_session(state: &Arc<State>, id: u64) {
     state.sink.emit(event("session.changed", data));
 }
 
-async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
-    // A login without a stored session starts a new device, so anything the
-    // previous one left behind has to go first — otherwise the crypto store
-    // still describes a device this session is not.
-    if session::load(&state.paths.session_file, state.store_key.as_ref()).is_none() {
-        if let Err(error) = session::reset_store(&state.paths) {
-            state
-                .sink
-                .emit(reply_error(id, format!("could not clear old data: {error}")));
-            return;
+/// Clears the ground for a login that starts a new device: without a stored
+/// session, whatever the previous device left in the store has to go first —
+/// otherwise the crypto store still describes a device this session is not.
+///
+/// A client an earlier `login.start` cached has its SQLite stores open on that
+/// very directory, so it is taken out of the state and dropped *before* the
+/// reset. Resetting under it does not fail the login: the open files keep
+/// serving their existing connections, but every connection the store pool
+/// opens afterwards finds an empty database, and the sync service that starts
+/// after the sign-in fails and retries with nothing reaching the room list
+/// until a restart. That was the 0.18.0 password-login report; the rule since
+/// is that `reset_store` runs only when no client has the directory open.
+async fn prepare_fresh_login(state: &Arc<State>) -> Result<(), String> {
+    match session::load(&state.paths.session_file, state.store_key().as_ref()) {
+        session::LoadOutcome::None => {
+            drop(state.client.lock().await.take());
+            session::reset_store(&state.paths)
+                .map_err(|error| format!("could not clear old data: {error}"))?;
+        }
+        session::LoadOutcome::Session(_) => {}
+        // A locked session is a session. Logging in over it would reset the
+        // store its key still protects; the way out of a lost key is an
+        // explicit sign-out, not a login.
+        session::LoadOutcome::Locked => {
+            return Err(
+                "a session is stored but its key is not available; unlock or sign out first"
+                    .to_owned(),
+            );
         }
     }
+    state
+        .paths
+        .prepare()
+        .map_err(|error| format!("could not prepare storage: {error}"))
+}
 
-    if let Err(error) = state.paths.prepare() {
-        state
-            .sink
-            .emit(reply_error(id, format!("could not prepare storage: {error}")));
+async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
+    if let Err(message) = prepare_fresh_login(state).await {
+        state.sink.emit(reply_error(id, message));
         return;
     }
 
-    let client = match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
+    let client = match session::build_client(&homeserver, &state.paths, state.store_key().as_ref()).await {
         Ok(client) => client,
         Err(error) => {
             state
@@ -1578,38 +1637,32 @@ async fn password_login(
     user: String,
     password: Secret,
 ) {
-    // Same rule as the other flows: a login without a stored session starts a
-    // new device, so a previous device's crypto store has to go first.
-    if session::load(&state.paths.session_file, state.store_key.as_ref()).is_none() {
-        if let Err(error) = session::reset_store(&state.paths) {
-            state
-                .sink
-                .emit(reply_error(id, format!("could not clear old data: {error}")));
-            return;
-        }
-    }
-
-    if let Err(error) = state.paths.prepare() {
-        state
-            .sink
-            .emit(reply_error(id, format!("could not prepare storage: {error}")));
-        return;
-    }
-
     // Reuse the client `login.start` built and vetted; build one only if the
     // UI skipped that step, and then vet it the same way.
+    //
+    // The store reset every fresh login begins with belongs to whoever builds
+    // the client: `login.start` ran it before building the cached client,
+    // whose SQLite stores have been open on that directory ever since.
+    // Running it again here — as 0.18.0 did — deleted those files under the
+    // live client (see `prepare_fresh_login`).
     let cached = state.client.lock().await.clone();
     let client = match cached {
         Some(client) => client,
-        None => match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
-            Ok(client) => client,
-            Err(error) => {
-                state
-                    .sink
-                    .emit(reply_error(id, format!("homeserver unreachable: {error}")));
+        None => {
+            if let Err(message) = prepare_fresh_login(state).await {
+                state.sink.emit(reply_error(id, message));
                 return;
             }
-        },
+            match session::build_client(&homeserver, &state.paths, state.store_key().as_ref()).await {
+                Ok(client) => client,
+                Err(error) => {
+                    state
+                        .sink
+                        .emit(reply_error(id, format!("homeserver unreachable: {error}")));
+                    return;
+                }
+            }
+        }
     };
 
     if client.homeserver().scheme() != "https" {
@@ -1658,25 +1711,12 @@ async fn password_login(
 /// URL the reply carries a short verification URL and a code, and completion
 /// means the user approved the login on some other device.
 async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
-    // Same rule as the browser flow: a fresh login is a fresh device, so a
-    // leftover crypto store from a previous device has to go.
-    if session::load(&state.paths.session_file, state.store_key.as_ref()).is_none() {
-        if let Err(error) = session::reset_store(&state.paths) {
-            state
-                .sink
-                .emit(reply_error(id, format!("could not clear old data: {error}")));
-            return;
-        }
-    }
-
-    if let Err(error) = state.paths.prepare() {
-        state
-            .sink
-            .emit(reply_error(id, format!("could not prepare storage: {error}")));
+    if let Err(message) = prepare_fresh_login(state).await {
+        state.sink.emit(reply_error(id, message));
         return;
     }
 
-    let client = match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
+    let client = match session::build_client(&homeserver, &state.paths, state.store_key().as_ref()).await {
         Ok(client) => client,
         Err(error) => {
             state
@@ -1750,7 +1790,7 @@ async fn persist(state: &Arc<State>, client: &Client, homeserver: String) {
         ));
         return;
     };
-    if let Err(error) = session::store(&stored, &state.paths.session_file, state.store_key.as_ref()) {
+    if let Err(error) = session::store(&stored, &state.paths.session_file, state.store_key().as_ref()) {
         state.sink.emit(event(
             "session.warning",
             json!({ "message": format!("session could not be saved: {error}") }),
@@ -1807,7 +1847,7 @@ async fn registration_url(state: &Arc<State>, id: u64, homeserver: String) {
         return;
     }
 
-    let client = match session::build_client(&homeserver, &state.paths, state.store_key.as_ref()).await {
+    let client = match session::build_client(&homeserver, &state.paths, state.store_key().as_ref()).await {
         Ok(client) => client,
         Err(error) => {
             state

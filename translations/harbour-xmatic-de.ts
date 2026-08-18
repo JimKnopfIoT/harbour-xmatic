@@ -1367,6 +1367,33 @@
     </message>
 </context>
 <context>
+    <name>SessionLockedPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Abmelden und lokale Daten löschen</translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation>Gesperrt</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix für Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your session is stored encrypted, and the key was not available when xmatic started.</source>
+        <translation>Deine Sitzung ist verschlüsselt gespeichert, und der Schlüssel war beim Start von xmatic nicht verfügbar.</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
+        <translation>Der Schlüssel liegt im Geheimnisspeicher des Geräts. Versuch es erneut und bestätige die Abfrage des Systems; die Freigabe gilt bis zum nächsten Neustart des Geräts.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Erneut versuchen</translation>
+    </message>
+</context>
+<context>
     <name>ShareToRoomPage</name>
     <message>
         <source>Send to</source>

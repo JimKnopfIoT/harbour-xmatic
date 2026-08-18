@@ -164,6 +164,12 @@ public:
     /// Looks for a persisted session and signs in with it if there is one.
     Q_INVOKABLE void restoreSession();
 
+    /// The session is stored encrypted but its key was not available at
+    /// start (sessionState "locked"): asks the device's secrets storage for
+    /// the key again — the system may show its unlock dialog — and retries
+    /// the restore with it. Never touches the stored data.
+    Q_INVOKABLE void retryUnlock();
+
     /// Begins the browser login against `homeserver`, which may be a server
     /// name such as "matrix.org" or a full URL. On a server without OAuth
     /// that offers the classic password sign-in, the answer arrives as
@@ -561,6 +567,9 @@ private:
 
     XmCore *m_core = nullptr;
     QString m_coreVersion;
+    /// Where the session file and the stores live; the unlock retry asks
+    /// the secrets keeper for the key against it.
+    QString m_dataDirectory;
     QString m_sessionState = QStringLiteral("none");
     QString m_syncState = QStringLiteral("idle");
     QString m_userId;

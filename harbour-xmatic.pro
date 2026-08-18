@@ -155,6 +155,7 @@ DISTFILES += \
     qml/cover/CoverPage.qml \
     qml/pages/AccountPage.qml \
     qml/pages/LoginPage.qml \
+    qml/pages/SessionLockedPage.qml \
     qml/pages/AboutPage.qml \
     qml/pages/RoomListPage.qml \
     qml/pages/RoomDelegate.qml \

@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.18.0
+Version:    0.18.1
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -82,6 +82,20 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Aug 18 2026 harbour-xmatic contributors 0.18.1-1
+- Password sign-in no longer flickers into an empty room list: the sign-in
+  reset the local store a second time, under the client it went on to use.
+  The reset now belongs to whoever builds the client.
+- A missing store key is a locked session, never a re-login. The key in the
+  device's secrets storage is released only through the system's own
+  approval dialog, which the app never allowed to appear — so after a reboot
+  the encrypted session read as "no session", the login page came up and the
+  sign-in cleared the store: a new device and a recovery-key round for every
+  affected user. The app now asks with the system dialog (once per boot),
+  logs the storage's reason, never replaces a key while encrypted data
+  exists, and shows a "Locked" page with a retry when the key is not at
+  hand.
+
 * Sun Aug 16 2026 harbour-xmatic contributors 0.18.0-1
 - A room can ask for mentions only, right here: the room page's mute switch
   became a four-way choice — account default, every message, mentions and

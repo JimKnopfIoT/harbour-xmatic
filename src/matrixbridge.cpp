@@ -1,5 +1,7 @@
 #include "matrixbridge.h"
 
+#include "secretskeeper.h"
+
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -42,6 +44,7 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                            const QString &storeKey,
                            QObject *parent)
     : QObject(parent)
+    , m_dataDirectory(dataDirectory)
 {
     // Started before anything can be sent: every pending command is stamped
     // against this clock, and reading an unstarted QElapsedTimer is undefined.
@@ -239,6 +242,21 @@ void MatrixBridge::checkStalledCommands()
 void MatrixBridge::restoreSession()
 {
     send(QStringLiteral("session.restore"));
+}
+
+void MatrixBridge::retryUnlock()
+{
+    setLastError(QString());
+    QString key = obtainStoreKey(m_dataDirectory);
+    QJsonObject arguments;
+    if (!key.isEmpty()) {
+        arguments.insert(QStringLiteral("storeKey"), key);
+        key.fill(QChar('0'));
+    }
+    // The payload carries the key; wiped like a password after the core took
+    // its copy. Without a key the plain restore runs and reports "locked"
+    // again, which keeps the page and its retry on screen.
+    send(QStringLiteral("session.restore"), arguments, !arguments.isEmpty());
 }
 
 void MatrixBridge::startLogin(const QString &homeserver)
