@@ -12,7 +12,7 @@ use std::time::Duration;
 use futures_util::StreamExt;
 use matrix_sdk::deserialized_responses::{SyncOrStrippedState, TimelineEventKind};
 use matrix_sdk::latest_events::LatestEventValue;
-use matrix_sdk::ruma::events::room::message::MessageType;
+use matrix_sdk::ruma::events::room::message::{MessageType, Relation};
 use matrix_sdk::ruma::events::{
     AnySyncMessageLikeEvent, AnySyncTimelineEvent, SyncMessageLikeEvent,
 };
@@ -120,7 +120,16 @@ fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>,
     let sender = Some(message_like.sender().to_string());
     match message_like {
         AnySyncMessageLikeEvent::RoomMessage(SyncMessageLikeEvent::Original(message)) => {
-            match &message.content.msgtype {
+            // An edit carries its readable text in m.new_content; the event's
+            // own body is only the "* …" fallback. For an edited reply that
+            // fallback starts with "* > <@…>", which the quote stripper below
+            // does not recognize — the banner then shows the quoted text, not
+            // the message (reported as "the notification shows my own text").
+            let msgtype = match &message.content.relates_to {
+                Some(Relation::Replacement(replacement)) => &replacement.new_content.msgtype,
+                _ => &message.content.msgtype,
+            };
+            match msgtype {
                 MessageType::Text(content) => {
                     (Some("text"), Some(preview_text(&content.body)), sender)
                 }
@@ -152,7 +161,7 @@ fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>,
 fn preview_text(body: &str) -> String {
     const PREVIEW_CHARS: usize = 160;
     let mut lines = body.lines().peekable();
-    if lines.peek().map_or(false, |line| line.starts_with("> ")) {
+    if lines.peek().map_or(false, |line| line.starts_with('>')) {
         while lines.peek().map_or(false, |line| line.starts_with('>')) {
             lines.next();
         }

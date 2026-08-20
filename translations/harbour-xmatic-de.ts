@@ -90,6 +90,14 @@
         <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
         <translation>Aus: eine Benachrichtigung sagt nur, wie viele Nachrichten angekommen sind. An: sie zeigt die letzte Nachricht — auch auf dem Sperrbildschirm.</translation>
     </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Antippbare Weblinks</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>An: ein Link in einer Nachricht öffnet beim Antippen den Browser. Aus: Links bleiben einfacher Text.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>

@@ -670,6 +670,13 @@ Page {
                                                && !!model.media
                                                && !isImage
                 readonly property bool isOwn: model.own === true
+                // Only a body that visibly carries a web link pays the rich-text
+                // path; everything else stays plain text. Behind a setting,
+                // default off: a tappable link is attack surface.
+                readonly property bool hasLink: matrix.clickableLinks
+                                                && model.kind === "message"
+                                                && !isFile && !isAudio
+                                                && /https?:\/\//.test(model.body || "")
 
                 // Calls and membership changes are not messages, but a room made
                 // only of them must not look empty: they show as a centred line.
@@ -1100,15 +1107,22 @@ Page {
                                 id: bodyMeasure
 
                                 visible: false
-                                textFormat: Text.PlainText
+                                // The twin measures what the label renders, so
+                                // it has to parse the same markup.
+                                textFormat: bodyLabel.textFormat
                                 font.pixelSize: bodyLabel.font.pixelSize
                                 font.italic: bodyLabel.font.italic
                                 text: bodyLabel.text
                             }
                             // Plain text on purpose: a message body is untrusted,
                             // and AutoText would render anything that looks like
-                            // HTML — including <img> that phones home.
-                            textFormat: Text.PlainText
+                            // HTML — including <img> that phones home. Only a
+                            // body with a detected web link switches to
+                            // StyledText, and then every character has been
+                            // escaped by linkifyBody first.
+                            textFormat: row.hasLink ? Text.StyledText : Text.PlainText
+                            linkColor: Theme.highlightColor
+                            onLinkActivated: Qt.openUrlExternally(link)
                             wrapMode: Text.Wrap
                             font.pixelSize: Theme.fontSizeSmall
                             font.italic: model.kind !== "message"
@@ -1138,6 +1152,9 @@ Page {
                                 }
                                 if (row.isFile) {
                                     return "📎 " + (model.body || "")
+                                }
+                                if (row.hasLink) {
+                                    return page.linkifyBody(model.body || "")
                                 }
                                 return model.body || ""
                             }
@@ -1572,6 +1589,31 @@ Page {
         page.pendingSaveIsImage = item.msgtype === "m.image"
         page.pendingSaveName = item.media ? (item.media.filename || "") : ""
         matrix.requestMedia(key, item.media.source, false)
+    }
+
+    // A message body is untrusted and is never rendered as markup. When it
+    // visibly contains a web link, the whole body is HTML-escaped first and
+    // only the detected URLs are wrapped in anchors — the StyledText that
+    // shows the result renders nothing this function did not write itself.
+    function linkifyBody(body) {
+        var escaped = body.replace(/&/g, "&amp;")
+                          .replace(/</g, "&lt;")
+                          .replace(/>/g, "&gt;")
+        return escaped.replace(/https?:\/\/[^\s<>"]+/g, function(url) {
+            // Sentence punctuation glued to the end of a pasted link is not
+            // part of it; a closing parenthesis only when none was opened.
+            var trail = ""
+            var m = url.match(/[.,;:!?]+$/)
+            if (m) {
+                trail = m[0]
+                url = url.slice(0, url.length - trail.length)
+            }
+            if (url.charAt(url.length - 1) === ")" && url.indexOf("(") < 0) {
+                url = url.slice(0, url.length - 1)
+                trail = ")" + trail
+            }
+            return "<a href=\"" + url + "\">" + url + "</a>" + trail
+        })
     }
 
     function storeFile(path, item) {

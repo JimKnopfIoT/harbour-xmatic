@@ -103,12 +103,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AccountPage.qml" line="125"/>
+        <location filename="../qml/pages/AccountPage.qml" line="108"/>
+        <source>Tappable web links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AccountPage.qml" line="109"/>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AccountPage.qml" line="133"/>
         <source>Sign out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/AccountPage.qml" line="130"/>
+        <location filename="../qml/pages/AccountPage.qml" line="138"/>
         <source>Encryption</source>
         <translation type="unfinished"></translation>
     </message>
@@ -838,23 +848,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="985"/>
+        <location filename="../src/matrixbridge.cpp" line="1010"/>
         <source>Enter your recovery key first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1112"/>
-        <location filename="../src/matrixbridge.cpp" line="1140"/>
+        <location filename="../src/matrixbridge.cpp" line="1137"/>
+        <location filename="../src/matrixbridge.cpp" line="1165"/>
         <source>The file could not be saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1310"/>
+        <location filename="../src/matrixbridge.cpp" line="1335"/>
         <source>The homeserver did not return a login page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1330"/>
+        <location filename="../src/matrixbridge.cpp" line="1355"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1471,123 +1481,123 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="689"/>
+        <location filename="../qml/pages/RoomPage.qml" line="696"/>
         <source>Call</source>
         <comment>timeline system line, a noun</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="690"/>
+        <location filename="../qml/pages/RoomPage.qml" line="697"/>
         <source>%1 joined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="691"/>
+        <location filename="../qml/pages/RoomPage.qml" line="698"/>
         <source>%1 left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="692"/>
+        <location filename="../qml/pages/RoomPage.qml" line="699"/>
         <source>%1 was invited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="693"/>
+        <location filename="../qml/pages/RoomPage.qml" line="700"/>
         <source>%1 was removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="694"/>
+        <location filename="../qml/pages/RoomPage.qml" line="701"/>
         <source>%1 was banned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="695"/>
+        <location filename="../qml/pages/RoomPage.qml" line="702"/>
         <source>%1 declined the invitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="696"/>
+        <location filename="../qml/pages/RoomPage.qml" line="703"/>
         <source>%1 asked to join</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="697"/>
+        <location filename="../qml/pages/RoomPage.qml" line="704"/>
         <source>%1 changed membership</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="698"/>
+        <location filename="../qml/pages/RoomPage.qml" line="705"/>
         <source>%1 changed their profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="721"/>
+        <location filename="../qml/pages/RoomPage.qml" line="728"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="727"/>
+        <location filename="../qml/pages/RoomPage.qml" line="734"/>
         <source>Reply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="741"/>
+        <location filename="../qml/pages/RoomPage.qml" line="748"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="747"/>
+        <location filename="../qml/pages/RoomPage.qml" line="754"/>
         <source>Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="756"/>
+        <location filename="../qml/pages/RoomPage.qml" line="763"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="762"/>
+        <location filename="../qml/pages/RoomPage.qml" line="769"/>
         <source>Pin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="769"/>
+        <location filename="../qml/pages/RoomPage.qml" line="776"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="775"/>
+        <location filename="../qml/pages/RoomPage.qml" line="782"/>
         <source>More…</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1080"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1087"/>
         <source>Voice message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1134"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1148"/>
         <source>Cannot be decrypted — this device is missing the key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1137"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1151"/>
         <source>Message deleted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1170"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1187"/>
         <source>not sent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1171"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1188"/>
         <source>edited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1249"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1266"/>
         <source>No messages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1647,32 +1657,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1300"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1317"/>
         <source>Accept invitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1326"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1343"/>
         <source>Recording… %1 s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1341"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1358"/>
         <source>Reply to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1364"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1381"/>
         <source>Editing message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1401"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1418"/>
         <source>New text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1402"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1419"/>
         <source>Message</source>
         <translation type="unfinished"></translation>
     </message>

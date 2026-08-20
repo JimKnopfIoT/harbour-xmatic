@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.18.2
+Version:    0.18.3
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -84,6 +84,20 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Aug 20 2026 harbour-xmatic contributors 0.18.3-1
+- Idle no longer costs measurable CPU. The client held a cross-process store
+  lock whose lease was rewritten into the crypto store every 50 ms - about
+  fifty disk syncs per second, guarding against a second process that the
+  single-instance launcher already rules out. The lock is single-process now;
+  measured idle load fell from 3.4% to 0.3%, and the flash is left alone.
+- Web links in messages can be tapped, behind a new switch under Account,
+  off by default: a tapped link opens the browser, and that is attack
+  surface one opts into. Only http(s) ever becomes a link, the shown text is
+  the target itself, and message bodies are still never rendered as markup.
+- The notification banner no longer shows the quoted message for edited
+  replies. The edit fallback hid the quote block from the preview's
+  stripper, so the banner could show readers their own words as if they
+  were the news.
 * Tue Aug 18 2026 harbour-xmatic contributors 0.18.2-1
 - The room search keeps the keyboard. Every letter re-filters the list and
   the list comes back as a full reset; on each reset the list view recreated

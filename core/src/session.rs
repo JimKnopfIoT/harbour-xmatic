@@ -176,14 +176,16 @@ pub async fn build_client(
         .server_name_or_homeserver_url(server)
         .sqlite_store_with_config_and_cache_path(store_config, None::<&Path>)
         .handle_refresh_tokens()
-        // The holder name has to differ per process. OAuth refresh tokens are
-        // single-use: if two instances share one identity, whichever refreshes
-        // first invalidates the other's session, and every request afterwards
-        // fails with invalid_grant.
-        .cross_process_store_config(CrossProcessLockConfig::multi_process(format!(
-            "xmatic-{}",
-            std::process::id()
-        )))
+        // SingleProcess, deliberately. The multi-process lock guards against a
+        // second process on the same store (single-use OAuth refresh tokens),
+        // but xmatic never has one: the launcher enforces --single-instance,
+        // there is no background daemon, and the share service wakes the same
+        // instance. The lock is not free either - its lease is re-written into
+        // the crypto store every 50 ms (EXTEND_LEASE_EVERY_MS), which kept
+        // ~50 fsyncs/s and a 60 Hz tokio tick running while the app was idle:
+        // measured 3.4% CPU against 0.9% for a comparable client. The builder
+        // default is MultiProcess("main"), so this must stay explicit.
+        .cross_process_store_config(CrossProcessLockConfig::SingleProcess)
         // Without this the SDK never touches the key backup on its own: the
         // default strategy is Manual.
         //
