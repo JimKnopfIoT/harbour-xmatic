@@ -104,6 +104,14 @@ Page {
                 onClicked: matrix.notificationPreview = !matrix.notificationPreview
             }
 
+            TextSwitch {
+                text: qsTr("Tappable web links")
+                description: qsTr("On, a link in a message opens the browser when tapped. Off, links stay plain text.")
+                checked: matrix.clickableLinks
+                automaticCheck: false
+                onClicked: matrix.clickableLinks = !matrix.clickableLinks
+            }
+
             Item {
                 width: 1
                 height: Theme.paddingLarge

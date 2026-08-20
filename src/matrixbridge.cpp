@@ -454,6 +454,31 @@ void MatrixBridge::setNotificationPreview(bool enabled)
     emit notificationPreviewChanged();
 }
 
+bool MatrixBridge::clickableLinks() const
+{
+    QSettings settings(settingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("ui/clickableLinks"), false).toBool();
+}
+
+void MatrixBridge::setClickableLinks(bool enabled)
+{
+    if (enabled == clickableLinks()) {
+        return;
+    }
+    const QString path = settingsPath();
+    QDir().mkpath(QFileInfo(path).absolutePath());
+    QSettings settings(path, QSettings::IniFormat);
+    settings.setValue(QStringLiteral("ui/clickableLinks"), enabled);
+    settings.sync();
+    if (settings.status() != QSettings::NoError) {
+        qWarning("xmatic: could not save the clickable links setting (status %d)",
+                 static_cast<int>(settings.status()));
+    } else {
+        qInfo("xmatic: clickable links %s", enabled ? "on" : "off");
+    }
+    emit clickableLinksChanged();
+}
+
 void MatrixBridge::leaveSpace(const QString &roomId)
 {
     if (roomId.isEmpty()) {

@@ -52,6 +52,10 @@ class MatrixBridge : public QObject
     /// Whether a notification may carry the message itself, not just a count.
     /// Off by default: the banner also lands on the lock screen.
     Q_PROPERTY(bool notificationPreview READ notificationPreview WRITE setNotificationPreview NOTIFY notificationPreviewChanged)
+    /// Whether web links in message bodies are tappable. Off by default: a
+    /// tapped link opens the browser, and that is attack surface the user has
+    /// to opt into.
+    Q_PROPERTY(bool clickableLinks READ clickableLinks WRITE setClickableLinks NOTIFY clickableLinksChanged)
     Q_PROPERTY(int spaceCounts READ spaceCounts NOTIFY spaceCountsChanged)
     Q_PROPERTY(QObject *timeline READ timeline CONSTANT)
     Q_PROPERTY(QObject *recorder READ recorder CONSTANT)
@@ -445,6 +449,8 @@ public:
     void setStartPage(const QString &page);
     bool notificationPreview() const;
     void setNotificationPreview(bool enabled);
+    bool clickableLinks() const;
+    void setClickableLinks(bool enabled);
 
     /// The directory server the search page last used; empty means the own
     /// homeserver. Persisted so the choice survives a restart.
@@ -459,6 +465,7 @@ public:
 signals:
     void startPageChanged();
     void notificationPreviewChanged();
+    void clickableLinksChanged();
     void spaceCountsChanged();
     void unreadTotalsChanged();
 
