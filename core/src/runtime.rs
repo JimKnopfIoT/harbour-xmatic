@@ -105,9 +105,14 @@ struct State {
     /// Behind an `Arc` so a command can clone the handle out and release the
     /// lock before going to the server — see `State::timeline`.
     timeline: Mutex<Option<Arc<TimelineHandle>>>,
+    /// The open thread's timeline, next to the room's — same locking rules.
+    thread: Mutex<Option<Arc<TimelineHandle>>>,
     /// Serialises `open_timeline` against itself. Held for the whole open,
     /// including the network part, which is why it cannot be `timeline`.
     opening: Mutex<()>,
+    /// The same for `open_thread`, and deliberately not `opening`: a thread
+    /// that is slow to build must not hold up a room switch.
+    opening_thread: Mutex<()>,
     /// Every room that currently needs a sliding-sync subscription. See
     /// `Subscriptions` — they have to be requested together or not at all.
     subscriptions: Mutex<Subscriptions>,
@@ -176,6 +181,10 @@ impl State {
     /// relented.
     async fn timeline(&self) -> Option<Arc<TimelineHandle>> {
         self.timeline.lock().await.clone()
+    }
+
+    async fn thread(&self) -> Option<Arc<TimelineHandle>> {
+        self.thread.lock().await.clone()
     }
 
     /// Records what a part of the app needs subscribed and asks the sliding
@@ -248,7 +257,9 @@ pub fn spawn(
         spaces: Mutex::new(None),
         open_space: Mutex::new(None),
         timeline: Mutex::new(None),
+        thread: Mutex::new(None),
         opening: Mutex::new(()),
+        opening_thread: Mutex::new(()),
         subscriptions: Mutex::new(Subscriptions::default()),
         directory: Mutex::new(None),
         verification: Arc::new(Mutex::new(None)),
@@ -442,7 +453,41 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::MemberRemove { room_id, user_id, .. } => {
             member_remove(&state, id, room_id, user_id).await
         }
+        Command::MemberProfile { room_id, user_id, .. } => {
+            member_profile(&state, id, room_id, user_id).await
+        }
+        Command::MemberBan { room_id, user_id, .. } => {
+            member_ban(&state, id, room_id, user_id).await
+        }
+        Command::MemberUnban { room_id, user_id, .. } => {
+            member_unban(&state, id, room_id, user_id).await
+        }
+        Command::MemberSetPower {
+            room_id,
+            user_id,
+            power,
+            ..
+        } => member_set_power(&state, id, room_id, user_id, power).await,
+        Command::MemberSetIgnored {
+            user_id, ignored, ..
+        } => member_set_ignored(&state, id, user_id, ignored).await,
+        Command::MemberWithdrawVerification { user_id, .. } => {
+            member_withdraw_verification(&state, id, user_id).await
+        }
+        Command::AccountIgnoredUsers { .. } => account_ignored_users(&state, id).await,
+        Command::RoomResetKeys { room_id, .. } => room_reset_keys(&state, id, room_id).await,
         Command::SpaceHierarchy { room_id, .. } => space_hierarchy(&state, id, room_id).await,
+        Command::ThreadOpen {
+            room_id,
+            root_event_id,
+            token,
+            ..
+        } => open_thread(&state, id, room_id, root_event_id, token).await,
+        Command::ThreadClose { root_event_id, .. } => {
+            close_thread(&state, id, root_event_id).await
+        }
+        Command::ThreadSend { body, .. } => send_thread_message(&state, id, body).await,
+        Command::ThreadPaginate { .. } => paginate_thread(&state, id).await,
     }
 }
 
@@ -672,6 +717,106 @@ async fn member_remove(state: &Arc<State>, id: u64, room_id: String, user_id: St
     }
 }
 
+async fn member_profile(state: &Arc<State>, id: u64, room_id: String, user_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match members::profile(&client, &room_id, &user_id).await {
+        Ok(data) => state.sink.emit(reply_ok(id, data)),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn member_ban(state: &Arc<State>, id: u64, room_id: String, user_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match members::ban(&client, &room_id, &user_id).await {
+        Ok(()) => state.sink.emit(reply_ok(
+            id,
+            json!({ "roomId": room_id, "userId": user_id }),
+        )),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn member_unban(state: &Arc<State>, id: u64, room_id: String, user_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match members::unban(&client, &room_id, &user_id).await {
+        Ok(()) => state.sink.emit(reply_ok(
+            id,
+            json!({ "roomId": room_id, "userId": user_id }),
+        )),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn member_set_power(state: &Arc<State>, id: u64, room_id: String, user_id: String, power: i64) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match members::set_power(&client, &room_id, &user_id, power).await {
+        Ok(()) => state.sink.emit(reply_ok(
+            id,
+            json!({ "roomId": room_id, "userId": user_id, "power": power }),
+        )),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn member_set_ignored(state: &Arc<State>, id: u64, user_id: String, ignored: bool) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match members::set_ignored(&client, &user_id, ignored).await {
+        Ok(()) => state.sink.emit(reply_ok(
+            id,
+            json!({ "userId": user_id, "ignored": ignored }),
+        )),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn room_reset_keys(state: &Arc<State>, id: u64, room_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match timeline::discard_room_key(&client, &room_id).await {
+        Ok(()) => state.sink.emit(reply_ok(id, json!({ "reset": true }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn account_ignored_users(state: &Arc<State>, id: u64) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match members::ignored(&client).await {
+        Ok(users) => state.sink.emit(reply_ok(id, json!({ "users": users }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn member_withdraw_verification(state: &Arc<State>, id: u64, user_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match members::withdraw_verification(&client, &user_id).await {
+        Ok(()) => state.sink.emit(reply_ok(id, json!({ "userId": user_id }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
 async fn encryption_status(state: &Arc<State>, id: u64) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
@@ -840,6 +985,13 @@ async fn open_timeline(state: &Arc<State>, id: u64, room_id: String, focus: Stri
         }
     }
 
+    // Past the early return, so re-entering the same room keeps its thread:
+    // a thread belongs to the view it was opened from, and a stream left
+    // running would keep emitting `thread.diff` for the room just left.
+    if let Some(handle) = state.thread.lock().await.take() {
+        handle.close();
+    }
+
     // Sliding sync only sends a minimal timeline for rooms in the list — one
     // event per response. A room that is being read has to be subscribed
     // explicitly, or its newer messages never arrive and the view shows
@@ -863,7 +1015,88 @@ async fn close_timeline(state: &Arc<State>, id: u64) {
     if let Some(handle) = state.timeline.lock().await.take() {
         handle.close();
     }
+    // A thread never outlives its room's view.
+    if let Some(handle) = state.thread.lock().await.take() {
+        handle.close();
+    }
     state.sink.emit(reply_ok(id, json!({ "open": false })));
+}
+
+async fn open_thread(
+    state: &Arc<State>,
+    id: u64,
+    room_id: String,
+    root_event_id: String,
+    token: String,
+) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+
+    let _opening = state.opening_thread.lock().await;
+
+    if let Some(previous) = state.thread.lock().await.take() {
+        previous.close();
+    }
+
+    match timeline::open_thread(&client, &room_id, &root_event_id, &token, state.sink.clone()).await
+    {
+        Ok(handle) => {
+            *state.thread.lock().await = Some(Arc::new(handle));
+            state.sink.emit(reply_ok(id, json!({ "open": true })));
+        }
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// Closes the open thread. A close that names a different thread than the one
+/// currently open is ignored: commands run as independent tasks, so the close
+/// of the thread just left can reach the core after the open of the next one.
+async fn close_thread(state: &Arc<State>, id: u64, root_event_id: String) {
+    let mut open = state.thread.lock().await;
+    let matches = open
+        .as_ref()
+        .map(|handle| root_event_id.is_empty() || handle.thread_root() == root_event_id)
+        .unwrap_or(false);
+    if matches {
+        if let Some(handle) = open.take() {
+            handle.close();
+        }
+    }
+    drop(open);
+    state.sink.emit(reply_ok(id, json!({ "open": false })));
+}
+
+async fn send_thread_message(state: &Arc<State>, id: u64, body: String) {
+    if body.trim().is_empty() {
+        state.sink.emit(reply_error(id, "nothing to send"));
+        return;
+    }
+
+    let outcome = match state.thread().await {
+        Some(handle) => handle.send_text(body).await,
+        None => Err("no thread is open".to_owned()),
+    };
+
+    match outcome {
+        Ok(()) => state.sink.emit(reply_ok(id, json!({ "sent": true }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn paginate_thread(state: &Arc<State>, id: u64) {
+    let outcome = match state.thread().await {
+        Some(handle) => handle.paginate().await,
+        None => Err("no thread is open".to_owned()),
+    };
+
+    match outcome {
+        Ok(reached_start) => state
+            .sink
+            .emit(reply_ok(id, json!({ "reachedStart": reached_start }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
 }
 
 async fn paginate_timeline(state: &Arc<State>, id: u64) {
@@ -1529,7 +1762,7 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {error}")));
+                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::timeline::scrub_ids(&error.to_string()))));
             return;
         }
     };
@@ -1541,7 +1774,8 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
     match client.oauth().server_metadata().await {
         Ok(_) => {}
         Err(OAuthDiscoveryError::NotSupported) => {
-            match login::password_offered(&client).await {
+            let flows = login::login_flows(&client).await;
+            match flows.as_ref().map(|list| list.iter().any(|flow| flow == "password")) {
                 Ok(true) => {
                     if client.homeserver().scheme() != "https" {
                         state.sink.emit(reply_error(
@@ -1557,18 +1791,35 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
                         .sink
                         .emit(reply_ok(id, json!({ "passwordLogin": true })));
                 }
-                Ok(false) => state.sink.emit(reply_error(
+                // Naming the method the server does want is the whole point:
+                // SSO is a redirect to the server's own web page, and a user
+                // told only "sign-in failed" will retype a password that was
+                // never wrong.
+                Ok(false) => {
+                    let sso = flows
+                        .as_ref()
+                        .map(|list| list.iter().any(|flow| flow == "sso"))
+                        .unwrap_or(false);
+                    state.sink.emit(reply_error(
+                        id,
+                        if sso {
+                            "this server signs in through its own web page (SSO), which this app cannot do yet"
+                        } else {
+                            "this server offers no sign-in method this app supports"
+                        },
+                    ));
+                }
+                Err(_) => state.sink.emit(reply_error(
                     id,
-                    "this server offers no sign-in method this app supports",
+                    flows.err().unwrap_or_else(|| "sign-in methods unknown".to_owned()),
                 )),
-                Err(message) => state.sink.emit(reply_error(id, message)),
             }
             return;
         }
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("sign-in discovery failed: {error}")));
+                .emit(reply_error(id, format!("sign-in discovery failed: {}", crate::timeline::scrub_ids(&error.to_string()))));
             return;
         }
     }
@@ -1658,7 +1909,7 @@ async fn password_login(
                 Err(error) => {
                     state
                         .sink
-                        .emit(reply_error(id, format!("homeserver unreachable: {error}")));
+                        .emit(reply_error(id, format!("homeserver unreachable: {}", crate::timeline::scrub_ids(&error.to_string()))));
                     return;
                 }
             }
@@ -1685,7 +1936,7 @@ async fn password_login(
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("sign-in discovery failed: {error}")));
+                .emit(reply_error(id, format!("sign-in discovery failed: {}", crate::timeline::scrub_ids(&error.to_string()))));
             return;
         }
     }
@@ -1721,7 +1972,7 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {error}")));
+                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::timeline::scrub_ids(&error.to_string()))));
             return;
         }
     };
@@ -1852,7 +2103,7 @@ async fn registration_url(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {error}")));
+                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::timeline::scrub_ids(&error.to_string()))));
             return;
         }
     };
@@ -1879,6 +2130,12 @@ async fn abort_login(state: &Arc<State>, id: u64) {
 
 async fn logout(state: &Arc<State>, id: u64) {
     if let Some(handle) = state.timeline.lock().await.take() {
+        handle.close();
+    }
+    // A thread handle holds the timeline, and through it the client and the
+    // open SQLite pool — `reset_store` below would delete the directory from
+    // under it.
+    if let Some(handle) = state.thread.lock().await.take() {
         handle.close();
     }
     if let Some(handle) = state.directory.lock().await.take() {

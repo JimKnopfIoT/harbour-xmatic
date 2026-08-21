@@ -97,9 +97,28 @@ Page {
             PageHeader {
                 title: qsTr("Rooms")
                 // The core reconnects on its own; this only says that it is
-                // doing so instead of leaving a silently stale list.
-                description: matrix.syncState === "offline"
-                             ? qsTr("Offline — waiting for the network") : ""
+                // doing so instead of leaving a silently stale list. A server
+                // that cannot do this app's sync produces the same "offline",
+                // but waiting will not help there, so it says so instead.
+                description: {
+                    if (!matrix.serverSupported) {
+                        return qsTr("This homeserver is not supported")
+                    }
+                    return matrix.syncState === "offline"
+                            ? qsTr("Offline — waiting for the network") : ""
+                }
+            }
+
+            // Only when the server itself is the problem: the empty list needs
+            // a reason, or it reads as a network hiccup that never clears.
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.errorColor
+                visible: !matrix.serverSupported
+                text: qsTr("Your homeserver does not offer the sync this app needs (simplified sliding sync, MSC4186). Rooms cannot be loaded from it. A newer server version, or an account on a server that supports it, is required.")
             }
 
             SearchField {

@@ -186,6 +186,9 @@ DISTFILES += \
     qml/pages/AddDirectoryServerDialog.qml \
     qml/pages/PinnedMessagesPage.qml \
     qml/pages/MemberListPage.qml \
+    qml/pages/MemberProfilePage.qml \
+    qml/pages/IgnoredUsersPage.qml \
+    qml/pages/ThreadPage.qml \
     qml/pages/CallPage.qml
 
 lupdate_only {

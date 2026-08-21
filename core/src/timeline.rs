@@ -63,11 +63,18 @@ pub struct TimelineHandle {
     /// Without this the room would be cleared on every single pagination that
     /// legitimately reports the start of a short room.
     retried_from_end: AtomicBool,
+    /// The thread this view is focused on, or empty for a room view.
+    thread_root: String,
 }
 
 impl TimelineHandle {
     pub fn room_id(&self) -> &str {
         &self.room_id
+    }
+
+    /// Which thread this view shows, or empty for a room view.
+    pub fn thread_root(&self) -> &str {
+        &self.thread_root
     }
 
     /// Whether this is the live view; focused views (pinned, permalink) are
@@ -356,10 +363,13 @@ fn replies_needing_details(diff: &VectorDiff<Arc<TimelineItem>>) -> Vec<OwnedEve
 const DETAIL_ATTEMPTS: u8 = 2;
 
 /// Spawns a detail fetch for each reply target that has attempts left.
+/// Failures go out as `timeline.detailError` (truncated id, scrubbed error)
+/// so they land in the journal instead of vanishing.
 fn request_reply_details(
     ids: impl IntoIterator<Item = OwnedEventId>,
     requested: &mut HashMap<OwnedEventId, u8>,
     timeline: &Arc<matrix_sdk_ui::timeline::Timeline>,
+    sink: &Arc<Sink>,
 ) {
     for id in ids {
         let attempts = requested.entry(id.clone()).or_insert(0);
@@ -368,15 +378,45 @@ fn request_reply_details(
         }
         *attempts += 1;
         let source = timeline.clone();
+        let sink = sink.clone();
         tokio::spawn(async move {
-            let _ = source.fetch_details_for_event(&id).await;
+            if let Err(error) = source.fetch_details_for_event(&id).await {
+                // On a char boundary: `truncate` counts bytes and would panic
+                // on an id whose server part is not ASCII.
+                let full = id.as_str();
+                let cut = full
+                    .char_indices()
+                    .nth(9)
+                    .map(|(index, _)| index)
+                    .unwrap_or(full.len());
+                let short = full[..cut].to_owned();
+                // A class, not the message: the SDK's own error carries the
+                // full id in its `Debug` output (`EventId("$…")`), and the
+                // most common case here is exactly that variant.
+                let class = match error {
+                    matrix_sdk_ui::timeline::Error::EventNotInTimeline(_) => "not-in-timeline",
+                    _ => "fetch-failed",
+                };
+                sink.emit(event(
+                    "timeline.detailError",
+                    json!({ "eventId": short, "error": class }),
+                ));
+            }
         });
     }
 }
 
 /// Describes the message a reply refers to, as far as it is already known.
+/// `state`: "ready", "error" (fetch failed — not there or not permitted),
+/// or "loading".
 fn reply_info(content: &matrix_sdk_ui::timeline::MsgLikeContent) -> Option<Value> {
     let in_reply_to = content.in_reply_to.as_ref()?;
+
+    let state = match &in_reply_to.event {
+        TimelineDetails::Ready(_) => "ready",
+        TimelineDetails::Error(_) => "error",
+        _ => "loading",
+    };
 
     let (sender, body) = match &in_reply_to.event {
         TimelineDetails::Ready(embedded) => {
@@ -405,6 +445,7 @@ fn reply_info(content: &matrix_sdk_ui::timeline::MsgLikeContent) -> Option<Value
         "eventId": in_reply_to.event_id.as_str(),
         "sender": sender,
         "body": body,
+        "state": state,
     }))
 }
 
@@ -465,6 +506,23 @@ fn encode_item(item: &TimelineItem) -> Value {
     // only of them (a call test room, say) must not look empty: they become a
     // "system" row. The `system` token is machine-readable so the QML side can
     // localise it; `name` carries the affected member for membership changes.
+    // Thread membership and summary, for the marker row and the inline tag.
+    let (thread_root, thread_count) = match event.content() {
+        TimelineItemContent::MsgLike(content) => (
+            content
+                .thread_root
+                .as_ref()
+                .map(|id| id.to_string())
+                .unwrap_or_default(),
+            content
+                .thread_summary
+                .as_ref()
+                .map(|summary| summary.num_replies)
+                .unwrap_or(0),
+        ),
+        _ => (String::new(), 0),
+    };
+
     let (kind, body, msgtype, edited, media, reply, system, name) = match event.content() {
         TimelineItemContent::MsgLike(content) => match &content.kind {
             MsgLikeKind::Message(message) => (
@@ -570,6 +628,8 @@ fn encode_item(item: &TimelineItem) -> Value {
         "timestamp": u64::from(event.timestamp().get()),
         "pending": event.send_state().is_some(),
         "sendState": send_state(event),
+        "threadRoot": thread_root,
+        "threadCount": thread_count,
     })
 }
 
@@ -776,6 +836,7 @@ pub async fn open(
             initial.iter().filter_map(|item| reply_needing_details(item)),
             &mut requested,
             &detail_source,
+            &sink,
         );
 
         while let Some(diffs) = stream.next().await {
@@ -795,6 +856,7 @@ pub async fn open(
                 diffs.iter().flat_map(replies_needing_details),
                 &mut requested,
                 &detail_source,
+                &sink,
             );
         }
     });
@@ -820,17 +882,136 @@ pub async fn open(
         timeline,
         task,
         retried_from_end: AtomicBool::new(false),
+        thread_root: String::new(),
+    })
+}
+
+/// Opens the timeline of one thread (`TimelineFocus::Thread`) and streams its
+/// updates as `thread.diff`. Runs next to the room's live timeline, not
+/// instead of it. Sending on this handle threads automatically — the SDK
+/// derives the relation from the focus.
+pub async fn open_thread(
+    client: &Client,
+    room_id: &str,
+    root: &str,
+    token: &str,
+    sink: Arc<Sink>,
+) -> Result<TimelineHandle, String> {
+    use matrix_sdk_ui::timeline::TimelineFocus;
+
+    let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
+    let room = client
+        .get_room(&parsed)
+        .ok_or_else(|| "room is not known yet".to_owned())?;
+    let root_id = EventId::parse(root).map_err(|_| "not an event identifier".to_owned())?;
+
+    let timeline = room
+        .timeline_builder()
+        .with_focus(TimelineFocus::Thread { root_event_id: root_id })
+        .with_internal_id_prefix(id_prefix(room_id, root))
+        .build()
+        .await
+        .map_err(|error| format!("thread unavailable: {error}"))?;
+    let timeline = Arc::new(timeline);
+
+    let (initial, mut stream) = timeline.subscribe().await;
+
+    sink.emit(event(
+        "thread.diff",
+        json!({
+            "roomId": room_id,
+            "root": root,
+            "token": token,
+            "ops": [{ "op": "reset", "values": encode_items(&initial) }],
+        }),
+    ));
+
+    let room_id_owned = room_id.to_owned();
+    let root_owned = root.to_owned();
+    let token_owned = token.to_owned();
+    let detail_source = timeline.clone();
+    let initial_empty = initial.is_empty();
+    let error_sink = sink.clone();
+    let task = tokio::spawn(async move {
+        let mut requested: HashMap<OwnedEventId, u8> = HashMap::new();
+        request_reply_details(
+            initial.iter().filter_map(|item| reply_needing_details(item)),
+            &mut requested,
+            &detail_source,
+            &sink,
+        );
+        while let Some(diffs) = stream.next().await {
+            let ops: Vec<Value> = diffs.iter().map(encode).collect();
+            sink.emit(event(
+                "thread.diff",
+                json!({
+                    "roomId": room_id_owned,
+                    "root": root_owned,
+                    "token": token_owned,
+                    "ops": ops,
+                }),
+            ));
+            request_reply_details(
+                diffs.iter().flat_map(replies_needing_details),
+                &mut requested,
+                &detail_source,
+                &sink,
+            );
+        }
+    });
+
+    // A thread that is not in the cache arrives empty; one page fills it.
+    // A failure here has to be reported, or the view sits on "loading" for
+    // good — the rows it would have delivered come through the diff stream,
+    // so nothing else would ever say that they are not coming.
+    if initial_empty {
+        let timeline = timeline.clone();
+        let root_owned = root.to_owned();
+        tokio::spawn(async move {
+            if let Err(error) = timeline.paginate_backwards(PAGE_SIZE).await {
+                error_sink.emit(event(
+                    "thread.error",
+                    json!({
+                        "root": root_owned,
+                        "message": scrub_ids(&error.to_string()),
+                    }),
+                ));
+            }
+        });
+    }
+
+    Ok(TimelineHandle {
+        room_id: room_id.to_owned(),
+        live: false,
+        pinned: false,
+        timeline,
+        task,
+        retried_from_end: AtomicBool::new(true),
+        thread_root: root.to_owned(),
     })
 }
 
 /// Strips anything that could identify a room, user or event from a message
-/// meant for the log. Matrix identifiers all carry a sigil, so a token that
-/// starts with one is replaced wholesale rather than trimmed.
-fn scrub_ids(text: &str) -> String {
+/// meant for the log or the error line.
+///
+/// Testing only a word's first character was not enough, and neither is a
+/// sigil test on its own. Measured against what the SDK actually produces:
+/// ids come wrapped in their own syntax (`EventId("$id")`), reqwest appends
+/// `for url (…)` with the id percent-encoded inside the path (`%21`, `%40`,
+/// `%23`, `%24`), and a server's JSON body is printed whole. So a word goes
+/// as soon as it looks like it could carry an identifier at all: any sigil,
+/// any percent escape, anything URL-shaped, anything quoted.
+pub fn scrub_ids(text: &str) -> String {
     text.split_whitespace()
-        .map(|word| match word.chars().next() {
-            Some('$') | Some('!') | Some('@') | Some('#') => "<id>",
-            _ => word,
+        .map(|word| {
+            let suspicious = word.contains(['$', '!', '@', '#', '"'])
+                || word.contains('%')
+                || word.contains("://");
+            if suspicious {
+                "<id>"
+            } else {
+                word
+            }
         })
         .collect::<Vec<_>>()
         .join(" ")
@@ -937,6 +1118,26 @@ pub async fn direct_chat(client: &Client, user_id: &str) -> Result<String, Strin
         .map_err(|error| format!("could not start the chat: {error}"))?;
 
     Ok(room.room_id().as_str().to_owned())
+}
+
+/// Throws away the room's outbound group session, so the next message starts
+/// a fresh one and shares its key with every device known at that moment.
+///
+/// The remedy for "the other side cannot read what I send": a Megolm key
+/// reaches a device through an Olm session, and once that pairing is out of
+/// step the recipient stays locked out for the whole session's lifetime. Only
+/// the sending session goes — received keys stay, so nothing of the own
+/// history becomes unreadable. Messages already sent stay unreadable for
+/// whoever never got that key; this fixes the next one, not the last one.
+pub async fn discard_room_key(client: &Client, room_id: &str) -> Result<(), String> {
+    let parsed = matrix_sdk::ruma::RoomId::parse(room_id)
+        .map_err(|_| "not a room identifier".to_owned())?;
+    let room = client
+        .get_room(&parsed)
+        .ok_or_else(|| "room is not known".to_owned())?;
+    room.discard_room_key()
+        .await
+        .map_err(|error| format!("could not reset the room key: {}", scrub_ids(&error.to_string())))
 }
 
 /// Turns on end-to-end encryption in a room. Irreversible by design of the

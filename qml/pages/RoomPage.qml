@@ -823,6 +823,21 @@ Page {
                     size: Theme.iconSizeSmall
                     source: model.senderAvatar || ""
                     name: model.senderName || model.sender || ""
+
+                    // Tap opens the sender's profile. The margin stays inside
+                    // the gap to the bubble (paddingSmall), or it would take
+                    // taps meant for the message; the long press still has to
+                    // reach the message's own menu.
+                    MouseArea {
+                        anchors {
+                            fill: parent
+                            margins: -Theme.paddingSmall
+                        }
+                        onClicked: pageStack.push(
+                                       Qt.resolvedUrl("MemberProfilePage.qml"),
+                                       { roomId: page.roomId, userId: model.sender })
+                        onPressAndHold: row.openMenu()
+                    }
                 }
 
                 // A message. Own messages sit on the right in the highlight colour,
@@ -971,16 +986,23 @@ Page {
                                     // quoted message is still being fetched.
                                     width: quoteTexts.maxWidth
                                     font.pixelSize: Theme.fontSizeExtraSmall
-                                    color: Theme.secondaryColor
+                                    color: model.replyTo && model.replyTo.state === "error"
+                                           ? Theme.errorColor : Theme.secondaryColor
                                     maximumLineCount: 2
                                     wrapMode: Text.Wrap
                                     elide: Text.ElideRight
                                     textFormat: Text.PlainText
-                                    // The ellipsis stands in while the quoted
-                                    // message is being fetched — and stays
-                                    // for one that has no text, a redacted
-                                    // original say.
-                                    text: model.replyTo ? (model.replyTo.body || "…") : ""
+                                    // "…" while fetching or for a quote with
+                                    // no text; the error state names itself.
+                                    text: {
+                                        if (!model.replyTo) {
+                                            return ""
+                                        }
+                                        if (model.replyTo.state === "error") {
+                                            return qsTr("The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.")
+                                        }
+                                        return model.replyTo.body || "…"
+                                    }
                                 }
                             }
                         }
@@ -1160,6 +1182,41 @@ Page {
                             }
                         }
 
+                        // Thread marker: the root shows the reply count, a
+                        // reply shown inline names its thread. Both open it.
+                        Label {
+                            id: threadLabel
+
+                            visible: row.isBubble
+                                     && (model.threadCount > 0
+                                         || (model.threadRoot || "").length > 0)
+                            width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            color: threadArea.pressed ? Theme.secondaryHighlightColor
+                                                      : Theme.highlightColor
+                            text: model.threadCount > 0
+                                  ? qsTr("Thread · %1").arg(model.threadCount)
+                                  : qsTr("In thread")
+
+                            MouseArea {
+                                id: threadArea
+                                anchors {
+                                    fill: parent
+                                    margins: -Theme.paddingSmall
+                                }
+                                onClicked: pageStack.push(
+                                               Qt.resolvedUrl("ThreadPage.qml"),
+                                               {
+                                                   roomId: page.roomId,
+                                                   roomName: page.roomName,
+                                                   rootEventId: model.threadCount > 0
+                                                                ? model.eventId
+                                                                : model.threadRoot
+                                               })
+                                onPressAndHold: row.openMenu()
+                            }
+                        }
+
                         Label {
                             id: metaLabel
 
@@ -1170,6 +1227,7 @@ Page {
                                             audioRow.visible ? audioRow.width : 0,
                                             senderLabel.visible ? senderLabel.width : 0,
                                             replyQuote.visible ? replyQuote.width : 0,
+                                            threadLabel.visible ? threadLabel.width : 0,
                                             implicitWidth)
                             horizontalAlignment: Text.AlignRight
                             font.pixelSize: Theme.fontSizeTiny

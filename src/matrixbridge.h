@@ -35,6 +35,10 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QString coreVersion READ coreVersion CONSTANT)
     Q_PROPERTY(QString sessionState READ sessionState NOTIFY sessionChanged)
     Q_PROPERTY(QString syncState READ syncState NOTIFY syncStateChanged)
+    /// False when the homeserver does not advertise the sync this app is
+    /// built on. Then "offline" means "cannot work with this server", not
+    /// "no network", and the UI has to say so instead of flashing a banner.
+    Q_PROPERTY(bool serverSupported READ serverSupported NOTIFY serverSupportedChanged)
     Q_PROPERTY(QString userId READ userId NOTIFY sessionChanged)
     Q_PROPERTY(QString deviceId READ deviceId NOTIFY sessionChanged)
     Q_PROPERTY(bool ready READ ready CONSTANT)
@@ -58,6 +62,7 @@ class MatrixBridge : public QObject
     Q_PROPERTY(bool clickableLinks READ clickableLinks WRITE setClickableLinks NOTIFY clickableLinksChanged)
     Q_PROPERTY(int spaceCounts READ spaceCounts NOTIFY spaceCountsChanged)
     Q_PROPERTY(QObject *timeline READ timeline CONSTANT)
+    Q_PROPERTY(QObject *threadTimeline READ threadTimeline CONSTANT)
     Q_PROPERTY(QObject *recorder READ recorder CONSTANT)
     Q_PROPERTY(QObject *calls READ calls CONSTANT)
     Q_PROPERTY(QString openRoomId READ openRoomId NOTIFY openRoomChanged)
@@ -99,6 +104,7 @@ public:
     /// One of "idle", "running", "offline", "terminated", "error". "offline"
     /// means the core noticed the network is gone and reconnects on its own.
     QString syncState() const { return m_syncState; }
+    bool serverSupported() const { return m_serverSupported; }
     QString userId() const { return m_userId; }
     QString deviceId() const { return m_deviceId; }
     bool ready() const { return m_core != nullptr; }
@@ -121,6 +127,7 @@ public:
     QObject *spaceRooms() { return &m_spaceRooms; }
     int spaceCounts() const { return m_spaceCountsRevision; }
     QObject *timeline() { return &m_timeline; }
+    QObject *threadTimeline() { return &m_threadTimeline; }
     QObject *recorder() { return m_recorder; }
     QObject *calls() { return m_calls; }
     QString openRoomId() const { return m_openRoomId; }
@@ -291,6 +298,11 @@ public:
     /// raise the pre-send warning. Persisted in the app config.
     Q_INVOKABLE void trustRecipient(const QString &userId);
 
+    /// Drops every suppressed pre-send warning, so unverified devices are
+    /// reported again. Answers how many recipients were on the list — the
+    /// dialog's "until you reset it" needs somewhere to be done.
+    Q_INVOKABLE int resetRecipientWarnings();
+
     /// Turns on end-to-end encryption in a room; there is no way back, so the
     /// UI asks first.
     Q_INVOKABLE void enableEncryption(const QString &roomId);
@@ -323,6 +335,34 @@ public:
     /// Removes (kicks) a member from a room; the row disappears on success.
     Q_INVOKABLE void removeMember(const QString &roomId, const QString &userId);
 
+    /// Asks for everything the member-profile page shows about one user in
+    /// one room; the answer arrives as `memberProfileReady`.
+    Q_INVOKABLE void loadMemberProfile(const QString &roomId, const QString &userId);
+
+    /// Bans a member from a room — a kick that also blocks rejoining.
+    Q_INVOKABLE void banMember(const QString &roomId, const QString &userId);
+
+    /// Lifts a member's ban.
+    Q_INVOKABLE void unbanMember(const QString &roomId, const QString &userId);
+
+    /// Sets a member's power level: 0 member, 50 moderator, 100 admin.
+    Q_INVOKABLE void setMemberPower(const QString &roomId, const QString &userId, int power);
+
+    /// Ignores or unignores a user, account-wide.
+    Q_INVOKABLE void setMemberIgnored(const QString &userId, bool ignored);
+
+    /// Withdraws a verification after the other side's identity changed.
+    Q_INVOKABLE void withdrawMemberVerification(const QString &userId);
+
+    /// Asks for the account's ignored users; the answer arrives as
+    /// `ignoredUsersReady`.
+    Q_INVOKABLE void loadIgnoredUsers();
+
+    /// Discards the room's outbound group session: the next message starts a
+    /// fresh one and re-shares its key. The remedy when the other side cannot
+    /// read what this device sends.
+    Q_INVOKABLE void resetRoomKeys(const QString &roomId);
+
     /// Asks the server for a space's linked children, including rooms the
     /// user has not joined; the answer arrives as spaceHierarchyReady().
     Q_INVOKABLE void fetchSpaceHierarchy(const QString &spaceId);
@@ -341,6 +381,19 @@ public:
 
     /// Loads a page of older messages.
     Q_INVOKABLE void loadOlder();
+
+    /// Opens one thread's timeline next to the room's; rows stream into
+    /// `threadTimeline`.
+    Q_INVOKABLE void openThread(const QString &roomId, const QString &rootEventId);
+
+    /// Closes the open thread and empties its model.
+    Q_INVOKABLE void closeThread();
+
+    /// Sends a text message into the open thread.
+    Q_INVOKABLE void sendThreadMessage(const QString &body);
+
+    /// Loads older events of the open thread.
+    Q_INVOKABLE void threadLoadOlder();
 
     /// Sends a plain text message to the open room.
     Q_INVOKABLE void sendMessage(const QString &body);
@@ -471,6 +524,7 @@ signals:
 
     void sessionChanged();
     void syncStateChanged();
+    void serverSupportedChanged();
     void busyChanged();
     void paginatingChanged();
     void lastErrorChanged();
@@ -519,6 +573,31 @@ signals:
     /// room upgrade.
     void roomInfoReady(const QVariantMap &info);
 
+    /// A member's profile, for the member-profile page.
+    void memberProfileReady(const QVariantMap &profileData);
+
+    /// A moderation or ignore action succeeded; no diff follows, so the open
+    /// profile page reloads on this.
+    void memberChanged(const QString &changedUserId);
+
+    /// The result of one member action, for pages that have to update without
+    /// re-reading: the server has confirmed it, but the local store only
+    /// learns of the state event on a later sync, so a reload would answer
+    /// with the old values. `action` is ban, unban, setPower, setIgnored or
+    /// withdrawVerification.
+    void memberActionDone(const QString &action, const QVariantMap &result);
+
+    /// A member profile could not be read; the page needs a state of its own
+    /// rather than a spinner that never stops.
+    void memberProfileFailed(const QString &message);
+
+    /// A thread could not be opened, paginated or posted to. Same reason:
+    /// `lastError` is global, and the page must not sit on "loading".
+    void threadFailed(const QString &message);
+
+    /// The account's ignored users, for the ignore list page.
+    void ignoredUsersReady(const QStringList &users);
+
     /// A room was created and can be opened. Name and encryption state come
     /// back with it, so the room opens correctly before the first sync diff.
     void roomCreated(const QString &roomId, const QString &name, bool encrypted);
@@ -536,6 +615,12 @@ signals:
                       const QString &previewKind,
                       const QString &previewText,
                       const QString &previewSender);
+
+    /// A room's notifying events dropped back to zero — it was read, here or
+    /// in another client. Read receipts travel between clients, so the server
+    /// clears the counter for every device; a banner raised for that room has
+    /// nothing left to announce and is taken down.
+    void roomRead(const QString &roomId);
 
     /// The URL that has to be opened in the browser to continue a login.
     void loginUrlReady(const QString &url);
@@ -593,6 +678,7 @@ private:
     QString m_dataDirectory;
     QString m_sessionState = QStringLiteral("none");
     QString m_syncState = QStringLiteral("idle");
+    bool m_serverSupported = true;
     QString m_userId;
     QString m_deviceId;
     QString m_lastError;
@@ -605,6 +691,15 @@ private:
     VoiceRecorder *m_recorder = nullptr;
     CallEngine *m_calls = nullptr;
     TimelineModel m_timeline;
+    TimelineModel m_threadTimeline;
+    /// Which room `m_members` was loaded for, so an action in another room
+    /// does not rewrite this one's rows.
+    QString m_membersRoomId;
+    /// Root event of the open thread, to drop late diffs after a switch.
+    QString m_openThreadRoot;
+    /// Counts thread opens, so diffs of a previous open of the *same* thread
+    /// can be told apart from this one's.
+    quint64 m_threadGeneration = 0;
     QString m_openRoomId;
     /// The room actually on screen; see setVisibleRoom.
     QString m_visibleRoomId;

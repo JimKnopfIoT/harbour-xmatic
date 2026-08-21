@@ -13,8 +13,19 @@ ApplicationWindow {
     // is only exchanged when the state actually changes.
     property string shownState: "none"
 
+    // The room the standing notification is about, or "" if none stands.
+    property string notifiedRoomId: ""
+
     initialPage: Component { LoginPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
+
+    // Silica's default is Text.AutoText, and every Label inherits it — a
+    // PageHeader title, a DetailItem, an error line. Display names, room
+    // names and server error texts all pass through those, so a name of
+    // `<img src=http://…>` fetched a remote picture on sight. Only the
+    // message body opts back out, explicitly, after escaping (RoomPage's
+    // linkifyBody); an explicit binding beats this default.
+    _defaultLabelFormat: Text.PlainText
     // Do not try to widen this through `defaultAllowedOrientations` — that one
     // is read-only in Silica, and assigning it makes the whole window fail to
     // load (a white screen, with nothing but a warning in the journal). Pages
@@ -210,6 +221,7 @@ ApplicationWindow {
             if (Qt.application.state === Qt.ApplicationActive) {
                 backgroundSync.enabled = false
                 notification.close()
+                app.notifiedRoomId = ""
             } else {
                 backgroundSync.enabled = matrix.sessionState === "signed-in"
             }
@@ -247,8 +259,22 @@ ApplicationWindow {
         // New messages in a room that is not on screen become a system
         // notification. The room list already carries the unread counts, so
         // this needs no extra request.
+        // A room read on another device clears the counter here too, and the
+        // banner has to go with it — the LED, the event feed entry and the
+        // banner are one published notification, so closing it takes all
+        // three down. Only when it is this room's: the notification object is
+        // a single one, and the room it last announced is the only one it
+        // could be showing.
+        onRoomRead: {
+            if (roomId === app.notifiedRoomId) {
+                notification.close()
+                app.notifiedRoomId = ""
+            }
+        }
+
         onRoomActivity: {
             notification.close()
+            app.notifiedRoomId = roomId
             notification.summary = roomName
             // The count is the default; the message itself only when the user
             // switched that on (Account → This app), because the banner also

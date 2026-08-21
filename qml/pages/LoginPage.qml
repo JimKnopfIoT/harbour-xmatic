@@ -223,14 +223,58 @@ Page {
                 text: qsTr("This server uses the classic password sign-in. The password is sent only to this server and is never saved on the device.")
             }
 
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.errorColor
+            // The failure is named, not just reported: a wrong password, an
+            // unreachable server and a sign-in method this app never
+            // implemented all used to arrive as one red line, and only the
+            // first of the three is worth retyping anything for.
+            Column {
+                width: parent.width
+                spacing: Theme.paddingSmall
                 visible: matrix.lastError.length > 0
-                text: matrix.lastError
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    wrapMode: Text.Wrap
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.errorColor
+                    textFormat: Text.PlainText
+                    text: qsTr("Sign-in did not work")
+                }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    wrapMode: Text.Wrap
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: Theme.secondaryColor
+                    textFormat: Text.PlainText
+                    text: matrix.lastError
+                }
+
+                // What to do about it, where the message allows a guess.
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    wrapMode: Text.Wrap
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: Theme.secondaryHighlightColor
+                    textFormat: Text.PlainText
+                    visible: text.length > 0
+                    text: {
+                        var message = matrix.lastError
+                        if (message.indexOf("SSO") >= 0) {
+                            return qsTr("This is the server's own web sign-in. Your password is not wrong — the app cannot use this method yet.")
+                        }
+                        if (message.indexOf("unreachable") >= 0) {
+                            return qsTr("Check the server address and your connection.")
+                        }
+                        if (message.indexOf("no sign-in method") >= 0) {
+                            return qsTr("The server expects a sign-in this app does not implement.")
+                        }
+                        return ""
+                    }
+                }
             }
         }
 

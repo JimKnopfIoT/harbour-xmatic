@@ -2,59 +2,18 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 // The members of one room. The primary line is the display name, the line
-// below it the Matrix address — the address is the point of the page, so it
-// is always shown. Tapping a member opens the actions: message, verify, copy
-// the address, and — power levels permitting — remove from the room. Ordering
-// (most powerful first, then by name) and the permission flags come from the
-// core; the server enforces the levels again on removal.
+// below it the Matrix address. Tapping a row opens the member's profile page;
+// all actions live there. Ordering (most powerful first, then by name) comes
+// from the core.
 Page {
     id: page
 
     property string roomId
     property string roomName
 
-    // Leaving the foreground aborts a running countdown at once, instead of only
-    // suppressing it when it expires. Suppressing at expiry was not enough:
-    // minimising the app and coming back inside the four seconds left the
-    // countdown running, and it fired on return. The remorse object has to be
-    // kept for that - Remorse.popupAction() hands it back.
-    property var activeRemorse: null
-    readonly property bool appForeground: Qt.application.active
-    onAppForegroundChanged: {
-        if (!appForeground && activeRemorse && activeRemorse.pending) {
-            activeRemorse.cancel()
-        }
-    }
-
-
     allowedOrientations: Orientation.All
 
     Component.onCompleted: matrix.loadMembers(roomId)
-
-    // Throwing somebody out asks first and says who — a display name is not
-    // unique, so the address goes underneath it. The remorse afterwards is the
-    // undo; it hangs on the page rather than on the row, because a RemorseItem
-    // inside a delegate executes when that delegate is destroyed, and it only
-    // acts while this page is active: Silica completes a running countdown on
-    // PageStatus.Deactivating, which would make going back a confirmation.
-    function confirmRemove(userId, displayName) {
-        var dialog = pageStack.push(
-                    Qt.resolvedUrl("ConfirmDialog.qml"),
-                    {
-                        question: qsTr("Really remove this member?"),
-                        subject: displayName,
-                        explanation: qsTr("%1 is removed from the room. They can come back if they are invited again or the room is public.").arg(userId),
-                        acceptLabel: qsTr("Remove")
-                    })
-        dialog.accepted.connect(function() {
-            page.activeRemorse = Remorse.popupAction(page, qsTr("Removing"), function() {
-                if (page.status !== PageStatus.Active || !Qt.application.active) {
-                    return
-                }
-                matrix.removeMember(page.roomId, userId)
-            })
-        })
-    }
 
     SilicaListView {
         id: memberList
@@ -70,8 +29,7 @@ Page {
                 description: page.roomName
             }
 
-            // Verifying or removing can fail (no encryption identity yet, the
-            // server refuses); without this line the action fails silently.
+            // Loading the list can fail; silence would look empty.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -88,7 +46,8 @@ Page {
 
             contentHeight: memberColumn.height + 2 * Theme.paddingMedium
 
-            onClicked: openMenu()
+            onClicked: pageStack.push(Qt.resolvedUrl("MemberProfilePage.qml"),
+                                      { roomId: page.roomId, userId: model.userId })
 
             Avatar {
                 id: memberAvatar
@@ -144,33 +103,6 @@ Page {
                 }
             }
 
-            menu: ContextMenu {
-                MenuItem {
-                    text: qsTr("Send direct message")
-                    visible: !model.isSelf
-                    onClicked: matrix.startDirectChat(model.userId)
-                }
-
-                MenuItem {
-                    text: qsTr("Verify")
-                    visible: !model.isSelf
-                    onClicked: {
-                        matrix.requestVerification(model.userId)
-                        pageStack.push(Qt.resolvedUrl("VerificationPage.qml"))
-                    }
-                }
-
-                MenuItem {
-                    text: qsTr("Copy address")
-                    onClicked: Clipboard.text = model.userId
-                }
-
-                MenuItem {
-                    text: qsTr("Remove from room")
-                    visible: model.canRemove
-                    onClicked: page.confirmRemove(model.userId, model.displayName)
-                }
-            }
         }
 
         ViewPlaceholder {

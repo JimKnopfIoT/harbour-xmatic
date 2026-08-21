@@ -29,6 +29,8 @@ public:
         EditedRole,
         PendingRole,
         SendStateRole,
+        ThreadRootRole,
+        ThreadCountRole,
     };
 
     explicit TimelineModel(QObject *parent = nullptr);

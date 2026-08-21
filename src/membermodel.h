@@ -31,6 +31,10 @@ public:
     /// away would still show the member.
     void removeUser(const QString &userId);
 
+    /// Rewrites one user's power level after a role change. Order unchanged;
+    /// the next load sorts fresh.
+    void setPower(const QString &userId, int power);
+
 protected:
     QVariant valueFor(const QJsonObject &row, int role) const override;
 };

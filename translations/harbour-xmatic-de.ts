@@ -83,6 +83,25 @@
         <translation>Darstellung</translation>
     </message>
     <message>
+        <source>Ignored users</source>
+        <translation>Ignorierte Nutzer</translation>
+    </message>
+    <message>
+        <source>Reset send warnings</source>
+        <translation>Warnungen zurücksetzen</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n recipient(s) will warn again</source>
+        <translation>
+            <numerusform>%n Empfänger warnt wieder</numerusform>
+            <numerusform>%n Empfänger warnen wieder</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>No suppressed warnings</source>
+        <translation>Keine unterdrückten Warnungen</translation>
+    </message>
+    <message>
         <source>Message text in notifications</source>
         <translation>Nachrichtentext in Benachrichtigungen</translation>
     </message>
@@ -531,6 +550,29 @@
     </message>
 </context>
 <context>
+    <name>IgnoredUsersPage</name>
+    <message>
+        <source>Ignored users</source>
+        <translation>Ignorierte Nutzer</translation>
+    </message>
+    <message>
+        <source>The list belongs to your account: the server stops delivering these people&apos;s messages, in every client. Tap somebody to stop ignoring them.</source>
+        <translation>Die Liste gehört zu deinem Konto: der Server liefert die Nachrichten dieser Personen nicht mehr aus, in jedem Client. Tippe jemanden an, um das Ignorieren zu beenden.</translation>
+    </message>
+    <message>
+        <source>No longer ignoring</source>
+        <translation>Wird nicht mehr ignoriert</translation>
+    </message>
+    <message>
+        <source>Nobody is ignored</source>
+        <translation>Niemand wird ignoriert</translation>
+    </message>
+    <message>
+        <source>You can ignore somebody from their profile.</source>
+        <translation>Ignorieren kannst du jemanden über dessen Profil.</translation>
+    </message>
+</context>
+<context>
     <name>ImageViewPage</name>
     <message>
         <source>Forward</source>
@@ -589,6 +631,22 @@
 </context>
 <context>
     <name>LoginPage</name>
+    <message>
+        <source>Sign-in did not work</source>
+        <translation>Die Anmeldung hat nicht geklappt</translation>
+    </message>
+    <message>
+        <source>This is the server&apos;s own web sign-in. Your password is not wrong — the app cannot use this method yet.</source>
+        <translation>Das ist die eigene Web-Anmeldung des Servers. Dein Passwort ist nicht falsch — die App beherrscht dieses Verfahren noch nicht.</translation>
+    </message>
+    <message>
+        <source>Check the server address and your connection.</source>
+        <translation>Prüfe die Serveradresse und deine Verbindung.</translation>
+    </message>
+    <message>
+        <source>The server expects a sign-in this app does not implement.</source>
+        <translation>Der Server erwartet ein Anmeldeverfahren, das diese App nicht umsetzt.</translation>
+    </message>
     <message>
         <source>Sign in</source>
         <translation>Anmelden</translation>
@@ -715,16 +773,63 @@
         <translation>Moderator</translation>
     </message>
     <message>
-        <source>Copy address</source>
-        <translation>Adresse kopieren</translation>
+        <source>No members yet</source>
+        <translation>Noch keine Mitglieder</translation>
     </message>
     <message>
-        <source>Send direct message</source>
-        <translation>Direktnachricht senden</translation>
+        <source>The people in this room show up here.</source>
+        <translation>Die Personen in diesem Raum erscheinen hier.</translation>
+    </message>
+</context>
+<context>
+    <name>MemberProfilePage</name>
+    <message>
+        <source>Admin</source>
+        <translation>Admin</translation>
     </message>
     <message>
-        <source>Verify</source>
-        <translation>Verifizieren</translation>
+        <source>Moderator</source>
+        <translation>Moderator</translation>
+    </message>
+    <message>
+        <source>Member</source>
+        <translation>Mitglied</translation>
+    </message>
+    <message>
+        <source>invited</source>
+        <translation>eingeladen</translation>
+    </message>
+    <message>
+        <source>banned</source>
+        <translation>verbannt</translation>
+    </message>
+    <message>
+        <source>left the room</source>
+        <translation>hat den Raum verlassen</translation>
+    </message>
+    <message>
+        <source>Make moderator</source>
+        <translation>Zum Moderator machen</translation>
+    </message>
+    <message>
+        <source>Make admin</source>
+        <translation>Zum Admin machen</translation>
+    </message>
+    <message>
+        <source>Really make this member an admin?</source>
+        <translation>Dieses Mitglied wirklich zum Admin machen?</translation>
+    </message>
+    <message>
+        <source>This cannot be taken back: only they themselves can step down afterwards.</source>
+        <translation>Das lässt sich nicht zurücknehmen: zurückstufen kann sich danach nur die Person selbst.</translation>
+    </message>
+    <message>
+        <source>Demote to member</source>
+        <translation>Zum Mitglied zurückstufen</translation>
+    </message>
+    <message>
+        <source>Revoke invitation</source>
+        <translation>Einladung zurückziehen</translation>
     </message>
     <message>
         <source>Remove from room</source>
@@ -735,24 +840,100 @@
         <translation>Wird entfernt</translation>
     </message>
     <message>
-        <source>No members yet</source>
-        <translation>Noch keine Mitglieder</translation>
+        <source>Ban from room</source>
+        <translation>Aus dem Raum verbannen</translation>
     </message>
     <message>
-        <source>The people in this room show up here.</source>
-        <translation>Die Personen in diesem Raum erscheinen hier.</translation>
+        <source>Really ban this member?</source>
+        <translation>Dieses Mitglied wirklich verbannen?</translation>
     </message>
     <message>
-        <source>Really remove this member?</source>
-        <translation>Mitglied wirklich entfernen?</translation>
+        <source>%1 is removed from the room and cannot come back until the ban is lifted.</source>
+        <translation>%1 wird aus dem Raum entfernt und kann nicht zurückkommen, bis der Bann aufgehoben wird.</translation>
     </message>
     <message>
-        <source>%1 is removed from the room. They can come back if they are invited again or the room is public.</source>
-        <translation>%1 wird aus dem Raum entfernt. Zurück kommt die Person nur über eine neue Einladung oder wenn der Raum öffentlich ist.</translation>
+        <source>Ban</source>
+        <translation>Verbannen</translation>
     </message>
     <message>
-        <source>Remove</source>
-        <translation>Entfernen</translation>
+        <source>Banning</source>
+        <translation>Wird verbannt</translation>
+    </message>
+    <message>
+        <source>Lift ban</source>
+        <translation>Bann aufheben</translation>
+    </message>
+    <message>
+        <source>Address copied</source>
+        <translation>Adresse kopiert</translation>
+    </message>
+    <message>
+        <source>Role</source>
+        <translation>Rolle</translation>
+    </message>
+    <message>
+        <source>Member since</source>
+        <translation>Mitglied seit</translation>
+    </message>
+    <message>
+        <source>Invited by</source>
+        <translation>Eingeladen von</translation>
+    </message>
+    <message>
+        <source>Devices</source>
+        <translation>Geräte</translation>
+    </message>
+    <message>
+        <source>Encryption</source>
+        <translation>Verschlüsselung</translation>
+    </message>
+    <message>
+        <source>Identity verified</source>
+        <translation>Identität verifiziert</translation>
+    </message>
+    <message>
+        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
+        <translation>Die Identität hat sich seit der Verifizierung geändert. Verifiziere neu oder ziehe die Verifizierung zurück.</translation>
+    </message>
+    <message>
+        <source>Identity not verified</source>
+        <translation>Identität nicht verifiziert</translation>
+    </message>
+    <message>
+        <source>Send direct message</source>
+        <translation>Direktnachricht senden</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Verifizieren</translation>
+    </message>
+    <message>
+        <source>Withdraw verification</source>
+        <translation>Verifizierung zurückziehen</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignorieren</translation>
+    </message>
+    <message>
+        <source>Stop ignoring</source>
+        <translation>Nicht mehr ignorieren</translation>
+    </message>
+    <message>
+        <source>Ignoring</source>
+        <translation>Wird ignoriert</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation>Neu laden</translation>
+    </message>
+    <message>
+        <source>Shared rooms</source>
+        <translation>Gemeinsame Räume</translation>
+    </message>
+    <message>
+        <source>No other shared rooms</source>
+        <translation>Keine weiteren gemeinsamen Räume</translation>
     </message>
 </context>
 <context>
@@ -875,6 +1056,22 @@
 </context>
 <context>
     <name>RoomInfoPage</name>
+    <message>
+        <source>Renegotiate encryption</source>
+        <translation>Verschlüsselung neu aushandeln</translation>
+    </message>
+    <message>
+        <source>Renegotiate encryption?</source>
+        <translation>Verschlüsselung neu aushandeln?</translation>
+    </message>
+    <message>
+        <source>The next message starts a new session and hands its key to every device in the room again. Messages already sent stay as they are; nothing of your own history is lost.</source>
+        <translation>Die nächste Nachricht beginnt eine neue Sitzung und gibt deren Schlüssel erneut an jedes Gerät im Raum. Bereits gesendete Nachrichten bleiben, wie sie sind; von deinem eigenen Verlauf geht nichts verloren.</translation>
+    </message>
+    <message>
+        <source>Renegotiate</source>
+        <translation>Neu aushandeln</translation>
+    </message>
     <message>
         <source>Leave room</source>
         <translation>Raum verlassen</translation>
@@ -1031,6 +1228,14 @@
 <context>
     <name>RoomListPage</name>
     <message>
+        <source>This homeserver is not supported</source>
+        <translation>Dieser Homeserver wird nicht unterstützt</translation>
+    </message>
+    <message>
+        <source>Your homeserver does not offer the sync this app needs (simplified sliding sync, MSC4186). Rooms cannot be loaded from it. A newer server version, or an account on a server that supports it, is required.</source>
+        <translation>Dein Homeserver bietet die Synchronisation nicht an, die diese App braucht (simplified sliding sync, MSC4186). Räume lassen sich von ihm nicht laden. Nötig ist eine neuere Serverversion oder ein Konto auf einem Server, der es unterstützt.</translation>
+    </message>
+    <message>
         <source>About xmatic</source>
         <translation>Über xmatic</translation>
     </message>
@@ -1149,6 +1354,18 @@
 </context>
 <context>
     <name>RoomPage</name>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Die zitierte Nachricht kann nicht geladen werden: sie existiert nicht mehr oder du darfst sie nicht sehen.</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Thread · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Im Thread</translation>
+    </message>
     <message>
         <source>Room info</source>
         <translation>Rauminfo</translation>
@@ -1515,6 +1732,45 @@
     <message>
         <source>Delete</source>
         <translation>Löschen</translation>
+    </message>
+</context>
+<context>
+    <name>ThreadPage</name>
+    <message>
+        <source>Thread</source>
+        <translation>Thread</translation>
+    </message>
+    <message>
+        <source>Load older posts</source>
+        <translation>Ältere Beiträge laden</translation>
+    </message>
+    <message>
+        <source>Loading thread</source>
+        <translation>Thread wird geladen</translation>
+    </message>
+    <message>
+        <source>Thread unavailable</source>
+        <translation>Thread nicht verfügbar</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Im Thread antworten</translation>
+    </message>
+    <message>
+        <source>Cannot be decrypted — this device is missing the key</source>
+        <translation>Nicht entschlüsselbar — diesem Gerät fehlt der Schlüssel</translation>
+    </message>
+    <message>
+        <source>Message deleted</source>
+        <translation>Nachricht gelöscht</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Anhang</translation>
+    </message>
+    <message>
+        <source>Event</source>
+        <translation>Ereignis</translation>
     </message>
 </context>
 <context>

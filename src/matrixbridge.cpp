@@ -544,6 +544,7 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
     }
 
     qInfo("xmatic: opening a room%s", focus.isEmpty() ? "" : " (focused)");
+    closeThread();
     setTimelineReady(false);
 
     // The model is emptied right away so the previous room's messages never
@@ -605,6 +606,9 @@ void MatrixBridge::closeRoom()
     setTimelineReady(false);
     emit openRoomChanged();
     m_timeline.clear();
+    // The core closes the thread with the room; only the model remains.
+    m_openThreadRoot.clear();
+    m_threadTimeline.clear();
     send(QStringLiteral("timeline.close"));
 }
 
@@ -624,6 +628,57 @@ void MatrixBridge::loadOlder()
     }
     m_paginateId = id;
     emit paginatingChanged();
+}
+
+void MatrixBridge::openThread(const QString &roomId, const QString &rootEventId)
+{
+    if (roomId.isEmpty() || rootEventId.isEmpty()) {
+        qWarning("xmatic: open thread requested without ids");
+        return;
+    }
+    setLastError(QString());
+    m_threadTimeline.clear();
+    m_openThreadRoot = rootEventId;
+    // Reopening the same thread has to be told apart from the one before it:
+    // the previous core task is aborted at its next await, so a diff of its
+    // making can still be in the Qt queue when this one's reset has landed.
+    // The root alone does not distinguish those two.
+    ++m_threadGeneration;
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    arguments.insert(QStringLiteral("rootEventId"), rootEventId);
+    arguments.insert(QStringLiteral("token"), QString::number(m_threadGeneration));
+    send(QStringLiteral("thread.open"), arguments);
+}
+
+void MatrixBridge::closeThread()
+{
+    if (m_openThreadRoot.isEmpty()) {
+        return;
+    }
+    // Named, because commands run as independent tasks: a close and an open
+    // issued back to back can reach the core in either order, and an
+    // unqualified close would shut down the thread just opened.
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("rootEventId"), m_openThreadRoot);
+    m_openThreadRoot.clear();
+    m_threadTimeline.clear();
+    send(QStringLiteral("thread.close"), arguments);
+}
+
+void MatrixBridge::sendThreadMessage(const QString &body)
+{
+    if (body.trimmed().isEmpty()) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("body"), body);
+    send(QStringLiteral("thread.send"), arguments);
+}
+
+void MatrixBridge::threadLoadOlder()
+{
+    send(QStringLiteral("thread.paginate"));
 }
 
 void MatrixBridge::pinMessage(const QString &eventId, bool pin)
@@ -709,6 +764,27 @@ void MatrixBridge::trustRecipient(const QString &userId)
     if (settings.status() != QSettings::NoError) {
         qWarning("xmatic: could not persist the trusted recipient");
     }
+}
+
+int MatrixBridge::resetRecipientWarnings()
+{
+    const QString path = settingsPath();
+    QSettings settings(path, QSettings::IniFormat);
+    const int count = settings.value(QStringLiteral("security/trustedRecipients"))
+                          .toStringList()
+                          .count();
+    if (count == 0) {
+        return 0;
+    }
+    settings.remove(QStringLiteral("security/trustedRecipients"));
+    settings.sync();
+    if (settings.status() != QSettings::NoError) {
+        qWarning("xmatic: could not clear the trusted recipients");
+        return 0;
+    }
+    // A count, never the addresses: this line ends up in the journal.
+    qInfo("xmatic: %d suppressed recipient warnings cleared", count);
+    return count;
 }
 
 void MatrixBridge::enableEncryption(const QString &roomId)
@@ -853,6 +929,7 @@ void MatrixBridge::loadMembers(const QString &roomId)
     // A stale error from elsewhere would show up on the freshly opened page.
     setLastError(QString());
     m_members.clear();
+    m_membersRoomId = roomId;
     QJsonObject arguments;
     arguments.insert(QStringLiteral("roomId"), roomId);
     send(QStringLiteral("members.load"), arguments);
@@ -866,6 +943,78 @@ void MatrixBridge::removeMember(const QString &roomId, const QString &userId)
     arguments.insert(QStringLiteral("userId"), userId);
     const quint64 id = send(QStringLiteral("member.remove"), arguments);
     m_removeRequests.insert(id, userId);
+}
+
+void MatrixBridge::loadMemberProfile(const QString &roomId, const QString &userId)
+{
+    setLastError(QString());
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    arguments.insert(QStringLiteral("userId"), userId);
+    send(QStringLiteral("member.profile"), arguments);
+}
+
+void MatrixBridge::banMember(const QString &roomId, const QString &userId)
+{
+    setLastError(QString());
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    arguments.insert(QStringLiteral("userId"), userId);
+    send(QStringLiteral("member.ban"), arguments);
+}
+
+void MatrixBridge::unbanMember(const QString &roomId, const QString &userId)
+{
+    setLastError(QString());
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    arguments.insert(QStringLiteral("userId"), userId);
+    send(QStringLiteral("member.unban"), arguments);
+}
+
+void MatrixBridge::setMemberPower(const QString &roomId, const QString &userId, int power)
+{
+    setLastError(QString());
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    arguments.insert(QStringLiteral("userId"), userId);
+    arguments.insert(QStringLiteral("power"), power);
+    send(QStringLiteral("member.setPower"), arguments);
+}
+
+void MatrixBridge::setMemberIgnored(const QString &userId, bool ignored)
+{
+    setLastError(QString());
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("userId"), userId);
+    arguments.insert(QStringLiteral("ignored"), ignored);
+    send(QStringLiteral("member.setIgnored"), arguments);
+}
+
+void MatrixBridge::withdrawMemberVerification(const QString &userId)
+{
+    setLastError(QString());
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("userId"), userId);
+    send(QStringLiteral("member.withdrawVerification"), arguments);
+}
+
+void MatrixBridge::loadIgnoredUsers()
+{
+    setLastError(QString());
+    send(QStringLiteral("account.ignoredUsers"));
+}
+
+void MatrixBridge::resetRoomKeys(const QString &roomId)
+{
+    if (roomId.isEmpty()) {
+        return;
+    }
+    setLastError(QString());
+    qInfo("xmatic: resetting the room key");
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    send(QStringLiteral("room.resetKeys"), arguments);
 }
 
 void MatrixBridge::fetchSpaceHierarchy(const QString &spaceId)
@@ -1279,6 +1428,14 @@ void MatrixBridge::handleMessage(const QString &json)
                 setLoginRunning(false);
                 emit loginFailed(error);
             }
+            if (command == QLatin1String("member.profile")) {
+                emit memberProfileFailed(error);
+            }
+            if (command == QLatin1String("thread.open")
+                || command == QLatin1String("thread.paginate")
+                || command == QLatin1String("thread.send")) {
+                emit threadFailed(error);
+            }
             m_mediaRequests.remove(id);
             m_hierarchyRequests.remove(id);
             m_removeRequests.remove(id);
@@ -1415,6 +1572,59 @@ void MatrixBridge::handleMessage(const QString &json)
             return;
         }
 
+        if (command == QLatin1String("member.profile")) {
+            emit memberProfileReady(data.toVariantMap());
+            return;
+        }
+
+        if (command == QLatin1String("account.ignoredUsers")) {
+            QStringList users;
+            const QJsonArray list = data.value(QStringLiteral("users")).toArray();
+            for (const QJsonValue &value : list) {
+                users.append(value.toString());
+            }
+            emit ignoredUsersReady(users);
+            return;
+        }
+
+        // No diff follows core-made state changes, and the local store only
+        // learns of the state event on a later sync — so the result is
+        // written into the model and handed to the page as data, never as a
+        // hint to re-read.
+        if (command == QLatin1String("member.ban")) {
+            const QString userId = data.value(QStringLiteral("userId")).toString();
+            // Only the model of the room this actually happened in.
+            if (data.value(QStringLiteral("roomId")).toString() == m_membersRoomId) {
+                m_members.removeUser(userId);
+            }
+            emit memberActionDone(QStringLiteral("ban"), data.toVariantMap());
+            emit memberChanged(userId);
+            return;
+        }
+
+        if (command == QLatin1String("member.setPower")) {
+            const QString userId = data.value(QStringLiteral("userId")).toString();
+            if (data.value(QStringLiteral("roomId")).toString() == m_membersRoomId) {
+                m_members.setPower(userId, data.value(QStringLiteral("power")).toInt());
+            }
+            emit memberActionDone(QStringLiteral("setPower"), data.toVariantMap());
+            emit memberChanged(userId);
+            return;
+        }
+
+        if (command == QLatin1String("member.unban")
+                || command == QLatin1String("member.setIgnored")
+                || command == QLatin1String("member.withdrawVerification")) {
+            const QString action = command == QLatin1String("member.unban")
+                    ? QStringLiteral("unban")
+                    : (command == QLatin1String("member.setIgnored")
+                       ? QStringLiteral("setIgnored")
+                       : QStringLiteral("withdrawVerification"));
+            emit memberActionDone(action, data.toVariantMap());
+            emit memberChanged(data.value(QStringLiteral("userId")).toString());
+            return;
+        }
+
         if (command == QLatin1String("media.fetch")) {
             const QString key = m_mediaRequests.take(id);
             const QString path = data.value(QStringLiteral("path")).toString();
@@ -1539,6 +1749,42 @@ void MatrixBridge::handleMessage(const QString &json)
                   qPrintable(names.join(QStringLiteral(","))),
                   m_timeline.count());
         }
+    } else if (name == QLatin1String("thread.diff")) {
+        if (data.value(QStringLiteral("token")).toString()
+                == QString::number(m_threadGeneration)) {
+            const QJsonArray ops = data.value(QStringLiteral("ops")).toArray();
+            m_threadTimeline.applyOperations(ops);
+            qInfo("xmatic: thread diff -> %d rows", m_threadTimeline.count());
+        }
+    } else if (name == QLatin1String("sync.support")) {
+        // A server that cannot do this app's sync fails every sync, which the
+        // offline mode turns into "offline" plus a restart loop — a flashing
+        // banner over an empty room list that reads as a network fault. Say
+        // what it is instead.
+        const bool supported = data.value(QStringLiteral("supported")).toBool(true);
+        const QString error = data.value(QStringLiteral("error")).toString();
+        if (!error.isEmpty()) {
+            qWarning("xmatic: could not ask the server what it supports: %s",
+                     qPrintable(error));
+        } else {
+            qInfo("xmatic: homeserver supports the required sync: %d", supported ? 1 : 0);
+        }
+        if (m_serverSupported != supported) {
+            m_serverSupported = supported;
+            emit serverSupportedChanged();
+        }
+    } else if (name == QLatin1String("thread.error")) {
+        if (data.value(QStringLiteral("root")).toString() == m_openThreadRoot) {
+            const QString message = data.value(QStringLiteral("message")).toString();
+            qWarning("xmatic: thread could not be loaded: %s", qPrintable(message));
+            emit threadFailed(message);
+        }
+    } else if (name == QLatin1String("timeline.detailError")) {
+        // The quoted event of a reply could not be fetched; ids arrive
+        // pre-truncated, the error pre-scrubbed.
+        qInfo("xmatic: reply details failed for %s: %s",
+              qPrintable(data.value(QStringLiteral("eventId")).toString()),
+              qPrintable(data.value(QStringLiteral("error")).toString()));
     } else if (name == QLatin1String("roomlist.diff")) {
         const QJsonArray ops = data.value(QStringLiteral("ops")).toArray();
         m_rooms.applyOperations(ops);
@@ -1692,6 +1938,15 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
         const int notifications = room.value(QStringLiteral("notifications")).toInt();
         const int previous = m_notified.value(id, notifications);
         m_notified.insert(id, notifications);
+
+        // Reading the room somewhere else clears the server's counter for
+        // this device too, and the count arrives here as any other change.
+        // Reported before the mute and on-screen tests below: those decide
+        // whether a room may *raise* a banner, not whether a banner that
+        // stands may go.
+        if (notifications == 0 && previous > 0) {
+            emit roomRead(id);
+        }
 
         // Muted and low-priority rooms still count their unread badge but
         // never raise a banner — that is the whole point of both.
