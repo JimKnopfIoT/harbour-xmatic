@@ -1242,8 +1242,11 @@ void MatrixBridge::deleteMessage(const QString &eventId)
     send(QStringLiteral("timeline.redact"), arguments);
 }
 
-void MatrixBridge::sendMedia(const QString &path, const QString &mimeType)
+void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
+                             const QString &caption, const QString &replyTo)
 {
+    // The type, never the name: a file name carries whatever the user called
+    // it, and the log is not the place for that.
     qInfo("xmatic: sending an attachment of type %s", qPrintable(mimeType));
 
     QJsonObject arguments;
@@ -1255,6 +1258,8 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType)
     arguments.insert(QStringLiteral("path"), local);
     arguments.insert(QStringLiteral("mimeType"),
                      mimeType.isEmpty() ? QStringLiteral("application/octet-stream") : mimeType);
+    arguments.insert(QStringLiteral("caption"), caption);
+    arguments.insert(QStringLiteral("replyTo"), replyTo);
     send(QStringLiteral("timeline.sendMedia"), arguments);
 }
 

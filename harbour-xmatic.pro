@@ -189,7 +189,8 @@ DISTFILES += \
     qml/pages/MemberProfilePage.qml \
     qml/pages/IgnoredUsersPage.qml \
     qml/pages/ThreadPage.qml \
-    qml/pages/CallPage.qml
+    qml/pages/CallPage.qml \
+    qml/pages/SendMediaPage.qml
 
 lupdate_only {
     SOURCES += qml/*.qml qml/cover/*.qml qml/pages/*.qml

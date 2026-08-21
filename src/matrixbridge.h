@@ -460,8 +460,13 @@ public:
     /// Deletes a message.
     Q_INVOKABLE void deleteMessage(const QString &eventId);
 
-    /// Sends a file from disk as an attachment.
-    Q_INVOKABLE void sendMedia(const QString &path, const QString &mimeType);
+    /// Sends a file from disk as an attachment. `caption` is the text shown
+    /// with it and `replyTo` the event it answers; both may be empty. Neither
+    /// can be added afterwards, which is why the send page asks for them
+    /// before the upload starts.
+    Q_INVOKABLE void sendMedia(const QString &path, const QString &mimeType,
+                               const QString &caption = QString(),
+                               const QString &replyTo = QString());
 
     /// Downloads an attachment. The result arrives as mediaReady(key, path);
     /// an already downloaded file is reported immediately.
