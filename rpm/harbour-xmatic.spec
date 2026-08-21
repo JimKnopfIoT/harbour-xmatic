@@ -101,6 +101,19 @@ strip %{buildroot}%{_bindir}/%{name}
   them the warning about unverified recipients, which appeared rotated by
   ninety degrees. They turn with the device now, and the short ones scroll so
   their input field cannot end up behind the keyboard.
+- Tapping a quote jumps to the message it quotes. That was never wired up at
+  all, and the same jump used by "show in conversation" for a pinned message
+  only ever worked when the message happened to be loaded already: it waited
+  for the row count to change, and a page of history that renders as nothing -
+  a stretch of membership changes does it - never changes that count. It now
+  retries on its own and says so when the message is beyond the loaded
+  history, instead of doing nothing at all.
+- A picture can carry a caption, and an answer can carry a picture. Picking a
+  file used to send it on the spot, which made all three impossible at once:
+  no caption, no reply, and no way back after tapping the wrong thumbnail.
+  There is now a page between picking and sending that shows what is about to
+  go out, quotes the message being answered, and takes the caption. Both
+  belong there because neither can be added afterwards.
 * Fri Aug 21 2026 harbour-xmatic contributors 0.19.0-1
 - Every member has a profile page now, one level below the member list.
   Tapping a member, or a sender's picture in a conversation, opens it: the

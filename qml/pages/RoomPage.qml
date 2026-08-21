@@ -21,6 +21,8 @@ Page {
     property string editingEventId: ""
     // Set while a reply is being composed.
     property string replyingEventId: ""
+    /// The quoted message's text, for the quote on the send page.
+    property string replyingBody: ""
     property string replyingTo: ""
 
     allowedOrientations: Orientation.All
@@ -211,11 +213,21 @@ Page {
         }
     }
 
-    // Asks this page to scroll to a message; called by the pinned overview
-    // before it pops back.
-    function jumpToPinned(eventId) {
+    // Scrolls to a message, loading older history until it shows up. Called by
+    // the pinned overview before it pops back, and by tapping a quote.
+    function jumpToEvent(eventId) {
+        if (!eventId || eventId.length === 0) {
+            return
+        }
         jumpTargetId = eventId
         jumpPagesLeft = 10
+        tryJump()
+    }
+
+    // Kept under its old name for the pinned overview, which calls it on the
+    // page underneath.
+    function jumpToPinned(eventId) {
+        jumpToEvent(eventId)
     }
 
     function tryJump() {
@@ -225,15 +237,35 @@ Page {
         var idx = matrix.timeline.indexOfEvent(jumpTargetId)
         if (idx >= 0) {
             jumpTargetId = ""
+            jumpRetry.stop()
             followTail = false
             timelineView.positionViewAtIndex(idx, ListView.Center)
-        } else if (jumpPagesLeft > 0 && !matrix.timelineAtStart) {
-            // Not loaded yet: fetch older history and retry when it arrives.
-            jumpPagesLeft--
-            matrix.loadOlder()
-        } else {
-            jumpTargetId = ""
+            return
         }
+        if (jumpPagesLeft > 0 && !matrix.timelineAtStart) {
+            // Only one request at a time; the timer brings us back either way.
+            if (!matrix.paginating) {
+                jumpPagesLeft--
+                matrix.loadOlder()
+            }
+            // Retried on a timer and not only on the row count: a page of
+            // history can arrive full of events that render as nothing, and
+            // then the count never changes and the jump dies without a word.
+            // That is exactly why this never worked — "no new rows" and "no
+            // more history" look the same from up here.
+            jumpRetry.restart()
+            return
+        }
+        jumpTargetId = ""
+        jumpRetry.stop()
+        jumpNoticeTimer.restart()
+    }
+
+    Timer {
+        id: jumpRetry
+
+        interval: 700
+        onTriggered: page.tryJump()
     }
 
     // A timeline that does not fill the screen cannot be scrolled, so reaching
@@ -951,87 +983,107 @@ Page {
                         // visibly hang off it — a bar across the top made the
                         // quoted sender and the author's name above look
                         // interchangeable in a received bubble.
-                        Row {
-                            id: replyQuote
-
-                            // No explicit width: like every sibling, the row
-                            // is as wide as its content and each child sizes
-                            // bottom-up. An earlier form derived a width from
-                            // the children's implicit widths while the
-                            // children read it back — the mixed directions
-                            // the width rule forbids, and the device journal
-                            // duly reported the loop.
+                        // Wrapped so the quote can be tapped: a MouseArea cannot be a child
+                        // of the Row itself (Row positions its children and forbids their
+                        // anchors), and the Item takes its size from the Row — parent reads
+                        // child, child reads parent, never both directions in one subtree.
+                        Item {
                             visible: !!model.replyTo
-                            spacing: Theme.paddingSmall
+                            width: replyQuote.width
+                            height: replyQuote.height
 
-                            Rectangle {
-                                width: Theme.paddingSmall / 2
-                                // The texts' height, not the parent's —
-                                // reading the parent back would close the
-                                // loop again.
-                                height: quoteTexts.height
-                                radius: width / 2
-                                color: Theme.rgba(Theme.highlightColor, 0.6)
-                            }
+                            Row {
+                                id: replyQuote
 
-                            Column {
-                                id: quoteTexts
+                                // No explicit width: like every sibling, the row
+                                // is as wide as its content and each child sizes
+                                // bottom-up. An earlier form derived a width from
+                                // the children's implicit widths while the
+                                // children read it back — the mixed directions
+                                // the width rule forbids, and the device journal
+                                // duly reported the loop.
+                                spacing: Theme.paddingSmall
 
-                                // What the labels may use once the bar and
-                                // the spacing took their share.
-                                readonly property real maxWidth: bubbleColumn.maxTextWidth
-                                                                 - Theme.paddingSmall * 1.5
-
-                                Label {
-                                    id: quoteSender
-
-                                    width: Math.min(implicitWidth, quoteTexts.maxWidth)
-                                    // An empty line above the quote reads as
-                                    // a rendering glitch; the box collapses
-                                    // to the body line until the sender is
-                                    // known.
-                                    visible: text.length > 0
-                                    font.pixelSize: Theme.fontSizeExtraSmall
-                                    color: appearance.nameColor.length > 0
-                                           ? appearance.nameColor : Theme.highlightColor
-                                    truncationMode: TruncationMode.Fade
-                                    textFormat: Text.PlainText
-                                    text: model.replyTo ? (model.replyTo.sender || "") : ""
+                                Rectangle {
+                                    width: Theme.paddingSmall / 2
+                                    // The texts' height, not the parent's —
+                                    // reading the parent back would close the
+                                    // loop again.
+                                    height: quoteTexts.height
+                                    radius: width / 2
+                                    color: Theme.rgba(Theme.highlightColor, 0.6)
                                 }
 
-                                Label {
-                                    id: quoteBody
+                                Column {
+                                    id: quoteTexts
 
-                                    // Fixed to the full text width, never to
-                                    // the own implicit width: with wrap and
-                                    // elide the implicit width follows the
-                                    // set width in this Qt, and reading it
-                                    // back is a binding loop (the journal
-                                    // caught the churn). A reply bubble is
-                                    // therefore always full width — which is
-                                    // also how the quote reads best — and
-                                    // the box cannot collapse while the
-                                    // quoted message is still being fetched.
-                                    width: quoteTexts.maxWidth
-                                    font.pixelSize: Theme.fontSizeExtraSmall
-                                    color: model.replyTo && model.replyTo.state === "error"
-                                           ? Theme.errorColor : Theme.secondaryColor
-                                    maximumLineCount: 2
-                                    wrapMode: Text.Wrap
-                                    elide: Text.ElideRight
-                                    textFormat: Text.PlainText
-                                    // "…" while fetching or for a quote with
-                                    // no text; the error state names itself.
-                                    text: {
-                                        if (!model.replyTo) {
-                                            return ""
+                                    // What the labels may use once the bar and
+                                    // the spacing took their share.
+                                    readonly property real maxWidth: bubbleColumn.maxTextWidth
+                                                                     - Theme.paddingSmall * 1.5
+
+                                    Label {
+                                        id: quoteSender
+
+                                        width: Math.min(implicitWidth, quoteTexts.maxWidth)
+                                        // An empty line above the quote reads as
+                                        // a rendering glitch; the box collapses
+                                        // to the body line until the sender is
+                                        // known.
+                                        visible: text.length > 0
+                                        font.pixelSize: Theme.fontSizeExtraSmall
+                                        color: appearance.nameColor.length > 0
+                                               ? appearance.nameColor : Theme.highlightColor
+                                        truncationMode: TruncationMode.Fade
+                                        textFormat: Text.PlainText
+                                        text: model.replyTo ? (model.replyTo.sender || "") : ""
+                                    }
+
+                                    Label {
+                                        id: quoteBody
+
+                                        // Fixed to the full text width, never to
+                                        // the own implicit width: with wrap and
+                                        // elide the implicit width follows the
+                                        // set width in this Qt, and reading it
+                                        // back is a binding loop (the journal
+                                        // caught the churn). A reply bubble is
+                                        // therefore always full width — which is
+                                        // also how the quote reads best — and
+                                        // the box cannot collapse while the
+                                        // quoted message is still being fetched.
+                                        width: quoteTexts.maxWidth
+                                        font.pixelSize: Theme.fontSizeExtraSmall
+                                        color: model.replyTo && model.replyTo.state === "error"
+                                               ? Theme.errorColor : Theme.secondaryColor
+                                        maximumLineCount: 2
+                                        wrapMode: Text.Wrap
+                                        elide: Text.ElideRight
+                                        textFormat: Text.PlainText
+                                        // "…" while fetching or for a quote with
+                                        // no text; the error state names itself.
+                                        text: {
+                                            if (!model.replyTo) {
+                                                return ""
+                                            }
+                                            if (model.replyTo.state === "error") {
+                                                return qsTr("The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.")
+                                            }
+                                            return model.replyTo.body || "…"
                                         }
-                                        if (model.replyTo.state === "error") {
-                                            return qsTr("The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.")
-                                        }
-                                        return model.replyTo.body || "…"
                                     }
                                 }
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                // A quote whose original was never fetched has nowhere to
+                                // go; the row says so and a tap would only look broken.
+                                enabled: !!model.replyTo && model.replyTo.state !== "error"
+                                onClicked: page.jumpToEvent(model.replyTo.eventId)
+                                // The long press still belongs to the message, not to the
+                                // quote — otherwise this corner of the bubble has no menu.
+                                onPressAndHold: row.openMenu()
                             }
                         }
 
@@ -1564,10 +1616,24 @@ Page {
 
         ContentPickerPage {
             allowedOrientations: Orientation.All
+            // Not sent from here any more. Sending straight out of the picker
+            // made three things impossible at once: a caption, an answer that
+            // carries a picture, and changing one's mind after tapping the
+            // wrong thumbnail. `replace` puts the send page where the picker
+            // stood, so going back lands in the conversation and not in the
+            // file list again.
             onSelectedContentPropertiesChanged: {
-                matrix.sendMedia(selectedContentProperties.filePath,
-                                 selectedContentProperties.mimeType)
-                page.followTail = true
+                pageStack.replace(Qt.resolvedUrl("SendMediaPage.qml"), {
+                    path: selectedContentProperties.filePath,
+                    mimeType: selectedContentProperties.mimeType,
+                    replyTo: page.replyingEventId,
+                    replySender: page.replyingTo,
+                    replyBody: page.replyingBody,
+                    afterSend: function () {
+                        page.clearReplyState()
+                        page.followTail = true
+                    }
+                })
             }
         }
     }
@@ -1619,6 +1685,9 @@ Page {
     function beginReply(eventId, sender, body) {
         page.replyingEventId = eventId
         page.replyingTo = sender && sender.length > 0 ? sender : body
+        // Kept separately from replyingTo: the send page shows sender and text
+        // as two lines, the way the quote in the conversation does.
+        page.replyingBody = body || ""
         page.editingEventId = ""
         messageField.forceActiveFocus()
     }
@@ -1626,7 +1695,17 @@ Page {
     function cancelReply() {
         page.replyingEventId = ""
         page.replyingTo = ""
+        page.replyingBody = ""
         messageField.text = ""
+    }
+
+    // After an attachment went out as a reply. Unlike cancelReply this leaves
+    // the composer alone — a half-typed message is not part of the picture
+    // that was just sent.
+    function clearReplyState() {
+        page.replyingEventId = ""
+        page.replyingTo = ""
+        page.replyingBody = ""
     }
 
     function toggleAudio(itemId, media) {
@@ -1734,5 +1813,46 @@ Page {
         page.editingEventId = ""
         messageField.text = ""
         messageField.focus = false
+    }
+
+    // Said out loud when a jump gives up. Silence was the old behaviour and it
+    // is indistinguishable from a tap that never registered — the user tries
+    // again instead of learning that the message is beyond reach.
+    Rectangle {
+        id: jumpNotice
+
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: Theme.itemSizeLarge
+        }
+        width: jumpNoticeLabel.width + 2 * Theme.paddingLarge
+        height: jumpNoticeLabel.height + 2 * Theme.paddingMedium
+        radius: Theme.paddingMedium
+        color: Theme.rgba(Theme.highlightDimmerColor, 0.9)
+        opacity: 0
+
+        Label {
+            id: jumpNoticeLabel
+
+            anchors.centerIn: parent
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.primaryColor
+            text: qsTr("That message is not in the loaded history")
+        }
+
+        Behavior on opacity { FadeAnimation { } }
+    }
+
+    Timer {
+        id: jumpNoticeTimer
+
+        interval: 2500
+        onTriggered: jumpNotice.opacity = 0
+        onRunningChanged: {
+            if (running) {
+                jumpNotice.opacity = 1
+            }
+        }
     }
 }

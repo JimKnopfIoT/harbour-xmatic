@@ -1706,6 +1706,29 @@
         <source>Leave</source>
         <translation>Verlassen</translation>
     </message>
+    <message>
+        <source>That message is not in the loaded history</source>
+        <translation>Diese Nachricht liegt nicht im geladenen Verlauf</translation>
+    </message>
+</context>
+<context>
+    <name>SendMediaPage</name>
+    <message>
+        <source>Reply</source>
+        <translation>Antworten</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translation>Senden</translation>
+    </message>
+    <message>
+        <source>Caption</source>
+        <translation>Bildunterschrift</translation>
+    </message>
+    <message>
+        <source>Caption (optional)</source>
+        <translation>Bildunterschrift (optional)</translation>
+    </message>
 </context>
 <context>
     <name>SessionLockedPage</name>

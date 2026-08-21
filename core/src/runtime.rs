@@ -327,9 +327,13 @@ async fn handle(state: Arc<State>, command: Command) {
         }
         Command::TimelineEdit { event_id, body, .. } => edit_message(&state, id, event_id, body).await,
         Command::TimelineRedact { event_id, .. } => redact_message(&state, id, event_id).await,
-        Command::TimelineSendMedia { path, mime_type, .. } => {
-            send_media(&state, id, path, mime_type).await
-        }
+        Command::TimelineSendMedia {
+            path,
+            mime_type,
+            caption,
+            reply_to,
+            ..
+        } => send_media(&state, id, path, mime_type, caption, reply_to).await,
         Command::MediaFetch {
             source, thumbnail, ..
         } => fetch_media(&state, id, source, thumbnail).await,
@@ -1201,7 +1205,14 @@ async fn redact_message(state: &Arc<State>, id: u64, event_id: String) {
     }
 }
 
-async fn send_media(state: &Arc<State>, id: u64, path: String, mime_type: String) {
+async fn send_media(
+    state: &Arc<State>,
+    id: u64,
+    path: String,
+    mime_type: String,
+    caption: String,
+    reply_to: String,
+) {
     // Cloned out of the guard: the attachment upload takes a while and must
     // not hold the lock.
     let timeline = state.timeline().await.map(|handle| handle.timeline());
@@ -1211,7 +1222,7 @@ async fn send_media(state: &Arc<State>, id: u64, path: String, mime_type: String
         return;
     };
 
-    match media::send(&timeline, &path, &mime_type).await {
+    match media::send(&timeline, &path, &mime_type, &caption, &reply_to).await {
         Ok(()) => state.sink.emit(reply_ok(id, json!({ "sent": true }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }

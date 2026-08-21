@@ -220,13 +220,20 @@ pub enum Command {
         event_id: String,
     },
 
-    /// Send a file from disk as an attachment.
+    /// Send a file from disk as an attachment. `caption` is the text shown
+    /// with it and `replyTo` the event it answers — both optional, and both
+    /// only decidable here: an attachment that went out bare cannot be turned
+    /// into a reply afterwards, and its caption would have to be an edit.
     #[serde(rename = "timeline.sendMedia")]
     TimelineSendMedia {
         id: u64,
         path: String,
         #[serde(rename = "mimeType")]
         mime_type: String,
+        #[serde(default)]
+        caption: String,
+        #[serde(rename = "replyTo", default)]
+        reply_to: String,
     },
 
     /// Send a copy of something to another room.

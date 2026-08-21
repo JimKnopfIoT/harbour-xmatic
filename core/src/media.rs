@@ -12,8 +12,10 @@ use matrix_sdk::{
     attachment::AttachmentConfig as RoomAttachmentConfig,
     media::{MediaFormat, MediaRequestParameters, MediaThumbnailSettings, UniqueKey},
     ruma::{
-        api::client::media::get_media_config, events::room::message::RoomMessageEventContent,
-        events::room::MediaSource, RoomId, UInt,
+        api::client::media::get_media_config,
+        events::room::message::{RoomMessageEventContent, TextMessageEventContent},
+        events::room::MediaSource,
+        EventId, RoomId, UInt,
     },
     Client,
 };
@@ -194,7 +196,18 @@ async fn upload_limit(client: &Client) -> Option<u64> {
 
 /// Sends a file from disk as an attachment. The timeline shows it immediately
 /// as a local echo.
-pub async fn send(timeline: &Timeline, path: &str, mime_type: &str) -> Result<(), String> {
+///
+/// `caption` and `reply_to` are both optional and both belong to this call:
+/// the caption travels inside the media event, and a reply relation cannot be
+/// added to an event that was already sent. An empty string means "not set"
+/// for either.
+pub async fn send(
+    timeline: &Timeline,
+    path: &str,
+    mime_type: &str,
+    caption: &str,
+    reply_to: &str,
+) -> Result<(), String> {
     let mime: mime::Mime = mime_type
         .parse()
         .map_err(|_| format!("not a media type: {mime_type}"))?;
@@ -228,12 +241,23 @@ pub async fn send(timeline: &Timeline, path: &str, mime_type: &str) -> Result<()
         .map(|name| name.to_string_lossy().into_owned())
         .unwrap_or_else(|| "attachment".to_owned());
 
+    let mut config = AttachmentConfig::default();
+    let caption = caption.trim();
+    if !caption.is_empty() {
+        config.caption = Some(TextMessageEventContent::plain(caption));
+    }
+    if !reply_to.is_empty() {
+        // Refused rather than silently sent bare: an attachment that lost its
+        // reply looks like an answer to nothing, and the user cannot tell that
+        // from a working one.
+        config.in_reply_to = Some(
+            EventId::parse(reply_to)
+                .map_err(|_| "the message being answered is not known".to_owned())?,
+        );
+    }
+
     timeline
-        .send_attachment(
-            AttachmentSource::Data { bytes, filename },
-            mime,
-            AttachmentConfig::default(),
-        )
+        .send_attachment(AttachmentSource::Data { bytes, filename }, mime, config)
         .await
         .map(|_| ())
         .map_err(|error| {
