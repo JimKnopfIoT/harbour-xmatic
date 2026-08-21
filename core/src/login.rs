@@ -327,18 +327,44 @@ pub async fn finish(client: &Client, redirect: LocalServerRedirectHandle) -> Res
 /// show a password form at all. A transport error here is an error, never a
 /// reason to fall back.
 pub async fn password_offered(client: &Client) -> Result<bool, String> {
+    Ok(login_flows(client).await?.iter().any(|flow| flow == "password"))
+}
+
+/// Every sign-in method the server offers, as flow names.
+///
+/// The point is the negative case: when none of them fits, the user needs to
+/// hear what the server actually wanted, not just that this app cannot do it.
+/// "Sign-in failed" is the same sentence for a wrong password, an unreachable
+/// server and a method this app never implemented — three different problems
+/// with three different remedies.
+pub async fn login_flows(client: &Client) -> Result<Vec<String>, String> {
     use matrix_sdk::ruma::api::client::session::get_login_types::v3::LoginType;
 
     let response = client
         .matrix_auth()
         .get_login_types()
         .await
-        .map_err(|error| format!("could not ask for the sign-in methods: {error}"))?;
+        .map_err(|error| {
+            format!(
+                "could not ask for the sign-in methods: {}",
+                crate::timeline::scrub_ids(&error.to_string())
+            )
+        })?;
 
     Ok(response
         .flows
         .iter()
-        .any(|flow| matches!(flow, LoginType::Password(_))))
+        .map(|flow| {
+            match flow {
+                LoginType::Password(_) => "password",
+                LoginType::Sso(_) => "sso",
+                LoginType::Token(_) => "token",
+                LoginType::ApplicationService(_) => "appservice",
+                _ => "other",
+            }
+            .to_owned()
+        })
+        .collect())
 }
 
 /// Signs in with `m.login.password` and activates the session on `client`.

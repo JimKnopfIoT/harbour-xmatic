@@ -60,8 +60,18 @@ and key backup therefore come from upstream rather than from this repository.
   can be changed the same way afterwards — **invite** people into it, and
   **leave** a room again; on an invitation, leaving declines it
 * **Member list** per room: every member's full Matrix address, sorted by
-  power level, with per-member actions — direct message, verify, copy the
-  address, and remove where the power levels allow it
+  power level
+* **Member profile**, from the member list or a sender's picture in the
+  conversation: the picture full size, the address to copy, the role, since
+  when they are a member and who invited them, the rooms you share, and the
+  state of their encryption identity — including the warning that it changed
+  after you verified it. Direct message, verify, ignore; and, where the
+  room's power levels allow it, remove, ban, or make somebody a moderator
+* **Threads**: a message that started one carries a marker with the reply
+  count and opens a page of its own; replies keep showing in the
+  conversation as well, so nothing is hidden from anyone who never opens it
+* **Ignored users** are listed under Account and can be taken off the list
+  there; the list belongs to the account and holds in every client
 * **Spaces** as their own navigation level: create, delete, add rooms by
   long-press, move rooms between spaces, nested spaces, unread badges per
   space, and a choice of rooms or spaces as the start page (swipe sideways for
@@ -71,6 +81,10 @@ and key backup therefore come from upstream rather than from this repository.
 
 ## What does not
 
+* **Homeservers that sign in through their own web page (SSO).** OAuth 2.0 /
+  MAS, the device code and the classic password sign-in work; the SSO
+  redirect flow is not implemented, and the login page says so rather than
+  leaving you to retype a password that was never wrong.
 * **Calling clients that only speak MatrixRTC.** They dropped the classic 1:1
   call flow (MSC2746). Where a client still offers a "legacy" call button,
   that one interoperates; the MatrixRTC one does not.

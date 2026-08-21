@@ -31,6 +31,22 @@ void MemberModel::removeUser(const QString &userId)
     }
 }
 
+void MemberModel::setPower(const QString &userId, int power)
+{
+    for (int i = 0; i < rows().count(); ++i) {
+        if (rows().at(i).value(QStringLiteral("userId")).toString() == userId) {
+            QJsonObject row = rows().at(i);
+            row.insert(QStringLiteral("power"), power);
+            QJsonObject operation;
+            operation.insert(QStringLiteral("op"), QStringLiteral("set"));
+            operation.insert(QStringLiteral("index"), i);
+            operation.insert(QStringLiteral("value"), row);
+            applyOperations(QJsonArray { operation });
+            return;
+        }
+    }
+}
+
 QVariant MemberModel::valueFor(const QJsonObject &row, int role) const
 {
     if (role == DisplayNameRole) {

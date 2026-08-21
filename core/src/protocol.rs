@@ -520,6 +520,78 @@ pub enum Command {
         user_id: String,
     },
 
+    /// Everything the member-profile page shows about one user in one room,
+    /// answered as a single object.
+    #[serde(rename = "member.profile")]
+    MemberProfile {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "userId")]
+        user_id: String,
+    },
+
+    /// Ban a member from a room.
+    #[serde(rename = "member.ban")]
+    MemberBan {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "userId")]
+        user_id: String,
+    },
+
+    /// Lift a member's ban.
+    #[serde(rename = "member.unban")]
+    MemberUnban {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "userId")]
+        user_id: String,
+    },
+
+    /// Set a member's power level: 0 member, 50 moderator, 100 admin.
+    #[serde(rename = "member.setPower")]
+    MemberSetPower {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "userId")]
+        user_id: String,
+        power: i64,
+    },
+
+    /// Ignore or unignore a user, account-wide.
+    #[serde(rename = "member.setIgnored")]
+    MemberSetIgnored {
+        id: u64,
+        #[serde(rename = "userId")]
+        user_id: String,
+        ignored: bool,
+    },
+
+    /// Withdraw a user's verification after their identity changed.
+    #[serde(rename = "member.withdrawVerification")]
+    MemberWithdrawVerification {
+        id: u64,
+        #[serde(rename = "userId")]
+        user_id: String,
+    },
+
+    /// List the account's ignored users.
+    #[serde(rename = "account.ignoredUsers")]
+    AccountIgnoredUsers { id: u64 },
+
+    /// Discard the room's outbound group session, so the next message starts
+    /// a fresh one and re-shares its key.
+    #[serde(rename = "room.resetKeys")]
+    RoomResetKeys {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
     /// List a space's linked children from the server's `/hierarchy` API,
     /// including rooms the user has not joined.
     #[serde(rename = "space.hierarchy")]
@@ -528,6 +600,39 @@ pub enum Command {
         #[serde(rename = "roomId")]
         room_id: String,
     },
+
+    /// Open one thread's timeline next to the room's; updates stream as
+    /// `thread.diff`.
+    #[serde(rename = "thread.open")]
+    ThreadOpen {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "rootEventId")]
+        root_event_id: String,
+        /// Echoed in every `thread.diff` so the UI can drop the diffs of an
+        /// earlier open of the same thread.
+        #[serde(default)]
+        token: String,
+    },
+
+    /// Close the open thread. `rootEventId` names which one: commands run as
+    /// independent tasks, so a close and an open issued together can arrive
+    /// in either order.
+    #[serde(rename = "thread.close")]
+    ThreadClose {
+        id: u64,
+        #[serde(rename = "rootEventId", default)]
+        root_event_id: String,
+    },
+
+    /// Send a text message into the open thread.
+    #[serde(rename = "thread.send")]
+    ThreadSend { id: u64, body: String },
+
+    /// Load older events of the open thread.
+    #[serde(rename = "thread.paginate")]
+    ThreadPaginate { id: u64 },
 }
 
 impl Command {
@@ -595,10 +700,22 @@ impl Command {
             | Command::MembersLoad { id, .. }
             | Command::RoomCheckRecipients { id, .. }
             | Command::MemberRemove { id, .. }
+            | Command::MemberProfile { id, .. }
+            | Command::MemberBan { id, .. }
+            | Command::MemberUnban { id, .. }
+            | Command::MemberSetPower { id, .. }
+            | Command::MemberSetIgnored { id, .. }
+            | Command::MemberWithdrawVerification { id, .. }
+            | Command::AccountIgnoredUsers { id }
+            | Command::RoomResetKeys { id, .. }
             | Command::RoomCreate { id, .. }
             | Command::RoomLeave { id, .. }
             | Command::RoomInvite { id, .. }
-            | Command::SpaceHierarchy { id, .. } => *id,
+            | Command::SpaceHierarchy { id, .. }
+            | Command::ThreadOpen { id, .. }
+            | Command::ThreadClose { id, .. }
+            | Command::ThreadSend { id, .. }
+            | Command::ThreadPaginate { id } => *id,
         }
     }
 }

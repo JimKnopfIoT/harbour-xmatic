@@ -96,6 +96,51 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AppearancePage.qml"))
             }
 
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Ignored users")
+                onClicked: pageStack.push(Qt.resolvedUrl("IgnoredUsersPage.qml"))
+            }
+
+            // The send warning offers "do not warn me about this user again",
+            // and its own subtitle promises it holds "until you reset it" —
+            // this is that reset. Kept as one button rather than a list: the
+            // entries are addresses, and the list would be a second place
+            // where they are on screen for no gain.
+            Button {
+                id: resetWarningsButton
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Reset send warnings")
+                onClicked: {
+                    var count = matrix.resetRecipientWarnings()
+                    resetWarningsHint.text = count > 0
+                            ? qsTr("%n recipient(s) will warn again", "", count)
+                            : qsTr("No suppressed warnings")
+                    resetWarningsHint.opacity = 1.0
+                    resetWarningsTimer.restart()
+                }
+            }
+
+            Label {
+                id: resetWarningsHint
+
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryHighlightColor
+                opacity: 0.0
+                visible: opacity > 0
+                Behavior on opacity { FadeAnimation { } }
+
+                Timer {
+                    id: resetWarningsTimer
+                    interval: 3000
+                    onTriggered: resetWarningsHint.opacity = 0.0
+                }
+            }
+
             TextSwitch {
                 text: qsTr("Message text in notifications")
                 description: qsTr("Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.")

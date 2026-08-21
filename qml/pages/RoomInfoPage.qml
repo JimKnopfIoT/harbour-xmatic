@@ -395,6 +395,42 @@ Page {
                 }
             }
 
+            // The remedy when the other side reports that it cannot read what
+            // this device sends: a Megolm key travels to each device over an
+            // Olm session, and once that pairing is out of step the recipient
+            // stays locked out for the rest of the session's life. Discarding
+            // it makes the next message start a fresh session and share its
+            // key again. Only the sending session goes — nothing of the own
+            // history becomes unreadable — and messages already sent stay
+            // unreadable for whoever never received their key.
+            BackgroundItem {
+                width: parent.width
+                visible: page.encrypted
+
+                onClicked: {
+                    var dialog = pageStack.push(
+                                Qt.resolvedUrl("ConfirmDialog.qml"),
+                                {
+                                    question: qsTr("Renegotiate encryption?"),
+                                    subject: page.roomName,
+                                    explanation: qsTr("The next message starts a new session and hands its key to every device in the room again. Messages already sent stay as they are; nothing of your own history is lost."),
+                                    acceptLabel: qsTr("Renegotiate")
+                                })
+                    dialog.accepted.connect(function() {
+                        matrix.resetRoomKeys(page.roomId)
+                    })
+                }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    truncationMode: TruncationMode.Fade
+                    color: Theme.highlightColor
+                    text: qsTr("Renegotiate encryption")
+                }
+            }
+
             DetailItem {
                 label: qsTr("Address")
                 visible: value.length > 0

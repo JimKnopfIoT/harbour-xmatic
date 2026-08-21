@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.18.3
+Version:    0.19.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -84,6 +84,51 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Aug 21 2026 harbour-xmatic contributors 0.19.0-1
+- Every member has a profile page now, one level below the member list.
+  Tapping a member, or a sender's picture in a conversation, opens it: the
+  picture at full size, the address to copy with a tap, the role, since when
+  they are a member and who invited them, the rooms you share, and whether
+  their encryption identity is trusted. That last one has four answers, not
+  two - the one worth knowing is "the identity changed since you verified
+  it", which is shown in red together with the way out.
+- Moderation moved onto that page: removing, banning and lifting a ban,
+  making somebody a moderator or an admin. Each entry only appears where the
+  room's power levels allow it, and making an admin asks first, because it
+  cannot be taken back.
+- Threads. A message that starts one carries a marker with the number of
+  replies, a reply inside one says so, and both open a page of their own
+  with its own composer. Replies in threads keep appearing in the
+  conversation as well, so nothing is hidden from anybody who never opens
+  the thread page.
+- A notification now disappears when the room is read somewhere else. Read
+  receipts travel between clients, so reading on a desktop clears the count
+  here - and with the notification the banner, the feed entry and the
+  communication LED go too, instead of claiming a message is still waiting.
+- A reply whose quoted message cannot be loaded says so, rather than showing
+  an ellipsis for good. That happens when the quoted event lives on a server
+  ours cannot fetch it from, or history visibility forbids it.
+- The account's ignored users are listed under Account, with a tap to stop
+  ignoring somebody. The list belongs to the account and holds in every
+  client. The send warning's "do not warn me about this user again" can be
+  taken back there too - it promised that and had nowhere to do it.
+- Room info offers renegotiating the encryption: the next message starts a
+  fresh session and hands its key to every device again. The remedy when the
+  other side reports it cannot read what this device sends.
+- A homeserver that cannot do the sync this app needs is now named as such.
+  Before, every sync failed, the offline mode turned that into "offline",
+  and the banner flashed over an empty room list - which reads as a network
+  fault and is not one. The app asks the server on start and says plainly
+  that it is not supported.
+- Sign-in failures say what went wrong. A server that only offers its own
+  web sign-in (SSO), which this app cannot use yet, is no longer reported
+  the same way as a wrong password.
+- Security: text that other people write - display names, room names, server
+  error messages - is rendered as plain text everywhere. A display name
+  could previously contain markup, and a picture in it was fetched on sight.
+  Error messages no longer carry room, user or event identifiers into the
+  device log.
+
 * Thu Aug 20 2026 harbour-xmatic contributors 0.18.3-1
 - Idle no longer costs measurable CPU. The client held a cross-process store
   lock whose lease was rewritten into the crypto store every 50 ms - about

@@ -43,6 +43,7 @@ use tokio::task::JoinHandle;
 use tokio::time::{sleep, Instant};
 
 use crate::protocol::event;
+use crate::timeline::scrub_ids;
 use crate::runtime::Sink;
 
 /// How many rooms the dynamic adapter loads per page. A phone screen shows a
@@ -271,7 +272,52 @@ fn encode(diff: &VectorDiff<RoomListItem>) -> Value {
 /// The stream borrows the room list, so both live inside the spawned task;
 /// filter changes are passed in over a channel rather than by handing the
 /// controller out.
+/// Asks the homeserver whether it speaks the sync this app is built on.
+///
+/// Everything here rides on `SyncService`, which is simplified sliding sync
+/// (MSC4186). The client is built with `VersionBuilder::Native`, so it
+/// assumes support rather than discovering it — and where the assumption is
+/// wrong every sync fails, the offline mode turns that into `Offline`, and
+/// the restart loop below makes the banner flash while the room list stays
+/// empty. That looks like a network problem and is not one, which is exactly
+/// what a field report could not tell us.
+///
+/// The flag is the same one the SDK's own discovery reads. Answering `false`
+/// does not stop anything: a server that supports it without advertising
+/// would otherwise be locked out over a missing header.
+async fn sliding_sync_supported(client: &Client) -> Result<bool, String> {
+    const FEATURE: &str = "org.matrix.simplified_msc3575";
+
+    let versions = client
+        .supported_versions()
+        .await
+        .map_err(|error| format!("{}", scrub_ids(&error.to_string())))?;
+
+    Ok(versions
+        .features
+        .iter()
+        .any(|feature| feature.as_str() == FEATURE))
+}
+
+/// Reports the outcome of that question as `sync.support`, so the UI can say
+/// "this server cannot do it" instead of showing a network error forever.
+fn spawn_support_check(client: Client, sink: Arc<Sink>) {
+    tokio::spawn(async move {
+        let data = match sliding_sync_supported(&client).await {
+            Ok(supported) => json!({ "supported": supported }),
+            // Could not ask — no verdict. The usual reason is that there is
+            // no network yet, which the offline banner already covers.
+            Err(message) => json!({ "supported": true, "error": message }),
+        };
+        sink.emit(event("sync.support", data));
+    });
+}
+
 pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, String> {
+    // Asked once per start, next to the sync service rather than before it:
+    // the answer is a diagnosis, not a gate.
+    spawn_support_check(client.clone(), sink.clone());
+
     // Without the offline mode a network loss (flight mode, dead WLAN) ends in
     // `State::Error` and the service stays down until the app restarts. With
     // it, the service polls the homeserver and restarts both sync loops on its
