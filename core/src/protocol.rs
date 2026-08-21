@@ -388,17 +388,43 @@ pub enum Command {
         room_id: String,
     },
 
-    /// Create a room with the given name. `public` lists it in the server's
-    /// room directory instead of making it invite-only, `encrypted` turns on
-    /// end-to-end encryption from the first message.
+    /// Create a room. Everything here is decided once, at creation, because
+    /// that is what the server accepts: encryption cannot be switched off
+    /// again, a room's federation is fixed for its lifetime, and the rest —
+    /// alias, topic, history visibility, power levels — would otherwise have
+    /// to be a settings page whose writes depend on a power level the creator
+    /// happens to have. `public` lists the room in the server's directory
+    /// instead of making it invite-only.
     #[serde(rename = "room.create")]
     RoomCreate {
         id: u64,
         name: String,
         #[serde(default)]
+        topic: String,
+        /// Local part of the published address, without `#` and without the
+        /// server part — the server appends its own. Empty means no address.
+        #[serde(default)]
+        alias: String,
+        #[serde(default)]
         encrypted: bool,
         #[serde(default)]
         public: bool,
+        /// `world_readable`, `shared`, `invited` or `joined`; empty leaves the
+        /// preset's own default in place.
+        #[serde(rename = "historyVisibility", default)]
+        history_visibility: String,
+        /// Matrix IDs invited as the room is created.
+        #[serde(default)]
+        invite: Vec<String>,
+        /// False keeps the room on this server (`m.federate`), for good.
+        #[serde(default = "default_true")]
+        federate: bool,
+        /// Only moderators may send messages — an announcement room.
+        #[serde(rename = "readOnly", default)]
+        read_only: bool,
+        /// Everyone invited starts at the creator's power level.
+        #[serde(rename = "equalPower", default)]
+        equal_power: bool,
     },
 
     /// Leave a room and forget it. On a room that is only invited, this
@@ -718,6 +744,11 @@ impl Command {
             | Command::ThreadPaginate { id } => *id,
         }
     }
+}
+
+/// `#[serde(default)]` for a flag whose absence means yes.
+fn default_true() -> bool {
+    true
 }
 
 /// A successful reply carrying arbitrary payload data.

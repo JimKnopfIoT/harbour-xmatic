@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.19.0
+Version:    0.20.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -84,6 +84,23 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Aug 21 2026 harbour-xmatic contributors 0.20.0-1
+- A new room is now described completely at the moment it is created, because
+  that is the only moment the server accepts most of it: topic, a public
+  address people can type elsewhere, who may read the history, whom to invite
+  right away, whether only moderators may write, whether everyone invited
+  starts with the creator's rights, and whether the room stays on this server.
+  Encryption stays where it was, as the one decision that cannot be undone.
+- A message that cannot be decrypted now says why. The reason was there all
+  along - the protocol library works it out and hands it over - and it was
+  being thrown away, so every case read the same. The one that matters is
+  "the sender did not share the key because they consider this device
+  insecure", which names a setting on the other side instead of leaving both
+  people guessing.
+- Six dialogs were stuck in portrait on a device that is held sideways, among
+  them the warning about unverified recipients, which appeared rotated by
+  ninety degrees. They turn with the device now, and the short ones scroll so
+  their input field cannot end up behind the keyboard.
 * Fri Aug 21 2026 harbour-xmatic contributors 0.19.0-1
 - Every member has a profile page now, one level below the member list.
   Tapping a member, or a sender's picture in a conversation, opens it: the

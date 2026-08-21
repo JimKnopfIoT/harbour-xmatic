@@ -10,6 +10,8 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
+    allowedOrientations: Orientation.All
+
     // What the spectrum is currently colouring.
     readonly property var elementKeys: ["otherBubble", "ownBubble", "name",
                                         "otherText", "ownText"]

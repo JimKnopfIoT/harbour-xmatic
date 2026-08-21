@@ -4307,11 +4307,12 @@ dependencies = [
 
 [[package]]
 name = "xmatic-core"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "base64",
  "futures-util",
  "matrix-sdk",
+ "matrix-sdk-base",
  "matrix-sdk-store-encryption",
  "matrix-sdk-ui",
  "mime",

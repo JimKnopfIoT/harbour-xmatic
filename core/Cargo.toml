@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.19.0"
+version = "0.20.0"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -29,6 +29,13 @@ matrix-sdk = { version = "=0.18.0", default-features = false, features = [
     "bundled-sqlite",
 ] }
 matrix-sdk-ui = "=0.18.0"
+# Only for `UtdCause`: the timeline hands the reason a message could not be
+# decrypted over as this type, and neither matrix-sdk nor matrix-sdk-ui
+# re-exports it. The crate is already in the tree as a dependency of both, and
+# it is pinned to the same version, so nothing new is pulled in.
+matrix-sdk-base = { version = "=0.18.0", default-features = false, features = [
+    "e2e-encryption",
+] }
 # For the device-code login (RFC 8628), which the SDK only wires up for its
 # QR flow. Versions mirror what the SDK already pulls in, so nothing new
 # enters the tree; reqwest stays rustls-only like everything else.

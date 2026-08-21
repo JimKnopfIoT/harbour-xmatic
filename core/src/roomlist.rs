@@ -18,12 +18,13 @@ use matrix_sdk::ruma::events::{
 };
 use matrix_sdk::ruma::api::client::room::{create_room, Visibility};
 use matrix_sdk::ruma::events::{
-    room::encryption::RoomEncryptionEventContent, space::child::SpaceChildEventContent,
-    InitialStateEvent, SyncStateEvent,
+    room::encryption::RoomEncryptionEventContent,
+    room::history_visibility::{HistoryVisibility, RoomHistoryVisibilityEventContent},
+    space::child::SpaceChildEventContent, InitialStateEvent, SyncStateEvent,
 };
 use matrix_sdk::ruma::room::RoomType;
 use matrix_sdk::ruma::serde::Raw;
-use matrix_sdk::ruma::{OwnedRoomId, OwnedServerName, RoomId};
+use matrix_sdk::ruma::{Int, OwnedRoomId, OwnedServerName, RoomId, UserId};
 use matrix_sdk::{Client, RoomState};
 use matrix_sdk_ui::{
     eyeball_im::VectorDiff,
@@ -629,6 +630,68 @@ pub async fn create_space(client: &Client, name: &str) -> Result<String, String>
     Ok(room.room_id().as_str().to_owned())
 }
 
+/// Everything a new room can be given at creation. It is a struct and not a
+/// row of booleans because the list grew past what a call site can read, and
+/// because every field here shares one property: the server takes it only now.
+/// Encryption cannot be switched off again, `m.federate` is fixed for the
+/// room's lifetime, and an alias or a power level added later depends on a
+/// right the creator may have lost by then. Asking once beats a settings page
+/// whose writes fail quietly.
+pub struct NewRoom {
+    pub name: String,
+    pub topic: String,
+    /// Local part of the published address, without `#` and server part.
+    pub alias: String,
+    pub encrypted: bool,
+    pub public: bool,
+    /// One of `world_readable`, `shared`, `invited`, `joined`; empty keeps the
+    /// preset's default.
+    pub history_visibility: String,
+    pub invite: Vec<String>,
+    /// False confines the room to this homeserver.
+    pub federate: bool,
+    /// Only moderators may send messages.
+    pub read_only: bool,
+    /// Everyone invited starts at the creator's power level.
+    pub equal_power: bool,
+}
+
+/// Translates the front end's history setting into the state event's value.
+/// An unknown name is refused rather than silently ignored: the difference
+/// between `world_readable` and `joined` is who can read the room forever.
+fn history_visibility(name: &str) -> Result<Option<HistoryVisibility>, String> {
+    Ok(match name.trim() {
+        "" => None,
+        "world_readable" => Some(HistoryVisibility::WorldReadable),
+        "shared" => Some(HistoryVisibility::Shared),
+        "invited" => Some(HistoryVisibility::Invited),
+        "joined" => Some(HistoryVisibility::Joined),
+        _ => return Err("unknown setting for the history".to_owned()),
+    })
+}
+
+/// The local part the server should publish the room under. The whole address
+/// is accepted too and reduced to its local part — a user who types what they
+/// see elsewhere (`#name:server`) would otherwise have the server escape the
+/// `#` and the `:` into an address nobody can reach.
+fn alias_localpart(input: &str) -> Result<Option<String>, String> {
+    let trimmed = input.trim().trim_start_matches('#');
+    if trimmed.is_empty() {
+        return Ok(None);
+    }
+    let localpart = match trimmed.split_once(':') {
+        Some((local, _server)) => local,
+        None => trimmed,
+    };
+    if localpart.is_empty() {
+        return Err("the address needs a name in front of the server".to_owned());
+    }
+    if localpart.chars().any(char::is_whitespace) {
+        return Err("the address must not contain spaces".to_owned());
+    }
+    Ok(Some(localpart.to_owned()))
+}
+
 /// Creates a room and returns its id. A private room is invite-only and
 /// unlisted; a public one is published in the server's room directory, which is
 /// what makes it findable through the directory search.
@@ -637,30 +700,90 @@ pub async fn create_space(client: &Client, name: &str) -> Result<String, String>
 /// switching it on later cannot protect what was already sent. It is offered
 /// for public rooms too, even though that is unusual: everyone who joins later
 /// can still read from their join onwards.
-pub async fn create_room(
-    client: &Client,
-    name: &str,
-    encrypted: bool,
-    public: bool,
-) -> Result<String, String> {
-    let name = name.trim();
+pub async fn create_room(client: &Client, room: NewRoom) -> Result<String, String> {
+    let name = room.name.trim();
     if name.is_empty() {
         return Err("a room needs a name".to_owned());
     }
 
     let mut request = create_room::v3::Request::new();
     request.name = Some(name.to_owned());
-    if public {
+
+    let topic = room.topic.trim();
+    if !topic.is_empty() {
+        request.topic = Some(topic.to_owned());
+    }
+
+    request.room_alias_name = alias_localpart(&room.alias)?;
+
+    // The invitees are parsed before anything is created: a typo in the third
+    // address should not leave a half-furnished room behind. The address is
+    // never echoed back — an error message ends up on screen and in
+    // screenshots, and a full Matrix ID does not belong in either, so the
+    // position in the list is what names the offending entry.
+    let mut invites = Vec::new();
+    for (position, entry) in room.invite.iter().enumerate() {
+        let entry = entry.trim();
+        if entry.is_empty() {
+            continue;
+        }
+        let user = UserId::parse(entry)
+            .map_err(|_| format!("entry {} is not a valid Matrix address", position + 1))?;
+        invites.push(user);
+    }
+    request.invite = invites;
+
+    if room.public {
         request.visibility = Visibility::Public;
         request.preset = Some(create_room::v3::RoomPreset::PublicChat);
+    } else if room.equal_power {
+        // The one preset that hands every invitee the creator's level. It is
+        // offered for private rooms only: in a public room it would promote
+        // whoever the creator happened to invite and nobody else, which reads
+        // as a bug rather than as a decision.
+        request.preset = Some(create_room::v3::RoomPreset::TrustedPrivateChat);
     } else {
         request.preset = Some(create_room::v3::RoomPreset::PrivateChat);
     }
-    if encrypted {
-        request.initial_state = vec![InitialStateEvent::with_empty_state_key(
-            RoomEncryptionEventContent::with_recommended_defaults(),
-        )
-        .to_raw_any()];
+
+    let mut initial = Vec::new();
+    if room.encrypted {
+        initial.push(
+            InitialStateEvent::with_empty_state_key(
+                RoomEncryptionEventContent::with_recommended_defaults(),
+            )
+            .to_raw_any(),
+        );
+    }
+    if let Some(visibility) = history_visibility(&room.history_visibility)? {
+        initial.push(
+            InitialStateEvent::with_empty_state_key(RoomHistoryVisibilityEventContent::new(
+                visibility,
+            ))
+            .to_raw_any(),
+        );
+    }
+    request.initial_state = initial;
+
+    // Only sent when it is false: `m.federate` defaults to true, and a request
+    // that spells out the default would still pin the room to this server on a
+    // server that reads the field rather than its absence.
+    if !room.federate {
+        let mut creation = create_room::v3::CreationContent::new();
+        creation.federate = false;
+        request.creation_content = Some(
+            Raw::new(&creation).map_err(|error| format!("could not describe the room: {error}"))?,
+        );
+    }
+
+    if room.read_only {
+        // Moderator level to speak. Nothing else is overridden, so the server's
+        // own defaults keep applying to kicking, banning and state.
+        let mut levels = create_room::RoomPowerLevelsContentOverride::new();
+        levels.events_default = Some(Int::from(50u8));
+        request.power_level_content_override = Some(
+            Raw::new(&levels).map_err(|error| format!("could not describe the room: {error}"))?,
+        );
     }
 
     let room = client

@@ -7,37 +7,51 @@ import Sailfish.Silica 1.0
 Dialog {
     id: dialog
 
+    allowedOrientations: Orientation.All
+
     canAccept: aliasField.text.trim().length > 2
 
     onAccepted: matrix.joinRoomByAlias(aliasField.text)
 
-    Column {
-        width: parent.width
-        spacing: Theme.paddingMedium
+    // In landscape the dialog is barely taller than its header, so the
+    // field below it has to be reachable by scrolling — on the wide
+    // device it would otherwise sit behind the keyboard.
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: content.height
 
-        DialogHeader {
-            acceptText: qsTr("Join")
-        }
+        VerticalScrollDecorator {}
 
-        TextField {
-            id: aliasField
+        Column {
+            id: content
 
             width: parent.width
-            label: qsTr("Room address")
-            placeholderText: "#room:server"
-            inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-            focus: true
-            EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-            EnterKey.onClicked: dialog.accept()
-        }
+            spacing: Theme.paddingMedium
 
-        Label {
-            x: Theme.horizontalPageMargin
-            width: parent.width - 2 * Theme.horizontalPageMargin
-            wrapMode: Text.Wrap
-            font.pixelSize: Theme.fontSizeExtraSmall
-            color: Theme.secondaryColor
-            text: qsTr("The room appears in the list once the server has answered. Joining a large public room can take a moment.")
+            DialogHeader {
+                acceptText: qsTr("Join")
+            }
+
+            TextField {
+                id: aliasField
+
+                width: parent.width
+                label: qsTr("Room address")
+                placeholderText: "#room:server"
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                focus: true
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                EnterKey.onClicked: dialog.accept()
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryColor
+                text: qsTr("The room appears in the list once the server has answered. Joining a large public room can take a moment.")
+            }
         }
     }
 }

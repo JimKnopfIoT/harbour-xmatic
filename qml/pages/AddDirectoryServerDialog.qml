@@ -6,6 +6,8 @@ import Sailfish.Silica 1.0
 Dialog {
     id: dialog
 
+    allowedOrientations: Orientation.All
+
     property string serverName: normalized(nameField.text)
 
     canAccept: serverName.indexOf(".") > 0
@@ -23,25 +25,37 @@ Dialog {
         return name
     }
 
-    Column {
-        width: parent.width
+    // In landscape the dialog is barely taller than its header, so the
+    // field below it has to be reachable by scrolling — on the wide
+    // device it would otherwise sit behind the keyboard.
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: content.height
 
-        DialogHeader {
-            acceptText: qsTr("Add")
-        }
+        VerticalScrollDecorator {}
 
-        TextField {
-            id: nameField
+        Column {
+            id: content
 
             width: parent.width
-            focus: true
-            label: qsTr("Directory server")
-            placeholderText: qsTr("For example matrix.org")
-            inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-                              | Qt.ImhUrlCharactersOnly
-            EnterKey.enabled: dialog.canAccept
-            EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-            EnterKey.onClicked: dialog.accept()
+
+            DialogHeader {
+                acceptText: qsTr("Add")
+            }
+
+            TextField {
+                id: nameField
+
+                width: parent.width
+                focus: true
+                label: qsTr("Directory server")
+                placeholderText: qsTr("For example matrix.org")
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                                  | Qt.ImhUrlCharactersOnly
+                EnterKey.enabled: dialog.canAccept
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                EnterKey.onClicked: dialog.accept()
+            }
         }
     }
 }
