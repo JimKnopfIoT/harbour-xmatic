@@ -183,6 +183,34 @@ Page {
                     })
     }
 
+    // What the row says instead of "not decryptable". The SDK works the reason
+    // out and the core forwards it as a key; without the sentence every such
+    // message reads the same, and the difference between "the sender withheld
+    // the key from this device" and "older than this device" is exactly what
+    // decides whether anything can be done about it.
+    function undecryptableText(cause) {
+        switch (cause) {
+        case "withheldInsecure":
+            return qsTr("The sender did not share the key: they consider this device insecure. Verify this device.")
+        case "withheldBySender":
+            return qsTr("The sender could not deliver the key to this device.")
+        case "verificationViolation":
+            return qsTr("The sender's identity has changed since you verified them, so the key was withheld.")
+        case "unsignedDevice":
+            return qsTr("The sender's device is not signed by its owner.")
+        case "unknownDevice":
+            return qsTr("The sender's device is unknown here.")
+        case "sentBeforeJoin":
+            return qsTr("Sent before you joined the room.")
+        case "historicalNoBackup":
+            return qsTr("Older than this device, and there is no key backup.")
+        case "historicalUnverifiedDevice":
+            return qsTr("Older than this device. Verify this device to read it.")
+        default:
+            return qsTr("Cannot be decrypted — this device is missing the key")
+        }
+    }
+
     // Asks this page to scroll to a message; called by the pinned overview
     // before it pops back.
     function jumpToPinned(eventId) {
@@ -1167,7 +1195,7 @@ Page {
 
                             text: {
                                 if (model.kind === "undecryptable") {
-                                    return qsTr("Cannot be decrypted — this device is missing the key")
+                                    return page.undecryptableText(model.utdCause)
                                 }
                                 if (model.kind === "redacted") {
                                     return qsTr("Message deleted")

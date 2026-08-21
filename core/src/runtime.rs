@@ -347,10 +347,35 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::RoomInfo { room_id, .. } => room_info(&state, id, room_id).await,
         Command::RoomCreate {
             name,
+            topic,
+            alias,
             encrypted,
             public,
+            history_visibility,
+            invite,
+            federate,
+            read_only,
+            equal_power,
             ..
-        } => create_room(&state, id, name, encrypted, public).await,
+        } => {
+            create_room(
+                &state,
+                id,
+                roomlist::NewRoom {
+                    name,
+                    topic,
+                    alias,
+                    encrypted,
+                    public,
+                    history_visibility,
+                    invite,
+                    federate,
+                    read_only,
+                    equal_power,
+                },
+            )
+            .await
+        }
         Command::RoomLeave { room_id, .. } => leave_room(&state, id, room_id).await,
         Command::RoomInvite {
             room_id, user_id, ..
@@ -1523,19 +1548,24 @@ async fn create_space(state: &Arc<State>, id: u64, name: String) {
     }
 }
 
-async fn create_room(state: &Arc<State>, id: u64, name: String, encrypted: bool, public: bool) {
+async fn create_room(state: &Arc<State>, id: u64, room: roomlist::NewRoom) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
 
+    // Kept for the reply: the request is consumed by the call below, and the
+    // front end opens the room under this name before the first diff arrives.
+    let name = room.name.trim().to_owned();
+    let encrypted = room.encrypted;
+
     // The room reaches the list through the running sync. The reply carries the
     // name and the encryption state back so the front end can open the room
     // under its title, and with the right state, before the first diff.
-    match roomlist::create_room(&client, &name, encrypted, public).await {
+    match roomlist::create_room(&client, room).await {
         Ok(room_id) => state.sink.emit(reply_ok(
             id,
-            json!({ "roomId": room_id, "name": name.trim(), "encrypted": encrypted }),
+            json!({ "roomId": room_id, "name": name, "encrypted": encrypted }),
         )),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }

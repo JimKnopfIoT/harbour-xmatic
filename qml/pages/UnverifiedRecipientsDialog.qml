@@ -7,6 +7,8 @@ import Sailfish.Silica 1.0
 Dialog {
     id: dialog
 
+    allowedOrientations: Orientation.All
+
     // Recipients to warn about: [{ userId, name, devices }].
     property var users: []
 

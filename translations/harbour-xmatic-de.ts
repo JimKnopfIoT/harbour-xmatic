@@ -366,8 +366,84 @@
         <translation>Nur jetzt entscheidbar — Verschlüsselung lässt sich später nicht mehr abschalten.</translation>
     </message>
     <message>
-        <source>The room opens right away. Invite people from its pulldown menu.</source>
-        <translation>Der Raum öffnet sich sofort. Lade Leute über sein Pulldown-Menü ein.</translation>
+        <source>Topic</source>
+        <translation>Thema</translation>
+    </message>
+    <message>
+        <source>What the room is about</source>
+        <translation>Worum es im Raum geht</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Adresse</translation>
+    </message>
+    <message>
+        <source>Reachable as %1</source>
+        <translation>Erreichbar als %1</translation>
+    </message>
+    <message>
+        <source>The name people can use to find the room, without # and without the server part. Optional.</source>
+        <translation>Der Name, unter dem andere den Raum finden — ohne # und ohne Serverteil. Optional.</translation>
+    </message>
+    <message>
+        <source>Readable history</source>
+        <translation>Lesbarer Verlauf</translation>
+    </message>
+    <message>
+        <source>Everyone, without joining</source>
+        <translation>Alle, auch ohne Beitritt</translation>
+    </message>
+    <message>
+        <source>Members, including earlier messages</source>
+        <translation>Mitglieder, auch ältere Nachrichten</translation>
+    </message>
+    <message>
+        <source>Members, from their invitation</source>
+        <translation>Mitglieder, ab ihrer Einladung</translation>
+    </message>
+    <message>
+        <source>Members, from their join</source>
+        <translation>Mitglieder, ab ihrem Beitritt</translation>
+    </message>
+    <message>
+        <source>Only moderators may write</source>
+        <translation>Nur Moderatoren dürfen schreiben</translation>
+    </message>
+    <message>
+        <source>For an announcement room. Everyone else can read, but not write and not react.</source>
+        <translation>Für einen Ankündigungsraum. Alle anderen können lesen, aber nicht schreiben und nicht reagieren.</translation>
+    </message>
+    <message>
+        <source>Invited people get my rights</source>
+        <translation>Eingeladene bekommen meine Rechte</translation>
+    </message>
+    <message>
+        <source>Everyone invited below starts as an administrator. Later members do not.</source>
+        <translation>Wer unten eingeladen wird, startet als Administrator. Später Hinzukommende nicht.</translation>
+    </message>
+    <message>
+        <source>Keep on this server</source>
+        <translation>Auf diesen Server beschränken</translation>
+    </message>
+    <message>
+        <source>People on other servers cannot join, not even by invitation. Cannot be changed later.</source>
+        <translation>Leute auf anderen Servern können nicht beitreten, auch nicht per Einladung. Später nicht änderbar.</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Einladen</translation>
+    </message>
+    <message>
+        <source>Matrix addresses, separated by commas</source>
+        <translation>Matrix-Adressen, durch Komma getrennt</translation>
+    </message>
+    <message>
+        <source>Invited as the room is created. You can invite more people later from the room&apos;s pulldown menu.</source>
+        <translation>Werden beim Anlegen eingeladen. Weitere kannst du später über das Pulldown-Menü des Raums einladen.</translation>
+    </message>
+    <message>
+        <source>The room opens right away.</source>
+        <translation>Der Raum öffnet sich sofort.</translation>
     </message>
 </context>
 <context>
@@ -1501,6 +1577,38 @@
     <message>
         <source>Beginning of the conversation</source>
         <translation>Anfang der Unterhaltung</translation>
+    </message>
+    <message>
+        <source>The sender did not share the key: they consider this device insecure. Verify this device.</source>
+        <translation>Der Absender hat den Schlüssel nicht geteilt: Er hält dieses Gerät für unsicher. Verifiziere dieses Gerät.</translation>
+    </message>
+    <message>
+        <source>The sender could not deliver the key to this device.</source>
+        <translation>Der Absender konnte den Schlüssel nicht an dieses Gerät übermitteln.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s identity has changed since you verified them, so the key was withheld.</source>
+        <translation>Die Identität des Absenders hat sich seit deiner Verifizierung geändert, deshalb wurde der Schlüssel zurückgehalten.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s device is not signed by its owner.</source>
+        <translation>Das Gerät des Absenders ist nicht von seinem Besitzer signiert.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s device is unknown here.</source>
+        <translation>Das Gerät des Absenders ist hier unbekannt.</translation>
+    </message>
+    <message>
+        <source>Sent before you joined the room.</source>
+        <translation>Gesendet, bevor du dem Raum beigetreten bist.</translation>
+    </message>
+    <message>
+        <source>Older than this device, and there is no key backup.</source>
+        <translation>Älter als dieses Gerät, und es gibt keine Schlüsselsicherung.</translation>
+    </message>
+    <message>
+        <source>Older than this device. Verify this device to read it.</source>
+        <translation>Älter als dieses Gerät. Verifiziere dieses Gerät, um sie zu lesen.</translation>
     </message>
     <message>
         <source>Cannot be decrypted — this device is missing the key</source>

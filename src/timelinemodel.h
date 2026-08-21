@@ -31,6 +31,7 @@ public:
         SendStateRole,
         ThreadRootRole,
         ThreadCountRole,
+        UtdCauseRole,
     };
 
     explicit TimelineModel(QObject *parent = nullptr);

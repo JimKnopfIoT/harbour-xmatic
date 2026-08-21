@@ -407,9 +407,13 @@ public:
     /// Joins a room by its address, for example "#room:server".
     Q_INVOKABLE void joinRoomByAlias(const QString &alias);
 
-    /// Creates a room. A public room is listed in the server's directory, a
-    /// private one is invite-only; encryption can only be decided here.
-    Q_INVOKABLE void createRoom(const QString &name, bool encrypted, bool isPublic);
+    /// Creates a room from the options the create page collected. A map and
+    /// not a row of arguments: everything the server accepts only at creation
+    /// belongs in here, the list is expected to grow, and a positional call
+    /// with ten arguments is unreadable from QML. Known keys are `name`,
+    /// `topic`, `alias`, `encrypted`, `public`, `historyVisibility`, `invite`,
+    /// `federate`, `readOnly` and `equalPower`; each one may be left out.
+    Q_INVOKABLE void createRoom(const QVariantMap &options);
 
     /// Leaves a room and forgets it. On an invitation this declines it.
     Q_INVOKABLE void leaveRoom(const QString &roomId);

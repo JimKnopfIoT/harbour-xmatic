@@ -1070,16 +1070,47 @@ void MatrixBridge::joinRoomByAlias(const QString &alias)
     send(QStringLiteral("room.joinByAlias"), arguments);
 }
 
-void MatrixBridge::createRoom(const QString &name, bool encrypted, bool isPublic)
+void MatrixBridge::createRoom(const QVariantMap &options)
 {
-    if (name.trimmed().isEmpty()) {
+    const QString name = options.value(QStringLiteral("name")).toString().trimmed();
+    if (name.isEmpty()) {
         return;
     }
     setLastError(QString());
+
     QJsonObject arguments;
-    arguments.insert(QStringLiteral("name"), name.trimmed());
-    arguments.insert(QStringLiteral("encrypted"), encrypted);
-    arguments.insert(QStringLiteral("public"), isPublic);
+    arguments.insert(QStringLiteral("name"), name);
+    arguments.insert(QStringLiteral("topic"),
+                     options.value(QStringLiteral("topic")).toString().trimmed());
+    arguments.insert(QStringLiteral("alias"),
+                     options.value(QStringLiteral("alias")).toString().trimmed());
+    arguments.insert(QStringLiteral("encrypted"),
+                     options.value(QStringLiteral("encrypted")).toBool());
+    arguments.insert(QStringLiteral("public"),
+                     options.value(QStringLiteral("public")).toBool());
+    arguments.insert(QStringLiteral("historyVisibility"),
+                     options.value(QStringLiteral("historyVisibility")).toString());
+    arguments.insert(QStringLiteral("readOnly"),
+                     options.value(QStringLiteral("readOnly")).toBool());
+    arguments.insert(QStringLiteral("equalPower"),
+                     options.value(QStringLiteral("equalPower")).toBool());
+    // Absent means yes for this one, so the default cannot be read off a
+    // missing key the way the flags above are.
+    arguments.insert(QStringLiteral("federate"),
+                     options.contains(QStringLiteral("federate"))
+                             ? options.value(QStringLiteral("federate")).toBool()
+                             : true);
+
+    QJsonArray invited;
+    const QStringList entries = options.value(QStringLiteral("invite")).toStringList();
+    for (const QString &entry : entries) {
+        const QString trimmed = entry.trimmed();
+        if (!trimmed.isEmpty()) {
+            invited.append(trimmed);
+        }
+    }
+    arguments.insert(QStringLiteral("invite"), invited);
+
     send(QStringLiteral("room.create"), arguments);
 }
 

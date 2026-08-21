@@ -30,11 +30,12 @@ use matrix_sdk::{
     },
     Client,
 };
+use matrix_sdk_base::crypto::types::events::UtdCause;
 use matrix_sdk_ui::{
     eyeball_im::VectorDiff,
     timeline::{
-        EventSendState, EventTimelineItem, MembershipChange, MsgLikeKind, RoomExt,
-        TimelineDetails, TimelineEventItemId, TimelineItem, TimelineItemContent,
+        EncryptedMessage, EventSendState, EventTimelineItem, MembershipChange, MsgLikeKind,
+        RoomExt, TimelineDetails, TimelineEventItemId, TimelineItem, TimelineItemContent,
         VirtualTimelineItem,
     },
 };
@@ -406,6 +407,39 @@ fn request_reply_details(
     }
 }
 
+/// Why an event could not be decrypted, as a stable key the front end turns
+/// into a sentence.
+///
+/// The SDK works this out and hands it over; throwing it away is what turns
+/// every report of "he cannot read me" into an afternoon of measuring. The
+/// distinction that matters most in practice is between a key that never
+/// arrived (the sender withheld it, or could not deliver it) and a message
+/// that is simply older than this device — the first is the sender's setting,
+/// the second is nobody's fault and cannot be repaired from here.
+fn utd_cause(event: &EventTimelineItem) -> &'static str {
+    let TimelineItemContent::MsgLike(content) = event.content() else {
+        return "";
+    };
+    let MsgLikeKind::UnableToDecrypt(message) = &content.kind else {
+        return "";
+    };
+    let EncryptedMessage::MegolmV1AesSha2 { cause, .. } = message else {
+        return "";
+    };
+    match cause {
+        UtdCause::SentBeforeWeJoined => "sentBeforeJoin",
+        UtdCause::VerificationViolation => "verificationViolation",
+        UtdCause::UnsignedDevice => "unsignedDevice",
+        UtdCause::UnknownDevice => "unknownDevice",
+        UtdCause::HistoricalMessageAndBackupIsDisabled => "historicalNoBackup",
+        UtdCause::HistoricalMessageAndDeviceIsUnverified => "historicalUnverifiedDevice",
+        UtdCause::WithheldForUnverifiedOrInsecureDevice => "withheldInsecure",
+        UtdCause::WithheldBySender => "withheldBySender",
+        // The SDK has no explanation either; the row keeps its plain text.
+        UtdCause::Unknown => "",
+    }
+}
+
 /// Describes the message a reply refers to, as far as it is already known.
 /// `state`: "ready", "error" (fetch failed — not there or not permitted),
 /// or "loading".
@@ -618,6 +652,7 @@ fn encode_item(item: &TimelineItem) -> Value {
         "msgtype": msgtype,
         "media": media,
         "replyTo": reply,
+        "utdCause": utd_cause(event),
         "edited": edited,
         "system": system,
         "name": name,
