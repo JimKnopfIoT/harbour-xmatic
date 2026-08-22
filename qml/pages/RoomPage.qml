@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
 import QtMultimedia 5.6
+import "Formatting.js" as Formatting
 
 // A single room: history above, composer below.
 //
@@ -737,6 +738,13 @@ Page {
                                                 && model.kind === "message"
                                                 && !isFile && !isAudio
                                                 && /https?:\/\//.test(model.body || "")
+                // The message carried an HTML body and the core made markup of
+                // it. Everything in that string was written by the core itself
+                // — the sender's characters are all escaped — so it can go to
+                // StyledText the same way a linkified body does.
+                readonly property bool hasFormatted: model.kind === "message"
+                                                     && !isFile && !isAudio
+                                                     && (model.formatted || "").length > 0
 
                 // Calls and membership changes are not messages, but a room made
                 // only of them must not look empty: they show as a centred line.
@@ -1222,7 +1230,8 @@ Page {
                             // body with a detected web link switches to
                             // StyledText, and then every character has been
                             // escaped by linkifyBody first.
-                            textFormat: row.hasLink ? Text.StyledText : Text.PlainText
+                            textFormat: (row.hasLink || row.hasFormatted)
+                                        ? Text.StyledText : Text.PlainText
                             linkColor: Theme.highlightColor
                             onLinkActivated: Qt.openUrlExternally(link)
                             wrapMode: Text.Wrap
@@ -1254,6 +1263,10 @@ Page {
                                 }
                                 if (row.isFile) {
                                     return "📎 " + (model.body || "")
+                                }
+                                if (row.hasFormatted) {
+                                    return Formatting.renderFormatted(model.formatted,
+                                                                      matrix.clickableLinks)
                                 }
                                 if (row.hasLink) {
                                     return page.linkifyBody(model.body || "")

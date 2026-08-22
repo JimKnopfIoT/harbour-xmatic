@@ -137,6 +137,59 @@ pub fn store_marked_encrypted(paths: &Paths) -> bool {
     paths.store.join(".encrypted").exists()
 }
 
+/// What the app's own files on disk amount to.
+///
+/// The two halves are reported separately because they are separate facts and
+/// can genuinely disagree. The SQLite stores carry the `.encrypted` marker from
+/// the moment they were created and can never change side afterwards
+/// (`store_key_applies` explains why), while the session file is rewritten on
+/// every successful restore and follows whatever key exists at that moment. A
+/// device whose stores predate the store key therefore has an encrypted session
+/// next to plaintext stores — collapsing that into one word would claim a
+/// protection that only covers half of it, which is precisely what the UI is
+/// meant to stop doing.
+pub struct StorageState {
+    /// The SQLite stores (state, crypto, event cache) are encrypted.
+    pub store_encrypted: bool,
+    /// A session file exists.
+    pub session_present: bool,
+    /// That session file is an encryption envelope rather than plaintext.
+    pub session_encrypted: bool,
+    /// A store key is available in this process. False means the secrets
+    /// service could not deliver one, so nothing can be encrypted right now.
+    pub key_available: bool,
+}
+
+impl StorageState {
+    /// True when everything that exists on disk is encrypted. An install with
+    /// no session file yet counts as encrypted if the stores are: there is
+    /// nothing else to protect.
+    pub fn fully_encrypted(&self) -> bool {
+        self.store_encrypted && (!self.session_present || self.session_encrypted)
+    }
+}
+
+/// Reads the storage state without opening anything.
+pub fn storage_state(paths: &Paths, key: Option<&StoreKey>) -> StorageState {
+    let (session_present, session_encrypted) = match std::fs::read(&paths.session_file) {
+        Ok(mut bytes) => {
+            // Only the shape is looked at, and the buffer goes away right
+            // after: it holds an access token either way.
+            let encrypted = serde_json::from_slice::<EncryptedEnvelope>(&bytes).is_ok();
+            bytes.zeroize();
+            (true, encrypted)
+        }
+        Err(_) => (false, false),
+    };
+
+    StorageState {
+        store_encrypted: store_marked_encrypted(paths),
+        session_present,
+        session_encrypted,
+        key_available: key.is_some(),
+    }
+}
+
 fn store_key_applies(paths: &Paths, key: Option<&StoreKey>) -> bool {
     if key.is_none() {
         return false;
@@ -178,9 +231,14 @@ pub async fn build_client(
         .handle_refresh_tokens()
         // SingleProcess, deliberately. The multi-process lock guards against a
         // second process on the same store (single-use OAuth refresh tokens),
-        // but xmatic never has one: the launcher enforces --single-instance,
-        // there is no background daemon, and the share service wakes the same
-        // instance. The lock is not free either - its lease is re-written into
+        // and xmatic makes sure there is none: `src/instancelock.cpp` takes an
+        // flock on the data directory before the store is opened and a second
+        // start hands over to the running instance. That guard is the whole
+        // justification for this line - do not assume the launcher provides it.
+        // It does not: the desktop file starts the app as a generic
+        // application, so mapplauncherd and its --single-instance are out of
+        // the picture, and the D-Bus name is only owned once QML has loaded.
+        // The lock is not free either - its lease is re-written into
         // the crypto store every 50 ms (EXTEND_LEASE_EVERY_MS), which kept
         // ~50 fsyncs/s and a 60 Hz tokio tick running while the app was idle:
         // measured 3.4% CPU against 0.9% for a comparable client. The builder

@@ -1,0 +1,2146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="mt">
+<context>
+    <name>AboutPage</name>
+    <message>
+        <source>About xmatic</source>
+        <translation>Dwar xmatic</translation>
+    </message>
+    <message>
+        <source>Version %1</source>
+        <translation>Verżjoni %1</translation>
+    </message>
+    <message>
+        <source>A native Matrix client for Sailfish OS: encrypted rooms, spaces, voice and video calls.</source>
+        <translation>Klijent Matrix nattiv għal Sailfish OS: kmamar iċċifrati, spazji, sejħiet bil-vuċi u bil-video.</translation>
+    </message>
+    <message>
+        <source>License: Apache 2.0</source>
+        <translation>Liċenzja: Apache 2.0</translation>
+    </message>
+    <message>
+        <source>Source code</source>
+        <translation>Kodiċi sors</translation>
+    </message>
+</context>
+<context>
+    <name>AccountPage</name>
+    <message>
+        <source>Signed in</source>
+        <translation>Illoggjat</translation>
+    </message>
+    <message>
+        <source>Account</source>
+        <translation>Kont</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation>Apparat</translation>
+    </message>
+    <message>
+        <source>Core</source>
+        <translation>Qalba</translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation>Profil</translation>
+    </message>
+    <message>
+        <source>Display name</source>
+        <translation>Isem li jidher</translation>
+    </message>
+    <message>
+        <source>Save name</source>
+        <translation>Issejvja l-isem</translation>
+    </message>
+    <message>
+        <source>Change avatar</source>
+        <translation>Ibdel l-avatar</translation>
+    </message>
+    <message>
+        <source>Set avatar</source>
+        <translation>Issettja avatar</translation>
+    </message>
+    <message>
+        <source>An avatar is set. Other people see it next to your name.</source>
+        <translation>Hemm avatar issettjat. L-oħrajn jarawh ħdejn ismek.</translation>
+    </message>
+    <message>
+        <source>This app</source>
+        <translation>Din l-app</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>Dehra</translation>
+    </message>
+    <message>
+        <source>Ignored users</source>
+        <translation>Utenti injorati</translation>
+    </message>
+    <message>
+        <source>Reset send warnings</source>
+        <translation>Irrisettja t-twissijiet tal-bagħt</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n recipient(s) will warn again</source>
+        <translation>
+            <numerusform>%n riċevitur se jwissi mill-ġdid</numerusform>
+            <numerusform>%n riċevituri se jwissu mill-ġdid</numerusform>
+            <numerusform>%n riċevituri se jwissu mill-ġdid</numerusform>
+            <numerusform>%n riċevituri se jwissu mill-ġdid</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>No suppressed warnings</source>
+        <translation>Ebda twissija mrażżna</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>It-test tal-messaġġ fin-notifiki</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Mitfi, in-notifika tgħid biss kemm waslu messaġġi. Mixgħul, turi l-aħħar messaġġ — anke fuq l-iskrin imsakkar.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Links tal-web li jistgħu jintmessu</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Mixgħul, link f&apos;messaġġ jiftaħ il-browser meta tmissu. Mitfi, il-links jibqgħu test sempliċi.</translation>
+    </message>
+    <message>
+        <source>Sign out</source>
+        <translation>Oħroġ</translation>
+    </message>
+    <message>
+        <source>Encryption</source>
+        <translation>Ċifrar</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Lingwa</translation>
+    </message>
+</context>
+<context>
+    <name>AddDirectoryServerDialog</name>
+    <message>
+        <source>Add</source>
+        <translation>Żid</translation>
+    </message>
+    <message>
+        <source>Directory server</source>
+        <translation>Server tad-direttorju</translation>
+    </message>
+    <message>
+        <source>For example matrix.org</source>
+        <translation>Pereżempju matrix.org</translation>
+    </message>
+</context>
+<context>
+    <name>AddToSpacePage</name>
+    <message>
+        <source>Add rooms</source>
+        <translation>Żid kmamar</translation>
+    </message>
+    <message>
+        <source>Press and hold a room to add it to the space.</source>
+        <translation>Żomm kamra biex iżżidha mal-ispazju.</translation>
+    </message>
+    <message>
+        <source>Add to space</source>
+        <translation>Żid mal-ispazju</translation>
+    </message>
+    <message>
+        <source>Adding to space</source>
+        <translation>Qed tiżdied mal-ispazju</translation>
+    </message>
+    <message>
+        <source>No rooms</source>
+        <translation>Ebda kamra</translation>
+    </message>
+    <message>
+        <source>Join or start a chat first, then add it to a space.</source>
+        <translation>L-ewwel idħol f&apos;konversazzjoni jew ibda waħda, imbagħad żidha ma&apos; spazju.</translation>
+    </message>
+</context>
+<context>
+    <name>AppearancePage</name>
+    <message>
+        <source>Reset to defaults</source>
+        <translation>Erġa&apos; għad-default</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>Dehra</translation>
+    </message>
+    <message>
+        <source>Somebody</source>
+        <comment>sample sender on the appearance page</comment>
+        <translation>Xi ħadd</translation>
+    </message>
+    <message>
+        <source>A received message looks like this.</source>
+        <translation>Messaġġ li jasal jidher hekk.</translation>
+    </message>
+    <message>
+        <source>And one of my own like this.</source>
+        <translation>U wieħed tiegħi hekk.</translation>
+    </message>
+    <message>
+        <source>Colouring</source>
+        <translation>Kuluri</translation>
+    </message>
+    <message>
+        <source>Their bubble</source>
+        <translation>Il-bużżieqa tagħhom</translation>
+    </message>
+    <message>
+        <source>My bubble</source>
+        <translation>Il-bużżieqa tiegħi</translation>
+    </message>
+    <message>
+        <source>Sender name</source>
+        <translation>Isem min bagħat</translation>
+    </message>
+    <message>
+        <source>Their text</source>
+        <translation>It-test tagħhom</translation>
+    </message>
+    <message>
+        <source>My text</source>
+        <translation>It-test tiegħi</translation>
+    </message>
+    <message>
+        <source>Follow the ambience</source>
+        <translation>Segwi l-ambjent</translation>
+    </message>
+    <message>
+        <source>Off, the colour below applies</source>
+        <translation>Mitfi, japplika l-kulur t&apos;hawn taħt</translation>
+    </message>
+    <message>
+        <source>Bubble opacity</source>
+        <translation>Opaċità tal-bżieżaq</translation>
+    </message>
+</context>
+<context>
+    <name>CallEngine</name>
+    <message>
+        <source>the camera did not start — continuing without video</source>
+        <translation>il-kamera ma bdietx — inkomplu mingħajr video</translation>
+    </message>
+    <message>
+        <source>GStreamer could not be started: %1</source>
+        <translation>GStreamer ma setax jibda: %1</translation>
+    </message>
+    <message>
+        <source>This device has no WebRTC support.</source>
+        <translation>Dan l-apparat m&apos;għandux appoġġ għal WebRTC.</translation>
+    </message>
+    <message>
+        <source>ready</source>
+        <translation>lest</translation>
+    </message>
+    <message>
+        <source>pipeline failed: %1</source>
+        <translation>il-pipeline falliet: %1</translation>
+    </message>
+    <message>
+        <source>webrtcbin is missing</source>
+        <translation>webrtcbin nieqes</translation>
+    </message>
+    <message>
+        <source>no camera — placing a voice call</source>
+        <translation>ebda kamera — qed issir sejħa bil-vuċi</translation>
+    </message>
+    <message>
+        <source>the microphone could not be opened</source>
+        <translation>il-mikrofonu ma setax jinfetaħ</translation>
+    </message>
+    <message>
+        <source>the session description could not be read</source>
+        <translation>id-deskrizzjoni tas-sessjoni ma setgħetx tinqara</translation>
+    </message>
+    <message>
+        <source>the other side sent an unreadable session description</source>
+        <translation>in-naħa l-oħra bagħtet deskrizzjoni tas-sessjoni li ma tinqarax</translation>
+    </message>
+    <message>
+        <source>the other side hung up</source>
+        <translation>in-naħa l-oħra qatgħet</translation>
+    </message>
+    <message>
+        <source>the connection was lost</source>
+        <translation>il-konnessjoni ntilfet</translation>
+    </message>
+    <message>
+        <source>connected</source>
+        <translation>konness</translation>
+    </message>
+</context>
+<context>
+    <name>CallPage</name>
+    <message>
+        <source>Call</source>
+        <translation>Sejħa</translation>
+    </message>
+    <message>
+        <source>Ringing…</source>
+        <translation>Iddoqq…</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Sejħa deħlin</translation>
+    </message>
+    <message>
+        <source>Connecting…</source>
+        <translation>Qed jikkonnettja…</translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>Konness</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Aċċetta</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Irrifjuta</translation>
+    </message>
+    <message>
+        <source>Hang up</source>
+        <translation>Agħlaq</translation>
+    </message>
+</context>
+<context>
+    <name>ColorField</name>
+    <message>
+        <source>Hex code</source>
+        <translation>Kodiċi eżadeċimali</translation>
+    </message>
+</context>
+<context>
+    <name>ConfirmDialog</name>
+    <message>
+        <source>Keep</source>
+        <translation>Żomm</translation>
+    </message>
+</context>
+<context>
+    <name>CoverPage</name>
+    <message>
+        <source>signing in…</source>
+        <translation>qed jidħol…</translation>
+    </message>
+    <message>
+        <source>not signed in</source>
+        <translation>mhux illoggjat</translation>
+    </message>
+</context>
+<context>
+    <name>CreateRoomDialog</name>
+    <message>
+        <source>Create room</source>
+        <translation>Oħloq kamra</translation>
+    </message>
+    <message>
+        <source>Room name</source>
+        <translation>Isem il-kamra</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Suġġett</translation>
+    </message>
+    <message>
+        <source>What the room is about</source>
+        <translation>Dwar xiex hija l-kamra</translation>
+    </message>
+    <message>
+        <source>Public room</source>
+        <translation>Kamra pubblika</translation>
+    </message>
+    <message>
+        <source>Listed in your homeserver&apos;s room directory, and anyone who finds it can join. Off means invitation only.</source>
+        <translation>Tidher fid-direttorju tal-kmamar tas-server tiegħek, u kull min isibha jista&apos; jidħol. Mitfi jfisser bi stedina biss.</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Indirizz</translation>
+    </message>
+    <message>
+        <source>Reachable as %1</source>
+        <translation>Aċċessibbli bħala %1</translation>
+    </message>
+    <message>
+        <source>The name people can use to find the room, without # and without the server part. Optional.</source>
+        <translation>L-isem li bih tinstab il-kamra, mingħajr # u mingħajr il-parti tas-server. Mhux obbligatorju.</translation>
+    </message>
+    <message>
+        <source>Readable history</source>
+        <translation>Storja li tinqara</translation>
+    </message>
+    <message>
+        <source>Everyone, without joining</source>
+        <translation>Kulħadd, mingħajr ma jidħol</translation>
+    </message>
+    <message>
+        <source>Members, including earlier messages</source>
+        <translation>Il-membri, inklużi messaġġi ta&apos; qabel</translation>
+    </message>
+    <message>
+        <source>Members, from their invitation</source>
+        <translation>Il-membri, mill-istedina tagħhom</translation>
+    </message>
+    <message>
+        <source>Members, from their join</source>
+        <translation>Il-membri, minn meta daħlu</translation>
+    </message>
+    <message>
+        <source>End-to-end encryption</source>
+        <translation>Ċifrar minn tarf sa tarf</translation>
+    </message>
+    <message>
+        <source>Unusual for a public room: everyone joining later reads along from their join onwards, and nothing before it.</source>
+        <translation>Mhux tas-soltu għal kamra pubblika: min jidħol aktar tard jaqra minn meta jidħol &apos;il quddiem, u xejn ta&apos; qabel.</translation>
+    </message>
+    <message>
+        <source>Can only be decided now — encryption cannot be turned off again later.</source>
+        <translation>Jista&apos; jiġi deċiż issa biss — iċ-ċifrar ma jistax jintefa aktar tard.</translation>
+    </message>
+    <message>
+        <source>Only moderators may write</source>
+        <translation>Jistgħu jiktbu l-moderaturi biss</translation>
+    </message>
+    <message>
+        <source>For an announcement room. Everyone else can read, but not write and not react.</source>
+        <translation>Għal kamra ta&apos; avviżi. L-oħrajn jistgħu jaqraw, imma mhux jiktbu jew jirreaġixxu.</translation>
+    </message>
+    <message>
+        <source>Invited people get my rights</source>
+        <translation>Il-mistiedna jieħdu d-drittijiet tiegħi</translation>
+    </message>
+    <message>
+        <source>Everyone invited below starts as an administrator. Later members do not.</source>
+        <translation>Kull min jiġi mistieden hawn taħt jibda bħala amministratur. Il-membri ta&apos; wara le.</translation>
+    </message>
+    <message>
+        <source>Keep on this server</source>
+        <translation>Żomm fuq dan is-server</translation>
+    </message>
+    <message>
+        <source>People on other servers cannot join, not even by invitation. Cannot be changed later.</source>
+        <translation>Nies fuq servers oħra ma jistgħux jidħlu, lanqas bi stedina. Ma jistax jinbidel wara.</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Stieden</translation>
+    </message>
+    <message>
+        <source>Matrix addresses, separated by commas</source>
+        <translation>Indirizzi Matrix, mifruda b&apos;virgoli</translation>
+    </message>
+    <message>
+        <source>Invited as the room is created. You can invite more people later from the room&apos;s pulldown menu.</source>
+        <translation>Jiġu mistiedna meta tinħoloq il-kamra. Tista&apos; tistieden aktar nies wara mill-menu tal-kamra.</translation>
+    </message>
+    <message>
+        <source>The room opens right away.</source>
+        <translation>Il-kamra tinfetaħ mill-ewwel.</translation>
+    </message>
+</context>
+<context>
+    <name>CreateSpaceDialog</name>
+    <message>
+        <source>Create space</source>
+        <translation>Oħloq spazju</translation>
+    </message>
+    <message>
+        <source>Space name</source>
+        <translation>Isem l-ispazju</translation>
+    </message>
+    <message>
+        <source>The space appears in the overview right away. It is private and holds no messages — it is a folder for rooms.</source>
+        <translation>L-ispazju jidher fil-ħarsa ġenerali mill-ewwel. Huwa privat u ma fihx messaġġi — huwa folder għal kmamar.</translation>
+    </message>
+</context>
+<context>
+    <name>DirectoryPage</name>
+    <message>
+        <source>Remove this server</source>
+        <translation>Neħħi dan is-server</translation>
+    </message>
+    <message>
+        <source>Add directory server</source>
+        <translation>Żid server tad-direttorju</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Skopri kmamar</translation>
+    </message>
+    <message>
+        <source>Directory</source>
+        <translation>Direttorju</translation>
+    </message>
+    <message>
+        <source>Search the room directory</source>
+        <translation>Fittex fid-direttorju tal-kmamar</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n member(s)</source>
+        <translation>
+            <numerusform>%n membru</numerusform>
+            <numerusform>%n membri</numerusform>
+            <numerusform>%n membri</numerusform>
+            <numerusform>%n membri</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Idħol</translation>
+    </message>
+    <message>
+        <source>Join (invitation required)</source>
+        <translation>Idħol (teħtieġ stedina)</translation>
+    </message>
+    <message>
+        <source>Joining</source>
+        <translation>Qed jidħol</translation>
+    </message>
+    <message>
+        <source>No rooms found</source>
+        <translation>Ma nstabet ebda kamra</translation>
+    </message>
+    <message>
+        <source>Public rooms of the chosen directory show up here.</source>
+        <translation>Il-kmamar pubbliċi tad-direttorju magħżul jidhru hawn.</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptStorageDialog</name>
+    <message>
+        <source>Sign out and encrypt</source>
+        <translation>Oħroġ u ċċifra</translation>
+    </message>
+    <message>
+        <source>Leave as it is</source>
+        <translation>Ħalli kif inhu</translation>
+    </message>
+    <message>
+        <source>An existing database cannot be encrypted in place. It has to be created anew: signing out deletes it, and the next sign-in creates it encrypted.</source>
+        <translation>Bażi tad-data eżistenti ma tistax tiġi ċċifrata fejn hi. Trid tinħoloq mill-ġdid: il-ħruġ iħassarha, u d-dħul li jmiss joħloqha ċċifrata.</translation>
+    </message>
+    <message>
+        <source>You will need your recovery key afterwards to unlock the backup, and this device has to be verified again. Have the recovery key at hand before you continue.</source>
+        <translation>Wara jkollok bżonn iċ-ċavetta tal-irkupru biex tiftaħ il-backup, u dan l-apparat ikollu jerġa&apos; jiġi vverifikat. Żomm iċ-ċavetta lesta qabel tkompli.</translation>
+    </message>
+    <message>
+        <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
+        <translation>Mhux possibbli għadu: m&apos;hemmx backup taċ-ċwievet fuq is-server. Li toħroġ issa jagħmel kull messaġġ iċċifrat fuq dan l-apparat illeġibbli għal dejjem. L-ewwel issettja l-backup, imbagħad erġa&apos; ejja hawn.</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptionPage</name>
+    <message>
+        <source>Encryption</source>
+        <translation>Ċifrar</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>Backup</translation>
+    </message>
+    <message>
+        <source>active</source>
+        <translation>attiv</translation>
+    </message>
+    <message>
+        <source>exists, not unlocked</source>
+        <translation>jeżisti, mhux miftuħ</translation>
+    </message>
+    <message>
+        <source>not set up</source>
+        <translation>mhux issettjat</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Irkupru</translation>
+    </message>
+    <message>
+        <source>set up</source>
+        <translation>issettjat</translation>
+    </message>
+    <message>
+        <source>incomplete</source>
+        <translation>mhux komplut</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>mhux magħruf</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Firma inkroċjata</translation>
+    </message>
+    <message>
+        <source>complete</source>
+        <translation>komplut</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Ħażna lokali</translation>
+    </message>
+    <message>
+        <source>encrypted</source>
+        <translation>iċċifrata</translation>
+    </message>
+    <message>
+        <source>not encrypted</source>
+        <translation>mhux iċċifrata</translation>
+    </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
+        <translation>Is-sessjoni u l-bażi tad-data tal-messaġġi jinsabu fuq dan l-apparat mingħajr ċifrar. Inħolqu qabel ma din l-app setgħet tiċċifrahom, u bażi tad-data eżistenti ma tistax tiġi ċċifrata fejn hi.</translation>
+    </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
+        <translation>Is-sessjoni u l-bażi tad-data tal-messaġġi jinsabu fuq dan l-apparat mingħajr ċifrar, għax il-ħażna sigura tas-sistema ma tatx ċavetta. Kull min jasal għas-sistema tal-fajls tal-apparat jista&apos; jaqrahom.</translation>
+    </message>
+    <message>
+        <source>Encrypt local storage</source>
+        <translation>Iċċifra l-ħażna lokali</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Ivverifika</translation>
+    </message>
+    <message>
+        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
+        <translation>Il-verifika tqabbel seba&apos; emoji man-naħa l-oħra. Bejn l-apparati tiegħek stess tiftaħ ukoll iċ-ċwievet komuni tal-kmamar.</translation>
+    </message>
+    <message>
+        <source>Verify my other devices</source>
+        <translation>Ivverifika l-apparati l-oħra tiegħi</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>ID tal-utent</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@isem:server</translation>
+    </message>
+    <message>
+        <source>Verify this user</source>
+        <translation>Ivverifika dan l-utent</translation>
+    </message>
+    <message>
+        <source>Unlock backup</source>
+        <translation>Iftaħ il-backup</translation>
+    </message>
+    <message>
+        <source>Enter the recovery key from your other client. This device then fetches the room keys it is missing, and older messages become readable.</source>
+        <translation>Daħħal iċ-ċavetta tal-irkupru mill-klijent l-ieħor tiegħek. Dan l-apparat imbagħad iġib iċ-ċwievet tal-kmamar li jonqsuh, u l-messaġġi eqdem isiru jinqraw.</translation>
+    </message>
+    <message>
+        <source>Recovery key</source>
+        <translation>Ċavetta tal-irkupru</translation>
+    </message>
+    <message>
+        <source>Unlock</source>
+        <translation>Iftaħ</translation>
+    </message>
+    <message>
+        <source>Set up backup</source>
+        <translation>Issettja backup</translation>
+    </message>
+    <message>
+        <source>Creates a backup of your room keys on the server, encrypted with a recovery key that only you hold. Without it, reinstalling loses every encrypted message.</source>
+        <translation>Joħloq fuq is-server backup taċ-ċwievet tal-kmamar tiegħek, iċċifrat b&apos;ċavetta tal-irkupru li għandek int biss. Mingħajrha, installazzjoni ġdida titlef kull messaġġ iċċifrat.</translation>
+    </message>
+    <message>
+        <source>Your recovery key</source>
+        <translation>Iċ-ċavetta tal-irkupru tiegħek</translation>
+    </message>
+    <message>
+        <source>Write this down now. It is shown only once and is not stored on this device.</source>
+        <translation>Iktibha issa. Tintwera darba biss u ma tinżammx fuq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Ikkopja</translation>
+    </message>
+</context>
+<context>
+    <name>ForwardPage</name>
+    <message>
+        <source>Forward to</source>
+        <translation>Għaddi lil</translation>
+    </message>
+</context>
+<context>
+    <name>IgnoredUsersPage</name>
+    <message>
+        <source>Ignored users</source>
+        <translation>Utenti injorati</translation>
+    </message>
+    <message>
+        <source>The list belongs to your account: the server stops delivering these people&apos;s messages, in every client. Tap somebody to stop ignoring them.</source>
+        <translation>Il-lista tappartjeni lill-kont tiegħek: is-server jieqaf iwassal il-messaġġi ta&apos; dawn in-nies, f&apos;kull klijent. Mess lil xi ħadd biex tieqaf tinjorah.</translation>
+    </message>
+    <message>
+        <source>No longer ignoring</source>
+        <translation>M&apos;għadux injorat</translation>
+    </message>
+    <message>
+        <source>Nobody is ignored</source>
+        <translation>Ħadd mhu injorat</translation>
+    </message>
+    <message>
+        <source>You can ignore somebody from their profile.</source>
+        <translation>Tista&apos; tinjora lil xi ħadd mill-profil tiegħu.</translation>
+    </message>
+</context>
+<context>
+    <name>ImageViewPage</name>
+    <message>
+        <source>Forward</source>
+        <translation>Għaddi</translation>
+    </message>
+    <message>
+        <source>Share</source>
+        <translation>Aqsam</translation>
+    </message>
+    <message>
+        <source>Save to gallery</source>
+        <translation>Issejvja fil-gallerija</translation>
+    </message>
+    <message>
+        <source>Share picture</source>
+        <translation>Aqsam ritratt</translation>
+    </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Issejvjat fil-gallerija</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Ma setax jiġi ssejvjat</translation>
+    </message>
+</context>
+<context>
+    <name>InviteToRoomDialog</name>
+    <message>
+        <source>Invite</source>
+        <translation>Stieden</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>ID tal-utent</translation>
+    </message>
+    <message>
+        <source>They appear in the member list as invited until they accept.</source>
+        <translation>Jidhru fil-lista tal-membri bħala mistiedna sakemm jaċċettaw.</translation>
+    </message>
+</context>
+<context>
+    <name>JoinRoomDialog</name>
+    <message>
+        <source>Join</source>
+        <translation>Idħol</translation>
+    </message>
+    <message>
+        <source>Room address</source>
+        <translation>Indirizz tal-kamra</translation>
+    </message>
+    <message>
+        <source>The room appears in the list once the server has answered. Joining a large public room can take a moment.</source>
+        <translation>Il-kamra tidher fil-lista malli s-server iwieġeb. Id-dħul f&apos;kamra pubblika kbira jista&apos; jieħu ftit.</translation>
+    </message>
+</context>
+<context>
+    <name>LanguagePage</name>
+    <message>
+        <source>Language</source>
+        <translation>Lingwa</translation>
+    </message>
+    <message>
+        <source>Takes effect the next time the app starts. Only the German translation has been checked by a native speaker; the others are machine translations, and English is always available here.</source>
+        <translation>Jidħol fis-seħħ id-darba li jmiss li tibda l-app. It-traduzzjoni Ġermaniża biss ġiet iċċekkjata minn kelliem nattiv; l-oħrajn huma traduzzjonijiet awtomatiċi, u l-Ingliż huwa dejjem disponibbli hawn.</translation>
+    </message>
+</context>
+<context>
+    <name>LanguageSettings</name>
+    <message>
+        <source>Follow the device</source>
+        <translation>Segwi l-apparat</translation>
+    </message>
+</context>
+<context>
+    <name>LoginPage</name>
+    <message>
+        <source>Sign in</source>
+        <translation>Idħol</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix għal Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Homeserver</source>
+        <translation>Server tad-dar</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Isem tal-utent</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translation>Oħloq kont</translation>
+    </message>
+    <message>
+        <source>Sign in on another device</source>
+        <translation>Idħol fuq apparat ieħor</translation>
+    </message>
+    <message>
+        <source>Finish signing in in the browser, then come back.</source>
+        <translation>Lesti d-dħul fil-browser, u mbagħad erġa&apos; ejja.</translation>
+    </message>
+    <message>
+        <source>Open this address on any other device and sign in there:</source>
+        <translation>Iftaħ dan l-indirizz fuq kwalunkwe apparat ieħor u idħol hemm:</translation>
+    </message>
+    <message>
+        <source>This page signs in by itself as soon as the login is approved there.</source>
+        <translation>Din il-paġna tidħol waħedha malli d-dħul jiġi approvat hemm.</translation>
+    </message>
+    <message>
+        <source>Your password is entered on the homeserver&apos;s own page and never reaches this app.</source>
+        <translation>Il-password tiegħek tiddaħħal fuq il-paġna tas-server innifsu u qatt ma tasal għand din l-app.</translation>
+    </message>
+    <message>
+        <source>This server uses the classic password sign-in. The password is sent only to this server and is never saved on the device.</source>
+        <translation>Dan is-server juża d-dħul klassiku bil-password. Il-password tintbagħat biss lil dan is-server u qatt ma tiġi ssejvjata fuq l-apparat.</translation>
+    </message>
+    <message>
+        <source>Sign-in did not work</source>
+        <translation>Id-dħul ma rnexxiex</translation>
+    </message>
+    <message>
+        <source>This is the server&apos;s own web sign-in. Your password is not wrong — the app cannot use this method yet.</source>
+        <translation>Dan huwa d-dħul bil-web tas-server innifsu. Il-password tiegħek mhix ħażina — l-app għadha ma tafx tuża dan il-metodu.</translation>
+    </message>
+    <message>
+        <source>Check the server address and your connection.</source>
+        <translation>Iċċekkja l-indirizz tas-server u l-konnessjoni tiegħek.</translation>
+    </message>
+    <message>
+        <source>The server expects a sign-in this app does not implement.</source>
+        <translation>Is-server jistenna dħul li din l-app ma timplimentax.</translation>
+    </message>
+    <message>
+        <source>Cancel sign-in</source>
+        <translation>Ikkanċella d-dħul</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutDialog</name>
+    <message>
+        <source>Sign out</source>
+        <translation>Oħroġ</translation>
+    </message>
+    <message>
+        <source>Stay signed in</source>
+        <translation>Ibqa&apos; ġewwa</translation>
+    </message>
+    <message>
+        <source>Really sign out?</source>
+        <translation>Verament trid toħroġ?</translation>
+    </message>
+    <message>
+        <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
+        <translation>Iċ-ċwievet ta&apos; dan l-apparat jitħassru flimkien mas-sessjoni. Il-messaġġi ċċifrati jibqgħu jinqraw biss jekk ikunu f&apos;backup taċ-ċwievet, u l-apparat irid jerġa&apos; jiġi vverifikat wara d-dħul.</translation>
+    </message>
+</context>
+<context>
+    <name>MatrixBridge</name>
+    <message>
+        <source>The protocol core could not be started.</source>
+        <translation>Il-qalba tal-protokoll ma setgħetx tibda.</translation>
+    </message>
+    <message>
+        <source>The protocol core is not available.</source>
+        <translation>Il-qalba tal-protokoll mhix disponibbli.</translation>
+    </message>
+    <message>
+        <source>Enter a homeserver first.</source>
+        <translation>L-ewwel daħħal server tad-dar.</translation>
+    </message>
+    <message>
+        <source>Enter username and password first.</source>
+        <translation>L-ewwel daħħal isem tal-utent u password.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key first.</source>
+        <translation>L-ewwel daħħal iċ-ċavetta tal-irkupru tiegħek.</translation>
+    </message>
+    <message>
+        <source>The file could not be saved.</source>
+        <translation>Il-fajl ma setax jiġi ssejvjat.</translation>
+    </message>
+    <message>
+        <source>The homeserver did not return a login page.</source>
+        <translation>Is-server tad-dar ma rritornax paġna tad-dħul.</translation>
+    </message>
+    <message>
+        <source>The homeserver did not return a sign-in code.</source>
+        <translation>Is-server tad-dar ma rritornax kodiċi tad-dħul.</translation>
+    </message>
+</context>
+<context>
+    <name>MemberListPage</name>
+    <message>
+        <source>Members</source>
+        <translation>Membri</translation>
+    </message>
+    <message>
+        <source>invited</source>
+        <translation>mistieden</translation>
+    </message>
+    <message>
+        <source>Admin</source>
+        <translation>Amministratur</translation>
+    </message>
+    <message>
+        <source>Moderator</source>
+        <translation>Moderatur</translation>
+    </message>
+    <message>
+        <source>No members yet</source>
+        <translation>Għad m&apos;hemm ebda membru</translation>
+    </message>
+    <message>
+        <source>The people in this room show up here.</source>
+        <translation>In-nies f&apos;din il-kamra jidhru hawn.</translation>
+    </message>
+</context>
+<context>
+    <name>MemberProfilePage</name>
+    <message>
+        <source>Admin</source>
+        <translation>Amministratur</translation>
+    </message>
+    <message>
+        <source>Moderator</source>
+        <translation>Moderatur</translation>
+    </message>
+    <message>
+        <source>Member</source>
+        <translation>Membru</translation>
+    </message>
+    <message>
+        <source>invited</source>
+        <translation>mistieden</translation>
+    </message>
+    <message>
+        <source>banned</source>
+        <translation>imblukkat</translation>
+    </message>
+    <message>
+        <source>left the room</source>
+        <translation>ħalla l-kamra</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation>Erġa&apos; llowdja</translation>
+    </message>
+    <message>
+        <source>Make moderator</source>
+        <translation>Agħmel moderatur</translation>
+    </message>
+    <message>
+        <source>Make admin</source>
+        <translation>Agħmel amministratur</translation>
+    </message>
+    <message>
+        <source>Really make this member an admin?</source>
+        <translation>Verament tagħmel lil dan il-membru amministratur?</translation>
+    </message>
+    <message>
+        <source>This cannot be taken back: only they themselves can step down afterwards.</source>
+        <translation>Dan ma jistax jittieħed lura: wara jista&apos; jirriżenja hu biss.</translation>
+    </message>
+    <message>
+        <source>Demote to member</source>
+        <translation>Niżżel għal membru</translation>
+    </message>
+    <message>
+        <source>Revoke invitation</source>
+        <translation>Irtira l-istedina</translation>
+    </message>
+    <message>
+        <source>Remove from room</source>
+        <translation>Neħħi mill-kamra</translation>
+    </message>
+    <message>
+        <source>Removing</source>
+        <translation>Qed jitneħħa</translation>
+    </message>
+    <message>
+        <source>Ban from room</source>
+        <translation>Imblokka mill-kamra</translation>
+    </message>
+    <message>
+        <source>Really ban this member?</source>
+        <translation>Verament timblokka lil dan il-membru?</translation>
+    </message>
+    <message>
+        <source>%1 is removed from the room and cannot come back until the ban is lifted.</source>
+        <translation>%1 jitneħħa mill-kamra u ma jistax jerġa&apos; lura sakemm l-imblokk jitneħħa.</translation>
+    </message>
+    <message>
+        <source>Ban</source>
+        <translation>Imblokka</translation>
+    </message>
+    <message>
+        <source>Banning</source>
+        <translation>Qed jiġi mblukkat</translation>
+    </message>
+    <message>
+        <source>Lift ban</source>
+        <translation>Neħħi l-imblokk</translation>
+    </message>
+    <message>
+        <source>Address copied</source>
+        <translation>L-indirizz ġie kkupjat</translation>
+    </message>
+    <message>
+        <source>Role</source>
+        <translation>Rwol</translation>
+    </message>
+    <message>
+        <source>Member since</source>
+        <translation>Membru minn</translation>
+    </message>
+    <message>
+        <source>Invited by</source>
+        <translation>Mistieden minn</translation>
+    </message>
+    <message>
+        <source>Devices</source>
+        <translation>Apparati</translation>
+    </message>
+    <message>
+        <source>Encryption</source>
+        <translation>Ċifrar</translation>
+    </message>
+    <message>
+        <source>Identity verified</source>
+        <translation>Identità vverifikata</translation>
+    </message>
+    <message>
+        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
+        <translation>L-identità nbidlet minn meta ġiet ivverifikata. Erġa&apos; vverifika, jew irtira l-verifika.</translation>
+    </message>
+    <message>
+        <source>Identity not verified</source>
+        <translation>Identità mhux ivverifikata</translation>
+    </message>
+    <message>
+        <source>Send direct message</source>
+        <translation>Ibgħat messaġġ dirett</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Ivverifika</translation>
+    </message>
+    <message>
+        <source>Withdraw verification</source>
+        <translation>Irtira l-verifika</translation>
+    </message>
+    <message>
+        <source>Stop ignoring</source>
+        <translation>Ieqaf tinjora</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Injora</translation>
+    </message>
+    <message>
+        <source>Ignoring</source>
+        <translation>Qed jiġi injorat</translation>
+    </message>
+    <message>
+        <source>Shared rooms</source>
+        <translation>Kmamar komuni</translation>
+    </message>
+    <message>
+        <source>No other shared rooms</source>
+        <translation>Ebda kamra komuni oħra</translation>
+    </message>
+</context>
+<context>
+    <name>MessageActionsPage</name>
+    <message>
+        <source>Message</source>
+        <translation>Messaġġ</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Ikkopja</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Wieġeb</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Issejvja</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Għaddi</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editja</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Waħħal</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ħassar</translation>
+    </message>
+</context>
+<context>
+    <name>MoveToSpacePage</name>
+    <message>
+        <source>Move to space</source>
+        <translation>Mexxi għal spazju</translation>
+    </message>
+    <message>
+        <source>No other space</source>
+        <translation>Ebda spazju ieħor</translation>
+    </message>
+    <message>
+        <source>Create another space first to move rooms between them.</source>
+        <translation>L-ewwel oħloq spazju ieħor biex tmexxi kmamar bejniethom.</translation>
+    </message>
+</context>
+<context>
+    <name>NewChatDialog</name>
+    <message>
+        <source>Start chat</source>
+        <translation>Ibda konversazzjoni</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>ID tal-utent</translation>
+    </message>
+    <message>
+        <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
+        <translation>In-naħa l-oħra tirċievi stedina u l-konversazzjoni tidher mill-ewwel fil-lista tiegħek. Il-messaġġi huma ċċifrati mill-bidu.</translation>
+    </message>
+</context>
+<context>
+    <name>PinnedMessagesPage</name>
+    <message>
+        <source>Pinned messages</source>
+        <translation>Messaġġi mwaħħla</translation>
+    </message>
+    <message>
+        <source>Show in conversation</source>
+        <translation>Uri fil-konversazzjoni</translation>
+    </message>
+    <message>
+        <source>Unpin</source>
+        <translation>Neħħi mit-tewħil</translation>
+    </message>
+    <message>
+        <source>Pinned messages unavailable</source>
+        <translation>Il-messaġġi mwaħħla mhumiex disponibbli</translation>
+    </message>
+    <message>
+        <source>No pinned messages</source>
+        <translation>Ebda messaġġ imwaħħal</translation>
+    </message>
+    <message>
+        <source>The server does not hand out these messages. They are older than this server&apos;s copy of the room.</source>
+        <translation>Is-server ma jagħtix dawn il-messaġġi. Huma eqdem mill-kopja tal-kamra fuq dan is-server.</translation>
+    </message>
+    <message>
+        <source>Long-press a message in the conversation to pin it.</source>
+        <translation>Żomm messaġġ fil-konversazzjoni biex twaħħlu.</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>no session description</source>
+        <translation>ebda deskrizzjoni tas-sessjoni</translation>
+    </message>
+</context>
+<context>
+    <name>RoomDelegate</name>
+    <message>
+        <source>Invitation</source>
+        <translation>Stedina</translation>
+    </message>
+    <message>
+        <source>Replaced by a new room</source>
+        <translation>Mibdula b&apos;kamra ġdida</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <translation>Spazju</translation>
+    </message>
+</context>
+<context>
+    <name>RoomInfoPage</name>
+    <message>
+        <source>this room</source>
+        <translation>din il-kamra</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Verament titlaq minn din il-kamra?</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Il-kamra titħalla u tintesa. Tisparixxi mil-lista tal-konversazzjonijiet, u biex terġa&apos; tidħol trid stedina ġdida jew indirizz pubbliku.</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Itlaq</translation>
+    </message>
+    <message>
+        <source>Leaving room</source>
+        <translation>Qed titlaq mill-kamra</translation>
+    </message>
+    <message>
+        <source>Leave room</source>
+        <translation>Itlaq mill-kamra</translation>
+    </message>
+    <message>
+        <source>Room</source>
+        <translation>Kamra</translation>
+    </message>
+    <message>
+        <source>Replaced — open the new room</source>
+        <translation>Mibdula — iftaħ il-kamra l-ġdida</translation>
+    </message>
+    <message>
+        <source>Replaced — join the new room</source>
+        <translation>Mibdula — idħol fil-kamra l-ġdida</translation>
+    </message>
+    <message>
+        <source>Older messages in the previous room</source>
+        <translation>Messaġġi eqdem fil-kamra ta&apos; qabel</translation>
+    </message>
+    <message>
+        <source>People and messages</source>
+        <translation>Nies u messaġġi</translation>
+    </message>
+    <message>
+        <source>Members: %1 (%2 invited)</source>
+        <translation>Membri: %1 (%2 mistiedna)</translation>
+    </message>
+    <message>
+        <source>Members: %1</source>
+        <translation>Membri: %1</translation>
+    </message>
+    <message>
+        <source>Pinned messages</source>
+        <translation>Messaġġi mwaħħla</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Stieden</translation>
+    </message>
+    <message>
+        <source>This room for me</source>
+        <translation>Din il-kamra għalija</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Notifiki</translation>
+    </message>
+    <message>
+        <source>Stored with the account, so it holds in every client</source>
+        <translation>Jinżamm mal-kont, allura japplika f&apos;kull klijent</translation>
+    </message>
+    <message>
+        <source>Account default</source>
+        <translation>Default tal-kont</translation>
+    </message>
+    <message>
+        <source>Every message</source>
+        <translation>Kull messaġġ</translation>
+    </message>
+    <message>
+        <source>Only mentions and keywords</source>
+        <translation>Semmien u kliem ċavetta biss</translation>
+    </message>
+    <message>
+        <source>Nothing (muted)</source>
+        <translation>Xejn (mitfija)</translation>
+    </message>
+    <message>
+        <source>Favourite</source>
+        <translation>Favorita</translation>
+    </message>
+    <message>
+        <source>Low priority</source>
+        <translation>Prijorità baxxa</translation>
+    </message>
+    <message>
+        <source>Sorts to the bottom of the list and stays quiet</source>
+        <translation>Titqiegħed fl-aħħar tal-lista u tibqa&apos; kwieta</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Dettalji</translation>
+    </message>
+    <message>
+        <source>Encryption</source>
+        <translation>Ċifrar</translation>
+    </message>
+    <message>
+        <source>End-to-end encrypted</source>
+        <translation>Iċċifrata minn tarf sa tarf</translation>
+    </message>
+    <message>
+        <source>Not encrypted</source>
+        <translation>Mhux iċċifrata</translation>
+    </message>
+    <message>
+        <source>Turning on encryption</source>
+        <translation>Qed jinxtegħel iċ-ċifrar</translation>
+    </message>
+    <message>
+        <source>Turn on encryption</source>
+        <translation>Ixgħel iċ-ċifrar</translation>
+    </message>
+    <message>
+        <source>Renegotiate encryption?</source>
+        <translation>Tinnegozja ċ-ċifrar mill-ġdid?</translation>
+    </message>
+    <message>
+        <source>The next message starts a new session and hands its key to every device in the room again. Messages already sent stay as they are; nothing of your own history is lost.</source>
+        <translation>Il-messaġġ li jmiss jibda sessjoni ġdida u jerġa&apos; jgħaddi ċ-ċavetta tagħha lil kull apparat fil-kamra. Il-messaġġi diġà mibgħuta jibqgħu kif inhuma; xejn mill-istorja tiegħek ma jintilef.</translation>
+    </message>
+    <message>
+        <source>Renegotiate</source>
+        <translation>Innegozja mill-ġdid</translation>
+    </message>
+    <message>
+        <source>Renegotiate encryption</source>
+        <translation>Innegozja ċ-ċifrar mill-ġdid</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Indirizz</translation>
+    </message>
+    <message>
+        <source>Access</source>
+        <translation>Aċċess</translation>
+    </message>
+    <message>
+        <source>Public</source>
+        <translation>Pubblika</translation>
+    </message>
+    <message>
+        <source>On invitation</source>
+        <translation>Bi stedina</translation>
+    </message>
+    <message>
+        <source>Room version</source>
+        <translation>Verżjoni tal-kamra</translation>
+    </message>
+    <message>
+        <source>Room ID</source>
+        <translation>ID tal-kamra</translation>
+    </message>
+    <message>
+        <source>Room ID copied</source>
+        <translation>L-ID tal-kamra ġie kkupjat</translation>
+    </message>
+</context>
+<context>
+    <name>RoomListPage</name>
+    <message>
+        <source>Really decline this invitation?</source>
+        <translation>Verament tirrifjuta din l-istedina?</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Verament titlaq minn din il-kamra?</translation>
+    </message>
+    <message>
+        <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
+        <translation>Wara l-istedina tkun marret. Terġa&apos; tidħol biss jekk xi ħadd jistiednek mill-ġdid.</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Il-kamra titħalla u tintesa. Tisparixxi mil-lista tal-konversazzjonijiet, u biex terġa&apos; tidħol trid stedina ġdida jew indirizz pubbliku.</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Irrifjuta</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Itlaq</translation>
+    </message>
+    <message>
+        <source>Declining</source>
+        <translation>Qed jiġi rrifjutat</translation>
+    </message>
+    <message>
+        <source>Leaving room</source>
+        <translation>Qed titlaq mill-kamra</translation>
+    </message>
+    <message>
+        <source>Rooms</source>
+        <translation>Kmamar</translation>
+    </message>
+    <message>
+        <source>This homeserver is not supported</source>
+        <translation>Dan is-server tad-dar mhux appoġġjat</translation>
+    </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — qed jistenna n-netwerk</translation>
+    </message>
+    <message>
+        <source>Your homeserver does not offer the sync this app needs (simplified sliding sync, MSC4186). Rooms cannot be loaded from it. A newer server version, or an account on a server that supports it, is required.</source>
+        <translation>Is-server tad-dar tiegħek ma joffrix is-sinkronizzazzjoni li teħtieġ din l-app (simplified sliding sync, MSC4186). Ma jistgħux jitniżżlu kmamar minnu. Tinħtieġ verżjoni aktar riċenti tas-server, jew kont fuq server li jappoġġjaha.</translation>
+    </message>
+    <message>
+        <source>Search rooms</source>
+        <translation>Fittex kmamar</translation>
+    </message>
+    <message>
+        <source>Remove from favourites</source>
+        <translation>Neħħi mill-favoriti</translation>
+    </message>
+    <message>
+        <source>Favourite</source>
+        <translation>Favorita</translation>
+    </message>
+    <message>
+        <source>Normal priority</source>
+        <translation>Prijorità normali</translation>
+    </message>
+    <message>
+        <source>Low priority</source>
+        <translation>Prijorità baxxa</translation>
+    </message>
+    <message>
+        <source>Unmute</source>
+        <translation>Erġa&apos; ixgħel il-ħoss</translation>
+    </message>
+    <message>
+        <source>Mute</source>
+        <translation>Itfi l-ħoss</translation>
+    </message>
+    <message>
+        <source>Decline invitation</source>
+        <translation>Irrifjuta l-istedina</translation>
+    </message>
+    <message>
+        <source>Leave room</source>
+        <translation>Itlaq mill-kamra</translation>
+    </message>
+    <message>
+        <source>No rooms</source>
+        <translation>Ebda kamra</translation>
+    </message>
+    <message>
+        <source>Rooms you join show up here once the first sync is through.</source>
+        <translation>Il-kmamar li tidħol fihom jidhru hawn malli tlesti l-ewwel sinkronizzazzjoni.</translation>
+    </message>
+    <message>
+        <source>About xmatic</source>
+        <translation>Dwar xmatic</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Konversazzjoni ġdida</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Kamra ġdida</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Idħol f&apos;kamra</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Skopri kmamar</translation>
+    </message>
+    <message>
+        <source>Make start page</source>
+        <translation>Agħmilha l-paġna tal-bidu</translation>
+    </message>
+    <message>
+        <source>Account</source>
+        <translation>Kont</translation>
+    </message>
+    <message>
+        <source>Sign out</source>
+        <translation>Oħroġ</translation>
+    </message>
+</context>
+<context>
+    <name>RoomPage</name>
+    <message>
+        <source>Really decline this invitation?</source>
+        <translation>Verament tirrifjuta din l-istedina?</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Verament titlaq minn din il-kamra?</translation>
+    </message>
+    <message>
+        <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
+        <translation>Wara l-istedina tkun marret. Terġa&apos; tidħol biss jekk xi ħadd jistiednek mill-ġdid.</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Il-kamra titħalla u tintesa. Tisparixxi mil-lista tal-konversazzjonijiet, u biex terġa&apos; tidħol trid stedina ġdida jew indirizz pubbliku.</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Irrifjuta</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Itlaq</translation>
+    </message>
+    <message>
+        <source>Declining</source>
+        <translation>Qed jiġi rrifjutat</translation>
+    </message>
+    <message>
+        <source>Leaving room</source>
+        <translation>Qed titlaq mill-kamra</translation>
+    </message>
+    <message>
+        <source>The sender did not share the key: they consider this device insecure. Verify this device.</source>
+        <translation>Min bagħat ma qasamx iċ-ċavetta: iqis dan l-apparat bħala mhux sigur. Ivverifika dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>The sender could not deliver the key to this device.</source>
+        <translation>Min bagħat ma setax iwassal iċ-ċavetta lil dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s identity has changed since you verified them, so the key was withheld.</source>
+        <translation>L-identità ta&apos; min bagħat inbidlet minn meta vverifikajtha, għalhekk iċ-ċavetta nżammet lura.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s device is not signed by its owner.</source>
+        <translation>L-apparat ta&apos; min bagħat mhux iffirmat mis-sid tiegħu.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s device is unknown here.</source>
+        <translation>L-apparat ta&apos; min bagħat mhux magħruf hawn.</translation>
+    </message>
+    <message>
+        <source>Sent before you joined the room.</source>
+        <translation>Mibgħut qabel ma dħalt fil-kamra.</translation>
+    </message>
+    <message>
+        <source>Older than this device, and there is no key backup.</source>
+        <translation>Eqdem minn dan l-apparat, u m&apos;hemmx backup taċ-ċwievet.</translation>
+    </message>
+    <message>
+        <source>Older than this device. Verify this device to read it.</source>
+        <translation>Eqdem minn dan l-apparat. Ivverifika l-apparat biex taqrah.</translation>
+    </message>
+    <message>
+        <source>Cannot be decrypted — this device is missing the key</source>
+        <translation>Ma jistax jiġi deċifrat — lil dan l-apparat tonqsu ċ-ċavetta</translation>
+    </message>
+    <message>
+        <source>Decline invitation</source>
+        <translation>Irrifjuta l-istedina</translation>
+    </message>
+    <message>
+        <source>Leave room</source>
+        <translation>Itlaq mill-kamra</translation>
+    </message>
+    <message>
+        <source>Call</source>
+        <translation>Sejħa</translation>
+    </message>
+    <message>
+        <source>Video call</source>
+        <translation>Sejħa bil-video</translation>
+    </message>
+    <message>
+        <source>Back to the call</source>
+        <translation>Lura għas-sejħa</translation>
+    </message>
+    <message>
+        <source>Go to the new room</source>
+        <translation>Mur fil-kamra l-ġdida</translation>
+    </message>
+    <message>
+        <source>Join the new room</source>
+        <translation>Idħol fil-kamra l-ġdida</translation>
+    </message>
+    <message>
+        <source>Load older messages</source>
+        <translation>Illowdja messaġġi eqdem</translation>
+    </message>
+    <message>
+        <source>Room info</source>
+        <translation>Info tal-kamra</translation>
+    </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — qed jistenna n-netwerk</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Stedina</translation>
+    </message>
+    <message>
+        <source>End-to-end encrypted</source>
+        <translation>Iċċifrata minn tarf sa tarf</translation>
+    </message>
+    <message>
+        <source>Not encrypted</source>
+        <translation>Mhux iċċifrata</translation>
+    </message>
+    <message>
+        <source>This room has been replaced</source>
+        <translation>Din il-kamra ġiet mibdula</translation>
+    </message>
+    <message>
+        <source>Switching to the new room…</source>
+        <translation>Qed jinbidel għall-kamra l-ġdida…</translation>
+    </message>
+    <message>
+        <source>Tap to open the new room</source>
+        <translation>Mess biex tiftaħ il-kamra l-ġdida</translation>
+    </message>
+    <message>
+        <source>Tap to join the new room</source>
+        <translation>Mess biex tidħol fil-kamra l-ġdida</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n pinned message(s)</source>
+        <translation>
+            <numerusform>%n messaġġ imwaħħal</numerusform>
+            <numerusform>%n messaġġi mwaħħla</numerusform>
+            <numerusform>%n messaġġi mwaħħla</numerusform>
+            <numerusform>%n messaġġi mwaħħla</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Beginning of the conversation</source>
+        <translation>Il-bidu tal-konversazzjoni</translation>
+    </message>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Sejħa</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 daħal</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 telaq</translation>
+    </message>
+    <message>
+        <source>%1 was invited</source>
+        <translation>%1 ġie mistieden</translation>
+    </message>
+    <message>
+        <source>%1 was removed</source>
+        <translation>%1 tneħħa</translation>
+    </message>
+    <message>
+        <source>%1 was banned</source>
+        <translation>%1 ġie mblukkat</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 irrifjuta l-istedina</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 talab li jidħol</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 biddel is-sħubija</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile</source>
+        <translation>%1 biddel il-profil tiegħu</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Ikkopja</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Wieġeb</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Issejvja</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Għaddi</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editja</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Waħħal</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ħassar</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Aktar…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Il-messaġġ ikkwotat ma jistax jitniżżel: m&apos;għadux jeżisti jew m&apos;għandekx permess tarah.</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Messaġġ bil-vuċi</translation>
+    </message>
+    <message>
+        <source>Message deleted</source>
+        <translation>Messaġġ imħassar</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Fjul · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Fil-fjul</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>mhux mibgħut</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>editjat</translation>
+    </message>
+    <message>
+        <source>No messages</source>
+        <translation>Ebda messaġġ</translation>
+    </message>
+    <message>
+        <source>Accept invitation</source>
+        <translation>Aċċetta l-istedina</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s</source>
+        <translation>Qed jirrekordja… %1 s</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Tweġiba lil %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Qed jiġi editjat il-messaġġ</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Test ġdid</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation>Messaġġ</translation>
+    </message>
+    <message>
+        <source>That message is not in the loaded history</source>
+        <translation>Dak il-messaġġ mhux fl-istorja mniżżla</translation>
+    </message>
+</context>
+<context>
+    <name>SendMediaPage</name>
+    <message>
+        <source>Reply</source>
+        <translation>Wieġeb</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translation>Ibgħat</translation>
+    </message>
+    <message>
+        <source>Caption</source>
+        <translation>Kaption</translation>
+    </message>
+    <message>
+        <source>Caption (optional)</source>
+        <translation>Kaption (mhux obbligatorju)</translation>
+    </message>
+</context>
+<context>
+    <name>SessionLockedPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Oħroġ u ħassar id-data lokali</translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation>Imsakkar</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix għal Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your session is stored encrypted, and the key was not available when xmatic started.</source>
+        <translation>Is-sessjoni tiegħek hija maħżuna ċċifrata, u ċ-ċavetta ma kinitx disponibbli meta beda xmatic.</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
+        <translation>Iċ-ċavetta tinsab fil-ħażna tas-sigrieti tal-apparat. Erġa&apos; pprova u kkonferma t-talba tas-sistema; l-approvazzjoni tgħodd sal-istartjar li jmiss tal-apparat.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Erġa&apos; pprova</translation>
+    </message>
+</context>
+<context>
+    <name>ShareToRoomPage</name>
+    <message>
+        <source>Send to</source>
+        <translation>Ibgħat lil</translation>
+    </message>
+    <message>
+        <source>No rooms</source>
+        <translation>Ebda kamra</translation>
+    </message>
+</context>
+<context>
+    <name>SpacePage</name>
+    <message>
+        <source>Space</source>
+        <translation>Spazju</translation>
+    </message>
+    <message>
+        <source>Add rooms</source>
+        <translation>Żid kmamar</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Aġġorna</translation>
+    </message>
+    <message>
+        <source>Move to space</source>
+        <translation>Mexxi għal spazju</translation>
+    </message>
+    <message>
+        <source>Remove from space</source>
+        <translation>Neħħi mill-ispazju</translation>
+    </message>
+    <message>
+        <source>Linked, not joined</source>
+        <translation>Marbuta, mhux imdaħħal</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n member(s)</source>
+        <translation>
+            <numerusform>%n membru</numerusform>
+            <numerusform>%n membri</numerusform>
+            <numerusform>%n membri</numerusform>
+            <numerusform>%n membri</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Idħol</translation>
+    </message>
+    <message>
+        <source>Joining</source>
+        <translation>Qed jidħol</translation>
+    </message>
+    <message>
+        <source>No rooms in this space</source>
+        <translation>Ebda kamra f&apos;dan l-ispazju</translation>
+    </message>
+    <message>
+        <source>Add rooms with the pulldown menu, or rooms of this space that you have joined show up here.</source>
+        <translation>Żid kmamar bil-menu, jew jidhru hawn il-kmamar ta&apos; dan l-ispazju li dħalt fihom.</translation>
+    </message>
+</context>
+<context>
+    <name>SpacesPage</name>
+    <message>
+        <source>Really delete this space?</source>
+        <translation>Verament tħassar dan l-ispazju?</translation>
+    </message>
+    <message>
+        <source>The space is left and forgotten. The rooms in it are not touched — they stay in the chat list.</source>
+        <translation>L-ispazju jitħalla u jintesa. Il-kmamar li fih ma jintmessux — jibqgħu fil-lista tal-konversazzjonijiet.</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ħassar</translation>
+    </message>
+    <message>
+        <source>Deleting space</source>
+        <translation>Qed jitħassar l-ispazju</translation>
+    </message>
+    <message>
+        <source>Spaces</source>
+        <translation>Spazji</translation>
+    </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — qed jistenna n-netwerk</translation>
+    </message>
+    <message>
+        <source>Create space</source>
+        <translation>Oħloq spazju</translation>
+    </message>
+    <message>
+        <source>Make start page</source>
+        <translation>Agħmilha l-paġna tal-bidu</translation>
+    </message>
+    <message>
+        <source>Delete space</source>
+        <translation>Ħassar l-ispazju</translation>
+    </message>
+    <message>
+        <source>No spaces</source>
+        <translation>Ebda spazju</translation>
+    </message>
+    <message>
+        <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
+        <translation>L-ispazji li int membru tagħhom jidhru hawn. L-ispazji jiġbru kmamar flimkien.</translation>
+    </message>
+</context>
+<context>
+    <name>ThreadPage</name>
+    <message>
+        <source>Load older posts</source>
+        <translation>Illowdja postijiet eqdem</translation>
+    </message>
+    <message>
+        <source>Thread</source>
+        <translation>Fjul</translation>
+    </message>
+    <message>
+        <source>Event</source>
+        <translation>Avveniment</translation>
+    </message>
+    <message>
+        <source>Cannot be decrypted — this device is missing the key</source>
+        <translation>Ma jistax jiġi deċifrat — lil dan l-apparat tonqsu ċ-ċavetta</translation>
+    </message>
+    <message>
+        <source>Message deleted</source>
+        <translation>Messaġġ imħassar</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Mehmuż</translation>
+    </message>
+    <message>
+        <source>Thread unavailable</source>
+        <translation>Il-fjul mhux disponibbli</translation>
+    </message>
+    <message>
+        <source>Loading thread</source>
+        <translation>Qed jillowdja l-fjul</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Wieġeb fil-fjul</translation>
+    </message>
+</context>
+<context>
+    <name>UnverifiedRecipientsDialog</name>
+    <message>
+        <source>Send anyway</source>
+        <translation>Ibgħat xorta</translation>
+    </message>
+    <message>
+        <source>Unverified devices</source>
+        <translation>Apparati mhux ivverifikati</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Il-messaġġ se jiġi ċċifrat għal apparati li ma vverifikajtx. Ivverifikahom għal ċertezza vera, jew ibagħtu xorta.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n unverified device(s)</source>
+        <translation>
+            <numerusform>%n apparat mhux ivverifikat</numerusform>
+            <numerusform>%n apparati mhux ivverifikati</numerusform>
+            <numerusform>%n apparati mhux ivverifikati</numerusform>
+            <numerusform>%n apparati mhux ivverifikati</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Do not warn about this user again</source>
+        <translation>Terġax twissini dwar dan l-utent</translation>
+    </message>
+    <message>
+        <source>Do not warn about these users again</source>
+        <translation>Terġax twissini dwar dawn l-utenti</translation>
+    </message>
+    <message>
+        <source>Applies until you verify or clear it.</source>
+        <translation>Jgħodd sakemm tivverifika jew tirrisettja.</translation>
+    </message>
+</context>
+<context>
+    <name>VerificationPage</name>
+    <message>
+        <source>Verification</source>
+        <translation>Verifika</translation>
+    </message>
+    <message>
+        <source>Another one of your devices</source>
+        <translation>Wieħed ieħor mill-apparati tiegħek</translation>
+    </message>
+    <message>
+        <source>Your answer is in. Waiting for the other device.</source>
+        <translation>It-tweġiba tiegħek daħlet. Qed jistenna l-apparat l-ieħor.</translation>
+    </message>
+    <message>
+        <source>Waiting for the other device to accept.</source>
+        <translation>Qed jistenna li l-apparat l-ieħor jaċċetta.</translation>
+    </message>
+    <message>
+        <source>Waiting for the other side to accept the request on their device.</source>
+        <translation>Qed jistenna li n-naħa l-oħra taċċetta t-talba fuq l-apparat tagħha.</translation>
+    </message>
+    <message>
+        <source>Confirm that this is really your other device. Once verified, both can share room keys and older messages become readable.</source>
+        <translation>Ikkonferma li dan huwa tassew l-apparat l-ieħor tiegħek. Ladarba jkunu vverifikati, it-tnejn jistgħu jaqsmu ċwievet tal-kmamar, u l-messaġġi eqdem isiru jinqraw.</translation>
+    </message>
+    <message>
+        <source>Confirm that you are really talking to this person and not to someone in between.</source>
+        <translation>Ikkonferma li tassew qed titkellem ma&apos; din il-persuna u mhux ma&apos; xi ħadd fin-nofs.</translation>
+    </message>
+    <message>
+        <source>Both devices must show the same emoji, in the same order.</source>
+        <translation>Iż-żewġ apparati jridu juru l-istess emoji, fl-istess ordni.</translation>
+    </message>
+    <message>
+        <source>Verified.</source>
+        <translation>Ivverifikat.</translation>
+    </message>
+    <message>
+        <source>The verification was cancelled.</source>
+        <translation>Il-verifika ġiet ikkanċellata.</translation>
+    </message>
+    <message>
+        <source>They do not match</source>
+        <translation>Ma jaqblux</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Irrifjuta</translation>
+    </message>
+    <message>
+        <source>They match</source>
+        <translation>Jaqblu</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Aċċetta</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ikkanċella</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Agħlaq</translation>
+    </message>
+</context>
+<context>
+    <name>VideoPage</name>
+    <message>
+        <source>Save</source>
+        <translation>Issejvja</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceRecorder</name>
+    <message>
+        <source>Nothing was recorded.</source>
+        <translation>Ma ġie rrekordjat xejn.</translation>
+    </message>
+</context>
+<context>
+    <name>harbour-xmatic</name>
+    <message>
+        <source>Picture</source>
+        <translation>Ritratt</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Messaġġ bil-vuċi</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fajl</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Post</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Messaġġ iċċifrat</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n mention(s)</source>
+        <translation>
+            <numerusform>%n semmien</numerusform>
+            <numerusform>%n semmieni</numerusform>
+            <numerusform>%n semmieni</numerusform>
+            <numerusform>%n semmieni</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new message(s)</source>
+        <translation>
+            <numerusform>%n messaġġ ġdid</numerusform>
+            <numerusform>%n messaġġi ġodda</numerusform>
+            <numerusform>%n messaġġi ġodda</numerusform>
+            <numerusform>%n messaġġi ġodda</numerusform>
+        </translation>
+    </message>
+</context>
+</TS>

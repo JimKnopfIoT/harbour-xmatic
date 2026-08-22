@@ -41,6 +41,8 @@ LIBS += $$system(pkg-config --libs sailfishsecrets)
 SOURCES += \
     src/harbour-xmatic.cpp \
     src/appearancesettings.cpp \
+    src/instancelock.cpp \
+    src/languagesettings.cpp \
     src/difflistmodel.cpp \
     src/matrixbridge.cpp \
     src/roomlistmodel.cpp \
@@ -58,6 +60,8 @@ SOURCES += \
 HEADERS += \
     src/appearancesettings.h \
     src/difflistmodel.h \
+    src/instancelock.h \
+    src/languagesettings.h \
     src/matrixbridge.h \
     src/secretskeeper.h \
     src/roomlistmodel.h \
@@ -134,12 +138,47 @@ dbusservice.files = org.xmatic.xmatic.service
 dbusservice.path = /usr/share/dbus-1/services
 INSTALLS += dbusservice
 
-# Bilingual: English source strings plus German. libsailfishapp loads the .qm
-# matching the device locale, otherwise the source strings are used.
-TRANSLATIONS += translations/harbour-xmatic-de.ts
+# English is the source language; the files below carry the translations.
+# libsailfishapp loads the .qm matching the device locale and falls back to the
+# source strings where there is none.
+#
+# EU official languages plus Russian, Norwegian Bokmål and Icelandic. English
+# has a file of its own although it is the source language: picking it in the
+# app has to override the automatic translator, and only a real .qm can do
+# that. A language is listed here only once actually translated; review state
+# per language is in translations/STATUS.md.
+TRANSLATIONS += \
+    translations/harbour-xmatic-bg.ts \
+    translations/harbour-xmatic-cs.ts \
+    translations/harbour-xmatic-da.ts \
+    translations/harbour-xmatic-de.ts \
+    translations/harbour-xmatic-el.ts \
+    translations/harbour-xmatic-en.ts \
+    translations/harbour-xmatic-es.ts \
+    translations/harbour-xmatic-et.ts \
+    translations/harbour-xmatic-fi.ts \
+    translations/harbour-xmatic-fr.ts \
+    translations/harbour-xmatic-ga.ts \
+    translations/harbour-xmatic-hr.ts \
+    translations/harbour-xmatic-hu.ts \
+    translations/harbour-xmatic-is.ts \
+    translations/harbour-xmatic-it.ts \
+    translations/harbour-xmatic-lt.ts \
+    translations/harbour-xmatic-lv.ts \
+    translations/harbour-xmatic-mt.ts \
+    translations/harbour-xmatic-nb.ts \
+    translations/harbour-xmatic-nl.ts \
+    translations/harbour-xmatic-pl.ts \
+    translations/harbour-xmatic-pt.ts \
+    translations/harbour-xmatic-ro.ts \
+    translations/harbour-xmatic-ru.ts \
+    translations/harbour-xmatic-sk.ts \
+    translations/harbour-xmatic-sl.ts \
+    translations/harbour-xmatic-sv.ts \
 
 DISTFILES += \
     LICENSE \
+    translations/STATUS.md \
     README.md \
     docs/README.md \
     docs/ARCHITECTURE.md \
@@ -151,6 +190,7 @@ DISTFILES += \
     harbour-xmatic.desktop \
     rpm/harbour-xmatic.spec \
     icons/xmatic-logo.svg \
+    tools/translation-review.py \
     qml/harbour-xmatic.qml \
     qml/cover/CoverPage.qml \
     qml/pages/AccountPage.qml \
@@ -171,6 +211,9 @@ DISTFILES += \
     qml/pages/VerificationPage.qml \
     qml/pages/EncryptionPage.qml \
     qml/pages/LogoutDialog.qml \
+    qml/pages/EncryptStorageDialog.qml \
+    qml/pages/LanguagePage.qml \
+    qml/pages/Formatting.js \
     qml/pages/ConfirmDialog.qml \
     qml/pages/ImageViewPage.qml \
     qml/pages/ForwardPage.qml \

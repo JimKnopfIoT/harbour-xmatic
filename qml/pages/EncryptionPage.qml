@@ -14,7 +14,23 @@ Page {
 
     property string generatedKey: ""
 
-    Component.onCompleted: matrix.refreshEncryptionStatus()
+    Component.onCompleted: {
+        matrix.refreshEncryptionStatus()
+        matrix.refreshStorageStatus()
+    }
+
+    // The recovery key unlocks the whole key backup — the same class of secret
+    // as the login password, which the bridge wipes out of its send buffer. The
+    // way back cannot be wiped that thoroughly: a QString handed into the QML
+    // engine lives in its string pool and nothing can overwrite it there. What
+    // is possible is not keeping it reachable once this page is gone, so both
+    // the shown key and the typed one are dropped when the page is destroyed.
+    // The residual is documented alongside the password's in
+    // docs/PASSWORD-LOGIN.md.
+    Component.onDestruction: {
+        page.generatedKey = ""
+        recoveryField.text = ""
+    }
 
     Connections {
         target: matrix
@@ -64,6 +80,43 @@ Page {
             DetailItem {
                 label: qsTr("Cross-signing")
                 value: matrix.encryptionStatus.crossSigned ? qsTr("complete") : qsTr("incomplete")
+            }
+
+            // What lies on this device, said plainly. The app degrades to
+            // unencrypted storage rather than refusing to start when the
+            // secrets service cannot deliver a key — a deliberate choice after
+            // a missing key was once read as "no session" and cost people their
+            // device — but a silent degrade is a dishonest one. Whoever runs in
+            // that state can see it here.
+            DetailItem {
+                label: qsTr("Local storage")
+                value: matrix.storageStatus.encrypted
+                       ? qsTr("encrypted")
+                       : qsTr("not encrypted")
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                visible: !matrix.storageStatus.encrypted
+                color: Theme.errorColor
+                text: matrix.storageStatus.keyAvailable
+                      ? qsTr("Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.")
+                      : qsTr("Session and message database lie on this device unencrypted, because the system's secure storage did not hand out a key. Anyone with access to the device's filesystem can read them.")
+            }
+
+            // The only way an existing store changes side: it is created
+            // encrypted or not at all. A sign-out clears it, the next sign-in
+            // creates a fresh one under the key. Offered only where it can
+            // actually work, and behind a dialog that says what it costs.
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: matrix.storageStatus.canEncrypt
+                text: qsTr("Encrypt local storage")
+                enabled: !matrix.busy
+                onClicked: pageStack.push(Qt.resolvedUrl("EncryptStorageDialog.qml"))
             }
 
             SectionHeader {

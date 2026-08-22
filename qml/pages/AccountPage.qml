@@ -141,6 +141,20 @@ Page {
                 }
             }
 
+            ValueButton {
+                label: qsTr("Language")
+                value: {
+                    var list = language.available
+                    for (var i = 0; i < list.length; ++i) {
+                        if (list[i].code === language.code) {
+                            return list[i].name
+                        }
+                    }
+                    return ""
+                }
+                onClicked: pageStack.push(Qt.resolvedUrl("LanguagePage.qml"))
+            }
+
             TextSwitch {
                 text: qsTr("Message text in notifications")
                 description: qsTr("Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.")

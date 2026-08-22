@@ -450,6 +450,7 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::VerificationConfirm { .. } => verification_step(&state, id, Step::Confirm).await,
         Command::VerificationCancel { .. } => verification_step(&state, id, Step::Cancel).await,
         Command::EncryptionStatus { .. } => encryption_status(&state, id).await,
+        Command::StorageStatus { .. } => storage_status(&state, id),
         Command::EncryptionRecover { key, .. } => encryption_recover(&state, id, key).await,
         Command::EncryptionEnableBackup { .. } => encryption_enable_backup(&state, id).await,
         Command::EncryptionFetchKeys { room_id, .. } => fetch_room_keys(&state, id, room_id).await,
@@ -855,13 +856,38 @@ async fn encryption_status(state: &Arc<State>, id: u64) {
     state.sink.emit(reply_ok(id, status));
 }
 
-async fn encryption_recover(state: &Arc<State>, id: u64, key: String) {
+/// Answers what the local storage on this device amounts to.
+///
+/// Synchronous and client-free on purpose: the answer is about files, and the
+/// UI needs it while signed out too — an install that runs unencrypted should
+/// say so before the first login, not only after it.
+fn storage_status(state: &Arc<State>, id: u64) {
+    let key = state.store_key();
+    let storage = session::storage_state(&state.paths, key.as_ref());
+    state.sink.emit(reply_ok(
+        id,
+        json!({
+            "encrypted": storage.fully_encrypted(),
+            "storeEncrypted": storage.store_encrypted,
+            "sessionPresent": storage.session_present,
+            "sessionEncrypted": storage.session_encrypted,
+            "keyAvailable": storage.key_available,
+            // True where the stores could be encrypted but are not, and a key
+            // exists to do it with — the only case in which offering the
+            // re-encryption is honest. `store_key_applies` can never upgrade an
+            // existing store in place, so this is a sign-out away, not a switch.
+            "canEncrypt": storage.key_available && !storage.store_encrypted,
+        }),
+    ));
+}
+
+async fn encryption_recover(state: &Arc<State>, id: u64, key: Secret) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
 
-    match recovery::recover(&client, &key).await {
+    match recovery::recover(&client, key.as_str()).await {
         Ok(()) => {
             let status = recovery::status(&client).await;
             state.sink.emit(reply_ok(id, status.clone()));

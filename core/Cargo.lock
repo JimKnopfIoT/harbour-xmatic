@@ -4307,7 +4307,7 @@ dependencies = [
 
 [[package]]
 name = "xmatic-core"
-version = "0.20.0"
+version = "0.21.0"
 dependencies = [
  "base64",
  "futures-util",
@@ -4319,6 +4319,7 @@ dependencies = [
  "oauth2",
  "oauth2-reqwest",
  "reqwest",
+ "ruma-html",
  "serde",
  "serde_json",
  "tokio",

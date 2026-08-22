@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.20.0
+Version:    0.21.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -84,6 +84,40 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Aug 22 2026 harbour-xmatic contributors 0.21.0-1
+- Formatted messages are shown as formatting instead of as raw text. Bold,
+  italic, code blocks, quotes, lists, headings and links now render; what a
+  message carries as HTML is rewritten inside the app into the small markup
+  Qt can draw, character by character, so nothing a sender wrote is ever
+  handed to a markup parser. Pictures in a message body become their
+  description rather than a download, sender-chosen colours are dropped, and
+  a link keeps its target only if that target is an ordinary web address -
+  whether it can be tapped at all is still the setting under Account.
+- The app now says when it is storing your session and messages unencrypted.
+  It has always fallen back to unencrypted storage when the device's secure
+  storage would not hand out a key, and it has always said so only in the
+  system log, which is not somewhere anyone looks. The encryption page names
+  the state and the reason. Where an encrypted store is possible but the
+  existing one predates it, it also offers the one operation that works:
+  sign out, sign back in. That deletes this device's keys, so it is refused
+  unless a key backup exists on the server.
+- Two copies of the app can no longer run on the same data. The client runs
+  its database without the SDK's cross-process lock, which is a deliberate
+  choice - the lock cost about fifty disk syncs per second while idle - but
+  it is only safe with one process, and nothing was enforcing that. A lock
+  file taken before the database opens does now; a second start hands over to
+  the running one.
+- The recovery key is treated like the login password on its way into the
+  app: the buffer that carried it is overwritten, and the core wipes its own
+  copy. A key that was just generated has to stay readable long enough to
+  write it down, so that one is only dropped when the page closes.
+- The interface is available in the twenty-four official languages of the
+  European Union, in Russian, Norwegian and Icelandic. It also no longer
+  simply follows the phone: Account now has a language of its own, English
+  included, because only the German translation has been checked by a native
+  speaker and one has to be able to get back out of the others. A change takes
+  effect the next time the app starts.
+
 * Fri Aug 21 2026 harbour-xmatic contributors 0.20.0-1
 - A new room is now described completely at the moment it is created, because
   that is the only moment the server accepts most of it: topic, a public

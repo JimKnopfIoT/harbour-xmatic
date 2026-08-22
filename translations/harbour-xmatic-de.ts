@@ -117,6 +117,10 @@
         <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
         <translation>An: ein Link in einer Nachricht öffnet beim Antippen den Browser. Aus: Links bleiben einfacher Text.</translation>
     </message>
+    <message>
+        <source>Language</source>
+        <translation>Sprache</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -512,6 +516,29 @@
     </message>
 </context>
 <context>
+    <name>EncryptStorageDialog</name>
+    <message>
+        <source>Sign out and encrypt</source>
+        <translation>Abmelden und verschlüsseln</translation>
+    </message>
+    <message>
+        <source>Leave as it is</source>
+        <translation>So lassen</translation>
+    </message>
+    <message>
+        <source>An existing database cannot be encrypted in place. It has to be created anew: signing out deletes it, and the next sign-in creates it encrypted.</source>
+        <translation>Eine bestehende Datenbank lässt sich nicht nachträglich verschlüsseln. Sie muss neu angelegt werden: Das Abmelden löscht sie, die nächste Anmeldung legt sie verschlüsselt an.</translation>
+    </message>
+    <message>
+        <source>You will need your recovery key afterwards to unlock the backup, and this device has to be verified again. Have the recovery key at hand before you continue.</source>
+        <translation>Du brauchst danach deinen Wiederherstellungsschlüssel, um das Backup zu entsperren, und dieses Gerät muss erneut verifiziert werden. Halte den Schlüssel bereit, bevor du weitermachst.</translation>
+    </message>
+    <message>
+        <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
+        <translation>Noch nicht möglich: Auf dem Server liegt kein Schlüssel-Backup. Ein Abmelden würde jede verschlüsselte Nachricht auf diesem Gerät endgültig unlesbar machen. Richte erst das Backup ein und komm dann hierher zurück.</translation>
+    </message>
+</context>
+<context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
@@ -617,6 +644,30 @@
         <source>@name:server</source>
         <translation>@name:server</translation>
     </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Lokale Ablage</translation>
+    </message>
+    <message>
+        <source>encrypted</source>
+        <translation>verschlüsselt</translation>
+    </message>
+    <message>
+        <source>not encrypted</source>
+        <translation>unverschlüsselt</translation>
+    </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
+        <translation>Sitzung und Nachrichtendatenbank liegen unverschlüsselt auf diesem Gerät. Sie entstanden, bevor diese App sie verschlüsseln konnte, und eine bestehende Datenbank lässt sich nicht nachträglich verschlüsseln.</translation>
+    </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
+        <translation>Sitzung und Nachrichtendatenbank liegen unverschlüsselt auf diesem Gerät, weil der sichere Speicher des Systems keinen Schlüssel herausgegeben hat. Wer an das Dateisystem des Geräts kommt, kann sie lesen.</translation>
+    </message>
+    <message>
+        <source>Encrypt local storage</source>
+        <translation>Ablage verschlüsseln</translation>
+    </message>
 </context>
 <context>
     <name>ForwardPage</name>
@@ -703,6 +754,24 @@
     <message>
         <source>The room appears in the list once the server has answered. Joining a large public room can take a moment.</source>
         <translation>Der Raum erscheint in der Liste, sobald der Server geantwortet hat. Bei großen öffentlichen Räumen kann das einen Moment dauern.</translation>
+    </message>
+</context>
+<context>
+    <name>LanguagePage</name>
+    <message>
+        <source>Language</source>
+        <translation>Sprache</translation>
+    </message>
+    <message>
+        <source>Takes effect the next time the app starts. Only the German translation has been checked by a native speaker; the others are machine translations, and English is always available here.</source>
+        <translation>Wirkt beim nächsten Start der App. Nur die deutsche Übersetzung wurde von einem Muttersprachler geprüft; die übrigen sind maschinell übersetzt, und Englisch steht hier immer zur Verfügung.</translation>
+    </message>
+</context>
+<context>
+    <name>LanguageSettings</name>
+    <message>
+        <source>Follow the device</source>
+        <translation>Dem Gerät folgen</translation>
     </message>
 </context>
 <context>

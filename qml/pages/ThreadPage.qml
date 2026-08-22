@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "Formatting.js" as Formatting
 
 // One thread of a room: root first, replies below, own composer. Rows stream
 // into matrix.threadTimeline via `thread.diff`. Text-focused: attachments
@@ -156,7 +157,16 @@ Page {
                     font.italic: model.kind !== "message"
                     color: model.kind === "message" ? Theme.primaryColor
                                                     : Theme.secondaryColor
-                    textFormat: Text.PlainText
+                    // Same rule as in the room: a message whose HTML the core
+                    // turned into markup is drawn as StyledText, everything
+                    // else stays plain. Nothing in that markup came from the
+                    // sender unescaped.
+                    readonly property bool hasFormatted: model.kind === "message"
+                                                         && !model.media
+                                                         && (model.formatted || "").length > 0
+                    textFormat: hasFormatted ? Text.StyledText : Text.PlainText
+                    linkColor: Theme.highlightColor
+                    onLinkActivated: Qt.openUrlExternally(link)
                     text: {
                         if (model.kind === "undecryptable") {
                             return qsTr("Cannot be decrypted — this device is missing the key")
@@ -166,6 +176,10 @@ Page {
                         }
                         if (model.media) {
                             return "📎 " + (model.body || qsTr("Attachment"))
+                        }
+                        if (hasFormatted) {
+                            return Formatting.renderFormatted(model.formatted,
+                                                              matrix.clickableLinks)
                         }
                         return model.body || ""
                     }

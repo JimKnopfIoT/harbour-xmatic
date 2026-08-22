@@ -10,10 +10,14 @@ use serde::Deserialize;
 use serde_json::{json, Value};
 use zeroize::Zeroizing;
 
-/// A password on its way to the homeserver. Exists so that the two easy
-/// leaks are impossible by construction: the heap copy is wiped on drop
-/// (`Zeroizing`), and `{:?}` — `Command` derives `Debug` — prints a
-/// placeholder instead of the value.
+/// A secret on its way out of the process — a login password, a recovery key.
+/// Exists so that the two easy leaks are impossible by construction: the heap
+/// copy is wiped on drop (`Zeroizing`), and `{:?}` — `Command` derives `Debug`
+/// — prints a placeholder instead of the value.
+///
+/// The recovery key belongs in here for the same reason the password does: it
+/// unlocks the entire key backup, so it is the same class of secret even
+/// though it travels in the opposite direction on its way back.
 pub struct Secret(Zeroizing<String>);
 
 impl Secret {
@@ -267,9 +271,16 @@ pub enum Command {
     #[serde(rename = "encryption.status")]
     EncryptionStatus { id: u64 },
 
+    /// Report whether the local files on this device are encrypted.
+    ///
+    /// Needs no client: it looks at what is on disk. The front end asks at
+    /// start so the answer is available signed out as well.
+    #[serde(rename = "storage.status")]
+    StorageStatus { id: u64 },
+
     /// Unlock the key backup with a recovery key or passphrase.
     #[serde(rename = "encryption.recover")]
-    EncryptionRecover { id: u64, key: String },
+    EncryptionRecover { id: u64, key: Secret },
 
     /// Set up key backup and return the new recovery key.
     #[serde(rename = "encryption.enableBackup")]
@@ -717,6 +728,7 @@ impl Command {
             | Command::VerificationConfirm { id }
             | Command::VerificationCancel { id }
             | Command::EncryptionStatus { id }
+            | Command::StorageStatus { id }
             | Command::EncryptionRecover { id, .. }
             | Command::EncryptionEnableBackup { id }
             | Command::EncryptionFetchKeys { id, .. }

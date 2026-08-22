@@ -17,6 +17,8 @@
 #include <sys/prctl.h>
 
 #include "appearancesettings.h"
+#include "instancelock.h"
+#include "languagesettings.h"
 #include "matrixbridge.h"
 #include "secretskeeper.h"
 
@@ -60,6 +62,18 @@ int main(int argc, char *argv[])
     if (dataDirectory.isEmpty()) {
         qWarning("xmatic: no writable data directory; the core cannot start");
     }
+    // Before anything opens the store. The core runs its SQLite stores without
+    // the SDK's cross-process lock, which only holds up while there is exactly
+    // one process per store — and nothing on the system guarantees that (see
+    // src/instancelock.cpp). A second start hands over to the running instance
+    // and leaves; a share that arrived by D-Bus activation is delivered to that
+    // instance by the bus once it owns the name, so nothing is dropped.
+    if (!acquireInstanceLock(dataDirectory)) {
+        qInfo("xmatic: another instance owns this store; handing over");
+        raiseRunningInstance();
+        return 0;
+    }
+
     // Attachments go to the cache: they can always be downloaded again, and
     // the system may reclaim the space.
     const QString cacheDirectory = ensureDirectory(QStandardPaths::CacheLocation);
@@ -77,9 +91,16 @@ int main(int argc, char *argv[])
 
     AppearanceSettings appearance;
 
+    LanguageSettings language;
+
     QScopedPointer<QQuickView> view(SailfishApp::createView());
+    // After createView(): it installs libsailfishapp's device-locale translator,
+    // and the one installed last is asked first.
+    LanguageSettings::applyTo(app.data());
+
     view->rootContext()->setContextProperty(QStringLiteral("matrix"), &bridge);
     view->rootContext()->setContextProperty(QStringLiteral("appearance"), &appearance);
+    view->rootContext()->setContextProperty(QStringLiteral("language"), &language);
     view->rootContext()->setContextProperty(QStringLiteral("appVersion"),
                                             QStringLiteral(XMATIC_VERSION_STRING));
     view->setSource(SailfishApp::pathTo(QStringLiteral("qml/harbour-xmatic.qml")));

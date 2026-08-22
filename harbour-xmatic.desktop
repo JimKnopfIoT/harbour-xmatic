@@ -32,6 +32,14 @@ ApplicationName=xmatic
 # Audio is needed to play voice messages and videos: without it the player
 # runs and the position advances, but the connection to the sound server is
 # refused and nothing is audible.
+# Each entry above is here because something failed silently without it, and
+# the list is only ever justified one line at a time. Taken together, though,
+# PublicDir plus RemovableMedia plus Documents plus Downloads amount to read
+# access to the user's files — which is what an attachment picker needs on this
+# release, because there is no per-file portal to ask instead. So: every
+# addition gets its own line of reasoning here, and every addition is also the
+# moment to ask which of the existing ones has become unnecessary. Nothing on
+# this line is permanent by default.
 Permissions=Internet;Audio;Microphone;Camera;Pictures;Documents;Downloads;Music;Videos;PublicDir;RemovableMedia;MediaIndexing;Sharing;Notifications;Secrets
 
 # What the share dialog offers xmatic for. A link arrives as text/x-url and is
