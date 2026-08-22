@@ -71,6 +71,11 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
 
     xm_core_set_callback(m_core, &MatrixBridge::deliver, this);
 
+    // Asked once at start, before anything else: whether the files on this
+    // device are encrypted is a property of the disk, not of a session, and
+    // the UI must be able to say so while signed out too.
+    refreshStorageStatus();
+
     // Runs only while commands are outstanding, so an idle app does not wake
     // up for this.
     m_stallWatch = new QTimer(this);
@@ -1184,6 +1189,11 @@ void MatrixBridge::refreshEncryptionStatus()
     send(QStringLiteral("encryption.status"));
 }
 
+void MatrixBridge::refreshStorageStatus()
+{
+    send(QStringLiteral("storage.status"));
+}
+
 void MatrixBridge::recoverKeys(const QString &key)
 {
     if (key.trimmed().isEmpty()) {
@@ -1194,7 +1204,11 @@ void MatrixBridge::recoverKeys(const QString &key)
 
     QJsonObject arguments;
     arguments.insert(QStringLiteral("key"), key.trimmed());
-    send(QStringLiteral("encryption.recover"), arguments);
+    // Same treatment as the login password: the recovery key unlocks the whole
+    // key backup, so the serialised payload must not stay on the heap after the
+    // core has taken its copy. What cannot be wiped is documented with the
+    // password's residual in docs/PASSWORD-LOGIN.md.
+    send(QStringLiteral("encryption.recover"), arguments, true);
 }
 
 void MatrixBridge::enableKeyBackup()
@@ -1671,6 +1685,22 @@ void MatrixBridge::handleMessage(const QString &json)
             return;
         }
 
+        if (command == QLatin1String("storage.status")) {
+            m_storageStatus = data.toVariantMap();
+            // Says what is on disk, names no path and no key.
+            qInfo("xmatic: local storage: store=%s session=%s key=%s",
+                  m_storageStatus.value(QStringLiteral("storeEncrypted")).toBool()
+                      ? "encrypted" : "plain",
+                  !m_storageStatus.value(QStringLiteral("sessionPresent")).toBool()
+                      ? "none"
+                      : (m_storageStatus.value(QStringLiteral("sessionEncrypted")).toBool()
+                             ? "encrypted" : "plain"),
+                  m_storageStatus.value(QStringLiteral("keyAvailable")).toBool()
+                      ? "available" : "missing");
+            emit storageChanged();
+            return;
+        }
+
         if (command == QLatin1String("encryption.status")
                 || command == QLatin1String("encryption.recover")) {
             m_encryptionStatus = data.toVariantMap();
@@ -2087,6 +2117,11 @@ void MatrixBridge::applySession(const QJsonObject &data)
     if (m_sessionState == QLatin1String("signed-in")) {
         send(QStringLiteral("call.turnServers"));
     }
+
+    // A login creates the stores (and with them the encryption marker), a
+    // sign-out deletes them again. Both change the answer, and neither sends a
+    // diff of its own.
+    refreshStorageStatus();
 
     emit sessionChanged();
 }

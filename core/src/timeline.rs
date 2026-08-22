@@ -22,7 +22,7 @@ use matrix_sdk::{
         events::{
             room::{
                 encryption::RoomEncryptionEventContent,
-                message::{MessageType, RoomMessageEventContent},
+                message::{FormattedBody, MessageFormat, MessageType, RoomMessageEventContent},
             },
             InitialStateEvent,
         },
@@ -247,6 +247,26 @@ fn parse_event_id(event_id: &str) -> Result<TimelineEventItemId, String> {
     EventId::parse(event_id)
         .map(TimelineEventItemId::EventId)
         .map_err(|_| "not an event identifier".to_owned())
+}
+
+/// The message's HTML variant, rewritten into the markup Qt can draw, or
+/// `None` where there is nothing to show beyond the plain body.
+///
+/// Only the three textual message types carry one. Everything else — an image,
+/// a file — uses `body` as its file name, where formatting would be nonsense.
+fn formatted_body(message_type: &MessageType) -> Option<String> {
+    let formatted: &FormattedBody = match message_type {
+        MessageType::Text(content) => content.formatted.as_ref()?,
+        MessageType::Notice(content) => content.formatted.as_ref()?,
+        MessageType::Emote(content) => content.formatted.as_ref()?,
+        _ => return None,
+    };
+    // `format` is an open enum in the spec; HTML is the only one defined, and
+    // anything else is markup this client has never seen.
+    if formatted.format != MessageFormat::Html {
+        return None;
+    }
+    crate::markup::to_styled_text(&formatted.body)
 }
 
 /// Describes an attachment so the front end can show and fetch it.
@@ -643,12 +663,25 @@ fn encode_item(item: &TimelineItem) -> Value {
         _ => ("other", String::new(), String::new(), false, None, None, "", String::new()),
     };
 
+    // Separate from the tuple above: it concerns exactly one of its arms, and
+    // threading a ninth element through every other arm would say otherwise.
+    let formatted = match event.content() {
+        TimelineItemContent::MsgLike(content) => match &content.kind {
+            MsgLikeKind::Message(message) => formatted_body(message.msgtype()),
+            _ => None,
+        },
+        _ => None,
+    };
+
     json!({
         "id": id,
         "eventId": event.event_id().map(|id| id.as_str()),
         "editable": event.is_editable(),
         "kind": kind,
         "body": body,
+        // The same message as `body`, as markup, where it adds something. Null
+        // for most messages — see core/src/markup.rs.
+        "formatted": formatted,
         "msgtype": msgtype,
         "media": media,
         "replyTo": reply,

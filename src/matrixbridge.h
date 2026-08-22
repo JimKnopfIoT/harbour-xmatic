@@ -79,6 +79,11 @@ class MatrixBridge : public QObject
     Q_PROPERTY(bool verificationWeStarted READ verificationWeStarted NOTIFY verificationChanged)
     Q_PROPERTY(QVariantList verificationEmoji READ verificationEmoji NOTIFY verificationChanged)
     Q_PROPERTY(QVariantMap encryptionStatus READ encryptionStatus NOTIFY encryptionChanged)
+    /// What the app's own files on this device amount to: `encrypted`,
+    /// `storeEncrypted`, `sessionEncrypted`, `keyAvailable`, `canEncrypt`.
+    /// Filled from `storage.status`, which needs no session — the answer is
+    /// available before the first login.
+    Q_PROPERTY(QVariantMap storageStatus READ storageStatus NOTIFY storageChanged)
     Q_PROPERTY(QString profileName READ profileName NOTIFY profileChanged)
     Q_PROPERTY(QString profileAvatar READ profileAvatar NOTIFY profileChanged)
     Q_PROPERTY(QObject *directory READ directory CONSTANT)
@@ -168,6 +173,7 @@ public:
 
     /// Members: recovery, backup, backupEnabled, backupOnServer, crossSigned.
     QVariantMap encryptionStatus() const { return m_encryptionStatus; }
+    QVariantMap storageStatus() const { return m_storageStatus; }
 
     QString profileName() const { return m_profileName; }
     QString profileAvatar() const { return m_profileAvatar; }
@@ -445,6 +451,10 @@ public:
     /// Unlocks the key backup with a recovery key or passphrase.
     Q_INVOKABLE void recoverKeys(const QString &key);
 
+    /// Asks the core what the local files amount to; the answer lands in
+    /// storageStatus().
+    Q_INVOKABLE void refreshStorageStatus();
+
     /// Sets up key backup; the new recovery key arrives via recoveryKeyReady().
     Q_INVOKABLE void enableKeyBackup();
 
@@ -560,6 +570,7 @@ signals:
 
     /// The freshly created recovery key. Shown once, never stored.
     void recoveryKeyReady(const QString &key);
+    void storageChanged();
 
     /// A request for older messages came back. Carries no row count on
     /// purpose: the rows it fetched reach the model through the diff stream,
@@ -727,6 +738,7 @@ private:
     bool m_verificationWeStarted = false;
     QVariantList m_verificationEmoji;
     QVariantMap m_encryptionStatus;
+    QVariantMap m_storageStatus;
 
     /// Downloaded attachments by request key, and the requests in flight.
     QHash<QString, QString> m_media;

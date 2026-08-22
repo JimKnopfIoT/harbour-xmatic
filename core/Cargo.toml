@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.20.0"
+version = "0.21.0"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -56,6 +56,11 @@ zeroize = "=1.9.0"
 # cipher the SDK's SQLite stores use internally. Already in the tree via
 # matrix-sdk-sqlite; base64 carries the key across the C ABI and wraps the
 # envelope fields. Both pinned to what the lock file already resolved.
+# Parses a message's `formatted_body` before it is rewritten into the small
+# markup subset Qt can draw (core/src/markup.rs). Already in the tree as a
+# dependency of the SDK's message types, and pinned to the version the lock
+# file resolved for them, so nothing new enters the build.
+ruma-html = "=0.8.0"
 matrix-sdk-store-encryption = "=0.18.0"
 base64 = "=0.22.1"
 

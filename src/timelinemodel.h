@@ -18,6 +18,7 @@ public:
         ReplyToRole,
         KindRole,
         BodyRole,
+        FormattedRole,
         MsgTypeRole,
         SenderRole,
         SenderNameRole,

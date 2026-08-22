@@ -18,11 +18,20 @@ and key backup therefore come from upstream rather than from this repository.
   detects what the server speaks; the password is never stored or logged
 * Session tokens and new local stores encrypted with a key from Sailfish
   Secrets (the first start asks once; declining keeps the app working
-  unencrypted)
+  unencrypted). The encryption page says which of the two the device is in and
+  why, and where a store simply predates the key it offers the one operation
+  that changes it — sign out, sign back in — refused unless a key backup
+  already exists on the server
 * Room list over Simplified Sliding Sync, with search and unread counts,
   grouped so favourites sit at the top and low-priority rooms at the bottom
 * Timeline in encrypted rooms: send, reply, edit, delete, paginate, read
   receipts
+* **Formatted messages** render as formatting rather than as raw text: bold,
+  italic, code blocks, quotes, lists, headings and links. What a message
+  carries as HTML is rewritten inside the app into the small markup Qt can
+  draw, so nothing a sender wrote is ever handed to a markup parser; pictures
+  in a message body become their description instead of a download, and
+  sender-chosen colours are dropped
 * Attachments: pictures with full-screen view and zoom, video playback, files;
   saving, sharing and forwarding to another room
 * Voice messages, recorded and played in place
@@ -78,6 +87,9 @@ and key backup therefore come from upstream rather than from this repository.
   the other)
 * **Voice and video calls** over WebRTC, encrypted, with the homeserver's TURN
   relay; the outgoing picture follows how the phone is held
+* **Twenty-seven interface languages**, and a picker under Account rather than
+  only the phone's setting — English included, so there is always a way back
+  out of a translation. A change takes effect at the next start
 
 ## What does not
 
@@ -94,6 +106,14 @@ and key backup therefore come from upstream rather than from this repository.
 * The app has to stay open — its cover on the home screen is the running
   process. There is no background daemon, the same way other messengers on
   this platform work.
+* **Only the German translation has been read by a native speaker.** The other
+  twenty-six are a single machine pass: usable, not verified.
+  `translations/STATUS.md` records the state per language and the corrections
+  already made. Offers to review one are welcome —
+  `tools/translation-review.py <lang>` prints a numbered sheet grouped by the
+  page each string appears on.
+* Spoilers are marked rather than hidden. The text renderer available here
+  cannot hide a run of text, so a spoiler shows with a marker in front of it.
 
 ## Requirements
 

@@ -18,6 +18,7 @@ mod media;
 mod members;
 mod profile;
 mod protocol;
+mod markup;
 mod recovery;
 mod roomlist;
 mod runtime;

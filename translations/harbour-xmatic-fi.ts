@@ -1,0 +1,2132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="fi">
+<context>
+    <name>AboutPage</name>
+    <message>
+        <source>About xmatic</source>
+        <translation>Tietoja xmaticista</translation>
+    </message>
+    <message>
+        <source>Version %1</source>
+        <translation>Versio %1</translation>
+    </message>
+    <message>
+        <source>A native Matrix client for Sailfish OS: encrypted rooms, spaces, voice and video calls.</source>
+        <translation>Natiivi Matrix-asiakasohjelma Sailfish OS:lle: salatut huoneet, spacet, ääni- ja videopuhelut.</translation>
+    </message>
+    <message>
+        <source>License: Apache 2.0</source>
+        <translation>Lisenssi: Apache 2.0</translation>
+    </message>
+    <message>
+        <source>Source code</source>
+        <translation>Lähdekoodi</translation>
+    </message>
+</context>
+<context>
+    <name>AccountPage</name>
+    <message>
+        <source>Signed in</source>
+        <translation>Kirjautunut sisään</translation>
+    </message>
+    <message>
+        <source>Account</source>
+        <translation>Tili</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation>Laite</translation>
+    </message>
+    <message>
+        <source>Core</source>
+        <translation>Ydin</translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation>Profiili</translation>
+    </message>
+    <message>
+        <source>Display name</source>
+        <translation>Näyttönimi</translation>
+    </message>
+    <message>
+        <source>Save name</source>
+        <translation>Tallenna nimi</translation>
+    </message>
+    <message>
+        <source>Change avatar</source>
+        <translation>Vaihda profiilikuva</translation>
+    </message>
+    <message>
+        <source>Set avatar</source>
+        <translation>Aseta profiilikuva</translation>
+    </message>
+    <message>
+        <source>An avatar is set. Other people see it next to your name.</source>
+        <translation>Profiilikuva on asetettu. Muut näkevät sen nimesi vieressä.</translation>
+    </message>
+    <message>
+        <source>This app</source>
+        <translation>Tämä sovellus</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>Ulkoasu</translation>
+    </message>
+    <message>
+        <source>Ignored users</source>
+        <translation>Sivuutetut käyttäjät</translation>
+    </message>
+    <message>
+        <source>Reset send warnings</source>
+        <translation>Nollaa lähetysvaroitukset</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n recipient(s) will warn again</source>
+        <translation>
+            <numerusform>%n vastaanottaja varoittaa taas</numerusform>
+            <numerusform>%n vastaanottajaa varoittaa taas</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>No suppressed warnings</source>
+        <translation>Ei vaimennettuja varoituksia</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Viestin teksti ilmoituksissa</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Kun tämä on pois päältä, ilmoitus kertoo vain, montako viestiä saapui. Päällä se näyttää uusimman viestin — myös lukitusnäytöllä.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Napautettavat verkkolinkit</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Päällä viestissä oleva linkki avaa selaimen napautettaessa. Pois päältä linkit pysyvät pelkkänä tekstinä.</translation>
+    </message>
+    <message>
+        <source>Sign out</source>
+        <translation>Kirjaudu ulos</translation>
+    </message>
+    <message>
+        <source>Encryption</source>
+        <translation>Salaus</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Kieli</translation>
+    </message>
+</context>
+<context>
+    <name>AddDirectoryServerDialog</name>
+    <message>
+        <source>Add</source>
+        <translation>Lisää</translation>
+    </message>
+    <message>
+        <source>Directory server</source>
+        <translation>Hakemistopalvelin</translation>
+    </message>
+    <message>
+        <source>For example matrix.org</source>
+        <translation>Esimerkiksi matrix.org</translation>
+    </message>
+</context>
+<context>
+    <name>AddToSpacePage</name>
+    <message>
+        <source>Add rooms</source>
+        <translation>Lisää huoneita</translation>
+    </message>
+    <message>
+        <source>Press and hold a room to add it to the space.</source>
+        <translation>Pidä huonetta painettuna lisätäksesi sen spaceen.</translation>
+    </message>
+    <message>
+        <source>Add to space</source>
+        <translation>Lisää spaceen</translation>
+    </message>
+    <message>
+        <source>Adding to space</source>
+        <translation>Lisätään spaceen</translation>
+    </message>
+    <message>
+        <source>No rooms</source>
+        <translation>Ei huoneita</translation>
+    </message>
+    <message>
+        <source>Join or start a chat first, then add it to a space.</source>
+        <translation>Liity keskusteluun tai aloita sellainen ensin, ja lisää se sitten spaceen.</translation>
+    </message>
+</context>
+<context>
+    <name>AppearancePage</name>
+    <message>
+        <source>Reset to defaults</source>
+        <translation>Palauta oletukset</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>Ulkoasu</translation>
+    </message>
+    <message>
+        <source>Somebody</source>
+        <comment>sample sender on the appearance page</comment>
+        <translation>Joku</translation>
+    </message>
+    <message>
+        <source>A received message looks like this.</source>
+        <translation>Vastaanotettu viesti näyttää tältä.</translation>
+    </message>
+    <message>
+        <source>And one of my own like this.</source>
+        <translation>Ja oma tältä.</translation>
+    </message>
+    <message>
+        <source>Colouring</source>
+        <translation>Värit</translation>
+    </message>
+    <message>
+        <source>Their bubble</source>
+        <translation>Heidän kuplansa</translation>
+    </message>
+    <message>
+        <source>My bubble</source>
+        <translation>Oma kuplani</translation>
+    </message>
+    <message>
+        <source>Sender name</source>
+        <translation>Lähettäjän nimi</translation>
+    </message>
+    <message>
+        <source>Their text</source>
+        <translation>Heidän tekstinsä</translation>
+    </message>
+    <message>
+        <source>My text</source>
+        <translation>Oma tekstini</translation>
+    </message>
+    <message>
+        <source>Follow the ambience</source>
+        <translation>Seuraa tunnelmaa</translation>
+    </message>
+    <message>
+        <source>Off, the colour below applies</source>
+        <translation>Pois päältä: käytetään alla olevaa väriä</translation>
+    </message>
+    <message>
+        <source>Bubble opacity</source>
+        <translation>Kuplien peittävyys</translation>
+    </message>
+</context>
+<context>
+    <name>CallEngine</name>
+    <message>
+        <source>the camera did not start — continuing without video</source>
+        <translation>kamera ei käynnistynyt — jatketaan ilman videota</translation>
+    </message>
+    <message>
+        <source>GStreamer could not be started: %1</source>
+        <translation>GStreameriä ei voitu käynnistää: %1</translation>
+    </message>
+    <message>
+        <source>This device has no WebRTC support.</source>
+        <translation>Tämä laite ei tue WebRTC:tä.</translation>
+    </message>
+    <message>
+        <source>ready</source>
+        <translation>valmis</translation>
+    </message>
+    <message>
+        <source>pipeline failed: %1</source>
+        <translation>liukuhihna epäonnistui: %1</translation>
+    </message>
+    <message>
+        <source>webrtcbin is missing</source>
+        <translation>webrtcbin puuttuu</translation>
+    </message>
+    <message>
+        <source>no camera — placing a voice call</source>
+        <translation>ei kameraa — soitetaan äänipuhelu</translation>
+    </message>
+    <message>
+        <source>the microphone could not be opened</source>
+        <translation>mikrofonia ei voitu avata</translation>
+    </message>
+    <message>
+        <source>the session description could not be read</source>
+        <translation>istuntokuvausta ei voitu lukea</translation>
+    </message>
+    <message>
+        <source>the other side sent an unreadable session description</source>
+        <translation>toinen osapuoli lähetti lukukelvottoman istuntokuvauksen</translation>
+    </message>
+    <message>
+        <source>the other side hung up</source>
+        <translation>toinen osapuoli katkaisi puhelun</translation>
+    </message>
+    <message>
+        <source>the connection was lost</source>
+        <translation>yhteys katkesi</translation>
+    </message>
+    <message>
+        <source>connected</source>
+        <translation>yhdistetty</translation>
+    </message>
+</context>
+<context>
+    <name>CallPage</name>
+    <message>
+        <source>Call</source>
+        <translation>Puhelu</translation>
+    </message>
+    <message>
+        <source>Ringing…</source>
+        <translation>Soi…</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Saapuva puhelu</translation>
+    </message>
+    <message>
+        <source>Connecting…</source>
+        <translation>Yhdistetään…</translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>Yhdistetty</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Vastaa</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Hylkää</translation>
+    </message>
+    <message>
+        <source>Hang up</source>
+        <translation>Lopeta puhelu</translation>
+    </message>
+</context>
+<context>
+    <name>ColorField</name>
+    <message>
+        <source>Hex code</source>
+        <translation>Heksakoodi</translation>
+    </message>
+</context>
+<context>
+    <name>ConfirmDialog</name>
+    <message>
+        <source>Keep</source>
+        <translation>Säilytä</translation>
+    </message>
+</context>
+<context>
+    <name>CoverPage</name>
+    <message>
+        <source>signing in…</source>
+        <translation>kirjaudutaan…</translation>
+    </message>
+    <message>
+        <source>not signed in</source>
+        <translation>ei kirjautunut</translation>
+    </message>
+</context>
+<context>
+    <name>CreateRoomDialog</name>
+    <message>
+        <source>Create room</source>
+        <translation>Luo huone</translation>
+    </message>
+    <message>
+        <source>Room name</source>
+        <translation>Huoneen nimi</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Aihe</translation>
+    </message>
+    <message>
+        <source>What the room is about</source>
+        <translation>Mistä huoneessa on kyse</translation>
+    </message>
+    <message>
+        <source>Public room</source>
+        <translation>Julkinen huone</translation>
+    </message>
+    <message>
+        <source>Listed in your homeserver&apos;s room directory, and anyone who finds it can join. Off means invitation only.</source>
+        <translation>Näkyy kotipalvelimesi huoneluettelossa, ja kuka tahansa sen löytävä voi liittyä. Pois päältä tarkoittaa vain kutsulla.</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Osoite</translation>
+    </message>
+    <message>
+        <source>Reachable as %1</source>
+        <translation>Tavoitettavissa nimellä %1</translation>
+    </message>
+    <message>
+        <source>The name people can use to find the room, without # and without the server part. Optional.</source>
+        <translation>Nimi, jolla huoneen voi löytää, ilman #-merkkiä ja ilman palvelinosaa. Valinnainen.</translation>
+    </message>
+    <message>
+        <source>Readable history</source>
+        <translation>Luettava historia</translation>
+    </message>
+    <message>
+        <source>Everyone, without joining</source>
+        <translation>Kaikki, ilman liittymistä</translation>
+    </message>
+    <message>
+        <source>Members, including earlier messages</source>
+        <translation>Jäsenet, myös aiemmat viestit</translation>
+    </message>
+    <message>
+        <source>Members, from their invitation</source>
+        <translation>Jäsenet, kutsustaan alkaen</translation>
+    </message>
+    <message>
+        <source>Members, from their join</source>
+        <translation>Jäsenet, liittymisestään alkaen</translation>
+    </message>
+    <message>
+        <source>End-to-end encryption</source>
+        <translation>Päästä päähän -salaus</translation>
+    </message>
+    <message>
+        <source>Unusual for a public room: everyone joining later reads along from their join onwards, and nothing before it.</source>
+        <translation>Epätavallista julkiselle huoneelle: myöhemmin liittyvä lukee liittymisestään eteenpäin eikä mitään sitä ennen.</translation>
+    </message>
+    <message>
+        <source>Can only be decided now — encryption cannot be turned off again later.</source>
+        <translation>Voidaan päättää vain nyt — salausta ei voi enää myöhemmin kytkeä pois.</translation>
+    </message>
+    <message>
+        <source>Only moderators may write</source>
+        <translation>Vain valvojat saavat kirjoittaa</translation>
+    </message>
+    <message>
+        <source>For an announcement room. Everyone else can read, but not write and not react.</source>
+        <translation>Tiedotushuoneeseen. Muut voivat lukea, mutta eivät kirjoittaa eivätkä reagoida.</translation>
+    </message>
+    <message>
+        <source>Invited people get my rights</source>
+        <translation>Kutsutut saavat oikeuteni</translation>
+    </message>
+    <message>
+        <source>Everyone invited below starts as an administrator. Later members do not.</source>
+        <translation>Kaikki alla kutsuttavat aloittavat ylläpitäjinä. Myöhemmät jäsenet eivät.</translation>
+    </message>
+    <message>
+        <source>Keep on this server</source>
+        <translation>Pidä tällä palvelimella</translation>
+    </message>
+    <message>
+        <source>People on other servers cannot join, not even by invitation. Cannot be changed later.</source>
+        <translation>Muiden palvelinten käyttäjät eivät voi liittyä, eivät edes kutsulla. Ei muutettavissa myöhemmin.</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Kutsu</translation>
+    </message>
+    <message>
+        <source>Matrix addresses, separated by commas</source>
+        <translation>Matrix-osoitteet pilkuilla erotettuina</translation>
+    </message>
+    <message>
+        <source>Invited as the room is created. You can invite more people later from the room&apos;s pulldown menu.</source>
+        <translation>Kutsutaan huoneen luonnin yhteydessä. Voit kutsua lisää myöhemmin huoneen vetovalikosta.</translation>
+    </message>
+    <message>
+        <source>The room opens right away.</source>
+        <translation>Huone avautuu heti.</translation>
+    </message>
+</context>
+<context>
+    <name>CreateSpaceDialog</name>
+    <message>
+        <source>Create space</source>
+        <translation>Luo space</translation>
+    </message>
+    <message>
+        <source>Space name</source>
+        <translation>Spacen nimi</translation>
+    </message>
+    <message>
+        <source>The space appears in the overview right away. It is private and holds no messages — it is a folder for rooms.</source>
+        <translation>Space ilmestyy yleisnäkymään heti. Se on yksityinen eikä sisällä viestejä — se on kansio huoneille.</translation>
+    </message>
+</context>
+<context>
+    <name>DirectoryPage</name>
+    <message>
+        <source>Remove this server</source>
+        <translation>Poista tämä palvelin</translation>
+    </message>
+    <message>
+        <source>Add directory server</source>
+        <translation>Lisää hakemistopalvelin</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Löydä huoneita</translation>
+    </message>
+    <message>
+        <source>Directory</source>
+        <translation>Hakemisto</translation>
+    </message>
+    <message>
+        <source>Search the room directory</source>
+        <translation>Hae huonehakemistosta</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n member(s)</source>
+        <translation>
+            <numerusform>%n jäsen</numerusform>
+            <numerusform>%n jäsentä</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Liity</translation>
+    </message>
+    <message>
+        <source>Join (invitation required)</source>
+        <translation>Liity (vaatii kutsun)</translation>
+    </message>
+    <message>
+        <source>Joining</source>
+        <translation>Liitytään</translation>
+    </message>
+    <message>
+        <source>No rooms found</source>
+        <translation>Huoneita ei löytynyt</translation>
+    </message>
+    <message>
+        <source>Public rooms of the chosen directory show up here.</source>
+        <translation>Valitun hakemiston julkiset huoneet näkyvät täällä.</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptStorageDialog</name>
+    <message>
+        <source>Sign out and encrypt</source>
+        <translation>Kirjaudu ulos ja salaa</translation>
+    </message>
+    <message>
+        <source>Leave as it is</source>
+        <translation>Jätä ennalleen</translation>
+    </message>
+    <message>
+        <source>An existing database cannot be encrypted in place. It has to be created anew: signing out deletes it, and the next sign-in creates it encrypted.</source>
+        <translation>Olemassa olevaa tietokantaa ei voi salata paikallaan. Se on luotava uudelleen: uloskirjautuminen poistaa sen, ja seuraava sisäänkirjautuminen luo sen salattuna.</translation>
+    </message>
+    <message>
+        <source>You will need your recovery key afterwards to unlock the backup, and this device has to be verified again. Have the recovery key at hand before you continue.</source>
+        <translation>Tarvitset jälkeenpäin palautusavaimesi varmuuskopion avaamiseen, ja tämä laite on varmennettava uudelleen. Pidä avain käsillä ennen kuin jatkat.</translation>
+    </message>
+    <message>
+        <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
+        <translation>Ei vielä mahdollista: palvelimella ei ole avainten varmuuskopiota. Uloskirjautuminen nyt tekisi jokaisesta tämän laitteen salatusta viestistä lopullisesti lukukelvottoman. Ota ensin varmuuskopio käyttöön ja palaa sitten tänne.</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptionPage</name>
+    <message>
+        <source>Encryption</source>
+        <translation>Salaus</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation>Varmuuskopio</translation>
+    </message>
+    <message>
+        <source>active</source>
+        <translation>käytössä</translation>
+    </message>
+    <message>
+        <source>exists, not unlocked</source>
+        <translation>on olemassa, ei avattu</translation>
+    </message>
+    <message>
+        <source>not set up</source>
+        <translation>ei määritetty</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Palautus</translation>
+    </message>
+    <message>
+        <source>set up</source>
+        <translation>määritetty</translation>
+    </message>
+    <message>
+        <source>incomplete</source>
+        <translation>kesken</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>tuntematon</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Ristiinallekirjoitus</translation>
+    </message>
+    <message>
+        <source>complete</source>
+        <translation>valmis</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Paikallinen tallennustila</translation>
+    </message>
+    <message>
+        <source>encrypted</source>
+        <translation>salattu</translation>
+    </message>
+    <message>
+        <source>not encrypted</source>
+        <translation>ei salattu</translation>
+    </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
+        <translation>Istunto ja viestitietokanta ovat tällä laitteella salaamattomina. Ne luotiin ennen kuin tämä sovellus osasi salata ne, eikä olemassa olevaa tietokantaa voi salata paikallaan.</translation>
+    </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
+        <translation>Istunto ja viestitietokanta ovat tällä laitteella salaamattomina, koska järjestelmän suojattu säilö ei antanut avainta. Kuka tahansa, joka pääsee laitteen tiedostojärjestelmään, voi lukea ne.</translation>
+    </message>
+    <message>
+        <source>Encrypt local storage</source>
+        <translation>Salaa paikallinen tallennustila</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Varmenna</translation>
+    </message>
+    <message>
+        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
+        <translation>Varmennus vertaa seitsemää emojia toisen osapuolen kanssa. Omien laitteidesi välillä se avaa myös jaetut huoneavaimet.</translation>
+    </message>
+    <message>
+        <source>Verify my other devices</source>
+        <translation>Varmenna muut laitteeni</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Käyttäjätunnus</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@nimi:palvelin</translation>
+    </message>
+    <message>
+        <source>Verify this user</source>
+        <translation>Varmenna tämä käyttäjä</translation>
+    </message>
+    <message>
+        <source>Unlock backup</source>
+        <translation>Avaa varmuuskopio</translation>
+    </message>
+    <message>
+        <source>Enter the recovery key from your other client. This device then fetches the room keys it is missing, and older messages become readable.</source>
+        <translation>Syötä toisen asiakasohjelmasi palautusavain. Tämä laite hakee silloin puuttuvat huoneavaimet, ja vanhemmat viestit muuttuvat luettaviksi.</translation>
+    </message>
+    <message>
+        <source>Recovery key</source>
+        <translation>Palautusavain</translation>
+    </message>
+    <message>
+        <source>Unlock</source>
+        <translation>Avaa</translation>
+    </message>
+    <message>
+        <source>Set up backup</source>
+        <translation>Ota varmuuskopio käyttöön</translation>
+    </message>
+    <message>
+        <source>Creates a backup of your room keys on the server, encrypted with a recovery key that only you hold. Without it, reinstalling loses every encrypted message.</source>
+        <translation>Luo palvelimelle varmuuskopion huoneavaimistasi, salattuna palautusavaimella, joka on vain sinulla. Ilman sitä uudelleenasennus menettää jokaisen salatun viestin.</translation>
+    </message>
+    <message>
+        <source>Your recovery key</source>
+        <translation>Palautusavaimesi</translation>
+    </message>
+    <message>
+        <source>Write this down now. It is shown only once and is not stored on this device.</source>
+        <translation>Kirjoita se nyt ylös. Se näytetään vain kerran eikä sitä säilytetä tällä laitteella.</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopioi</translation>
+    </message>
+</context>
+<context>
+    <name>ForwardPage</name>
+    <message>
+        <source>Forward to</source>
+        <translation>Välitä kohteeseen</translation>
+    </message>
+</context>
+<context>
+    <name>IgnoredUsersPage</name>
+    <message>
+        <source>Ignored users</source>
+        <translation>Sivuutetut käyttäjät</translation>
+    </message>
+    <message>
+        <source>The list belongs to your account: the server stops delivering these people&apos;s messages, in every client. Tap somebody to stop ignoring them.</source>
+        <translation>Luettelo kuuluu tiliisi: palvelin lakkaa toimittamasta näiden henkilöiden viestejä, kaikissa asiakasohjelmissa. Napauta jotakuta lopettaaksesi hänen sivuuttamisensa.</translation>
+    </message>
+    <message>
+        <source>No longer ignoring</source>
+        <translation>Ei enää sivuuteta</translation>
+    </message>
+    <message>
+        <source>Nobody is ignored</source>
+        <translation>Ketään ei sivuuteta</translation>
+    </message>
+    <message>
+        <source>You can ignore somebody from their profile.</source>
+        <translation>Voit sivuuttaa jonkun hänen profiilistaan.</translation>
+    </message>
+</context>
+<context>
+    <name>ImageViewPage</name>
+    <message>
+        <source>Forward</source>
+        <translation>Välitä</translation>
+    </message>
+    <message>
+        <source>Share</source>
+        <translation>Jaa</translation>
+    </message>
+    <message>
+        <source>Save to gallery</source>
+        <translation>Tallenna galleriaan</translation>
+    </message>
+    <message>
+        <source>Share picture</source>
+        <translation>Jaa kuva</translation>
+    </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Tallennettu galleriaan</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Tallennus ei onnistunut</translation>
+    </message>
+</context>
+<context>
+    <name>InviteToRoomDialog</name>
+    <message>
+        <source>Invite</source>
+        <translation>Kutsu</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Käyttäjätunnus</translation>
+    </message>
+    <message>
+        <source>They appear in the member list as invited until they accept.</source>
+        <translation>He näkyvät jäsenluettelossa kutsuttuina, kunnes hyväksyvät.</translation>
+    </message>
+</context>
+<context>
+    <name>JoinRoomDialog</name>
+    <message>
+        <source>Join</source>
+        <translation>Liity</translation>
+    </message>
+    <message>
+        <source>Room address</source>
+        <translation>Huoneen osoite</translation>
+    </message>
+    <message>
+        <source>The room appears in the list once the server has answered. Joining a large public room can take a moment.</source>
+        <translation>Huone ilmestyy luetteloon heti kun palvelin on vastannut. Suureen julkiseen huoneeseen liittyminen voi kestää hetken.</translation>
+    </message>
+</context>
+<context>
+    <name>LanguagePage</name>
+    <message>
+        <source>Language</source>
+        <translation>Kieli</translation>
+    </message>
+    <message>
+        <source>Takes effect the next time the app starts. Only the German translation has been checked by a native speaker; the others are machine translations, and English is always available here.</source>
+        <translation>Tulee voimaan seuraavalla käynnistyskerralla. Vain saksankielisen käännöksen on tarkistanut äidinkielinen puhuja; muut ovat konekäännöksiä, ja englanti on täällä aina saatavilla.</translation>
+    </message>
+</context>
+<context>
+    <name>LanguageSettings</name>
+    <message>
+        <source>Follow the device</source>
+        <translation>Seuraa laitetta</translation>
+    </message>
+</context>
+<context>
+    <name>LoginPage</name>
+    <message>
+        <source>Sign in</source>
+        <translation>Kirjaudu sisään</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS:lle</translation>
+    </message>
+    <message>
+        <source>Homeserver</source>
+        <translation>Kotipalvelin</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Käyttäjänimi</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Salasana</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translation>Luo tili</translation>
+    </message>
+    <message>
+        <source>Sign in on another device</source>
+        <translation>Kirjaudu toisella laitteella</translation>
+    </message>
+    <message>
+        <source>Finish signing in in the browser, then come back.</source>
+        <translation>Viimeistele kirjautuminen selaimessa ja palaa sitten.</translation>
+    </message>
+    <message>
+        <source>Open this address on any other device and sign in there:</source>
+        <translation>Avaa tämä osoite millä tahansa toisella laitteella ja kirjaudu siellä:</translation>
+    </message>
+    <message>
+        <source>This page signs in by itself as soon as the login is approved there.</source>
+        <translation>Tämä sivu kirjautuu itse heti kun kirjautuminen on siellä hyväksytty.</translation>
+    </message>
+    <message>
+        <source>Your password is entered on the homeserver&apos;s own page and never reaches this app.</source>
+        <translation>Salasanasi syötetään kotipalvelimen omalla sivulla eikä se koskaan päädy tähän sovellukseen.</translation>
+    </message>
+    <message>
+        <source>This server uses the classic password sign-in. The password is sent only to this server and is never saved on the device.</source>
+        <translation>Tämä palvelin käyttää perinteistä salasanakirjautumista. Salasana lähetetään vain tälle palvelimelle eikä sitä koskaan tallenneta laitteelle.</translation>
+    </message>
+    <message>
+        <source>Sign-in did not work</source>
+        <translation>Kirjautuminen ei onnistunut</translation>
+    </message>
+    <message>
+        <source>This is the server&apos;s own web sign-in. Your password is not wrong — the app cannot use this method yet.</source>
+        <translation>Tämä on palvelimen oma verkkokirjautuminen. Salasanasi ei ole väärä — sovellus ei osaa vielä käyttää tätä tapaa.</translation>
+    </message>
+    <message>
+        <source>Check the server address and your connection.</source>
+        <translation>Tarkista palvelimen osoite ja yhteytesi.</translation>
+    </message>
+    <message>
+        <source>The server expects a sign-in this app does not implement.</source>
+        <translation>Palvelin odottaa kirjautumistapaa, jota tämä sovellus ei toteuta.</translation>
+    </message>
+    <message>
+        <source>Cancel sign-in</source>
+        <translation>Peruuta kirjautuminen</translation>
+    </message>
+</context>
+<context>
+    <name>LogoutDialog</name>
+    <message>
+        <source>Sign out</source>
+        <translation>Kirjaudu ulos</translation>
+    </message>
+    <message>
+        <source>Stay signed in</source>
+        <translation>Pysy kirjautuneena</translation>
+    </message>
+    <message>
+        <source>Really sign out?</source>
+        <translation>Kirjaudutaanko todella ulos?</translation>
+    </message>
+    <message>
+        <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
+        <translation>Tämän laitteen avaimet poistetaan istunnon mukana. Salatut viestit pysyvät luettavina vain, jos ne ovat avainten varmuuskopiossa, ja laite on varmennettava uudelleen kirjautumisen jälkeen.</translation>
+    </message>
+</context>
+<context>
+    <name>MatrixBridge</name>
+    <message>
+        <source>The protocol core could not be started.</source>
+        <translation>Protokollaydintä ei voitu käynnistää.</translation>
+    </message>
+    <message>
+        <source>The protocol core is not available.</source>
+        <translation>Protokollaydin ei ole käytettävissä.</translation>
+    </message>
+    <message>
+        <source>Enter a homeserver first.</source>
+        <translation>Syötä ensin kotipalvelin.</translation>
+    </message>
+    <message>
+        <source>Enter username and password first.</source>
+        <translation>Syötä ensin käyttäjänimi ja salasana.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key first.</source>
+        <translation>Syötä ensin palautusavaimesi.</translation>
+    </message>
+    <message>
+        <source>The file could not be saved.</source>
+        <translation>Tiedostoa ei voitu tallentaa.</translation>
+    </message>
+    <message>
+        <source>The homeserver did not return a login page.</source>
+        <translation>Kotipalvelin ei palauttanut kirjautumissivua.</translation>
+    </message>
+    <message>
+        <source>The homeserver did not return a sign-in code.</source>
+        <translation>Kotipalvelin ei palauttanut kirjautumiskoodia.</translation>
+    </message>
+</context>
+<context>
+    <name>MemberListPage</name>
+    <message>
+        <source>Members</source>
+        <translation>Jäsenet</translation>
+    </message>
+    <message>
+        <source>invited</source>
+        <translation>kutsuttu</translation>
+    </message>
+    <message>
+        <source>Admin</source>
+        <translation>Ylläpitäjä</translation>
+    </message>
+    <message>
+        <source>Moderator</source>
+        <translation>Valvoja</translation>
+    </message>
+    <message>
+        <source>No members yet</source>
+        <translation>Ei vielä jäseniä</translation>
+    </message>
+    <message>
+        <source>The people in this room show up here.</source>
+        <translation>Tämän huoneen ihmiset näkyvät täällä.</translation>
+    </message>
+</context>
+<context>
+    <name>MemberProfilePage</name>
+    <message>
+        <source>Admin</source>
+        <translation>Ylläpitäjä</translation>
+    </message>
+    <message>
+        <source>Moderator</source>
+        <translation>Valvoja</translation>
+    </message>
+    <message>
+        <source>Member</source>
+        <translation>Jäsen</translation>
+    </message>
+    <message>
+        <source>invited</source>
+        <translation>kutsuttu</translation>
+    </message>
+    <message>
+        <source>banned</source>
+        <translation>porttikiellossa</translation>
+    </message>
+    <message>
+        <source>left the room</source>
+        <translation>poistui huoneesta</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation>Lataa uudelleen</translation>
+    </message>
+    <message>
+        <source>Make moderator</source>
+        <translation>Tee valvojaksi</translation>
+    </message>
+    <message>
+        <source>Make admin</source>
+        <translation>Tee ylläpitäjäksi</translation>
+    </message>
+    <message>
+        <source>Really make this member an admin?</source>
+        <translation>Tehdäänkö tästä jäsenestä todella ylläpitäjä?</translation>
+    </message>
+    <message>
+        <source>This cannot be taken back: only they themselves can step down afterwards.</source>
+        <translation>Tätä ei voi perua: vain hän itse voi luopua roolista jälkeenpäin.</translation>
+    </message>
+    <message>
+        <source>Demote to member</source>
+        <translation>Alenna jäseneksi</translation>
+    </message>
+    <message>
+        <source>Revoke invitation</source>
+        <translation>Peruuta kutsu</translation>
+    </message>
+    <message>
+        <source>Remove from room</source>
+        <translation>Poista huoneesta</translation>
+    </message>
+    <message>
+        <source>Removing</source>
+        <translation>Poistetaan</translation>
+    </message>
+    <message>
+        <source>Ban from room</source>
+        <translation>Aseta porttikieltoon</translation>
+    </message>
+    <message>
+        <source>Really ban this member?</source>
+        <translation>Asetetaanko tämä jäsen todella porttikieltoon?</translation>
+    </message>
+    <message>
+        <source>%1 is removed from the room and cannot come back until the ban is lifted.</source>
+        <translation>%1 poistetaan huoneesta, eikä hän voi palata ennen kuin porttikielto puretaan.</translation>
+    </message>
+    <message>
+        <source>Ban</source>
+        <translation>Porttikielto</translation>
+    </message>
+    <message>
+        <source>Banning</source>
+        <translation>Asetetaan porttikieltoon</translation>
+    </message>
+    <message>
+        <source>Lift ban</source>
+        <translation>Pura porttikielto</translation>
+    </message>
+    <message>
+        <source>Address copied</source>
+        <translation>Osoite kopioitu</translation>
+    </message>
+    <message>
+        <source>Role</source>
+        <translation>Rooli</translation>
+    </message>
+    <message>
+        <source>Member since</source>
+        <translation>Jäsenenä alkaen</translation>
+    </message>
+    <message>
+        <source>Invited by</source>
+        <translation>Kutsuja</translation>
+    </message>
+    <message>
+        <source>Devices</source>
+        <translation>Laitteet</translation>
+    </message>
+    <message>
+        <source>Encryption</source>
+        <translation>Salaus</translation>
+    </message>
+    <message>
+        <source>Identity verified</source>
+        <translation>Henkilöllisyys varmennettu</translation>
+    </message>
+    <message>
+        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
+        <translation>Henkilöllisyys on muuttunut varmennuksen jälkeen. Varmenna uudelleen tai peru varmennus.</translation>
+    </message>
+    <message>
+        <source>Identity not verified</source>
+        <translation>Henkilöllisyyttä ei ole varmennettu</translation>
+    </message>
+    <message>
+        <source>Send direct message</source>
+        <translation>Lähetä yksityisviesti</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Varmenna</translation>
+    </message>
+    <message>
+        <source>Withdraw verification</source>
+        <translation>Peru varmennus</translation>
+    </message>
+    <message>
+        <source>Stop ignoring</source>
+        <translation>Lopeta sivuuttaminen</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Sivuuta</translation>
+    </message>
+    <message>
+        <source>Ignoring</source>
+        <translation>Sivuutetaan</translation>
+    </message>
+    <message>
+        <source>Shared rooms</source>
+        <translation>Yhteiset huoneet</translation>
+    </message>
+    <message>
+        <source>No other shared rooms</source>
+        <translation>Ei muita yhteisiä huoneita</translation>
+    </message>
+</context>
+<context>
+    <name>MessageActionsPage</name>
+    <message>
+        <source>Message</source>
+        <translation>Viesti</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopioi</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Vastaa</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Välitä</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Muokkaa</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kiinnitä</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Poista</translation>
+    </message>
+</context>
+<context>
+    <name>MoveToSpacePage</name>
+    <message>
+        <source>Move to space</source>
+        <translation>Siirrä spaceen</translation>
+    </message>
+    <message>
+        <source>No other space</source>
+        <translation>Ei muuta spacea</translation>
+    </message>
+    <message>
+        <source>Create another space first to move rooms between them.</source>
+        <translation>Luo ensin toinen space, jotta huoneita voi siirtää niiden välillä.</translation>
+    </message>
+</context>
+<context>
+    <name>NewChatDialog</name>
+    <message>
+        <source>Start chat</source>
+        <translation>Aloita keskustelu</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Käyttäjätunnus</translation>
+    </message>
+    <message>
+        <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
+        <translation>Toinen osapuoli saa kutsun ja keskustelu ilmestyy heti luetteloosi. Viestit on salattu alusta alkaen.</translation>
+    </message>
+</context>
+<context>
+    <name>PinnedMessagesPage</name>
+    <message>
+        <source>Pinned messages</source>
+        <translation>Kiinnitetyt viestit</translation>
+    </message>
+    <message>
+        <source>Show in conversation</source>
+        <translation>Näytä keskustelussa</translation>
+    </message>
+    <message>
+        <source>Unpin</source>
+        <translation>Irrota</translation>
+    </message>
+    <message>
+        <source>Pinned messages unavailable</source>
+        <translation>Kiinnitetyt viestit eivät ole saatavilla</translation>
+    </message>
+    <message>
+        <source>No pinned messages</source>
+        <translation>Ei kiinnitettyjä viestejä</translation>
+    </message>
+    <message>
+        <source>The server does not hand out these messages. They are older than this server&apos;s copy of the room.</source>
+        <translation>Palvelin ei anna näitä viestejä. Ne ovat vanhempia kuin palvelimen kopio huoneesta.</translation>
+    </message>
+    <message>
+        <source>Long-press a message in the conversation to pin it.</source>
+        <translation>Pidä keskustelussa olevaa viestiä painettuna kiinnittääksesi sen.</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>no session description</source>
+        <translation>ei istuntokuvausta</translation>
+    </message>
+</context>
+<context>
+    <name>RoomDelegate</name>
+    <message>
+        <source>Invitation</source>
+        <translation>Kutsu</translation>
+    </message>
+    <message>
+        <source>Replaced by a new room</source>
+        <translation>Korvattu uudella huoneella</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <translation>Space</translation>
+    </message>
+</context>
+<context>
+    <name>RoomInfoPage</name>
+    <message>
+        <source>this room</source>
+        <translation>tämä huone</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Poistutaanko todella tästä huoneesta?</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Huoneesta poistutaan ja se unohdetaan. Se katoaa keskusteluluettelosta, ja takaisin pääsy vaatii uuden kutsun tai julkisen osoitteen.</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Poistu</translation>
+    </message>
+    <message>
+        <source>Leaving room</source>
+        <translation>Poistutaan huoneesta</translation>
+    </message>
+    <message>
+        <source>Leave room</source>
+        <translation>Poistu huoneesta</translation>
+    </message>
+    <message>
+        <source>Room</source>
+        <translation>Huone</translation>
+    </message>
+    <message>
+        <source>Replaced — open the new room</source>
+        <translation>Korvattu — avaa uusi huone</translation>
+    </message>
+    <message>
+        <source>Replaced — join the new room</source>
+        <translation>Korvattu — liity uuteen huoneeseen</translation>
+    </message>
+    <message>
+        <source>Older messages in the previous room</source>
+        <translation>Vanhemmat viestit edellisessä huoneessa</translation>
+    </message>
+    <message>
+        <source>People and messages</source>
+        <translation>Ihmiset ja viestit</translation>
+    </message>
+    <message>
+        <source>Members: %1 (%2 invited)</source>
+        <translation>Jäsenet: %1 (%2 kutsuttu)</translation>
+    </message>
+    <message>
+        <source>Members: %1</source>
+        <translation>Jäsenet: %1</translation>
+    </message>
+    <message>
+        <source>Pinned messages</source>
+        <translation>Kiinnitetyt viestit</translation>
+    </message>
+    <message>
+        <source>Invite</source>
+        <translation>Kutsu</translation>
+    </message>
+    <message>
+        <source>This room for me</source>
+        <translation>Tämä huone minulle</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Ilmoitukset</translation>
+    </message>
+    <message>
+        <source>Stored with the account, so it holds in every client</source>
+        <translation>Tallennetaan tilille, joten se pätee jokaisessa asiakasohjelmassa</translation>
+    </message>
+    <message>
+        <source>Account default</source>
+        <translation>Tilin oletus</translation>
+    </message>
+    <message>
+        <source>Every message</source>
+        <translation>Jokainen viesti</translation>
+    </message>
+    <message>
+        <source>Only mentions and keywords</source>
+        <translation>Vain maininnat ja avainsanat</translation>
+    </message>
+    <message>
+        <source>Nothing (muted)</source>
+        <translation>Ei mitään (vaimennettu)</translation>
+    </message>
+    <message>
+        <source>Favourite</source>
+        <translation>Suosikki</translation>
+    </message>
+    <message>
+        <source>Low priority</source>
+        <translation>Matala prioriteetti</translation>
+    </message>
+    <message>
+        <source>Sorts to the bottom of the list and stays quiet</source>
+        <translation>Järjestyy luettelon loppuun ja pysyy hiljaa</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Tiedot</translation>
+    </message>
+    <message>
+        <source>Encryption</source>
+        <translation>Salaus</translation>
+    </message>
+    <message>
+        <source>End-to-end encrypted</source>
+        <translation>Päästä päähän -salattu</translation>
+    </message>
+    <message>
+        <source>Not encrypted</source>
+        <translation>Ei salattu</translation>
+    </message>
+    <message>
+        <source>Turning on encryption</source>
+        <translation>Otetaan salaus käyttöön</translation>
+    </message>
+    <message>
+        <source>Turn on encryption</source>
+        <translation>Ota salaus käyttöön</translation>
+    </message>
+    <message>
+        <source>Renegotiate encryption?</source>
+        <translation>Neuvotellaanko salaus uudelleen?</translation>
+    </message>
+    <message>
+        <source>The next message starts a new session and hands its key to every device in the room again. Messages already sent stay as they are; nothing of your own history is lost.</source>
+        <translation>Seuraava viesti aloittaa uuden istunnon ja antaa sen avaimen jokaiselle huoneen laitteelle uudelleen. Jo lähetetyt viestit pysyvät ennallaan; mitään historiastasi ei menetetä.</translation>
+    </message>
+    <message>
+        <source>Renegotiate</source>
+        <translation>Neuvottele uudelleen</translation>
+    </message>
+    <message>
+        <source>Renegotiate encryption</source>
+        <translation>Neuvottele salaus uudelleen</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Osoite</translation>
+    </message>
+    <message>
+        <source>Access</source>
+        <translation>Pääsy</translation>
+    </message>
+    <message>
+        <source>Public</source>
+        <translation>Julkinen</translation>
+    </message>
+    <message>
+        <source>On invitation</source>
+        <translation>Kutsulla</translation>
+    </message>
+    <message>
+        <source>Room version</source>
+        <translation>Huoneen versio</translation>
+    </message>
+    <message>
+        <source>Room ID</source>
+        <translation>Huoneen tunnus</translation>
+    </message>
+    <message>
+        <source>Room ID copied</source>
+        <translation>Huoneen tunnus kopioitu</translation>
+    </message>
+</context>
+<context>
+    <name>RoomListPage</name>
+    <message>
+        <source>Really decline this invitation?</source>
+        <translation>Hylätäänkö tämä kutsu todella?</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Poistutaanko todella tästä huoneesta?</translation>
+    </message>
+    <message>
+        <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
+        <translation>Kutsu on sen jälkeen poissa. Pääset takaisin vain, jos joku kutsuu sinut uudelleen.</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Huoneesta poistutaan ja se unohdetaan. Se katoaa keskusteluluettelosta, ja takaisin pääsy vaatii uuden kutsun tai julkisen osoitteen.</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Hylkää</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Poistu</translation>
+    </message>
+    <message>
+        <source>Declining</source>
+        <translation>Hylätään</translation>
+    </message>
+    <message>
+        <source>Leaving room</source>
+        <translation>Poistutaan huoneesta</translation>
+    </message>
+    <message>
+        <source>Rooms</source>
+        <translation>Huoneet</translation>
+    </message>
+    <message>
+        <source>This homeserver is not supported</source>
+        <translation>Tätä kotipalvelinta ei tueta</translation>
+    </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — odotetaan verkkoa</translation>
+    </message>
+    <message>
+        <source>Your homeserver does not offer the sync this app needs (simplified sliding sync, MSC4186). Rooms cannot be loaded from it. A newer server version, or an account on a server that supports it, is required.</source>
+        <translation>Kotipalvelimesi ei tarjoa synkronointia, jota tämä sovellus tarvitsee (simplified sliding sync, MSC4186). Huoneita ei voi ladata siltä. Tarvitaan uudempi palvelinversio tai tili palvelimella, joka tukee sitä.</translation>
+    </message>
+    <message>
+        <source>Search rooms</source>
+        <translation>Hae huoneita</translation>
+    </message>
+    <message>
+        <source>Remove from favourites</source>
+        <translation>Poista suosikeista</translation>
+    </message>
+    <message>
+        <source>Favourite</source>
+        <translation>Suosikki</translation>
+    </message>
+    <message>
+        <source>Normal priority</source>
+        <translation>Normaali prioriteetti</translation>
+    </message>
+    <message>
+        <source>Low priority</source>
+        <translation>Matala prioriteetti</translation>
+    </message>
+    <message>
+        <source>Unmute</source>
+        <translation>Poista vaimennus</translation>
+    </message>
+    <message>
+        <source>Mute</source>
+        <translation>Vaimenna</translation>
+    </message>
+    <message>
+        <source>Decline invitation</source>
+        <translation>Hylkää kutsu</translation>
+    </message>
+    <message>
+        <source>Leave room</source>
+        <translation>Poistu huoneesta</translation>
+    </message>
+    <message>
+        <source>No rooms</source>
+        <translation>Ei huoneita</translation>
+    </message>
+    <message>
+        <source>Rooms you join show up here once the first sync is through.</source>
+        <translation>Huoneet, joihin liityt, näkyvät täällä heti kun ensimmäinen synkronointi on valmis.</translation>
+    </message>
+    <message>
+        <source>About xmatic</source>
+        <translation>Tietoja xmaticista</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Uusi keskustelu</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Uusi huone</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Liity huoneeseen</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Löydä huoneita</translation>
+    </message>
+    <message>
+        <source>Make start page</source>
+        <translation>Aseta aloitussivuksi</translation>
+    </message>
+    <message>
+        <source>Account</source>
+        <translation>Tili</translation>
+    </message>
+    <message>
+        <source>Sign out</source>
+        <translation>Kirjaudu ulos</translation>
+    </message>
+</context>
+<context>
+    <name>RoomPage</name>
+    <message>
+        <source>Really decline this invitation?</source>
+        <translation>Hylätäänkö tämä kutsu todella?</translation>
+    </message>
+    <message>
+        <source>Really leave this room?</source>
+        <translation>Poistutaanko todella tästä huoneesta?</translation>
+    </message>
+    <message>
+        <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
+        <translation>Kutsu on sen jälkeen poissa. Pääset takaisin vain, jos joku kutsuu sinut uudelleen.</translation>
+    </message>
+    <message>
+        <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
+        <translation>Huoneesta poistutaan ja se unohdetaan. Se katoaa keskusteluluettelosta, ja takaisin pääsy vaatii uuden kutsun tai julkisen osoitteen.</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Hylkää</translation>
+    </message>
+    <message>
+        <source>Leave</source>
+        <translation>Poistu</translation>
+    </message>
+    <message>
+        <source>Declining</source>
+        <translation>Hylätään</translation>
+    </message>
+    <message>
+        <source>Leaving room</source>
+        <translation>Poistutaan huoneesta</translation>
+    </message>
+    <message>
+        <source>The sender did not share the key: they consider this device insecure. Verify this device.</source>
+        <translation>Lähettäjä ei jakanut avainta: hän pitää tätä laitetta turvattomana. Varmenna tämä laite.</translation>
+    </message>
+    <message>
+        <source>The sender could not deliver the key to this device.</source>
+        <translation>Lähettäjä ei saanut toimitettua avainta tälle laitteelle.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s identity has changed since you verified them, so the key was withheld.</source>
+        <translation>Lähettäjän henkilöllisyys on muuttunut sen jälkeen kun varmensit sen, joten avain pidätettiin.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s device is not signed by its owner.</source>
+        <translation>Lähettäjän laitetta ei ole allekirjoitettu omistajansa toimesta.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s device is unknown here.</source>
+        <translation>Lähettäjän laite on täällä tuntematon.</translation>
+    </message>
+    <message>
+        <source>Sent before you joined the room.</source>
+        <translation>Lähetetty ennen kuin liityit huoneeseen.</translation>
+    </message>
+    <message>
+        <source>Older than this device, and there is no key backup.</source>
+        <translation>Vanhempi kuin tämä laite, eikä avainten varmuuskopiota ole.</translation>
+    </message>
+    <message>
+        <source>Older than this device. Verify this device to read it.</source>
+        <translation>Vanhempi kuin tämä laite. Varmenna laite lukeaksesi sen.</translation>
+    </message>
+    <message>
+        <source>Cannot be decrypted — this device is missing the key</source>
+        <translation>Ei voi purkaa salausta — tältä laitteelta puuttuu avain</translation>
+    </message>
+    <message>
+        <source>Decline invitation</source>
+        <translation>Hylkää kutsu</translation>
+    </message>
+    <message>
+        <source>Leave room</source>
+        <translation>Poistu huoneesta</translation>
+    </message>
+    <message>
+        <source>Call</source>
+        <translation>Puhelu</translation>
+    </message>
+    <message>
+        <source>Video call</source>
+        <translation>Videopuhelu</translation>
+    </message>
+    <message>
+        <source>Back to the call</source>
+        <translation>Takaisin puheluun</translation>
+    </message>
+    <message>
+        <source>Go to the new room</source>
+        <translation>Siirry uuteen huoneeseen</translation>
+    </message>
+    <message>
+        <source>Join the new room</source>
+        <translation>Liity uuteen huoneeseen</translation>
+    </message>
+    <message>
+        <source>Load older messages</source>
+        <translation>Lataa vanhempia viestejä</translation>
+    </message>
+    <message>
+        <source>Room info</source>
+        <translation>Huoneen tiedot</translation>
+    </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — odotetaan verkkoa</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Kutsu</translation>
+    </message>
+    <message>
+        <source>End-to-end encrypted</source>
+        <translation>Päästä päähän -salattu</translation>
+    </message>
+    <message>
+        <source>Not encrypted</source>
+        <translation>Ei salattu</translation>
+    </message>
+    <message>
+        <source>This room has been replaced</source>
+        <translation>Tämä huone on korvattu</translation>
+    </message>
+    <message>
+        <source>Switching to the new room…</source>
+        <translation>Siirrytään uuteen huoneeseen…</translation>
+    </message>
+    <message>
+        <source>Tap to open the new room</source>
+        <translation>Napauta avataksesi uuden huoneen</translation>
+    </message>
+    <message>
+        <source>Tap to join the new room</source>
+        <translation>Napauta liittyäksesi uuteen huoneeseen</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n pinned message(s)</source>
+        <translation>
+            <numerusform>%n kiinnitetty viesti</numerusform>
+            <numerusform>%n kiinnitettyä viestiä</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Beginning of the conversation</source>
+        <translation>Keskustelun alku</translation>
+    </message>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Puhelu</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 liittyi</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 poistui</translation>
+    </message>
+    <message>
+        <source>%1 was invited</source>
+        <translation>%1 kutsuttiin</translation>
+    </message>
+    <message>
+        <source>%1 was removed</source>
+        <translation>%1 poistettiin</translation>
+    </message>
+    <message>
+        <source>%1 was banned</source>
+        <translation>%1 asetettiin porttikieltoon</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 hylkäsi kutsun</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 pyysi päästä sisään</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 muutti jäsenyyttä</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile</source>
+        <translation>%1 muutti profiiliaan</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopioi</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Vastaa</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Välitä</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Muokkaa</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kiinnitä</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Lisää…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Lainattua viestiä ei voi ladata: sitä ei enää ole tai sinulla ei ole lupaa nähdä sitä.</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Ääniviesti</translation>
+    </message>
+    <message>
+        <source>Message deleted</source>
+        <translation>Viesti poistettu</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Ketju · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Ketjussa</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>ei lähetetty</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>muokattu</translation>
+    </message>
+    <message>
+        <source>No messages</source>
+        <translation>Ei viestejä</translation>
+    </message>
+    <message>
+        <source>Accept invitation</source>
+        <translation>Hyväksy kutsu</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s</source>
+        <translation>Nauhoitetaan… %1 s</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Vastaus käyttäjälle %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Muokataan viestiä</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Uusi teksti</translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <translation>Viesti</translation>
+    </message>
+    <message>
+        <source>That message is not in the loaded history</source>
+        <translation>Kyseinen viesti ei ole ladatussa historiassa</translation>
+    </message>
+</context>
+<context>
+    <name>SendMediaPage</name>
+    <message>
+        <source>Reply</source>
+        <translation>Vastaa</translation>
+    </message>
+    <message>
+        <source>Send</source>
+        <translation>Lähetä</translation>
+    </message>
+    <message>
+        <source>Caption</source>
+        <translation>Kuvateksti</translation>
+    </message>
+    <message>
+        <source>Caption (optional)</source>
+        <translation>Kuvateksti (valinnainen)</translation>
+    </message>
+</context>
+<context>
+    <name>SessionLockedPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Kirjaudu ulos ja poista paikalliset tiedot</translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation>Lukittu</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS:lle</translation>
+    </message>
+    <message>
+        <source>Your session is stored encrypted, and the key was not available when xmatic started.</source>
+        <translation>Istuntosi on tallennettu salattuna, eikä avain ollut käytettävissä xmaticin käynnistyessä.</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
+        <translation>Avain on laitteen suojatussa säilössä. Yritä uudelleen ja vahvista järjestelmän pyyntö; hyväksyntä on voimassa laitteen seuraavaan uudelleenkäynnistykseen asti.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Yritä uudelleen</translation>
+    </message>
+</context>
+<context>
+    <name>ShareToRoomPage</name>
+    <message>
+        <source>Send to</source>
+        <translation>Lähetä kohteeseen</translation>
+    </message>
+    <message>
+        <source>No rooms</source>
+        <translation>Ei huoneita</translation>
+    </message>
+</context>
+<context>
+    <name>SpacePage</name>
+    <message>
+        <source>Space</source>
+        <translation>Space</translation>
+    </message>
+    <message>
+        <source>Add rooms</source>
+        <translation>Lisää huoneita</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Päivitä</translation>
+    </message>
+    <message>
+        <source>Move to space</source>
+        <translation>Siirrä spaceen</translation>
+    </message>
+    <message>
+        <source>Remove from space</source>
+        <translation>Poista spacesta</translation>
+    </message>
+    <message>
+        <source>Linked, not joined</source>
+        <translation>Linkitetty, ei liitytty</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n member(s)</source>
+        <translation>
+            <numerusform>%n jäsen</numerusform>
+            <numerusform>%n jäsentä</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Liity</translation>
+    </message>
+    <message>
+        <source>Joining</source>
+        <translation>Liitytään</translation>
+    </message>
+    <message>
+        <source>No rooms in this space</source>
+        <translation>Ei huoneita tässä spacessa</translation>
+    </message>
+    <message>
+        <source>Add rooms with the pulldown menu, or rooms of this space that you have joined show up here.</source>
+        <translation>Lisää huoneita vetovalikosta, tai tämän spacen huoneet, joihin olet liittynyt, näkyvät täällä.</translation>
+    </message>
+</context>
+<context>
+    <name>SpacesPage</name>
+    <message>
+        <source>Really delete this space?</source>
+        <translation>Poistetaanko tämä space todella?</translation>
+    </message>
+    <message>
+        <source>The space is left and forgotten. The rooms in it are not touched — they stay in the chat list.</source>
+        <translation>Spacesta poistutaan ja se unohdetaan. Sen sisältämiin huoneisiin ei kosketa — ne jäävät keskusteluluetteloon.</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <source>Deleting space</source>
+        <translation>Poistetaan spacea</translation>
+    </message>
+    <message>
+        <source>Spaces</source>
+        <translation>Spacet</translation>
+    </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — odotetaan verkkoa</translation>
+    </message>
+    <message>
+        <source>Create space</source>
+        <translation>Luo space</translation>
+    </message>
+    <message>
+        <source>Make start page</source>
+        <translation>Aseta aloitussivuksi</translation>
+    </message>
+    <message>
+        <source>Delete space</source>
+        <translation>Poista space</translation>
+    </message>
+    <message>
+        <source>No spaces</source>
+        <translation>Ei spaceja</translation>
+    </message>
+    <message>
+        <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
+        <translation>Spacet, joiden jäsen olet, näkyvät täällä. Space kokoaa huoneita yhteen.</translation>
+    </message>
+</context>
+<context>
+    <name>ThreadPage</name>
+    <message>
+        <source>Load older posts</source>
+        <translation>Lataa vanhempia viestejä</translation>
+    </message>
+    <message>
+        <source>Thread</source>
+        <translation>Ketju</translation>
+    </message>
+    <message>
+        <source>Event</source>
+        <translation>Tapahtuma</translation>
+    </message>
+    <message>
+        <source>Cannot be decrypted — this device is missing the key</source>
+        <translation>Ei voi purkaa salausta — tältä laitteelta puuttuu avain</translation>
+    </message>
+    <message>
+        <source>Message deleted</source>
+        <translation>Viesti poistettu</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Liite</translation>
+    </message>
+    <message>
+        <source>Thread unavailable</source>
+        <translation>Ketju ei ole saatavilla</translation>
+    </message>
+    <message>
+        <source>Loading thread</source>
+        <translation>Ladataan ketjua</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vastaa ketjussa</translation>
+    </message>
+</context>
+<context>
+    <name>UnverifiedRecipientsDialog</name>
+    <message>
+        <source>Send anyway</source>
+        <translation>Lähetä silti</translation>
+    </message>
+    <message>
+        <source>Unverified devices</source>
+        <translation>Varmentamattomat laitteet</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Viesti salataan laitteille, joita et ole varmentanut. Varmenna ne varmuuden vuoksi tai lähetä silti.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n unverified device(s)</source>
+        <translation>
+            <numerusform>%n varmentamaton laite</numerusform>
+            <numerusform>%n varmentamatonta laitetta</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Do not warn about this user again</source>
+        <translation>Älä varoita tästä käyttäjästä enää</translation>
+    </message>
+    <message>
+        <source>Do not warn about these users again</source>
+        <translation>Älä varoita näistä käyttäjistä enää</translation>
+    </message>
+    <message>
+        <source>Applies until you verify or clear it.</source>
+        <translation>Voimassa kunnes varmennat tai nollaat.</translation>
+    </message>
+</context>
+<context>
+    <name>VerificationPage</name>
+    <message>
+        <source>Verification</source>
+        <translation>Varmennus</translation>
+    </message>
+    <message>
+        <source>Another one of your devices</source>
+        <translation>Toinen laitteistasi</translation>
+    </message>
+    <message>
+        <source>Your answer is in. Waiting for the other device.</source>
+        <translation>Vastauksesi on kirjattu. Odotetaan toista laitetta.</translation>
+    </message>
+    <message>
+        <source>Waiting for the other device to accept.</source>
+        <translation>Odotetaan, että toinen laite hyväksyy.</translation>
+    </message>
+    <message>
+        <source>Waiting for the other side to accept the request on their device.</source>
+        <translation>Odotetaan, että toinen osapuoli hyväksyy pyynnön laitteellaan.</translation>
+    </message>
+    <message>
+        <source>Confirm that this is really your other device. Once verified, both can share room keys and older messages become readable.</source>
+        <translation>Vahvista, että tämä on todella toinen laitteesi. Varmennuksen jälkeen molemmat voivat jakaa huoneavaimia ja vanhemmat viestit muuttuvat luettaviksi.</translation>
+    </message>
+    <message>
+        <source>Confirm that you are really talking to this person and not to someone in between.</source>
+        <translation>Vahvista, että puhut todella tälle henkilölle etkä jollekulle välissä.</translation>
+    </message>
+    <message>
+        <source>Both devices must show the same emoji, in the same order.</source>
+        <translation>Molempien laitteiden on näytettävä samat emojit samassa järjestyksessä.</translation>
+    </message>
+    <message>
+        <source>Verified.</source>
+        <translation>Varmennettu.</translation>
+    </message>
+    <message>
+        <source>The verification was cancelled.</source>
+        <translation>Varmennus peruutettiin.</translation>
+    </message>
+    <message>
+        <source>They do not match</source>
+        <translation>Ne eivät täsmää</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Hylkää</translation>
+    </message>
+    <message>
+        <source>They match</source>
+        <translation>Ne täsmäävät</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Vastaa</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Sulje</translation>
+    </message>
+</context>
+<context>
+    <name>VideoPage</name>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceRecorder</name>
+    <message>
+        <source>Nothing was recorded.</source>
+        <translation>Mitään ei nauhoitettu.</translation>
+    </message>
+</context>
+<context>
+    <name>harbour-xmatic</name>
+    <message>
+        <source>Picture</source>
+        <translation>Kuva</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Ääniviesti</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Tiedosto</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Sijainti</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Salattu viesti</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n mention(s)</source>
+        <translation>
+            <numerusform>%n maininta</numerusform>
+            <numerusform>%n mainintaa</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n new message(s)</source>
+        <translation>
+            <numerusform>%n uusi viesti</numerusform>
+            <numerusform>%n uutta viestiä</numerusform>
+        </translation>
+    </message>
+</context>
+</TS>
