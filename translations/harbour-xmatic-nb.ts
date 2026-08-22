@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>A native Matrix client for Sailfish OS: encrypted rooms, spaces, voice and video calls.</source>
-        <translation>En nativ Matrix-klient for Sailfish OS: krypterte rom, spaces, tale- og videosamtaler.</translation>
+        <translation>En nativ Matrix-klient for Sailfish OS: krypterte rom, romgrupper, tale- og videosamtaler.</translation>
     </message>
     <message>
         <source>License: Apache 2.0</source>
@@ -28,7 +28,7 @@
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
-        <translation>Logget inn</translation>
+        <translation>Innlogget</translation>
     </message>
     <message>
         <source>Account</source>
@@ -52,19 +52,19 @@
     </message>
     <message>
         <source>Save name</source>
-        <translation>Lagre navnet</translation>
+        <translation>Lagre navn</translation>
     </message>
     <message>
         <source>Change avatar</source>
-        <translation>Bytt avatar</translation>
+        <translation>Endre profilbilde</translation>
     </message>
     <message>
         <source>Set avatar</source>
-        <translation>Angi avatar</translation>
+        <translation>Velg profilbilde</translation>
     </message>
     <message>
         <source>An avatar is set. Other people see it next to your name.</source>
-        <translation>En avatar er satt. Andre ser den ved siden av navnet ditt.</translation>
+        <translation>Et profilbilde er valgt. Andre ser det ved siden av navnet ditt.</translation>
     </message>
     <message>
         <source>This app</source>
@@ -99,7 +99,7 @@
     </message>
     <message>
         <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Av forteller varselet bare hvor mange meldinger som kom. På viser det den siste meldingen — også på låseskjermen.</translation>
+        <translation>Av: Et varsel viser kun hvor mange meldinger som har kommet. På: Det viser den nyeste meldingen — også på låseskjermen.</translation>
     </message>
     <message>
         <source>Tappable web links</source>
@@ -145,15 +145,15 @@
     </message>
     <message>
         <source>Press and hold a room to add it to the space.</source>
-        <translation>Hold inne et rom for å legge det til i din space.</translation>
+        <translation>Trykk og hold på et rom for å legge det til i romgruppen.</translation>
     </message>
     <message>
         <source>Add to space</source>
-        <translation>Legg til i space</translation>
+        <translation>Legg til i romgruppe</translation>
     </message>
     <message>
         <source>Adding to space</source>
-        <translation>Legger til i space</translation>
+        <translation>Legger til i romgruppe</translation>
     </message>
     <message>
         <source>No rooms</source>
@@ -161,7 +161,7 @@
     </message>
     <message>
         <source>Join or start a chat first, then add it to a space.</source>
-        <translation>Bli med i eller start en samtale først, og legg den så til i en space.</translation>
+        <translation>Bli med i eller start en samtale først, og legg den deretter til i en romgruppe.</translation>
     </message>
 </context>
 <context>
@@ -185,7 +185,7 @@
     </message>
     <message>
         <source>And one of my own like this.</source>
-        <translation>Og en av mine slik.</translation>
+        <translation>Og en av mine egne slik.</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -193,19 +193,19 @@
     </message>
     <message>
         <source>Their bubble</source>
-        <translation>Deres boble</translation>
+        <translation>Andres snakkeboble</translation>
     </message>
     <message>
         <source>My bubble</source>
-        <translation>Min boble</translation>
+        <translation>Min snakkeboble</translation>
     </message>
     <message>
         <source>Sender name</source>
-        <translation>Avsenderens navn</translation>
+        <translation>Avsendernavn</translation>
     </message>
     <message>
         <source>Their text</source>
-        <translation>Deres tekst</translation>
+        <translation>Andres tekst</translation>
     </message>
     <message>
         <source>My text</source>
@@ -213,15 +213,15 @@
     </message>
     <message>
         <source>Follow the ambience</source>
-        <translation>Følg ambiensen</translation>
+        <translation>Følg systemtemaet</translation>
     </message>
     <message>
         <source>Off, the colour below applies</source>
-        <translation>Av gjelder fargen nedenfor</translation>
+        <translation>Av, fargen nedenfor gjelder</translation>
     </message>
     <message>
         <source>Bubble opacity</source>
-        <translation>Boblenes dekkevne</translation>
+        <translation>Boblegjennomsiktighet</translation>
     </message>
 </context>
 <context>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>GStreamer could not be started: %1</source>
-        <translation>GStreamer kunne ikke startes: %1</translation>
+        <translation>Kunne ikke starte GStreamer: %1</translation>
     </message>
     <message>
         <source>This device has no WebRTC support.</source>
@@ -244,7 +244,7 @@
     </message>
     <message>
         <source>pipeline failed: %1</source>
-        <translation>pipeline feilet: %1</translation>
+        <translation>dataflyt mislyktes: %1</translation>
     </message>
     <message>
         <source>webrtcbin is missing</source>
@@ -252,19 +252,19 @@
     </message>
     <message>
         <source>no camera — placing a voice call</source>
-        <translation>ingen kamera — ringer en talesamtale</translation>
+        <translation>ingen kamera — starter talesamtale</translation>
     </message>
     <message>
         <source>the microphone could not be opened</source>
-        <translation>mikrofonen kunne ikke åpnes</translation>
+        <translation>kunne ikke åpne mikrofonen</translation>
     </message>
     <message>
         <source>the session description could not be read</source>
-        <translation>øktbeskrivelsen kunne ikke leses</translation>
+        <translation>sesjonsbeskrivelsen kunne ikke leses</translation>
     </message>
     <message>
         <source>the other side sent an unreadable session description</source>
-        <translation>motparten sendte en uleselig øktbeskrivelse</translation>
+        <translation>motparten sendte en uleselig sesjonsbeskrivelse</translation>
     </message>
     <message>
         <source>the other side hung up</source>
@@ -283,7 +283,7 @@
     <name>CallPage</name>
     <message>
         <source>Call</source>
-        <translation>Samtale</translation>
+        <translation>Start samtale</translation>
     </message>
     <message>
         <source>Ringing…</source>
@@ -303,7 +303,7 @@
     </message>
     <message>
         <source>Accept</source>
-        <translation>Svar</translation>
+        <translation>Godta</translation>
     </message>
     <message>
         <source>Decline</source>
@@ -318,7 +318,7 @@
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
-        <translation>Heksadesimal kode</translation>
+        <translation>Heksadesimalkode</translation>
     </message>
 </context>
 <context>
@@ -336,7 +336,7 @@
     </message>
     <message>
         <source>not signed in</source>
-        <translation>ikke logget inn</translation>
+        <translation>ikke innlogget</translation>
     </message>
 </context>
 <context>
@@ -363,7 +363,7 @@
     </message>
     <message>
         <source>Listed in your homeserver&apos;s room directory, and anyone who finds it can join. Off means invitation only.</source>
-        <translation>Vises i romkatalogen til hjemmetjeneren din, og alle som finner det kan bli med. Av betyr bare etter invitasjon.</translation>
+        <translation>Vises i hjemmetjenerens romkatalog, og hvem som helst kan bli med. Av betyr kun etter invitasjon.</translation>
     </message>
     <message>
         <source>Address</source>
@@ -403,11 +403,11 @@
     </message>
     <message>
         <source>Unusual for a public room: everyone joining later reads along from their join onwards, and nothing before it.</source>
-        <translation>Uvanlig for et offentlig rom: den som kommer til senere leser fra sin ankomst og ingenting før den.</translation>
+        <translation>Uvanlig for et offentlig rom: alle som blir med senere leser kun fra de ble med, og ingenting før det.</translation>
     </message>
     <message>
         <source>Can only be decided now — encryption cannot be turned off again later.</source>
-        <translation>Kan bare bestemmes nå — krypteringen kan ikke slås av igjen senere.</translation>
+        <translation>Kan bare bestemmes nå — kryptering kan ikke slås av igjen senere.</translation>
     </message>
     <message>
         <source>Only moderators may write</source>
@@ -454,15 +454,15 @@
     <name>CreateSpaceDialog</name>
     <message>
         <source>Create space</source>
-        <translation>Opprett space</translation>
+        <translation>Opprett romgruppe</translation>
     </message>
     <message>
         <source>Space name</source>
-        <translation>Navn på din space</translation>
+        <translation>Navn på romgruppe</translation>
     </message>
     <message>
         <source>The space appears in the overview right away. It is private and holds no messages — it is a folder for rooms.</source>
-        <translation>Din space vises straks i oversikten. Den er privat og inneholder ingen meldinger — den er en mappe for rom.</translation>
+        <translation>Romgruppen vises i oversikten med en gang. Den er privat og inneholder ingen meldinger — den fungerer som en mappe for rom.</translation>
     </message>
 </context>
 <context>
@@ -477,7 +477,7 @@
     </message>
     <message>
         <source>Discover rooms</source>
-        <translation>Oppdag rom</translation>
+        <translation>Utforsk rom</translation>
     </message>
     <message>
         <source>Directory</source>
@@ -500,7 +500,7 @@
     </message>
     <message>
         <source>Join (invitation required)</source>
-        <translation>Bli med (krever invitasjon)</translation>
+        <translation>Bli med (invitasjon kreves)</translation>
     </message>
     <message>
         <source>Joining</source>
@@ -508,11 +508,11 @@
     </message>
     <message>
         <source>No rooms found</source>
-        <translation>Fant ingen rom</translation>
+        <translation>Ingen rom funnet</translation>
     </message>
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
-        <translation>Offentlige rom i den valgte katalogen vises her.</translation>
+        <translation>Offentlige rom fra den valgte katalogen vises her.</translation>
     </message>
 </context>
 <context>
@@ -558,7 +558,7 @@
     </message>
     <message>
         <source>not set up</source>
-        <translation>ikke satt opp</translation>
+        <translation>ikke konfigurert</translation>
     </message>
     <message>
         <source>Recovery</source>
@@ -566,7 +566,7 @@
     </message>
     <message>
         <source>set up</source>
-        <translation>satt opp</translation>
+        <translation>konfigurert</translation>
     </message>
     <message>
         <source>incomplete</source>
@@ -582,7 +582,7 @@
     </message>
     <message>
         <source>complete</source>
-        <translation>fullstendig</translation>
+        <translation>fullført</translation>
     </message>
     <message>
         <source>Local storage</source>
@@ -614,7 +614,7 @@
     </message>
     <message>
         <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Verifiseringen sammenligner sju emojier med motparten. Mellom dine egne enheter låser den også opp delte romnøkler.</translation>
+        <translation>Verifisering sammenligner sju emoji med motparten. Mellom dine egne enheter låser det også opp delte romnøkler.</translation>
     </message>
     <message>
         <source>Verify my other devices</source>
@@ -634,11 +634,11 @@
     </message>
     <message>
         <source>Unlock backup</source>
-        <translation>Lås opp sikkerhetskopien</translation>
+        <translation>Lås opp sikkerhetskopi</translation>
     </message>
     <message>
         <source>Enter the recovery key from your other client. This device then fetches the room keys it is missing, and older messages become readable.</source>
-        <translation>Skriv inn gjenopprettingsnøkkelen fra din andre klient. Enheten henter da romnøklene den mangler, og eldre meldinger blir lesbare.</translation>
+        <translation>Skriv inn gjenopprettingsnøkkelen fra din andre klient. Denne enheten henter deretter romnøklene den mangler, slik at eldre meldinger kan leses.</translation>
     </message>
     <message>
         <source>Recovery key</source>
@@ -650,11 +650,11 @@
     </message>
     <message>
         <source>Set up backup</source>
-        <translation>Sett opp sikkerhetskopi</translation>
+        <translation>Konfigurer sikkerhetskopi</translation>
     </message>
     <message>
         <source>Creates a backup of your room keys on the server, encrypted with a recovery key that only you hold. Without it, reinstalling loses every encrypted message.</source>
-        <translation>Oppretter en sikkerhetskopi av romnøklene dine på tjeneren, kryptert med en gjenopprettingsnøkkel som bare du har. Uten den mister en reinstallasjon hver kryptert melding.</translation>
+        <translation>Oppretter en sikkerhetskopi av romnøklene dine på tjeneren, kryptert med en gjenopprettingsnøkkel som bare du har. Uten denne vil ny installasjon føre til at alle krypterte meldinger går tapt.</translation>
     </message>
     <message>
         <source>Your recovery key</source>
@@ -662,7 +662,7 @@
     </message>
     <message>
         <source>Write this down now. It is shown only once and is not stored on this device.</source>
-        <translation>Skriv den ned nå. Den vises bare én gang og lagres ikke på enheten.</translation>
+        <translation>Skriv ned dette nå. Den vises bare én gang og lagres ikke på denne enheten.</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -711,7 +711,7 @@
     </message>
     <message>
         <source>Save to gallery</source>
-        <translation>Lagre i galleriet</translation>
+        <translation>Lagre i galleri</translation>
     </message>
     <message>
         <source>Share picture</source>
@@ -719,11 +719,11 @@
     </message>
     <message>
         <source>Saved to gallery</source>
-        <translation>Lagret i galleriet</translation>
+        <translation>Lagret i galleri</translation>
     </message>
     <message>
         <source>Could not save</source>
-        <translation>Kunne ikke lagres</translation>
+        <translation>Kunne ikke lagre</translation>
     </message>
 </context>
 <context>
@@ -738,7 +738,7 @@
     </message>
     <message>
         <source>They appear in the member list as invited until they accept.</source>
-        <translation>De står som inviterte i medlemslisten til de godtar.</translation>
+        <translation>De vises i medlemslisten som invitert inntil de godtar.</translation>
     </message>
 </context>
 <context>
@@ -753,7 +753,7 @@
     </message>
     <message>
         <source>The room appears in the list once the server has answered. Joining a large public room can take a moment.</source>
-        <translation>Rommet vises i listen så snart tjeneren har svart. Å bli med i et stort offentlig rom kan ta et øyeblikk.</translation>
+        <translation>Rommet vises i listen så snart tjeneren har svart. Å bli med i et stort offentlig rom kan ta litt tid.</translation>
     </message>
 </context>
 <context>
@@ -806,23 +806,23 @@
     </message>
     <message>
         <source>Finish signing in in the browser, then come back.</source>
-        <translation>Fullfør innloggingen i nettleseren, og kom så tilbake.</translation>
+        <translation>Fullfør innloggingen i nettleseren, og kom deretter tilbake.</translation>
     </message>
     <message>
         <source>Open this address on any other device and sign in there:</source>
-        <translation>Åpne denne adressen på en hvilken som helst annen enhet og logg inn der:</translation>
+        <translation>Åpne denne adressen på en annen enhet og logg inn der:</translation>
     </message>
     <message>
         <source>This page signs in by itself as soon as the login is approved there.</source>
-        <translation>Denne siden logger inn av seg selv så snart innloggingen godkjennes der.</translation>
+        <translation>Denne siden logger inn automatisk så snart innloggingen er godkjent der.</translation>
     </message>
     <message>
         <source>Your password is entered on the homeserver&apos;s own page and never reaches this app.</source>
-        <translation>Passordet ditt skrives inn på hjemmetjenerens egen side og når aldri fram til denne appen.</translation>
+        <translation>Passordet ditt tastes inn på hjemmetjenerens egen side og når aldri denne appen.</translation>
     </message>
     <message>
         <source>This server uses the classic password sign-in. The password is sent only to this server and is never saved on the device.</source>
-        <translation>Denne tjeneren bruker den klassiske innloggingen med passord. Passordet sendes bare til denne tjeneren og lagres aldri på enheten.</translation>
+        <translation>Denne tjeneren bruker klassisk passordinnlogging. Passordet sendes kun til denne tjeneren og lagres aldri på enheten.</translation>
     </message>
     <message>
         <source>Sign-in did not work</source>
@@ -842,7 +842,7 @@
     </message>
     <message>
         <source>Cancel sign-in</source>
-        <translation>Avbryt innloggingen</translation>
+        <translation>Avbryt innlogging</translation>
     </message>
 </context>
 <context>
@@ -857,11 +857,11 @@
     </message>
     <message>
         <source>Really sign out?</source>
-        <translation>Virkelig logge ut?</translation>
+        <translation>Vil du virkelig logge ut?</translation>
     </message>
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
-        <translation>Enhetens nøkler slettes sammen med økten. Krypterte meldinger forblir lesbare bare hvis de ligger i en nøkkelsikkerhetskopi, og enheten må verifiseres på nytt etter innlogging.</translation>
+        <translation>Denne enhetens nøkler slettes sammen med sesjonen. Krypterte meldinger forblir kun lesbare hvis de finnes i en nøkkelsikkerhetskopi, og denne enheten må verifiseres på nytt etter at du logger inn igjen.</translation>
     </message>
 </context>
 <context>
@@ -876,15 +876,15 @@
     </message>
     <message>
         <source>Enter a homeserver first.</source>
-        <translation>Skriv inn en hjemmetjener først.</translation>
+        <translation>Oppgi en hjemmetjener først.</translation>
     </message>
     <message>
         <source>Enter username and password first.</source>
-        <translation>Skriv inn brukernavn og passord først.</translation>
+        <translation>Oppgi brukernavn og passord først.</translation>
     </message>
     <message>
         <source>Enter your recovery key first.</source>
-        <translation>Skriv inn gjenopprettingsnøkkelen din først.</translation>
+        <translation>Oppgi gjenopprettingsnøkkelen din først.</translation>
     </message>
     <message>
         <source>The file could not be saved.</source>
@@ -892,11 +892,11 @@
     </message>
     <message>
         <source>The homeserver did not return a login page.</source>
-        <translation>Hjemmetjeneren returnerte ingen innloggingsside.</translation>
+        <translation>Hjemmetjeneren returnerte ikke en innloggingsside.</translation>
     </message>
     <message>
         <source>The homeserver did not return a sign-in code.</source>
-        <translation>Hjemmetjeneren returnerte ingen innloggingskode.</translation>
+        <translation>Hjemmetjeneren returnerte ikke en innloggingskode.</translation>
     </message>
 </context>
 <context>
@@ -982,7 +982,7 @@
     </message>
     <message>
         <source>Remove from room</source>
-        <translation>Fjern fra rommet</translation>
+        <translation>Fjern fra rom</translation>
     </message>
     <message>
         <source>Removing</source>
@@ -1120,15 +1120,15 @@
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
-        <translation>Flytt til en space</translation>
+        <translation>Flytt til romgruppe</translation>
     </message>
     <message>
         <source>No other space</source>
-        <translation>Ingen annen space</translation>
+        <translation>Ingen annen romgruppe</translation>
     </message>
     <message>
         <source>Create another space first to move rooms between them.</source>
-        <translation>Opprett først en space til for å kunne flytte rom mellom dem.</translation>
+        <translation>Opprett en annen romgruppe først for å flytte rom mellom dem.</translation>
     </message>
 </context>
 <context>
@@ -1143,7 +1143,7 @@
     </message>
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
-        <translation>Motparten får en invitasjon, og samtalen vises straks i listen din. Meldinger er krypterte fra begynnelsen.</translation>
+        <translation>Motparten mottar en invitasjon, og samtalen vises i listen din med en gang. Meldingene er kryptert fra starten.</translation>
     </message>
 </context>
 <context>
@@ -1154,7 +1154,7 @@
     </message>
     <message>
         <source>Show in conversation</source>
-        <translation>Vis i samtalen</translation>
+        <translation>Vis i samtale</translation>
     </message>
     <message>
         <source>Unpin</source>
@@ -1162,7 +1162,7 @@
     </message>
     <message>
         <source>Pinned messages unavailable</source>
-        <translation>Festede meldinger er utilgjengelige</translation>
+        <translation>Festede meldinger utilgjengelig</translation>
     </message>
     <message>
         <source>No pinned messages</source>
@@ -1170,18 +1170,18 @@
     </message>
     <message>
         <source>The server does not hand out these messages. They are older than this server&apos;s copy of the room.</source>
-        <translation>Tjeneren gir ikke ut disse meldingene. De er eldre enn tjenerens kopi av rommet.</translation>
+        <translation>Tjeneren gir ikke ut disse meldingene. De er eldre enn denne tjenerens kopi av rommet.</translation>
     </message>
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
-        <translation>Hold inne en melding i samtalen for å feste den.</translation>
+        <translation>Trykk og hold på en melding i samtalen for å feste den.</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
-        <translation>ingen øktbeskrivelse</translation>
+        <translation>ingen sesjonsbeskrivelse</translation>
     </message>
 </context>
 <context>
@@ -1196,7 +1196,7 @@
     </message>
     <message>
         <source>Space</source>
-        <translation>Space</translation>
+        <translation>Romgruppe</translation>
     </message>
 </context>
 <context>
@@ -1207,11 +1207,11 @@
     </message>
     <message>
         <source>Really leave this room?</source>
-        <translation>Virkelig forlate dette rommet?</translation>
+        <translation>Vil du virkelig forlate dette rommet?</translation>
     </message>
     <message>
         <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
-        <translation>Rommet forlates og glemmes. Det forsvinner fra samtalelisten, og å komme inn igjen krever en ny invitasjon eller en offentlig adresse.</translation>
+        <translation>Rommet forlates og glemmes. Det forsvinner fra samtalelisten, og for å komme inn igjen kreves en ny invitasjon eller en offentlig adresse.</translation>
     </message>
     <message>
         <source>Leave</source>
@@ -1219,11 +1219,11 @@
     </message>
     <message>
         <source>Leaving room</source>
-        <translation>Forlater rommet</translation>
+        <translation>Forlater rom</translation>
     </message>
     <message>
         <source>Leave room</source>
-        <translation>Forlat rommet</translation>
+        <translation>Forlat rom</translation>
     </message>
     <message>
         <source>Room</source>
@@ -1271,11 +1271,11 @@
     </message>
     <message>
         <source>Stored with the account, so it holds in every client</source>
-        <translation>Lagres med kontoen og gjelder derfor i hver klient</translation>
+        <translation>Lagres på kontoen, så det gjelder i alle klienter</translation>
     </message>
     <message>
         <source>Account default</source>
-        <translation>Kontoens standard</translation>
+        <translation>Kontostandard</translation>
     </message>
     <message>
         <source>Every message</source>
@@ -1283,7 +1283,7 @@
     </message>
     <message>
         <source>Only mentions and keywords</source>
-        <translation>Bare omtaler og nøkkelord</translation>
+        <translation>Kun nevnelser og nøkkelord</translation>
     </message>
     <message>
         <source>Nothing (muted)</source>
@@ -1299,7 +1299,7 @@
     </message>
     <message>
         <source>Sorts to the bottom of the list and stays quiet</source>
-        <translation>Sorteres nederst i listen og holder seg stille</translation>
+        <translation>Sorteres til bunnen av listen og forblir stille</translation>
     </message>
     <message>
         <source>Details</source>
@@ -1319,11 +1319,11 @@
     </message>
     <message>
         <source>Turning on encryption</source>
-        <translation>Slår på krypteringen</translation>
+        <translation>Slår på kryptering</translation>
     </message>
     <message>
         <source>Turn on encryption</source>
-        <translation>Slå på krypteringen</translation>
+        <translation>Slå på kryptering</translation>
     </message>
     <message>
         <source>Renegotiate encryption?</source>
@@ -1374,19 +1374,19 @@
     <name>RoomListPage</name>
     <message>
         <source>Really decline this invitation?</source>
-        <translation>Virkelig avslå denne invitasjonen?</translation>
+        <translation>Vil du virkelig avvise denne invitasjonen?</translation>
     </message>
     <message>
         <source>Really leave this room?</source>
-        <translation>Virkelig forlate dette rommet?</translation>
+        <translation>Vil du virkelig forlate dette rommet?</translation>
     </message>
     <message>
         <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
-        <translation>Invitasjonen er borte etterpå. Du kommer bare inn igjen hvis noen inviterer deg på nytt.</translation>
+        <translation>Invitasjonen forsvinner etterpå. Du kan bare komme inn igjen dersom noen inviterer deg på nytt.</translation>
     </message>
     <message>
         <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
-        <translation>Rommet forlates og glemmes. Det forsvinner fra samtalelisten, og å komme inn igjen krever en ny invitasjon eller en offentlig adresse.</translation>
+        <translation>Rommet forlates og glemmes. Det forsvinner fra samtalelisten, og for å komme inn igjen kreves en ny invitasjon eller en offentlig adresse.</translation>
     </message>
     <message>
         <source>Decline</source>
@@ -1398,11 +1398,11 @@
     </message>
     <message>
         <source>Declining</source>
-        <translation>Avslår</translation>
+        <translation>Avviser</translation>
     </message>
     <message>
         <source>Leaving room</source>
-        <translation>Forlater rommet</translation>
+        <translation>Forlater rom</translation>
     </message>
     <message>
         <source>Rooms</source>
@@ -1414,7 +1414,7 @@
     </message>
     <message>
         <source>Offline — waiting for the network</source>
-        <translation>Frakoblet — venter på nettverket</translation>
+        <translation>Frakoblet — venter på nettverk</translation>
     </message>
     <message>
         <source>Your homeserver does not offer the sync this app needs (simplified sliding sync, MSC4186). Rooms cannot be loaded from it. A newer server version, or an account on a server that supports it, is required.</source>
@@ -1434,7 +1434,7 @@
     </message>
     <message>
         <source>Normal priority</source>
-        <translation>Vanlig prioritet</translation>
+        <translation>Normal prioritet</translation>
     </message>
     <message>
         <source>Low priority</source>
@@ -1442,7 +1442,7 @@
     </message>
     <message>
         <source>Unmute</source>
-        <translation>Slå på lyden</translation>
+        <translation>Slå på lyd</translation>
     </message>
     <message>
         <source>Mute</source>
@@ -1450,11 +1450,11 @@
     </message>
     <message>
         <source>Decline invitation</source>
-        <translation>Avslå invitasjonen</translation>
+        <translation>Avvis invitasjon</translation>
     </message>
     <message>
         <source>Leave room</source>
-        <translation>Forlat rommet</translation>
+        <translation>Forlat rom</translation>
     </message>
     <message>
         <source>No rooms</source>
@@ -1462,7 +1462,7 @@
     </message>
     <message>
         <source>Rooms you join show up here once the first sync is through.</source>
-        <translation>Rom du blir med i vises her så snart den første synkroniseringen er ferdig.</translation>
+        <translation>Rom du blir med i vises her så snart den første synkroniseringen er fullført.</translation>
     </message>
     <message>
         <source>About xmatic</source>
@@ -1482,7 +1482,7 @@
     </message>
     <message>
         <source>Discover rooms</source>
-        <translation>Oppdag rom</translation>
+        <translation>Utforsk rom</translation>
     </message>
     <message>
         <source>Make start page</source>
@@ -1501,19 +1501,19 @@
     <name>RoomPage</name>
     <message>
         <source>Really decline this invitation?</source>
-        <translation>Virkelig avslå denne invitasjonen?</translation>
+        <translation>Vil du virkelig avvise denne invitasjonen?</translation>
     </message>
     <message>
         <source>Really leave this room?</source>
-        <translation>Virkelig forlate dette rommet?</translation>
+        <translation>Vil du virkelig forlate dette rommet?</translation>
     </message>
     <message>
         <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
-        <translation>Invitasjonen er borte etterpå. Du kommer bare inn igjen hvis noen inviterer deg på nytt.</translation>
+        <translation>Invitasjonen forsvinner etterpå. Du kan bare komme inn igjen dersom noen inviterer deg på nytt.</translation>
     </message>
     <message>
         <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
-        <translation>Rommet forlates og glemmes. Det forsvinner fra samtalelisten, og å komme inn igjen krever en ny invitasjon eller en offentlig adresse.</translation>
+        <translation>Rommet forlates og glemmes. Det forsvinner fra samtalelisten, og for å komme inn igjen kreves en ny invitasjon eller en offentlig adresse.</translation>
     </message>
     <message>
         <source>Decline</source>
@@ -1525,11 +1525,11 @@
     </message>
     <message>
         <source>Declining</source>
-        <translation>Avslår</translation>
+        <translation>Avviser</translation>
     </message>
     <message>
         <source>Leaving room</source>
-        <translation>Forlater rommet</translation>
+        <translation>Forlater rom</translation>
     </message>
     <message>
         <source>The sender did not share the key: they consider this device insecure. Verify this device.</source>
@@ -1565,19 +1565,19 @@
     </message>
     <message>
         <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Kan ikke dekrypteres — enheten mangler nøkkelen</translation>
+        <translation>Kan ikke dekrypteres — denne enheten mangler nøkkelen</translation>
     </message>
     <message>
         <source>Decline invitation</source>
-        <translation>Avslå invitasjonen</translation>
+        <translation>Avvis invitasjon</translation>
     </message>
     <message>
         <source>Leave room</source>
-        <translation>Forlat rommet</translation>
+        <translation>Forlat rom</translation>
     </message>
     <message>
         <source>Call</source>
-        <translation>Samtale</translation>
+        <translation>Start samtale</translation>
     </message>
     <message>
         <source>Video call</source>
@@ -1601,11 +1601,11 @@
     </message>
     <message>
         <source>Room info</source>
-        <translation>Rominfo</translation>
+        <translation>Rominformasjon</translation>
     </message>
     <message>
         <source>Offline — waiting for the network</source>
-        <translation>Frakoblet — venter på nettverket</translation>
+        <translation>Frakoblet — venter på nettverk</translation>
     </message>
     <message>
         <source>Invitation</source>
@@ -1644,12 +1644,12 @@
     </message>
     <message>
         <source>Beginning of the conversation</source>
-        <translation>Begynnelsen av samtalen</translation>
+        <translation>Starten på samtalen</translation>
     </message>
     <message>
         <source>Call</source>
         <comment>timeline system line, a noun</comment>
-        <translation>Samtale</translation>
+        <translation>Start samtale</translation>
     </message>
     <message>
         <source>%1 joined</source>
@@ -1657,7 +1657,7 @@
     </message>
     <message>
         <source>%1 left</source>
-        <translation>%1 gikk</translation>
+        <translation>%1 forlot rommet</translation>
     </message>
     <message>
         <source>%1 was invited</source>
@@ -1673,7 +1673,7 @@
     </message>
     <message>
         <source>%1 declined the invitation</source>
-        <translation>%1 avslo invitasjonen</translation>
+        <translation>%1 avviste invitasjonen</translation>
     </message>
     <message>
         <source>%1 asked to join</source>
@@ -1681,11 +1681,11 @@
     </message>
     <message>
         <source>%1 changed membership</source>
-        <translation>%1 endret medlemskap</translation>
+        <translation>%1 endret medlemskapsstatus</translation>
     </message>
     <message>
         <source>%1 changed their profile</source>
-        <translation>%1 endret profilen sin</translation>
+        <translation>%1 endret sin profil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -1753,11 +1753,11 @@
     </message>
     <message>
         <source>Accept invitation</source>
-        <translation>Godta invitasjonen</translation>
+        <translation>Godta invitasjon</translation>
     </message>
     <message>
         <source>Recording… %1 s</source>
-        <translation>Tar opp… %1 s</translation>
+        <translation>Spiller inn… %1 s</translation>
     </message>
     <message>
         <source>Reply to %1</source>
@@ -1765,7 +1765,7 @@
     </message>
     <message>
         <source>Editing message</source>
-        <translation>Redigerer meldingen</translation>
+        <translation>Redigerer melding</translation>
     </message>
     <message>
         <source>New text</source>
@@ -1815,11 +1815,11 @@
     </message>
     <message>
         <source>Your session is stored encrypted, and the key was not available when xmatic started.</source>
-        <translation>Økten din er lagret kryptert, og nøkkelen var ikke tilgjengelig da xmatic startet.</translation>
+        <translation>Sesjonen din er lagret kryptert, og nøkkelen var ikke tilgjengelig da xmatic startet.</translation>
     </message>
     <message>
         <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Nøkkelen ligger i enhetens hemmelighetslager. Prøv igjen og bekreft systemets forespørsel; godkjenningen gjelder til neste omstart av enheten.</translation>
+        <translation>Nøkkelen ligger i enhetens hemmelighetslager. Prøv igjen og bekreft systemets forespørsel; godkjenningen varer til neste omstart av enheten.</translation>
     </message>
     <message>
         <source>Try again</source>
@@ -1841,7 +1841,7 @@
     <name>SpacePage</name>
     <message>
         <source>Space</source>
-        <translation>Space</translation>
+        <translation>Romgruppe</translation>
     </message>
     <message>
         <source>Add rooms</source>
@@ -1853,15 +1853,15 @@
     </message>
     <message>
         <source>Move to space</source>
-        <translation>Flytt til en space</translation>
+        <translation>Flytt til romgruppe</translation>
     </message>
     <message>
         <source>Remove from space</source>
-        <translation>Fjern fra din space</translation>
+        <translation>Fjern fra romgruppe</translation>
     </message>
     <message>
         <source>Linked, not joined</source>
-        <translation>Lenket, ikke med</translation>
+        <translation>Lenket, ikke blitt med</translation>
     </message>
     <message numerus="yes">
         <source>%n member(s)</source>
@@ -1880,22 +1880,22 @@
     </message>
     <message>
         <source>No rooms in this space</source>
-        <translation>Ingen rom i denne spacen</translation>
+        <translation>Ingen rom i denne romgruppen</translation>
     </message>
     <message>
         <source>Add rooms with the pulldown menu, or rooms of this space that you have joined show up here.</source>
-        <translation>Legg til rom med nedtrekksmenyen, eller så vises rommene i din space som du har blitt med i her.</translation>
+        <translation>Legg til rom via nedtrekksmenyen, eller rom i denne romgruppen du har blitt med i vil vises her.</translation>
     </message>
 </context>
 <context>
     <name>SpacesPage</name>
     <message>
         <source>Really delete this space?</source>
-        <translation>Virkelig slette denne spacen?</translation>
+        <translation>Er du sikker på at du vil slette denne romgruppen?</translation>
     </message>
     <message>
         <source>The space is left and forgotten. The rooms in it are not touched — they stay in the chat list.</source>
-        <translation>Din space forlates og glemmes. Rommene i den røres ikke — de blir værende i samtalelisten.</translation>
+        <translation>Romgruppen forlates og glemmes. Rommene i den berøres ikke — de blir værende i samtalelisten.</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1903,19 +1903,19 @@
     </message>
     <message>
         <source>Deleting space</source>
-        <translation>Sletter space</translation>
+        <translation>Sletter romgruppe</translation>
     </message>
     <message>
         <source>Spaces</source>
-        <translation>Spaces</translation>
+        <translation>Romgrupper</translation>
     </message>
     <message>
         <source>Offline — waiting for the network</source>
-        <translation>Frakoblet — venter på nettverket</translation>
+        <translation>Frakoblet — venter på nettverk</translation>
     </message>
     <message>
         <source>Create space</source>
-        <translation>Opprett space</translation>
+        <translation>Opprett romgruppe</translation>
     </message>
     <message>
         <source>Make start page</source>
@@ -1923,15 +1923,15 @@
     </message>
     <message>
         <source>Delete space</source>
-        <translation>Slett space</translation>
+        <translation>Slett romgruppe</translation>
     </message>
     <message>
         <source>No spaces</source>
-        <translation>Ingen spaces</translation>
+        <translation>Ingen romgrupper</translation>
     </message>
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
-        <translation>De spacene du er medlem av vises her. En space samler rom.</translation>
+        <translation>Romgrupper du er medlem av vises her. Romgrupper samler rom sammen.</translation>
     </message>
 </context>
 <context>
@@ -1950,7 +1950,7 @@
     </message>
     <message>
         <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Kan ikke dekrypteres — enheten mangler nøkkelen</translation>
+        <translation>Kan ikke dekrypteres — denne enheten mangler nøkkelen</translation>
     </message>
     <message>
         <source>Message deleted</source>
@@ -1977,7 +1977,7 @@
     <name>UnverifiedRecipientsDialog</name>
     <message>
         <source>Send anyway</source>
-        <translation>Send likevel</translation>
+        <translation>Send allikevel</translation>
     </message>
     <message>
         <source>Unverified devices</source>
@@ -1985,7 +1985,7 @@
     </message>
     <message>
         <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Meldingen krypteres for enheter du ikke har verifisert. Verifiser dem for å være helt sikker, eller send likevel.</translation>
+        <translation>Meldingen vil bli kryptert for enheter du ikke har verifisert. Verifiser dem for reell sikkerhet, eller send likevel.</translation>
     </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
@@ -2004,7 +2004,7 @@
     </message>
     <message>
         <source>Applies until you verify or clear it.</source>
-        <translation>Gjelder til du verifiserer eller nullstiller.</translation>
+        <translation>Gjelder til du verifiserer eller fjerner valget.</translation>
     </message>
 </context>
 <context>
@@ -2015,7 +2015,7 @@
     </message>
     <message>
         <source>Another one of your devices</source>
-        <translation>Enda en av enhetene dine</translation>
+        <translation>En annen av dine enheter</translation>
     </message>
     <message>
         <source>Your answer is in. Waiting for the other device.</source>
@@ -2023,23 +2023,23 @@
     </message>
     <message>
         <source>Waiting for the other device to accept.</source>
-        <translation>Venter på at den andre enheten godtar.</translation>
+        <translation>Venter på at den andre enheten skal godta.</translation>
     </message>
     <message>
         <source>Waiting for the other side to accept the request on their device.</source>
-        <translation>Venter på at motparten godtar forespørselen på sin enhet.</translation>
+        <translation>Venter på at motparten skal godta forespørselen på sin enhet.</translation>
     </message>
     <message>
         <source>Confirm that this is really your other device. Once verified, both can share room keys and older messages become readable.</source>
-        <translation>Bekreft at dette virkelig er din andre enhet. Når de er verifisert kan begge dele romnøkler, og eldre meldinger blir lesbare.</translation>
+        <translation>Bekreft at dette virkelig er din andre enhet. Når den er verifisert, kan begge dele romnøkler slik at eldre meldinger kan leses.</translation>
     </message>
     <message>
         <source>Confirm that you are really talking to this person and not to someone in between.</source>
-        <translation>Bekreft at du virkelig snakker med denne personen og ikke med noen imellom.</translation>
+        <translation>Bekreft at du virkelig snakker med denne personen og ikke en tredjepart i mellom.</translation>
     </message>
     <message>
         <source>Both devices must show the same emoji, in the same order.</source>
-        <translation>Begge enhetene må vise de samme emojiene, i samme rekkefølge.</translation>
+        <translation>Begge enheter må vise de samme emojiene, i samme rekkefølge.</translation>
     </message>
     <message>
         <source>Verified.</source>
@@ -2051,7 +2051,7 @@
     </message>
     <message>
         <source>They do not match</source>
-        <translation>De stemmer ikke</translation>
+        <translation>De stemmer ikke overens</translation>
     </message>
     <message>
         <source>Decline</source>
@@ -2059,11 +2059,11 @@
     </message>
     <message>
         <source>They match</source>
-        <translation>De stemmer</translation>
+        <translation>De stemmer overens</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Svar</translation>
+        <translation>Godta</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2085,7 +2085,7 @@
     <name>VoiceRecorder</name>
     <message>
         <source>Nothing was recorded.</source>
-        <translation>Ingenting ble tatt opp.</translation>
+        <translation>Det ble ikke gjort opptak.</translation>
     </message>
 </context>
 <context>
@@ -2117,8 +2117,8 @@
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
-            <numerusform>%n omtale</numerusform>
-            <numerusform>%n omtaler</numerusform>
+            <numerusform>%n nevnelse</numerusform>
+            <numerusform>%n nevnelser</numerusform>
         </translation>
     </message>
     <message numerus="yes">
