@@ -114,9 +114,10 @@ strip %{buildroot}%{_bindir}/%{name}
 - The interface is available in the twenty-four official languages of the
   European Union, in Russian, Norwegian and Icelandic. It also no longer
   simply follows the phone: Account now has a language of its own, English
-  included, because only the German translation has been checked by a native
-  speaker and one has to be able to get back out of the others. A change takes
-  effect the next time the app starts.
+  included, because most of these are machine translations and one has to be
+  able to get back out of them. A change takes effect the next time the app
+  starts. Norwegian is the exception - most of it was contributed by a
+  Norwegian speaker, and German is the other one that has been read by one.
 
 * Fri Aug 21 2026 harbour-xmatic contributors 0.20.0-1
 - A new room is now described completely at the moment it is created, because
