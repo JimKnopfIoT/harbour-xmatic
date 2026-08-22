@@ -231,13 +231,10 @@ pub async fn build_client(
         .handle_refresh_tokens()
         // SingleProcess, deliberately. The multi-process lock guards against a
         // second process on the same store (single-use OAuth refresh tokens),
-        // and xmatic makes sure there is none: `src/instancelock.cpp` takes an
-        // flock on the data directory before the store is opened and a second
-        // start hands over to the running instance. That guard is the whole
-        // justification for this line - do not assume the launcher provides it.
-        // It does not: the desktop file starts the app as a generic
-        // application, so mapplauncherd and its --single-instance are out of
-        // the picture, and the D-Bus name is only owned once QML has loaded.
+        // and `src/instancelock.cpp` is what makes sure there is none: an flock
+        // taken before the store opens. That guard is the justification for this
+        // line. The launcher covers only the icon tap, not the D-Bus activation
+        // the share service and notifications use.
         // The lock is not free either - its lease is re-written into
         // the crypto store every 50 ms (EXTEND_LEASE_EVERY_MS), which kept
         // ~50 fsyncs/s and a 60 Hz tokio tick running while the app was idle:
