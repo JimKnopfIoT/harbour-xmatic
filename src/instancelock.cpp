@@ -1,14 +1,14 @@
 // Single-instance enforcement.
 //
-// The Rust core runs its SQLite stores with CrossProcessLockConfig::SingleProcess
-// (core/src/session.rs), which is only safe while there really is one process
-// per store: two of them race for single-use OAuth refresh tokens and write the
-// crypto store under each other. Nothing on the system enforces that on its own.
-// The desktop file starts the app as X-Nemo-Application-Type=generic, so
-// mapplauncherd — the component that would apply --single-instance — is not in
-// the picture at all, and the D-Bus name the app owns is only taken once QML has
-// loaded, which leaves the whole start-up open. This file closes that window
-// before the store is opened.
+// The core runs its SQLite stores with CrossProcessLockConfig::SingleProcess
+// (core/src/session.rs), safe only with one process per store: two race for
+// single-use OAuth refresh tokens and write the crypto store under each other.
+//
+// The icon tap is covered without this file — lipstick launches even a generic
+// application through `invoker --single-instance` (verified on the device). What
+// is not covered is D-Bus activation: the share service and a notification start
+// the app from org.xmatic.xmatic.service, past the invoker, and the name that
+// would deduplicate them is only owned once QML has loaded.
 //
 // flock() rather than a PID file: the kernel releases it when the process dies,
 // whichever way it dies, so there is no stale lock to reason about after a
