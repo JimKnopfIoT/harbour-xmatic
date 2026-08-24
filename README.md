@@ -24,8 +24,7 @@ and key backup therefore come from upstream rather than from this repository.
   already exists on the server
 * Room list over Simplified Sliding Sync, with search and unread counts,
   grouped so favourites sit at the top and low-priority rooms at the bottom
-* Timeline in encrypted rooms: send, reply, edit, delete, paginate, read
-  receipts
+* Timeline in encrypted rooms: send, reply, edit, delete, paginate
 * **Formatted messages** render as formatting rather than as raw text: bold,
   italic, code blocks, quotes, lists, headings and links. What a message
   carries as HTML is rewritten inside the app into the small markup Qt can
@@ -106,12 +105,13 @@ and key backup therefore come from upstream rather than from this repository.
 * The app has to stay open — its cover on the home screen is the running
   process. There is no background daemon, the same way other messengers on
   this platform work.
-* **Only the German translation has been read by a native speaker.** The other
-  twenty-six are a single machine pass: usable, not verified.
-  `translations/STATUS.md` records the state per language and the corrections
-  already made. Offers to review one are welcome —
-  `tools/translation-review.py <lang>` prints a numbered sheet grouped by the
-  page each string appears on.
+* **Most translations are unreviewed.** German is the project language;
+  Norwegian came largely from a Norwegian speaker, and Finnish, Swedish and
+  Danish have had a correction pass. The rest are a single machine pass:
+  usable, not verified. An offer to review one is welcome — open an issue and
+  you get a numbered sheet of that language to correct.
+* Read status is not shown, and a room counts as read when you open it, not
+  while you read it.
 * Spoilers are marked rather than hidden. The text renderer available here
   cannot hide a run of text, so a spoiler shows with a marker in front of it.
 
@@ -193,6 +193,6 @@ functions; everything else is a JSON message type.
 
 ## Licence
 
-Apache-2.0, matching matrix-rust-sdk. The Rust core links a number of upstream
-crates, each under its own permissive licence (see `core/Cargo.toml` and the
-crates it pulls in).
+Copyright 2026 JimKnopfIoT. Apache-2.0, matching matrix-rust-sdk. The Rust
+core links a number of upstream crates, each under its own permissive licence
+(see `core/Cargo.toml` and the crates it pulls in).

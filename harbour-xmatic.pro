@@ -178,19 +178,10 @@ TRANSLATIONS += \
 
 DISTFILES += \
     LICENSE \
-    translations/STATUS.md \
     README.md \
-    docs/README.md \
-    docs/ARCHITECTURE.md \
-    docs/BUILD.md \
-    docs/FEATURES.md \
-    docs/CALLS.md \
-    docs/SECURITY.md \
-    docs/PITFALLS.md \
     harbour-xmatic.desktop \
     rpm/harbour-xmatic.spec \
     icons/xmatic-logo.svg \
-    tools/translation-review.py \
     qml/harbour-xmatic.qml \
     qml/cover/CoverPage.qml \
     qml/pages/AccountPage.qml \
