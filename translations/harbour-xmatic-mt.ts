@@ -123,6 +123,22 @@
         <source>Language</source>
         <translation>Lingwa</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Uri l-istat tal-qari ta&apos; oħrajn</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Mitfi, ma jinġieb xejn dwar min qara xiex, li jżomm ukoll il-konversazzjoni aktar bla xkiel. Mixgħul, il-messaġġi tiegħek juru kemm-il persuna qrathom.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Messaġġi bil-vuċi</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Mixgħul, hemm mikrofonu ħdejn il-qasam tal-messaġġ: żommu biex tirrekordja, itilqu biex tibgħat. Mitfi, mhuwiex hemm.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -224,6 +240,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Opaċità tal-bżieżaq</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reazzjonijiet bħala stampi</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Mitfi, reazzjoni titpinġa bħala l-karattru li hi — dejjem tajjeb u bla ħlas. Mixgħul, xmatic ifittex għaliha stampa tiegħek f&apos;%1, imsemmija skont il-code points tagħha (1f44d.svg). Xejn ma jinġieb miegħu u xejn ma jitniżżel. Iżen: fajl ta&apos; stampa jinfetaħ minn dekowder tal-istampi, u hemm hu fejn app ta&apos; din ix-xorta hija l-aktar esposta.</translation>
     </message>
 </context>
 <context>
@@ -1119,6 +1143,18 @@
         <source>Delete</source>
         <translation>Ħassar</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Warrab</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Ibgħat mill-ġdid</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Irreaġixxi</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1186,6 +1222,40 @@
     <message>
         <source>no session description</source>
         <translation>ebda deskrizzjoni tas-sessjoni</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Irreaġixxi</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Xi ħaġa oħra</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Kmamar</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Konversazzjoni ġdida</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Kamra ġdida</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Idħol f&apos;kamra</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Skopri kmamar</translation>
     </message>
 </context>
 <context>
@@ -1473,22 +1543,6 @@
         <translation>Dwar xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Konversazzjoni ġdida</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Kamra ġdida</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Idħol f&apos;kamra</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Skopri kmamar</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Agħmilha l-paġna tal-bidu</translation>
     </message>
@@ -1499,6 +1553,10 @@
     <message>
         <source>Sign out</source>
         <translation>Oħroġ</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Immarka bħala moqri</translation>
     </message>
 </context>
 <context>
@@ -1785,6 +1843,27 @@
         <source>That message is not in the loaded history</source>
         <translation>Dak il-messaġġ mhux fl-istorja mniżżla</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>moqri minn %n</numerusform>
+            <numerusform>moqri minn %n</numerusform>
+            <numerusform>moqri minn %n</numerusform>
+            <numerusform>moqri minn %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Warrab</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Ibgħat mill-ġdid</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Irreaġixxi</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1987,14 +2066,6 @@
         <source>Send anyway</source>
         <translation>Ibgħat xorta</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Apparati mhux ivverifikati</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Il-messaġġ se jiġi ċċifrat għal apparati li ma vverifikajtx. Ivverifikahom għal ċertezza vera, jew ibagħtu xorta.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2015,6 +2086,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Jgħodd sakemm tivverifika jew tirrisettja.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>iċ-ċwievet inbidlu minn meta vverifikajthom</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>mhux ivverifikat</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Dan l-apparat mhux ivverifikat</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Riċevituri mhux ivverifikati</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Il-messaġġ se jiġi kkriptat għal riċevituri li ma vverifikajtx. Ivverifikahom għal ċertezza vera, jew ibgħat xorta waħda.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Terġax twissi</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Sakemm dan l-apparat mhux ivverifikat, l-ebda apparat ieħor ma jista&apos; jintwera bħala vverifikat — lanqas wieħed li huwa. Ivverifikah f&apos;Kont → Ċifrar, jew ibgħat xorta waħda.</translation>
     </message>
 </context>
 <context>

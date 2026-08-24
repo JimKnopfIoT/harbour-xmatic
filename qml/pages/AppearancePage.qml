@@ -224,6 +224,16 @@ Page {
             // The way back, in plain sight: every colour to the ambience, both
             // opacities to their defaults. The pull-down carries the same
             // entry, but a reset that has to be found is not a safety net.
+            TextSwitch {
+                text: qsTr("Reactions as pictures")
+                // The path and the warning belong where the choice is made,
+                // not in a manual nobody has.
+                description: qsTr("Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.").arg(matrix.emojiDirectory)
+                checked: settings.emojiImages
+                automaticCheck: false
+                onClicked: settings.emojiImages = !settings.emojiImages
+            }
+
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Reset to defaults")

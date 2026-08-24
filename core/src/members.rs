@@ -7,6 +7,7 @@
 //! stream would be the follow-up if that ever matters.
 
 use crate::timeline::scrub_ids;
+use crate::text::strip_bidi;
 use matrix_sdk::ruma::events::ignored_user_list::{IgnoredUser, IgnoredUserListEventContent};
 use matrix_sdk::ruma::events::room::member::MembershipState;
 use matrix_sdk::ruma::events::room::power_levels::UserPowerLevel;
@@ -63,7 +64,7 @@ pub async fn load(client: &Client, room_id: &str) -> Result<Vec<Value>, String> 
         .iter()
         .map(|member| {
             let user_id = member.user_id().as_str().to_owned();
-            let name = member.display_name().unwrap_or_default().to_owned();
+            let name = strip_bidi(member.display_name().unwrap_or_default());
             let level = power(member.power_level());
             let is_self = own_id.as_deref() == Some(member.user_id());
             let can_remove = !is_self
@@ -95,12 +96,24 @@ pub async fn load(client: &Client, room_id: &str) -> Result<Vec<Value>, String> 
     Ok(rows.into_iter().map(|(_, _, row)| row).collect())
 }
 
-/// Joined recipients of an encrypted room that still have unverified devices,
-/// so the UI can warn before a message goes to a session the user never
-/// checked. One entry per user, with how many of their devices are unverified.
+/// Joined recipients of an encrypted room the user has reason to check before
+/// sending. One entry per user: `{ userId, name, devices, reason }`, empty for
+/// an unencrypted room and when nothing is open. This device is skipped — it is
+/// always trusted to itself.
 ///
-/// Empty for an unencrypted room and when everything is verified. This device
-/// is skipped — it is always trusted to itself.
+/// `reason` says what is actually wrong, because the four cases need different
+/// words and used to be reported as one:
+///
+/// * `ownDevice` — **this** device is unverified. `Device::is_verified` is only
+///   ever true once our own identity is verified (`matrix-sdk-crypto`,
+///   `identities/device.rs`), so in that state every other device reads
+///   "unverified" no matter how well it is cross-signed. The old code counted
+///   them and reported everybody's sessions as unchecked, which two users read
+///   as a bug in the counting. It is one entry now, and it names the cause.
+/// * `violation` — that user's keys changed after they were verified.
+/// * `identity` — that user was never verified; `devices` is how many they have.
+/// * `devices` — the user is verified but has sessions their own identity has
+///   not signed; `devices` counts those.
 ///
 /// A member whose devices this client has never downloaded is asked for
 /// explicitly. `get_user_devices` reads the local crypto store and nothing
@@ -127,7 +140,24 @@ pub async fn unverified_recipients(client: &Client, room_id: &str) -> Result<Vec
     let own_device = client.device_id().map(|device| device.to_owned());
     let encryption = client.encryption();
 
+    // An empty store means "never fetched", not "unverified" — the same rule
+    // the loop below applies to a member's devices. Judging this device from
+    // an empty store would warn about it right after every fresh login.
+    let own_verified = match &own_user {
+        Some(user) => {
+            let mut identity = encryption.get_user_identity(user).await.ok().flatten();
+            if identity.is_none() {
+                if let Ok(fetched) = encryption.request_user_identity(user).await {
+                    identity = fetched;
+                }
+            }
+            identity.is_some_and(|identity| identity.is_verified())
+        }
+        None => false,
+    };
+
     let mut out = Vec::new();
+    let mut any_unverified = false;
     for member in members {
         let user_id = member.user_id();
         let mut devices = encryption
@@ -148,23 +178,64 @@ pub async fn unverified_recipients(client: &Client, room_id: &str) -> Result<Vec
             }
         }
 
-        let unverified = devices
-            .devices()
-            .filter(|device| {
-                // This very device is us; it needs no verifying against itself.
-                let is_own_current = own_user.as_deref() == Some(user_id)
-                    && own_device.as_deref() == Some(device.device_id());
-                !is_own_current && !device.is_verified()
-            })
-            .count();
+        let others = devices.devices().filter(|device| {
+            // This very device is us; it needs no verifying against itself.
+            let is_own_current = own_user.as_deref() == Some(user_id)
+                && own_device.as_deref() == Some(device.device_id());
+            !is_own_current
+        });
 
-        if unverified > 0 {
-            out.push(json!({
-                "userId": user_id.as_str(),
-                "name": member.display_name().unwrap_or_default(),
-                "devices": unverified,
-            }));
+        let mut total = 0;
+        let mut unsigned = 0;
+        for device in others {
+            total += 1;
+            if !device.is_verified() {
+                any_unverified = true;
+            }
+            if !device.is_cross_signed_by_owner() && !device.is_locally_trusted() {
+                unsigned += 1;
+            }
         }
+        if total == 0 {
+            continue;
+        }
+
+        let identity = encryption.get_user_identity(user_id).await.ok().flatten();
+        let (reason, count) = match &identity {
+            Some(identity) if identity.has_verification_violation() => ("violation", total),
+            Some(identity) if identity.is_verified() => ("devices", unsigned),
+            _ => ("identity", total),
+        };
+        if count == 0 {
+            continue;
+        }
+
+        out.push(json!({
+            "userId": user_id.as_str(),
+            "name": strip_bidi(member.display_name().unwrap_or_default()),
+            "devices": count,
+            "reason": reason,
+        }));
+    }
+
+    // While this device is unverified nothing above can be trusted as an
+    // answer about anyone else, so it collapses to the one fact that is true.
+    // A room where nothing is open stays quiet either way.
+    if !own_verified {
+        if !any_unverified {
+            return Ok(Vec::new());
+        }
+        // Not the own address: the front end keys "do not warn again" on this
+        // field, and under the own id that tick would also silence a later
+        // warning about own sessions nothing has signed. A key no Matrix id
+        // can collide with - they all start with '@' - keeps the two apart,
+        // and the own address stays out of the settings file.
+        return Ok(vec![json!({
+            "userId": "own-device",
+            "name": "",
+            "devices": 0,
+            "reason": "ownDevice",
+        })]);
     }
 
     Ok(out)
@@ -307,7 +378,7 @@ pub async fn profile(client: &Client, room_id: &str, user_id: &str) -> Result<Va
     Ok(json!({
         "roomId": room.room_id().as_str(),
         "userId": user.as_str(),
-        "displayName": member.display_name().unwrap_or_default(),
+        "displayName": strip_bidi(member.display_name().unwrap_or_default()),
         "avatar": member.avatar_url().map(|url| url.to_string()),
         "membership": membership(member.membership()),
         "power": target_power,

@@ -18,6 +18,7 @@ use tokio::task::JoinHandle;
 
 use crate::protocol::event;
 use crate::runtime::Sink;
+use crate::text::strip_bidi;
 
 /// How many rooms one page of results carries.
 const PAGE_SIZE: u32 = 20;
@@ -32,8 +33,8 @@ pub enum Order {
 fn summarize(room: &RoomDescription) -> Value {
     json!({
         "id": room.room_id.as_str(),
-        "name": room.name.clone().unwrap_or_default(),
-        "topic": room.topic.clone().unwrap_or_default(),
+        "name": strip_bidi(room.name.as_deref().unwrap_or_default()),
+        "topic": strip_bidi(room.topic.as_deref().unwrap_or_default()),
         "alias": room
             .alias
             .as_ref()

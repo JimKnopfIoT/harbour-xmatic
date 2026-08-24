@@ -107,8 +107,15 @@ impl Writer {
     }
 
     /// Writes sender-provided text, escaped so it can never become markup.
+    ///
+    /// Direction controls are dropped on the way (`text::strip_bidi`): they are
+    /// invisible and reorder what follows, so a formatted message could show
+    /// one thing and say another.
     fn push_text(&mut self, text: &str, context: &Context) {
         for character in text.chars() {
+            if crate::text::is_bidi_control(character) {
+                continue;
+            }
             match character {
                 '&' => self.push_raw("&amp;"),
                 '<' => self.push_raw("&lt;"),

@@ -1,5 +1,7 @@
 #include "languagesettings.h"
 
+#include "appsettings.h"
+
 #include <QGuiApplication>
 #include <QSettings>
 #include <QStandardPaths>
@@ -10,15 +12,10 @@ namespace {
 
 // Same file and same reasoning as the appearance settings: UserScope would
 // write one level above the app's config directory, where Sailjail blocks it.
-QString settingsPath()
-{
-    return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)
-           + QStringLiteral("/settings.conf");
-}
 
 QString storedCode()
 {
-    QSettings settings(settingsPath(), QSettings::IniFormat);
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
     return settings.value(QStringLiteral("ui/language")).toString();
 }
 
@@ -30,11 +27,13 @@ const char *const kLanguages[][2] = {
     { "de", "Deutsch" },   { "el", "Ελληνικά" },  { "en", "English" },
     { "es", "Español" },   { "et", "Eesti" },     { "fi", "Suomi" },
     { "fr", "Français" },  { "ga", "Gaeilge" },   { "hr", "Hrvatski" },
-    { "hu", "Magyar" },    { "is", "Íslenska" },  { "it", "Italiano" },
+    { "hi", "हिन्दी" },       { "hu", "Magyar" },    { "is", "Íslenska" },
+    { "it", "Italiano" },
     { "lt", "Lietuvių" },  { "lv", "Latviešu" },  { "mt", "Malti" },
     { "nb", "Norsk bokmål" }, { "nl", "Nederlands" }, { "pl", "Polski" },
     { "pt", "Português" }, { "ro", "Română" },    { "ru", "Русский" },
     { "sk", "Slovenčina" }, { "sl", "Slovenščina" }, { "sv", "Svenska" },
+    { "zh_CN", "简体中文" },
 };
 
 } // namespace
@@ -52,7 +51,7 @@ void LanguageSettings::setCode(const QString &code)
     }
     m_code = code;
 
-    QSettings settings(settingsPath(), QSettings::IniFormat);
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
     settings.setValue(QStringLiteral("ui/language"), code);
     settings.sync();
     if (settings.status() != QSettings::NoError) {

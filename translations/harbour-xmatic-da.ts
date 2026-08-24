@@ -121,6 +121,22 @@
         <source>Language</source>
         <translation>Sprog</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Vis andres læsestatus</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Slået fra hentes intet om, hvem der har læst hvad, hvilket også holder samtalen mere glidende. Slået til viser dine egne beskeder, hvor mange der har læst dem.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Talebeskeder</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Slået til sidder der en mikrofon ved siden af beskedfeltet: hold den nede for at optage, slip for at sende. Slået fra er den der ikke.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -222,6 +238,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Boblernes dækkeevne</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reaktioner som billeder</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Slået fra tegnes en reaktion som det tegn, den er — altid rigtigt og gratis. Slået til leder xmatic efter dit eget billede til den i %1, opkaldt efter dens kodepunkter (1f44d.svg). Intet leveres med, og intet hentes. Vej det op: en billedfil åbnes af en billeddekoder, og dér er en app som denne mest udsat.</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1139,18 @@
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Kassér</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Send igen</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagér</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1182,6 +1218,40 @@
     <message>
         <source>no session description</source>
         <translation>ingen sessionsbeskrivelse</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reagér</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Noget andet</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Rum</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Ny samtale</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Nyt rum</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Deltag i rum</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Find rum</translation>
     </message>
 </context>
 <context>
@@ -1469,22 +1539,6 @@
         <translation>Om xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Ny samtale</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Nyt rum</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Deltag i rum</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Find rum</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Gør til startside</translation>
     </message>
@@ -1495,6 +1549,10 @@
     <message>
         <source>Sign out</source>
         <translation>Log ud</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Markér som læst</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1837,25 @@
         <source>That message is not in the loaded history</source>
         <translation>Den besked er ikke i den indlæste historik</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>læst af %n</numerusform>
+            <numerusform>læst af %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Kassér</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Send igen</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagér</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1979,14 +2056,6 @@
         <source>Send anyway</source>
         <translation>Send alligevel</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Uverificerede enheder</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Beskeden krypteres til enheder, du ikke har verificeret. Verificer dem for at være helt sikker, eller send alligevel.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2005,6 +2074,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Gælder, indtil du verificerer eller nulstiller.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>nøgler ændret, siden du verificerede dem</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>ikke verificeret</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Denne enhed er ikke verificeret</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Uverificerede modtagere</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Beskeden bliver krypteret til modtagere, du ikke har verificeret. Verificér dem for reel sikkerhed, eller send alligevel.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Advar ikke igen</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Så længe denne enhed ikke er verificeret, kan ingen anden enhed vises som verificeret — heller ikke en, der er det. Verificér den under Konto → Kryptering, eller send alligevel.</translation>
     </message>
 </context>
 <context>

@@ -121,6 +121,22 @@
         <source>Language</source>
         <translation>Keel</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Näita teiste lugemise olekut</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Väljas ei tooda midagi selle kohta, kes mida luges, mis hoiab vestluse ka sujuvamana. Sees näitavad su enda sõnumid, kui paljud on neid lugenud.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Häälsõnumid</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Sees on sõnumivälja kõrval mikrofon: hoia all, et salvestada, lase lahti, et saata. Väljas seda pole.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -222,6 +238,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Mullide läbipaistvus</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reaktsioonid piltidena</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Väljas joonistatakse reaktsioon märgina, mis ta on — alati õige ja tasuta. Sees otsib xmatic sellele sinu enda pilti kaustast %1, nimetatuna koodipunktide järgi (1f44d.svg). Midagi ei tarnita kaasa ega laadita alla. Kaalu: pildifaili avab pildidekooder, ja seal on selline rakendus kõige haavatavam.</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1139,18 @@
         <source>Delete</source>
         <translation>Kustuta</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Loobu</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Saada uuesti</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reageeri</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1182,6 +1218,40 @@
     <message>
         <source>no session description</source>
         <translation>seansikirjeldust pole</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reageeri</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Midagi muud</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Toad</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Uus vestlus</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Uus tuba</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Liitu toaga</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Avasta tube</translation>
     </message>
 </context>
 <context>
@@ -1469,22 +1539,6 @@
         <translation>Teave xmaticu kohta</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Uus vestlus</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Uus tuba</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Liitu toaga</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Avasta tube</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Määra avaleheks</translation>
     </message>
@@ -1495,6 +1549,10 @@
     <message>
         <source>Sign out</source>
         <translation>Logi välja</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Märgi loetuks</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1837,25 @@
         <source>That message is not in the loaded history</source>
         <translation>Seda sõnumit pole laaditud ajaloos</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>lugenud: %n</numerusform>
+            <numerusform>lugenud: %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Loobu</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Saada uuesti</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reageeri</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1979,14 +2056,6 @@
         <source>Send anyway</source>
         <translation>Saada siiski</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Kinnitamata seadmed</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Sõnum krüptitakse ka seadmetele, mida sa pole kinnitanud. Kinnita need tõelise kindluse jaoks või saada siiski.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2005,6 +2074,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Kehtib, kuni kinnitad või lähtestad.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>võtmed on muutunud pärast seda, kui sa need kinnitasid</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>kinnitamata</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>See seade on kinnitamata</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Kinnitamata saajad</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Sõnum krüptitakse saajatele, keda sa pole kinnitanud. Kinnita nad tõelise kindluse saamiseks või saada ikkagi.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Ära enam hoiata</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Kuni see seade on kinnitamata, ei saa ühtegi teist seadet näidata kinnitatuna — ka mitte sellist, mis seda on. Kinnita see menüüs Konto → Krüptimine või saada ikkagi.</translation>
     </message>
 </context>
 <context>

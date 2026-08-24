@@ -121,6 +121,22 @@
         <source>Language</source>
         <translation>Taal</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Leesstatus van anderen tonen</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Uit wordt er niets opgehaald over wie wat gelezen heeft, wat het gesprek ook soepeler houdt. Aan vermelden je eigen berichten hoeveel mensen ze gelezen hebben.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Spraakberichten</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Aan staat er een microfoon naast het berichtveld: ingedrukt houden neemt op, loslaten verstuurt. Uit is hij er niet.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -222,6 +238,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Doorzichtigheid van ballonnen</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reacties als afbeeldingen</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Uit wordt een reactie getekend als het teken dat ze is — altijd juist en gratis. Aan zoekt xmatic er een eigen afbeelding voor in %1, genoemd naar de code points (1f44d.svg). Er wordt niets meegeleverd en niets gedownload. Weeg af: een afbeeldingsbestand wordt door een beelddecoder geopend, en daar is een app als deze het kwetsbaarst.</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1139,18 @@
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Weggooien</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Opnieuw versturen</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reageren</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1182,6 +1218,40 @@
     <message>
         <source>no session description</source>
         <translation>geen sessiebeschrijving</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reageren</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Iets anders</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Kamers</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Nieuw gesprek</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Nieuwe kamer</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Deelnemen aan kamer</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Kamers ontdekken</translation>
     </message>
 </context>
 <context>
@@ -1469,22 +1539,6 @@
         <translation>Over xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Nieuw gesprek</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Nieuwe kamer</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Deelnemen aan kamer</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Kamers ontdekken</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Als startpagina instellen</translation>
     </message>
@@ -1495,6 +1549,10 @@
     <message>
         <source>Sign out</source>
         <translation>Afmelden</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Als gelezen markeren</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1837,25 @@
         <source>That message is not in the loaded history</source>
         <translation>Dat bericht staat niet in de geladen geschiedenis</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>gelezen door %n</numerusform>
+            <numerusform>gelezen door %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Weggooien</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Opnieuw versturen</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reageren</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1979,14 +2056,6 @@
         <source>Send anyway</source>
         <translation>Toch verzenden</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Niet-geverifieerde apparaten</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Het bericht wordt versleuteld voor apparaten die je niet hebt geverifieerd. Verifieer ze voor echte zekerheid, of verzend het toch.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2005,6 +2074,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Geldt tot je verifieert of het opnieuw instelt.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>sleutels gewijzigd sinds je ze verifieerde</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>niet geverifieerd</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Dit apparaat is niet geverifieerd</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Niet-geverifieerde ontvangers</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Het bericht wordt versleuteld voor ontvangers die je niet geverifieerd hebt. Verifieer ze voor echte zekerheid, of verstuur toch.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Niet meer waarschuwen</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Zolang dit apparaat niet geverifieerd is, kan geen enkel ander apparaat als geverifieerd worden getoond — ook geen apparaat dat het wel is. Verifieer het onder Account → Versleuteling, of verstuur toch.</translation>
     </message>
 </context>
 <context>

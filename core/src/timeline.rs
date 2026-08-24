@@ -17,9 +17,13 @@ use std::sync::Arc;
 use futures_util::StreamExt;
 use matrix_sdk::{
     room::edit::EditedContent,
+    room::Receipts,
     ruma::{
-        api::client::{receipt::create_receipt::v3::ReceiptType, room::create_room},
+        api::client::room::create_room,
         events::{
+            // Two different `ReceiptType`s exist: the one above is what a
+            // receipt is sent as, this one is what a stored receipt reads as.
+            receipt::{ReceiptThread, ReceiptType as StoredReceiptType},
             room::{
                 encryption::RoomEncryptionEventContent,
                 message::{FormattedBody, MessageFormat, MessageType, RoomMessageEventContent},
@@ -36,13 +40,14 @@ use matrix_sdk_ui::{
     timeline::{
         EncryptedMessage, EventSendState, EventTimelineItem, MembershipChange, MsgLikeKind,
         RoomExt, TimelineDetails, TimelineEventItemId, TimelineItem, TimelineItemContent,
-        VirtualTimelineItem,
+        TimelineReadReceiptTracking, VirtualTimelineItem,
     },
 };
 use serde_json::{json, Value};
 
 use crate::protocol::event;
 use crate::runtime::Sink;
+use crate::text::{safe_file_name, strip_bidi};
 
 /// How many events one backwards pagination asks for.
 const PAGE_SIZE: u16 = 30;
@@ -66,6 +71,9 @@ pub struct TimelineHandle {
     retried_from_end: AtomicBool,
     /// The thread this view is focused on, or empty for a room view.
     thread_root: String,
+    /// Whether this timeline was built tracking other people's receipts. Part
+    /// of the handle because the setting can only be chosen at build time.
+    receipts: bool,
 }
 
 impl TimelineHandle {
@@ -82,6 +90,11 @@ impl TimelineHandle {
     /// always rebuilt on open.
     pub fn is_live(&self) -> bool {
         self.live
+    }
+
+    /// Whether it was built with receipt tracking on.
+    pub fn tracks_receipts(&self) -> bool {
+        self.receipts
     }
 
     /// Pins a message to the room, or unpins it. Idempotent on the server —
@@ -206,32 +219,132 @@ impl TimelineHandle {
     }
 
     /// Replaces the body of a message that was already sent.
+    ///
+    /// A picture, video, audio clip or file is edited as a **caption**, not as
+    /// a message. `EditedContent::RoomMessage` replaces the whole content, so
+    /// an `m.image` edited that way becomes an `m.text`: the picture is gone
+    /// from the event, and no further edit can bring it back because there is
+    /// no attachment left to caption. `MediaCaption` keeps the media part and
+    /// swaps only the text (`matrix-sdk/src/room/edit.rs`). An empty caption
+    /// removes it, which is what the SDK does with `None`.
     pub async fn edit(&self, event_id: &str, body: String) -> Result<(), String> {
         let id = parse_event_id(event_id)?;
+        let content = match self.is_media_event(&id).await {
+            Some(true) => EditedContent::MediaCaption {
+                caption: Some(body).filter(|text| !text.is_empty()),
+                formatted_caption: None,
+                mentions: None,
+            },
+            Some(false) => {
+                EditedContent::RoomMessage(RoomMessageEventContent::text_plain(body).into())
+            }
+            // Unknown kind: refusing costs an edit the UI could not have
+            // offered anyway, while guessing "text" on a picture destroys it.
+            None => return Err("this message is no longer loaded".to_owned()),
+        };
         self.timeline
-            .edit(
-                &id,
-                EditedContent::RoomMessage(RoomMessageEventContent::text_plain(body).into()),
-            )
+            .edit(&id, content)
             .await
             .map_err(|error| format!("could not edit: {error}"))
     }
 
-    /// Redacts a message. The event stays in the timeline as a deleted one.
-    pub async fn redact(&self, event_id: &str) -> Result<(), String> {
+    /// Whether that event carries an attachment. `None` when the timeline does
+    /// not hold the event, so the caller can refuse rather than guess.
+    async fn is_media_event(&self, id: &TimelineEventItemId) -> Option<bool> {
+        // A local echo has no event id yet, and cannot be edited either.
+        let TimelineEventItemId::EventId(event_id) = id else {
+            return None;
+        };
+        let item = self.timeline.item_by_event_id(event_id).await?;
+        match item.content() {
+            TimelineItemContent::MsgLike(content) => match &content.kind {
+                MsgLikeKind::Message(message) => Some(matches!(
+                    message.msgtype(),
+                    MessageType::Image(_)
+                        | MessageType::Video(_)
+                        | MessageType::Audio(_)
+                        | MessageType::File(_)
+                )),
+                _ => Some(false),
+            },
+            _ => Some(false),
+        }
+    }
+
+    /// Adds our reaction to a message, or takes it back if it is already
+    /// there. One command for both: the SDK decides from what it holds, and
+    /// two commands would be two chances to disagree with it.
+    pub async fn toggle_reaction(&self, event_id: &str, key: &str) -> Result<(), String> {
+        if key.is_empty() {
+            return Err("no reaction given".to_owned());
+        }
         let id = parse_event_id(event_id)?;
+        self.timeline
+            .toggle_reaction(&id, key)
+            .await
+            .map(|_| ())
+            .map_err(|error| format!("could not react: {error}"))
+    }
+
+    /// Puts a parked message back in the queue. The SDK stops trying after an
+    /// error it cannot recover from; this is the "try again" for that, and it
+    /// only exists for a message that never reached the server.
+    pub async fn retry(&self, txn_id: &str) -> Result<(), String> {
+        if txn_id.is_empty() {
+            return Err("not a queued message".to_owned());
+        }
+        let wanted = TimelineEventItemId::TransactionId(txn_id.into());
+        // Walked rather than looked up: the SDK offers `item_by_event_id`, and
+        // a queued message is precisely the one without an event id.
+        let items = self.timeline.items().await;
+        let handle = items
+            .iter()
+            .filter_map(|item| item.as_event())
+            .find(|event| event.identifier() == wanted)
+            .and_then(|event| event.local_echo_send_handle())
+            .ok_or_else(|| "this message is no longer queued".to_owned())?;
+        handle
+            .unwedge()
+            .await
+            .map_err(|error| format!("could not send it again: {}", scrub_ids(&error.to_string())))
+    }
+
+    /// Redacts a message, or discards one that never left. For a sent event
+    /// this is a redaction and the row stays as a deleted one; for a local echo
+    /// the SDK aborts the queued send instead and the row disappears.
+    pub async fn redact(&self, event_id: &str, txn_id: &str) -> Result<(), String> {
+        let id = if event_id.is_empty() {
+            if txn_id.is_empty() {
+                return Err("not an event identifier".to_owned());
+            }
+            TimelineEventItemId::TransactionId(txn_id.into())
+        } else {
+            parse_event_id(event_id)?
+        };
         self.timeline
             .redact(&id, None)
             .await
             .map_err(|error| format!("could not delete: {error}"))
     }
 
-    /// Marks the room as read up to the latest event.
+    /// Marks the room as read up to the latest event: the receipt others see,
+    /// and the fully-read marker, which is where *this* account stopped
+    /// reading. Both in one request (`/read_markers`).
+    ///
+    /// The marker is not decoration: it is what the line in the conversation
+    /// follows and what "open where I stopped" reads on the next visit. Sending
+    /// only the receipt left that line standing where it first appeared.
     pub async fn mark_read(&self) -> Result<(), String> {
+        let Some(event_id) = self.timeline.latest_event_id().await else {
+            return Ok(());
+        };
         self.timeline
-            .mark_as_read(ReceiptType::Read)
+            .send_multiple_receipts(
+                Receipts::new()
+                    .public_read_receipt(event_id.clone())
+                    .fully_read_marker(event_id),
+            )
             .await
-            .map(|_| ())
             .map_err(|error| format!("read receipt could not be sent: {error}"))
     }
 
@@ -291,30 +404,33 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
         _ => None,
     };
 
+    // `filename()`, never `body`: a captioned attachment carries the caption in
+    // `body` and the real name in `filename` (MSC2530), so reading `body` here
+    // saved a picture under its caption.
     let (source, mimetype, size, filename) = match message_type {
         MessageType::Image(content) => (
             &content.source,
             content.info.as_ref().and_then(|i| i.mimetype.clone()),
             content.info.as_ref().and_then(|i| i.size),
-            content.body.clone(),
+            content.filename().to_owned(),
         ),
         MessageType::Video(content) => (
             &content.source,
             content.info.as_ref().and_then(|i| i.mimetype.clone()),
             content.info.as_ref().and_then(|i| i.size),
-            content.body.clone(),
+            content.filename().to_owned(),
         ),
         MessageType::Audio(content) => (
             &content.source,
             content.info.as_ref().and_then(|i| i.mimetype.clone()),
             content.info.as_ref().and_then(|i| i.size),
-            content.body.clone(),
+            content.filename().to_owned(),
         ),
         MessageType::File(content) => (
             &content.source,
             content.info.as_ref().and_then(|i| i.mimetype.clone()),
             content.info.as_ref().and_then(|i| i.size),
-            content.body.clone(),
+            content.filename().to_owned(),
         ),
         _ => return None,
     };
@@ -336,7 +452,10 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
         "thumbnailSource": thumbnail,
         "mimetype": mimetype,
         "size": size.map(u64::from),
-        "filename": filename,
+        // Sanitised here, not where it is saved: a name that came in an event
+        // can hold a path, and the rule for that belongs where it can be
+        // tested (core/src/text.rs).
+        "filename": safe_file_name(&filename),
         "width": width.map(u64::from),
         "height": height.map(u64::from),
     }))
@@ -476,7 +595,7 @@ fn reply_info(content: &matrix_sdk_ui::timeline::MsgLikeContent) -> Option<Value
         TimelineDetails::Ready(embedded) => {
             let body = match &embedded.content {
                 TimelineItemContent::MsgLike(msg) => match &msg.kind {
-                    MsgLikeKind::Message(message) => message.body().to_owned(),
+                    MsgLikeKind::Message(message) => strip_bidi(message.body()),
                     MsgLikeKind::Redacted => String::new(),
                     _ => String::new(),
                 },
@@ -509,7 +628,8 @@ fn sender_name(item: &EventTimelineItem) -> String {
     match item.sender_profile() {
         TimelineDetails::Ready(profile) => profile
             .display_name
-            .clone()
+            .as_deref()
+            .map(strip_bidi)
             .unwrap_or_else(|| item.sender().as_str().to_owned()),
         _ => item.sender().as_str().to_owned(),
     }
@@ -533,7 +653,7 @@ fn sender_avatar(item: &EventTimelineItem) -> Option<String> {
 /// Items that are neither messages nor date dividers still appear, with kind
 /// "other" — dropping them here would put the model's indices out of step with
 /// the diffs the SDK sends.
-fn encode_item(item: &TimelineItem) -> Value {
+fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
     let id = item.unique_id().0.clone();
 
     if let Some(virtual_item) = item.as_virtual() {
@@ -581,7 +701,7 @@ fn encode_item(item: &TimelineItem) -> Value {
         TimelineItemContent::MsgLike(content) => match &content.kind {
             MsgLikeKind::Message(message) => (
                 "message",
-                message.body().to_owned(),
+                strip_bidi(message.body()),
                 message.msgtype().msgtype().to_owned(),
                 message.is_edited(),
                 media_info(message.msgtype()),
@@ -654,13 +774,51 @@ fn encode_item(item: &TimelineItem) -> Value {
                 None,
                 None,
                 token,
-                change.display_name().unwrap_or_default(),
+                strip_bidi(&change.display_name().unwrap_or_default()),
             )
         }
         TimelineItemContent::ProfileChange(_) => {
             ("system", String::new(), String::new(), false, None, None, "profile", String::new())
         }
         _ => ("other", String::new(), String::new(), false, None, None, "", String::new()),
+    };
+
+    // Reactions, grouped the way they are drawn: one entry per key, how many
+    // people used it, and whether we are one of them. Deliberately not the
+    // list of users - the bubble shows a count, and a name would only be
+    // payload nobody reads. Keys stay exactly as they arrived: two that look
+    // alike but differ in a variation selector are two keys to the server, and
+    // merging them here would take a reaction back that was never given.
+    let reactions = match event.content() {
+        TimelineItemContent::MsgLike(content) => content
+            .reactions
+            .iter()
+            .map(|(key, senders)| {
+                json!({
+                    "key": key,
+                    "count": senders.len(),
+                    "mine": own.map(|user| senders.contains_key(user)).unwrap_or(false),
+                })
+            })
+            .collect::<Vec<Value>>(),
+        _ => Vec::new(),
+    };
+
+    // The text an attachment was sent with, where there is one. `body` alone
+    // cannot say: for an attachment without a caption it holds the file name,
+    // and the row would then show the file name as if it were a message.
+    let caption = match event.content() {
+        TimelineItemContent::MsgLike(content) => match &content.kind {
+            MsgLikeKind::Message(message) => match message.msgtype() {
+                MessageType::Image(inner) => inner.caption().map(str::to_owned),
+                MessageType::Video(inner) => inner.caption().map(str::to_owned),
+                MessageType::Audio(inner) => inner.caption().map(str::to_owned),
+                MessageType::File(inner) => inner.caption().map(str::to_owned),
+                _ => None,
+            },
+            _ => None,
+        },
+        _ => None,
     };
 
     // Separate from the tuple above: it concerns exactly one of its arms, and
@@ -676,7 +834,19 @@ fn encode_item(item: &TimelineItem) -> Value {
     json!({
         "id": id,
         "eventId": event.event_id().map(|id| id.as_str()),
-        "editable": event.is_editable(),
+        // A message still in the send queue has no event id. It has a
+        // transaction id, and that is the only handle by which it can be
+        // discarded - without it a send that failed for good sits in the room
+        // for ever, with nothing that can act on it.
+        "txnId": match event.identifier() {
+            TimelineEventItemId::TransactionId(id) => Some(id.to_string()),
+            TimelineEventItemId::EventId(_) => None,
+        },
+        // The SDK calls a local echo editable, and it is - but every edit
+        // path here goes by event id, and a message still in the send queue
+        // has none. Offering the action would answer "not an event
+        // identifier".
+        "editable": event.is_editable() && event.event_id().is_some(),
         "kind": kind,
         "body": body,
         // The same message as `body`, as markup, where it adds something. Null
@@ -684,6 +854,7 @@ fn encode_item(item: &TimelineItem) -> Value {
         "formatted": formatted,
         "msgtype": msgtype,
         "media": media,
+        "caption": caption,
         "replyTo": reply,
         "utdCause": utd_cause(event),
         "edited": edited,
@@ -696,8 +867,17 @@ fn encode_item(item: &TimelineItem) -> Value {
         "timestamp": u64::from(event.timestamp().get()),
         "pending": event.send_state().is_some(),
         "sendState": send_state(event),
+        "sendError": send_error(event),
         "threadRoot": thread_root,
         "threadCount": thread_count,
+        // How many other people have read up to here. Always 0 while receipt
+        // tracking is off, which is the default — the map is then empty.
+        "reactions": reactions,
+        "readBy": event
+            .read_receipts()
+            .keys()
+            .filter(|user| Some(user.as_ref()) != own)
+            .count(),
     })
 }
 
@@ -710,6 +890,25 @@ fn encode_item(item: &TimelineItem) -> Value {
 /// message stays in the queue waiting for another try. Without showing it, a
 /// message that never left looks exactly like one that arrived, which is how a
 /// tester came to send the same text twice.
+/// Why a send failed, scrubbed of identifiers, and whether the SDK considers
+/// it recoverable. A recoverable failure parks the room's queue and clears
+/// itself when the network is back; an unrecoverable one waits for the user to
+/// discard or retry it - and until 0.22.3 there was no way to do either, so the
+/// message simply stayed. Without the reason, "not sent" is all anyone can say
+/// about it, which is what a field report had to work with.
+fn send_error(event: &EventTimelineItem) -> Option<Value> {
+    match event.send_state() {
+        Some(EventSendState::SendingFailed {
+            error,
+            is_recoverable,
+        }) => Some(json!({
+            "reason": scrub_ids(&error.to_string()),
+            "recoverable": is_recoverable,
+        })),
+        _ => None,
+    }
+}
+
 fn send_state(event: &EventTimelineItem) -> &'static str {
     match event.send_state() {
         None | Some(EventSendState::Sent { .. }) => "",
@@ -718,34 +917,37 @@ fn send_state(event: &EventTimelineItem) -> &'static str {
     }
 }
 
-fn encode_items<'a>(items: impl IntoIterator<Item = &'a Arc<TimelineItem>>) -> Vec<Value> {
+fn encode_items<'a>(
+    items: impl IntoIterator<Item = &'a Arc<TimelineItem>>,
+    own: Option<&UserId>,
+) -> Vec<Value> {
     items
         .into_iter()
-        .map(|item| encode_item(item.as_ref()))
+        .map(|item| encode_item(item.as_ref(), own))
         .collect()
 }
 
-fn encode(diff: &VectorDiff<Arc<TimelineItem>>) -> Value {
+fn encode(diff: &VectorDiff<Arc<TimelineItem>>, own: Option<&UserId>) -> Value {
     match diff {
-        VectorDiff::Append { values } => json!({ "op": "append", "values": encode_items(values) }),
+        VectorDiff::Append { values } => json!({ "op": "append", "values": encode_items(values, own) }),
         VectorDiff::Clear => json!({ "op": "clear" }),
         VectorDiff::PushFront { value } => {
-            json!({ "op": "insert", "index": 0, "value": encode_item(value) })
+            json!({ "op": "insert", "index": 0, "value": encode_item(value, own) })
         }
         VectorDiff::PushBack { value } => {
-            json!({ "op": "append", "values": [encode_item(value)] })
+            json!({ "op": "append", "values": [encode_item(value, own)] })
         }
         VectorDiff::PopFront => json!({ "op": "remove", "index": 0 }),
         VectorDiff::PopBack => json!({ "op": "popBack" }),
         VectorDiff::Insert { index, value } => {
-            json!({ "op": "insert", "index": index, "value": encode_item(value) })
+            json!({ "op": "insert", "index": index, "value": encode_item(value, own) })
         }
         VectorDiff::Set { index, value } => {
-            json!({ "op": "set", "index": index, "value": encode_item(value) })
+            json!({ "op": "set", "index": index, "value": encode_item(value, own) })
         }
         VectorDiff::Remove { index } => json!({ "op": "remove", "index": index }),
         VectorDiff::Truncate { length } => json!({ "op": "truncate", "length": length }),
-        VectorDiff::Reset { values } => json!({ "op": "reset", "values": encode_items(values) }),
+        VectorDiff::Reset { values } => json!({ "op": "reset", "values": encode_items(values, own) }),
     }
 }
 
@@ -770,6 +972,23 @@ fn id_prefix(room_id: &str, focus: &str) -> String {
     format!("{:x}/", hasher.finish())
 }
 
+/// The event this device last sent a read receipt for, so the view can open
+/// where reading stopped instead of at the newest message.
+///
+/// Read from the room's stored receipts, not from the timeline: that keeps the
+/// jump working with receipt tracking switched off, which is the default.
+pub async fn own_read_marker(client: &Client, room_id: &str) -> Option<String> {
+    let parsed = RoomId::parse(room_id).ok()?;
+    let room = client.get_room(&parsed)?;
+    let user = client.user_id()?;
+    let (event_id, _) = room
+        .load_user_receipt(StoredReceiptType::Read, ReceiptThread::Unthreaded, user)
+        .await
+        .ok()
+        .flatten()?;
+    Some(event_id.to_string())
+}
+
 /// Opens the timeline of `room_id` and starts streaming updates.
 ///
 /// `focus` selects the view: empty for the live timeline, `"pinned"` for the
@@ -779,6 +998,7 @@ pub async fn open(
     client: &Client,
     room_id: &str,
     focus: &str,
+    receipts: bool,
     sink: Arc<Sink>,
 ) -> Result<TimelineHandle, String> {
     use matrix_sdk_ui::timeline::{TimelineEventFocusThreadMode, TimelineFocus};
@@ -791,8 +1011,17 @@ pub async fn open(
     let prefix = id_prefix(room_id, focus);
 
     let live = focus.is_empty();
+    let tracking = if receipts {
+        // Message-like only: a receipt on a membership change would update a
+        // row nobody reads a status off.
+        TimelineReadReceiptTracking::MessageLikeEvents
+    } else {
+        TimelineReadReceiptTracking::Disabled
+    };
+
     let timeline = if live {
         room.timeline_builder()
+            .track_read_marker_and_receipts(tracking)
             .with_internal_id_prefix(prefix)
             .build()
             .await
@@ -811,6 +1040,8 @@ pub async fn open(
                 },
             }
         };
+        // A focused view - pinned messages, a permalink - shows a slice, not
+        // the conversation; a read status has nothing to say in it.
         room.timeline_builder()
             .with_focus(focus)
             .with_internal_id_prefix(prefix)
@@ -820,6 +1051,10 @@ pub async fn open(
     };
     let timeline = Arc::new(timeline);
 
+    // Owned: the stream task outlives this call, and every row it encodes
+    // needs to know which receipt is ours so it is not counted as a reader.
+    let own = client.user_id().map(|user| user.to_owned());
+
     let (initial, mut stream) = timeline.subscribe().await;
 
     // The first batch goes out as a reset so the model starts from a known
@@ -828,7 +1063,7 @@ pub async fn open(
         "timeline.diff",
         json!({
             "roomId": room_id,
-            "ops": [{ "op": "reset", "values": encode_items(&initial) }],
+            "ops": [{ "op": "reset", "values": encode_items(&initial, own.as_deref()) }],
         }),
     ));
 
@@ -908,7 +1143,7 @@ pub async fn open(
         );
 
         while let Some(diffs) = stream.next().await {
-            let ops: Vec<Value> = diffs.iter().map(encode).collect();
+            let ops: Vec<Value> = diffs.iter().map(|diff| encode(diff, own.as_deref())).collect();
             sink.emit(event(
                 "timeline.diff",
                 json!({ "roomId": room_id_owned, "ops": ops }),
@@ -951,6 +1186,7 @@ pub async fn open(
         task,
         retried_from_end: AtomicBool::new(false),
         thread_root: String::new(),
+        receipts,
     })
 }
 
@@ -982,6 +1218,10 @@ pub async fn open_thread(
         .map_err(|error| format!("thread unavailable: {error}"))?;
     let timeline = Arc::new(timeline);
 
+    // Owned: the stream task outlives this call, and every row it encodes
+    // needs to know which receipt is ours so it is not counted as a reader.
+    let own = client.user_id().map(|user| user.to_owned());
+
     let (initial, mut stream) = timeline.subscribe().await;
 
     sink.emit(event(
@@ -990,7 +1230,7 @@ pub async fn open_thread(
             "roomId": room_id,
             "root": root,
             "token": token,
-            "ops": [{ "op": "reset", "values": encode_items(&initial) }],
+            "ops": [{ "op": "reset", "values": encode_items(&initial, own.as_deref()) }],
         }),
     ));
 
@@ -1009,7 +1249,7 @@ pub async fn open_thread(
             &sink,
         );
         while let Some(diffs) = stream.next().await {
-            let ops: Vec<Value> = diffs.iter().map(encode).collect();
+            let ops: Vec<Value> = diffs.iter().map(|diff| encode(diff, own.as_deref())).collect();
             sink.emit(event(
                 "thread.diff",
                 json!({
@@ -1056,6 +1296,7 @@ pub async fn open_thread(
         task,
         retried_from_end: AtomicBool::new(true),
         thread_root: root.to_owned(),
+        receipts: false,
     })
 }
 
@@ -1295,8 +1536,10 @@ pub async fn room_info(client: &Client, room_id: &str) -> Result<Value, String> 
 
     Ok(json!({
         "roomId": room_id,
-        "name": room.cached_display_name().map(|name| name.to_string()).unwrap_or_default(),
-        "topic": room.topic().unwrap_or_default(),
+        "name": strip_bidi(
+            &room.cached_display_name().map(|name| name.to_string()).unwrap_or_default(),
+        ),
+        "topic": strip_bidi(&room.topic().unwrap_or_default()),
         "avatar": room.avatar_url().map(|url| url.to_string()),
         "alias": room.canonical_alias().map(|alias| alias.to_string()).unwrap_or_default(),
         "altAliases": room

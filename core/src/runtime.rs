@@ -315,9 +315,14 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::SpaceRemoveChild {
             space_id, room_id, ..
         } => remove_space_child(&state, id, space_id, room_id).await,
-        Command::TimelineOpen { room_id, focus, .. } => {
-            open_timeline(&state, id, room_id, focus).await
-        }
+        Command::TimelineOpen {
+            room_id,
+            focus,
+            receipts,
+            ..
+        } => open_timeline(&state, id, room_id, focus, receipts).await,
+        Command::RoomMarkRead { room_id, .. } => mark_room_read(&state, id, room_id).await,
+        Command::RoomResolve { address, .. } => resolve_room(&state, id, address).await,
         Command::TimelineClose { .. } => close_timeline(&state, id).await,
         Command::TimelinePaginate { .. } => paginate_timeline(&state, id).await,
         Command::TimelineSend { body, .. } => send_message(&state, id, body).await,
@@ -326,7 +331,11 @@ async fn handle(state: Arc<State>, command: Command) {
             reply_message(&state, id, event_id, body).await
         }
         Command::TimelineEdit { event_id, body, .. } => edit_message(&state, id, event_id, body).await,
-        Command::TimelineRedact { event_id, .. } => redact_message(&state, id, event_id).await,
+        Command::TimelineRetry { txn_id, .. } => retry_message(&state, id, txn_id).await,
+        Command::TimelineReact { event_id, key, .. } => react(&state, id, event_id, key).await,
+        Command::TimelineRedact {
+            event_id, txn_id, ..
+        } => redact_message(&state, id, event_id, txn_id).await,
         Command::TimelineSendMedia {
             path,
             mime_type,
@@ -1004,7 +1013,13 @@ async fn verification_step(state: &Arc<State>, id: u64, step: Step) {
     }
 }
 
-async fn open_timeline(state: &Arc<State>, id: u64, room_id: String, focus: String) {
+async fn open_timeline(
+    state: &Arc<State>,
+    id: u64,
+    room_id: String,
+    focus: String,
+    receipts: bool,
+) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
@@ -1028,12 +1043,28 @@ async fn open_timeline(state: &Arc<State>, id: u64, room_id: String, focus: Stri
     // temporary guard lives until the end of the `if let` body in edition 2021,
     // so locking again inside it deadlocks a mutex that is not reentrant — and
     // that mutex is the one every other timeline command needs.
+    // Where this device's own reading stopped, so the view can open there
+    // instead of at the newest message. Read before the timeline lock is taken:
+    // it is a store read, and this project already froze every room switch once
+    // by awaiting inside that lock. It also has to be the state *before* this
+    // visit marks anything read.
+    let marker = timeline::own_read_marker(&client, &room_id).await;
+
     {
         let mut open = state.timeline.lock().await;
         if let Some(previous) = open.take() {
-            if previous.room_id() == room_id && focus.is_empty() && previous.is_live() {
+            // The receipt setting is chosen when the timeline is built, so a
+            // changed one has to rebuild even for the room already open.
+            if previous.room_id() == room_id
+                && focus.is_empty()
+                && previous.is_live()
+                && previous.tracks_receipts() == receipts
+            {
                 open.replace(previous);
-                state.sink.emit(reply_ok(id, json!({ "open": true })));
+                state.sink.emit(reply_ok(
+                    id,
+                    json!({ "open": true, "readMarker": marker, "rebuilt": false }),
+                ));
                 return;
             }
             previous.close();
@@ -1057,11 +1088,48 @@ async fn open_timeline(state: &Arc<State>, id: u64, room_id: String, focus: Stri
             .await;
     }
 
-    match timeline::open(&client, &room_id, &focus, state.sink.clone()).await {
+    match timeline::open(&client, &room_id, &focus, receipts, state.sink.clone()).await {
         Ok(handle) => {
             *state.timeline.lock().await = Some(Arc::new(handle));
-            state.sink.emit(reply_ok(id, json!({ "open": true })));
+            // Rebuilt, so the view starts from nothing and may open where
+            // reading stopped; the branch above kept the rows it had.
+            state.sink.emit(reply_ok(
+                id,
+                json!({ "open": true, "readMarker": marker, "rebuilt": true }),
+            ));
         }
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// A tapped Matrix link: which room is meant, and are we in it.
+async fn resolve_room(state: &Arc<State>, id: u64, address: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match roomlist::resolve(&client, &address).await {
+        Ok(mut data) => {
+            if let Some(object) = data.as_object_mut() {
+                object.insert("address".to_owned(), json!(address));
+            }
+            state.sink.emit(reply_ok(id, data));
+        }
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// The chat list's "mark as read": no timeline is opened for it, so it cannot
+/// go through the open handle the way the room's own does.
+async fn mark_room_read(state: &Arc<State>, id: u64, room_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match roomlist::mark_read(&client, &room_id).await {
+        Ok(marked) => state
+            .sink
+            .emit(reply_ok(id, json!({ "roomId": room_id, "marked": marked }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
@@ -1219,9 +1287,31 @@ async fn edit_message(state: &Arc<State>, id: u64, event_id: String, body: Strin
     }
 }
 
-async fn redact_message(state: &Arc<State>, id: u64, event_id: String) {
+async fn react(state: &Arc<State>, id: u64, event_id: String, key: String) {
     let outcome = match state.timeline().await {
-        Some(handle) => handle.redact(&event_id).await,
+        Some(handle) => handle.toggle_reaction(&event_id, &key).await,
+        None => Err("no timeline is open".to_owned()),
+    };
+    match outcome {
+        Ok(()) => state.sink.emit(reply_ok(id, json!({ "reacted": true }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn retry_message(state: &Arc<State>, id: u64, txn_id: String) {
+    let outcome = match state.timeline().await {
+        Some(handle) => handle.retry(&txn_id).await,
+        None => Err("no timeline is open".to_owned()),
+    };
+    match outcome {
+        Ok(()) => state.sink.emit(reply_ok(id, json!({ "queued": true }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+async fn redact_message(state: &Arc<State>, id: u64, event_id: String, txn_id: String) {
+    let outcome = match state.timeline().await {
+        Some(handle) => handle.redact(&event_id, &txn_id).await,
         None => Err("no timeline is open".to_owned()),
     };
 

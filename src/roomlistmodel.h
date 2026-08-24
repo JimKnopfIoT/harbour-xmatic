@@ -45,6 +45,10 @@ public:
     /// had when it last arrived, so the marker never appears and the menu
     /// keeps offering the action that was just carried out.
     void setNotifyMode(const QString &roomId, const QString &mode);
+    /// Clears a room's unread counters after it was marked read from the list.
+    /// A receipt does not always bring a diff with it, and the row would keep
+    /// its badge until something else touched the room.
+    void clearUnread(const QString &roomId);
 
     int unreadRooms() const { return m_unreadRooms; }
     int unreadMessages() const { return m_unreadMessages; }

@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.21.0
+Version:    0.22.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -84,6 +84,26 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Aug 24 2026 harbour-xmatic contributors 0.22.0-1
+- Reactions: shown grouped with a count, sent and taken back by tapping,
+  "React" in a message's menu. Drawn as the characters they are; picture files
+  of your own can be used instead (Appearance, off, nothing shipped).
+- The caption of a picture is shown, and editing it keeps the picture. An
+  attachment is saved under its file name, not under its caption.
+- A room counts as read while it is read, opens where reading stopped, and can
+  be marked read from the chat list. Other people's read status optional
+  (Account, off).
+- Tapping a notification opens the room it names.
+- Matrix links open in the app: permalink, matrix: URI or #room:server. The tap
+  never joins by itself.
+- A message that failed to send can be sent again or discarded.
+- Direction-control characters are removed from messages, names, previews and
+  file names.
+- Simplified Chinese and Hindi added; 29 languages.
+- The microphone next to the message field can be switched off.
+- Shorter menus: five entries in the chat list, the four ways into a room on
+  their own page.
+
 * Sat Aug 22 2026 harbour-xmatic contributors 0.21.0-1
 - Formatted messages are shown as formatting instead of as raw text. Bold,
   italic, code blocks, quotes, lists, headings and links now render; what a

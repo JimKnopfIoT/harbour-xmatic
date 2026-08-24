@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "Formatting.js" as Formatting
+import "MatrixLinks.js" as MatrixLinks
 
 // One thread of a room: root first, replies below, own composer. Rows stream
 // into matrix.threadTimeline via `thread.diff`. Text-focused: attachments
@@ -24,6 +25,43 @@ Page {
     Connections {
         target: matrix
         onThreadFailed: page.error = message
+    }
+
+    // A tapped link, as in the room below: a Matrix address is answered inside
+    // the app, anything else is a web address.
+    function followLink(link) {
+        var target = MatrixLinks.parse(link)
+        if (!target) {
+            Qt.openUrlExternally(link)
+            return
+        }
+        if (target.kind === "user") {
+            pageStack.push(Qt.resolvedUrl("NewChatDialog.qml"), { prefill: target.id })
+            return
+        }
+        page.pendingAddress = target.id
+        matrix.resolveRoom(target.id)
+    }
+
+    property string pendingAddress: ""
+
+    Connections {
+        target: matrix
+
+        onRoomResolved: {
+            if (page.pendingAddress.length === 0) {
+                return
+            }
+            page.pendingAddress = ""
+            if (joined) {
+                pageStack.push(Qt.resolvedUrl("RoomPage.qml"),
+                               { roomId: roomId, roomName: "" })
+                return
+            }
+            pageStack.push(Qt.resolvedUrl("JoinRoomDialog.qml"), { prefill: address })
+        }
+
+        onRoomResolveFailed: page.pendingAddress = ""
     }
 
     SilicaListView {
@@ -166,7 +204,7 @@ Page {
                                                          && (model.formatted || "").length > 0
                     textFormat: hasFormatted ? Text.StyledText : Text.PlainText
                     linkColor: Theme.highlightColor
-                    onLinkActivated: Qt.openUrlExternally(link)
+                    onLinkActivated: page.followLink(link)
                     text: {
                         if (model.kind === "undecryptable") {
                             return qsTr("Cannot be decrypted — this device is missing the key")
@@ -179,7 +217,7 @@ Page {
                         }
                         if (hasFormatted) {
                             return Formatting.renderFormatted(model.formatted,
-                                                              matrix.clickableLinks)
+                                                              settings.clickableLinks)
                         }
                         return model.body || ""
                     }

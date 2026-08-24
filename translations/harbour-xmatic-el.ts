@@ -121,6 +121,22 @@
         <source>Language</source>
         <translation>Γλώσσα</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Εμφάνιση κατάστασης ανάγνωσης των άλλων</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Απενεργοποιημένο δεν ανακτάται τίποτα για το ποιος διάβασε τι, κάτι που κρατά και τη συνομιλία πιο ομαλή. Ενεργοποιημένο, τα δικά σου μηνύματα δείχνουν πόσοι τα διάβασαν.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Φωνητικά μηνύματα</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Ενεργοποιημένο, δίπλα στο πεδίο μηνύματος υπάρχει μικρόφωνο: κράτα το πατημένο για εγγραφή, άσ&apos; το για αποστολή. Απενεργοποιημένο, δεν υπάρχει.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -222,6 +238,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Αδιαφάνεια συννεφάκια</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Αντιδράσεις ως εικόνες</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Απενεργοποιημένο, μια αντίδραση σχεδιάζεται ως ο χαρακτήρας που είναι — πάντα σωστά και δωρεάν. Ενεργοποιημένο, το xmatic ψάχνει γι&apos; αυτήν δική σου εικόνα στο %1, με όνομα από τα code points της (1f44d.svg). Τίποτα δεν παραδίδεται και τίποτα δεν κατεβαίνει. Ζύγισέ το: ένα αρχείο εικόνας το ανοίγει ένας αποκωδικοποιητής εικόνας, και εκεί μια τέτοια εφαρμογή είναι πιο εκτεθειμένη.</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1139,18 @@
         <source>Delete</source>
         <translation>Διαγραφή</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Απόρριψη</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Αποστολή ξανά</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Αντίδραση</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1182,6 +1218,40 @@
     <message>
         <source>no session description</source>
         <translation>καμία περιγραφή συνεδρίας</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Αντίδραση</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Κάτι άλλο</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Δωμάτια</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Νέα συνομιλία</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Νέο δωμάτιο</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Είσοδος σε δωμάτιο</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Ανακάλυψη δωματίων</translation>
     </message>
 </context>
 <context>
@@ -1469,22 +1539,6 @@
         <translation>Σχετικά με το xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Νέα συνομιλία</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Νέο δωμάτιο</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Είσοδος σε δωμάτιο</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Ανακάλυψη δωματίων</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Ορισμός ως αρχική σελίδα</translation>
     </message>
@@ -1495,6 +1549,10 @@
     <message>
         <source>Sign out</source>
         <translation>Αποσύνδεση</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Σήμανση ως αναγνωσμένο</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1837,25 @@
         <source>That message is not in the loaded history</source>
         <translation>Αυτό το μήνυμα δεν είναι στο φορτωμένο ιστορικό</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>διαβάστηκε από %n</numerusform>
+            <numerusform>διαβάστηκε από %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Απόρριψη</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Αποστολή ξανά</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Αντίδραση</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1979,14 +2056,6 @@
         <source>Send anyway</source>
         <translation>Αποστολή έτσι κι αλλιώς</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Μη επαληθευμένες συσκευές</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Το μήνυμα θα κρυπτογραφηθεί και για συσκευές που δεν έχεις επαληθεύσει. Επαλήθευσέ τες για πραγματική βεβαιότητα, ή στείλ&apos; το έτσι κι αλλιώς.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2005,6 +2074,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Ισχύει μέχρι να επαληθεύσεις ή να το μηδενίσεις.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>τα κλειδιά άλλαξαν αφότου τα επαλήθευσες</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>μη επαληθευμένο</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Αυτή η συσκευή δεν είναι επαληθευμένη</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Μη επαληθευμένοι παραλήπτες</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Το μήνυμα θα κρυπτογραφηθεί για παραλήπτες που δεν έχεις επαληθεύσει. Επαλήθευσέ τους για πραγματική βεβαιότητα ή στείλε ούτως ή άλλως.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Να μην ξαναειδοποιηθώ</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Όσο αυτή η συσκευή δεν είναι επαληθευμένη, καμία άλλη συσκευή δεν μπορεί να εμφανιστεί ως επαληθευμένη — ούτε καν κάποια που είναι. Επαλήθευσέ την στο Λογαριασμός → Κρυπτογράφηση ή στείλε ούτως ή άλλως.</translation>
     </message>
 </context>
 <context>

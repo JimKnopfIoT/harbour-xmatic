@@ -69,7 +69,7 @@ ApplicationWindow {
         }
         // The home page is the user's choice; the other one is reachable from
         // it with a sideways swipe (each home page attaches its sibling).
-        return matrix.startPage === "spaces" ? Qt.resolvedUrl("pages/SpacesPage.qml")
+        return settings.startPage === "spaces" ? Qt.resolvedUrl("pages/SpacesPage.qml")
                                              : Qt.resolvedUrl("pages/RoomListPage.qml")
     }
 
@@ -126,6 +126,53 @@ ApplicationWindow {
 
     Component.onCompleted: matrix.restoreSession()
 
+    // The tap on a notification, and the launcher's hand-over, arrive here.
+    // Neither carries an argument: which room is meant is this app's own
+    // knowledge (`notifiedRoomId`), never the caller's claim.
+    Connections {
+        target: activation
+
+        onRaiseRequested: app.activate()
+
+        onNotifiedRoomRequested: {
+            app.activate()
+            app.openNotifiedRoom()
+        }
+    }
+
+    // Opens the room the standing notification is about, once. Nothing stands
+    // -> nothing happens, so a repeated call cannot walk the user through
+    // rooms. Not while the session is still being restored either: the room
+    // list is not there yet, and the login page is what belongs on screen.
+    function openNotifiedRoom() {
+        var roomId = app.notifiedRoomId
+        if (roomId.length === 0 || matrix.sessionState !== "signed-in") {
+            return
+        }
+        app.notifiedRoomId = ""
+        notification.close()
+        var current = pageStack.currentPage
+        // A call takes precedence over everything; the room can wait.
+        if (current && current.objectName === "callPage") {
+            return
+        }
+        // Already there: raising the window was the whole job, and pushing a
+        // second copy of the room would stack it on itself.
+        if (current && current.objectName === "roomPage" && current.roomId === roomId) {
+            return
+        }
+        // Coming from another room, the new one takes its place instead of
+        // stacking on it: swiping back belongs in the chat list, not in the
+        // room the notification pulled the user out of.
+        if (current && current.objectName === "roomPage") {
+            pageStack.replace(Qt.resolvedUrl("pages/RoomPage.qml"),
+                              { roomId: roomId, roomName: "" })
+            return
+        }
+        pageStack.push(Qt.resolvedUrl("pages/RoomPage.qml"),
+                       { roomId: roomId, roomName: "" })
+    }
+
     Notification {
         id: notification
 
@@ -142,14 +189,16 @@ ApplicationWindow {
         // talking.
         appIcon: "/usr/share/icons/hicolor/86x86/apps/harbour-xmatic.png"
         isTransient: false
-        // Tapping the notification brings the app forward rather than opening
-        // a second instance.
+        // Tapping opens the room this banner is about. The method takes no
+        // argument - see src/appservice.h for why - so nothing about the room
+        // travels through the notification, and nothing of it stays behind in
+        // the system's notification store.
         remoteActions: [{
             "name": "default",
             "service": "org.xmatic.xmatic",
             "path": "/org/xmatic/xmatic",
             "iface": "org.xmatic.xmatic",
-            "method": "activate"
+            "method": "openNotified"
         }]
     }
 
@@ -282,7 +331,7 @@ ApplicationWindow {
             // a picture says "picture" in the UI's language, and an event this
             // device could not decrypt says so instead of pretending to be a
             // count.
-            var preview = matrix.notificationPreview ? app.previewLine(previewKind, previewText) : ""
+            var preview = settings.notificationPreview ? app.previewLine(previewKind, previewText) : ""
             notification.body = preview.length > 0 ? preview
                     : mentions > 0
                       ? qsTr("%n mention(s)", "", mentions)

@@ -86,6 +86,31 @@ void RoomListModel::setNotifyMode(const QString &roomId, const QString &mode)
     }
 }
 
+void RoomListModel::clearUnread(const QString &roomId)
+{
+    for (int i = 0; i < rows().count(); ++i) {
+        QJsonObject row = rows().at(i);
+        if (row.value(QStringLiteral("id")).toString() != roomId) {
+            continue;
+        }
+        if (row.value(QStringLiteral("unread")).toInt() == 0
+            && row.value(QStringLiteral("notifications")).toInt() == 0
+            && row.value(QStringLiteral("mentions")).toInt() == 0) {
+            return;
+        }
+        row.insert(QStringLiteral("unread"), 0);
+        row.insert(QStringLiteral("notifications"), 0);
+        row.insert(QStringLiteral("mentions"), 0);
+
+        QJsonObject operation;
+        operation.insert(QStringLiteral("op"), QStringLiteral("set"));
+        operation.insert(QStringLiteral("index"), i);
+        operation.insert(QStringLiteral("value"), row);
+        applyOperations(QJsonArray { operation });
+        return;
+    }
+}
+
 QVariant RoomListModel::valueFor(const QJsonObject &row, int role) const
 {
     if (role == NameRole) {

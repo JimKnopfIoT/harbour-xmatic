@@ -94,8 +94,8 @@ Page {
                 // Only shown when spaces is not already the start page; picking
                 // it takes effect on the next start.
                 text: qsTr("Make start page")
-                visible: matrix.startPage !== "spaces"
-                onClicked: matrix.startPage = "spaces"
+                visible: settings.startPage !== "spaces"
+                onClicked: settings.startPage = "spaces"
             }
         }
 

@@ -41,6 +41,8 @@ LIBS += $$system(pkg-config --libs sailfishsecrets)
 SOURCES += \
     src/harbour-xmatic.cpp \
     src/appearancesettings.cpp \
+    src/appservice.cpp \
+    src/appsettings.cpp \
     src/instancelock.cpp \
     src/languagesettings.cpp \
     src/difflistmodel.cpp \
@@ -59,6 +61,8 @@ SOURCES += \
 
 HEADERS += \
     src/appearancesettings.h \
+    src/appservice.h \
+    src/appsettings.h \
     src/difflistmodel.h \
     src/instancelock.h \
     src/languagesettings.h \
@@ -159,6 +163,7 @@ TRANSLATIONS += \
     translations/harbour-xmatic-fi.ts \
     translations/harbour-xmatic-fr.ts \
     translations/harbour-xmatic-ga.ts \
+    translations/harbour-xmatic-hi.ts \
     translations/harbour-xmatic-hr.ts \
     translations/harbour-xmatic-hu.ts \
     translations/harbour-xmatic-is.ts \
@@ -175,6 +180,7 @@ TRANSLATIONS += \
     translations/harbour-xmatic-sk.ts \
     translations/harbour-xmatic-sl.ts \
     translations/harbour-xmatic-sv.ts \
+    translations/harbour-xmatic-zh_CN.ts \
 
 DISTFILES += \
     LICENSE \
@@ -205,11 +211,14 @@ DISTFILES += \
     qml/pages/EncryptStorageDialog.qml \
     qml/pages/LanguagePage.qml \
     qml/pages/Formatting.js \
+    qml/pages/MatrixLinks.js \
     qml/pages/ConfirmDialog.qml \
     qml/pages/ImageViewPage.qml \
     qml/pages/ForwardPage.qml \
     qml/pages/ShareToRoomPage.qml \
     qml/pages/MessageActionsPage.qml \
+    qml/pages/ReactionDialog.qml \
+    qml/pages/RoomActionsPage.qml \
     qml/pages/Avatar.qml \
     qml/pages/VideoPage.qml \
     qml/pages/JoinRoomDialog.qml \

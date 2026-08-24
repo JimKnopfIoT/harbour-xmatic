@@ -23,6 +23,7 @@ mod recovery;
 mod roomlist;
 mod runtime;
 mod session;
+mod text;
 mod timeline;
 mod verification;
 

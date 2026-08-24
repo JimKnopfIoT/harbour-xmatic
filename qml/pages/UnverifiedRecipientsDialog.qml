@@ -1,16 +1,34 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Shown before a message goes into an encrypted room where a recipient still
-// has devices the user never verified. Accepting sends anyway; the switch
-// remembers that choice per user so the warning does not return for them.
+// Shown before a message goes into an encrypted room where something about the
+// recipients was never checked. Accepting sends anyway; the switch remembers
+// that per user, and for the own-device case under the own address.
+//
+// `reason` decides the words. While this device itself is unverified nothing
+// can be said about anyone else's: the core answers with a single ownDevice
+// entry then, and the dialog says that instead of listing people.
 Dialog {
     id: dialog
 
     allowedOrientations: Orientation.All
 
-    // Recipients to warn about: [{ userId, name, devices }].
+    // Recipients to warn about: [{ userId, name, devices, reason }].
     property var users: []
+
+    readonly property bool ownDevice: users.length === 1
+                                      && users[0].reason === "ownDevice"
+
+    function line(entry) {
+        switch (entry.reason) {
+        case "violation":
+            return qsTr("keys changed since you verified them")
+        case "identity":
+            return qsTr("not verified")
+        default:
+            return qsTr("%n unverified device(s)", "", entry.devices)
+        }
+    }
 
     canAccept: true
 
@@ -19,7 +37,7 @@ Dialog {
         // dialog actually warned about.
         if (rememberSwitch.checked) {
             for (var i = 0; i < users.length; i++) {
-                matrix.trustRecipient(users[i].userId)
+                settings.trustRecipient(users[i].userId)
             }
         }
     }
@@ -44,7 +62,8 @@ Dialog {
                 wrapMode: Text.Wrap
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeLarge
-                text: qsTr("Unverified devices")
+                text: dialog.ownDevice ? qsTr("This device is not verified")
+                                       : qsTr("Unverified recipients")
             }
 
             Label {
@@ -53,14 +72,16 @@ Dialog {
                 wrapMode: Text.Wrap
                 color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeSmall
-                text: qsTr("The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.")
+                text: dialog.ownDevice
+                      ? qsTr("As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.")
+                      : qsTr("The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.")
             }
 
             Column {
                 width: parent.width
 
                 Repeater {
-                    model: dialog.users
+                    model: dialog.ownDevice ? [] : dialog.users
 
                     Label {
                         x: Theme.horizontalPageMargin
@@ -69,8 +90,7 @@ Dialog {
                         textFormat: Text.PlainText
                         text: (modelData.name && modelData.name.length > 0
                                ? modelData.name : modelData.userId)
-                              + " — "
-                              + qsTr("%n unverified device(s)", "", modelData.devices)
+                              + " — " + dialog.line(modelData)
                     }
                 }
             }
@@ -78,9 +98,11 @@ Dialog {
             TextSwitch {
                 id: rememberSwitch
 
-                text: dialog.users.length === 1
-                      ? qsTr("Do not warn about this user again")
-                      : qsTr("Do not warn about these users again")
+                text: dialog.ownDevice
+                      ? qsTr("Do not warn again")
+                      : (dialog.users.length === 1
+                         ? qsTr("Do not warn about this user again")
+                         : qsTr("Do not warn about these users again"))
                 description: qsTr("Applies until you verify or clear it.")
             }
         }

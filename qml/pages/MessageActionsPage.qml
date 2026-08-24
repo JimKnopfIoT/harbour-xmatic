@@ -19,6 +19,9 @@ Page {
     property var roomPage
 
     property string eventId
+    /// A message whose send failed has no event id; this names it instead.
+    property string txnId
+    property bool unsent: false
     property string body
     property string senderName
     property bool isOwn: false
@@ -162,9 +165,27 @@ Page {
 
             ListItem {
                 contentHeight: Theme.itemSizeSmall
-                visible: page.isOwn
+                visible: page.eventId.length > 0
                 onClicked: {
-                    matrix.deleteMessage(page.eventId)
+                    var target = page.eventId
+                    pageStack.pop()
+                    page.roomPage.pickReaction(target)
+                }
+                Label {
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: qsTr("React")
+                }
+            }
+
+            ListItem {
+                contentHeight: Theme.itemSizeSmall
+                visible: page.unsent
+                onClicked: {
+                    matrix.retryMessage(page.txnId)
                     pageStack.pop()
                 }
                 Label {
@@ -173,7 +194,24 @@ Page {
                         leftMargin: Theme.horizontalPageMargin
                         verticalCenter: parent.verticalCenter
                     }
-                    text: qsTr("Delete")
+                    text: qsTr("Send again")
+                }
+            }
+
+            ListItem {
+                contentHeight: Theme.itemSizeSmall
+                visible: page.isOwn
+                onClicked: {
+                    matrix.deleteMessage(page.eventId, page.txnId)
+                    pageStack.pop()
+                }
+                Label {
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: page.unsent ? qsTr("Discard") : qsTr("Delete")
                     color: Theme.errorColor
                 }
             }

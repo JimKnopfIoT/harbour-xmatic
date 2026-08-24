@@ -122,6 +122,22 @@
         <source>Language</source>
         <translation>Kalba</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Rodyti kitų skaitymo būseną</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Išjungus nieko nesiunčiama apie tai, kas ką perskaitė, todėl pokalbis lieka sklandesnis. Įjungus tavo žinutės rodo, kiek žmonių jas perskaitė.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Balso žinutės</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Įjungus šalia žinutės lauko yra mikrofonas: laikyk, kad įrašytum, paleisk, kad išsiųstum. Išjungus jo nėra.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -223,6 +239,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Debesėlių nepermatomumas</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reakcijos kaip paveikslėliai</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Išjungus reakcija piešiama kaip ženklas, kuriuo ji yra — visada teisinga ir nemokama. Įjungus xmatic ieško jai tavo paties paveikslėlio aplanke %1, pavadinto pagal jos kodo taškus (1f44d.svg). Nieko nepridedama ir nieko neatsiunčiama. Pasverk: paveikslėlio failą atveria vaizdų dekoderis, o ten tokia programa yra pažeidžiamiausia.</translation>
     </message>
 </context>
 <context>
@@ -1117,6 +1141,18 @@
         <source>Delete</source>
         <translation>Ištrinti</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Atmesti</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Siųsti dar kartą</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reaguoti</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1184,6 +1220,40 @@
     <message>
         <source>no session description</source>
         <translation>nėra seanso aprašo</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reaguoti</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Kas nors kita</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Kambariai</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Naujas pokalbis</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Naujas kambarys</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Prisijungti prie kambario</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Atrasti kambarių</translation>
     </message>
 </context>
 <context>
@@ -1471,22 +1541,6 @@
         <translation>Apie xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Naujas pokalbis</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Naujas kambarys</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Prisijungti prie kambario</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Atrasti kambarių</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Padaryti pradžios puslapiu</translation>
     </message>
@@ -1497,6 +1551,10 @@
     <message>
         <source>Sign out</source>
         <translation>Atsijungti</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Žymėti kaip skaitytą</translation>
     </message>
 </context>
 <context>
@@ -1782,6 +1840,26 @@
         <source>That message is not in the loaded history</source>
         <translation>Šios žinutės nėra įkeltoje istorijoje</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>perskaitė: %n</numerusform>
+            <numerusform>perskaitė: %n</numerusform>
+            <numerusform>perskaitė: %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Atmesti</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Siųsti dar kartą</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reaguoti</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1983,14 +2061,6 @@
         <source>Send anyway</source>
         <translation>Vis tiek siųsti</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Nepatvirtinti įrenginiai</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Žinutė bus užšifruota ir įrenginiams, kurių nepatvirtinai. Patvirtink juos dėl tikro tikrumo arba vis tiek siųsk.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2010,6 +2080,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Galioja, kol patvirtinsi arba atstatysi.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>raktai pasikeitė nuo tada, kai juos patvirtinai</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>nepatvirtinta</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Šis įrenginys nepatvirtintas</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Nepatvirtinti gavėjai</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Žinutė bus užšifruota gavėjams, kurių nepatvirtinai. Patvirtink juos dėl tikrumo arba vis tiek siųsk.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Daugiau neįspėti</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Kol šis įrenginys nepatvirtintas, joks kitas įrenginys negali būti rodomas kaip patvirtintas — net ir toks, kuris yra. Patvirtink jį per Paskyra → Šifravimas arba vis tiek siųsk.</translation>
     </message>
 </context>
 <context>

@@ -10,6 +10,9 @@ Dialog {
 
     allowedOrientations: Orientation.All
 
+    /// Filled in when a tapped link brought the user here.
+    property string prefill: ""
+
     canAccept: userField.text.trim().length > 3
 
     onAccepted: matrix.startDirectChat(userField.text)
@@ -37,6 +40,7 @@ Dialog {
                 id: userField
 
                 width: parent.width
+                text: dialog.prefill
                 label: qsTr("User ID")
                 placeholderText: "@name:server"
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText

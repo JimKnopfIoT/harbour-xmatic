@@ -1,5 +1,6 @@
 #include "matrixbridge.h"
 
+#include "appsettings.h"
 #include "secretskeeper.h"
 
 #include <QDir>
@@ -42,10 +43,23 @@ QString jsonToCompactString(const QJsonObject &object)
 MatrixBridge::MatrixBridge(const QString &dataDirectory,
                            const QString &cacheDirectory,
                            const QString &storeKey,
+                           AppSettings *settings,
                            QObject *parent)
     : QObject(parent)
     , m_dataDirectory(dataDirectory)
+    , m_settings(settings)
 {
+    // The read status can only be chosen when a timeline is built, so the one
+    // already open keeps the old setting until it is built again. Rebuilt here
+    // so the switch acts on the room the user came from, not on the next one.
+    if (m_settings) {
+        connect(m_settings, &AppSettings::showReadStatusChanged, this, [this]() {
+            if (!m_openRoomId.isEmpty()) {
+                openRoom(m_openRoomId, m_timelineFocus);
+            }
+        });
+    }
+
     // Started before anything can be sent: every pending command is stamped
     // against this clock, and reading an unstarted QElapsedTimer is undefined.
     m_uptime.start();
@@ -395,95 +409,6 @@ void MatrixBridge::createSpace(const QString &name)
     send(QStringLiteral("space.create"), arguments);
 }
 
-// Sailjail only lets the app write inside its own config directory
-// (AppConfigLocation → ~/.config/org.xmatic/xmatic). QSettings' UserScope path
-// sits one level above that and the sandbox blocks it silently, so the file is
-// placed explicitly inside the allowed directory.
-static QString settingsPath()
-{
-    return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)
-           + QStringLiteral("/settings.conf");
-}
-
-QString MatrixBridge::startPage() const
-{
-    QSettings settings(settingsPath(), QSettings::IniFormat);
-    const QString page = settings.value(QStringLiteral("ui/startPage"),
-                                        QStringLiteral("rooms")).toString();
-    return page == QLatin1String("spaces") ? page : QStringLiteral("rooms");
-}
-
-void MatrixBridge::setStartPage(const QString &page)
-{
-    const QString wanted = page == QLatin1String("spaces") ? QStringLiteral("spaces")
-                                                           : QStringLiteral("rooms");
-    if (wanted == startPage()) {
-        return;
-    }
-    const QString path = settingsPath();
-    QDir().mkpath(QFileInfo(path).absolutePath());
-    QSettings settings(path, QSettings::IniFormat);
-    settings.setValue(QStringLiteral("ui/startPage"), wanted);
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not save the start page (status %d)",
-                 static_cast<int>(settings.status()));
-    } else {
-        qInfo("xmatic: start page set to %s", qPrintable(wanted));
-    }
-    emit startPageChanged();
-}
-
-bool MatrixBridge::notificationPreview() const
-{
-    QSettings settings(settingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("ui/notificationPreview"), false).toBool();
-}
-
-void MatrixBridge::setNotificationPreview(bool enabled)
-{
-    if (enabled == notificationPreview()) {
-        return;
-    }
-    const QString path = settingsPath();
-    QDir().mkpath(QFileInfo(path).absolutePath());
-    QSettings settings(path, QSettings::IniFormat);
-    settings.setValue(QStringLiteral("ui/notificationPreview"), enabled);
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not save the notification preview setting (status %d)",
-                 static_cast<int>(settings.status()));
-    } else {
-        qInfo("xmatic: notification preview %s", enabled ? "on" : "off");
-    }
-    emit notificationPreviewChanged();
-}
-
-bool MatrixBridge::clickableLinks() const
-{
-    QSettings settings(settingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("ui/clickableLinks"), false).toBool();
-}
-
-void MatrixBridge::setClickableLinks(bool enabled)
-{
-    if (enabled == clickableLinks()) {
-        return;
-    }
-    const QString path = settingsPath();
-    QDir().mkpath(QFileInfo(path).absolutePath());
-    QSettings settings(path, QSettings::IniFormat);
-    settings.setValue(QStringLiteral("ui/clickableLinks"), enabled);
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not save the clickable links setting (status %d)",
-                 static_cast<int>(settings.status()));
-    } else {
-        qInfo("xmatic: clickable links %s", enabled ? "on" : "off");
-    }
-    emit clickableLinksChanged();
-}
-
 void MatrixBridge::leaveSpace(const QString &roomId)
 {
     if (roomId.isEmpty()) {
@@ -586,6 +511,8 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
     if (!focus.isEmpty()) {
         arguments.insert(QStringLiteral("focus"), focus);
     }
+    arguments.insert(QStringLiteral("receipts"),
+                     m_settings && m_settings->showReadStatus());
     send(QStringLiteral("timeline.open"), arguments);
 
     // Pull this room's keys out of the backup as well. Messages that predate
@@ -739,57 +666,73 @@ void MatrixBridge::setRoomLowPriority(const QString &roomId, bool lowPriority)
     send(QStringLiteral("room.setLowPriority"), arguments);
 }
 
+QString MatrixBridge::emojiDirectory() const
+{
+    return m_dataDirectory + QStringLiteral("/emoji");
+}
+
+QString MatrixBridge::emojiSource(const QString &key) const
+{
+    if (key.isEmpty()) {
+        return QString();
+    }
+    const auto cached = m_emojiSources.constFind(key);
+    if (cached != m_emojiSources.constEnd()) {
+        return *cached;
+    }
+
+    // The name is built from the reaction, the way every emoji set names its
+    // files: code points in hex, joined by a dash. A variation selector is
+    // dropped unless the sequence is a joined one, which is the rule the sets
+    // themselves follow.
+    const QVector<uint> points = key.toUcs4();
+    const bool joined = points.contains(0x200D);
+    QStringList parts;
+    for (uint point : points) {
+        if (point == 0xFE0F && !joined) {
+            continue;
+        }
+        parts.append(QString::number(point, 16));
+    }
+
+    QString found;
+    if (!parts.isEmpty()) {
+        const QString base = emojiDirectory() + QLatin1Char('/') + parts.join(QLatin1Char('-'));
+        for (const QString &extension : { QStringLiteral(".svg"), QStringLiteral(".png") }) {
+            const QFileInfo file(base + extension);
+            if (file.exists() && file.isFile() && file.size() <= 64 * 1024) {
+                found = QUrl::fromLocalFile(file.absoluteFilePath()).toString();
+                break;
+            }
+        }
+    }
+
+    m_emojiSources.insert(key, found);
+    return found;
+}
+
+void MatrixBridge::markRoomRead(const QString &roomId)
+{
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    send(QStringLiteral("room.markRead"), arguments);
+}
+
+void MatrixBridge::resolveRoom(const QString &address)
+{
+    if (address.trimmed().isEmpty()) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("address"), address.trimmed());
+    send(QStringLiteral("room.resolve"), arguments);
+}
+
 void MatrixBridge::checkRecipients(const QString &roomId)
 {
     QJsonObject arguments;
     arguments.insert(QStringLiteral("roomId"), roomId);
     send(QStringLiteral("room.checkRecipients"), arguments);
-}
-
-bool MatrixBridge::isRecipientTrusted(const QString &userId) const
-{
-    QSettings settings(settingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("security/trustedRecipients"))
-        .toStringList()
-        .contains(userId);
-}
-
-void MatrixBridge::trustRecipient(const QString &userId)
-{
-    const QString path = settingsPath();
-    QSettings settings(path, QSettings::IniFormat);
-    QStringList trusted =
-        settings.value(QStringLiteral("security/trustedRecipients")).toStringList();
-    if (trusted.contains(userId)) {
-        return;
-    }
-    trusted.append(userId);
-    settings.setValue(QStringLiteral("security/trustedRecipients"), trusted);
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not persist the trusted recipient");
-    }
-}
-
-int MatrixBridge::resetRecipientWarnings()
-{
-    const QString path = settingsPath();
-    QSettings settings(path, QSettings::IniFormat);
-    const int count = settings.value(QStringLiteral("security/trustedRecipients"))
-                          .toStringList()
-                          .count();
-    if (count == 0) {
-        return 0;
-    }
-    settings.remove(QStringLiteral("security/trustedRecipients"));
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not clear the trusted recipients");
-        return 0;
-    }
-    // A count, never the addresses: this line ends up in the journal.
-    qInfo("xmatic: %d suppressed recipient warnings cleared", count);
-    return count;
 }
 
 void MatrixBridge::enableEncryption(const QString &roomId)
@@ -830,90 +773,6 @@ void MatrixBridge::searchDirectory(const QString &pattern, const QString &server
 
 // A server name as the user may type it: with a scheme, a trailing slash or
 // stray spaces. Reduced to the bare name the directory API expects.
-static QString normalizedServerName(const QString &server)
-{
-    QString name = server.trimmed().toLower();
-    if (name.startsWith(QLatin1String("https://"))) {
-        name = name.mid(8);
-    } else if (name.startsWith(QLatin1String("http://"))) {
-        name = name.mid(7);
-    }
-    while (name.endsWith(QLatin1Char('/'))) {
-        name.chop(1);
-    }
-    return name;
-}
-
-QString MatrixBridge::directoryServer() const
-{
-    QSettings settings(settingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("directory/server")).toString();
-}
-
-void MatrixBridge::setDirectoryServer(const QString &server)
-{
-    const QString wanted = normalizedServerName(server);
-    if (wanted == directoryServer()) {
-        return;
-    }
-    const QString path = settingsPath();
-    QDir().mkpath(QFileInfo(path).absolutePath());
-    QSettings settings(path, QSettings::IniFormat);
-    settings.setValue(QStringLiteral("directory/server"), wanted);
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not save the directory server (status %d)",
-                 static_cast<int>(settings.status()));
-    }
-    emit directoryServerChanged();
-}
-
-QStringList MatrixBridge::directoryServers() const
-{
-    QSettings settings(settingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("directory/servers")).toStringList();
-}
-
-void MatrixBridge::addDirectoryServer(const QString &server)
-{
-    const QString name = normalizedServerName(server);
-    if (name.isEmpty()) {
-        return;
-    }
-    QStringList servers = directoryServers();
-    if (servers.contains(name)) {
-        return;
-    }
-    servers.append(name);
-    const QString path = settingsPath();
-    QDir().mkpath(QFileInfo(path).absolutePath());
-    QSettings settings(path, QSettings::IniFormat);
-    settings.setValue(QStringLiteral("directory/servers"), servers);
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not save the directory servers (status %d)",
-                 static_cast<int>(settings.status()));
-    }
-    emit directoryServersChanged();
-}
-
-void MatrixBridge::removeDirectoryServer(const QString &server)
-{
-    const QString name = normalizedServerName(server);
-    QStringList servers = directoryServers();
-    if (servers.removeAll(name) == 0) {
-        return;
-    }
-    QSettings settings(settingsPath(), QSettings::IniFormat);
-    settings.setValue(QStringLiteral("directory/servers"), servers);
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not save the directory servers (status %d)",
-                 static_cast<int>(settings.status()));
-    }
-    emit directoryServersChanged();
-}
-
 void MatrixBridge::directoryLoadMore()
 {
     send(QStringLiteral("directory.loadMore"));
@@ -1246,13 +1105,35 @@ void MatrixBridge::editMessage(const QString &eventId, const QString &body)
     send(QStringLiteral("timeline.edit"), arguments);
 }
 
-void MatrixBridge::deleteMessage(const QString &eventId)
+void MatrixBridge::toggleReaction(const QString &eventId, const QString &key)
 {
-    if (eventId.isEmpty()) {
+    if (eventId.isEmpty() || key.isEmpty()) {
         return;
     }
     QJsonObject arguments;
     arguments.insert(QStringLiteral("eventId"), eventId);
+    arguments.insert(QStringLiteral("key"), key);
+    send(QStringLiteral("timeline.react"), arguments);
+}
+
+void MatrixBridge::retryMessage(const QString &txnId)
+{
+    if (txnId.isEmpty()) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("txnId"), txnId);
+    send(QStringLiteral("timeline.retry"), arguments);
+}
+
+void MatrixBridge::deleteMessage(const QString &eventId, const QString &txnId)
+{
+    if (eventId.isEmpty() && txnId.isEmpty()) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("eventId"), eventId);
+    arguments.insert(QStringLiteral("txnId"), txnId);
     send(QStringLiteral("timeline.redact"), arguments);
 }
 
@@ -1436,7 +1317,6 @@ void MatrixBridge::requestAvatar(const QString &url)
     m_mediaRequests.insert(id, url);
     send(QStringLiteral("media.fetch"), arguments);
 }
-
 void MatrixBridge::handleMessage(const QString &json)
 {
     const QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
@@ -1447,302 +1327,419 @@ void MatrixBridge::handleMessage(const QString &json)
     const QString type = message.value(QStringLiteral("type")).toString();
 
     if (type == QLatin1String("reply")) {
-        const quint64 id = static_cast<quint64>(message.value(QStringLiteral("id")).toDouble());
-        const PendingCommand entry = m_pending.take(id);
-        const QString command = entry.command;
-        emit busyChanged();
-        updateStallWatch();
+        handleReply(message);
+    } else if (type == QLatin1String("event")) {
+        handleEvent(message);
+    }
+}
 
-        // The other half of the stall report: how long it took in the end.
-        // Without it the journal says a command hung and never says whether it
-        // came back, which is the difference between slow and broken.
-        if (entry.reported) {
-            qWarning("xmatic: %s answered after %d s",
-                     qPrintable(command),
-                     static_cast<int>((m_uptime.elapsed() - entry.sentAt) / 1000));
+/// A command's answer: the bookkeeping every reply needs, then the one
+/// handler that knows this command. Each group answers whether it took it.
+void MatrixBridge::handleReply(const QJsonObject &message)
+{
+    const quint64 id = static_cast<quint64>(message.value(QStringLiteral("id")).toDouble());
+    const PendingCommand entry = m_pending.take(id);
+    const QString command = entry.command;
+    emit busyChanged();
+    updateStallWatch();
+
+    // The other half of the stall report: how long it took in the end.
+    // Without it the journal says a command hung and never says whether it
+    // came back, which is the difference between slow and broken.
+    if (entry.reported) {
+        qWarning("xmatic: %s answered after %d s",
+                 qPrintable(command),
+                 static_cast<int>((m_uptime.elapsed() - entry.sentAt) / 1000));
+    }
+
+    // Released before anything else looks at the reply, so a handler that
+    // reacts to the result already sees the timeline as idle.
+    if (id != 0 && id == m_paginateId) {
+        m_paginateId = 0;
+        emit paginatingChanged();
+    }
+
+    if (!message.value(QStringLiteral("ok")).toBool()) {
+        const QString error = message.value(QStringLiteral("error")).toString();
+        qWarning("xmatic: %s failed: %s", qPrintable(command), qPrintable(error));
+        if (command == QLatin1String("login.start")
+            || command == QLatin1String("login.deviceCode")
+            || command == QLatin1String("login.password")) {
+            setLoginRunning(false);
+            emit loginFailed(error);
         }
-
-        // Released before anything else looks at the reply, so a handler that
-        // reacts to the result already sees the timeline as idle.
-        if (id != 0 && id == m_paginateId) {
-            m_paginateId = 0;
-            emit paginatingChanged();
-        }
-
-        if (!message.value(QStringLiteral("ok")).toBool()) {
-            const QString error = message.value(QStringLiteral("error")).toString();
-            qWarning("xmatic: %s failed: %s", qPrintable(command), qPrintable(error));
-            if (command == QLatin1String("login.start")
-                || command == QLatin1String("login.deviceCode")
-                || command == QLatin1String("login.password")) {
-                setLoginRunning(false);
-                emit loginFailed(error);
-            }
-            if (command == QLatin1String("member.profile")) {
-                emit memberProfileFailed(error);
-            }
-            if (command == QLatin1String("thread.open")
-                || command == QLatin1String("thread.paginate")
-                || command == QLatin1String("thread.send")) {
-                emit threadFailed(error);
-            }
-            m_mediaRequests.remove(id);
-            m_hierarchyRequests.remove(id);
-            m_removeRequests.remove(id);
-            setLastError(error);
-            return;
-        }
-
-        const QJsonObject data = message.value(QStringLiteral("data")).toObject();
-
-        if (command == QLatin1String("login.registrationUrl")) {
-            const QString url = data.value(QStringLiteral("url")).toString();
-            if (!url.isEmpty()) {
-                emit registrationUrlReady(url);
-            }
-            return;
-        }
-
-        if (command == QLatin1String("account.get")) {
-            const QString name = data.value(QStringLiteral("displayName")).toString();
-            const QString avatar = data.value(QStringLiteral("avatarUrl")).toString();
-            if (name != m_profileName || avatar != m_profileAvatar) {
-                m_profileName = name;
-                m_profileAvatar = avatar;
-                emit profileChanged();
-            }
-            return;
-        }
-
-        if (command == QLatin1String("space.hierarchy")) {
-            const QString spaceId = m_hierarchyRequests.take(id);
-            emit spaceHierarchyReady(spaceId,
-                                     data.value(QStringLiteral("rooms")).toArray().toVariantList());
-            return;
-        }
-
-        if (command == QLatin1String("room.checkRecipients")) {
-            emit recipientsChecked(data.value(QStringLiteral("roomId")).toString(),
-                                   data.value(QStringLiteral("users")).toArray().toVariantList());
-            return;
-        }
-
-        if (command == QLatin1String("login.start")) {
-            // A server without OAuth that offers the classic password flow
-            // answers with a flag instead of a browser URL; the login page
-            // then shows the credentials form. Not busy while the user types.
-            if (data.value(QStringLiteral("passwordLogin")).toBool()) {
-                setLoginRunning(false);
-                emit passwordLoginNeeded();
-                return;
-            }
-            const QString url = data.value(QStringLiteral("url")).toString();
-            if (url.isEmpty()) {
-                setLoginRunning(false);
-                emit loginFailed(tr("The homeserver did not return a login page."));
-            } else {
-                emit loginUrlReady(url);
-            }
-            return;
-        }
-
-        if (command == QLatin1String("login.password")) {
-            // The session.changed event that follows this reply carries the
-            // whole outcome; nothing to do here.
-            return;
-        }
-
-        if (command == QLatin1String("login.deviceCode")) {
-            // Prefer the short URL: the user has to type it on another
-            // device, and the complete variant embeds the code anyway.
-            const QString url = data.value(QStringLiteral("verificationUri")).toString();
-            const QString code = data.value(QStringLiteral("userCode")).toString();
-            if (url.isEmpty() || code.isEmpty()) {
-                setLoginRunning(false);
-                emit loginFailed(tr("The homeserver did not return a sign-in code."));
-            } else {
-                emit deviceCodeReady(url, code);
-            }
-            return;
-        }
-
-        if (command == QLatin1String("call.turnServers")) {
-            QVariantList servers;
-            const QJsonArray uris = data.value(QStringLiteral("uris")).toArray();
-            for (const QJsonValue &uri : uris) {
-                QVariantMap server;
-                server.insert(QStringLiteral("uri"), uri.toString());
-                server.insert(QStringLiteral("username"),
-                              data.value(QStringLiteral("username")).toString());
-                server.insert(QStringLiteral("password"),
-                              data.value(QStringLiteral("password")).toString());
-                servers.append(server);
-            }
-            m_calls->setTurnServers(servers);
-            qInfo("xmatic: %d relay servers available", servers.size());
-            return;
-        }
-
-        if (command == QLatin1String("room.setNotifyMode")) {
-            // The mode writes a push rule, which the SDK's room list does not
-            // consider a notable change, so no diff follows and the row would
-            // keep the old state until something else touched the room —
-            // entering it, for instance. Write it into the models directly.
-            const QString roomId = data.value(QStringLiteral("roomId")).toString();
-            const QString mode = data.value(QStringLiteral("mode")).toString();
-            m_rooms.setNotifyMode(roomId, mode);
-            m_spaceRooms.setNotifyMode(roomId, mode);
-            return;
-        }
-
-        if (command == QLatin1String("room.directChat")) {
-            emit directChatReady(data.value(QStringLiteral("roomId")).toString());
-            return;
-        }
-
-        if (command == QLatin1String("room.followSuccessor")) {
-            emit successorReady(data.value(QStringLiteral("roomId")).toString());
-            return;
-        }
-
-        if (command == QLatin1String("room.info")) {
-            emit roomInfoReady(data.toVariantMap());
-            return;
-        }
-
-        if (command == QLatin1String("room.create")) {
-            emit roomCreated(data.value(QStringLiteral("roomId")).toString(),
-                             data.value(QStringLiteral("name")).toString(),
-                             data.value(QStringLiteral("encrypted")).toBool());
-            return;
-        }
-
-        if (command == QLatin1String("member.remove")) {
-            m_members.removeUser(m_removeRequests.take(id));
-            return;
-        }
-
         if (command == QLatin1String("member.profile")) {
-            emit memberProfileReady(data.toVariantMap());
-            return;
+            emit memberProfileFailed(error);
         }
-
-        if (command == QLatin1String("account.ignoredUsers")) {
-            QStringList users;
-            const QJsonArray list = data.value(QStringLiteral("users")).toArray();
-            for (const QJsonValue &value : list) {
-                users.append(value.toString());
-            }
-            emit ignoredUsersReady(users);
-            return;
+        if (command == QLatin1String("thread.open")
+            || command == QLatin1String("thread.paginate")
+            || command == QLatin1String("thread.send")) {
+            emit threadFailed(error);
         }
-
-        // No diff follows core-made state changes, and the local store only
-        // learns of the state event on a later sync — so the result is
-        // written into the model and handed to the page as data, never as a
-        // hint to re-read.
-        if (command == QLatin1String("member.ban")) {
-            const QString userId = data.value(QStringLiteral("userId")).toString();
-            // Only the model of the room this actually happened in.
-            if (data.value(QStringLiteral("roomId")).toString() == m_membersRoomId) {
-                m_members.removeUser(userId);
-            }
-            emit memberActionDone(QStringLiteral("ban"), data.toVariantMap());
-            emit memberChanged(userId);
-            return;
-        }
-
-        if (command == QLatin1String("member.setPower")) {
-            const QString userId = data.value(QStringLiteral("userId")).toString();
-            if (data.value(QStringLiteral("roomId")).toString() == m_membersRoomId) {
-                m_members.setPower(userId, data.value(QStringLiteral("power")).toInt());
-            }
-            emit memberActionDone(QStringLiteral("setPower"), data.toVariantMap());
-            emit memberChanged(userId);
-            return;
-        }
-
-        if (command == QLatin1String("member.unban")
-                || command == QLatin1String("member.setIgnored")
-                || command == QLatin1String("member.withdrawVerification")) {
-            const QString action = command == QLatin1String("member.unban")
-                    ? QStringLiteral("unban")
-                    : (command == QLatin1String("member.setIgnored")
-                       ? QStringLiteral("setIgnored")
-                       : QStringLiteral("withdrawVerification"));
-            emit memberActionDone(action, data.toVariantMap());
-            emit memberChanged(data.value(QStringLiteral("userId")).toString());
-            return;
-        }
-
-        if (command == QLatin1String("media.fetch")) {
-            const QString key = m_mediaRequests.take(id);
-            const QString path = data.value(QStringLiteral("path")).toString();
-            if (!key.isEmpty() && !path.isEmpty()) {
-                m_media.insert(key, path);
-                emit mediaReady(key, path);
-            }
-            return;
-        }
-
-        if (command == QLatin1String("storage.status")) {
-            m_storageStatus = data.toVariantMap();
-            // Says what is on disk, names no path and no key.
-            qInfo("xmatic: local storage: store=%s session=%s key=%s",
-                  m_storageStatus.value(QStringLiteral("storeEncrypted")).toBool()
-                      ? "encrypted" : "plain",
-                  !m_storageStatus.value(QStringLiteral("sessionPresent")).toBool()
-                      ? "none"
-                      : (m_storageStatus.value(QStringLiteral("sessionEncrypted")).toBool()
-                             ? "encrypted" : "plain"),
-                  m_storageStatus.value(QStringLiteral("keyAvailable")).toBool()
-                      ? "available" : "missing");
-            emit storageChanged();
-            return;
-        }
-
-        if (command == QLatin1String("encryption.status")
-                || command == QLatin1String("encryption.recover")) {
-            m_encryptionStatus = data.toVariantMap();
-            emit encryptionChanged();
-            return;
-        }
-
-        if (command == QLatin1String("encryption.enableBackup")) {
-            emit recoveryKeyReady(data.value(QStringLiteral("recoveryKey")).toString());
-            return;
-        }
-
-        if (command == QLatin1String("timeline.open")) {
-            setTimelineReady(true);
-            return;
-        }
-
-        if (command == QLatin1String("timeline.paginate")) {
-            setTimelineAtStart(data.value(QStringLiteral("reachedStart")).toBool());
-            // The count is the model's at this moment, not the page's yield —
-            // the rows of this pagination may still be on their way through the
-            // diff stream. Two of these lines with the same count and no diff
-            // between them is what a fruitless round looks like.
-            qInfo("xmatic: older messages answered, %d rows in the model, at start %d",
-                  m_timeline.count(), m_timelineAtStart ? 1 : 0);
-            emit paginated();
-            return;
-        }
-
-        if (data.contains(QStringLiteral("state"))) {
-            applySession(data);
-        }
+        m_mediaRequests.remove(id);
+        m_hierarchyRequests.remove(id);
+        m_removeRequests.remove(id);
+        setLastError(error);
         return;
     }
 
-    if (type != QLatin1String("event")) {
+    const QJsonObject data = message.value(QStringLiteral("data")).toObject();
+
+    if (replyLogin(command, data)) {
+        return;
+    }
+    if (replyAccount(command, data)) {
+        return;
+    }
+    if (replyRoom(id, command, data)) {
+        return;
+    }
+    if (replyMember(id, command, data)) {
+        return;
+    }
+    if (replyTimeline(id, command, data)) {
+        return;
+    }
+    if (replyEncryption(command, data)) {
+        return;
+    }
+    if (replyCall(command, data)) {
         return;
     }
 
+    if (data.contains(QStringLiteral("state"))) {
+        applySession(data);
+    }
+}
+
+/// Replies about the login flow.
+bool MatrixBridge::replyLogin(const QString &command, const QJsonObject &data)
+{
+
+    if (command == QLatin1String("login.registrationUrl")) {
+        const QString url = data.value(QStringLiteral("url")).toString();
+        if (!url.isEmpty()) {
+            emit registrationUrlReady(url);
+        }
+        return true;
+    }
+
+    if (command == QLatin1String("login.start")) {
+        // A server without OAuth that offers the classic password flow
+        // answers with a flag instead of a browser URL; the login page
+        // then shows the credentials form. Not busy while the user types.
+        if (data.value(QStringLiteral("passwordLogin")).toBool()) {
+            setLoginRunning(false);
+            emit passwordLoginNeeded();
+            return true;
+        }
+        const QString url = data.value(QStringLiteral("url")).toString();
+        if (url.isEmpty()) {
+            setLoginRunning(false);
+            emit loginFailed(tr("The homeserver did not return a login page."));
+        } else {
+            emit loginUrlReady(url);
+        }
+        return true;
+    }
+
+    if (command == QLatin1String("login.password")) {
+        // The session.changed event that follows this reply carries the
+        // whole outcome; nothing to do here.
+        return true;
+    }
+
+    if (command == QLatin1String("login.deviceCode")) {
+        // Prefer the short URL: the user has to type it on another
+        // device, and the complete variant embeds the code anyway.
+        const QString url = data.value(QStringLiteral("verificationUri")).toString();
+        const QString code = data.value(QStringLiteral("userCode")).toString();
+        if (url.isEmpty() || code.isEmpty()) {
+            setLoginRunning(false);
+            emit loginFailed(tr("The homeserver did not return a sign-in code."));
+        } else {
+            emit deviceCodeReady(url, code);
+        }
+        return true;
+    }
+    return false;
+}
+
+/// Replies about the account and its storage.
+bool MatrixBridge::replyAccount(const QString &command, const QJsonObject &data)
+{
+
+    if (command == QLatin1String("account.get")) {
+        const QString name = data.value(QStringLiteral("displayName")).toString();
+        const QString avatar = data.value(QStringLiteral("avatarUrl")).toString();
+        if (name != m_profileName || avatar != m_profileAvatar) {
+            m_profileName = name;
+            m_profileAvatar = avatar;
+            emit profileChanged();
+        }
+        return true;
+    }
+
+    if (command == QLatin1String("account.ignoredUsers")) {
+        QStringList users;
+        const QJsonArray list = data.value(QStringLiteral("users")).toArray();
+        for (const QJsonValue &value : list) {
+            users.append(value.toString());
+        }
+        emit ignoredUsersReady(users);
+        return true;
+    }
+
+    if (command == QLatin1String("storage.status")) {
+        m_storageStatus = data.toVariantMap();
+        // Says what is on disk, names no path and no key.
+        qInfo("xmatic: local storage: store=%s session=%s key=%s",
+              m_storageStatus.value(QStringLiteral("storeEncrypted")).toBool()
+                  ? "encrypted" : "plain",
+              !m_storageStatus.value(QStringLiteral("sessionPresent")).toBool()
+                  ? "none"
+                  : (m_storageStatus.value(QStringLiteral("sessionEncrypted")).toBool()
+                         ? "encrypted" : "plain"),
+              m_storageStatus.value(QStringLiteral("keyAvailable")).toBool()
+                  ? "available" : "missing");
+        emit storageChanged();
+        return true;
+    }
+    return false;
+}
+
+/// Replies about rooms and spaces.
+bool MatrixBridge::replyRoom(quint64 id, const QString &command, const QJsonObject &data)
+{
+
+    if (command == QLatin1String("space.hierarchy")) {
+        const QString spaceId = m_hierarchyRequests.take(id);
+        emit spaceHierarchyReady(spaceId,
+                                 data.value(QStringLiteral("rooms")).toArray().toVariantList());
+        return true;
+    }
+
+    if (command == QLatin1String("room.checkRecipients")) {
+        emit recipientsChecked(data.value(QStringLiteral("roomId")).toString(),
+                               data.value(QStringLiteral("users")).toArray().toVariantList());
+        return true;
+    }
+
+    if (command == QLatin1String("room.setNotifyMode")) {
+        // The mode writes a push rule, which the SDK's room list does not
+        // consider a notable change, so no diff follows and the row would
+        // keep the old state until something else touched the room —
+        // entering it, for instance. Write it into the models directly.
+        const QString roomId = data.value(QStringLiteral("roomId")).toString();
+        const QString mode = data.value(QStringLiteral("mode")).toString();
+        m_rooms.setNotifyMode(roomId, mode);
+        m_spaceRooms.setNotifyMode(roomId, mode);
+        return true;
+    }
+
+    if (command == QLatin1String("room.resolve")) {
+        emit roomResolved(data.value(QStringLiteral("address")).toString(),
+                          data.value(QStringLiteral("roomId")).toString(),
+                          data.value(QStringLiteral("joined")).toBool());
+        return true;
+    }
+
+    if (command == QLatin1String("room.markRead")) {
+        // Same reason as the notify mode above: the receipt may not come back
+        // as a diff, and the badge would stand until something else touched
+        // the room.
+        const QString roomId = data.value(QStringLiteral("roomId")).toString();
+        m_rooms.clearUnread(roomId);
+        m_spaceRooms.clearUnread(roomId);
+        return true;
+    }
+
+    if (command == QLatin1String("room.directChat")) {
+        emit directChatReady(data.value(QStringLiteral("roomId")).toString());
+        return true;
+    }
+
+    if (command == QLatin1String("room.followSuccessor")) {
+        emit successorReady(data.value(QStringLiteral("roomId")).toString());
+        return true;
+    }
+
+    if (command == QLatin1String("room.info")) {
+        emit roomInfoReady(data.toVariantMap());
+        return true;
+    }
+
+    if (command == QLatin1String("room.create")) {
+        emit roomCreated(data.value(QStringLiteral("roomId")).toString(),
+                         data.value(QStringLiteral("name")).toString(),
+                         data.value(QStringLiteral("encrypted")).toBool());
+        return true;
+    }
+    return false;
+}
+
+/// Replies about members and moderation.
+bool MatrixBridge::replyMember(quint64 id, const QString &command, const QJsonObject &data)
+{
+
+    if (command == QLatin1String("member.remove")) {
+        m_members.removeUser(m_removeRequests.take(id));
+        return true;
+    }
+
+    if (command == QLatin1String("member.profile")) {
+        emit memberProfileReady(data.toVariantMap());
+        return true;
+    }
+
+    // No diff follows core-made state changes, and the local store only
+    // learns of the state event on a later sync — so the result is
+    // written into the model and handed to the page as data, never as a
+    // hint to re-read.
+    if (command == QLatin1String("member.ban")) {
+        const QString userId = data.value(QStringLiteral("userId")).toString();
+        // Only the model of the room this actually happened in.
+        if (data.value(QStringLiteral("roomId")).toString() == m_membersRoomId) {
+            m_members.removeUser(userId);
+        }
+        emit memberActionDone(QStringLiteral("ban"), data.toVariantMap());
+        emit memberChanged(userId);
+        return true;
+    }
+
+    if (command == QLatin1String("member.setPower")) {
+        const QString userId = data.value(QStringLiteral("userId")).toString();
+        if (data.value(QStringLiteral("roomId")).toString() == m_membersRoomId) {
+            m_members.setPower(userId, data.value(QStringLiteral("power")).toInt());
+        }
+        emit memberActionDone(QStringLiteral("setPower"), data.toVariantMap());
+        emit memberChanged(userId);
+        return true;
+    }
+
+    if (command == QLatin1String("member.unban")
+            || command == QLatin1String("member.setIgnored")
+            || command == QLatin1String("member.withdrawVerification")) {
+        const QString action = command == QLatin1String("member.unban")
+                ? QStringLiteral("unban")
+                : (command == QLatin1String("member.setIgnored")
+                   ? QStringLiteral("setIgnored")
+                   : QStringLiteral("withdrawVerification"));
+        emit memberActionDone(action, data.toVariantMap());
+        emit memberChanged(data.value(QStringLiteral("userId")).toString());
+        return true;
+    }
+    return false;
+}
+
+/// Replies about the timeline and its media.
+bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJsonObject &data)
+{
+
+    if (command == QLatin1String("media.fetch")) {
+        const QString key = m_mediaRequests.take(id);
+        const QString path = data.value(QStringLiteral("path")).toString();
+        if (!key.isEmpty() && !path.isEmpty()) {
+            m_media.insert(key, path);
+            emit mediaReady(key, path);
+        }
+        return true;
+    }
+
+    if (command == QLatin1String("timeline.open")) {
+        setTimelineReady(true);
+        // Only for the live view. A focused open - the pinned overview, a
+        // permalink - shows a different slice of the room, and the room's
+        // read marker means nothing in it.
+        if (m_timelineFocus.isEmpty()) {
+            emit timelineOpened(data.value(QStringLiteral("readMarker")).toString(),
+                                data.value(QStringLiteral("rebuilt")).toBool());
+        }
+        return true;
+    }
+
+    if (command == QLatin1String("timeline.paginate")) {
+        setTimelineAtStart(data.value(QStringLiteral("reachedStart")).toBool());
+        // The count is the model's at this moment, not the page's yield —
+        // the rows of this pagination may still be on their way through the
+        // diff stream. Two of these lines with the same count and no diff
+        // between them is what a fruitless round looks like.
+        qInfo("xmatic: older messages answered, %d rows in the model, at start %d",
+              m_timeline.count(), m_timelineAtStart ? 1 : 0);
+        emit paginated();
+        return true;
+    }
+
+    return false;
+}
+
+/// Replies about encryption.
+bool MatrixBridge::replyEncryption(const QString &command, const QJsonObject &data)
+{
+
+    if (command == QLatin1String("encryption.status")
+            || command == QLatin1String("encryption.recover")) {
+        m_encryptionStatus = data.toVariantMap();
+        emit encryptionChanged();
+        return true;
+    }
+
+    if (command == QLatin1String("encryption.enableBackup")) {
+        emit recoveryKeyReady(data.value(QStringLiteral("recoveryKey")).toString());
+        return true;
+    }
+    return false;
+}
+
+/// Replies about calls.
+bool MatrixBridge::replyCall(const QString &command, const QJsonObject &data)
+{
+
+    if (command == QLatin1String("call.turnServers")) {
+        QVariantList servers;
+        const QJsonArray uris = data.value(QStringLiteral("uris")).toArray();
+        for (const QJsonValue &uri : uris) {
+            QVariantMap server;
+            server.insert(QStringLiteral("uri"), uri.toString());
+            server.insert(QStringLiteral("username"),
+                          data.value(QStringLiteral("username")).toString());
+            server.insert(QStringLiteral("password"),
+                          data.value(QStringLiteral("password")).toString());
+            servers.append(server);
+        }
+        m_calls->setTurnServers(servers);
+        qInfo("xmatic: %d relay servers available", servers.size());
+        return true;
+    }
+    return false;
+}
+/// A message the core sent on its own. Same shape as the replies: one
+/// handler per domain, the first that recognises the name takes it.
+void MatrixBridge::handleEvent(const QJsonObject &message)
+{
     const QString name = message.value(QStringLiteral("event")).toString();
     const QJsonObject data = message.value(QStringLiteral("data")).toObject();
 
+    if (eventCall(name, data)) {
+        return;
+    }
+    if (eventVerification(name, data)) {
+        return;
+    }
+    if (eventTimeline(name, data)) {
+        return;
+    }
+    if (eventLists(name, data)) {
+        return;
+    }
+    if (eventSession(name, data)) {
+        return;
+    }
+}
+
+/// Events about a call's signalling.
+bool MatrixBridge::eventCall(const QString &name, const QJsonObject &data)
+{
     if (name == QLatin1String("call.invite")) {
         m_calls->onRemoteInvite(data.value(QStringLiteral("roomId")).toString(),
                                 data.value(QStringLiteral("sender")).toString(),
@@ -1756,7 +1753,16 @@ void MatrixBridge::handleMessage(const QString &json)
                                     data.value(QStringLiteral("candidates")).toArray().toVariantList());
     } else if (name == QLatin1String("call.hangup")) {
         m_calls->onRemoteHangup(data.value(QStringLiteral("callId")).toString());
-    } else if (name == QLatin1String("verification.request")) {
+    } else {
+        return false;
+    }
+    return true;
+}
+
+/// Events about verification and encryption.
+bool MatrixBridge::eventVerification(const QString &name, const QJsonObject &data)
+{
+    if (name == QLatin1String("verification.request")) {
         m_verificationState = QStringLiteral("requested");
         m_verificationUser = data.value(QStringLiteral("userId")).toString();
         m_verificationIsSelf = data.value(QStringLiteral("isSelf")).toBool();
@@ -1798,7 +1804,16 @@ void MatrixBridge::handleMessage(const QString &json)
         m_verificationState = QStringLiteral("cancelled");
         qInfo("xmatic: verification cancelled");
         emit verificationChanged();
-    } else if (name == QLatin1String("timeline.diff")) {
+    } else {
+        return false;
+    }
+    return true;
+}
+
+/// Events about the timeline and threads.
+bool MatrixBridge::eventTimeline(const QString &name, const QJsonObject &data)
+{
+    if (name == QLatin1String("timeline.diff")) {
         // Late diffs from a room that was closed in the meantime are dropped.
         if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
             const QJsonArray ops = data.value(QStringLiteral("ops")).toArray();
@@ -1814,6 +1829,7 @@ void MatrixBridge::handleMessage(const QString &json)
             qInfo("xmatic: timeline diff [%s] -> %d rows",
                   qPrintable(names.join(QStringLiteral(","))),
                   m_timeline.count());
+            reportSendFailures(ops);
         }
     } else if (name == QLatin1String("thread.diff")) {
         if (data.value(QStringLiteral("token")).toString()
@@ -1821,23 +1837,6 @@ void MatrixBridge::handleMessage(const QString &json)
             const QJsonArray ops = data.value(QStringLiteral("ops")).toArray();
             m_threadTimeline.applyOperations(ops);
             qInfo("xmatic: thread diff -> %d rows", m_threadTimeline.count());
-        }
-    } else if (name == QLatin1String("sync.support")) {
-        // A server that cannot do this app's sync fails every sync, which the
-        // offline mode turns into "offline" plus a restart loop — a flashing
-        // banner over an empty room list that reads as a network fault. Say
-        // what it is instead.
-        const bool supported = data.value(QStringLiteral("supported")).toBool(true);
-        const QString error = data.value(QStringLiteral("error")).toString();
-        if (!error.isEmpty()) {
-            qWarning("xmatic: could not ask the server what it supports: %s",
-                     qPrintable(error));
-        } else {
-            qInfo("xmatic: homeserver supports the required sync: %d", supported ? 1 : 0);
-        }
-        if (m_serverSupported != supported) {
-            m_serverSupported = supported;
-            emit serverSupportedChanged();
         }
     } else if (name == QLatin1String("thread.error")) {
         if (data.value(QStringLiteral("root")).toString() == m_openThreadRoot) {
@@ -1851,21 +1850,6 @@ void MatrixBridge::handleMessage(const QString &json)
         qInfo("xmatic: reply details failed for %s: %s",
               qPrintable(data.value(QStringLiteral("eventId")).toString()),
               qPrintable(data.value(QStringLiteral("error")).toString()));
-    } else if (name == QLatin1String("roomlist.diff")) {
-        const QJsonArray ops = data.value(QStringLiteral("ops")).toArray();
-        m_rooms.applyOperations(ops);
-        reportNewMessages(ops);
-        // Unread counts feed the space badges, so a room list change may change
-        // them even though the space list itself did not.
-        bumpSpaceCounts();
-    } else if (name == QLatin1String("spaces.diff")) {
-        m_spaces.applyOperations(data.value(QStringLiteral("ops")).toArray());
-    } else if (name == QLatin1String("space.diff")) {
-        // A space's rooms are a subset of the main list, which already drives
-        // notifications, so this view does not report new messages of its own.
-        m_spaceRooms.applyOperations(data.value(QStringLiteral("ops")).toArray());
-    } else if (name == QLatin1String("spaces.children")) {
-        updateSpaceChildren(data.value(QStringLiteral("spaces")).toObject());
     } else if (name == QLatin1String("timeline.pinned")) {
         if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
             QStringList ids;
@@ -1907,6 +1891,30 @@ void MatrixBridge::handleMessage(const QString &json)
                 emit tombstoneChanged();
             }
         }
+    } else {
+        return false;
+    }
+    return true;
+}
+
+/// Events about the lists: rooms, spaces, directory, members.
+bool MatrixBridge::eventLists(const QString &name, const QJsonObject &data)
+{
+    if (name == QLatin1String("roomlist.diff")) {
+        const QJsonArray ops = data.value(QStringLiteral("ops")).toArray();
+        m_rooms.applyOperations(ops);
+        reportNewMessages(ops);
+        // Unread counts feed the space badges, so a room list change may change
+        // them even though the space list itself did not.
+        bumpSpaceCounts();
+    } else if (name == QLatin1String("spaces.diff")) {
+        m_spaces.applyOperations(data.value(QStringLiteral("ops")).toArray());
+    } else if (name == QLatin1String("space.diff")) {
+        // A space's rooms are a subset of the main list, which already drives
+        // notifications, so this view does not report new messages of its own.
+        m_spaceRooms.applyOperations(data.value(QStringLiteral("ops")).toArray());
+    } else if (name == QLatin1String("spaces.children")) {
+        updateSpaceChildren(data.value(QStringLiteral("spaces")).toObject());
     } else if (name == QLatin1String("directory.diff")) {
         m_directory.applyOperations(data.value(QStringLiteral("ops")).toArray());
     } else if (name == QLatin1String("members.diff")) {
@@ -1920,6 +1928,32 @@ void MatrixBridge::handleMessage(const QString &json)
         const QString error = data.value(QStringLiteral("error")).toString();
         if (!error.isEmpty()) {
             setLastError(error);
+        }
+    } else {
+        return false;
+    }
+    return true;
+}
+
+/// Events about the session, sync and profile.
+bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
+{
+    if (name == QLatin1String("sync.support")) {
+        // A server that cannot do this app's sync fails every sync, which the
+        // offline mode turns into "offline" plus a restart loop — a flashing
+        // banner over an empty room list that reads as a network fault. Say
+        // what it is instead.
+        const bool supported = data.value(QStringLiteral("supported")).toBool(true);
+        const QString error = data.value(QStringLiteral("error")).toString();
+        if (!error.isEmpty()) {
+            qWarning("xmatic: could not ask the server what it supports: %s",
+                     qPrintable(error));
+        } else {
+            qInfo("xmatic: homeserver supports the required sync: %d", supported ? 1 : 0);
+        }
+        if (m_serverSupported != supported) {
+            m_serverSupported = supported;
+            emit serverSupportedChanged();
         }
     } else if (name == QLatin1String("profile.changed")) {
         const QString displayName = data.value(QStringLiteral("displayName")).toString();
@@ -1968,6 +2002,40 @@ void MatrixBridge::handleMessage(const QString &json)
         setLoginRunning(false);
     } else if (name == QLatin1String("session.warning")) {
         setLastError(data.value(QStringLiteral("message")).toString());
+    } else {
+        return false;
+    }
+    return true;
+}
+void MatrixBridge::reportSendFailures(const QJsonArray &operations)
+{
+    // A message the queue gave up on is the one thing in a diff worth a line
+    // of its own: it stays in the room until the user acts, and "not sent" is
+    // all the screen can say about it. The core scrubbed the reason already.
+    for (const QJsonValue &value : operations) {
+        const QJsonObject op = value.toObject();
+        QVector<QJsonObject> rows;
+        if (op.value(QStringLiteral("value")).isObject()) {
+            rows.append(op.value(QStringLiteral("value")).toObject());
+        }
+        for (const QJsonValue &entry : op.value(QStringLiteral("values")).toArray()) {
+            rows.append(entry.toObject());
+        }
+        for (const QJsonObject &row : rows) {
+            const QJsonObject error = row.value(QStringLiteral("sendError")).toObject();
+            if (error.isEmpty()) {
+                continue;
+            }
+            const QString key = row.value(QStringLiteral("txnId")).toString();
+            if (key.isEmpty() || m_reportedSendFailures.contains(key)) {
+                continue;
+            }
+            m_reportedSendFailures.insert(key);
+            qWarning("xmatic: a message could not be sent (%s): %s",
+                     error.value(QStringLiteral("recoverable")).toBool() ? "will retry"
+                                                                        : "given up",
+                     qPrintable(error.value(QStringLiteral("reason")).toString()));
+        }
     }
 }
 
