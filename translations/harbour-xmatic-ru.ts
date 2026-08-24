@@ -122,6 +122,22 @@
         <source>Language</source>
         <translation>Язык</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Показывать статус прочтения других</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Выключено — ничего не запрашивается о том, кто что прочитал, и разговор остаётся более плавным. Включено — твои сообщения показывают, сколько человек их прочитали.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Голосовые сообщения</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Включено — рядом с полем сообщения микрофон: держи, чтобы записать, отпусти, чтобы отправить. Выключено — его нет.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -223,6 +239,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Непрозрачность облачков</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Реакции как картинки</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Выключено — реакция рисуется как знак, которым она является: всегда верно и бесплатно. Включено — xmatic ищет для неё твою собственную картинку в %1, названную по её кодовым точкам (1f44d.svg). Ничего не поставляется и ничего не скачивается. Взвесь: файл картинки открывает декодер изображений, и именно там приложение такого рода наиболее уязвимо.</translation>
     </message>
 </context>
 <context>
@@ -1117,6 +1141,18 @@
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Отменить</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Отправить снова</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Отреагировать</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1184,6 +1220,40 @@
     <message>
         <source>no session description</source>
         <translation>нет описания сессии</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Отреагировать</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Что-то другое</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Комнаты</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Новый чат</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Новая комната</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Войти в комнату</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Найти комнаты</translation>
     </message>
 </context>
 <context>
@@ -1471,22 +1541,6 @@
         <translation>О xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Новый чат</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Новая комната</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Войти в комнату</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Найти комнаты</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Сделать стартовой страницей</translation>
     </message>
@@ -1497,6 +1551,10 @@
     <message>
         <source>Sign out</source>
         <translation>Выйти</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Отметить прочитанным</translation>
     </message>
 </context>
 <context>
@@ -1782,6 +1840,26 @@
         <source>That message is not in the loaded history</source>
         <translation>Этого сообщения нет в загруженной истории</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>прочитали: %n</numerusform>
+            <numerusform>прочитали: %n</numerusform>
+            <numerusform>прочитали: %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Отменить</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Отправить снова</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Отреагировать</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1983,14 +2061,6 @@
         <source>Send anyway</source>
         <translation>Всё равно отправить</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Неподтверждённые устройства</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Сообщение будет зашифровано для устройств, которые ты не подтвердил. Подтверди их для полной уверенности или отправь всё равно.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2010,6 +2080,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Действует, пока ты не подтвердишь или не сбросишь.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>ключи изменились с тех пор, как ты их подтвердил</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>не подтверждён</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Это устройство не подтверждено</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Неподтверждённые получатели</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Сообщение будет зашифровано для получателей, которых ты не подтвердил. Подтверди их для настоящей уверенности или всё равно отправь.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Больше не предупреждать</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Пока это устройство не подтверждено, ни одно другое устройство нельзя показать как подтверждённое — даже то, которое подтверждено. Подтверди его в разделе Учётная запись → Шифрование или всё равно отправь.</translation>
     </message>
 </context>
 <context>

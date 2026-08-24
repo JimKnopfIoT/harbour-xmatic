@@ -13,5 +13,16 @@ function renderFormatted(markup, clickableLinks) {
     if (clickableLinks) {
         return markup
     }
-    return markup.replace(/<a href="[^"]*">/g, "").replace(/<\/a>/g, "")
+    // Anchors never nest - markup.rs refuses a nested one - so each opening tag
+    // is closed before the next opens and a whole anchor can be matched at
+    // once. A Matrix permalink keeps its target even here: it is answered
+    // inside the app and never reaches a browser, which is what the setting is
+    // about. Every other link loses the target and stays as its text.
+    return markup.replace(/<a href="([^"]*)">([\s\S]*?)<\/a>/g,
+                          function(anchor, href, text) {
+        var internal = href.indexOf("matrix.to/#/") >= 0
+                       || href.indexOf("matrix:") === 0
+                       || href.indexOf("xmatic:") === 0
+        return internal ? anchor : text
+    })
 }

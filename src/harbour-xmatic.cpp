@@ -17,6 +17,8 @@
 #include <sys/prctl.h>
 
 #include "appearancesettings.h"
+#include "appservice.h"
+#include "appsettings.h"
 #include "instancelock.h"
 #include "languagesettings.h"
 #include "matrixbridge.h"
@@ -83,7 +85,17 @@ int main(int argc, char *argv[])
     // then runs as before, with unencrypted stores, and the keeper has said
     // so in the journal.
     QString storeKey = obtainStoreKey(dataDirectory);
-    MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey);
+
+    // Before the bridge: it reads a setting while opening a room and listens
+    // for the one that has to rebuild a timeline.
+    AppSettings settings;
+
+    // The app's D-Bus object: the notification's tap and the instance
+    // hand-over reach the running app through it, and nothing else does.
+    AppService service;
+    service.publish();
+
+    MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey, &settings);
     if (!storeKey.isEmpty()) {
         storeKey.fill(QChar('0'));
     }
@@ -99,6 +111,8 @@ int main(int argc, char *argv[])
     LanguageSettings::applyTo(app.data());
 
     view->rootContext()->setContextProperty(QStringLiteral("matrix"), &bridge);
+    view->rootContext()->setContextProperty(QStringLiteral("settings"), &settings);
+    view->rootContext()->setContextProperty(QStringLiteral("activation"), &service);
     view->rootContext()->setContextProperty(QStringLiteral("appearance"), &appearance);
     view->rootContext()->setContextProperty(QStringLiteral("language"), &language);
     view->rootContext()->setContextProperty(QStringLiteral("appVersion"),

@@ -11,6 +11,7 @@
 #include <QVariantList>
 #include <QVariant>
 #include <QVariantMap>
+#include <QSet>
 #include <QString>
 
 #include "roomlistmodel.h"
@@ -28,11 +29,14 @@
 /// through one callback that fires on a core worker thread. The trampoline
 /// therefore does nothing but re-post the message into the Qt event loop, so
 /// everything below runs on the UI thread.
+class AppSettings;
+
 class MatrixBridge : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(QString coreVersion READ coreVersion CONSTANT)
+    Q_PROPERTY(QString emojiDirectory READ emojiDirectory CONSTANT)
     Q_PROPERTY(QString sessionState READ sessionState NOTIFY sessionChanged)
     Q_PROPERTY(QString syncState READ syncState NOTIFY syncStateChanged)
     /// False when the homeserver does not advertise the sync this app is
@@ -52,14 +56,11 @@ class MatrixBridge : public QObject
     Q_PROPERTY(int unreadMessages READ unreadMessages NOTIFY unreadTotalsChanged)
     Q_PROPERTY(QObject *spaces READ spaces CONSTANT)
     Q_PROPERTY(QObject *spaceRooms READ spaceRooms CONSTANT)
-    Q_PROPERTY(QString startPage READ startPage WRITE setStartPage NOTIFY startPageChanged)
     /// Whether a notification may carry the message itself, not just a count.
     /// Off by default: the banner also lands on the lock screen.
-    Q_PROPERTY(bool notificationPreview READ notificationPreview WRITE setNotificationPreview NOTIFY notificationPreviewChanged)
     /// Whether web links in message bodies are tappable. Off by default: a
     /// tapped link opens the browser, and that is attack surface the user has
     /// to opt into.
-    Q_PROPERTY(bool clickableLinks READ clickableLinks WRITE setClickableLinks NOTIFY clickableLinksChanged)
     Q_PROPERTY(int spaceCounts READ spaceCounts NOTIFY spaceCountsChanged)
     Q_PROPERTY(QObject *timeline READ timeline CONSTANT)
     Q_PROPERTY(QObject *threadTimeline READ threadTimeline CONSTANT)
@@ -88,9 +89,6 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QString profileAvatar READ profileAvatar NOTIFY profileChanged)
     Q_PROPERTY(QObject *directory READ directory CONSTANT)
     Q_PROPERTY(bool directoryAtEnd READ directoryAtEnd NOTIFY directoryStateChanged)
-    Q_PROPERTY(QString directoryServer READ directoryServer WRITE setDirectoryServer
-               NOTIFY directoryServerChanged)
-    Q_PROPERTY(QStringList directoryServers READ directoryServers NOTIFY directoryServersChanged)
     Q_PROPERTY(QObject *members READ members CONSTANT)
 
 public:
@@ -99,11 +97,24 @@ public:
     /// unencrypted stores. It goes into the core's config and nowhere else.
     explicit MatrixBridge(const QString &dataDirectory,
                           const QString &cacheDirectory,
-                          const QString &storeKey = QString(),
+                          const QString &storeKey,
+                          AppSettings *settings,
                           QObject *parent = nullptr);
     ~MatrixBridge() override;
 
     QString coreVersion() const { return m_coreVersion; }
+
+    /// Where a user may put emoji images. Named on the appearance page so it
+    /// can be found without guessing.
+    QString emojiDirectory() const;
+
+    /// The image for a reaction, or empty where there is none. The file name is
+    /// derived from the reaction's own code points and never taken from the
+    /// directory, so nothing in there can name itself into a path; only .svg
+    /// and .png are looked for, and a file past 64 KB is refused - an emoji is
+    /// a few hundred bytes, and the decoder is the app's main untrusted-input
+    /// surface (docs/SECURITY.md).
+    Q_INVOKABLE QString emojiSource(const QString &key) const;
     QString sessionState() const { return m_sessionState; }
 
     /// One of "idle", "running", "offline", "terminated", "error". "offline"
@@ -296,18 +307,13 @@ public:
     /// unverified devices. The answer comes back as `recipientsChecked`.
     Q_INVOKABLE void checkRecipients(const QString &roomId);
 
-    /// Whether the user chose to stop being warned about this recipient's
-    /// unverified devices (the "remember for this user" tick).
-    Q_INVOKABLE bool isRecipientTrusted(const QString &userId) const;
+    /// Marks a room read from the chat list, without opening it.
+    Q_INVOKABLE void markRoomRead(const QString &roomId);
 
-    /// Remembers that unverified devices of this recipient should no longer
-    /// raise the pre-send warning. Persisted in the app config.
-    Q_INVOKABLE void trustRecipient(const QString &userId);
-
-    /// Drops every suppressed pre-send warning, so unverified devices are
-    /// reported again. Answers how many recipients were on the list — the
-    /// dialog's "until you reset it" needs somewhere to be done.
-    Q_INVOKABLE int resetRecipientWarnings();
+    /// Asks which room an address means and whether this account is in it.
+    /// Answers with roomResolved. Resolving only - a tapped link must never
+    /// join anything by itself.
+    Q_INVOKABLE void resolveRoom(const QString &address);
 
     /// Turns on end-to-end encryption in a room; there is no way back, so the
     /// UI asks first.
@@ -468,7 +474,18 @@ public:
     Q_INVOKABLE void editMessage(const QString &eventId, const QString &body);
 
     /// Deletes a message.
-    Q_INVOKABLE void deleteMessage(const QString &eventId);
+    /// Deletes a sent message, or discards one that never left - a message
+    /// whose send failed for good has no event id and can only be named by its
+    /// transaction id.
+    Q_INVOKABLE void deleteMessage(const QString &eventId, const QString &txnId = QString());
+
+    /// Puts a message the send queue parked back in line. Only for one that
+    /// never reached the server.
+    Q_INVOKABLE void retryMessage(const QString &txnId);
+
+    /// Adds a reaction to a message, or takes ours back if it is already
+    /// there. The key is the reaction itself - usually one emoji character.
+    Q_INVOKABLE void toggleReaction(const QString &eventId, const QString &key);
 
     /// Sends a file from disk as an attachment. `caption` is the text shown
     /// with it and `replyTo` the event it answers; both may be empty. Neither
@@ -515,29 +532,7 @@ public:
     /// Same, but into the download folder — for anything that is not a picture.
     Q_INVOKABLE QString saveToDownloads(const QString &path, const QString &suggestedName);
 
-    /// Which page opens first after sign-in: "rooms" or "spaces". Persisted so
-    /// the choice survives a restart.
-    QString startPage() const;
-    void setStartPage(const QString &page);
-    bool notificationPreview() const;
-    void setNotificationPreview(bool enabled);
-    bool clickableLinks() const;
-    void setClickableLinks(bool enabled);
-
-    /// The directory server the search page last used; empty means the own
-    /// homeserver. Persisted so the choice survives a restart.
-    QString directoryServer() const;
-    void setDirectoryServer(const QString &server);
-
-    /// Directory servers the user added, next to the built-in suggestions.
-    QStringList directoryServers() const;
-    Q_INVOKABLE void addDirectoryServer(const QString &server);
-    Q_INVOKABLE void removeDirectoryServer(const QString &server);
-
 signals:
-    void startPageChanged();
-    void notificationPreviewChanged();
-    void clickableLinksChanged();
     void spaceCountsChanged();
     void unreadTotalsChanged();
 
@@ -556,8 +551,6 @@ signals:
     void encryptionChanged();
     void profileChanged();
     void directoryStateChanged();
-    void directoryServerChanged();
-    void directoryServersChanged();
 
     /// A space's linked children as maps with id, name, topic, members,
     /// avatar, space and joined.
@@ -578,6 +571,16 @@ signals:
     /// Whether the timeline grew can only be judged from the model, one round
     /// later.
     void paginated();
+
+    /// The open timeline is ready, and where this device's reading had stopped
+    /// - empty when nothing was ever read here. The view uses it to open at the
+    /// first unread message instead of at the newest one.
+    void timelineOpened(const QString &readMarker, bool rebuilt);
+
+    /// A room address resolved: the room, and whether we are a member.
+    void roomResolved(const QString &address, const QString &roomId, bool joined);
+    /// That address could not be resolved; the message says why.
+    void roomResolveFailed(const QString &address, const QString &message);
 
     /// An attachment finished downloading.
     void mediaReady(const QString &key, const QString &path);
@@ -627,7 +630,7 @@ signals:
     /// emote, image, video, audio, file, location, encrypted, or empty when
     /// there is nothing to say; `previewText` is set for text and emote only;
     /// `previewSender` is the sender's Matrix ID. Whether any of it is shown
-    /// is the UI's decision (see `notificationPreview`).
+    /// is the UI's decision (see `AppSettings::notificationPreview`).
     void roomActivity(const QString &roomId,
                       const QString &roomName,
                       int unread,
@@ -662,6 +665,25 @@ signals:
 private slots:
     /// Receives one JSON message from the core, already back on the UI thread.
     void handleMessage(const QString &json);
+    /// Says in the journal why a message did not go out, once per message.
+    void reportSendFailures(const QJsonArray &operations);
+    /// The two halves of an incoming message, each dispatched to the handler
+    /// for its domain. A domain handler answers whether the message was its
+    /// own, so the chain stops at the first that recognises it.
+    void handleReply(const QJsonObject &message);
+    void handleEvent(const QJsonObject &message);
+    bool replyLogin(const QString &command, const QJsonObject &data);
+    bool replyAccount(const QString &command, const QJsonObject &data);
+    bool replyRoom(quint64 id, const QString &command, const QJsonObject &data);
+    bool replyMember(quint64 id, const QString &command, const QJsonObject &data);
+    bool replyTimeline(quint64 id, const QString &command, const QJsonObject &data);
+    bool replyEncryption(const QString &command, const QJsonObject &data);
+    bool replyCall(const QString &command, const QJsonObject &data);
+    bool eventCall(const QString &name, const QJsonObject &data);
+    bool eventVerification(const QString &name, const QJsonObject &data);
+    bool eventTimeline(const QString &name, const QJsonObject &data);
+    bool eventLists(const QString &name, const QJsonObject &data);
+    bool eventSession(const QString &name, const QJsonObject &data);
 
     /// Names commands that have been waiting far too long, once each. The
     /// point is the journal: a stalled request otherwise leaves no trace at
@@ -696,6 +718,8 @@ private:
     /// Where the session file and the stores live; the unlock retry asks
     /// the secrets keeper for the key against it.
     QString m_dataDirectory;
+    /// Answers of emojiSource(), which QML asks once per chip per rebuild.
+    mutable QHash<QString, QString> m_emojiSources;
     QString m_sessionState = QStringLiteral("none");
     QString m_syncState = QStringLiteral("idle");
     bool m_serverSupported = true;
@@ -720,6 +744,12 @@ private:
     /// Counts thread opens, so diffs of a previous open of the *same* thread
     /// can be told apart from this one's.
     quint64 m_threadGeneration = 0;
+    /// The user's preferences. Not owned - main() outlives the bridge. Read
+    /// where a command needs one, and listened to where a change has to act.
+    AppSettings *m_settings = nullptr;
+    /// Transaction ids of messages whose failure was already reported, so a
+    /// row that is rewritten does not repeat itself in the journal.
+    QSet<QString> m_reportedSendFailures;
     QString m_openRoomId;
     /// The room actually on screen; see setVisibleRoom.
     QString m_visibleRoomId;

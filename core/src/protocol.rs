@@ -184,6 +184,27 @@ pub enum Command {
         room_id: String,
         #[serde(default)]
         focus: String,
+        /// Track other people's read receipts. Off by default: every receipt
+        /// that moves updates a timeline item, and each of those redraws a row
+        /// on the Qt side. Only worth it where the status is actually shown.
+        #[serde(default)]
+        receipts: bool,
+    },
+
+    /// Resolve a room address to a room id, and report whether this account
+    /// is in that room. Answering only - joining stays a separate command.
+    #[serde(rename = "room.resolve")]
+    RoomResolve {
+        id: u64,
+        address: String,
+    },
+
+    /// Mark a room read from the list, without opening it.
+    #[serde(rename = "room.markRead")]
+    RoomMarkRead {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
     },
 
     /// Close the open timeline.
@@ -217,11 +238,32 @@ pub enum Command {
     },
 
     /// Delete a message.
-    #[serde(rename = "timeline.redact")]
-    TimelineRedact {
+    /// Add or take back our reaction to a message.
+    #[serde(rename = "timeline.react")]
+    TimelineReact {
         id: u64,
         #[serde(rename = "eventId")]
         event_id: String,
+        key: String,
+    },
+
+    /// Put a message the send queue parked back in line.
+    #[serde(rename = "timeline.retry")]
+    TimelineRetry {
+        id: u64,
+        #[serde(rename = "txnId")]
+        txn_id: String,
+    },
+
+    #[serde(rename = "timeline.redact")]
+    TimelineRedact {
+        id: u64,
+        /// Empty for a message that never reached the server; `txnId` names it
+        /// then.
+        #[serde(default, rename = "eventId")]
+        event_id: String,
+        #[serde(default, rename = "txnId")]
+        txn_id: String,
     },
 
     /// Send a file from disk as an attachment. `caption` is the text shown
@@ -690,6 +732,8 @@ impl Command {
             | Command::LoginRegistrationUrl { id, .. }
             | Command::LoginAbort { id }
             | Command::RoomEnableEncryption { id, .. }
+            | Command::RoomMarkRead { id, .. }
+            | Command::RoomResolve { id, .. }
             | Command::Logout { id }
             | Command::RoomListStart { id }
             | Command::RoomListFilter { id, .. }
@@ -710,6 +754,8 @@ impl Command {
             | Command::TimelineReply { id, .. }
             | Command::TimelineEdit { id, .. }
             | Command::TimelineRedact { id, .. }
+            | Command::TimelineRetry { id, .. }
+            | Command::TimelineReact { id, .. }
             | Command::TimelineSendMedia { id, .. }
             | Command::MediaFetch { id, .. }
             | Command::RoomForward { id, .. }
@@ -784,4 +830,39 @@ pub fn reply_error(id: u64, message: impl Into<String>) -> Value {
 /// An unsolicited message from the core.
 pub fn event(name: &str, data: Value) -> Value {
     json!({ "type": "event", "event": name, "data": data })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A message in a script other than Latin has to survive the way in - the
+    /// Qt side writes UTF-8 JSON, the C ABI hands over a NUL-terminated string,
+    /// and serde reads it back. Asked because a Cyrillic message was reported
+    /// as stuck; this end of it is not where it sticks.
+    #[test]
+    fn a_message_keeps_its_script() {
+        for body in [
+            "Привет, как дела?",
+            "Καλημέρα",
+            "こんにちは",
+            "emoji 🙂 and a zero-width\u{200b}space",
+        ] {
+            let raw = json!({ "cmd": "timeline.send", "id": 1, "body": body }).to_string();
+            let command: Command = serde_json::from_str(&raw).expect("parses");
+            match command {
+                Command::TimelineSend { body: parsed, .. } => assert_eq!(parsed, body),
+                other => panic!("wrong command: {other:?}"),
+            }
+        }
+    }
+
+    /// The same for the way out: a reply carries the text back unchanged.
+    #[test]
+    fn a_reply_keeps_its_script() {
+        let value = reply_ok(7, json!({ "body": "Привет" }));
+        let encoded = value.to_string();
+        let decoded: Value = serde_json::from_str(&encoded).expect("parses");
+        assert_eq!(decoded["data"]["body"], "Привет");
+    }
 }

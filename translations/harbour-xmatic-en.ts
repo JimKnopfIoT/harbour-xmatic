@@ -121,6 +121,22 @@
         <source>Language</source>
         <translation>Language</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Show others&apos; read status</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Voice messages</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -222,6 +238,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Bubble opacity</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reactions as pictures</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1139,18 @@
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Discard</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Send again</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>React</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1182,6 +1218,40 @@
     <message>
         <source>no session description</source>
         <translation>no session description</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>React</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Something else</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Rooms</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>New chat</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>New room</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Join room</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Discover rooms</translation>
     </message>
 </context>
 <context>
@@ -1469,22 +1539,6 @@
         <translation>About xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>New chat</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>New room</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Join room</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Discover rooms</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Make start page</translation>
     </message>
@@ -1495,6 +1549,10 @@
     <message>
         <source>Sign out</source>
         <translation>Sign out</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Mark as read</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1837,25 @@
         <source>That message is not in the loaded history</source>
         <translation>That message is not in the loaded history</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>read by %n</numerusform>
+            <numerusform>read by %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Discard</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Send again</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>React</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1979,14 +2056,6 @@
         <source>Send anyway</source>
         <translation>Send anyway</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Unverified devices</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2005,6 +2074,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Applies until you verify or clear it.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>keys changed since you verified them</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>not verified</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>This device is not verified</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Unverified recipients</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Do not warn again</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</translation>
     </message>
 </context>
 <context>

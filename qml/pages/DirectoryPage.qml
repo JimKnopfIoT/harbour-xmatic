@@ -31,7 +31,7 @@ Page {
     readonly property var knownDirectories: ["matrix.org", "matrixrooms.info", "hackint.org"]
     property var serverChoices: {
         var choices = [ownServer]
-        var candidates = knownDirectories.concat(matrix.directoryServers)
+        var candidates = knownDirectories.concat(settings.directoryServers)
         for (var i = 0; i < candidates.length; i++) {
             if (choices.indexOf(candidates[i]) < 0) {
                 choices.push(candidates[i])
@@ -79,14 +79,14 @@ Page {
         PullDownMenu {
             MenuItem {
                 // Only user-added servers can go away again.
-                visible: matrix.directoryServers.indexOf(page.selectedServer) >= 0
+                visible: settings.directoryServers.indexOf(page.selectedServer) >= 0
                 text: qsTr("Remove this server")
                 onClicked: {
                     var name = page.selectedServer
                     if (page.serverBoxItem) {
                         page.serverBoxItem.currentIndex = 0
                     }
-                    matrix.removeDirectoryServer(name)
+                    settings.removeDirectoryServer(name)
                 }
             }
             MenuItem {
@@ -94,7 +94,7 @@ Page {
                 onClicked: {
                     var dialog = pageStack.push(Qt.resolvedUrl("AddDirectoryServerDialog.qml"))
                     dialog.accepted.connect(function() {
-                        matrix.addDirectoryServer(dialog.serverName)
+                        settings.addDirectoryServer(dialog.serverName)
                         var index = page.serverChoices.indexOf(dialog.serverName)
                         if (index >= 0 && page.serverBoxItem) {
                             page.serverBoxItem.currentIndex = index
@@ -134,12 +134,12 @@ Page {
                     if (!page.serverRestored) {
                         return
                     }
-                    matrix.directoryServer = page.selectedServer
+                    settings.directoryServer = page.selectedServer
                     page.research()
                 }
                 Component.onCompleted: {
                     page.serverBoxItem = serverBox
-                    var saved = matrix.directoryServer
+                    var saved = settings.directoryServer
                     var index = saved.length > 0 ? page.serverChoices.indexOf(saved) : 0
                     currentIndex = index >= 0 ? index : 0
                     page.selectedServer = currentIndex <= 0

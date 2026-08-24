@@ -120,6 +120,22 @@
         <source>Language</source>
         <translation>Nyelv</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Mások olvasási állapotának mutatása</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Kikapcsolva semmi sem töltődik le arról, ki mit olvasott, ami a beszélgetést is gördülékenyebben tartja. Bekapcsolva a saját üzeneteid mutatják, hányan olvasták őket.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Hangüzenetek</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Bekapcsolva az üzenetmező mellett mikrofon van: tartsd nyomva a felvételhez, engedd el a küldéshez. Kikapcsolva nincs ott.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -221,6 +237,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Buborékok átlátszósága</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reakciók képként</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Kikapcsolva a reakció úgy jelenik meg, ahogy a karakter szól — mindig helyesen és ingyen. Bekapcsolva az xmatic saját képet keres hozzá itt: %1, a kódpontjai szerint elnevezve (1f44d.svg). Semmi sincs mellékelve és semmi sem töltődik le. Mérlegeld: egy képfájlt egy képdekódoló nyit meg, és ott a legsebezhetőbb egy ilyen alkalmazás.</translation>
     </message>
 </context>
 <context>
@@ -1113,6 +1137,18 @@
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Elvetés</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Küldés újra</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagálás</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1180,6 +1216,40 @@
     <message>
         <source>no session description</source>
         <translation>nincs munkamenet-leírás</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reagálás</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Valami más</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Szobák</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Új beszélgetés</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Új szoba</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Belépés szobába</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Szobák felfedezése</translation>
     </message>
 </context>
 <context>
@@ -1467,22 +1537,6 @@
         <translation>Az xmatic névjegye</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Új beszélgetés</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Új szoba</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Belépés szobába</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Szobák felfedezése</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Legyen a kezdőoldal</translation>
     </message>
@@ -1493,6 +1547,10 @@
     <message>
         <source>Sign out</source>
         <translation>Kijelentkezés</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Megjelölés olvasottként</translation>
     </message>
 </context>
 <context>
@@ -1776,6 +1834,24 @@
         <source>That message is not in the loaded history</source>
         <translation>Ez az üzenet nincs a betöltött előzményekben</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>elolvasta: %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Elvetés</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Küldés újra</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagálás</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1975,14 +2051,6 @@
         <source>Send anyway</source>
         <translation>Küldés mindenképp</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Nem ellenőrzött eszközök</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Az üzenet olyan eszközöknek is titkosítva lesz, amiket nem ellenőriztél. Ellenőrizd őket a valódi biztonságért, vagy küldd el mindenképp.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2000,6 +2068,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Addig érvényes, amíg nem ellenőrzöd vagy nem állítod vissza.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>a kulcsok megváltoztak, mióta ellenőrizted őket</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>nincs ellenőrizve</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Ez az eszköz nincs ellenőrizve</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Nem ellenőrzött címzettek</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Az üzenet olyan címzettek számára lesz titkosítva, akiket nem ellenőriztél. Ellenőrizd őket a valódi bizonyosságért, vagy küldd el mégis.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Ne figyelmeztessen többé</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Amíg ez az eszköz nincs ellenőrizve, semelyik másik eszköz sem jeleníthető meg ellenőrzöttként — még olyan sem, amelyik az. Ellenőrizd a Fiók → Titkosítás alatt, vagy küldd el mégis.</translation>
     </message>
 </context>
 <context>

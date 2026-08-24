@@ -122,6 +122,22 @@
         <source>Language</source>
         <translation>Valoda</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Rādīt citu lasīšanas statusu</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Izslēgts nekas netiek ielādēts par to, kurš ko izlasījis, kas arī notur sarunu plūstošāku. Ieslēgts tavas ziņas rāda, cik cilvēku tās izlasījuši.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Balss ziņas</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Ieslēgts blakus ziņas laukam ir mikrofons: turi, lai ierakstītu, atlaid, lai sūtītu. Izslēgts tā tur nav.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -223,6 +239,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Burbuļu necaurspīdīgums</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reakcijas kā attēli</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Izslēgts reakcija tiek zīmēta kā zīme, kas tā ir — vienmēr pareizi un bez maksas. Ieslēgts xmatic meklē tai tavu paša attēlu mapē %1, nosauktu pēc tās koda punktiem (1f44d.svg). Nekas netiek piegādāts līdzi un nekas netiek lejupielādēts. Apsver: attēla failu atver attēlu dekodētājs, un tur šāda lietotne ir visneaizsargātākā.</translation>
     </message>
 </context>
 <context>
@@ -1117,6 +1141,18 @@
         <source>Delete</source>
         <translation>Dzēst</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Atmest</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Sūtīt vēlreiz</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reaģēt</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1184,6 +1220,40 @@
     <message>
         <source>no session description</source>
         <translation>nav sesijas apraksta</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reaģēt</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Kaut kas cits</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Istabas</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Jauna saruna</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Jauna istaba</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Pievienoties istabai</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Atklāt istabas</translation>
     </message>
 </context>
 <context>
@@ -1471,22 +1541,6 @@
         <translation>Par xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Jauna saruna</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Jauna istaba</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Pievienoties istabai</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Atklāt istabas</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Padarīt par sākumlapu</translation>
     </message>
@@ -1497,6 +1551,10 @@
     <message>
         <source>Sign out</source>
         <translation>Atteikties</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Atzīmēt kā izlasītu</translation>
     </message>
 </context>
 <context>
@@ -1782,6 +1840,26 @@
         <source>That message is not in the loaded history</source>
         <translation>Šī ziņa nav ielādētajā vēsturē</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>izlasījuši: %n</numerusform>
+            <numerusform>izlasījuši: %n</numerusform>
+            <numerusform>izlasījuši: %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Atmest</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Sūtīt vēlreiz</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reaģēt</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1983,14 +2061,6 @@
         <source>Send anyway</source>
         <translation>Tomēr sūtīt</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Neapstiprinātas ierīces</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Ziņa tiks šifrēta arī ierīcēm, kuras neesi apstiprinājis. Apstiprini tās patiesai drošībai vai sūti tomēr.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2010,6 +2080,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Der, līdz apstiprini vai atiestati.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>atslēgas mainījušās, kopš tu tās apstiprināji</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>neapstiprināts</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Šī ierīce nav apstiprināta</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Neapstiprināti saņēmēji</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Ziņa tiks šifrēta saņēmējiem, kurus tu neesi apstiprinājis. Apstiprini viņus, lai būtu droši, vai tomēr sūti.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Vairs nebrīdināt</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Kamēr šī ierīce nav apstiprināta, nevienu citu ierīci nevar rādīt kā apstiprinātu — pat tādu ne, kas ir. Apstiprini to sadaļā Konts → Šifrēšana vai tomēr sūti.</translation>
     </message>
 </context>
 <context>

@@ -122,6 +122,22 @@
         <source>Language</source>
         <translation>Limbă</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Arată starea de citire a celorlalți</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Dezactivat nu se preia nimic despre cine ce a citit, ceea ce păstrează conversația mai fluidă. Activat, mesajele tale arată câți oameni le-au citit.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Mesaje vocale</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Activat, lângă câmpul de mesaj este un microfon: ține apăsat pentru a înregistra, dă drumul pentru a trimite. Dezactivat, nu este acolo.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -223,6 +239,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Opacitatea bulelor</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reacții ca imagini</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Dezactivat, o reacție este desenată ca semnul care este — mereu corect și gratuit. Activat, xmatic caută pentru ea o imagine proprie în %1, denumită după punctele ei de cod (1f44d.svg). Nu se livrează și nu se descarcă nimic. Cântărește: un fișier imagine este deschis de un decodor de imagini, iar acolo o aplicație de acest fel este cea mai expusă.</translation>
     </message>
 </context>
 <context>
@@ -1117,6 +1141,18 @@
         <source>Delete</source>
         <translation>Șterge</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Renunță</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Trimite din nou</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reacționează</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1184,6 +1220,40 @@
     <message>
         <source>no session description</source>
         <translation>nicio descriere de sesiune</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reacționează</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Altceva</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Camere</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Conversație nouă</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Cameră nouă</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Intră în cameră</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Descoperă camere</translation>
     </message>
 </context>
 <context>
@@ -1471,22 +1541,6 @@
         <translation>Despre xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Conversație nouă</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Cameră nouă</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Intră în cameră</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Descoperă camere</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Setează ca pagină de start</translation>
     </message>
@@ -1497,6 +1551,10 @@
     <message>
         <source>Sign out</source>
         <translation>Deconectare</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Marchează ca citit</translation>
     </message>
 </context>
 <context>
@@ -1782,6 +1840,26 @@
         <source>That message is not in the loaded history</source>
         <translation>Acel mesaj nu se află în istoricul încărcat</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>citit de %n</numerusform>
+            <numerusform>citit de %n</numerusform>
+            <numerusform>citit de %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Renunță</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Trimite din nou</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reacționează</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1983,14 +2061,6 @@
         <source>Send anyway</source>
         <translation>Trimite oricum</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Dispozitive neverificate</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Mesajul va fi criptat pentru dispozitive pe care nu le-ai verificat. Verifică-le pentru siguranță reală sau trimite oricum.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2010,6 +2080,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Valabil până verifici sau resetezi.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>cheile s-au schimbat de când le-ai verificat</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>neverificat</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Acest dispozitiv nu este verificat</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Destinatari neverificați</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Mesajul va fi criptat pentru destinatari pe care nu i-ai verificat. Verifică-i pentru certitudine reală sau trimite oricum.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Nu mai avertiza</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Cât timp acest dispozitiv nu este verificat, niciun alt dispozitiv nu poate fi arătat ca verificat — nici măcar unul care este. Verifică-l în Cont → Criptare sau trimite oricum.</translation>
     </message>
 </context>
 <context>

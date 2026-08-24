@@ -122,6 +122,22 @@
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Zobrazovat stav přečtení ostatních</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Vypnuto se nic nenačítá o tom, kdo co přečetl, což také udrží konverzaci plynulejší. Zapnuto tvé zprávy ukazují, kolik lidí je přečetlo.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Hlasové zprávy</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Zapnuto je vedle pole zprávy mikrofon: podrž pro nahrávání, pusť pro odeslání. Vypnuto tam není.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -223,6 +239,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Průhlednost bublin</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reakce jako obrázky</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Vypnuto se reakce kreslí jako znak, kterým je — vždy správně a zdarma. Zapnuto xmatic pro ni hledá tvůj vlastní obrázek v %1, pojmenovaný podle jejích kódových bodů (1f44d.svg). Nic se nedodává ani nestahuje. Zvaž to: obrázkový soubor otevírá dekodér obrázků, a tam je aplikace tohoto druhu nejzranitelnější.</translation>
     </message>
 </context>
 <context>
@@ -1117,6 +1141,18 @@
         <source>Delete</source>
         <translation>Smazat</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Zahodit</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Odeslat znovu</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagovat</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1184,6 +1220,40 @@
     <message>
         <source>no session description</source>
         <translation>žádný popis relace</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reagovat</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Něco jiného</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Místnosti</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Nový rozhovor</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Nová místnost</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Vstoupit do místnosti</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Objevovat místnosti</translation>
     </message>
 </context>
 <context>
@@ -1471,22 +1541,6 @@
         <translation>O xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Nový rozhovor</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Nová místnost</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Vstoupit do místnosti</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Objevovat místnosti</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Nastavit jako úvodní stránku</translation>
     </message>
@@ -1497,6 +1551,10 @@
     <message>
         <source>Sign out</source>
         <translation>Odhlásit se</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Označit jako přečtené</translation>
     </message>
 </context>
 <context>
@@ -1782,6 +1840,26 @@
         <source>That message is not in the loaded history</source>
         <translation>Tato zpráva není v načtené historii</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>přečteno: %n</numerusform>
+            <numerusform>přečteno: %n</numerusform>
+            <numerusform>přečteno: %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Zahodit</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Odeslat znovu</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagovat</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1983,14 +2061,6 @@
         <source>Send anyway</source>
         <translation>Přesto odeslat</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Neověřená zařízení</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Zpráva bude zašifrována pro zařízení, která jsi neověřil. Ověř je pro skutečnou jistotu, nebo ji přesto odešli.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2010,6 +2080,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Platí, dokud neověříš nebo nevynuluješ.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>klíče se změnily od doby, kdy jsi je ověřil</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>neověřeno</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Toto zařízení není ověřené</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Neověření příjemci</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Zpráva bude zašifrována pro příjemce, které jsi neověřil. Ověř je pro skutečnou jistotu, nebo odešli i tak.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Už neupozorňovat</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Dokud není toto zařízení ověřené, nelze žádné jiné zařízení zobrazit jako ověřené — ani takové, které ověřené je. Ověř ho v Účet → Šifrování, nebo odešli i tak.</translation>
     </message>
 </context>
 <context>

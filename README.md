@@ -19,7 +19,10 @@ repository.
   encryption page names which of the two states the device is in
 * Room list over Simplified Sliding Sync: search, unread counts, favourites,
   low priority, mute
-* Timeline in encrypted rooms: send, reply, edit, delete, paginate
+* Timeline in encrypted rooms: send, reply, edit, delete, paginate. A message
+  that could not be sent can be sent again or discarded
+* Reactions, sent and shown, grouped by character with a count; the picker
+  holds the common handful and the keyboard the rest
 * Formatted messages rendered as formatting — bold, italic, code, quotes,
   lists, headings, links. The HTML a message carries is rewritten inside the
   app instead of being handed to a markup parser
@@ -27,11 +30,16 @@ repository.
   forward. Voice messages recorded and played in place
 * Device verification in both directions, cross-signing, key backup and
   recovery, and a warning before sending to devices you never verified
-* Notifications for rooms not on screen, with a background wake-up; messages
-  written offline go out when the network returns
+* Notifications for rooms not on screen, with a background wake-up; tapping one
+  opens the room it is about. Messages written offline go out when the network
+  returns
 * Rooms: create (public or invite-only, encrypted or not, both settled at
   creation), invite, join by address, leave, direct chats, and a search across
   public room directories
+* A room opens where you stopped reading, counts as read while it is read, and
+  can be marked read from the chat list without opening it
+* Matrix links lead into the app: a permalink or a plain #room:server opens the
+  room, or offers to join it - the tap itself never joins
 * Spaces as their own navigation level: nested, unread badges, rooms added and
   moved by long-press, either list as the start page
 * Members: list per room, profile with the encryption identity, moderation
@@ -40,7 +48,7 @@ repository.
 * A share target for the system's share dialog, running or not
 * Voice and video calls over WebRTC, encrypted, with the homeserver's TURN
   relay
-* Twenty-seven interface languages, picked in the app rather than only by the
+* Twenty-nine interface languages, picked in the app rather than only by the
   phone's setting
 
 ## What does not
@@ -57,14 +65,16 @@ repository.
 * The app has to stay open; its cover on the home screen is the running
   process. There is no background daemon, the same way other messengers on
   this platform work.
-* Read status is not shown, and a room counts as read when you open it, not
-  while you read it.
 * Spoilers are marked rather than hidden: the text renderer available here
   cannot hide a run of text.
 * **Most translations are unreviewed.** German is the project language,
   Norwegian came largely from a Norwegian speaker, and Finnish, Swedish and
-  Danish had a correction pass. The rest are a single machine pass. An offer
-  to review one is welcome — open an issue and you get a numbered sheet.
+  Danish had a correction pass. The rest, Chinese and Hindi among them, are a
+  single machine pass. An offer to review one is welcome — open an issue and
+  you get a numbered sheet.
+* Reactions are drawn as the characters they are, which on this Qt means
+  monochrome. Pictures of your own can be used instead (Appearance); none are
+  shipped and none are downloaded.
 
 ## Requirements
 

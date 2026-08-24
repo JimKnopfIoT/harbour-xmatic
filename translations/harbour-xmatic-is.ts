@@ -121,6 +121,22 @@
         <source>Language</source>
         <translation>Tungumál</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Sýna lesstöðu annarra</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Slökkt er ekkert sótt um hver hefur lesið hvað, sem heldur samtalinu líka mýkra. Kveikt sýna eigin skilaboð hversu margir hafa lesið þau.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Talskilaboð</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Kveikt situr hljóðnemi við hliðina á skilaboðareitnum: haltu inni til að taka upp, slepptu til að senda. Slökkt er hann ekki þar.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -222,6 +238,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Gegnsæi blaðra</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Viðbrögð sem myndir</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Slökkt er viðbragð teiknað sem táknið sem það er — alltaf rétt og ókeypis. Kveikt leitar xmatic að þinni eigin mynd fyrir það í %1, nefndri eftir kóðapunktum hennar (1f44d.svg). Engu er dreift með og ekkert er sótt. Vegðu og metdu: myndskrá er opnuð af myndafkóðara, og þar er forrit af þessu tagi berskjaldaðast.</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1139,18 @@
         <source>Delete</source>
         <translation>Eyða</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Henda</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Senda aftur</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Bregðast við</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1182,6 +1218,40 @@
     <message>
         <source>no session description</source>
         <translation>engin lotulýsing</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Bregðast við</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Eitthvað annað</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Herbergi</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Nýtt samtal</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Nýtt herbergi</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Ganga inn í herbergi</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Uppgötva herbergi</translation>
     </message>
 </context>
 <context>
@@ -1469,22 +1539,6 @@
         <translation>Um xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Nýtt samtal</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Nýtt herbergi</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Ganga inn í herbergi</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Uppgötva herbergi</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Gera að upphafssíðu</translation>
     </message>
@@ -1495,6 +1549,10 @@
     <message>
         <source>Sign out</source>
         <translation>Skrá út</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Merkja sem lesið</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1837,25 @@
         <source>That message is not in the loaded history</source>
         <translation>Þessi skilaboð eru ekki í hlaðnu sögunni</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>lesið af %n</numerusform>
+            <numerusform>lesið af %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Henda</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Senda aftur</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Bregðast við</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1979,14 +2056,6 @@
         <source>Send anyway</source>
         <translation>Senda samt</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Óstaðfest tæki</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Skilaboðin verða dulkóðuð fyrir tæki sem þú hefur ekki staðfest. Staðfestu þau til að vera viss, eða sendu samt.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2005,6 +2074,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Gildir þar til þú staðfestir eða endurstillir.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>lyklar breyttust eftir að þú staðfestir þá</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>óstaðfest</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Þetta tæki er ekki staðfest</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Óstaðfestir viðtakendur</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Skilaboðin verða dulkóðuð til viðtakenda sem þú hefur ekki staðfest. Staðfestu þá til að vera viss, eða sendu samt.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Ekki vara við aftur</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Á meðan þetta tæki er óstaðfest er ekki hægt að sýna neitt annað tæki sem staðfest — ekki einu sinni tæki sem er það. Staðfestu það undir Reikningur → Dulkóðun, eða sendu samt.</translation>
     </message>
 </context>
 <context>

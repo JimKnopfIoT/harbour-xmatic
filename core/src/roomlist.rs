@@ -12,6 +12,7 @@ use std::time::Duration;
 use futures_util::StreamExt;
 use matrix_sdk::deserialized_responses::{SyncOrStrippedState, TimelineEventKind};
 use matrix_sdk::latest_events::LatestEventValue;
+use matrix_sdk::room::Receipts;
 use matrix_sdk::ruma::events::room::message::{MessageType, Relation};
 use matrix_sdk::ruma::events::{
     AnySyncMessageLikeEvent, AnySyncTimelineEvent, SyncMessageLikeEvent,
@@ -24,7 +25,7 @@ use matrix_sdk::ruma::events::{
 };
 use matrix_sdk::ruma::room::RoomType;
 use matrix_sdk::ruma::serde::Raw;
-use matrix_sdk::ruma::{Int, OwnedRoomId, OwnedServerName, RoomId, UserId};
+use matrix_sdk::ruma::{Int, OwnedRoomId, OwnedServerName, RoomAliasId, RoomId, UserId};
 use matrix_sdk::{Client, RoomState};
 use matrix_sdk_ui::{
     eyeball_im::VectorDiff,
@@ -46,6 +47,7 @@ use tokio::time::{sleep, Instant};
 use crate::protocol::event;
 use crate::timeline::scrub_ids;
 use crate::runtime::Sink;
+use crate::text::strip_bidi;
 
 /// How many rooms the dynamic adapter loads per page. A phone screen shows a
 /// handful; this is generous enough that scrolling rarely has to grow it.
@@ -109,6 +111,69 @@ fn room_avatar(item: &RoomListItem) -> Option<String> {
 /// that is not a message (state, reactions, redacted) yields no preview, and
 /// an event this device could not decrypt says so as its kind, so the banner
 /// can still be honest about it.
+/// Resolves a room address - `#alias:server` or `!id:server` - to a room id,
+/// and says whether this account is already in it.
+///
+/// Used by a tapped Matrix link. It answers, it never joins: a link in a
+/// message must not be able to put anybody into a room, so the front end asks
+/// first where the answer says "not a member".
+pub async fn resolve(client: &Client, address: &str) -> Result<Value, String> {
+    let address = address.trim();
+    let room_id = if address.starts_with('!') {
+        OwnedRoomId::try_from(address).map_err(|_| "not a room identifier".to_owned())?
+    } else {
+        let alias = RoomAliasId::parse(address).map_err(|_| "not a room address".to_owned())?;
+        client
+            .resolve_room_alias(&alias)
+            .await
+            .map_err(|error| format!("this address is not known: {}", scrub_ids(&error.to_string())))?
+            .room_id
+    };
+
+    let joined = client
+        .get_room(&room_id)
+        .map(|room| room.state() == RoomState::Joined)
+        .unwrap_or(false);
+
+    Ok(json!({ "roomId": room_id.as_str(), "joined": joined }))
+}
+
+/// Marks a room read without opening it: a read receipt on its latest event,
+/// plus clearing the manual unread flag. Used by the chat list, where the point
+/// is not having to read the room at all.
+///
+/// A room whose latest event this device has not seen as a remote event - an
+/// empty room, or one that only holds a local echo - has nothing to point a
+/// receipt at, and answers that it did nothing rather than failing.
+pub async fn mark_read(client: &Client, room_id: &str) -> Result<bool, String> {
+    let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
+    let room = client
+        .get_room(&parsed)
+        .ok_or_else(|| "room is not known yet".to_owned())?;
+
+    let LatestEventValue::Remote(event) = room.latest_event() else {
+        return Ok(false);
+    };
+    let Ok(parsed_event) = event.raw().deserialize() else {
+        return Ok(false);
+    };
+    let event_id = parsed_event.event_id().to_owned();
+
+    // The receipt and the fully-read marker together, in one request: the
+    // marker is what the room opens at next time.
+    room.send_multiple_receipts(
+        Receipts::new()
+            .public_read_receipt(event_id.clone())
+            .fully_read_marker(event_id),
+    )
+    .await
+    .map_err(|error| format!("could not mark it read: {}", scrub_ids(&error.to_string())))?;
+    // The flag is what a manual "unread" sets; a receipt alone would leave it
+    // standing and the room would look unread with nothing in it to read.
+    let _ = room.set_unread_flag(false).await;
+    Ok(true)
+}
+
 fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>, Option<String>) {
     let LatestEventValue::Remote(event) = item.latest_event() else {
         return (None, None, None);
@@ -162,6 +227,9 @@ fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>,
 /// length that fits two lines of a notification.
 fn preview_text(body: &str) -> String {
     const PREVIEW_CHARS: usize = 160;
+    // The notification banner is drawn from this, and a line that reverses
+    // itself there is the same trick as in a message.
+    let body = &strip_bidi(body);
     let mut lines = body.lines().peekable();
     if lines.peek().map_or(false, |line| line.starts_with('>')) {
         while lines.peek().map_or(false, |line| line.starts_with('>')) {
@@ -187,10 +255,12 @@ fn summarize(item: &RoomListItem) -> Value {
     let (preview_kind, preview_text, preview_sender) = latest_preview(item);
     json!({
         "id": item.room_id().as_str(),
-        "name": item
-            .cached_display_name()
-            .map(|name| name.to_string())
-            .unwrap_or_default(),
+        "name": strip_bidi(
+            &item
+                .cached_display_name()
+                .map(|name| name.to_string())
+                .unwrap_or_default(),
+        ),
         "unread": item.num_unread_messages(),
         // Counted client-side against the account's push rules: only events
         // whose rules say "notify". This is the number a banner may follow —
@@ -1112,8 +1182,8 @@ pub async fn space_hierarchy(client: &Client, space_id: &str) -> Result<Value, S
                 .unwrap_or(false);
             json!({
                 "id": summary.room_id.as_str(),
-                "name": summary.name.clone().unwrap_or_default(),
-                "topic": summary.topic.clone().unwrap_or_default(),
+                "name": strip_bidi(summary.name.as_deref().unwrap_or_default()),
+                "topic": strip_bidi(summary.topic.as_deref().unwrap_or_default()),
                 "members": u64::from(summary.num_joined_members),
                 "avatar": summary.avatar_url.as_ref().map(|url| url.to_string()),
                 "space": summary.room_type == Some(RoomType::Space),

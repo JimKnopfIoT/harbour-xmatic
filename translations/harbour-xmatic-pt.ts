@@ -121,6 +121,22 @@
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Mostrar o estado de leitura dos outros</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Desligado, nada é obtido sobre quem leu o quê, o que também mantém a conversa mais fluida. Ligado, as tuas mensagens dizem quantas pessoas as leram.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Mensagens de voz</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Ligado, há um microfone ao lado do campo de mensagem: mantém premido para gravar, larga para enviar. Desligado, não está lá.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -222,6 +238,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Opacidade dos balões</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reações como imagens</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Desligado, uma reação é desenhada como o carácter que é — sempre correto e gratuito. Ligado, o xmatic procura para ela uma imagem tua em %1, com o nome dos seus pontos de código (1f44d.svg). Nada é incluído nem descarregado. Pondera: um ficheiro de imagem é aberto por um descodificador de imagens, e é aí que uma aplicação destas está mais exposta.</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1139,18 @@
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Descartar</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Enviar de novo</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagir</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1182,6 +1218,40 @@
     <message>
         <source>no session description</source>
         <translation>sem descrição de sessão</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reagir</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Outra coisa</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Salas</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Nova conversa</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Sala nova</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Entrar numa sala</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Descobrir salas</translation>
     </message>
 </context>
 <context>
@@ -1469,22 +1539,6 @@
         <translation>Sobre o xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Nova conversa</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Sala nova</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Entrar numa sala</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Descobrir salas</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Definir como página inicial</translation>
     </message>
@@ -1495,6 +1549,10 @@
     <message>
         <source>Sign out</source>
         <translation>Terminar sessão</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Marcar como lido</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1837,25 @@
         <source>That message is not in the loaded history</source>
         <translation>Essa mensagem não está no histórico carregado</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>lido por %n</numerusform>
+            <numerusform>lido por %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Descartar</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Enviar de novo</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagir</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1979,14 +2056,6 @@
         <source>Send anyway</source>
         <translation>Enviar mesmo assim</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Dispositivos não verificados</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>A mensagem será cifrada para dispositivos que não verificaste. Verifica-os para teres a certeza, ou envia mesmo assim.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2005,6 +2074,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Vale até verificares ou repores.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>chaves mudaram desde que as verificaste</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>não verificado</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Este dispositivo não está verificado</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Destinatários não verificados</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>A mensagem será cifrada para destinatários que não verificaste. Verifica-os para teres certeza, ou envia mesmo assim.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Não voltar a avisar</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Enquanto este dispositivo não estiver verificado, nenhum outro dispositivo pode aparecer como verificado — nem sequer um que esteja. Verifica-o em Conta → Cifragem, ou envia mesmo assim.</translation>
     </message>
 </context>
 <context>

@@ -142,6 +142,14 @@ Page {
 
             menu: ContextMenu {
                 MenuItem {
+                    // Without opening it: the point of the entry is not having
+                    // to read the room at all.
+                    text: qsTr("Mark as read")
+                    visible: model.unread > 0 || model.mentions > 0
+                    onClicked: matrix.markRoomRead(model.id)
+                }
+
+                MenuItem {
                     text: model.favourite
                           ? qsTr("Remove from favourites") : qsTr("Favourite")
                     onClicked: matrix.setRoomFavourite(model.id, !model.favourite)
@@ -186,32 +194,20 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
 
+            // The four ways into a room are one entry: a menu on a phone holds
+            // about five before the last of them is out of reach, and these
+            // four are all "start something", not everyday actions.
             MenuItem {
-                text: qsTr("New chat")
-                onClicked: pageStack.push(Qt.resolvedUrl("NewChatDialog.qml"))
-            }
-
-            MenuItem {
-                text: qsTr("New room")
-                onClicked: pageStack.push(Qt.resolvedUrl("CreateRoomDialog.qml"))
-            }
-
-            MenuItem {
-                text: qsTr("Join room")
-                onClicked: pageStack.push(Qt.resolvedUrl("JoinRoomDialog.qml"))
-            }
-
-            MenuItem {
-                text: qsTr("Discover rooms")
-                onClicked: pageStack.push(Qt.resolvedUrl("DirectoryPage.qml"))
+                text: qsTr("Rooms")
+                onClicked: pageStack.push(Qt.resolvedUrl("RoomActionsPage.qml"))
             }
 
             MenuItem {
                 // Only shown when rooms is not already the start page; picking
                 // it takes effect on the next start.
                 text: qsTr("Make start page")
-                visible: matrix.startPage !== "rooms"
-                onClicked: matrix.startPage = "rooms"
+                visible: settings.startPage !== "rooms"
+                onClicked: settings.startPage = "rooms"
             }
 
             MenuItem {

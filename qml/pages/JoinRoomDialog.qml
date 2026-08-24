@@ -9,6 +9,9 @@ Dialog {
 
     allowedOrientations: Orientation.All
 
+    /// Filled in when a tapped link brought the user here.
+    property string prefill: ""
+
     canAccept: aliasField.text.trim().length > 2
 
     onAccepted: matrix.joinRoomByAlias(aliasField.text)
@@ -36,6 +39,7 @@ Dialog {
                 id: aliasField
 
                 width: parent.width
+                text: dialog.prefill
                 label: qsTr("Room address")
                 placeholderText: "#room:server"
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText

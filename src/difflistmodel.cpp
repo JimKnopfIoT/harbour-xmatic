@@ -74,7 +74,16 @@ void DiffListModel::applyOperation(const QJsonObject &operation)
         if (index < 0 || index >= m_rows.count()) {
             return;
         }
-        m_rows[index] = operation.value(QStringLiteral("value")).toObject();
+        const QJsonObject value = operation.value(QStringLiteral("value")).toObject();
+        // dataChanged without a role list makes the delegate re-evaluate every
+        // binding of that row, so an update that changes nothing visible still
+        // costs a full redraw. The SDK updates an item for things this row does
+        // not carry - a read receipt moving is the frequent one - and those
+        // arrive here as a set identical to what is already stored.
+        if (m_rows.at(index) == value) {
+            return;
+        }
+        m_rows[index] = value;
         const QModelIndex changed = createIndex(index, 0);
         emit dataChanged(changed, changed);
         return;

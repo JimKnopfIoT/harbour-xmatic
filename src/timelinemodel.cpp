@@ -30,6 +30,10 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(ThreadRootRole, "threadRoot");
     names.insert(ThreadCountRole, "threadCount");
     names.insert(UtdCauseRole, "utdCause");
+    names.insert(ReadByRole, "readBy");
+    names.insert(CaptionRole, "caption");
+    names.insert(TxnIdRole, "txnId");
+    names.insert(ReactionsRole, "reactions");
     return names;
 }
 

@@ -121,6 +121,22 @@
         <source>Language</source>
         <translation>Език</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Показвай статуса на четене на другите</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Изключено не се извлича нищо за това кой какво е прочел, което поддържа разговора и по-плавен. Включено твоите съобщения показват колко души са ги прочели.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Гласови съобщения</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Включено, до полето за съобщение има микрофон: задръж, за да запишеш, пусни, за да изпратиш. Изключено го няма.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -222,6 +238,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Прозрачност на балончетата</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Реакции като картинки</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Изключено реакцията се изчертава като знака, който е — винаги вярно и безплатно. Включено xmatic търси за нея твоя собствена картинка в %1, наименувана по кодовите ѝ точки (1f44d.svg). Нищо не се доставя и нищо не се изтегля. Претегли: файл с картинка се отваря от декодер на изображения, а там приложение от този вид е най-уязвимо.</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1139,18 @@
         <source>Delete</source>
         <translation>Изтрий</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Отхвърли</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Изпрати отново</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Реагирай</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1182,6 +1218,40 @@
     <message>
         <source>no session description</source>
         <translation>няма описание на сесията</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Реагирай</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Нещо друго</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Стаи</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Нов разговор</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Нова стая</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Влез в стая</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Открий стаи</translation>
     </message>
 </context>
 <context>
@@ -1469,22 +1539,6 @@
         <translation>Относно xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Нов разговор</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Нова стая</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Влез в стая</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Открий стаи</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Направи начална страница</translation>
     </message>
@@ -1495,6 +1549,10 @@
     <message>
         <source>Sign out</source>
         <translation>Изход</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Отбележи като прочетено</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1837,25 @@
         <source>That message is not in the loaded history</source>
         <translation>Това съобщение не е в заредената история</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>прочетено от: %n</numerusform>
+            <numerusform>прочетено от: %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Отхвърли</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Изпрати отново</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Реагирай</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1979,14 +2056,6 @@
         <source>Send anyway</source>
         <translation>Изпрати въпреки това</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Непотвърдени устройства</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Съобщението ще бъде шифровано и за устройства, които не си потвърдил. Потвърди ги за истинска сигурност или го изпрати въпреки това.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2005,6 +2074,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Важи, докато не потвърдиш или не нулираш.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>ключовете са се променили, откакто ги потвърди</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>непотвърден</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Това устройство не е потвърдено</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Непотвърдени получатели</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Съобщението ще бъде шифровано за получатели, които не си потвърдил. Потвърди ги за истинска сигурност или все пак изпрати.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Не предупреждавай повече</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Докато това устройство не е потвърдено, никое друго устройство не може да се покаже като потвърдено — дори такова, което е. Потвърди го в Профил → Шифроване или все пак изпрати.</translation>
     </message>
 </context>
 <context>

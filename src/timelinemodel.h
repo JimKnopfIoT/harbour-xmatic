@@ -33,6 +33,10 @@ public:
         ThreadRootRole,
         ThreadCountRole,
         UtdCauseRole,
+        ReadByRole,
+        CaptionRole,
+        TxnIdRole,
+        ReactionsRole,
     };
 
     explicit TimelineModel(QObject *parent = nullptr);

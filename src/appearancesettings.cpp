@@ -1,5 +1,7 @@
 #include "appearancesettings.h"
 
+#include "appsettings.h"
+
 #include <QDir>
 #include <QFileInfo>
 #include <QSettings>
@@ -10,11 +12,6 @@
 // inside its own config directory, QSettings' UserScope default sits one
 // level above it and the sandbox blocks the write silently. Same file too —
 // one settings.conf, this class owns the "appearance" group.
-static QString settingsPath()
-{
-    return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)
-           + QStringLiteral("/settings.conf");
-}
 
 // The bubble fills' defaults, kept in one place: 0.35 marks the own side,
 // 0.15 the received one — the soft tints the contrast work settled on.
@@ -29,7 +26,7 @@ AppearanceSettings::AppearanceSettings(QObject *parent)
 
 void AppearanceSettings::load()
 {
-    QSettings settings(settingsPath(), QSettings::IniFormat);
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
     settings.beginGroup(QStringLiteral("appearance"));
     m_ownBubbleColor = settings.value(QStringLiteral("ownBubbleColor")).toString();
     m_ownBubbleOpacity =
@@ -44,7 +41,7 @@ void AppearanceSettings::load()
 
 void AppearanceSettings::store(const QString &key, const QVariant &value)
 {
-    const QString path = settingsPath();
+    const QString path = appSettingsPath();
     QDir().mkpath(QFileInfo(path).absolutePath());
     QSettings settings(path, QSettings::IniFormat);
     settings.setValue(QStringLiteral("appearance/") + key, value);
@@ -135,7 +132,7 @@ void AppearanceSettings::resetAll()
     m_ownTextColor.clear();
     m_otherTextColor.clear();
 
-    const QString path = settingsPath();
+    const QString path = appSettingsPath();
     QDir().mkpath(QFileInfo(path).absolutePath());
     QSettings settings(path, QSettings::IniFormat);
     settings.remove(QStringLiteral("appearance"));

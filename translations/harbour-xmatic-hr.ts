@@ -122,6 +122,22 @@
         <source>Language</source>
         <translation>Jezik</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Prikaži status čitanja drugih</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Isključeno se ništa ne dohvaća o tome tko je što pročitao, što razgovor drži i tečnijim. Uključeno tvoje poruke pokazuju koliko ih je ljudi pročitalo.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Glasovne poruke</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Uključeno je pored polja za poruku mikrofon: drži za snimanje, pusti za slanje. Isključeno ga nema.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -223,6 +239,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Prozirnost oblačića</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Reakcije kao slike</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Isključeno se reakcija crta kao znak koji jest — uvijek točno i besplatno. Uključeno xmatic za nju traži tvoju vlastitu sliku u %1, nazvanu po njezinim kodnim točkama (1f44d.svg). Ništa se ne isporučuje niti preuzima. Odvagni: slikovnu datoteku otvara dekoder slika, a ondje je aplikacija ove vrste najizloženija.</translation>
     </message>
 </context>
 <context>
@@ -1117,6 +1141,18 @@
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Odbaci</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Pošalji ponovno</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagiraj</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1184,6 +1220,40 @@
     <message>
         <source>no session description</source>
         <translation>nema opisa sesije</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Reagiraj</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Nešto drugo</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Sobe</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Novi razgovor</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Nova soba</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Uđi u sobu</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Otkrij sobe</translation>
     </message>
 </context>
 <context>
@@ -1471,22 +1541,6 @@
         <translation>O xmaticu</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Novi razgovor</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Nova soba</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Uđi u sobu</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Otkrij sobe</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Postavi kao početnu stranicu</translation>
     </message>
@@ -1497,6 +1551,10 @@
     <message>
         <source>Sign out</source>
         <translation>Odjava</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Označi kao pročitano</translation>
     </message>
 </context>
 <context>
@@ -1782,6 +1840,26 @@
         <source>That message is not in the loaded history</source>
         <translation>Ta poruka nije u učitanoj povijesti</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>pročitano: %n</numerusform>
+            <numerusform>pročitano: %n</numerusform>
+            <numerusform>pročitano: %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Odbaci</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Pošalji ponovno</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagiraj</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1983,14 +2061,6 @@
         <source>Send anyway</source>
         <translation>Ipak pošalji</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Neprovjereni uređaji</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Poruka će biti šifrirana i za uređaje koje nisi provjerio. Provjeri ih za stvarnu sigurnost ili je ipak pošalji.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2010,6 +2080,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Vrijedi dok ne provjeriš ili ne poništiš.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>ključevi su se promijenili otkad si ih provjerio</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>neprovjereno</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Ovaj uređaj nije provjeren</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Neprovjereni primatelji</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Poruka će biti šifrirana za primatelje koje nisi provjerio. Provjeri ih za pravu sigurnost ili ipak pošalji.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Ne upozoravaj više</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Dok ovaj uređaj nije provjeren, nijedan drugi uređaj ne može biti prikazan kao provjeren — ni onaj koji jest. Provjeri ga u Račun → Šifriranje ili ipak pošalji.</translation>
     </message>
 </context>
 <context>

@@ -122,6 +122,22 @@
         <source>Language</source>
         <translation>Teanga</translation>
     </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Taispeáin stádas léite daoine eile</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Múchta, ní thugtar aon rud faoi cé a léigh cad, rud a choinníonn an comhrá níos réidhe freisin. Lasta, insíonn do theachtaireachtaí féin cé mhéad duine a léigh iad.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Teachtaireachtaí gutha</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Lasta, tá micreafón in aice leis an réimse teachtaireachta: coinnigh síos chun taifeadadh, scaoil chun seoladh. Múchta, níl sé ann.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -223,6 +239,14 @@
     <message>
         <source>Bubble opacity</source>
         <translation>Teimhneacht na mbolgán</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures</source>
+        <translation>Freagairtí mar phictiúir</translation>
+    </message>
+    <message>
+        <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
+        <translation>Múchta, tarraingítear freagairt mar an carachtar atá inti — ceart i gcónaí agus saor in aisce. Lasta, lorgaíonn xmatic pictiúr de do chuid féin di i %1, ainmnithe as a pointí cóid (1f44d.svg). Ní sheoltar aon rud leis agus ní íoslódáiltear aon rud. Meáigh é: osclaíonn díchódóir íomhánna comhad pictiúir, agus is ansin is mó atá aip den chineál seo neamhchosanta.</translation>
     </message>
 </context>
 <context>
@@ -1117,6 +1141,18 @@
         <source>Delete</source>
         <translation>Scrios</translation>
     </message>
+    <message>
+        <source>Discard</source>
+        <translation>Caith uait</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Seol arís</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Freagair</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1184,6 +1220,40 @@
     <message>
         <source>no session description</source>
         <translation>gan cur síos seisiúin</translation>
+    </message>
+</context>
+<context>
+    <name>ReactionDialog</name>
+    <message>
+        <source>React</source>
+        <translation>Freagair</translation>
+    </message>
+    <message>
+        <source>Something else</source>
+        <translation>Rud éigin eile</translation>
+    </message>
+</context>
+<context>
+    <name>RoomActionsPage</name>
+    <message>
+        <source>Rooms</source>
+        <translation>Seomraí</translation>
+    </message>
+    <message>
+        <source>New chat</source>
+        <translation>Comhrá nua</translation>
+    </message>
+    <message>
+        <source>New room</source>
+        <translation>Seomra nua</translation>
+    </message>
+    <message>
+        <source>Join room</source>
+        <translation>Téigh isteach i seomra</translation>
+    </message>
+    <message>
+        <source>Discover rooms</source>
+        <translation>Aimsigh seomraí</translation>
     </message>
 </context>
 <context>
@@ -1471,22 +1541,6 @@
         <translation>Maidir le xmatic</translation>
     </message>
     <message>
-        <source>New chat</source>
-        <translation>Comhrá nua</translation>
-    </message>
-    <message>
-        <source>New room</source>
-        <translation>Seomra nua</translation>
-    </message>
-    <message>
-        <source>Join room</source>
-        <translation>Téigh isteach i seomra</translation>
-    </message>
-    <message>
-        <source>Discover rooms</source>
-        <translation>Aimsigh seomraí</translation>
-    </message>
-    <message>
         <source>Make start page</source>
         <translation>Déan an leathanach tosaigh de</translation>
     </message>
@@ -1497,6 +1551,10 @@
     <message>
         <source>Sign out</source>
         <translation>Sínigh amach</translation>
+    </message>
+    <message>
+        <source>Mark as read</source>
+        <translation>Marcáil mar léite</translation>
     </message>
 </context>
 <context>
@@ -1782,6 +1840,26 @@
         <source>That message is not in the loaded history</source>
         <translation>Níl an teachtaireacht sin sa stair luchtaithe</translation>
     </message>
+    <message numerus="yes">
+        <source>read by %n</source>
+        <translation>
+            <numerusform>léite ag %n</numerusform>
+            <numerusform>léite ag %n</numerusform>
+            <numerusform>léite ag %n</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Caith uait</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Seol arís</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Freagair</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -1983,14 +2061,6 @@
         <source>Send anyway</source>
         <translation>Seol mar sin féin</translation>
     </message>
-    <message>
-        <source>Unverified devices</source>
-        <translation>Gléasanna gan fíorú</translation>
-    </message>
-    <message>
-        <source>The message will be encrypted for devices you have not verified. Verify them for real certainty, or send anyway.</source>
-        <translation>Cripteofar an teachtaireacht do ghléasanna nár fhíoraigh tú. Fíoraigh iad le bheith cinnte, nó seol mar sin féin.</translation>
-    </message>
     <message numerus="yes">
         <source>%n unverified device(s)</source>
         <translation>
@@ -2010,6 +2080,34 @@
     <message>
         <source>Applies until you verify or clear it.</source>
         <translation>Baineann sé go dtí go bhfíoraíonn tú nó go nglanann tú é.</translation>
+    </message>
+    <message>
+        <source>keys changed since you verified them</source>
+        <translation>athraíodh na heochracha ó d&apos;fhíoraigh tú iad</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>gan fíorú</translation>
+    </message>
+    <message>
+        <source>This device is not verified</source>
+        <translation>Níl an gléas seo fíoraithe</translation>
+    </message>
+    <message>
+        <source>Unverified recipients</source>
+        <translation>Faighteoirí gan fíorú</translation>
+    </message>
+    <message>
+        <source>The message will be encrypted for recipients you have not verified. Verify them for real certainty, or send anyway.</source>
+        <translation>Déanfar an teachtaireacht a chriptiú d&apos;fhaighteoirí nár fhíoraigh tú. Fíoraigh iad le bheith cinnte, nó seol mar sin féin.</translation>
+    </message>
+    <message>
+        <source>Do not warn again</source>
+        <translation>Ná tabhair rabhadh arís</translation>
+    </message>
+    <message>
+        <source>As long as this device is unverified, no other device can be shown as verified — not even one that is. Verify it under Account → Encryption, or send anyway.</source>
+        <translation>Fad is nach bhfuil an gléas seo fíoraithe, ní féidir aon ghléas eile a thaispeáint mar cheann fíoraithe — fiú ceann atá fíoraithe. Fíoraigh é faoi Cuntas → Criptiú, nó seol mar sin féin.</translation>
     </message>
 </context>
 <context>

@@ -113,7 +113,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Reset send warnings")
                 onClicked: {
-                    var count = matrix.resetRecipientWarnings()
+                    var count = settings.resetRecipientWarnings()
                     resetWarningsHint.text = count > 0
                             ? qsTr("%n recipient(s) will warn again", "", count)
                             : qsTr("No suppressed warnings")
@@ -158,17 +158,33 @@ Page {
             TextSwitch {
                 text: qsTr("Message text in notifications")
                 description: qsTr("Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.")
-                checked: matrix.notificationPreview
+                checked: settings.notificationPreview
                 automaticCheck: false
-                onClicked: matrix.notificationPreview = !matrix.notificationPreview
+                onClicked: settings.notificationPreview = !settings.notificationPreview
+            }
+
+            TextSwitch {
+                text: qsTr("Show others' read status")
+                description: qsTr("Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.")
+                checked: settings.showReadStatus
+                automaticCheck: false
+                onClicked: settings.showReadStatus = !settings.showReadStatus
+            }
+
+            TextSwitch {
+                text: qsTr("Voice messages")
+                description: qsTr("On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.")
+                checked: settings.voiceMessages
+                automaticCheck: false
+                onClicked: settings.voiceMessages = !settings.voiceMessages
             }
 
             TextSwitch {
                 text: qsTr("Tappable web links")
                 description: qsTr("On, a link in a message opens the browser when tapped. Off, links stay plain text.")
-                checked: matrix.clickableLinks
+                checked: settings.clickableLinks
                 automaticCheck: false
-                onClicked: matrix.clickableLinks = !matrix.clickableLinks
+                onClicked: settings.clickableLinks = !settings.clickableLinks
             }
 
             Item {
