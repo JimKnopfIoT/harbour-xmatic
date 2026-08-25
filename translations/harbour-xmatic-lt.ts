@@ -95,22 +95,6 @@
         <translation>Nuslopintų įspėjimų nėra</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Žinutės tekstas pranešimuose</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Išjungta: pranešimas sako tik, kiek žinučių atėjo. Įjungta: rodo naujausią žinutę — ir užrakinimo ekrane.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Paliečiamos saitai</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Įjungta: saitas žinutėje palietus atveria naršyklę. Išjungta: saitai lieka paprastu tekstu.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Atsijungti</translation>
     </message>
@@ -123,20 +107,8 @@
         <translation>Kalba</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Rodyti kitų skaitymo būseną</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Išjungus nieko nesiunčiama apie tai, kas ką perskaitė, todėl pokalbis lieka sklandesnis. Įjungus tavo žinutės rodo, kiek žmonių jas perskaitė.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Balso žinutės</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Įjungus šalia žinutės lauko yra mikrofonas: laikyk, kad įrašytum, paleisk, kad išsiųstum. Išjungus jo nėra.</translation>
+        <source>Privacy</source>
+        <translation>Privatumas</translation>
     </message>
 </context>
 <context>
@@ -248,6 +220,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Išjungus reakcija piešiama kaip ženklas, kuriuo ji yra — visada teisinga ir nemokama. Įjungus xmatic ieško jai tavo paties paveikslėlio aplanke %1, pavadinto pagal jos kodo taškus (1f44d.svg). Nieko nepridedama ir nieko neatsiunčiama. Pasverk: paveikslėlio failą atveria vaizdų dekoderis, o ten tokia programa yra pažeidžiamiausia.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Pasirinkti jaustukų paveikslėlius</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Skaitomi paveikslėliai…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 priimta, %2 atmesta</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Paveikslėliai po nuskaitymo pasikeitė ir nerodomi.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Atkurti numatytas spalvas</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Pašalinti jaustukų paveikslėlius</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -337,6 +333,22 @@
     <message>
         <source>Hang up</source>
         <translation>Padėti ragelį</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Atsiliepti be kameros</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Atsiliepti su kamera</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Gaunamas vaizdo skambutis</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Vaizdo skambučiai išjungti Privatume; šis priimamas kaip balso skambutis.</translation>
     </message>
 </context>
 <context>
@@ -652,7 +664,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@vardas:serveris</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -924,6 +936,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Namų serveris negrąžino prisijungimo kodo.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Įrašytų sąrašų dabar perskaityti nepavyksta.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Tavo seansas baigėsi. Prisijunk iš naujo.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1106,6 +1126,14 @@
         <source>No other shared rooms</source>
         <translation>Kitų bendrų kambarių nėra</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Drausti skambučius</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Leisti skambučius</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1152,6 +1180,10 @@
     <message>
         <source>React</source>
         <translation>Reaguoti</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Atsakyti gijoje</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1245,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Palaikyk žinutę pokalbyje, kad ją prisegtum.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Privatumas</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Kas gali tau skambinti</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Visi</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Žmonės, su kuriais turi tiesioginį pokalbį</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Tik mano sąrašas</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Skambučiai iš grupių kambarių</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Vaizdo skambučiai</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Siųsti skaitymo patvirtinimus</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Leidžiami skambintojai</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix adresas</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Leisti skambučius</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Kol kas nieko.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Pašalinti</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Skambutis skamba ir nutildytame kambaryje. Atmesti neskamba, o skambinantysis nieko nesužino.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>Grupės kambaryje skambutį mato visi. Sąrašas to nepanaikina.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Išjungta: pasiūlymas su vaizdu priimamas kaip balso skambutis.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Išjungta palieka tavo skaitymą tau, abiem kryptimis.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Jie visada gali skambinti. Sąrašas lieka šiame įrenginyje.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Šiame įrenginyje</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Ką sužino kiti</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Žinutės tekstas pranešimuose</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Išjungta: pranešimas sako tik, kiek žinučių atėjo. Įjungta: rodo naujausią žinutę — ir užrakinimo ekrane.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Rodyti kitų skaitymo būseną</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Išjungus nieko nesiunčiama apie tai, kas ką perskaitė, todėl pokalbis lieka sklandesnis. Įjungus tavo žinutės rodo, kiek žmonių jas perskaitė.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Balso žinutės</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Įjungus šalia žinutės lauko yra mikrofonas: laikyk, kad įrašytum, paleisk, kad išsiųstum. Išjungus jo nėra.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Paliečiamos saitai</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Įjungta: saitas žinutėje palietus atveria naršyklę. Išjungta: saitai lieka paprastu tekstu.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Ištrinti mediją dabar</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Žinutės ir raktai saugomi užšifruoti. Atverti paveikslėliai, vaizdo įrašai ir dokumentai — ne: jie guli įrenginyje kaip ir galerijos, perskaitomi bet kam, kas jį turi.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Atsisiųstos medijos trynimas</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Niekada</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Užveriant programą</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Kai tik programa nebėra priekyje</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Numatytai jie ištrinami atsijungiant, tad išsaugok tai, ką nori pasilikti.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>„Niekada“ palieka juos visam laikui — patogu ir nerekomenduojama.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Ištrinta parsiunčiama iš naujo, kai atveri.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Atsijungiant</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Riboti pakartotinius skambučius</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Įjungta: tas pats žmogus gali skambinti vėl tik po trumpos pertraukos. Tai atitolina ir antrą, tikrą bandymą.</translation>
     </message>
 </context>
 <context>
@@ -1549,10 +1748,6 @@
         <translation>Paskyra</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Atsijungti</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Žymėti kaip skaitytą</translation>
     </message>
@@ -1859,6 +2054,42 @@
     <message>
         <source>React</source>
         <translation>Reaguoti</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Atsakyti gijoje</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Kopijuoti kambario nuorodą</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Kambario nuoroda nukopijuota</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Išsiųsta neužšifruota</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Išsiuntė ne nurodyta paskyra</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Siuntėjo raktai pasikeitė</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Iš nepatvirtinto įrenginio</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Iš nepatvirtinto asmens</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autentiškumas nepatvirtintas</translation>
     </message>
 </context>
 <context>
@@ -2232,6 +2463,18 @@
             <numerusform>%n naujos žinutės</numerusform>
             <numerusform>%n naujų žinučių</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Gaunamas vaizdo skambutis</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Įeinantis skambutis</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nauja žinutė</translation>
     </message>
 </context>
 </TS>

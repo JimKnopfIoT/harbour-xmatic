@@ -95,22 +95,6 @@
         <translation>Žiadne potlačené varovania</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Text správy v oznámeniach</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Vypnuté: oznámenie povie len, koľko správ prišlo. Zapnuté: ukáže poslednú správu — aj na uzamknutej obrazovke.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Klikateľné webové odkazy</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Zapnuté: odkaz v správe po ťuknutí otvorí prehliadač. Vypnuté: odkazy zostanú obyčajným textom.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Odhlásiť sa</translation>
     </message>
@@ -123,20 +107,8 @@
         <translation>Jazyk</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Zobrazovať stav prečítania ostatných</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Vypnuté sa nič nenačítava o tom, kto čo prečítal, čo udrží konverzáciu plynulejšou. Zapnuté tvoje správy ukazujú, koľko ľudí ich prečítalo.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Hlasové správy</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Zapnuté je vedľa poľa správy mikrofón: podrž pre nahrávanie, pusti pre odoslanie. Vypnuté tam nie je.</translation>
+        <source>Privacy</source>
+        <translation>Súkromie</translation>
     </message>
 </context>
 <context>
@@ -248,6 +220,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Vypnuté sa reakcia kreslí ako znak, ktorým je — vždy správne a zadarmo. Zapnuté xmatic pre ňu hľadá tvoj vlastný obrázok v %1, pomenovaný podľa jej kódových bodov (1f44d.svg). Nič sa nedodáva ani nesťahuje. Zváž to: obrázkový súbor otvára dekodér obrázkov, a tam je aplikácia tohto druhu najzraniteľnejšia.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Vybrať obrázky emodži</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Načítavajú sa obrázky…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 prevzatých, %2 odmietnutých</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Obrázky sa od načítania zmenili a nezobrazujú sa.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Obnoviť predvolené farby</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Odstrániť obrázky emodži</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -337,6 +333,22 @@
     <message>
         <source>Hang up</source>
         <translation>Zložiť</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Prijať bez kamery</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Prijať s kamerou</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Prichádzajúci videohovor</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Videohovory sú v Súkromí vypnuté; tento sa prijme ako hlasový hovor.</translation>
     </message>
 </context>
 <context>
@@ -652,7 +664,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@meno:server</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -924,6 +936,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Domovský server nevrátil prihlasovací kód.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Uložené zoznamy sa teraz nedajú prečítať.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Tvoja relácia sa skončila. Prihlás sa znova.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1106,6 +1126,14 @@
         <source>No other shared rooms</source>
         <translation>Žiadne ďalšie spoločné miestnosti</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Zakázať hovory</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Povoliť hovory</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1152,6 +1180,10 @@
     <message>
         <source>React</source>
         <translation>Reagovať</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Odpovedať vo vlákne</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1245,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Podrž správu v rozhovore, aby si ju pripol.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Súkromie</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Kto ti smie volať</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Všetci</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Ľudia, s ktorými máš priamy rozhovor</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Len môj zoznam</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Hovory zo skupinových miestností</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Videohovory</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Posielať potvrdenia o prečítaní</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Povolení volajúci</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Adresa Matrix</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Povoliť hovory</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Zatiaľ nikto.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Odstrániť</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Hovor zvoní aj v stíšenej miestnosti. Odmietnuté nezvonia a volajúci sa nič nedozvie.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>V skupinovej miestnosti hovor vidia všetci. Zoznam to neprebíja.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Vypnuté: ponuka s videom sa prijme ako hlasový hovor.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Vypnuté si tvoje čítanie nechá pre teba, v oboch smeroch.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Volať môžu vždy. Zoznam zostáva v tomto zariadení.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>V tomto zariadení</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Čo sa dozvedia ostatní</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Text správy v oznámeniach</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Vypnuté: oznámenie povie len, koľko správ prišlo. Zapnuté: ukáže poslednú správu — aj na uzamknutej obrazovke.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Zobrazovať stav prečítania ostatných</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Vypnuté sa nič nenačítava o tom, kto čo prečítal, čo udrží konverzáciu plynulejšou. Zapnuté tvoje správy ukazujú, koľko ľudí ich prečítalo.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Hlasové správy</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Zapnuté je vedľa poľa správy mikrofón: podrž pre nahrávanie, pusti pre odoslanie. Vypnuté tam nie je.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Klikateľné webové odkazy</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Zapnuté: odkaz v správe po ťuknutí otvorí prehliadač. Vypnuté: odkazy zostanú obyčajným textom.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Zmazať médiá teraz</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Správy a kľúče sú uložené šifrovane. Otvorené obrázky, videá a dokumenty nie — ležia v zariadení ako tie v galérii, čitateľné pre každého, kto ho má.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Mazanie stiahnutých médií</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Nikdy</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Pri zatvorení aplikácie</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Hneď ako aplikácia nie je vpredu</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Predvolene sa zmažú pri odhlásení, tak si ulož, čo si chceš nechať.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>„Nikdy“ ich nechá navždy — pohodlné a neodporúčané.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Zmazané sa stiahne znova pri otvorení.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Pri odhlásení</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Obmedziť opakované hovory</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Zapnuté: ten istý človek môže zavolať znova až po krátkej pauze. Zdrží to aj druhý, skutočný pokus.</translation>
     </message>
 </context>
 <context>
@@ -1549,10 +1748,6 @@
         <translation>Účet</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Odhlásiť sa</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Označiť ako prečítané</translation>
     </message>
@@ -1859,6 +2054,42 @@
     <message>
         <source>React</source>
         <translation>Reagovať</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Odpovedať vo vlákne</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Kopírovať odkaz na miestnosť</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Odkaz na miestnosť skopírovaný</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Odoslané nešifrovane</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Neodoslal to uvedený účet</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Kľúče odosielateľa sa zmenili</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Z neovereného zariadenia</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Od neoverenej osoby</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Pravosť nepotvrdená</translation>
     </message>
 </context>
 <context>
@@ -2232,6 +2463,18 @@
             <numerusform>%n nové správy</numerusform>
             <numerusform>%n nových správ</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Prichádzajúci videohovor</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Prichádzajúci hovor</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nová správa</translation>
     </message>
 </context>
 </TS>

@@ -23,9 +23,18 @@ Dialog {
     property string replySender: ""
     property string replyBody: ""
 
+    /// What was already typed in the conversation when the file was picked.
+    /// It starts the caption off: text and picture were meant as one message,
+    /// and leaving the text behind sent two.
+    property string caption: ""
+
     /// Called once the attachment is on its way, so the room can drop the
     /// reply it was holding without losing a half-typed message.
     property var afterSend: null
+
+    /// Called when the send was called off, with the caption as it stands, so
+    /// the conversation can put the text back where it was typed.
+    property var afterCancel: null
 
     readonly property bool isImage: mimeType.indexOf("image/") === 0
     // The picker speaks URLs, the core wants a path, and the preview wants a
@@ -38,6 +47,12 @@ Dialog {
     }
 
     canAccept: path.length > 0
+
+    onRejected: {
+        if (dialog.afterCancel) {
+            dialog.afterCancel(captionField.text)
+        }
+    }
 
     onAccepted: {
         matrix.sendMedia(dialog.plainPath, dialog.mimeType,
@@ -157,6 +172,7 @@ Dialog {
                 label: qsTr("Caption")
                 placeholderText: qsTr("Caption (optional)")
                 focus: true
+                text: dialog.caption
             }
         }
     }

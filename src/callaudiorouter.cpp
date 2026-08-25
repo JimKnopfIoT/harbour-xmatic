@@ -192,8 +192,11 @@ bool CallAudioRouter::routeCallStream()
                 pa_context_set_sink_input_mute(ctx, scan.index, 0, nullptr, nullptr)) {
             pa_operation_unref(o);
         }
+        // Half, not nine tenths: the stream is born muted on Halium and needs
+        // a value, but a call that starts at full volume against an ear is a
+        // fright. Louder is one swipe away, quieter is not once it startled.
         pa_cvolume cv;
-        pa_cvolume_set(&cv, scan.channels, (PA_VOLUME_NORM * 9) / 10);
+        pa_cvolume_set(&cv, scan.channels, PA_VOLUME_NORM / 2);
         if (pa_operation *o =
                 pa_context_set_sink_input_volume(ctx, scan.index, &cv, nullptr, nullptr)) {
             pa_operation_unref(o);

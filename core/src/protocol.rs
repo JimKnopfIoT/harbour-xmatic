@@ -309,6 +309,55 @@ pub enum Command {
     #[serde(rename = "timeline.markRead")]
     TimelineMarkRead { id: u64 },
 
+    /// The encrypted lists that name people. `get` answers with all of them;
+    /// `set` replaces one.
+    #[serde(rename = "private.get")]
+    PrivateGet { id: u64 },
+
+    /// Replaces every list at once. One write, not one per list: two writes
+    /// would be two read-modify-writes racing each other.
+    #[serde(rename = "private.set")]
+    PrivateSet {
+        id: u64,
+        #[serde(default)]
+        lists: std::collections::BTreeMap<String, Vec<String>>,
+    },
+
+    /// Who may make this phone ring. Sent at start and on every change of the
+    /// privacy page; the core refuses everything else before it rings.
+    #[serde(rename = "calls.setPolicy")]
+    CallsSetPolicy {
+        id: u64,
+        #[serde(default)]
+        policy: String,
+        #[serde(default)]
+        groups: bool,
+        #[serde(default)]
+        video: bool,
+        #[serde(default)]
+        flood: bool,
+        #[serde(default)]
+        allowed: Vec<String>,
+    },
+
+    /// A matrix.to link to the room: its address where it has one, otherwise
+    /// its id plus the servers a stranger can join through.
+    #[serde(rename = "room.permalink")]
+    RoomPermalink {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
+    /// Who has read up to the given event, with their names. Asked only when
+    /// the "read by" mark is tapped, so the rows themselves stay small.
+    #[serde(rename = "timeline.readers")]
+    TimelineReaders {
+        id: u64,
+        #[serde(rename = "eventId")]
+        event_id: String,
+    },
+
     /// Report the state of key backup and recovery.
     #[serde(rename = "encryption.status")]
     EncryptionStatus { id: u64 },
@@ -355,6 +404,11 @@ pub enum Command {
     /// Reject a request or abort a running comparison.
     #[serde(rename = "verification.cancel")]
     VerificationCancel { id: u64 },
+
+    /// The emoji did not match: sent as `m.mismatched_sas`, not as an ordinary
+    /// cancel.
+    #[serde(rename = "verification.mismatch")]
+    VerificationMismatch { id: u64 },
 
     /// Ring the other side of a room with a local session description.
     #[serde(rename = "call.invite")]
@@ -751,6 +805,11 @@ impl Command {
             | Command::TimelinePaginate { id }
             | Command::TimelineSend { id, .. }
             | Command::TimelineMarkRead { id }
+            | Command::TimelineReaders { id, .. }
+            | Command::RoomPermalink { id, .. }
+            | Command::CallsSetPolicy { id, .. }
+            | Command::PrivateGet { id }
+            | Command::PrivateSet { id, .. }
             | Command::TimelineReply { id, .. }
             | Command::TimelineEdit { id, .. }
             | Command::TimelineRedact { id, .. }
@@ -773,6 +832,7 @@ impl Command {
             | Command::VerificationAccept { id }
             | Command::VerificationConfirm { id }
             | Command::VerificationCancel { id }
+            | Command::VerificationMismatch { id }
             | Command::EncryptionStatus { id }
             | Command::StorageStatus { id }
             | Command::EncryptionRecover { id, .. }
@@ -824,7 +884,15 @@ pub fn reply_ok(id: u64, data: Value) -> Value {
 /// A failed reply. `message` is shown to the user, so it must never contain a
 /// token, a full user ID or anything else worth keeping out of a screenshot.
 pub fn reply_error(id: u64, message: impl Into<String>) -> Value {
-    json!({ "type": "reply", "id": id, "ok": false, "error": message.into() })
+    // The sink, not the source: an SDK error carries the request URL, and that
+    // URL carries the room and the user. Ninety-odd places build such a
+    // message; this is the one they all pass through.
+    json!({
+        "type": "reply",
+        "id": id,
+        "ok": false,
+        "error": crate::text::scrub_ids(&message.into()),
+    })
 }
 
 /// An unsolicited message from the core.

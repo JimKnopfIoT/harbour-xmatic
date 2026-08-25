@@ -49,7 +49,7 @@ impl ActiveVerification {
         self.request
             .accept()
             .await
-            .map_err(|error| format!("could not accept: {error}"))
+            .map_err(|error| crate::text::scrub_ids(&format!("could not accept: {error}")))
     }
 
     /// Confirms that the emoji match on both screens.
@@ -60,6 +60,23 @@ impl ActiveVerification {
                 .confirm()
                 .await
                 .map_err(|error| format!("could not confirm: {error}")),
+            None => Err("the emoji have not been exchanged yet".to_owned()),
+        }
+    }
+
+    /// The emoji did not match on both sides.
+    ///
+    /// A separate code on the wire (`m.mismatched_sas`), not the ordinary
+    /// cancel: it is the one signal in the whole exchange that says somebody
+    /// may be sitting in the middle, and the other side can only warn about it
+    /// if it is sent as that.
+    pub async fn mismatch(&self) -> Result<(), String> {
+        let sas = self.sas.lock().await.clone();
+        match sas {
+            Some(sas) => sas
+                .mismatch()
+                .await
+                .map_err(|error| format!("could not report the mismatch: {error}")),
             None => Err("the emoji have not been exchanged yet".to_owned()),
         }
     }
@@ -170,7 +187,7 @@ async fn track(sink: Arc<Sink>, request: VerificationRequest, slot: Slot) {
                         Err(error) => {
                             sink.emit(event(
                                 "verification.failed",
-                                json!({ "flowId": flow_id, "message": error.to_string() }),
+                                json!({ "flowId": flow_id, "message": crate::text::scrub_ids(&error.to_string()) }),
                             ));
                         }
                     }
@@ -228,7 +245,7 @@ async fn drive_sas(sink: Arc<Sink>, sas: SasVerification, flow_id: String, slot:
         if let Err(error) = sas.accept().await {
             sink.emit(event(
                 "verification.failed",
-                json!({ "flowId": flow_id, "message": format!("could not accept: {error}") }),
+                json!({ "flowId": flow_id, "message": crate::text::scrub_ids(&format!("could not accept: {error}")) }),
             ));
             sink.emit(event("verification.cancelled", json!({ "flowId": flow_id })));
             release(&slot, &flow_id).await;

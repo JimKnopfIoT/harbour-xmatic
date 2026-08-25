@@ -12,7 +12,7 @@ use std::collections::hash_map::DefaultHasher;
 use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
 use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 
 use futures_util::StreamExt;
 use matrix_sdk::{
@@ -30,7 +30,8 @@ use matrix_sdk::{
             },
             InitialStateEvent,
         },
-        EventId, OwnedEventId, OwnedServerName, RoomId, RoomOrAliasId, ServerName, UserId,
+        EventId, OwnedEventId, OwnedServerName, OwnedUserId, RoomId, RoomOrAliasId, ServerName,
+        UserId,
     },
     Client,
 };
@@ -47,7 +48,7 @@ use serde_json::{json, Value};
 
 use crate::protocol::event;
 use crate::runtime::Sink;
-use crate::text::{safe_file_name, strip_bidi};
+use crate::text::{safe_file_name, scrub_ids, strip_bidi};
 
 /// How many events one backwards pagination asks for.
 const PAGE_SIZE: u16 = 30;
@@ -348,6 +349,66 @@ impl TimelineHandle {
             .map_err(|error| format!("read receipt could not be sent: {error}"))
     }
 
+    /// Everybody who has read up to `event_id` or past it, with the name and
+    /// picture the room knows them under.
+    ///
+    /// Past it, not on it: a receipt marks the newest event a person has read,
+    /// which in a running conversation is one of the later messages. Asking
+    /// only the marked event itself would answer "nobody" for exactly the
+    /// people who read it.
+    pub async fn readers(&self, event_id: &str) -> Result<Vec<Value>, String> {
+        let target = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
+        let items = self.timeline.items().await;
+        let room = self.timeline.room();
+        let own = room.own_user_id().to_owned();
+
+        let mut from = None;
+        for (index, item) in items.iter().enumerate() {
+            if let Some(event) = item.as_event() {
+                if event.event_id() == Some(target.as_ref()) {
+                    from = Some(index);
+                    break;
+                }
+            }
+        }
+        let from = from.ok_or_else(|| "that message is not in the timeline".to_owned())?;
+
+        let mut users: Vec<OwnedUserId> = Vec::new();
+        for item in items.iter().skip(from) {
+            let Some(event) = item.as_event() else {
+                continue;
+            };
+            for user in event.read_receipts().keys() {
+                if user == &own {
+                    continue;
+                }
+                if !users.iter().any(|known| known == user) {
+                    users.push(user.clone());
+                }
+            }
+        }
+
+        let mut readers = Vec::with_capacity(users.len());
+        for user in users {
+            let member = room.get_member_no_sync(&user).await.ok().flatten();
+            let name = member
+                .as_ref()
+                .and_then(|member| member.display_name())
+                .map(strip_bidi)
+                .unwrap_or_else(|| user.as_str().to_owned());
+            let avatar = member
+                .as_ref()
+                .and_then(|member| member.avatar_url())
+                .map(|url| url.to_string());
+            readers.push(json!({
+                "userId": user.as_str(),
+                "name": name,
+                "avatar": avatar,
+            }));
+        }
+        Ok(readers)
+    }
+
     /// Takes `&self` rather than consuming the handle: the runtime keeps it
     /// behind an `Arc` so a command can work on it without holding the state
     /// lock, and an `Arc` cannot hand out ownership.
@@ -456,6 +517,9 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
         // can hold a path, and the rule for that belongs where it can be
         // tested (core/src/text.rs).
         "filename": safe_file_name(&filename),
+        // Passed through as declared. Nulling an absurd value made the row's
+        // guard read it as "not declared" and let it through - two halves of
+        // one protection, each correct alone.
         "width": width.map(u64::from),
         "height": height.map(u64::from),
     }))
@@ -591,11 +655,20 @@ fn reply_info(content: &matrix_sdk_ui::timeline::MsgLikeContent) -> Option<Value
         _ => "loading",
     };
 
+    // What the quoted message is, beyond its text: a picture quoted by its file
+    // name says nothing, and the file name is all a media message has as a body.
+    let mut msgtype = String::new();
+    let mut media = None;
+
     let (sender, body) = match &in_reply_to.event {
         TimelineDetails::Ready(embedded) => {
             let body = match &embedded.content {
                 TimelineItemContent::MsgLike(msg) => match &msg.kind {
-                    MsgLikeKind::Message(message) => strip_bidi(message.body()),
+                    MsgLikeKind::Message(message) => {
+                        msgtype = message.msgtype().msgtype().to_owned();
+                        media = media_info(message.msgtype());
+                        strip_bidi(message.body())
+                    }
                     MsgLikeKind::Redacted => String::new(),
                     _ => String::new(),
                 },
@@ -619,19 +692,101 @@ fn reply_info(content: &matrix_sdk_ui::timeline::MsgLikeContent) -> Option<Value
         "sender": sender,
         "body": body,
         "state": state,
+        "msgtype": msgtype,
+        "media": media,
     }))
 }
 
-/// The sender's display name, falling back to the bare user ID while the
-/// profile is still being resolved.
+/// What was last known about a sender, so a profile that is momentarily not
+/// ready does not blank the conversation.
+///
+/// `Timeline::fetch_members` marks *every* profile pending before it asks the
+/// server (`set_sender_profiles_pending`), and the app calls it on each open.
+/// Without a memory every name in the room therefore falls back to a bare
+/// Matrix address for as long as that request takes - and stays there when it
+/// fails, which is what "the nick disappears, reopening brings it back" was.
+///
+/// Keyed by sender alone, not by room: a display name can be set per room, but
+/// this is only the stand-in for the moments the real profile is not readable,
+/// and a name from another room is closer to the truth than an address.
+static KNOWN_SENDERS: Mutex<Option<HashMap<String, (String, Option<String>)>>> =
+    Mutex::new(None);
+
+/// Wipes the remembered names. A sign-out must not carry one account's
+/// contacts into the next.
+pub fn forget_senders() {
+    if let Ok(mut guard) = KNOWN_SENDERS.lock() {
+        *guard = None;
+    }
+}
+
+fn remember_sender(user: &str, name: Option<&str>, avatar: Option<&str>) {
+    let Ok(mut guard) = KNOWN_SENDERS.lock() else {
+        return;
+    };
+    let known = guard.get_or_insert_with(HashMap::new);
+    let entry = known
+        .entry(user.to_owned())
+        .or_insert_with(|| (user.to_owned(), None));
+    if let Some(name) = name {
+        entry.0 = name.to_owned();
+    }
+    if avatar.is_some() {
+        entry.1 = avatar.map(|url| url.to_owned());
+    }
+}
+
+fn recall_sender(user: &str) -> Option<(String, Option<String>)> {
+    let guard = KNOWN_SENDERS.lock().ok()?;
+    guard.as_ref()?.get(user).cloned()
+}
+
+/// The authenticity marker for one event: `"red"`, `"grey"` or nothing, with
+/// the SDK's own machine-readable reason.
+fn shield_state(event: &EventTimelineItem) -> Option<Value> {
+    use matrix_sdk_ui::timeline::{TimelineEventShieldState, TimelineEventShieldStateCode};
+
+    let reason = |code: TimelineEventShieldStateCode| match code {
+        TimelineEventShieldStateCode::AuthenticityNotGuaranteed => "authenticity",
+        TimelineEventShieldStateCode::UnknownDevice => "unknownDevice",
+        TimelineEventShieldStateCode::UnsignedDevice => "unsignedDevice",
+        TimelineEventShieldStateCode::UnverifiedIdentity => "unverifiedIdentity",
+        TimelineEventShieldStateCode::VerificationViolation => "identityChanged",
+        TimelineEventShieldStateCode::MismatchedSender => "mismatchedSender",
+        TimelineEventShieldStateCode::SentInClear => "sentInClear",
+    };
+
+    match event.get_shield(false) {
+        TimelineEventShieldState::Red { code } => {
+            Some(json!({ "level": "red", "reason": reason(code) }))
+        }
+        TimelineEventShieldState::Grey { code } => {
+            Some(json!({ "level": "grey", "reason": reason(code) }))
+        }
+        TimelineEventShieldState::None => None,
+    }
+}
+
+/// What a reaction may look like on screen: no bidi overrides, and short
+/// enough for a chip.
+fn reaction_key(key: &str) -> String {
+    strip_bidi(key).chars().take(32).collect()
+}
+
+/// The sender's display name, falling back to the last one seen and only then
+/// to the bare user ID.
 fn sender_name(item: &EventTimelineItem) -> String {
+    let user = item.sender().as_str();
     match item.sender_profile() {
-        TimelineDetails::Ready(profile) => profile
-            .display_name
-            .as_deref()
-            .map(strip_bidi)
-            .unwrap_or_else(|| item.sender().as_str().to_owned()),
-        _ => item.sender().as_str().to_owned(),
+        TimelineDetails::Ready(profile) => {
+            let name = profile.display_name.as_deref().map(strip_bidi);
+            let avatar = profile.avatar_url.as_ref().map(|url| url.to_string());
+            remember_sender(user, name.as_deref(), avatar.as_deref());
+            name.unwrap_or_else(|| user.to_owned())
+        }
+        _ => recall_sender(user)
+            .map(|(name, _)| name)
+            .unwrap_or_else(|| user.to_owned()),
     }
 }
 
@@ -644,7 +799,8 @@ fn sender_avatar(item: &EventTimelineItem) -> Option<String> {
         TimelineDetails::Ready(profile) => {
             profile.avatar_url.as_ref().map(|url| url.to_string())
         }
-        _ => None,
+        // Same reason as in sender_name: pending is not "has none".
+        _ => recall_sender(item.sender().as_str()).and_then(|(_, avatar)| avatar),
     }
 }
 
@@ -725,7 +881,7 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
             // name and the poll's question are there.
             MsgLikeKind::Sticker(sticker) => (
                 "message",
-                sticker.content().body.clone(),
+                strip_bidi(&sticker.content().body),
                 "m.sticker".to_owned(),
                 false,
                 None,
@@ -735,7 +891,7 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
             ),
             MsgLikeKind::Poll(poll) => (
                 "message",
-                poll.fallback_text().unwrap_or_default(),
+                poll.fallback_text().as_deref().map(strip_bidi).unwrap_or_default(),
                 "m.poll".to_owned(),
                 false,
                 None,
@@ -795,7 +951,13 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
             .iter()
             .map(|(key, senders)| {
                 json!({
-                    "key": key,
+                    // Filtered like every other string a stranger wrote: a
+                    // reaction is free text, not necessarily an emoji, and it
+                    // is drawn in a chip that cannot hold a paragraph. The
+                    // round trip to the server uses the original key, which
+                    // the row carries in `reactionKeys`.
+                    "key": reaction_key(key),
+                    "sendKey": key,
                     "count": senders.len(),
                     "mine": own.map(|user| senders.contains_key(user)).unwrap_or(false),
                 })
@@ -810,10 +972,13 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
     let caption = match event.content() {
         TimelineItemContent::MsgLike(content) => match &content.kind {
             MsgLikeKind::Message(message) => match message.msgtype() {
-                MessageType::Image(inner) => inner.caption().map(str::to_owned),
-                MessageType::Video(inner) => inner.caption().map(str::to_owned),
-                MessageType::Audio(inner) => inner.caption().map(str::to_owned),
-                MessageType::File(inner) => inner.caption().map(str::to_owned),
+                // Through the same filter as a message body: a caption is
+                // text a stranger wrote, and a bidi override in it reverses
+                // what the reader sees.
+                MessageType::Image(inner) => inner.caption().map(strip_bidi),
+                MessageType::Video(inner) => inner.caption().map(strip_bidi),
+                MessageType::Audio(inner) => inner.caption().map(strip_bidi),
+                MessageType::File(inner) => inner.caption().map(strip_bidi),
                 _ => None,
             },
             _ => None,
@@ -857,6 +1022,11 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
         "caption": caption,
         "replyTo": reply,
         "utdCause": utd_cause(event),
+        // Whether the message is what it claims to be. The SDK computes this
+        // and calls it the recommended decoration; without it a message sent
+        // in the clear into an encrypted room, or one from a device that is
+        // not the sender's, is drawn like any other.
+        "shield": shield_state(event),
         "edited": edited,
         "system": system,
         "name": name,
@@ -878,6 +1048,16 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
             .keys()
             .filter(|user| Some(user.as_ref()) != own)
             .count(),
+        // Who they are. A receipt sits on exactly one event per person, so the
+        // whole timeline carries at most one entry per reader - the rows do
+        // not grow with the conversation. Names are not in here: they are
+        // fetched when the mark is tapped (`timeline.readers`).
+        "readByUsers": event
+            .read_receipts()
+            .keys()
+            .filter(|user| Some(user.as_ref()) != own)
+            .map(|user| user.to_string())
+            .collect::<Vec<_>>(),
     })
 }
 
@@ -1076,7 +1256,19 @@ pub async fn open(
     //
     // Spawned, not awaited: the conversation appears at once and the profiles
     // arrive through the diff stream that is already running.
-    {
+    //
+    // Only where the SDK says the list is not complete, though. The call marks
+    // every profile pending before it asks (`set_sender_profiles_pending`), so
+    // asking on each open blanks names that were already right, for as long as
+    // the request takes.
+    //
+    // `are_members_synced` is the SDK's own bookkeeping, not a guess of ours:
+    // it is set once the full list has been read and cleared again whenever
+    // the state may have gone incomplete - a gappy sync, a limited timeline.
+    // A member who joined while the room was closed therefore still lands
+    // here, either through the ordinary sync that carries their membership
+    // event or through this fetch when the SDK marks the list as unsynced.
+    if !room.are_members_synced() {
         let timeline = timeline.clone();
         tokio::spawn(async move {
             timeline.fetch_members().await;
@@ -1310,21 +1502,6 @@ pub async fn open_thread(
 /// `%23`, `%24`), and a server's JSON body is printed whole. So a word goes
 /// as soon as it looks like it could carry an identifier at all: any sigil,
 /// any percent escape, anything URL-shaped, anything quoted.
-pub fn scrub_ids(text: &str) -> String {
-    text.split_whitespace()
-        .map(|word| {
-            let suspicious = word.contains(['$', '!', '@', '#', '"'])
-                || word.contains('%')
-                || word.contains("://");
-            if suspicious {
-                "<id>"
-            } else {
-                word
-            }
-        })
-        .collect::<Vec<_>>()
-        .join(" ")
-}
 
 /// Tries to fetch every pinned event and reports how many could be read.
 /// The pinned view is built by the SDK from exactly these fetches, so when it

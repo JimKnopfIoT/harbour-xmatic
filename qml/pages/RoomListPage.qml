@@ -215,10 +215,6 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AccountPage.qml"))
             }
 
-            MenuItem {
-                text: qsTr("Sign out")
-                onClicked: pageStack.push(Qt.resolvedUrl("LogoutDialog.qml"))
-            }
         }
 
         VerticalScrollDecorator { }

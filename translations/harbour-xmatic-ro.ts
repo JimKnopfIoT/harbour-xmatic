@@ -95,22 +95,6 @@
         <translation>Niciun avertisment suprimat</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Textul mesajului în notificări</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Dezactivat, notificarea spune doar câte mesaje au sosit. Activat, arată ultimul mesaj — și pe ecranul blocat.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Legături web apăsabile</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Activat, o legătură dintr-un mesaj deschide navigatorul la atingere. Dezactivat, legăturile rămân text simplu.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Deconectare</translation>
     </message>
@@ -123,20 +107,8 @@
         <translation>Limbă</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Arată starea de citire a celorlalți</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Dezactivat nu se preia nimic despre cine ce a citit, ceea ce păstrează conversația mai fluidă. Activat, mesajele tale arată câți oameni le-au citit.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Mesaje vocale</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Activat, lângă câmpul de mesaj este un microfon: ține apăsat pentru a înregistra, dă drumul pentru a trimite. Dezactivat, nu este acolo.</translation>
+        <source>Privacy</source>
+        <translation>Confidențialitate</translation>
     </message>
 </context>
 <context>
@@ -248,6 +220,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Dezactivat, o reacție este desenată ca semnul care este — mereu corect și gratuit. Activat, xmatic caută pentru ea o imagine proprie în %1, denumită după punctele ei de cod (1f44d.svg). Nu se livrează și nu se descarcă nimic. Cântărește: un fișier imagine este deschis de un decodor de imagini, iar acolo o aplicație de acest fel este cea mai expusă.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Alege imagini emoji</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Se citesc imaginile…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 preluate, %2 respinse</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Imaginile s-au schimbat de la citire și nu sunt afișate.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Resetează culorile</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Elimină imaginile emoji</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -337,6 +333,22 @@
     <message>
         <source>Hang up</source>
         <translation>Închide</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Acceptă fără cameră</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Acceptă cu camera</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Apel video primit</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Apelurile video sunt oprite în Confidențialitate; acesta este preluat ca apel vocal.</translation>
     </message>
 </context>
 <context>
@@ -652,7 +664,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@nume:server</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -924,6 +936,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Serverul nu a returnat un cod de autentificare.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Listele salvate nu pot fi citite acum.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Sesiunea ta s-a încheiat. Conectează-te din nou.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1106,6 +1126,14 @@
         <source>No other shared rooms</source>
         <translation>Nicio altă cameră comună</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Interzice apelurile</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Permite apelurile</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1152,6 +1180,10 @@
     <message>
         <source>React</source>
         <translation>Reacționează</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Răspunde în fir</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1245,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Ține apăsat un mesaj din conversație pentru a-l fixa.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Confidențialitate</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Cine te poate suna</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Toată lumea</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Persoane cu care ai o discuție directă</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Doar lista mea</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Apeluri din camere de grup</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Apeluri video</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Trimite confirmări de citire</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Apelanți permiși</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Adresă Matrix</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Permite apelurile</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Încă nimeni.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Elimină</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Un apel sună și într-o cameră amuțită. Cele refuzate nu sună, iar apelantul nu află nimic.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>Într-o cameră de grup apelul îl văd toți. Lista nu anulează asta.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Oprit: o ofertă cu video este acceptată ca apel vocal.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Oprit îți păstrează cititul pentru tine, în ambele sensuri.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Pot suna oricând. Lista rămâne pe acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Pe acest dispozitiv</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Ce află ceilalți</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Textul mesajului în notificări</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Dezactivat, notificarea spune doar câte mesaje au sosit. Activat, arată ultimul mesaj — și pe ecranul blocat.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Arată starea de citire a celorlalți</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Dezactivat nu se preia nimic despre cine ce a citit, ceea ce păstrează conversația mai fluidă. Activat, mesajele tale arată câți oameni le-au citit.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Mesaje vocale</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Activat, lângă câmpul de mesaj este un microfon: ține apăsat pentru a înregistra, dă drumul pentru a trimite. Dezactivat, nu este acolo.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Legături web apăsabile</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Activat, o legătură dintr-un mesaj deschide navigatorul la atingere. Dezactivat, legăturile rămân text simplu.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Șterge media acum</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Mesajele și cheile sunt păstrate criptat. Imaginile, filmele și documentele pe care le-ai deschis nu — stau pe dispozitiv ca cele din galerie, lizibile pentru oricine îl are.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Ștergerea media descărcate</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Niciodată</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>La închiderea aplicației</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>De îndată ce aplicația nu mai este în față</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>În mod implicit sunt șterse la deconectare, așa că salvează ce vrei să păstrezi.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>„Niciodată” le păstrează pentru totdeauna — comod și nerecomandat.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Ce se șterge este adus din nou când îl deschizi.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>La deconectare</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Limitează apelurile repetate</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Pornit: aceeași persoană poate suna din nou doar după o scurtă pauză. Întârzie și o a doua încercare autentică.</translation>
     </message>
 </context>
 <context>
@@ -1549,10 +1748,6 @@
         <translation>Cont</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Deconectare</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Marchează ca citit</translation>
     </message>
@@ -1859,6 +2054,42 @@
     <message>
         <source>React</source>
         <translation>Reacționează</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Răspunde în fir</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Copiază linkul camerei</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Linkul camerei a fost copiat</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Trimis necriptat</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nu a fost trimis de contul indicat</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Cheile expeditorului s-au schimbat</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>De pe un dispozitiv neverificat</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>De la o persoană neverificată</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autenticitate neconfirmată</translation>
     </message>
 </context>
 <context>
@@ -2232,6 +2463,18 @@
             <numerusform>%n mesaje noi</numerusform>
             <numerusform>%n de mesaje noi</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Apel video primit</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Apel primit</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Mesaj nou</translation>
     </message>
 </context>
 </TS>

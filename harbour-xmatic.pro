@@ -8,7 +8,7 @@ TARGET = harbour-xmatic
 
 CONFIG += sailfishapp sailfishapp_i18n c++11
 
-QT += network dbus multimedia
+QT += network dbus multimedia concurrent
 
 # The media half of a call: Matrix carries only the signalling.
 #
@@ -46,6 +46,9 @@ SOURCES += \
     src/instancelock.cpp \
     src/languagesettings.cpp \
     src/difflistmodel.cpp \
+    src/emojiset.cpp \
+    src/emojistore.cpp \
+    src/emojiimageprovider.cpp \
     src/matrixbridge.cpp \
     src/roomlistmodel.cpp \
     src/roomsortmodel.cpp \
@@ -64,6 +67,9 @@ HEADERS += \
     src/appservice.h \
     src/appsettings.h \
     src/difflistmodel.h \
+    src/emojiset.h \
+    src/emojistore.h \
+    src/emojiimageprovider.h \
     src/instancelock.h \
     src/languagesettings.h \
     src/matrixbridge.h \
@@ -182,6 +188,14 @@ TRANSLATIONS += \
     translations/harbour-xmatic-sv.ts \
     translations/harbour-xmatic-zh_CN.ts \
 
+# The QML rule check runs with every build, not when somebody remembers it: a
+# second handler for one signal makes a page unloadable, and neither qmake nor
+# qmllint says a word about it.
+qmlcheck.commands = python3 $$PWD/scripts/qml-check.py $$PWD/qml
+qmlcheck.depends =
+QMAKE_EXTRA_TARGETS += qmlcheck
+PRE_TARGETDEPS += qmlcheck
+
 DISTFILES += \
     LICENSE \
     README.md \
@@ -204,6 +218,7 @@ DISTFILES += \
     qml/pages/RoomPage.qml \
     qml/pages/RoomInfoPage.qml \
     qml/pages/AppearancePage.qml \
+    qml/pages/PrivacyPage.qml \
     qml/pages/ColorField.qml \
     qml/pages/VerificationPage.qml \
     qml/pages/EncryptionPage.qml \
@@ -218,6 +233,8 @@ DISTFILES += \
     qml/pages/ShareToRoomPage.qml \
     qml/pages/MessageActionsPage.qml \
     qml/pages/ReactionDialog.qml \
+    qml/pages/EmojiItem.qml \
+    qml/pages/Emoji.js \
     qml/pages/RoomActionsPage.qml \
     qml/pages/Avatar.qml \
     qml/pages/VideoPage.qml \

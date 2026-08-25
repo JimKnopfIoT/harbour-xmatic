@@ -115,7 +115,7 @@ pub async fn fetch(
 
     let bytes = client
         .media()
-        .get_media_content(&request, true)
+        .get_media_content(&request, false)
         .await
         .map_err(|error| format!("download failed: {error}"))?;
 
@@ -136,6 +136,13 @@ pub async fn fetch(
     // mistaken for a complete file.
     let partial = path.with_extension("part");
     std::fs::write(&partial, bytes).map_err(|error| format!("could not write media: {error}"))?;
+    // Decrypted content of an end-to-end encrypted room: owner-only, like the
+    // session file. The umask alone would leave it 0644.
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        let _ = std::fs::set_permissions(&partial, std::fs::Permissions::from_mode(0o600));
+    }
     std::fs::rename(&partial, &path).map_err(|error| format!("could not store media: {error}"))?;
 
     Ok(path.to_string_lossy().into_owned())

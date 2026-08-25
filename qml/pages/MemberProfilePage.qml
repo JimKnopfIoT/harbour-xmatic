@@ -433,6 +433,21 @@ Page {
                 }
 
                 Button {
+                    // The allow list from the privacy page. Kept on this
+                    // device, unlike ignoring, which is the account's.
+                    text: matrix.callerAllowed(page.userId)
+                          ? qsTr("Forbid calls") : qsTr("Allow calls")
+                    visible: page.loaded && !profile.isSelf
+                    onClicked: {
+                        if (matrix.callerAllowed(page.userId)) {
+                            matrix.forbidCaller(page.userId)
+                        } else {
+                            matrix.allowCaller(page.userId)
+                        }
+                    }
+                }
+
+                Button {
                     // Ignoring is account-wide.
                     text: page.loaded && profile.ignored
                           ? qsTr("Stop ignoring") : qsTr("Ignore")

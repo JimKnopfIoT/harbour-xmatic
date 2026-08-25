@@ -94,22 +94,6 @@
         <translation>Καμία κατασταλμένη προειδοποίηση</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Κείμενο μηνύματος στις ειδοποιήσεις</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Ανενεργό: η ειδοποίηση λέει μόνο πόσα μηνύματα ήρθαν. Ενεργό: δείχνει το τελευταίο μήνυμα — και στην οθόνη κλειδώματος.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Σύνδεσμοι ιστού με πάτημα</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Ενεργό: ένας σύνδεσμος σε μήνυμα ανοίγει τον περιηγητή με πάτημα. Ανενεργό: οι σύνδεσμοι μένουν απλό κείμενο.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Αποσύνδεση</translation>
     </message>
@@ -122,20 +106,8 @@
         <translation>Γλώσσα</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Εμφάνιση κατάστασης ανάγνωσης των άλλων</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Απενεργοποιημένο δεν ανακτάται τίποτα για το ποιος διάβασε τι, κάτι που κρατά και τη συνομιλία πιο ομαλή. Ενεργοποιημένο, τα δικά σου μηνύματα δείχνουν πόσοι τα διάβασαν.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Φωνητικά μηνύματα</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Ενεργοποιημένο, δίπλα στο πεδίο μηνύματος υπάρχει μικρόφωνο: κράτα το πατημένο για εγγραφή, άσ&apos; το για αποστολή. Απενεργοποιημένο, δεν υπάρχει.</translation>
+        <source>Privacy</source>
+        <translation>Απόρρητο</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Απενεργοποιημένο, μια αντίδραση σχεδιάζεται ως ο χαρακτήρας που είναι — πάντα σωστά και δωρεάν. Ενεργοποιημένο, το xmatic ψάχνει γι&apos; αυτήν δική σου εικόνα στο %1, με όνομα από τα code points της (1f44d.svg). Τίποτα δεν παραδίδεται και τίποτα δεν κατεβαίνει. Ζύγισέ το: ένα αρχείο εικόνας το ανοίγει ένας αποκωδικοποιητής εικόνας, και εκεί μια τέτοια εφαρμογή είναι πιο εκτεθειμένη.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Επιλογή εικόνων emoji</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Ανάγνωση των εικόνων…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 ελήφθησαν, %2 απορρίφθηκαν</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Οι εικόνες άλλαξαν μετά την ανάγνωση και δεν εμφανίζονται.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Επαναφορά προεπιλεγμένων χρωμάτων</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Αφαίρεση εικόνων emoji</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Τερματισμός</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Αποδοχή χωρίς κάμερα</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Αποδοχή με κάμερα</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Εισερχόμενη βιντεοκλήση</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Οι βιντεοκλήσεις είναι απενεργοποιημένες στο Απόρρητο· αυτή απαντάται ως φωνητική κλήση.</translation>
     </message>
 </context>
 <context>
@@ -650,7 +662,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@όνομα:διακομιστής</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -922,6 +934,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Ο οικείος διακομιστής δεν επέστρεψε κωδικό σύνδεσης.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Οι αποθηκευμένες λίστες δεν διαβάζονται τώρα.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Η συνεδρία σου τελείωσε. Συνδέσου ξανά.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Κανένα άλλο κοινό δωμάτιο</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Απαγόρευση κλήσεων</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Να επιτρέπονται οι κλήσεις</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Αντίδραση</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Απάντηση στο νήμα</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Κράτα πατημένο ένα μήνυμα στη συνομιλία για να το καρφιτσώσεις.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Απόρρητο</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Ποιος μπορεί να σε καλεί</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Όλοι</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Άτομα με τα οποία έχεις προσωπική συνομιλία</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Μόνο η λίστα μου</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Κλήσεις από ομαδικά δωμάτια</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Βιντεοκλήσεις</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Αποστολή αποδείξεων ανάγνωσης</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Επιτρεπόμενοι καλούντες</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Διεύθυνση Matrix</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Να επιτρέπονται οι κλήσεις</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Κανείς ακόμη.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Αφαίρεση</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Μια κλήση χτυπά και σε σιγασμένο δωμάτιο. Οι απορριφθείσες δεν χτυπούν και ο καλών δεν μαθαίνει τίποτα.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>Σε ομαδικό δωμάτιο όλοι βλέπουν την κλήση. Η λίστα δεν το ακυρώνει.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Ανενεργό: μια πρόταση με βίντεο απαντάται ως φωνητική κλήση.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Ανενεργό κρατά την ανάγνωσή σου για σένα, και στις δύο κατευθύνσεις.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Μπορούν πάντα να καλούν. Η λίστα μένει σε αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Σε αυτή τη συσκευή</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Τι μαθαίνουν οι άλλοι</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Κείμενο μηνύματος στις ειδοποιήσεις</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Ανενεργό: η ειδοποίηση λέει μόνο πόσα μηνύματα ήρθαν. Ενεργό: δείχνει το τελευταίο μήνυμα — και στην οθόνη κλειδώματος.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Εμφάνιση κατάστασης ανάγνωσης των άλλων</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Απενεργοποιημένο δεν ανακτάται τίποτα για το ποιος διάβασε τι, κάτι που κρατά και τη συνομιλία πιο ομαλή. Ενεργοποιημένο, τα δικά σου μηνύματα δείχνουν πόσοι τα διάβασαν.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Φωνητικά μηνύματα</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Ενεργοποιημένο, δίπλα στο πεδίο μηνύματος υπάρχει μικρόφωνο: κράτα το πατημένο για εγγραφή, άσ&apos; το για αποστολή. Απενεργοποιημένο, δεν υπάρχει.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Σύνδεσμοι ιστού με πάτημα</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Ενεργό: ένας σύνδεσμος σε μήνυμα ανοίγει τον περιηγητή με πάτημα. Ανενεργό: οι σύνδεσμοι μένουν απλό κείμενο.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Διαγραφή πολυμέσων τώρα</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Τα μηνύματα και τα κλειδιά αποθηκεύονται κρυπτογραφημένα. Οι εικόνες, τα βίντεο και τα έγγραφα που άνοιξες όχι — βρίσκονται στη συσκευή όπως αυτά της συλλογής, αναγνώσιμα από όποιον την κρατά.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Διαγραφή ληφθέντων πολυμέσων</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Ποτέ</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Όταν κλείνει η εφαρμογή</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Μόλις η εφαρμογή δεν είναι μπροστά</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Από προεπιλογή διαγράφονται κατά την αποσύνδεση, γι&apos; αυτό αποθήκευσε ό,τι θέλεις να κρατήσεις.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>Το «Ποτέ» τα κρατά για πάντα — βολικό και μη συνιστώμενο.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Ό,τι διαγράφεται λαμβάνεται ξανά όταν το ανοίξεις.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Κατά την αποσύνδεση</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Περιορισμός επαναλαμβανόμενων κλήσεων</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Ενεργό: το ίδιο άτομο μπορεί να ξανακαλέσει μόνο μετά από σύντομη παύση. Καθυστερεί και μια δεύτερη, πραγματική προσπάθεια.</translation>
     </message>
 </context>
 <context>
@@ -1547,10 +1746,6 @@
         <translation>Λογαριασμός</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Αποσύνδεση</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Σήμανση ως αναγνωσμένο</translation>
     </message>
@@ -1855,6 +2050,42 @@
     <message>
         <source>React</source>
         <translation>Αντίδραση</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Απάντηση στο νήμα</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Αντιγραφή συνδέσμου δωματίου</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Ο σύνδεσμος δωματίου αντιγράφηκε</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Στάλθηκε χωρίς κρυπτογράφηση</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Δεν στάλθηκε από τον λογαριασμό που αναφέρεται</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Τα κλειδιά του αποστολέα άλλαξαν</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Από μη επαληθευμένη συσκευή</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Από μη επαληθευμένο άτομο</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Η γνησιότητα δεν επιβεβαιώθηκε</translation>
     </message>
 </context>
 <context>
@@ -2224,6 +2455,18 @@
             <numerusform>%n νέο μήνυμα</numerusform>
             <numerusform>%n νέα μηνύματα</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Εισερχόμενη βιντεοκλήση</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Εισερχόμενη κλήση</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Νέο μήνυμα</translation>
     </message>
 </context>
 </TS>

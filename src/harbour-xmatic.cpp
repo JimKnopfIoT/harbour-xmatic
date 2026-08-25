@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QGuiApplication>
 #include <QQmlContext>
+#include <QQmlEngine>
 #include <QQuickView>
 #include <QScopedPointer>
 #include <QStandardPaths>
@@ -19,6 +20,9 @@
 #include "appearancesettings.h"
 #include "appservice.h"
 #include "appsettings.h"
+#include "emojiimageprovider.h"
+#include "emojiset.h"
+#include "emojistore.h"
 #include "instancelock.h"
 #include "languagesettings.h"
 #include "matrixbridge.h"
@@ -101,6 +105,13 @@ int main(int argc, char *argv[])
     }
     qInfo("xmatic: %s", qPrintable(bridge.coreVersion()));
 
+    // The emoji picture set: where it lives, what was checked, and the one
+    // way to get at it. Created before the view because the view is handed
+    // the provider.
+    EmojiStore emojiStore(dataDirectory + QStringLiteral("/emoji"));
+    EmojiSet emojiSet(&emojiStore);
+    bridge.setEmojiStore(&emojiStore);
+
     AppearanceSettings appearance;
 
     LanguageSettings language;
@@ -115,8 +126,33 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty(QStringLiteral("activation"), &service);
     view->rootContext()->setContextProperty(QStringLiteral("appearance"), &appearance);
     view->rootContext()->setContextProperty(QStringLiteral("language"), &language);
+    view->rootContext()->setContextProperty(QStringLiteral("emojiSet"), &emojiSet);
+    // Takes ownership; the store outlives it, being on the stack of main().
+    view->engine()->addImageProvider(QStringLiteral("xmatic-emoji"),
+                                     new EmojiImageProvider(&emojiStore));
     view->rootContext()->setContextProperty(QStringLiteral("appVersion"),
                                             QStringLiteral(XMATIC_VERSION_STRING));
+    // The wipe the privacy page offers, on the way out. A killed process never
+    // gets here; the bridge therefore also clears leftovers at start.
+    QObject::connect(app.data(), &QGuiApplication::aboutToQuit, &bridge, [&bridge, &settings]() {
+        const QString when = settings.mediaWipe();
+        if (when == QStringLiteral("exit") || when == QStringLiteral("background")) {
+            bridge.clearMediaCache();
+        }
+    });
+
+    // Nothing listened to these before: a notification tap works because
+    // lipstick activates the app, but a call arriving while the app sits in
+    // the switcher has to raise its own window.
+    QObject::connect(&service, &AppService::raiseRequested, view.data(), [&view]() {
+        view->raise();
+        view->requestActivate();
+    });
+    QObject::connect(&service, &AppService::notifiedRoomRequested, view.data(), [&view]() {
+        view->raise();
+        view->requestActivate();
+    });
+
     view->setSource(SailfishApp::pathTo(QStringLiteral("qml/harbour-xmatic.qml")));
     view->show();
 

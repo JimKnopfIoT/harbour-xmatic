@@ -32,7 +32,11 @@ Page {
     function followLink(link) {
         var target = MatrixLinks.parse(link)
         if (!target) {
-            Qt.openUrlExternally(link)
+            // The same allowlist as the room view: everything the system would
+            // otherwise dispatch is a stranger's choice, not the user's.
+            if (/^https?:\/\//i.test(link)) {
+                Qt.openUrlExternally(link)
+            }
             return
         }
         if (target.kind === "user") {

@@ -95,22 +95,6 @@
         <translation>Níl aon rabhadh curtha faoi chois</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Téacs na teachtaireachta i bhfógraí</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>As, ní deir an fógra ach cé mhéad teachtaireacht a tháinig. Ann, taispeánann sé an teachtaireacht is déanaí — ar an scáileán glasáilte freisin.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Naisc gréasáin inbhrúite</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Ann, osclaíonn nasc i dteachtaireacht an brabhsálaí nuair a bhrúitear é. As, fanann naisc ina ngnáth-théacs.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Sínigh amach</translation>
     </message>
@@ -123,20 +107,8 @@
         <translation>Teanga</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Taispeáin stádas léite daoine eile</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Múchta, ní thugtar aon rud faoi cé a léigh cad, rud a choinníonn an comhrá níos réidhe freisin. Lasta, insíonn do theachtaireachtaí féin cé mhéad duine a léigh iad.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Teachtaireachtaí gutha</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Lasta, tá micreafón in aice leis an réimse teachtaireachta: coinnigh síos chun taifeadadh, scaoil chun seoladh. Múchta, níl sé ann.</translation>
+        <source>Privacy</source>
+        <translation>Príobháideachas</translation>
     </message>
 </context>
 <context>
@@ -248,6 +220,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Múchta, tarraingítear freagairt mar an carachtar atá inti — ceart i gcónaí agus saor in aisce. Lasta, lorgaíonn xmatic pictiúr de do chuid féin di i %1, ainmnithe as a pointí cóid (1f44d.svg). Ní sheoltar aon rud leis agus ní íoslódáiltear aon rud. Meáigh é: osclaíonn díchódóir íomhánna comhad pictiúir, agus is ansin is mó atá aip den chineál seo neamhchosanta.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Roghnaigh íomhánna emoji</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Na híomhánna á léamh…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 glactha, %2 diúltaithe</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Tá na híomhánna athraithe ó léadh iad agus ní thaispeántar iad.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Athshocraigh na dathanna</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Bain na híomhánna emoji</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -337,6 +333,22 @@
     <message>
         <source>Hang up</source>
         <translation>Croch suas</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Glac gan ceamara</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Glac le ceamara</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Físghlao isteach</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Tá físghlaonna múchta faoi Phríobháideachas; freagraítear an ceann seo mar ghlao gutha.</translation>
     </message>
 </context>
 <context>
@@ -652,7 +664,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@ainm:freastalaí</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -924,6 +936,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Níor sheol an freastalaí baile cód sínithe isteach ar ais.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Ní féidir na liostaí stóráilte a léamh faoi láthair.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Tá do sheisiún thart. Logáil isteach arís.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1106,6 +1126,14 @@
         <source>No other shared rooms</source>
         <translation>Níl aon seomra comhroinnte eile ann</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Cuir cosc ar ghlaonna</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Ceadaigh glaonna</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1152,6 +1180,10 @@
     <message>
         <source>React</source>
         <translation>Freagair</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Freagair sa snáithe</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1245,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Coinnigh do mhéar ar theachtaireacht sa chomhrá chun í a phionnáil.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Príobháideachas</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Cé atá in ann glaoch ort</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Gach duine</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Daoine a bhfuil comhrá díreach agat leo</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Mo liosta amháin</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Glaonna ó sheomraí grúpa</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Físghlaonna</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Seol admhálacha léite</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Glaoiteoirí ceadaithe</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Seoladh Matrix</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Ceadaigh glaonna</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Duine ar bith fós.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Bain</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Buaileann glao fiú i seomra balbhaithe. Ní bhuaileann glaonna diúltaithe, agus ní fhoghlaimíonn an glaoiteoir rud ar bith.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>I seomra grúpa feiceann gach duine an glao. Ní sháraíonn an liosta é sin.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>As: freagraítear tairiscint le físeán mar ghlao gutha.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>As, coinníonn tú do chuid léitheoireachta duit féin, sa dá threo.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Is féidir leo glaoch i gcónaí. Fanann an liosta ar an ngléas seo.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Ar an ngléas seo</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>A bhfoghlaimíonn daoine eile</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Téacs na teachtaireachta i bhfógraí</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>As, ní deir an fógra ach cé mhéad teachtaireacht a tháinig. Ann, taispeánann sé an teachtaireacht is déanaí — ar an scáileán glasáilte freisin.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Taispeáin stádas léite daoine eile</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Múchta, ní thugtar aon rud faoi cé a léigh cad, rud a choinníonn an comhrá níos réidhe freisin. Lasta, insíonn do theachtaireachtaí féin cé mhéad duine a léigh iad.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Teachtaireachtaí gutha</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Lasta, tá micreafón in aice leis an réimse teachtaireachta: coinnigh síos chun taifeadadh, scaoil chun seoladh. Múchta, níl sé ann.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Naisc gréasáin inbhrúite</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Ann, osclaíonn nasc i dteachtaireacht an brabhsálaí nuair a bhrúitear é. As, fanann naisc ina ngnáth-théacs.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Scrios na meáin anois</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Stóráiltear teachtaireachtaí agus eochracha criptithe. Ní hamhlaidh do phictiúir, físeáin agus cáipéisí a d&apos;oscail tú — luíonn siad ar an ngléas mar a dhéanann cinn an ghailearaí, inléite ag duine ar bith a bhfuil sé aige.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Scrios na meáin íoslódáilte</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Riamh</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Nuair a dhúntar an feidhmchlár</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Chomh luath is nach bhfuil an feidhmchlár chun tosaigh</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>De réir réamhshocraithe scriostar iad nuair a logálann tú amach, mar sin sábháil a bhfuil uait a choinneáil.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>Coinníonn „Riamh“ go deo iad — áisiúil agus ní mholtar é.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Faightear an rud a scriostar arís nuair a osclaíonn tú é.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Nuair a logálann tú amach</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Cuir teorainn le glaonna athdhéanta</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Air: ní féidir leis an duine céanna glaoch arís ach tar éis sos gearr. Cuireann sé moill freisin ar dhara hiarracht dháiríre.</translation>
     </message>
 </context>
 <context>
@@ -1549,10 +1748,6 @@
         <translation>Cuntas</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Sínigh amach</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Marcáil mar léite</translation>
     </message>
@@ -1859,6 +2054,42 @@
     <message>
         <source>React</source>
         <translation>Freagair</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Freagair sa snáithe</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Cóipeáil nasc an tseomra</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Nasc an tseomra cóipeáilte</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Seoladh gan chriptiú</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Níorbh é an cuntas atá luaite a sheol é</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Athraigh eochracha an tseoltóra</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Ó ghléas neamhfhíoraithe</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Ó dhuine neamhfhíoraithe</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Barántúlacht gan deimhniú</translation>
     </message>
 </context>
 <context>
@@ -2232,6 +2463,18 @@
             <numerusform>%n theachtaireacht nua</numerusform>
             <numerusform>%n teachtaireacht nua</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Físghlao isteach</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Glao isteach</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Teachtaireacht nua</translation>
     </message>
 </context>
 </TS>

@@ -1,5 +1,7 @@
 .pragma library
 
+
+.import "Emoji.js" as Emoji
 // Shared by the room timeline and the thread view, which draw the same rows.
 
 // The core's markup, adjusted for the web-link setting.
@@ -20,9 +22,102 @@ function renderFormatted(markup, clickableLinks) {
     // about. Every other link loses the target and stays as its text.
     return markup.replace(/<a href="([^"]*)">([\s\S]*?)<\/a>/g,
                           function(anchor, href, text) {
-        var internal = href.indexOf("matrix.to/#/") >= 0
+        var internal = /^https?:\/\/(www\.)?matrix\.to\/#\//i.test(href)
                        || href.indexOf("matrix:") === 0
                        || href.indexOf("xmatic:") === 0
         return internal ? anchor : text
     })
+}
+
+// Emoji in a message, drawn as the pictures the user brought.
+//
+// The text handed in must already be escaped - this walks it and inserts
+// `<img>` tags of its own, so anything the sender wrote has to have lost its
+// meaning as markup before it gets here. The pictures come from the app's own
+// image provider, never from a URL in the message: nothing is fetched from the
+// network, and the provider refuses a name it did not write itself.
+//
+// The catalogue is used as the dictionary of what an emoji *is*. Longest match
+// first, so a sequence built from several code points (a flag, a family, a
+// skin tone) wins over its first character.
+var _sequences = null
+var _longest = 0
+
+function _dictionary() {
+    if (_sequences) {
+        return _sequences
+    }
+    _sequences = {}
+    for (var g = 0; g < Emoji.groups.length; g++) {
+        var items = Emoji.groups[g].items
+        for (var i = 0; i < items.length; i++) {
+            _sequences[items[i]] = true
+            if (items[i].length > _longest) {
+                _longest = items[i].length
+            }
+        }
+    }
+    return _sequences
+}
+
+/// Replaces every emoji that has a picture with an `<img>` of it. Returns the
+/// text unchanged when there is nothing to replace, which is how the caller
+/// decides whether the row needs the markup renderer at all.
+function withEmojiPictures(escaped, size, source) {
+    if (!escaped || escaped.length === 0) {
+        return escaped
+    }
+    var known = _dictionary()
+    var out = ""
+    var i = 0
+    var replaced = false
+    var inTag = false
+    while (i < escaped.length) {
+        var here = escaped.charAt(i)
+        // Tags are skipped whole. The text was escaped before it got here, so
+        // every `<` in it was written by this app or by the core - and writing
+        // an `<img>` inside another tag's attribute breaks that tag.
+        if (here === "<") {
+            inTag = true
+        } else if (here === ">") {
+            inTag = false
+        }
+        if (inTag) {
+            out += here
+            i += 1
+            continue
+        }
+        var code = escaped.charCodeAt(i)
+        // Cheap gate: everything below the symbol blocks is ordinary text, and
+        // a message is mostly ordinary text.
+        if (code < 0x203C) {
+            out += escaped.charAt(i)
+            i += 1
+            continue
+        }
+        var hit = ""
+        var max = Math.min(_longest, escaped.length - i)
+        for (var len = max; len > 0; len--) {
+            var candidate = escaped.substr(i, len)
+            if (known[candidate]) {
+                hit = candidate
+                break
+            }
+        }
+        if (hit.length === 0) {
+            out += escaped.charAt(i)
+            i += 1
+            continue
+        }
+        var picture = source(hit)
+        if (picture.length === 0) {
+            out += hit
+            i += hit.length
+            continue
+        }
+        out += '<img src="' + picture + '" width="' + size + '" height="' + size + '">'
+        i += hit.length
+        replaced = true
+    }
+    return replaced ? out : escaped
 }

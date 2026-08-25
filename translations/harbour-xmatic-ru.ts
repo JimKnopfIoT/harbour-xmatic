@@ -95,22 +95,6 @@
         <translation>Нет подавленных предупреждений</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Текст сообщения в уведомлениях</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Выключено — уведомление сообщает только, сколько сообщений пришло. Включено — показывает последнее сообщение, в том числе на экране блокировки.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Нажимаемые веб-ссылки</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Включено — ссылка в сообщении открывает браузер при нажатии. Выключено — ссылки остаются обычным текстом.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Выйти</translation>
     </message>
@@ -123,20 +107,8 @@
         <translation>Язык</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Показывать статус прочтения других</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Выключено — ничего не запрашивается о том, кто что прочитал, и разговор остаётся более плавным. Включено — твои сообщения показывают, сколько человек их прочитали.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Голосовые сообщения</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Включено — рядом с полем сообщения микрофон: держи, чтобы записать, отпусти, чтобы отправить. Выключено — его нет.</translation>
+        <source>Privacy</source>
+        <translation>Приватность</translation>
     </message>
 </context>
 <context>
@@ -248,6 +220,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Выключено — реакция рисуется как знак, которым она является: всегда верно и бесплатно. Включено — xmatic ищет для неё твою собственную картинку в %1, названную по её кодовым точкам (1f44d.svg). Ничего не поставляется и ничего не скачивается. Взвесь: файл картинки открывает декодер изображений, и именно там приложение такого рода наиболее уязвимо.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Выбрать картинки эмодзи</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Картинки читаются…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 принято, %2 отклонено</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Картинки изменились после чтения и не показываются.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Сбросить цвета</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Удалить картинки эмодзи</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -337,6 +333,22 @@
     <message>
         <source>Hang up</source>
         <translation>Завершить</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Принять без камеры</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Принять с камерой</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Входящий видеозвонок</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Видеозвонки выключены в разделе «Приватность»; этот принимается как голосовой.</translation>
     </message>
 </context>
 <context>
@@ -652,7 +664,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@имя:сервер</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -924,6 +936,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Домашний сервер не вернул код входа.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Сохранённые списки сейчас не читаются.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Твоя сессия завершена. Войди снова.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1106,6 +1126,14 @@
         <source>No other shared rooms</source>
         <translation>Других общих комнат нет</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Запретить звонки</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Разрешить звонки</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1152,6 +1180,10 @@
     <message>
         <source>React</source>
         <translation>Отреагировать</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Ответить в теме</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1245,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Нажми и удерживай сообщение в беседе, чтобы закрепить его.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Приватность</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Кто может тебе звонить</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Все</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Люди, с которыми у тебя личный чат</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Только мой список</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Звонки из групповых комнат</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Видеозвонки</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Отправлять уведомления о прочтении</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Кому разрешено звонить</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Адрес Matrix</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Разрешить звонки</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Пока никого.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Звонок звонит и в приглушённой комнате. Отклонённые не звонят, и звонящий ничего не узнаёт.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>В групповой комнате звонок видят все. Список это не отменяет.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Выключено: предложение с видео принимается как голосовой звонок.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Выключено оставляет твоё чтение при тебе — в обе стороны.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Им звонить можно всегда. Список остаётся на этом устройстве.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>На этом устройстве</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Что узнают другие</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Текст сообщения в уведомлениях</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Выключено — уведомление сообщает только, сколько сообщений пришло. Включено — показывает последнее сообщение, в том числе на экране блокировки.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Показывать статус прочтения других</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Выключено — ничего не запрашивается о том, кто что прочитал, и разговор остаётся более плавным. Включено — твои сообщения показывают, сколько человек их прочитали.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Голосовые сообщения</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Включено — рядом с полем сообщения микрофон: держи, чтобы записать, отпусти, чтобы отправить. Выключено — его нет.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Нажимаемые веб-ссылки</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Включено — ссылка в сообщении открывает браузер при нажатии. Выключено — ссылки остаются обычным текстом.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Удалить медиа сейчас</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Сообщения и ключи хранятся зашифрованными. Открытые картинки, видео и документы — нет: они лежат на устройстве так же, как снимки в галерее, и доступны любому, у кого оно в руках.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Удаление скачанных медиа</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Никогда</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>При закрытии приложения</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Как только приложение не впереди</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>По умолчанию они удаляются при выходе из аккаунта, поэтому сохрани то, что хочешь оставить.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>«Никогда» оставляет их навсегда — удобно и не рекомендуется.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Удалённое загружается заново при открытии.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>При выходе из аккаунта</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Ограничивать повторные звонки</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Включено: тот же человек может позвонить снова только после короткой паузы. Это задерживает и вторую, настоящую попытку.</translation>
     </message>
 </context>
 <context>
@@ -1549,10 +1748,6 @@
         <translation>Учётная запись</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Выйти</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Отметить прочитанным</translation>
     </message>
@@ -1859,6 +2054,42 @@
     <message>
         <source>React</source>
         <translation>Отреагировать</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Ответить в теме</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Копировать ссылку на комнату</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Ссылка на комнату скопирована</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Отправлено без шифрования</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Отправлено не тем аккаунтом, который указан</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Ключи отправителя изменились</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>С непроверенного устройства</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>От непроверённого человека</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Подлинность не подтверждена</translation>
     </message>
 </context>
 <context>
@@ -2232,6 +2463,18 @@
             <numerusform>%n новых сообщения</numerusform>
             <numerusform>%n новых сообщений</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Входящий видеозвонок</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Входящий звонок</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Новое сообщение</translation>
     </message>
 </context>
 </TS>

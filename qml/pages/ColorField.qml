@@ -36,6 +36,24 @@ Column {
     function setColor(colorString) {
         chosen = toHex(colorString)
         placeMarker(chosen)
+        placeSliders()
+    }
+
+    /// A Silica slider stops following its binding the moment it has been
+    /// dragged, so a colour set from outside - a reset, a change of element -
+    /// has to move the three of them by hand. Without this the colour was
+    /// right and the sliders kept the old position until the page was left
+    /// and entered again.
+    function placeSliders() {
+        for (var i = 0; i < channels.count; i++) {
+            var slider = channels.itemAt(i)
+            if (!slider) {
+                continue
+            }
+            slider.value = Math.round(255 * (i === 0 ? chosenColor.r
+                                           : i === 1 ? chosenColor.g
+                                                     : chosenColor.b))
+        }
     }
 
     function apply(colorString) {
@@ -255,6 +273,8 @@ Column {
     // and the equality check in the handler is what keeps that reflection
     // from echoing back as another edit.
     Repeater {
+        id: channels
+
         model: ["R", "G", "B"]
 
         Slider {

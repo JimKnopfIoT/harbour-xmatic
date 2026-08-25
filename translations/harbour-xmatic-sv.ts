@@ -94,22 +94,6 @@
         <translation>Inga undertryckta varningar</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Meddelandetext i aviseringar</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Av visar aviseringen bara hur många meddelanden som kommit. På visar den det senaste meddelandet — även på låsskärmen.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Tryckbara webblänkar</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>På öppnar en länk i ett meddelande webbläsaren när du trycker på den. Av förblir länkar vanlig text.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Logga ut</translation>
     </message>
@@ -122,20 +106,8 @@
         <translation>Språk</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Visa andras lässtatus</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Av hämtas inget om vem som läst vad, vilket också håller konversationen mjukare. På visar dina egna meddelanden hur många som läst dem.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Röstmeddelanden</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>På sitter en mikrofon bredvid meddelandefältet: håll in för att spela in, släpp för att skicka. Av finns den inte.</translation>
+        <source>Privacy</source>
+        <translation>Integritet</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Av ritas en reaktion som det tecken den är — alltid rätt och gratis. På letar xmatic efter en egen bild för den i %1, namngiven efter dess kodpunkter (1f44d.svg). Inget levereras med och inget hämtas. Väg det: en bildfil öppnas av en bildavkodare, och där är en app av det här slaget mest utsatt.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Välj emoji-bilder</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Läser bilderna…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 övertagna, %2 avvisade</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Bilderna har ändrats sedan de lästes in och visas inte.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Återställ färgerna</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Ta bort emoji-bilder</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Lägg på</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Svara utan kamera</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Svara med kamera</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Inkommande videosamtal</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Videosamtal är avstängda under Integritet; det här besvaras som ett röstsamtal.</translation>
     </message>
 </context>
 <context>
@@ -650,7 +662,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@namn:server</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -922,6 +934,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Hemservern returnerade ingen inloggningskod.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>De sparade listorna går inte att läsa just nu.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Din session har avslutats. Logga in igen.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Inga andra gemensamma rum</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Förbjud samtal</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Tillåt samtal</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Reagera</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svara i tråden</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Håll ett meddelande i konversationen intryckt för att fästa det.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Integritet</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Vem som får ringa dig</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Alla</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Personer du har ett direktchatt med</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Bara min lista</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Samtal från grupprum</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Videosamtal</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Skicka läskvitton</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Tillåtna uppringare</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix-adress</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Tillåt samtal</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Ingen än.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Ta bort</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Ett samtal ringer även i ett tystat rum. Avvisade ringer inte, och den som ringer får inte veta något.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>I ett grupprum ser alla samtalet. Listan går inte före det.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Av: ett erbjudande med video besvaras som ett röstsamtal.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Av behåller din läsning för dig själv, åt båda hållen.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>De får alltid ringa. Listan stannar på den här enheten.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>På den här enheten</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Vad andra får veta</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Meddelandetext i aviseringar</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Av visar aviseringen bara hur många meddelanden som kommit. På visar den det senaste meddelandet — även på låsskärmen.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Visa andras lässtatus</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Av hämtas inget om vem som läst vad, vilket också håller konversationen mjukare. På visar dina egna meddelanden hur många som läst dem.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Röstmeddelanden</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>På sitter en mikrofon bredvid meddelandefältet: håll in för att spela in, släpp för att skicka. Av finns den inte.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Tryckbara webblänkar</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>På öppnar en länk i ett meddelande webbläsaren när du trycker på den. Av förblir länkar vanlig text.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Radera media nu</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Meddelanden och nycklar lagras krypterade. Bilder, videor och dokument du öppnat gör det inte — de ligger på enheten som de i galleriet, läsbara för vem som helst som har den.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Radera hämtade media</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Aldrig</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>När appen stängs</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Så snart appen inte är främst</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Som standard raderas de vid utloggning, så spara det du vill behålla.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>”Aldrig” behåller dem för gott — bekvämt och inte rekommenderat.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Det som raderas hämtas igen när du öppnar det.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Vid utloggning</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Begränsa upprepade samtal</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>På: samma person kan ringa igen först efter en kort paus. Det fördröjer också ett andra, äkta försök.</translation>
     </message>
 </context>
 <context>
@@ -1547,10 +1746,6 @@
         <translation>Konto</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Logga ut</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Markera som läst</translation>
     </message>
@@ -1855,6 +2050,42 @@
     <message>
         <source>React</source>
         <translation>Reagera</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svara i tråden</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Kopiera rumslänk</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Rumslänk kopierad</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Skickat okrypterat</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Skickades inte av kontot som anges</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Avsändarens nycklar har ändrats</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Från en overifierad enhet</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Från en overifierad person</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Äktheten är inte bekräftad</translation>
     </message>
 </context>
 <context>
@@ -2224,6 +2455,18 @@
             <numerusform>%n nytt meddelande</numerusform>
             <numerusform>%n nya meddelanden</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Inkommande videosamtal</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Inkommande samtal</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nytt meddelande</translation>
     </message>
 </context>
 </TS>

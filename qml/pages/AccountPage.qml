@@ -40,6 +40,16 @@ Page {
                 value: matrix.coreVersion
             }
 
+            // Buttons stacked on one page look like a list, and a list with
+            // ragged edges reads as an accident. The widest label decides for
+            // all of them; the parent reads the children's implicit widths,
+            // the children read the parent's - never both ways in one item.
+            readonly property real buttonWidth: Math.min(
+                    width - 2 * Theme.horizontalPageMargin,
+                    Math.max(saveNameButton.implicitWidth, avatarButton.implicitWidth,
+                             appearanceButton.implicitWidth, privacyButton.implicitWidth,
+                             ignoredButton.implicitWidth, resetWarningsButton.implicitWidth))
+
             SectionHeader {
                 text: qsTr("Profile")
             }
@@ -59,7 +69,10 @@ Page {
             }
 
             Button {
+                id: saveNameButton
+
                 anchors.horizontalCenter: parent.horizontalCenter
+                width: column.buttonWidth
                 text: qsTr("Save name")
                 enabled: nameField.text !== matrix.profileName
                 onClicked: {
@@ -69,7 +82,10 @@ Page {
             }
 
             Button {
+                id: avatarButton
+
                 anchors.horizontalCenter: parent.horizontalCenter
+                width: column.buttonWidth
                 text: matrix.profileAvatar.length > 0
                       ? qsTr("Change avatar")
                       : qsTr("Set avatar")
@@ -91,13 +107,28 @@ Page {
             }
 
             Button {
+                id: appearanceButton
+
                 anchors.horizontalCenter: parent.horizontalCenter
+                width: column.buttonWidth
                 text: qsTr("Appearance")
                 onClicked: pageStack.push(Qt.resolvedUrl("AppearancePage.qml"))
             }
 
             Button {
+                id: privacyButton
+
                 anchors.horizontalCenter: parent.horizontalCenter
+                width: column.buttonWidth
+                text: qsTr("Privacy")
+                onClicked: pageStack.push(Qt.resolvedUrl("PrivacyPage.qml"))
+            }
+
+            Button {
+                id: ignoredButton
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: column.buttonWidth
                 text: qsTr("Ignored users")
                 onClicked: pageStack.push(Qt.resolvedUrl("IgnoredUsersPage.qml"))
             }
@@ -111,9 +142,10 @@ Page {
                 id: resetWarningsButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
+                width: column.buttonWidth
                 text: qsTr("Reset send warnings")
                 onClicked: {
-                    var count = settings.resetRecipientWarnings()
+                    var count = matrix.resetRecipientWarnings()
                     resetWarningsHint.text = count > 0
                             ? qsTr("%n recipient(s) will warn again", "", count)
                             : qsTr("No suppressed warnings")
@@ -153,38 +185,6 @@ Page {
                     return ""
                 }
                 onClicked: pageStack.push(Qt.resolvedUrl("LanguagePage.qml"))
-            }
-
-            TextSwitch {
-                text: qsTr("Message text in notifications")
-                description: qsTr("Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.")
-                checked: settings.notificationPreview
-                automaticCheck: false
-                onClicked: settings.notificationPreview = !settings.notificationPreview
-            }
-
-            TextSwitch {
-                text: qsTr("Show others' read status")
-                description: qsTr("Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.")
-                checked: settings.showReadStatus
-                automaticCheck: false
-                onClicked: settings.showReadStatus = !settings.showReadStatus
-            }
-
-            TextSwitch {
-                text: qsTr("Voice messages")
-                description: qsTr("On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.")
-                checked: settings.voiceMessages
-                automaticCheck: false
-                onClicked: settings.voiceMessages = !settings.voiceMessages
-            }
-
-            TextSwitch {
-                text: qsTr("Tappable web links")
-                description: qsTr("On, a link in a message opens the browser when tapped. Off, links stay plain text.")
-                checked: settings.clickableLinks
-                automaticCheck: false
-                onClicked: settings.clickableLinks = !settings.clickableLinks
             }
 
             Item {

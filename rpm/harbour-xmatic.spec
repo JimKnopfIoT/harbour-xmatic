@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.22.0
+Version:    0.23.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -84,6 +84,108 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Aug 26 2026 harbour-xmatic contributors 0.23.0-1
+- Privacy has a page of its own under Account: who may call you (everyone,
+  people you have a direct chat with, or only a list you keep), whether group
+  rooms may ring at all, whether video is answered as video, and a brake
+  against repeated calls. A refused call rings nothing and tells the caller
+  nothing.
+- Downloaded pictures, videos and documents are deleted when you sign out.
+  That is the new default; the other choices are never, on closing the app, or
+  as soon as the app is not in front. The page says plainly that these files
+  lie on the device as unencrypted as the ones in the gallery.
+- The lists that name people are stored encrypted, like the session and the
+  keys already were. An older unencrypted list is taken over once and removed.
+- Read receipts work in both directions: your own messages say how many people
+  read them, a long press names them, and sending them is a switch.
+- A message with thousands of nested tags no longer takes the app down with
+  it. It was not a crash that a restart cured - the event stayed in the room
+  and took the app down again on every visit.
+- A call can no longer be redirected by a third party in the room: the peer is
+  fixed when the call is placed, not by whoever answers first.
+- A picture can no longer cost more memory than the device has, whichever side
+  it is long on, and answering without video now also stops the other side's
+  video from being decoded.
+- The session file is written whole or not at all.
+- Error reports keep the server's own words - a rate limit is named as one -
+  while addresses, hosts and identifiers are removed.
+- Room link copy sits in the room's pull-down menu; sign out sits under
+  Account, and only there.
+
+* Tue Aug 25 2026 harbour-xmatic contributors 0.22.2-1
+- A reaction is picked from the whole emoji set: a page of its own, Unicode's
+  groups in a row above it, the common handful first. Typing one by hand is
+  unchanged, and a picture set that spells one name differently is found now.
+- The same page writes into the message: a face next to the send button opens
+  it, the emoji lands where the cursor is.
+- The conversation stays at its end when a row grows after the fact - a
+  reaction under the last message used to leave the end below the screen.
+- Text typed before a picture was picked becomes its caption instead of a
+  second message; calling the send off puts the text back.
+- Names stop disappearing while a room's member list is being fetched: the
+  last name and picture known for a sender stand in, and the list is asked
+  for once per room rather than on every open.
+- The read receipt is also sent when the app leaves the front with the room
+  open - locking the screen used to leave everything just read unconfirmed,
+  and the other side saw it as unread.
+- Account -> Privacy also holds the four switches that used to sit in the
+  account page: message text in notifications, other people's read status,
+  voice messages, tappable web links. They all decide what leaves this device.
+- Account -> Privacy: who may call (only people you have a direct chat with by
+  default), calls from group rooms and video calls off, an allow list, and a
+  switch for sending read receipts. Refused calls are dropped in the core, before
+  anything rings, and are answered in no way the caller can observe; a caller
+  rings at most once a minute. An offer with video now has two actions - the
+  camera opens because the user chose it, never because the caller asked.
+- Calls: the call identifier comes from the kernel's random source instead of a
+  clock and a counter; an answer and its ICE candidates have to come from the
+  room and from the party that answered; a "turns:" relay keeps its TLS instead
+  of being rewritten to "turn:"; only the decoders a Matrix call needs may be
+  plugged in; a remote video frame larger than 1920 pixels is dropped rather
+  than allocated; hanging up a video call no longer risks a crash.
+- The two lists that name people - who may call, and who the send warning is
+  switched off for - are kept encrypted under the device's store key instead of
+  in the plain settings file. What was there before moves over on the first
+  start and is removed.
+- Identifiers are blanked where an error leaves the core, not at the ninety-odd
+  places that build one: a failed request used to carry the room and the user
+  into the journal and into the error banner, because the HTTP error names the
+  URL it failed on.
+- Reading in emoji pictures: a run that cannot start keeps the checked set
+  instead of dropping to the unchecked one, a picture whose size the decoder
+  cannot state is refused, scalable pictures with entity definitions are
+  refused, and the checksum is taken from the bytes that were written.
+- Downloaded media can be deleted when the app closes, or as soon as it is not
+  in front any more. Never by default, which is what it always did.
+- Local data: the session file is written atomically, the store's databases and
+  downloaded attachments are owner-only, sign-out deletes the media cache, and a
+  recording is removed once it has been sent.
+- Emoji in a message are drawn from the picture set, not only in reactions.
+- Pinch zoom keeps the point between the fingers where it is.
+- Emoji pictures can be read in from a folder (Appearance) instead of being
+  copied onto the device by hand. Everything read in is checked: only files
+  named after code points, only small ones, each decoded once and written out
+  again as PNG, each with a checksum that is verified every time the picture
+  is drawn. A picture that changed since is refused and the character is drawn
+  instead, with a red line saying so. A set copied in by hand keeps working,
+  unchecked as before.
+- A quoted picture is quoted as a picture: the reply shows a thumbnail where
+  it used to show the file name.
+- "Copy room link" in the room's pull-down: the matrix.to address others can
+  be pointed at, the room's own where it has one.
+- "Read by" stands under every own message now, counting the people who have
+  read at least that far, and a long press on that line unfolds their names.
+- "Read by" now marks the newest own message the others have read up to. A
+  receipt points at the newest event someone read, which in a running
+  conversation is their own message, so nothing was ever marked before.
+- A notification carries the message that arrived, not the one before it. The
+  count rises a pass earlier than the text, so the banner now waits for the
+  text and goes out as a count only if none comes.
+
+* Tue Aug 25 2026 harbour-xmatic contributors 0.22.1-1
+- A thread can be started: "Reply in thread" in a message's menu. Until now
+  only threads other clients had opened could be answered.
+
 * Mon Aug 24 2026 harbour-xmatic contributors 0.22.0-1
 - Reactions: shown grouped with a count, sent and taken back by tapping,
   "React" in a message's menu. Drawn as the characters they are; picture files

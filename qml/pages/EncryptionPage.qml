@@ -42,6 +42,22 @@ Page {
         pageStack.push(Qt.resolvedUrl("VerificationPage.qml"))
     }
 
+    /// Sends the key and wipes the field. A recovery key on screen is a
+    /// recovery key in a screenshot, in the task switcher and in whatever the
+    /// input method kept.
+    function useRecoveryKey(key) {
+        matrix.recoverKeys(key)
+        recoveryField.text = ""
+        recoveryField.focus = false
+    }
+
+    readonly property bool appForeground: Qt.application.active
+    onAppForegroundChanged: {
+        if (!appForeground) {
+            recoveryField.text = ""
+        }
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge
@@ -179,16 +195,20 @@ Page {
                 width: parent.width
                 label: qsTr("Recovery key")
                 placeholderText: qsTr("Recovery key")
+                // Sensitive: the flag that keeps the input method from
+                // remembering what is typed. The password has carried it since
+                // it existed; this field unlocks the whole key backup.
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                                  | Qt.ImhSensitiveData
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-                EnterKey.onClicked: matrix.recoverKeys(text)
+                EnterKey.onClicked: page.useRecoveryKey(text)
             }
 
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Unlock")
                 enabled: !matrix.busy && recoveryField.text.trim().length > 0
-                onClicked: matrix.recoverKeys(recoveryField.text)
+                onClicked: page.useRecoveryKey(recoveryField.text)
             }
 
             SectionHeader {

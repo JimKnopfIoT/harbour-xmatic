@@ -94,22 +94,6 @@
         <translation>Engar bældar viðvaranir</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Texti skilaboða í tilkynningum</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Slökkt segir tilkynningin aðeins hversu mörg skilaboð bárust. Kveikt sýnir hún nýjustu skilaboðin — einnig á lásskjánum.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Veftenglar sem má snerta</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Kveikt opnar tengill í skilaboðum vafrann þegar snert er á honum. Slökkt haldast tenglar sem venjulegur texti.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Skrá út</translation>
     </message>
@@ -122,20 +106,8 @@
         <translation>Tungumál</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Sýna lesstöðu annarra</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Slökkt er ekkert sótt um hver hefur lesið hvað, sem heldur samtalinu líka mýkra. Kveikt sýna eigin skilaboð hversu margir hafa lesið þau.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Talskilaboð</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Kveikt situr hljóðnemi við hliðina á skilaboðareitnum: haltu inni til að taka upp, slepptu til að senda. Slökkt er hann ekki þar.</translation>
+        <source>Privacy</source>
+        <translation>Persónuvernd</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Slökkt er viðbragð teiknað sem táknið sem það er — alltaf rétt og ókeypis. Kveikt leitar xmatic að þinni eigin mynd fyrir það í %1, nefndri eftir kóðapunktum hennar (1f44d.svg). Engu er dreift með og ekkert er sótt. Vegðu og metdu: myndskrá er opnuð af myndafkóðara, og þar er forrit af þessu tagi berskjaldaðast.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Velja emoji-myndir</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Les myndirnar…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 teknar, %2 hafnað</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Myndirnar hafa breyst frá innlestri og eru ekki sýndar.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Endurstilla liti</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Fjarlægja emoji-myndir</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Leggja á</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Svara án myndavélar</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Svara með myndavél</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Móttekið myndsímtal</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Myndsímtöl eru slökkt undir Persónuvernd; þessu er svarað sem raddsímtali.</translation>
     </message>
 </context>
 <context>
@@ -650,7 +662,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@nafn:þjónn</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -922,6 +934,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Heimaþjónninn skilaði engum innskráningarkóða.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Ekki er hægt að lesa vistaða listana núna.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Setunni þinni er lokið. Skráðu þig inn aftur.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Engin önnur sameiginleg herbergi</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Banna símtöl</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Leyfa símtöl</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Bregðast við</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svara í þræðinum</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Haltu inni skilaboðum í samtalinu til að festa þau.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Persónuvernd</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Hver má hringja í þig</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Allir</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Fólk sem þú átt beint spjall við</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Aðeins listinn minn</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Símtöl úr hópspjöllum</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Myndsímtöl</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Senda lestrarkvittanir</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Leyfðir hringjendur</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix-vistfang</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Leyfa símtöl</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Enginn enn.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Fjarlægja</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Símtal hringir líka í þögguðu spjalli. Höfnuð símtöl hringja ekki og hringjandinn fær ekkert að vita.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>Í hópspjalli sjá allir símtalið. Listinn breytir því ekki.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Af: boði með mynd er svarað sem raddsímtali.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Af heldur lestrinum hjá þér, í báðar áttir.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Þeir mega alltaf hringja. Listinn er áfram í þessu tæki.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Í þessu tæki</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Hvað aðrir fá að vita</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Texti skilaboða í tilkynningum</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Slökkt segir tilkynningin aðeins hversu mörg skilaboð bárust. Kveikt sýnir hún nýjustu skilaboðin — einnig á lásskjánum.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Sýna lesstöðu annarra</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Slökkt er ekkert sótt um hver hefur lesið hvað, sem heldur samtalinu líka mýkra. Kveikt sýna eigin skilaboð hversu margir hafa lesið þau.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Talskilaboð</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Kveikt situr hljóðnemi við hliðina á skilaboðareitnum: haltu inni til að taka upp, slepptu til að senda. Slökkt er hann ekki þar.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Veftenglar sem má snerta</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Kveikt opnar tengill í skilaboðum vafrann þegar snert er á honum. Slökkt haldast tenglar sem venjulegur texti.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Eyða margmiðlun núna</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Skilaboð og lyklar eru geymd dulkóðuð. Myndir, myndskeið og skjöl sem þú opnaðir eru það ekki — þau liggja í tækinu eins og myndirnar í safninu, læsileg hverjum sem heldur á því.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Eyða sóttri margmiðlun</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Aldrei</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Þegar forritinu er lokað</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Um leið og forritið er ekki fremst</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Sjálfgefið er þeim eytt við útskráningu, svo vistaðu það sem þú vilt halda.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>„Aldrei“ heldur þeim að eilífu — þægilegt og ekki mælt með því.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Það sem eytt er sækist aftur þegar þú opnar það.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Við útskráningu</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Takmarka endurtekin símtöl</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Kveikt: sama manneskja getur aðeins hringt aftur eftir stutta bið. Það seinkar líka annarri, raunverulegri tilraun.</translation>
     </message>
 </context>
 <context>
@@ -1547,10 +1746,6 @@
         <translation>Reikningur</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Skrá út</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Merkja sem lesið</translation>
     </message>
@@ -1855,6 +2050,42 @@
     <message>
         <source>React</source>
         <translation>Bregðast við</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svara í þræðinum</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Afrita hlekk spjallrásar</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Hlekkur spjallrásar afritaður</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Sent ódulkóðað</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ekki sent af reikningnum sem er nefndur</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Lyklar sendanda breyttust</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Úr óstaðfestu tæki</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Frá óstaðfestum aðila</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Áreiðanleiki óstaðfestur</translation>
     </message>
 </context>
 <context>
@@ -2224,6 +2455,18 @@
             <numerusform>%n ný skilaboð</numerusform>
             <numerusform>%n ný skilaboð</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Móttekið myndsímtal</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Móttekið símtal</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Ný skilaboð</translation>
     </message>
 </context>
 </TS>

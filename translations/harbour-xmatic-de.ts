@@ -102,40 +102,12 @@
         <translation>Keine unterdrückten Warnungen</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Nachrichtentext in Benachrichtigungen</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Aus: eine Benachrichtigung sagt nur, wie viele Nachrichten angekommen sind. An: sie zeigt die letzte Nachricht — auch auf dem Sperrbildschirm.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Antippbare Weblinks</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>An: ein Link in einer Nachricht öffnet beim Antippen den Browser. Aus: Links bleiben einfacher Text.</translation>
-    </message>
-    <message>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Lesestatus anderer anzeigen</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Aus wird nichts darüber geholt, wer was gelesen hat — das hält das Gespräch außerdem flüssiger. An sagen deine eigenen Nachrichten, wie viele sie gelesen haben.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Sprachnachrichten</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>An sitzt ein Mikrofon neben dem Eingabefeld: gedrückt halten nimmt auf, loslassen sendet. Aus ist es nicht da.</translation>
+        <source>Privacy</source>
+        <translation>Privatsphäre</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Aus wird eine Reaktion als das Zeichen gezeichnet, das sie ist — immer richtig und kostenlos. An sucht xmatic dafür ein eigenes Bild in %1, benannt nach seinen Codepunkten (1f44d.svg). Es wird nichts mitgeliefert und nichts heruntergeladen. Wäge ab: Eine Bilddatei wird von einem Bilddekoder geöffnet, und dort ist eine App dieser Art am verwundbarsten.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Emoji-Bilder wählen</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Bilder werden gelesen…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 übernommen, %2 abgewiesen</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Die Bilder haben sich seit dem Einlesen verändert und werden nicht angezeigt.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Farben auf Standard zurücksetzen</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Emoji-Bilder entfernen</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Auflegen</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Ohne Kamera annehmen</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Mit Kamera annehmen</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Eingehender Videoanruf</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Videoanrufe sind unter Privatsphäre aus; dieser wird als Sprachanruf angenommen.</translation>
     </message>
 </context>
 <context>
@@ -922,6 +934,14 @@
         <source>The file could not be saved.</source>
         <translation>Die Datei konnte nicht gespeichert werden.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Die gespeicherten Listen sind gerade nicht lesbar.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Deine Sitzung ist beendet. Melde dich neu an.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Keine weiteren gemeinsamen Räume</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Anrufe verbieten</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Anrufe erlauben</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Reagieren</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Im Thread antworten</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>The server does not hand out these messages. They are older than this server&apos;s copy of the room.</source>
         <translation>Der Server gibt diese Nachrichten nicht heraus. Sie sind älter als die Kopie des Raums auf diesem Server.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Privatsphäre</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Wer dich anrufen darf</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Alle</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Leute, mit denen du einen Direktchat hast</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Nur meine Liste</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Anrufe aus Gruppenräumen</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Videoanrufe</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Lesebestätigungen senden</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Erlaubte Anrufer</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix-Adresse</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Anrufe erlauben</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Noch niemand.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Entfernen</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Ein Anruf klingelt auch in einem stummen Raum. Abgewiesene klingeln nicht, und der Anrufer erfährt nichts.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>In einem Gruppenraum sehen alle den Anruf. Die Liste hebt das nicht auf.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Aus: Ein Angebot mit Video wird als Sprachanruf angenommen.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Aus behält dein Lesen für dich — in beide Richtungen.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Sie dürfen immer anrufen. Die Liste bleibt auf diesem Gerät.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Auf diesem Gerät</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Was andere erfahren</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Nachrichtentext in Benachrichtigungen</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Aus: eine Benachrichtigung sagt nur, wie viele Nachrichten angekommen sind. An: sie zeigt die letzte Nachricht — auch auf dem Sperrbildschirm.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Lesestatus anderer anzeigen</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Aus wird nichts darüber geholt, wer was gelesen hat — das hält das Gespräch außerdem flüssiger. An sagen deine eigenen Nachrichten, wie viele sie gelesen haben.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Sprachnachrichten</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>An sitzt ein Mikrofon neben dem Eingabefeld: gedrückt halten nimmt auf, loslassen sendet. Aus ist es nicht da.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Antippbare Weblinks</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>An: ein Link in einer Nachricht öffnet beim Antippen den Browser. Aus: Links bleiben einfacher Text.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Medien jetzt löschen</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Nachrichten und Schlüssel liegen verschlüsselt. Geöffnete Bilder, Videos und Dokumente nicht — sie liegen auf dem Gerät wie die Bilder in der Galerie, lesbar für jeden, der es in der Hand hat.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Heruntergeladene Medien löschen</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Nie</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Beim Schließen der App</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Sobald die App nicht mehr vorn ist</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Standardmäßig werden sie beim Abmelden gelöscht; speichere also vorher, was du behalten willst.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>„Nie“ behält sie für immer — bequem und nicht empfohlen.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Gelöschtes wird beim Öffnen neu geholt.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Beim Abmelden</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Wiederholte Anrufe bremsen</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>An: dieselbe Person kann erst nach einer kurzen Pause wieder klingeln. Das verzögert auch einen zweiten, echten Versuch.</translation>
     </message>
 </context>
 <context>
@@ -1473,10 +1672,6 @@
     <message>
         <source>Account</source>
         <translation>Konto</translation>
-    </message>
-    <message>
-        <source>Sign out</source>
-        <translation>Abmelden</translation>
     </message>
     <message>
         <source>Make start page</source>
@@ -1856,6 +2051,42 @@
         <source>React</source>
         <translation>Reagieren</translation>
     </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Im Thread antworten</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Raumlink kopieren</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Raumlink kopiert</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Unverschlüsselt gesendet</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nicht von dem genannten Konto gesendet</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Die Schlüssel des Absenders haben sich geändert</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Von einem unverifizierten Gerät</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Von einer unverifizierten Person</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Echtheit nicht bestätigt</translation>
+    </message>
 </context>
 <context>
     <name>SendMediaPage</name>
@@ -2224,6 +2455,18 @@
     <message>
         <source>Encrypted message</source>
         <translation>Verschlüsselte Nachricht</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Eingehender Videoanruf</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Eingehender Anruf</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Neue Nachricht</translation>
     </message>
 </context>
 </TS>

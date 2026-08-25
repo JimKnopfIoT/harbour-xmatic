@@ -33,6 +33,10 @@ public:
     void requestRaise();
     void requestNotifiedRoom();
 
+    /// The app asking for its own window, for a ringing call: a notification
+    /// banner is gone in a moment, and a call has to be answerable.
+    Q_INVOKABLE void raiseWindow() { emit raiseRequested(); }
+
 signals:
     /// Bring the window forward.
     void raiseRequested();

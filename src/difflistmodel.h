@@ -2,6 +2,7 @@
 #define DIFFLISTMODEL_H
 
 #include <QAbstractListModel>
+#include <QHash>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QVector>
@@ -50,8 +51,12 @@ protected:
 
 private:
     void applyOperation(const QJsonObject &operation);
+    const QByteArray &fieldFor(int role) const;
 
     QVector<QJsonObject> m_rows;
+    /// roleNames() builds its table anew on every call, and data() is asked
+    /// once per role per row per repaint. Built once here instead.
+    mutable QHash<int, QByteArray> m_fields;
 };
 
 #endif // DIFFLISTMODEL_H

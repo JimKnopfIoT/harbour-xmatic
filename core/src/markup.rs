@@ -22,11 +22,58 @@ const MAX_INPUT: usize = 64 * 1024;
 
 /// Same, on the output: a small input can expand through nesting.
 const MAX_OUTPUT: usize = 96 * 1024;
+/// How many tags a message may carry at all. A body that needs more is not a
+/// message, and counting them costs one pass over the bytes.
+const MAX_TAGS: u32 = 4096;
+
+/// How deeply the raw string nests, counted without building anything.
+///
+/// Cheap and deliberately crude: every `<` that is not a closing tag counts as
+/// one level, every `</` closes one. Self-closing tags cost nothing that
+/// matters here, because the bound is about the parser's recursion, not about
+/// correctness of the count.
+fn nesting_is_sane(html: &str) -> bool {
+    let mut depth: i32 = 0;
+    let mut tags: u32 = 0;
+    let bytes = html.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] != b'<' {
+            i += 1;
+            continue;
+        }
+        tags += 1;
+        if tags > MAX_TAGS {
+            return false;
+        }
+        if bytes.get(i + 1) == Some(&b'/') {
+            depth -= 1;
+        } else if !html[i..].starts_with("<!") {
+            depth += 1;
+            if depth > MAX_DEPTH as i32 {
+                return false;
+            }
+        }
+        i += 1;
+    }
+    true
+}
 
 /// `None` when the result adds nothing over the plain body — the usual case,
 /// since many clients attach a `formatted_body` to every message.
 pub fn to_styled_text(html: &str) -> Option<String> {
     if html.is_empty() || html.len() > MAX_INPUT {
+        return None;
+    }
+
+    // Before the parser, not during the walk. `Html::parse` builds the whole
+    // tree first and drops it recursively, and neither step is bounded by
+    // anything below: 20 000 nested tags fit in a message under the byte cap
+    // and overflow the thread's stack, which is an abort, not a panic - no
+    // catch_unwind can hold it, and the event stays in the store, so the room
+    // aborts the app again on every open. MAX_DEPTH is checked in `node()`,
+    // which never runs.
+    if !nesting_is_sane(html) {
         return None;
     }
 
@@ -124,6 +171,9 @@ impl Writer {
                 // Only leading spaces: `&nbsp;` everywhere would stop the
                 // label wrapping, and a long code line would be cut off.
                 ' ' if context.preformatted && self.at_indent() => self.push_raw("&nbsp;"),
+                // A bidi override in a target reverses what the address
+                // looks like; the text filter drops them and so does this.
+                _ if crate::text::is_bidi_control(character) => {}
                 _ => {
                     let mut buffer = [0u8; 4];
                     let encoded: &str = character.encode_utf8(&mut buffer);
@@ -375,10 +425,14 @@ impl Writer {
         }
 
         self.push_tag("<a href=\"");
-        // Sender's string: escaped like any text, plus the closing quote.
+        // The sender's string, with one deliberate exception: `&` stays
+        // itself. Qt reads an attribute as a raw run to the closing quote and
+        // decodes no entities, so `&amp;` would end up in the opened address -
+        // every link with two query parameters opened the wrong URL. The
+        // characters that could end the attribute are refused by `is_web_url`
+        // before this runs, and are escaped here as a second line anyway.
         for character in href.chars() {
             match character {
-                '&' => self.push_raw("&amp;"),
                 '<' => self.push_raw("&lt;"),
                 '>' => self.push_raw("&gt;"),
                 '"' => self.push_raw("&quot;"),
@@ -571,6 +625,18 @@ mod tests {
     fn oversized_input_is_refused() {
         let huge = format!("<b>{}</b>", "x".repeat(MAX_INPUT));
         assert_eq!(to_styled_text(&huge), None);
+    }
+
+    #[test]
+    fn a_message_that_would_overflow_the_stack_is_refused() {
+        // 20 327 levels fit under the byte cap and abort the process inside
+        // `Html::parse`. The old test used 300 and certified nothing.
+        let bomb = "<b>".repeat(20327);
+        assert!(bomb.len() < MAX_INPUT);
+        assert_eq!(to_styled_text(&bomb), None);
+        // And the shape that only *counts* a lot without nesting.
+        let flat = "<b>x</b>".repeat(5000);
+        assert_eq!(to_styled_text(&flat), None);
     }
 
     #[test]
