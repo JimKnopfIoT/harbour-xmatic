@@ -4,9 +4,16 @@ Source language: English. One `.ts` per target; `.qm` is build output. A
 language is listed in `TRANSLATIONS` only once it is actually translated —
 an empty file would ship as coverage that is not there.
 
-Not shipped, deliberately: `nn` (Norwegian Nynorsk), Sámi, Faroese, and the
-non-EU languages east and south of the EU. Adding them means adding more
-unreviewed machine output.
+Beyond the EU: Russian, Norwegian Bokmål, Icelandic, Simplified Chinese and
+Hindi. The last two were added for reach, not because anyone asked - Chinese
+because it opens the app to people who do not read English, Hindi because
+leaving out the second-largest language group while shipping Maltese would be
+a strange thing to defend. Both are unreviewed machine output, like most of
+the list.
+
+Not shipped, deliberately: `nn` (Norwegian Nynorsk), Sámi, Faroese, traditional
+Chinese (`zh_TW` is its own file, not the same one in other characters), and
+the other languages of India. Adding them means adding more unreviewed output.
 
 `review` is the only column that matters. **machine** means generated in one
 pass without a native speaker — usable, not verified.
@@ -23,6 +30,8 @@ pass without a native speaker — usable, not verified.
 | pl cs sk sl hr bg ru | | machine | plural forms checked against Qt's rule |
 | el hu ro et lv lt is | | machine | |
 | ga mt | Irish, Maltese | machine, low confidence | 3 and 4 plural forms; smallest corpora |
+| zh_CN | Simplified Chinese | machine | one plural form; `Space` kept as the English term |
+| hi | Hindi | machine, low confidence | one plural form; informal (तुम) throughout, as everywhere else |
 
 ## Known corrections already applied
 

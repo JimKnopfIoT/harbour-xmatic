@@ -94,22 +94,6 @@
         <translation>Няма потиснати предупреждения</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Текст на съобщението в известията</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Изключено: известието казва само колко съобщения са дошли. Включено: показва последното съобщение — и на заключения екран.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Уеб връзки с натискане</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Включено: връзка в съобщение отваря браузъра при натискане. Изключено: връзките остават обикновен текст.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Изход</translation>
     </message>
@@ -122,20 +106,8 @@
         <translation>Език</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Показвай статуса на четене на другите</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Изключено не се извлича нищо за това кой какво е прочел, което поддържа разговора и по-плавен. Включено твоите съобщения показват колко души са ги прочели.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Гласови съобщения</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Включено, до полето за съобщение има микрофон: задръж, за да запишеш, пусни, за да изпратиш. Изключено го няма.</translation>
+        <source>Privacy</source>
+        <translation>Поверителност</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Изключено реакцията се изчертава като знака, който е — винаги вярно и безплатно. Включено xmatic търси за нея твоя собствена картинка в %1, наименувана по кодовите ѝ точки (1f44d.svg). Нищо не се доставя и нищо не се изтегля. Претегли: файл с картинка се отваря от декодер на изображения, а там приложение от този вид е най-уязвимо.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Избор на емоджи картинки</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Картинките се четат…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 приети, %2 отхвърлени</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Картинките са променени след прочитането им и не се показват.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Връщане на цветовете към стандартните</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Премахване на емоджи картинките</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Затвори</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Приемане без камера</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Приемане с камера</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Входящо видеообаждане</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Видеообажданията са изключени в Поверителност; това се приема като гласово обаждане.</translation>
     </message>
 </context>
 <context>
@@ -650,7 +662,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@име:сървър</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -922,6 +934,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Домашният сървър не върна код за влизане.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Запазените списъци не могат да бъдат прочетени сега.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Сесията ти приключи. Влез отново.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Няма други общи стаи</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Забрана на обажданията</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Разрешаване на обаждания</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Реагирай</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Отговори в темата</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Задръж съобщение в разговора, за да го закачиш.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Поверителност</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Кой може да ти се обажда</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Всички</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Хора, с които имаш личен чат</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Само моят списък</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Обаждания от групови стаи</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Видеообаждания</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Изпращане на потвърждения за прочитане</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Разрешени обаждащи се</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix адрес</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Разрешаване на обаждания</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Още никой.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Премахване</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Обаждането звъни и в заглушена стая. Отказаните не звънят и обаждащият се не научава нищо.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>В групова стая всички виждат обаждането. Списъкът не отменя това.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Изключено: предложение с видео се приема като гласово обаждане.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Изключено пази четенето ти за теб — в двете посоки.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Те могат винаги да се обаждат. Списъкът остава на това устройство.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>На това устройство</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Какво научават другите</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Текст на съобщението в известията</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Изключено: известието казва само колко съобщения са дошли. Включено: показва последното съобщение — и на заключения екран.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Показвай статуса на четене на другите</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Изключено не се извлича нищо за това кой какво е прочел, което поддържа разговора и по-плавен. Включено твоите съобщения показват колко души са ги прочели.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Гласови съобщения</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Включено, до полето за съобщение има микрофон: задръж, за да запишеш, пусни, за да изпратиш. Изключено го няма.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Уеб връзки с натискане</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Включено: връзка в съобщение отваря браузъра при натискане. Изключено: връзките остават обикновен текст.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Изтрий медиите сега</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Съобщенията и ключовете се пазят шифровани. Отворените снимки, видеа и документи — не: те лежат на устройството като тези в галерията, четими за всеки, който го държи.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Изтриване на изтеглените медии</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Никога</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>При затваряне на приложението</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Щом приложението не е отпред</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>По подразбиране се изтриват при отписване, затова запази това, което искаш да останe.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>„Никога“ ги пази завинаги — удобно и непрепоръчително.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Изтритото се изтегля отново, когато го отвориш.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>При отписване</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Ограничаване на повторните обаждания</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Включено: същият човек може да звънне отново само след кратка пауза. Това забавя и втори, истински опит.</translation>
     </message>
 </context>
 <context>
@@ -1547,10 +1746,6 @@
         <translation>Профил</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Изход</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Отбележи като прочетено</translation>
     </message>
@@ -1855,6 +2050,42 @@
     <message>
         <source>React</source>
         <translation>Реагирай</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Отговори в темата</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Копиране на връзката към стаята</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Връзката към стаята е копирана</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Изпратено нешифровано</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Не е изпратено от посочения акаунт</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Ключовете на подателя са променени</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>От непроверено устройство</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>От непроверен човек</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Автентичността не е потвърдена</translation>
     </message>
 </context>
 <context>
@@ -2224,6 +2455,18 @@
             <numerusform>%n ново съобщение</numerusform>
             <numerusform>%n нови съобщения</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Входящо видеообаждане</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Входящо повикване</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Ново съобщение</translation>
     </message>
 </context>
 </TS>

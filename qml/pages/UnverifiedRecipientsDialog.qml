@@ -37,7 +37,7 @@ Dialog {
         // dialog actually warned about.
         if (rememberSwitch.checked) {
             for (var i = 0; i < users.length; i++) {
-                settings.trustRecipient(users[i].userId)
+                matrix.trustRecipient(users[i].userId)
             }
         }
     }

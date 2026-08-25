@@ -1,8 +1,70 @@
 #include "timelinemodel.h"
 
+#include <QJsonArray>
+#include <QSet>
+
 TimelineModel::TimelineModel(QObject *parent)
     : DiffListModel(parent)
 {
+    // Whenever the rows move, the read mark may move with them. Recomputed
+    // here rather than in data(): it is one pass over the list, and asking per
+    // row would make every redraw quadratic.
+    connect(this, &QAbstractItemModel::modelReset, this, &TimelineModel::updateReadCounts);
+    connect(this, &QAbstractItemModel::rowsInserted, this, &TimelineModel::updateReadCounts);
+    connect(this, &QAbstractItemModel::rowsRemoved, this, &TimelineModel::updateReadCounts);
+    connect(this, &QAbstractItemModel::dataChanged, this, &TimelineModel::updateReadCounts);
+}
+
+QVariant TimelineModel::data(const QModelIndex &index, int role) const
+{
+    if (role == ReadMarkRole) {
+        return m_readCounts.value(index.row()) > 0;
+    }
+    if (role == ReadMarkByRole) {
+        return m_readCounts.value(index.row());
+    }
+    return DiffListModel::data(index, role);
+}
+
+void TimelineModel::updateReadCounts()
+{
+    // The emits below come back here through dataChanged.
+    if (m_updatingReadCounts) {
+        return;
+    }
+
+    // One pass from the newest row backwards, carrying everyone met so far.
+    // A receipt marks the newest event a person has read, so whoever appears
+    // at row i has read row i and everything before it - the running set is
+    // therefore exactly "who has read this far" for each row in turn. Their
+    // own messages count as read by them, which is what the SDK's implicit
+    // receipt on a sent event says.
+    QVector<int> counts(rows().count(), 0);
+    QSet<QString> seen;
+    for (int i = rows().count() - 1; i >= 0; --i) {
+        const QJsonObject &row = rows().at(i);
+        const QJsonArray users = row.value(QStringLiteral("readByUsers")).toArray();
+        for (const QJsonValue &user : users) {
+            seen.insert(user.toString());
+        }
+        if (row.value(QStringLiteral("own")).toBool()
+            && row.value(QStringLiteral("kind")).toString() == QLatin1String("message")) {
+            counts[i] = seen.count();
+        }
+    }
+
+    if (counts == m_readCounts) {
+        return;
+    }
+    m_readCounts = counts;
+
+    if (rows().isEmpty()) {
+        return;
+    }
+    m_updatingReadCounts = true;
+    emit dataChanged(index(0, 0), index(rows().count() - 1, 0),
+                     QVector<int> { ReadMarkRole, ReadMarkByRole });
+    m_updatingReadCounts = false;
 }
 
 QHash<int, QByteArray> TimelineModel::roleNames() const
@@ -34,6 +96,9 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(CaptionRole, "caption");
     names.insert(TxnIdRole, "txnId");
     names.insert(ReactionsRole, "reactions");
+    names.insert(ReadMarkRole, "readMark");
+    names.insert(ReadMarkByRole, "readMarkBy");
+    names.insert(ShieldRole, "shield");
     return names;
 }
 

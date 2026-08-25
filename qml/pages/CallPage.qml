@@ -76,7 +76,8 @@ Page {
             text: {
                 switch (matrix.calls.state) {
                 case "calling": return qsTr("Ringing…")
-                case "ringing": return qsTr("Incoming call")
+                case "ringing": return matrix.calls.videoOffered || matrix.calls.videoRefused
+                                       ? qsTr("Incoming video call") : qsTr("Incoming call")
                 case "connecting": return qsTr("Connecting…")
                 case "active": return qsTr("Connected")
                 default: return matrix.calls.status
@@ -84,17 +85,56 @@ Page {
             }
         }
 
-        Row {
+        // A video offer that the privacy setting turns down goes through as a
+        // voice call. Saying so beats a picture that never appears.
+        Label {
+            x: Theme.horizontalPageMargin
+            width: parent.width - 2 * Theme.horizontalPageMargin
+            visible: matrix.calls.state === "ringing" && matrix.calls.videoRefused
+            wrapMode: Text.Wrap
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryHighlightColor
+            text: qsTr("Video calls are switched off in Privacy; this one is answered as a voice call.")
+        }
+
+        // Stacked, not in a row: three actions do not fit a phone side by side,
+        // and the one that answers the call as it was offered belongs on top.
+        // The habitual first tap must not be the one that leaves the camera off.
+        Column {
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: Theme.paddingLarge
+            spacing: Theme.paddingMedium
+
+            readonly property real buttonWidth: Math.max(withCamera.implicitWidth,
+                                                         plainAccept.implicitWidth,
+                                                         endCall.implicitWidth)
 
             Button {
-                text: qsTr("Accept")
-                visible: matrix.calls.state === "ringing"
-                onClicked: matrix.calls.acceptCall()
+                id: withCamera
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.buttonWidth
+                text: qsTr("Accept with camera")
+                visible: matrix.calls.state === "ringing" && matrix.calls.videoOffered
+                onClicked: matrix.calls.acceptCall(true)
             }
 
             Button {
+                id: plainAccept
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.buttonWidth
+                text: matrix.calls.videoOffered ? qsTr("Accept without camera")
+                                                : qsTr("Accept")
+                visible: matrix.calls.state === "ringing"
+                onClicked: matrix.calls.acceptCall(false)
+            }
+
+            Button {
+                id: endCall
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.buttonWidth
                 text: matrix.calls.state === "ringing" ? qsTr("Decline") : qsTr("Hang up")
                 onClicked: matrix.calls.hangUp()
             }

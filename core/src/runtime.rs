@@ -24,6 +24,7 @@ use crate::call;
 use crate::directory;
 use crate::login;
 use crate::profile;
+use crate::private;
 use crate::protocol::{event, reply_error, reply_ok, Command, Secret};
 use crate::media;
 use crate::members;
@@ -327,6 +328,90 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::TimelinePaginate { .. } => paginate_timeline(&state, id).await,
         Command::TimelineSend { body, .. } => send_message(&state, id, body).await,
         Command::TimelineMarkRead { .. } => mark_read(&state, id).await,
+        Command::PrivateGet { .. } => {
+            match private::load(&state.paths.private_file, state.store_key().as_ref()) {
+                private::Loaded::Lists(lists) => {
+                    state.sink.emit(reply_ok(id, json!({ "lists": lists, "readable": true })))
+                }
+                private::Loaded::Empty => state
+                    .sink
+                    .emit(reply_ok(id, json!({ "lists": {}, "readable": true }))),
+                // Locked or damaged: say so rather than answering "there is
+                // nothing", which is what a write would then destroy.
+                private::Loaded::Unreadable => state
+                    .sink
+                    .emit(reply_ok(id, json!({ "lists": {}, "readable": false }))),
+            }
+        }
+
+        Command::PrivateSet { lists, .. } => {
+            // The front end sends the whole state, so nothing has to be read
+            // first and no two writes can overwrite each other. The file is
+            // only consulted to refuse a write over an unreadable one.
+            match private::load(&state.paths.private_file, state.store_key().as_ref()) {
+                private::Loaded::Unreadable => {
+                    state.sink.emit(reply_error(
+                        id,
+                        "the stored lists cannot be read; nothing was changed".to_owned(),
+                    ));
+                    return;
+                }
+                _ => {}
+            }
+            match private::save(&state.paths.private_file, state.store_key().as_ref(), &lists) {
+                Ok(()) => state
+                    .sink
+                    .emit(reply_ok(id, json!({ "lists": lists, "readable": true }))),
+                Err(error) => state
+                    .sink
+                    .emit(reply_error(id, format!("list could not be saved: {error}"))),
+            }
+        }
+
+        Command::CallsSetPolicy {
+            policy,
+            groups,
+            video,
+            flood,
+            allowed,
+            ..
+        } => {
+            call::set_policy(call::CallPolicy {
+                who: policy,
+                groups,
+                video,
+                flood,
+                allowed,
+            });
+            state.sink.emit(reply_ok(id, json!({ "set": true })));
+        }
+
+        Command::RoomPermalink { room_id, .. } => {
+            let client = match state.client().await {
+                Some(client) => client,
+                None => {
+                    state.sink.emit(reply_error(id, "not signed in".to_owned()));
+                    return;
+                }
+            };
+            match roomlist::permalink(&client, &room_id).await {
+                Ok(link) => state.sink.emit(reply_ok(id, json!({ "link": link }))),
+                Err(message) => state.sink.emit(reply_error(id, message)),
+            }
+        }
+
+        Command::TimelineReaders { event_id, .. } => {
+            let outcome = match state.timeline().await {
+                Some(handle) => handle.readers(&event_id).await,
+                None => Err("no timeline is open".to_owned()),
+            };
+            match outcome {
+                Ok(readers) => state
+                    .sink
+                    .emit(reply_ok(id, json!({ "readers": readers }))),
+                Err(message) => state.sink.emit(reply_error(id, message)),
+            }
+        }
         Command::TimelineReply { event_id, body, .. } => {
             reply_message(&state, id, event_id, body).await
         }
@@ -407,10 +492,21 @@ async fn handle(state: Arc<State>, command: Command) {
             // burst of ICE candidates then arrives as its last one alone,
             // which is a call that connects and stays silent.
             set_call_room(&state, Some(&room_id)).await;
-            call_step(&state, id, move |client| async move {
-                call::invite(&client, &room_id, &call_id, &party_id, sdp).await
-            })
-            .await
+            let client = match state.client().await {
+                Some(client) => client,
+                None => {
+                    state.sink.emit(reply_error(id, "not signed in".to_owned()));
+                    return;
+                }
+            };
+            match call::invite(&client, &room_id, &call_id, &party_id, sdp).await {
+                // `peer` is who may answer: in a two-person room the one other
+                // member, bound before the call rings.
+                Ok(peer) => state
+                    .sink
+                    .emit(reply_ok(id, json!({ "sent": true, "peer": peer }))),
+                Err(message) => state.sink.emit(reply_error(id, message)),
+            }
         }
         Command::CallAnswer {
             room_id,
@@ -458,6 +554,9 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::VerificationAccept { .. } => verification_step(&state, id, Step::Accept).await,
         Command::VerificationConfirm { .. } => verification_step(&state, id, Step::Confirm).await,
         Command::VerificationCancel { .. } => verification_step(&state, id, Step::Cancel).await,
+        Command::VerificationMismatch { .. } => {
+            verification_step(&state, id, Step::Mismatch).await
+        }
         Command::EncryptionStatus { .. } => encryption_status(&state, id).await,
         Command::StorageStatus { .. } => storage_status(&state, id),
         Command::EncryptionRecover { key, .. } => encryption_recover(&state, id, key).await,
@@ -988,6 +1087,7 @@ enum Step {
     Accept,
     Confirm,
     Cancel,
+    Mismatch,
 }
 
 async fn verification_step(state: &Arc<State>, id: u64, step: Step) {
@@ -1003,6 +1103,7 @@ async fn verification_step(state: &Arc<State>, id: u64, step: Step) {
         Step::Accept => active.accept().await,
         Step::Confirm => active.confirm().await,
         Step::Cancel => active.cancel().await,
+        Step::Mismatch => active.mismatch().await,
     };
 
     match outcome {
@@ -1919,7 +2020,7 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::timeline::scrub_ids(&error.to_string()))));
+                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))));
             return;
         }
     };
@@ -1976,7 +2077,7 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("sign-in discovery failed: {}", crate::timeline::scrub_ids(&error.to_string()))));
+                .emit(reply_error(id, format!("sign-in discovery failed: {}", crate::text::scrub_ids(&error.to_string()))));
             return;
         }
     }
@@ -2024,7 +2125,7 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
             Err(message) => {
                 waiter
                     .sink
-                    .emit(event("login.failed", json!({ "message": message })));
+                    .emit(event("login.failed", json!({ "message": crate::text::scrub_ids(&message) })));
             }
         }
     });
@@ -2066,7 +2167,7 @@ async fn password_login(
                 Err(error) => {
                     state
                         .sink
-                        .emit(reply_error(id, format!("homeserver unreachable: {}", crate::timeline::scrub_ids(&error.to_string()))));
+                        .emit(reply_error(id, format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))));
                     return;
                 }
             }
@@ -2093,7 +2194,7 @@ async fn password_login(
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("sign-in discovery failed: {}", crate::timeline::scrub_ids(&error.to_string()))));
+                .emit(reply_error(id, format!("sign-in discovery failed: {}", crate::text::scrub_ids(&error.to_string()))));
             return;
         }
     }
@@ -2129,7 +2230,7 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::timeline::scrub_ids(&error.to_string()))));
+                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))));
             return;
         }
     };
@@ -2173,7 +2274,7 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
             Err(message) => {
                 waiter
                     .sink
-                    .emit(event("login.failed", json!({ "message": message })));
+                    .emit(event("login.failed", json!({ "message": crate::text::scrub_ids(&message) })));
             }
         }
     });
@@ -2201,7 +2302,7 @@ async fn persist(state: &Arc<State>, client: &Client, homeserver: String) {
     if let Err(error) = session::store(&stored, &state.paths.session_file, state.store_key().as_ref()) {
         state.sink.emit(event(
             "session.warning",
-            json!({ "message": format!("session could not be saved: {error}") }),
+            json!({ "message": crate::text::scrub_ids(&format!("session could not be saved: {error}")) }),
         ));
     }
 }
@@ -2260,7 +2361,7 @@ async fn registration_url(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::timeline::scrub_ids(&error.to_string()))));
+                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))));
             return;
         }
     };
@@ -2315,10 +2416,16 @@ async fn logout(state: &Arc<State>, id: u64) {
         let _ = client.logout().await;
     }
     session::forget(&state.paths.session_file);
+    // The lists that name people belong to the account that is leaving.
+    session::forget(&state.paths.private_file);
+    // Same for what is only in memory: remembered display names, the call
+    // policy with its allow list, and who rang when.
+    timeline::forget_senders();
+    call::forget_state();
     if let Err(error) = session::reset_store(&state.paths) {
         state.sink.emit(event(
             "session.warning",
-            json!({ "message": format!("local data could not be cleared: {error}") }),
+            json!({ "message": crate::text::scrub_ids(&format!("local data could not be cleared: {error}")) }),
         ));
     }
 

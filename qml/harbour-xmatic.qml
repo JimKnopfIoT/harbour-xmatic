@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtMultimedia 5.6
 import Nemo.Notifications 1.0
 import Nemo.KeepAlive 1.2
 import Sailfish.Share 1.0
@@ -226,7 +227,11 @@ ApplicationWindow {
             var resource = resources[0]
             var share = { "body": "", "path": "", "mimeType": "" }
             if (resource.type === ShareResource.FilePathType) {
-                share.path = resource.filePath
+                // Whatever asked for the share names the file; a path
+                // inside this app's own directories is refused, because the
+                // session token and the crypto store live there.
+                share.path = matrix.shareableFile(resource.filePath)
+                             ? resource.filePath : ""
                 share.mimeType = matrix.mimeTypeForPath(resource.filePath)
             } else {
                 share.body = resource.data
@@ -277,6 +282,37 @@ ApplicationWindow {
         }
     }
 
+    // A ringing call is not a message: it rings until it is answered or the
+    // caller gives up. The system has no category for that, so the app rings
+    // itself - the notification's own tone plays four times and stops, which
+    // is exactly what was missed.
+    Audio {
+        id: ringer
+
+        source: "file:///usr/share/sounds/jolla-ringtones/stereo/jolla-ringtone.ogg"
+        loops: Audio.Infinite
+        volume: 0.8
+    }
+
+    Notification {
+        id: callNotification
+
+        appName: "xmatic"
+        category: "x-nemo.messaging.im"
+        appIcon: "/usr/share/icons/hicolor/86x86/apps/harbour-xmatic.png"
+        // Stays in the event feed: the banner is gone in a moment, and a
+        // missed call has to leave a trace.
+        isTransient: false
+        urgency: Notification.Critical
+        remoteActions: [{
+            "name": "default",
+            "service": "org.xmatic.xmatic",
+            "path": "/org/xmatic/xmatic",
+            "iface": "org.xmatic.xmatic",
+            "method": "activate"
+        }]
+    }
+
     Connections {
         target: matrix.calls
 
@@ -284,6 +320,30 @@ ApplicationWindow {
         onIncomingCall: {
             if (pageStack.currentPage.objectName !== "callPage") {
                 pageStack.push(Qt.resolvedUrl("pages/CallPage.qml"))
+            }
+            activation.raiseWindow()
+
+            callNotification.summary = !settings.notificationPreview
+                                       ? qsTr("Incoming call")
+                                       : matrix.calls.videoOffered
+                                       || matrix.calls.videoRefused
+                                       ? qsTr("Incoming video call")
+                                       : qsTr("Incoming call")
+            // Who is calling only where the user asked for message text: the
+            // banner shows on the lock screen either way.
+            callNotification.body = settings.notificationPreview ? peer : ""
+            callNotification.previewSummary = callNotification.summary
+            callNotification.previewBody = callNotification.body
+            callNotification.publish()
+            ringer.play()
+        }
+
+        // Answered, declined, or the caller gave up: the ring stops with the
+        // ringing state, whichever way it ended.
+        onStateChanged: {
+            if (matrix.calls.state !== "ringing") {
+                ringer.stop()
+                callNotification.close()
             }
         }
     }
@@ -324,7 +384,11 @@ ApplicationWindow {
         onRoomActivity: {
             notification.close()
             app.notifiedRoomId = roomId
-            notification.summary = roomName
+            // The room's name is content: in a direct chat it is the other
+            // person. Behind the same switch as the message text, because the
+            // banner shows on the lock screen.
+            notification.summary = settings.notificationPreview
+                                   ? roomName : qsTr("New message")
             // The count is the default; the message itself only when the user
             // switched that on (Account → This app), because the banner also
             // shows on the lock screen. Non-text events are named by kind, so

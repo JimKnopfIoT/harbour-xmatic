@@ -94,22 +94,6 @@
         <translation>Summutatud hoiatusi pole</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Sõnumi tekst teavitustes</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Väljas ütleb teavitus ainult, mitu sõnumit saabus. Sees näitab viimast sõnumit — ka lukustuskuval.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Puudutatavad veebilingid</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Sees avab sõnumis olev link puudutamisel brauseri. Väljas jäävad lingid tavaliseks tekstiks.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Logi välja</translation>
     </message>
@@ -122,20 +106,8 @@
         <translation>Keel</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Näita teiste lugemise olekut</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Väljas ei tooda midagi selle kohta, kes mida luges, mis hoiab vestluse ka sujuvamana. Sees näitavad su enda sõnumid, kui paljud on neid lugenud.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Häälsõnumid</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Sees on sõnumivälja kõrval mikrofon: hoia all, et salvestada, lase lahti, et saata. Väljas seda pole.</translation>
+        <source>Privacy</source>
+        <translation>Privaatsus</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Väljas joonistatakse reaktsioon märgina, mis ta on — alati õige ja tasuta. Sees otsib xmatic sellele sinu enda pilti kaustast %1, nimetatuna koodipunktide järgi (1f44d.svg). Midagi ei tarnita kaasa ega laadita alla. Kaalu: pildifaili avab pildidekooder, ja seal on selline rakendus kõige haavatavam.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Vali emoji-pildid</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Piltide lugemine…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 võetud, %2 tagasi lükatud</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Pildid on pärast sisselugemist muutunud ja neid ei näidata.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Lähtesta värvid</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Eemalda emoji-pildid</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Lõpeta kõne</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Võta vastu ilma kaamerata</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Võta vastu kaameraga</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Sissetulev videokõne</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Videokõned on privaatsuse all välja lülitatud; sellele vastatakse häälkõnena.</translation>
     </message>
 </context>
 <context>
@@ -650,7 +662,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@nimi:server</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -922,6 +934,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Koduserver ei tagastanud sisselogimiskoodi.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Salvestatud loendeid ei saa praegu lugeda.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Sinu sessioon on lõppenud. Logi uuesti sisse.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Muid ühiseid tube pole</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Keela kõned</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Luba kõned</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Reageeri</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vasta lõimes</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Hoia vestluses sõnumit all, et see üles kinnitada.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Privaatsus</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Kes tohib sulle helistada</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Kõik</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Inimesed, kellega sul on otsevestlus</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Ainult minu loend</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Kõned rühmaruumidest</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Videokõned</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Saada lugemiskinnitusi</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Lubatud helistajad</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrixi aadress</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Luba kõned</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Veel mitte kedagi.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eemalda</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Kõne heliseb ka vaigistatud ruumis. Keeldutud ei helise ja helistaja ei saa midagi teada.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>Rühmaruumis näevad kõnet kõik. Loend seda ei tühista.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Väljas: videopakkumisele vastatakse häälkõnena.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Väljas hoiab lugemise sinu teada, mõlemas suunas.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Nad tohivad alati helistada. Loend jääb sellesse seadmesse.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Selles seadmes</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Mida teised teada saavad</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Sõnumi tekst teavitustes</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Väljas ütleb teavitus ainult, mitu sõnumit saabus. Sees näitab viimast sõnumit — ka lukustuskuval.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Näita teiste lugemise olekut</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Väljas ei tooda midagi selle kohta, kes mida luges, mis hoiab vestluse ka sujuvamana. Sees näitavad su enda sõnumid, kui paljud on neid lugenud.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Häälsõnumid</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Sees on sõnumivälja kõrval mikrofon: hoia all, et salvestada, lase lahti, et saata. Väljas seda pole.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Puudutatavad veebilingid</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Sees avab sõnumis olev link puudutamisel brauseri. Väljas jäävad lingid tavaliseks tekstiks.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Kustuta meedia kohe</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Sõnumid ja võtmed on salvestatud krüptitult. Avatud pildid, videod ja dokumendid mitte — need on seadmes nagu galerii omad, loetavad igaühele, kelle käes seade on.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Allalaaditud meedia kustutamine</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Mitte kunagi</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Rakenduse sulgemisel</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Niipea kui rakendus pole ees</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Vaikimisi kustutatakse need väljalogimisel, seega salvesta see, mida tahad alles hoida.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>„Mitte kunagi“ hoiab need alatiseks — mugav ja mitte soovitatav.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Kustutatu tuuakse avamisel uuesti.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Väljalogimisel</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Piira korduvaid kõnesid</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Sees: sama inimene saab uuesti helistada alles pärast lühikest pausi. See lükkab edasi ka teise, tõelise katse.</translation>
     </message>
 </context>
 <context>
@@ -1547,10 +1746,6 @@
         <translation>Konto</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Logi välja</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Märgi loetuks</translation>
     </message>
@@ -1855,6 +2050,42 @@
     <message>
         <source>React</source>
         <translation>Reageeri</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vasta lõimes</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Kopeeri ruumi link</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Ruumi link on kopeeritud</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Saadetud krüptimata</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ei saatnud see konto, mida nimetatakse</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Saatja võtmed muutusid</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Kinnitamata seadmest</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Kinnitamata inimeselt</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Ehtsus kinnitamata</translation>
     </message>
 </context>
 <context>
@@ -2224,6 +2455,18 @@
             <numerusform>%n uus sõnum</numerusform>
             <numerusform>%n uut sõnumit</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Sissetulev videokõne</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Sissetulev kõne</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Uus sõnum</translation>
     </message>
 </context>
 </TS>

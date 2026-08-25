@@ -46,6 +46,12 @@ pub struct Paths {
     /// Downloaded attachments. Separate from the store because it is
     /// disposable — every file in it can be fetched again.
     pub media_cache: PathBuf,
+    /// Voice messages recorded on this device. Written by the Qt side, which
+    /// derives the same path; cleared here because a sign-out has to reach
+    /// everything readable.
+    pub voice_cache: PathBuf,
+    /// Encrypted lists that name people (see private.rs).
+    pub private_file: PathBuf,
 }
 
 impl Paths {
@@ -54,6 +60,8 @@ impl Paths {
             store: data_dir.join("store"),
             session_file: data_dir.join("session.json"),
             media_cache: cache_dir.join("media"),
+            voice_cache: cache_dir.join("voice"),
+            private_file: data_dir.join("private.json"),
         }
     }
 
@@ -225,7 +233,7 @@ pub async fn build_client(
     let store_config =
         SqliteStoreConfig::new(&paths.store).key(store_key.map(|key| &**key));
 
-    Client::builder()
+    let client = Client::builder()
         .server_name_or_homeserver_url(server)
         .sqlite_store_with_config_and_cache_path(store_config, None::<&Path>)
         .handle_refresh_tokens()
@@ -262,7 +270,14 @@ pub async fn build_client(
             auto_enable_backups: false,
         })
         .build()
-        .await
+        .await;
+
+    // The SDK creates its databases with the process umask. They hold the
+    // device identity and the room keys.
+    if client.is_ok() {
+        restrict_store(paths);
+    }
+    client
 }
 
 /// The encrypted shape of `session.json`: a fresh `StoreCipher` per write,
@@ -310,9 +325,68 @@ pub fn store(
         serde_json::to_vec_pretty(session).map_err(|error| invalid(error.to_string()))?
     };
 
-    std::fs::write(path, json)?;
+    // Temp file, restricted before a byte goes in, then renamed over the old
+    // one. `write` truncates in place: an interruption leaves a short file,
+    // and a short session file reads as `Locked` - the state whose only exit
+    // deletes the crypto store.
+    let temporary = path.with_extension("json.new");
+    {
+        use std::io::Write;
+        let mut file = create_private(&temporary)?;
+        file.write_all(&json)?;
+        file.sync_all()?;
+    }
+    std::fs::rename(&temporary, path)?;
     restrict_permissions(path)
 }
+
+/// Writes bytes to a private file the same way the session is written: temp
+/// file at 0600, synced, renamed over the old one.
+pub fn write_private(path: &Path, bytes: &[u8]) -> Result<(), std::io::Error> {
+    let temporary = path.with_extension("new");
+    {
+        use std::io::Write;
+        let mut file = create_private(&temporary)?;
+        file.write_all(bytes)?;
+        file.sync_all()?;
+    }
+    std::fs::rename(&temporary, path)?;
+    restrict_permissions(path)
+}
+
+/// Creates a file only this user can read, without a moment at 0644 in
+/// between.
+#[cfg(unix)]
+fn create_private(path: &Path) -> Result<std::fs::File, std::io::Error> {
+    use std::os::unix::fs::OpenOptionsExt;
+    std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .mode(0o600)
+        .open(path)
+}
+
+#[cfg(not(unix))]
+fn create_private(path: &Path) -> Result<std::fs::File, std::io::Error> {
+    std::fs::File::create(path)
+}
+
+/// 0600 on every file the store directory holds. matrix-sdk-sqlite creates its
+/// databases with the process umask, so the keys would otherwise be readable
+/// by anything running as this user outside the sandbox.
+pub fn restrict_store(paths: &Paths) {
+    let Ok(entries) = std::fs::read_dir(&paths.store) else {
+        return;
+    };
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_file() {
+            let _ = restrict_permissions(&path);
+        }
+    }
+}
+
 
 /// Reads a previously stored session, or `None` if there is none or it can no
 /// longer be read — a stale file must never block the user from logging in

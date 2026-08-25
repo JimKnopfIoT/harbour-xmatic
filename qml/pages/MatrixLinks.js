@@ -1,5 +1,15 @@
 .pragma library
 
+/// Percent-decoding that cannot throw: `decodeURIComponent("%zz")` raises, and
+/// a raise inside a binding leaves the row half-built.
+function safeDecode(text) {
+    try {
+        return decodeURIComponent(text)
+    } catch (error) {
+        return text
+    }
+}
+
 // What a link in a message points at, and how the app deals with it.
 //
 // Matrix carries its own addresses: `#room:server`, `@user:server`, and the
@@ -40,13 +50,17 @@ function parse(link) {
         if (!sigils[parts[0]]) {
             return null
         }
-        target = sigils[parts[0]] + decodeURIComponent(parts[1])
+        target = sigils[parts[0]] + safeDecode(parts[1])
     } else {
-        var marker = link.indexOf("matrix.to/#/")
+        // The host has to *be* matrix.to, not merely contain it:
+    // https://tracker.example/px?u=matrix.to/#/x was classed as internal and
+    // stayed tappable with web links switched off.
+    var marker = /^https?:\/\/(www\.)?matrix\.to\/#\//i.test(link)
+                 ? link.indexOf("matrix.to/#/") : -1
         if (marker < 0) {
             return null
         }
-        target = decodeURIComponent(link.substring(marker + "matrix.to/#/".length))
+        target = safeDecode(link.substring(marker + "matrix.to/#/".length))
         // A permalink can name an event inside the room, and carries via
         // servers as a query. Neither is used here: the room is the target.
         target = target.split("?")[0].split("/")[0]

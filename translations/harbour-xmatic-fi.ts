@@ -94,22 +94,6 @@
         <translation>Ei vaimennettuja varoituksia</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Viestin teksti ilmoituksissa</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Kun tämä on pois päältä, ilmoitus kertoo vain, montako viestiä saapui. Päällä se näyttää uusimman viestin — myös lukitusnäytöllä.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Napautettavat verkkolinkit</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Päällä viestissä oleva linkki avaa selaimen napautettaessa. Pois päältä linkit pysyvät pelkkänä tekstinä.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Kirjaudu ulos</translation>
     </message>
@@ -122,20 +106,8 @@
         <translation>Kieli</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Näytä muiden lukutila</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Pois päältä mitään ei haeta siitä, kuka on lukenut mitä, mikä pitää keskustelun myös sujuvampana. Päällä omat viestisi kertovat, kuinka moni on lukenut ne.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Ääniviestit</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Päällä viestikentän vieressä on mikrofoni: pidä pohjassa nauhoittaaksesi, päästä irti lähettääksesi. Pois päältä sitä ei ole.</translation>
+        <source>Privacy</source>
+        <translation>Yksityisyys</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Pois päältä reaktio piirretään merkkinä, joka se on — aina oikein ja ilmaiseksi. Päällä xmatic etsii sille omaa kuvaasi kansiosta %1, nimettynä sen koodipisteiden mukaan (1f44d.svg). Mitään ei toimiteta mukana eikä ladata. Punnitse: kuvatiedoston avaa kuvadekooderi, ja siinä tämänkaltainen sovellus on haavoittuvimmillaan.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Valitse emoji-kuvat</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Luetaan kuvia…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 otettu käyttöön, %2 hylätty</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Kuvat ovat muuttuneet lukemisen jälkeen, eikä niitä näytetä.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Palauta oletusvärit</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Poista emoji-kuvat</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Lopeta puhelu</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Vastaa ilman kameraa</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Vastaa kameran kanssa</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Saapuva videopuhelu</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Videopuhelut on kytketty pois Yksityisyydessä; tähän vastataan äänipuheluna.</translation>
     </message>
 </context>
 <context>
@@ -650,7 +662,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@nimi:palvelin</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -922,6 +934,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Kotipalvelin ei palauttanut kirjautumiskoodia.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Tallennettuja listoja ei voi nyt lukea.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Istuntosi päättyi. Kirjaudu uudelleen.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Ei muita yhteisiä huoneita</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Estä puhelut</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Salli puhelut</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Reagoi</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vastaa ketjussa</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Pidä keskustelussa olevaa viestiä painettuna kiinnittääksesi sen.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Yksityisyys</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Kuka saa soittaa sinulle</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Kaikki</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Ihmiset, joiden kanssa sinulla on kahdenkeskinen keskustelu</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Vain oma listani</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Puhelut ryhmähuoneista</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Videopuhelut</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Lähetä lukukuittaukset</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Sallitut soittajat</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix-osoite</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Salli puhelut</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Ei vielä ketään.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Puhelu soi myös mykistetyssä huoneessa. Hylätyt eivät soi, eikä soittaja saa tietää mitään.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>Ryhmähuoneessa kaikki näkevät puhelun. Lista ei kumoa tätä.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Pois: videotarjoukseen vastataan äänipuheluna.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Pois pitää lukemisesi omana tietonasi, molempiin suuntiin.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>He saavat aina soittaa. Lista pysyy tällä laitteella.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Tällä laitteella</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Mitä muut saavat tietää</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Viestin teksti ilmoituksissa</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Kun tämä on pois päältä, ilmoitus kertoo vain, montako viestiä saapui. Päällä se näyttää uusimman viestin — myös lukitusnäytöllä.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Näytä muiden lukutila</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Pois päältä mitään ei haeta siitä, kuka on lukenut mitä, mikä pitää keskustelun myös sujuvampana. Päällä omat viestisi kertovat, kuinka moni on lukenut ne.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Ääniviestit</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Päällä viestikentän vieressä on mikrofoni: pidä pohjassa nauhoittaaksesi, päästä irti lähettääksesi. Pois päältä sitä ei ole.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Napautettavat verkkolinkit</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Päällä viestissä oleva linkki avaa selaimen napautettaessa. Pois päältä linkit pysyvät pelkkänä tekstinä.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Poista mediat nyt</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Viestit ja avaimet säilytetään salattuina. Avaamasi kuvat, videot ja asiakirjat eivät — ne ovat laitteella kuten galleriankin kuvat, kenen tahansa luettavissa jolla laite on.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Ladattujen medioiden poisto</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Ei koskaan</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Kun sovellus suljetaan</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Heti kun sovellus ei ole edessä</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Oletuksena ne poistetaan uloskirjautuessa, joten tallenna se minkä haluat säilyttää.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>”Ei koskaan” säilyttää ne ikuisesti — kätevää eikä suositeltavaa.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Poistettu haetaan uudelleen kun avaat sen.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Uloskirjautuessa</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Rajoita toistuvia puheluita</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Päällä: sama henkilö voi soittaa uudelleen vasta lyhyen tauon jälkeen. Se viivyttää myös toista, aitoa yritystä.</translation>
     </message>
 </context>
 <context>
@@ -1547,10 +1746,6 @@
         <translation>Tili</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Kirjaudu ulos</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Merkitse luetuksi</translation>
     </message>
@@ -1855,6 +2050,42 @@
     <message>
         <source>React</source>
         <translation>Reagoi</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vastaa ketjussa</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Kopioi huoneen linkki</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Huoneen linkki kopioitu</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Lähetetty salaamattomana</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ei lähettänyt mainittu tili</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Lähettäjän avaimet muuttuivat</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Vahvistamattomalta laitteelta</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Vahvistamattomalta henkilöltä</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Aitoutta ei vahvistettu</translation>
     </message>
 </context>
 <context>
@@ -2224,6 +2455,18 @@
             <numerusform>%n uusi viesti</numerusform>
             <numerusform>%n uutta viestiä</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Saapuva videopuhelu</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Saapuva puhelu</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Uusi viesti</translation>
     </message>
 </context>
 </TS>

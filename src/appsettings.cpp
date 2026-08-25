@@ -232,43 +232,129 @@ void AppSettings::removeDirectoryServer(const QString &server)
     emit directoryServersChanged();
 }
 
-bool AppSettings::isRecipientTrusted(const QString &userId) const
+QString AppSettings::callPolicy() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("security/trustedRecipients"))
-        .toStringList()
-        .contains(userId);
+    const QString value = settings.value(QStringLiteral("privacy/callPolicy"),
+                                         QStringLiteral("direct")).toString();
+    if (value == QLatin1String("all") || value == QLatin1String("list")) {
+        return value;
+    }
+    return QStringLiteral("direct");
 }
 
-void AppSettings::trustRecipient(const QString &userId)
+void AppSettings::setCallPolicy(const QString &policy)
 {
-    QSettings settings(writablePath(), QSettings::IniFormat);
-    QStringList trusted =
-        settings.value(QStringLiteral("security/trustedRecipients")).toStringList();
-    if (trusted.contains(userId)) {
+    if (policy == callPolicy()) {
         return;
     }
-    trusted.append(userId);
-    store(settings, QStringLiteral("security/trustedRecipients"), trusted,
-          "the trusted recipient");
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/callPolicy"), policy, "the call policy");
+    emit callPolicyChanged();
 }
 
-int AppSettings::resetRecipientWarnings()
+bool AppSettings::groupCalls() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("privacy/groupCalls"), false).toBool();
+}
+
+void AppSettings::setGroupCalls(bool enabled)
+{
+    if (enabled == groupCalls()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/groupCalls"), enabled, "the group-call setting");
+    emit callPolicyChanged();
+}
+
+bool AppSettings::videoCalls() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("privacy/videoCalls"), false).toBool();
+}
+
+void AppSettings::setVideoCalls(bool enabled)
+{
+    if (enabled == videoCalls()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/videoCalls"), enabled, "the video-call setting");
+    emit callPolicyChanged();
+}
+
+bool AppSettings::callFlood() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("privacy/callFlood"), false).toBool();
+}
+
+void AppSettings::setCallFlood(bool enabled)
+{
+    if (enabled == callFlood()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/callFlood"), enabled, "the call flood setting");
+    emit callPolicyChanged();
+}
+
+QStringList AppSettings::legacyAllowedCallers() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("privacy/allowedCallers")).toStringList();
+}
+
+QStringList AppSettings::legacyTrustedRecipients() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("security/trustedRecipients")).toStringList();
+}
+
+void AppSettings::dropLegacyLists()
 {
     QSettings settings(writablePath(), QSettings::IniFormat);
-    const int count = settings.value(QStringLiteral("security/trustedRecipients"))
-                          .toStringList()
-                          .count();
-    if (count == 0) {
-        return 0;
-    }
+    settings.remove(QStringLiteral("privacy/allowedCallers"));
     settings.remove(QStringLiteral("security/trustedRecipients"));
     settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not clear the trusted recipients");
-        return 0;
+}
+
+bool AppSettings::sendReadReceipts() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("privacy/sendReadReceipts"), true).toBool();
+}
+
+void AppSettings::setSendReadReceipts(bool enabled)
+{
+    if (enabled == sendReadReceipts()) {
+        return;
     }
-    // A count, never the addresses: this line ends up in the journal.
-    qInfo("xmatic: %d suppressed recipient warnings cleared", count);
-    return count;
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/sendReadReceipts"), enabled,
+          "the read-receipt setting");
+    emit sendReadReceiptsChanged();
+}
+
+QString AppSettings::mediaWipe() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    const QString value = settings.value(QStringLiteral("privacy/mediaWipe")).toString();
+    if (value == QLatin1String("never") || value == QLatin1String("exit")
+        || value == QLatin1String("background")) {
+        return value;
+    }
+    return QStringLiteral("logout");
+}
+
+void AppSettings::setMediaWipe(const QString &when)
+{
+    if (when == mediaWipe()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/mediaWipe"), when, "the media wipe setting");
+    emit mediaWipeChanged();
 }

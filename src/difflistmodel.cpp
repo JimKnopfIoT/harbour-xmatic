@@ -20,9 +20,19 @@ QVariant DiffListModel::data(const QModelIndex &index, int role) const
     return valueFor(m_rows.at(index.row()), role);
 }
 
+const QByteArray &DiffListModel::fieldFor(int role) const
+{
+    if (m_fields.isEmpty()) {
+        m_fields = roleNames();
+    }
+    static const QByteArray none;
+    const auto found = m_fields.constFind(role);
+    return found == m_fields.constEnd() ? none : *found;
+}
+
 QVariant DiffListModel::valueFor(const QJsonObject &row, int role) const
 {
-    const QByteArray field = roleNames().value(role);
+    const QByteArray &field = fieldFor(role);
     if (field.isEmpty()) {
         return QVariant();
     }

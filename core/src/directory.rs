@@ -118,7 +118,7 @@ pub fn start(client: Client, sink: Arc<Sink>) -> (JoinHandle<()>, mpsc::Unbounde
                     // same request can be tried again. Reporting a dropped
                     // request as the end of the list ended the directory for
                     // good and made the user redo the whole search.
-                    let error = outcome.err().map(|error| format!("{error}"));
+                    let error = outcome.err().map(|error| crate::text::scrub_ids(&format!("{error}")));
                     sink.emit(event(
                         "directory.state",
                         json!({ "atEnd": search.is_at_last_page(), "error": error }),

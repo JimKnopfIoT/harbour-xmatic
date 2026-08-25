@@ -17,6 +17,7 @@ mod login;
 mod media;
 mod members;
 mod profile;
+mod private;
 mod protocol;
 mod markup;
 mod recovery;

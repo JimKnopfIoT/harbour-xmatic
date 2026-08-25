@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Sailfish.Pickers 1.0
 
 // The conversation's colours, chosen by the user. One spectrum serves every
 // element: the selector underneath decides what the fingertip is colouring,
@@ -92,6 +93,13 @@ Page {
 
         Column {
             id: content
+
+            // One width for the buttons on this page - see AccountPage.
+            readonly property real buttonWidth: Math.min(
+                    width - 2 * Theme.horizontalPageMargin,
+                    Math.max(resetColoursButton.implicitWidth,
+                             choosePicturesButton.implicitWidth,
+                             removePicturesButton.implicitWidth))
 
             width: parent.width
             spacing: Theme.paddingSmall
@@ -224,6 +232,15 @@ Page {
             // The way back, in plain sight: every colour to the ambience, both
             // opacities to their defaults. The pull-down carries the same
             // entry, but a reset that has to be found is not a safety net.
+            Button {
+                id: resetColoursButton
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: content.buttonWidth
+                text: qsTr("Reset colours to defaults")
+                onClicked: page.resetAll()
+            }
+
             TextSwitch {
                 text: qsTr("Reactions as pictures")
                 // The path and the warning belong where the choice is made,
@@ -234,10 +251,60 @@ Page {
                 onClicked: settings.emojiImages = !settings.emojiImages
             }
 
+            // Reading a set in, rather than copying files onto the device by
+            // hand. What it buys is the checking: only files named like code
+            // points, only small ones, each one decoded once here and written
+            // out again as PNG, each one with a checksum that is verified
+            // every time the picture is used afterwards.
             Button {
+                id: choosePicturesButton
+
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Reset to defaults")
-                onClicked: page.resetAll()
+                width: content.buttonWidth
+                enabled: !emojiSet.busy
+                text: qsTr("Choose emoji pictures")
+                onClicked: pageStack.push(folderPicker)
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: emojiSet.busy
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryHighlightColor
+                text: qsTr("Reading the pictures…")
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: !emojiSet.busy && (emojiSet.lastImported > 0 || emojiSet.lastRejected > 0)
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryHighlightColor
+                text: qsTr("%1 taken over, %2 refused")
+                          .arg(emojiSet.lastImported).arg(emojiSet.lastRejected)
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: emojiSet.tampered
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.errorColor
+                text: qsTr("The pictures have changed since they were read in and are not shown.")
+            }
+
+            Button {
+                id: removePicturesButton
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: content.buttonWidth
+                visible: emojiSet.verified && !emojiSet.busy
+                text: qsTr("Remove emoji pictures")
+                onClicked: emojiSet.removeAll()
             }
 
             Item {
@@ -249,8 +316,22 @@ Page {
         VerticalScrollDecorator { }
     }
 
+    // The picker hands back a folder; everything else happens in the core of
+    // the app, not here.
+    Component {
+        id: folderPicker
+
+        FolderPickerPage {
+            allowedOrientations: Orientation.All
+            onSelectedPathChanged: emojiSet.importFrom(selectedPath)
+        }
+    }
+
     function resetAll() {
         appearance.resetAll()
+        // Both the colour and the two sliders: the reset is a change from
+        // outside, and nothing in this page follows one on its own.
         syncField()
+        colorField.placeSliders()
     }
 }

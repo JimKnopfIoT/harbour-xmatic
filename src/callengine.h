@@ -1,6 +1,7 @@
 #ifndef CALLENGINE_H
 #define CALLENGINE_H
 
+#include <QAtomicInt>
 #include <QObject>
 #include <QByteArray>
 #include <QTimer>
@@ -39,6 +40,8 @@ class CallEngine : public QObject
     Q_PROPERTY(QString peer READ peer NOTIFY callChanged)
     Q_PROPERTY(bool muted READ muted NOTIFY mutedChanged)
     Q_PROPERTY(bool video READ video NOTIFY callChanged)
+    Q_PROPERTY(bool videoOffered READ videoOffered NOTIFY callChanged)
+    Q_PROPERTY(bool videoRefused READ videoRefused NOTIFY callChanged)
     Q_PROPERTY(QObject *remoteVideo READ remoteVideo CONSTANT)
     Q_PROPERTY(QObject *selfVideo READ selfVideo CONSTANT)
 
@@ -53,6 +56,12 @@ public:
     QString peer() const { return m_peer; }
     bool muted() const { return m_muted; }
     bool video() const { return m_withVideo; }
+    /// Whether the ringing call offered video. Says what the two accept
+    /// actions mean; it does not by itself open anything.
+    bool videoOffered() const { return m_videoOffered; }
+    /// The caller offered video and the privacy setting says no. The call goes
+    /// through as a voice call, and the page says why.
+    bool videoRefused() const { return m_videoRefused; }
     QObject *remoteVideo() { return &m_remoteVideo; }
     QObject *selfVideo() { return &m_selfVideo; }
 
@@ -61,7 +70,15 @@ public:
     Q_INVOKABLE void placeCall(const QString &roomId, bool withVideo = false);
 
     /// Answers the call that is currently ringing.
-    Q_INVOKABLE void acceptCall();
+    /// Answers the ringing call. `withVideo` opens the camera - never the
+    /// caller's choice, always the user's, and only where the offer had video
+    /// at all.
+    Q_INVOKABLE void acceptCall(bool withVideo = false);
+
+    /// Who may answer the call this device just placed. Set from the reply to
+    /// the invitation, before any answer can arrive: without it the first
+    /// answer from anybody in the room would take the microphone.
+    void setExpectedPeer(const QString &peer);
 
     /// Ends or declines the current call.
     Q_INVOKABLE void hangUp();
@@ -79,12 +96,20 @@ public:
 
     // Fed from the core's signalling events.
     void onRemoteInvite(const QString &roomId,
+                        bool videoAllowed,
+                        bool videoOffered,
                         const QString &sender,
                         const QString &callId,
                         const QString &sdp);
-    void onRemoteAnswer(const QString &callId, const QString &sdp);
-    void onRemoteCandidates(const QString &callId, const QVariantList &candidates);
-    void onRemoteHangup(const QString &callId);
+    void onRemoteAnswer(const QString &roomId,
+                        const QString &sender,
+                        const QString &callId,
+                        const QString &sdp);
+    void onRemoteCandidates(const QString &roomId,
+                            const QString &sender,
+                            const QString &callId,
+                            const QVariantList &candidates);
+    void onRemoteHangup(const QString &roomId, const QString &sender, const QString &callId);
 
 signals:
     void statusChanged();
@@ -152,6 +177,10 @@ private:
     bool m_isCaller = false;
     /// Whether this call negotiated a camera stream.
     bool m_withVideo = false;
+    bool m_videoOffered = false;
+    /// Stops a ring nobody answers.
+    QTimer m_ringTimeout;
+    bool m_videoRefused = false;
 
     QString m_status;
     QString m_state = QStringLiteral("idle");
@@ -175,7 +204,9 @@ private:
     QString m_cameraFormat;
 
     /// Frames the camera has delivered in this call; zero means it never ran.
-    unsigned m_cameraFrames = 0;
+    // Written on the camera's streaming thread, read on the Qt one: the
+    // watchdog that reads a stale zero tears a working video call down.
+    QAtomicInt m_cameraFrames;
 };
 
 #endif // CALLENGINE_H

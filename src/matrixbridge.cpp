@@ -1,5 +1,7 @@
 #include "matrixbridge.h"
 
+#include "emojistore.h"
+
 #include "appsettings.h"
 #include "secretskeeper.h"
 
@@ -47,6 +49,7 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                            QObject *parent)
     : QObject(parent)
     , m_dataDirectory(dataDirectory)
+    , m_cacheDirectory(cacheDirectory)
     , m_settings(settings)
 {
     // The read status can only be chosen when a timeline is built, so the one
@@ -59,6 +62,27 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
             }
         });
     }
+
+    // The call rules travel to the core, where a refused call is dropped
+    // before it can ring, and follow every change of the privacy page.
+    if (m_settings) {
+        connect(m_settings, &AppSettings::callPolicyChanged, this,
+                &MatrixBridge::pushCallPolicy);
+    }
+
+    // A banner that waited in vain for its text goes out as a count. Without
+    // this a room whose latest event never resolves - an event kind the
+    // preview has no words for, a decryption that does not come - would
+    // announce nothing at all.
+    m_bannerTimeout.setSingleShot(true);
+    m_bannerTimeout.setInterval(900);
+    connect(&m_bannerTimeout, &QTimer::timeout, this, [this]() {
+        const auto pending = m_pendingBanners;
+        m_pendingBanners.clear();
+        for (auto it = pending.constBegin(); it != pending.constEnd(); ++it) {
+            publishBanner(it.key(), it.value(), QJsonObject());
+        }
+    });
 
     // Started before anything can be sent: every pending command is stamped
     // against this clock, and reading an unstarted QElapsedTimer is undefined.
@@ -84,6 +108,52 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     }
 
     xm_core_set_callback(m_core, &MatrixBridge::deliver, this);
+
+    // Signing out takes the decrypted media with it, unless the user asked
+    // for "never" - that setting means never. The lists that name people go in
+    // every case: they belong to the account that is leaving.
+    connect(this, &MatrixBridge::sessionChanged, this, [this]() {
+        if (m_sessionState == QLatin1String("signed-in") && !m_privateListsReadable) {
+            // A key that arrived late - the collection was locked at start.
+            send(QStringLiteral("private.get"));
+            return;
+        }
+        if (m_sessionState != QLatin1String("none") || !m_settings) {
+            return;
+        }
+        m_privateLists.clear();
+        m_privateListsReadable = false;
+        emit privateListsChanged();
+        if (m_settings->mediaWipe() != QLatin1String("never")) {
+            clearMediaCache();
+        }
+    });
+
+    // Leftovers from a run that was killed rather than closed.
+    if (m_settings) {
+        const QString when = m_settings->mediaWipe();
+        if (when == QLatin1String("exit") || when == QLatin1String("background")) {
+            clearMediaCache();
+        }
+    }
+
+    // The strict stage: gone as soon as the app is not in front any more.
+    connect(qGuiApp, &QGuiApplication::applicationStateChanged, this,
+            [this](Qt::ApplicationState state) {
+                if (state == Qt::ApplicationActive || !m_settings) {
+                    return;
+                }
+                if (m_settings->mediaWipe() == QLatin1String("background")) {
+                    clearMediaCache();
+                }
+            });
+
+    // The encrypted lists, and with them the callers the policy allows.
+    send(QStringLiteral("private.get"));
+
+    // Before any sync can deliver a call: the core refuses what the privacy
+    // page refuses, and it has to know the rules from the first event on.
+    pushCallPolicy();
 
     // Asked once at start, before anything else: whether the files on this
     // device are encrypted is a property of the disk, not of a session, and
@@ -142,7 +212,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                 send(QStringLiteral("call.hangup"), arguments);
             });
 
-    m_recorder = new VoiceRecorder(cacheDirectory + QStringLiteral("/voice"), this);
+    m_voiceDirectory = cacheDirectory + QStringLiteral("/voice");
+    m_recorder = new VoiceRecorder(m_voiceDirectory, this);
     connect(m_recorder, &VoiceRecorder::finished, this, [this](const QString &path,
                                                                const QString &mimeType) {
         sendMedia(path, mimeType);
@@ -255,6 +326,37 @@ void MatrixBridge::checkStalledCommands()
         qWarning("xmatic: %s has been waiting %d s for an answer",
                  qPrintable(it->command),
                  static_cast<int>(waited / 1000));
+    }
+
+    // A command that never came back used to sit in the list for good, and
+    // `busy` sits on that list: one lost answer froze the sign-in page, text
+    // field included, until the app was restarted. Two minutes is far past any
+    // retry budget the SDK has.
+    static const qint64 giveUp = 120000;
+    QStringList abandoned;
+    for (auto it = m_pending.begin(); it != m_pending.end();) {
+        if (now - it->sentAt < giveUp) {
+            ++it;
+            continue;
+        }
+        abandoned.append(it->command);
+        // The two states that gate a page are not in this list: a lost login
+        // reply left the sign-in page frozen, and a lost pagination reply left
+        // "load older messages" dead for the rest of the session.
+        if (it.key() == m_paginateId) {
+            m_paginateId = 0;
+            emit paginatingChanged();
+        }
+        if (it->command.startsWith(QLatin1String("login."))) {
+            setLoginRunning(false);
+        }
+        it = m_pending.erase(it);
+    }
+    if (!abandoned.isEmpty()) {
+        qWarning("xmatic: gave up waiting for %d command(s): %s",
+                 int(abandoned.count()), qPrintable(abandoned.join(QStringLiteral(", "))));
+        emit busyChanged();
+        updateStallWatch();
     }
 }
 
@@ -688,24 +790,63 @@ QString MatrixBridge::emojiSource(const QString &key) const
     const QVector<uint> points = key.toUcs4();
     const bool joined = points.contains(0x200D);
     QStringList parts;
+    QStringList bare;
     for (uint point : points) {
+        const QString hex = QString::number(point, 16);
+        if (point != 0xFE0F) {
+            bare.append(hex);
+        }
         if (point == 0xFE0F && !joined) {
             continue;
         }
-        parts.append(QString::number(point, 16));
+        parts.append(hex);
+    }
+
+    // The second name is the first with every variation selector gone. Sets
+    // agree on the rule above but not on every sequence: one of them names the
+    // eye in a speech bubble that way, and a name that is merely spelled
+    // differently should not read as "no picture".
+    QStringList names;
+    names.append(parts.join(QLatin1Char('-')));
+    if (bare != parts) {
+        names.append(bare.join(QLatin1Char('-')));
     }
 
     QString found;
-    if (!parts.isEmpty()) {
-        const QString base = emojiDirectory() + QLatin1Char('/') + parts.join(QLatin1Char('-'));
-        for (const QString &extension : { QStringLiteral(".svg"), QStringLiteral(".png") }) {
+    // A set that was read in through the app is served by the provider, which
+    // checks each picture against the checksum taken when it was written. A
+    // set somebody copied into the directory by hand has no checksums to check
+    // against and is opened as a plain file, exactly as before - that path is
+    // unchecked, and the setting's own text says what it costs.
+    const bool checked = m_emojiStore && m_emojiStore->verified();
+    for (const QString &name : names) {
+        if (name.isEmpty()) {
+            continue;
+        }
+        if (checked) {
+            if (m_emojiStore->knows(name + QStringLiteral(".png"))) {
+                found = QStringLiteral("image://xmatic-emoji/") + name;
+                break;
+            }
+            continue;
+        }
+        const QString base = emojiDirectory() + QLatin1Char('/') + name;
+        // PNG only. A hand-copied set has no checksums, and handing an SVG
+        // from outside to Qt 5.6's parser at display time - once per row, per
+        // redraw - is the one thing this feature must not do. Reading a set in
+        // through Appearance rasterises it and lifts this restriction.
+        for (const QString &extension : { QStringLiteral(".png") }) {
             const QFileInfo file(base + extension);
             if (file.exists() && file.isFile() && file.size() <= 64 * 1024) {
                 found = QUrl::fromLocalFile(file.absoluteFilePath()).toString();
                 break;
             }
         }
+        if (!found.isEmpty()) {
+            break;
+        }
     }
+
 
     m_emojiSources.insert(key, found);
     return found;
@@ -905,7 +1046,204 @@ void MatrixBridge::sendMessage(const QString &body)
 
 void MatrixBridge::markRead()
 {
+    // Reading without telling anybody is a choice the privacy page offers.
+    // Only the automatic receipt is held back here; "mark as read" in the chat
+    // list stays a deliberate action and still sends one.
+    if (m_settings && !m_settings->sendReadReceipts()) {
+        return;
+    }
     send(QStringLiteral("timeline.markRead"));
+}
+
+bool MatrixBridge::shareableFile(const QString &path) const
+{
+    QString local = path;
+    if (local.startsWith(QLatin1String("file://"))) {
+        local = QUrl(local).toLocalFile();
+    }
+    const QFileInfo info(local);
+    const QString resolved = info.canonicalFilePath().isEmpty()
+            ? info.absoluteFilePath()
+            : info.canonicalFilePath();
+    if (resolved.isEmpty()) {
+        return false;
+    }
+
+    // Canonical on both sides, so a link cannot point in from outside.
+    const QStringList mine {
+        m_dataDirectory,
+        m_cacheDirectory,
+        QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation),
+    };
+    for (const QString &directory : mine) {
+        if (directory.isEmpty()) {
+            continue;
+        }
+        const QFileInfo own(directory);
+        const QString ownPath = own.canonicalFilePath().isEmpty()
+                ? own.absoluteFilePath()
+                : own.canonicalFilePath();
+        if (!ownPath.isEmpty()
+            && (resolved == ownPath || resolved.startsWith(ownPath + QLatin1Char('/')))) {
+            qWarning("xmatic: a share pointed at this app's own data and was refused");
+            return false;
+        }
+    }
+    return true;
+}
+
+void MatrixBridge::clearMediaCache()
+{
+    if (m_cacheDirectory.isEmpty()) {
+        return;
+    }
+    QDir(m_cacheDirectory + QStringLiteral("/media")).removeRecursively();
+    QDir(m_cacheDirectory + QStringLiteral("/voice")).removeRecursively();
+    m_media.clear();
+}
+
+bool MatrixBridge::callerAllowed(const QString &userId) const
+{
+    return m_privateLists.value(QStringLiteral("callers")).contains(userId.trimmed());
+}
+
+void MatrixBridge::allowCaller(const QString &userId)
+{
+    const QString id = userId.trimmed();
+    // A Matrix address and nothing that could be a pattern: the list is
+    // compared literally.
+    if (!id.startsWith(QLatin1Char('@')) || !id.contains(QLatin1Char(':'))) {
+        return;
+    }
+    QStringList callers = m_privateLists.value(QStringLiteral("callers"));
+    if (callers.contains(id)) {
+        return;
+    }
+    callers.append(id);
+    sendPrivateList(QStringLiteral("callers"), callers);
+}
+
+void MatrixBridge::forbidCaller(const QString &userId)
+{
+    QStringList callers = m_privateLists.value(QStringLiteral("callers"));
+    if (callers.removeAll(userId.trimmed()) == 0) {
+        return;
+    }
+    sendPrivateList(QStringLiteral("callers"), callers);
+}
+
+bool MatrixBridge::recipientTrusted(const QString &userId) const
+{
+    return m_privateLists.value(QStringLiteral("trusted")).contains(userId);
+}
+
+void MatrixBridge::trustRecipient(const QString &userId)
+{
+    QStringList trusted = m_privateLists.value(QStringLiteral("trusted"));
+    if (userId.isEmpty() || trusted.contains(userId)) {
+        return;
+    }
+    trusted.append(userId);
+    sendPrivateList(QStringLiteral("trusted"), trusted);
+}
+
+int MatrixBridge::resetRecipientWarnings()
+{
+    const int count = m_privateLists.value(QStringLiteral("trusted")).count();
+    if (count > 0) {
+        sendPrivateList(QStringLiteral("trusted"), QStringList());
+    }
+    return count;
+}
+
+void MatrixBridge::sendPrivateList(const QString &list, const QStringList &values)
+{
+    if (!m_privateListsReadable) {
+        // Locked or damaged: writing now would replace what could not be read.
+        setLastError(tr("The stored lists cannot be read right now."));
+        return;
+    }
+
+    // Local first, so the UI does not wait for a round trip; the answer
+    // carries the stored truth and overwrites it.
+    m_privateLists.insert(list, values);
+    sendPrivateLists();
+}
+
+/// Writes every list in one command. The core replaces the file with what
+/// arrives, so there is no read-modify-write to race with.
+void MatrixBridge::sendPrivateLists()
+{
+    if (!m_privateListsReadable) {
+        setLastError(tr("The stored lists cannot be read right now."));
+        return;
+    }
+
+    emit privateListsChanged();
+    pushCallPolicy();
+
+    QJsonObject lists;
+    for (auto it = m_privateLists.constBegin(); it != m_privateLists.constEnd(); ++it) {
+        lists.insert(it.key(), QJsonArray::fromStringList(it.value()));
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("lists"), lists);
+    send(QStringLiteral("private.set"), arguments);
+}
+
+void MatrixBridge::pushCallPolicy()
+{
+    if (!m_settings) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("policy"), m_settings->callPolicy());
+    arguments.insert(QStringLiteral("groups"), m_settings->groupCalls());
+    arguments.insert(QStringLiteral("video"), m_settings->videoCalls());
+    arguments.insert(QStringLiteral("flood"), m_settings->callFlood());
+    arguments.insert(QStringLiteral("allowed"),
+                     QJsonArray::fromStringList(allowedCallers()));
+    send(QStringLiteral("calls.setPolicy"), arguments);
+}
+
+void MatrixBridge::setEmojiStore(EmojiStore *store)
+{
+    m_emojiStore = store;
+    if (!m_emojiStore) {
+        return;
+    }
+    // Reading a set in, or throwing it away, changes what every lookup should
+    // answer - and the answers are cached. Both signals may come from the
+    // image thread, hence queued.
+    const auto invalidate = [this]() {
+        m_emojiSources.clear();
+        ++m_emojiRevision;
+        emit emojiRevisionChanged();
+    };
+    connect(m_emojiStore, &EmojiStore::contentChanged, this, invalidate, Qt::QueuedConnection);
+    connect(m_emojiStore, &EmojiStore::tamperedChanged, this, invalidate, Qt::QueuedConnection);
+}
+
+void MatrixBridge::loadRoomLink(const QString &roomId)
+{
+    if (roomId.isEmpty()) {
+        return;
+    }
+    setLastError(QString());
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    send(QStringLiteral("room.permalink"), arguments);
+}
+
+void MatrixBridge::loadReaders(const QString &eventId)
+{
+    if (eventId.isEmpty()) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("eventId"), eventId);
+    const quint64 id = send(QStringLiteral("timeline.readers"), arguments);
+    m_readerRequests.insert(id, eventId);
 }
 
 void MatrixBridge::joinRoom(const QString &roomId)
@@ -1033,6 +1371,11 @@ void MatrixBridge::cancelVerification()
     send(QStringLiteral("verification.cancel"));
 }
 
+void MatrixBridge::reportVerificationMismatch()
+{
+    send(QStringLiteral("verification.mismatch"));
+}
+
 void MatrixBridge::clearVerification()
 {
     m_verificationState = QStringLiteral("none");
@@ -1155,7 +1498,12 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                      mimeType.isEmpty() ? QStringLiteral("application/octet-stream") : mimeType);
     arguments.insert(QStringLiteral("caption"), caption);
     arguments.insert(QStringLiteral("replyTo"), replyTo);
-    send(QStringLiteral("timeline.sendMedia"), arguments);
+    const quint64 id = send(QStringLiteral("timeline.sendMedia"), arguments);
+    // A recording of one's own is not a document the user keeps: it goes as
+    // soon as it is out.
+    if (!m_voiceDirectory.isEmpty() && local.startsWith(m_voiceDirectory)) {
+        m_voiceSends.insert(id, local);
+    }
 }
 
 void MatrixBridge::forwardToRoom(const QString &roomId,
@@ -1379,6 +1727,23 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         m_mediaRequests.remove(id);
         m_hierarchyRequests.remove(id);
         m_removeRequests.remove(id);
+        m_readerRequests.remove(id);
+        if (entry.command == QLatin1String("private.set")) {
+            // The local copy was updated before the round trip; a refused
+            // write must not leave the caller looking allowed.
+            send(QStringLiteral("private.get"));
+        }
+        // The recording stays where it is: the send failed, and it is the
+        // only copy.
+        m_voiceSends.remove(id);
+        // "command not understood" means the two halves of the app do not
+        // match - a stale core against a newer bridge. The list of every
+        // command it does know belongs in the journal, not in a banner.
+        if (error.startsWith(QLatin1String("command not understood"))) {
+            qWarning("xmatic: %s rejected by the core: %s",
+                     qPrintable(command), qPrintable(error.left(120)));
+            return;
+        }
         setLastError(error);
         return;
     }
@@ -1554,6 +1919,11 @@ bool MatrixBridge::replyRoom(quint64 id, const QString &command, const QJsonObje
         return true;
     }
 
+    if (command == QLatin1String("room.permalink")) {
+        emit roomLinkReady(data.value(QStringLiteral("link")).toString());
+        return true;
+    }
+
     if (command == QLatin1String("room.directChat")) {
         emit directChatReady(data.value(QStringLiteral("roomId")).toString());
         return true;
@@ -1646,6 +2016,84 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
         return true;
     }
 
+    if (command == QLatin1String("private.set") && m_legacyDropPending && m_settings) {
+        // The encrypted copy exists now, so the plaintext one may go.
+        m_legacyDropPending = false;
+        m_settings->dropLegacyLists();
+    }
+
+    if (command == QLatin1String("private.get") || command == QLatin1String("private.set")) {
+        const QJsonObject lists = data.value(QStringLiteral("lists")).toObject();
+        m_privateLists.clear();
+        for (auto it = lists.constBegin(); it != lists.constEnd(); ++it) {
+            QStringList values;
+            for (const QJsonValue &value : it.value().toArray()) {
+                values.append(value.toString());
+            }
+            m_privateLists.insert(it.key(), values);
+        }
+
+        // Whether the file could be read at all. Locked or damaged is not
+        // empty, and nothing may be written over it - the store key is bound
+        // to the device lock and is missing after every reboot until the
+        // system dialog has run.
+        m_privateListsReadable = data.value(QStringLiteral("readable")).toBool();
+
+        // Anything the plain settings file still holds moves over once, and is
+        // removed there: a list of names does not belong in a file that any
+        // backup copies in the clear. Only where the encrypted file was
+        // readable - otherwise the move would delete the only copy.
+        if (command == QLatin1String("private.get") && m_settings && m_privateListsReadable) {
+            const QStringList callers = m_settings->legacyAllowedCallers();
+            const QStringList trusted = m_settings->legacyTrustedRecipients();
+            if (!callers.isEmpty() || !trusted.isEmpty()) {
+                // Both lists in one write. Two commands would be two
+                // read-modify-writes racing each other, and the second would
+                // overwrite the first - on the very migration that then
+                // deletes the plaintext original.
+                for (const QString &caller : callers) {
+                    QStringList merged = m_privateLists.value(QStringLiteral("callers"));
+                    if (!merged.contains(caller)) {
+                        merged.append(caller);
+                        m_privateLists.insert(QStringLiteral("callers"), merged);
+                    }
+                }
+                for (const QString &user : trusted) {
+                    QStringList merged = m_privateLists.value(QStringLiteral("trusted"));
+                    if (!merged.contains(user)) {
+                        merged.append(user);
+                        m_privateLists.insert(QStringLiteral("trusted"), merged);
+                    }
+                }
+                sendPrivateLists();
+                // Dropped only when the encrypted write came back ok; see
+                // the reply handler for `private.set`.
+                m_legacyDropPending = true;
+            }
+        }
+
+        emit privateListsChanged();
+        pushCallPolicy();
+        return true;
+    }
+
+    if (command == QLatin1String("timeline.sendMedia")) {
+        const QString recording = m_voiceSends.take(id);
+        if (!recording.isEmpty()) {
+            QFile::remove(recording);
+        }
+        return false;
+    }
+
+    if (command == QLatin1String("timeline.readers")) {
+        const QString eventId = m_readerRequests.take(id);
+        if (!eventId.isEmpty()) {
+            emit readersReady(eventId,
+                              data.value(QStringLiteral("readers")).toArray().toVariantList());
+        }
+        return true;
+    }
+
     if (command == QLatin1String("timeline.open")) {
         setTimelineReady(true);
         // Only for the live view. A focused open - the pinned overview, a
@@ -1694,6 +2142,12 @@ bool MatrixBridge::replyEncryption(const QString &command, const QJsonObject &da
 /// Replies about calls.
 bool MatrixBridge::replyCall(const QString &command, const QJsonObject &data)
 {
+    if (command == QLatin1String("call.invite")) {
+        // The one member who may answer, from the room's own membership.
+        m_calls->setExpectedPeer(data.value(QStringLiteral("peer")).toString());
+        return true;
+    }
+
 
     if (command == QLatin1String("call.turnServers")) {
         QVariantList servers;
@@ -1741,18 +2195,52 @@ void MatrixBridge::handleEvent(const QJsonObject &message)
 bool MatrixBridge::eventCall(const QString &name, const QJsonObject &data)
 {
     if (name == QLatin1String("call.invite")) {
+        // A late ring is either our fault or the delivery's; this number says
+        // which, without naming anybody.
+        qInfo("xmatic: incoming call, %lld ms after it was sent",
+              static_cast<long long>(data.value(QStringLiteral("ageMs")).toDouble()));
         m_calls->onRemoteInvite(data.value(QStringLiteral("roomId")).toString(),
+                                data.value(QStringLiteral("video")).toBool(),
+                                data.value(QStringLiteral("videoOffered")).toBool(),
                                 data.value(QStringLiteral("sender")).toString(),
                                 data.value(QStringLiteral("callId")).toString(),
                                 data.value(QStringLiteral("sdp")).toString());
     } else if (name == QLatin1String("call.answer")) {
-        m_calls->onRemoteAnswer(data.value(QStringLiteral("callId")).toString(),
+        // Room and sender travel with the event and are checked in the engine:
+        // a call id is public to everybody in the room.
+        m_calls->onRemoteAnswer(data.value(QStringLiteral("roomId")).toString(),
+                                data.value(QStringLiteral("sender")).toString(),
+                                data.value(QStringLiteral("callId")).toString(),
                                 data.value(QStringLiteral("sdp")).toString());
     } else if (name == QLatin1String("call.candidates")) {
-        m_calls->onRemoteCandidates(data.value(QStringLiteral("callId")).toString(),
+        m_calls->onRemoteCandidates(data.value(QStringLiteral("roomId")).toString(),
+                                    data.value(QStringLiteral("sender")).toString(),
+                                    data.value(QStringLiteral("callId")).toString(),
                                     data.value(QStringLiteral("candidates")).toArray().toVariantList());
+    } else if (name == QLatin1String("call.blocked")) {
+        // The invitation still raised the server's notification counter, and
+        // the chat list turns that into a banner. Refusing the call and then
+        // beeping about it is the opposite of what the setting promises.
+        const QString roomId = data.value(QStringLiteral("roomId")).toString();
+        if (!roomId.isEmpty()) {
+            // Short, and once per room per minute. Longer or repeatable turns
+            // a refused call into a way of silencing a room's messages: the
+            // caller chooses when to send, and every invitation would extend
+            // the silence.
+            const qint64 now = m_uptime.elapsed();
+            const qint64 last = m_blockedCallRooms.value(roomId, -60000);
+            if (now - last >= 60000) {
+                m_blockedCallRooms.insert(roomId, now);
+            }
+        }
+        // No identifier, only the reason: this is the line that tells a silent
+        // phone from a phone nobody called.
+        qInfo("xmatic: an incoming call was refused (%s)",
+              qPrintable(data.value(QStringLiteral("reason")).toString()));
     } else if (name == QLatin1String("call.hangup")) {
-        m_calls->onRemoteHangup(data.value(QStringLiteral("callId")).toString());
+        m_calls->onRemoteHangup(data.value(QStringLiteral("roomId")).toString(),
+                                data.value(QStringLiteral("sender")).toString(),
+                                data.value(QStringLiteral("callId")).toString());
     } else {
         return false;
     }
@@ -1938,6 +2426,15 @@ bool MatrixBridge::eventLists(const QString &name, const QJsonObject &data)
 /// Events about the session, sync and profile.
 bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
 {
+    if (name == QLatin1String("session.expired")) {
+        // Emitted by the core and, until now, understood by nobody: the room
+        // list then sat there empty and quietly not syncing.
+        qWarning("xmatic: the session expired");
+        applySession(QJsonObject { { QStringLiteral("state"), QStringLiteral("none") } });
+        setLastError(tr("Your session has ended. Please sign in again."));
+        return true;
+    }
+
     if (name == QLatin1String("sync.support")) {
         // A server that cannot do this app's sync fails every sync, which the
         // offline mode turns into "offline" plus a restart loop — a flashing
@@ -2079,6 +2576,9 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
         // whether a room may *raise* a banner, not whether a banner that
         // stands may go.
         if (notifications == 0 && previous > 0) {
+            // A banner still waiting for its text is pointless now: the room
+            // was read somewhere else, and what it would announce is gone.
+            m_pendingBanners.remove(id);
             emit roomRead(id);
         }
 
@@ -2103,19 +2603,64 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
         // precisely the room someone tests with, which is how it was found.
         const bool onScreen = !m_visibleRoomId.isEmpty() && id == m_visibleRoomId
                 && QGuiApplication::applicationState() == Qt::ApplicationActive;
+        // The room's latest event, by the timestamp that travels with it. The
+        // preview in this very object belongs to that event, so a timestamp
+        // that moved is the proof that the text is the new message's and not
+        // its predecessor's.
+        const quint64 timestamp = static_cast<quint64>(
+            room.value(QStringLiteral("timestamp")).toDouble());
+
+        const auto waiting = m_pendingBanners.find(id);
+        if (waiting != m_pendingBanners.end() && timestamp > waiting->timestamp) {
+            const PendingBanner ready = *waiting;
+            m_pendingBanners.erase(waiting);
+            publishBanner(id, ready, room);
+        }
+
         // The count shown is the notifying one too: in a mentions-only room
         // "50 new messages" over one lone mention would point at the wrong
         // thing.
-        if (notifications > previous && !onScreen) {
-            emit roomActivity(id,
-                              room.value(QStringLiteral("name")).toString(),
-                              notifications,
-                              room.value(QStringLiteral("mentions")).toInt(),
-                              room.value(QStringLiteral("previewKind")).toString(),
-                              room.value(QStringLiteral("previewText")).toString(),
-                              room.value(QStringLiteral("previewSender")).toString());
+        // A call this device refused a moment ago: its own counter rise is
+        // what would ring here.
+        const auto blocked = m_blockedCallRooms.constFind(id);
+        const bool afterBlockedCall = blocked != m_blockedCallRooms.constEnd()
+                && m_uptime.elapsed() - *blocked < 5000;
+
+        if (notifications > previous && !onScreen && !afterBlockedCall) {
+            PendingBanner pending;
+            pending.name = room.value(QStringLiteral("name")).toString();
+            pending.notifications = notifications;
+            pending.mentions = room.value(QStringLiteral("mentions")).toInt();
+            pending.timestamp = timestamp;
+
+            // Without the message text there is nothing to wait for: the
+            // banner says how many arrived, and that number is right already.
+            if (!m_settings || !m_settings->notificationPreview()) {
+                publishBanner(id, pending, room);
+                continue;
+            }
+
+            m_pendingBanners.insert(id, pending);
+            if (!m_bannerTimeout.isActive()) {
+                m_bannerTimeout.start();
+            }
         }
     }
+}
+
+/// One banner, from what was known when the counts rose plus whatever text the
+/// room carries now. An empty `room` is the timeout's way of saying "no text
+/// arrived" — the count line then stands on its own.
+void MatrixBridge::publishBanner(const QString &roomId, const PendingBanner &pending,
+                                 const QJsonObject &room)
+{
+    emit roomActivity(roomId,
+                      pending.name,
+                      pending.notifications,
+                      pending.mentions,
+                      room.value(QStringLiteral("previewKind")).toString(),
+                      room.value(QStringLiteral("previewText")).toString(),
+                      room.value(QStringLiteral("previewSender")).toString());
 }
 
 void MatrixBridge::updateSpaceChildren(const QJsonObject &spaces)

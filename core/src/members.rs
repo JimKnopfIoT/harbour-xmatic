@@ -6,7 +6,7 @@
 //! while the page is open is rare enough that a refresh covers it; a live
 //! stream would be the follow-up if that ever matters.
 
-use crate::timeline::scrub_ids;
+use crate::text::scrub_ids;
 use crate::text::strip_bidi;
 use matrix_sdk::ruma::events::ignored_user_list::{IgnoredUser, IgnoredUserListEventContent};
 use matrix_sdk::ruma::events::room::member::MembershipState;

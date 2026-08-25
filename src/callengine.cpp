@@ -1,6 +1,7 @@
 #include "callengine.h"
 
 #include <QDateTime>
+#include <QFile>
 #include <QMetaObject>
 #include <QUrl>
 #include <QVariantMap>
@@ -92,13 +93,55 @@ QByteArray videoPipelineDescription()
         .toLatin1();
 }
 
+/// Which decoders a call may plug in.
+///
+/// Matrix negotiates Opus and VP8, so those are the ones a call needs. Without
+/// a list the other side decides which of the phone's decoders parses its
+/// bytes - every one of them, gst-libav included, from a stranger's RTP.
+/// Also skips gst-droid, which force-sw-decoders does not catch and which
+/// takes the call's audio down with it.
+gint chooseDecoder(GstElement *, GstPad *, GstCaps *, GstElementFactory *factory, gpointer)
+{
+    // 2 = GST_AUTOPLUG_SELECT_SKIP, 0 = GST_AUTOPLUG_SELECT_TRY.
+    const gchar *name = factory
+        ? gst_plugin_feature_get_name(GST_PLUGIN_FEATURE(factory))
+        : nullptr;
+    if (!name) {
+        return 2;
+    }
+    static const char *const allowed[] = {
+        "opusdec", "vp8dec", "vp9dec",
+        "rtpopusdepay", "rtpvp8depay", "rtpvp9depay",
+        "opusparse", "rtpjitterbuffer",
+    };
+    for (const char *entry : allowed) {
+        if (g_strcmp0(name, entry) == 0) {
+            return 0;
+        }
+    }
+    return 2;
+}
+
+/// What a remote frame may measure. The sender chooses the size, and the
+/// receive path allocates from it.
+const int kMaximumRemoteWidth = 1920;
+const int kMaximumRemoteHeight = 1920;
+
 /// A random identifier for one call, as the specification requires.
+///
+/// From the kernel, not from a clock and an LCG: everybody in the room sees a
+/// call id, and an id that can be guessed is an id somebody else can answer.
 QString freshId(const QString &prefix)
 {
-    return QStringLiteral("%1%2%3")
-        .arg(prefix)
-        .arg(QDateTime::currentMSecsSinceEpoch())
-        .arg(qrand() % 100000);
+    QByteArray random(16, '\0');
+    QFile source(QStringLiteral("/dev/urandom"));
+    if (source.open(QIODevice::ReadOnly)
+        && source.read(random.data(), random.size()) == random.size()) {
+        return prefix + QString::fromLatin1(random.toHex());
+    }
+    // Nothing to fall back to that is worth having; refuse rather than pretend.
+    qWarning("xmatic: no random source for a call identifier");
+    return QString();
 }
 
 } // namespace
@@ -106,9 +149,13 @@ QString freshId(const QString &prefix)
 CallEngine::CallEngine(QObject *parent)
     : QObject(parent)
 {
-    // qrand() is process-wide but unseeded runs produce the same call IDs on
-    // every start.
-    qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch()));
+    m_ringTimeout.setSingleShot(true);
+    m_ringTimeout.setInterval(45000);
+    connect(&m_ringTimeout, &QTimer::timeout, this, [this]() {
+        if (m_state == QLatin1String("ringing")) {
+            hangUp();
+        }
+    });
 
     // Queued on purpose: frames arrive on the camera's thread, and pushing
     // them from there races with tearing the pipeline down.
@@ -123,7 +170,7 @@ CallEngine::CallEngine(QObject *parent)
     m_cameraWatchdog.setSingleShot(true);
     m_cameraWatchdog.setInterval(3000);
     connect(&m_cameraWatchdog, &QTimer::timeout, this, [this]() {
-        if (!m_withVideo || m_cameraFrames > 0 || m_state == QLatin1String("idle")) {
+        if (!m_withVideo || m_cameraFrames.load() > 0 || m_state == QLatin1String("idle")) {
             return;
         }
         qWarning("xmatic: the camera produced nothing, falling back to a voice call");
@@ -180,6 +227,10 @@ void CallEngine::setStatus(const QString &status)
 
 void CallEngine::setState(const QString &state)
 {
+    if (state != QLatin1String("ringing")) {
+        m_ringTimeout.stop();
+    }
+
     if (m_state == state) {
         return;
     }
@@ -269,7 +320,7 @@ bool CallEngine::buildPipeline()
     // Count what the camera actually delivers. An outgoing video call that
     // never connects looks identical whether the sensor produced nothing or
     // the negotiation failed, and only this tells the two apart.
-    m_cameraFrames = 0;
+    m_cameraFrames.store(0);
     m_cameraFormat.clear();
     m_cameraFeed = m_withVideo ? gst_bin_get_by_name(GST_BIN(m_pipeline), "camsrc") : nullptr;
     m_cameraFlip = m_withVideo ? gst_bin_get_by_name(GST_BIN(m_pipeline), "camflip") : nullptr;
@@ -318,12 +369,21 @@ void CallEngine::applyTurnServers()
             continue;
         }
 
-        // webrtcbin wants the credentials inside the URI, percent-encoded.
+        // webrtcbin wants the credentials inside the URI, percent-encoded, and
+        // the scheme kept: `turns:` is the relay over TLS, and rewriting it to
+        // `turn:` sent the allocation out in the clear. Only the leading
+        // scheme goes, never a match somewhere inside the host.
+        QString scheme = QStringLiteral("turn");
         QString address = uri;
-        address.remove(QStringLiteral("turn:"));
-        address.remove(QStringLiteral("turns:"));
-        const QString full = QStringLiteral("turn://%1:%2@%3")
-                                 .arg(QString::fromUtf8(QUrl::toPercentEncoding(user)),
+        if (address.startsWith(QStringLiteral("turns:"), Qt::CaseInsensitive)) {
+            scheme = QStringLiteral("turns");
+            address = address.mid(6);
+        } else if (address.startsWith(QStringLiteral("turn:"), Qt::CaseInsensitive)) {
+            address = address.mid(5);
+        }
+        const QString full = QStringLiteral("%1://%2:%3@%4")
+                                 .arg(scheme,
+                                      QString::fromUtf8(QUrl::toPercentEncoding(user)),
                                       QString::fromUtf8(QUrl::toPercentEncoding(password)),
                                       address);
 
@@ -363,7 +423,7 @@ void CallEngine::pushCameraFrame(const QByteArray &data,
     g_signal_emit_by_name(m_cameraFeed, "push-buffer", buffer, &flow);
     gst_buffer_unref(buffer);
 
-    if (flow != GST_FLOW_OK && m_cameraFrames < 2) {
+    if (flow != GST_FLOW_OK && m_cameraFrames.load() < 2) {
         qWarning("xmatic: camera frame rejected by the pipeline (%d)", int(flow));
     }
 }
@@ -407,6 +467,8 @@ void CallEngine::placeCall(const QString &roomId, bool withVideo)
 }
 
 void CallEngine::onRemoteInvite(const QString &roomId,
+                                bool videoAllowed,
+                                bool videoOffered,
                                 const QString &sender,
                                 const QString &callId,
                                 const QString &sdp)
@@ -425,17 +487,35 @@ void CallEngine::onRemoteInvite(const QString &roomId,
     m_callId = callId;
     m_partyId = freshId(QStringLiteral("p"));
     m_isCaller = false;
-    // Answer in kind: a video offer is met with a camera, an audio one is not.
-    m_withVideo = sdp.contains(QLatin1String("m=video")) && CameraSource::isAvailable();
+    // What was offered, not what will be answered: the camera opens when the
+    // user picks the action that opens it, never because the offer asked. The
+    // core has already applied the privacy setting to this flag - with video
+    // calls switched off it arrives false and the two actions collapse to one.
+    m_videoOffered = videoAllowed && CameraSource::isAvailable();
+    m_videoRefused = videoOffered && !m_videoOffered;
+    m_withVideo = false;
     m_pendingRemoteOffer = sdp;
     emit callChanged();
 
     setState(QStringLiteral("ringing"));
+    // A ring that nobody answers ends by itself. Without this the ringtone
+    // loops until the caller gives up - and a caller can choose not to.
+    m_ringTimeout.start();
     emit incomingCall(roomId, sender);
 }
 
-void CallEngine::acceptCall()
+void CallEngine::setExpectedPeer(const QString &peer)
 {
+    if (!m_isCaller || peer.isEmpty() || m_state == QLatin1String("idle")) {
+        return;
+    }
+    m_peer = peer;
+    emit callChanged();
+}
+
+void CallEngine::acceptCall(bool withVideo)
+{
+    m_withVideo = withVideo && m_videoOffered;
     if (m_state != QLatin1String("ringing") || m_pendingRemoteOffer.isEmpty()) {
         return;
     }
@@ -458,11 +538,22 @@ void CallEngine::acceptCall()
     m_pendingRemoteOffer.clear();
 }
 
-void CallEngine::onRemoteAnswer(const QString &callId, const QString &sdp)
+void CallEngine::onRemoteAnswer(const QString &roomId,
+                               const QString &sender,
+                               const QString &callId,
+                               const QString &sdp)
 {
-    if (callId != m_callId || !m_isCaller) {
+    // The id alone is not an authentication: in a room with more than two
+    // members everybody sees it. Who we called is not known in advance, so the
+    // first answer decides it and every later event has to come from the same
+    // party - that is what MSC2746 calls selecting an answer.
+    if (callId != m_callId || !m_isCaller || roomId != m_roomId) {
         return;
     }
+    if (!m_peer.isEmpty() && sender != m_peer) {
+        return;
+    }
+    m_peer = sender;
     setState(QStringLiteral("connecting"));
     applyRemoteDescription(sdp, false);
 }
@@ -506,9 +597,18 @@ void CallEngine::applyRemoteDescription(const QString &sdp, bool isOffer)
     }
 }
 
-void CallEngine::onRemoteCandidates(const QString &callId, const QVariantList &candidates)
+void CallEngine::onRemoteCandidates(const QString &roomId,
+                                   const QString &sender,
+                                   const QString &callId,
+                                   const QVariantList &candidates)
 {
-    if (callId != m_callId || !m_webrtc) {
+    // Same rule as the answer: an injected candidate makes this device send
+    // STUN probes to an address of somebody else's choosing. Before the party
+    // is known - our own call, not yet answered - the room is the whole check.
+    if (callId != m_callId || !m_webrtc || roomId != m_roomId) {
+        return;
+    }
+    if (!m_peer.isEmpty() && sender != m_peer) {
         return;
     }
 
@@ -524,8 +624,19 @@ void CallEngine::onRemoteCandidates(const QString &callId, const QVariantList &c
     }
 }
 
-void CallEngine::onRemoteHangup(const QString &callId)
+void CallEngine::onRemoteHangup(const QString &roomId,
+                               const QString &sender,
+                               const QString &callId)
 {
+    // Room and party, as for the answer: the call id is public to every member
+    // of the room, so on its own it lets any bystander end the call.
+    if (!roomId.isEmpty() && roomId != m_roomId) {
+        return;
+    }
+    if (!m_peer.isEmpty() && !sender.isEmpty() && sender != m_peer) {
+        return;
+    }
+
     if (m_state == QLatin1String("idle")) {
         return;
     }
@@ -706,15 +817,7 @@ void CallEngine::streamAdded(GstElement *, GstPad *pad, void *user)
     // alone does not skip it (gst-droid does not tag it as hardware), so reject
     // any droid* factory explicitly. VP8 in software is cheap enough.
     g_object_set(decode, "force-sw-decoders", TRUE, nullptr);
-    g_signal_connect(
-        decode, "autoplug-select",
-        G_CALLBACK(+[](GstElement *, GstPad *, GstCaps *, GstElementFactory *factory,
-                       gpointer) -> gint {
-            const gchar *name = gst_plugin_feature_get_name(GST_PLUGIN_FEATURE(factory));
-            // 2 = GST_AUTOPLUG_SELECT_SKIP, 0 = GST_AUTOPLUG_SELECT_TRY.
-            return (name && g_str_has_prefix(name, "droid")) ? 2 : 0;
-        }),
-        nullptr);
+    g_signal_connect(decode, "autoplug-select", G_CALLBACK(chooseDecoder), nullptr);
 
     gst_bin_add(GST_BIN(engine->m_pipeline), decode);
     // Connect the handler and link the incoming pad BEFORE decodebin starts,
@@ -745,6 +848,13 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
     const gchar *name = gst_structure_get_name(structure);
     const bool isVideo = name && g_str_has_prefix(name, "video/");
     gst_caps_unref(caps);
+
+    // A call answered without video decodes no video. The privacy switch shut
+    // the camera; it has to shut the decoder too, or the other side still
+    // chooses which of this phone's decoders runs on its bytes.
+    if (isVideo && !engine->m_withVideo) {
+        return;
+    }
 
     GstElement *first = nullptr;
     GstElement *last = nullptr;
@@ -789,8 +899,14 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
         // I420 is what the decoder produces, so the convert element in front
         // is a passthrough and the colour conversion happens on the GPU when
         // the frame is drawn.
-        GstCaps *wanted =
-            gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "I420", nullptr);
+        // No size in these caps. They sit downstream of the decoder, so they
+        // cannot shrink what it already allocated - all they would do is turn
+        // an oversize frame into a not-negotiated error, and that error kills
+        // the shared transport, taking the call's audio with it. The frame is
+        // bounded where it is copied instead.
+        GstCaps *wanted = gst_caps_new_simple("video/x-raw",
+                                              "format", G_TYPE_STRING, "I420",
+                                              nullptr);
         g_object_set(sink, "caps", wanted, "emit-signals", TRUE, "max-buffers", 2,
                      "drop", TRUE, nullptr);
         gst_caps_unref(wanted);
@@ -882,6 +998,15 @@ int CallEngine::videoFrameArrived(void *sink, void *user)
         if (gst_video_frame_map(&frame, &info, buffer, GST_MAP_READ)) {
             const int width = GST_VIDEO_FRAME_WIDTH(&frame);
             const int height = GST_VIDEO_FRAME_HEIGHT(&frame);
+            // What the other side sends decides this allocation, so it is
+            // bounded here. Beyond the cap the frame is dropped rather than
+            // copied; a call that sends 4K to a phone is not a call.
+            if (width <= 0 || height <= 0 || width > kMaximumRemoteWidth
+                || height > kMaximumRemoteHeight) {
+                gst_video_frame_unmap(&frame);
+                gst_sample_unref(sample);
+                return GST_FLOW_OK;
+            }
             // Repack into tight I420: the decoder's planes may be padded to an
             // alignment (16 or 32 on the Gemini), and a QVideoFrame wants
             // contiguous rows. Copy row by row from each plane's real stride.
@@ -948,6 +1073,12 @@ int CallEngine::selfFrameArrived(void *sink, void *user)
         if (gst_video_frame_map(&frame, &info, buffer, GST_MAP_READ)) {
             const int width = GST_VIDEO_FRAME_WIDTH(&frame);
             const int height = GST_VIDEO_FRAME_HEIGHT(&frame);
+            if (width <= 0 || height <= 0 || width > kMaximumRemoteWidth
+                || height > kMaximumRemoteHeight) {
+                gst_video_frame_unmap(&frame);
+                gst_sample_unref(sample);
+                return GST_FLOW_OK;
+            }
             QByteArray tight;
             tight.resize(width * height * 3 / 2);
             char *out = tight.data();
@@ -1008,7 +1139,7 @@ unsigned CallEngine::cameraProbe(GstPad *, void *, void *user)
 
     // Only the first few are worth reporting; after that the camera clearly
     // works and the log would drown.
-    const unsigned seen = ++engine->m_cameraFrames;
+    const int seen = engine->m_cameraFrames.fetchAndAddOrdered(1) + 1;
     if (seen == 1 || seen == 30) {
         qInfo("xmatic: camera delivered %u frames", seen);
     }
@@ -1083,7 +1214,7 @@ void CallEngine::markDisconnected()
 
 void CallEngine::markConnected()
 {
-    if (m_withVideo && m_cameraFrames == 0) {
+    if (m_withVideo && m_cameraFrames.load() == 0) {
         qWarning("xmatic: connected but the camera has produced nothing");
     }
 

@@ -6,7 +6,8 @@
 //! `beginInsertRows` and so on. This is the payoff of putting the protocol in
 //! Rust: nothing here reimplements sync, ordering or unread counting.
 
-use std::sync::Arc;
+use std::collections::HashSet;
+use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 use futures_util::StreamExt;
@@ -45,7 +46,7 @@ use tokio::task::JoinHandle;
 use tokio::time::{sleep, Instant};
 
 use crate::protocol::event;
-use crate::timeline::scrub_ids;
+use crate::text::scrub_ids;
 use crate::runtime::Sink;
 use crate::text::strip_bidi;
 
@@ -174,6 +175,20 @@ pub async fn mark_read(client: &Client, room_id: &str) -> Result<bool, String> {
     Ok(true)
 }
 
+/// A matrix.to link to the room. The SDK picks the address where the room has
+/// one and falls back to the id plus a route - the servers through which
+/// somebody who is not a member can find it. An id alone is not joinable.
+pub async fn permalink(client: &Client, room_id: &str) -> Result<String, String> {
+    let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
+    let room = client
+        .get_room(&parsed)
+        .ok_or_else(|| "room is not known yet".to_owned())?;
+    room.matrix_to_permalink()
+        .await
+        .map(|uri| uri.to_string())
+        .map_err(|error| format!("no link for this room: {}", scrub_ids(&error.to_string())))
+}
+
 fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>, Option<String>) {
     let LatestEventValue::Remote(event) = item.latest_event() else {
         return (None, None, None);
@@ -249,18 +264,56 @@ fn preview_text(body: &str) -> String {
     }
 }
 
+/// Rooms whose display name this process has already asked to be computed.
+static NAMES_REQUESTED: Mutex<Option<HashSet<String>>> = Mutex::new(None);
+
+/// The room's name, and a request for one where the SDK has none yet.
+///
+/// `cached_display_name` is filled by a sync and by nothing else, so a room
+/// seen before that first fill has *no* name - not a wrong one, none, and the
+/// list row, the banner and the room header all showed an empty line. The
+/// computation is spawned once per room; it caches, which makes the next diff
+/// carry the name. Meanwhile the row keeps its empty name rather than being
+/// given an invented one - a wrong name in a chat list is worse than a late
+/// one.
+fn display_name(item: &RoomListItem) -> String {
+    if let Some(name) = item.cached_display_name() {
+        return strip_bidi(&name.to_string());
+    }
+
+    let room_id = item.room_id().to_string();
+    let asked = match NAMES_REQUESTED.lock() {
+        Ok(mut guard) => !guard
+            .get_or_insert_with(HashSet::new)
+            .insert(room_id),
+        Err(_) => true,
+    };
+    if !asked {
+        let room = std::ops::Deref::deref(item).clone();
+        let room_id = item.room_id().to_string();
+        tokio::spawn(async move {
+            if room.display_name().await.is_err() {
+                // Marked before the attempt so two syncs do not both ask; on
+                // failure the mark goes, or one bad moment costs the room its
+                // name for the rest of the process.
+                if let Ok(mut guard) = NAMES_REQUESTED.lock() {
+                    if let Some(rooms) = guard.as_mut() {
+                        rooms.remove(&room_id);
+                    }
+                }
+            }
+        });
+    }
+    String::new()
+}
+
 /// One room as the UI needs it. Deliberately flat and small — this crosses the
 /// FFI on every change.
 fn summarize(item: &RoomListItem) -> Value {
     let (preview_kind, preview_text, preview_sender) = latest_preview(item);
     json!({
         "id": item.room_id().as_str(),
-        "name": strip_bidi(
-            &item
-                .cached_display_name()
-                .map(|name| name.to_string())
-                .unwrap_or_default(),
-        ),
+        "name": display_name(item),
         "unread": item.num_unread_messages(),
         // Counted client-side against the account's push rules: only events
         // whose rules say "notify". This is the number a banner may follow —

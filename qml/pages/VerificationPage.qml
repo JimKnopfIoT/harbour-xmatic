@@ -167,7 +167,15 @@ Page {
                           ? qsTr("They do not match")
                           : qsTr("Decline")
                     onClicked: {
-                        matrix.cancelVerification()
+                        // Two meanings, two codes on the wire: emoji that do
+                        // not match are the one signal that says somebody may
+                        // be in the middle, and only the other side can act on
+                        // it. Declining a request is an ordinary cancel.
+                        if (matrix.verificationState === "comparing") {
+                            matrix.reportVerificationMismatch()
+                        } else {
+                            matrix.cancelVerification()
+                        }
                         pageStack.pop()
                     }
                 }

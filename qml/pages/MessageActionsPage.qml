@@ -169,6 +169,24 @@ Page {
                 onClicked: {
                     var target = page.eventId
                     pageStack.pop()
+                    page.roomPage.openThread(target)
+                }
+                Label {
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: qsTr("Reply in thread")
+                }
+            }
+
+            ListItem {
+                contentHeight: Theme.itemSizeSmall
+                visible: page.eventId.length > 0
+                onClicked: {
+                    var target = page.eventId
+                    pageStack.pop()
                     page.roomPage.pickReaction(target)
                 }
                 Label {

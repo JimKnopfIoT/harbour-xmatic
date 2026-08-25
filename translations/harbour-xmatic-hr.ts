@@ -95,22 +95,6 @@
         <translation>Nema prigušenih upozorenja</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Tekst poruke u obavijestima</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Isključeno: obavijest kaže samo koliko je poruka stiglo. Uključeno: pokazuje zadnju poruku — i na zaključanom zaslonu.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Poveznice koje se mogu dodirnuti</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Uključeno: poveznica u poruci na dodir otvara preglednik. Isključeno: poveznice ostaju obični tekst.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Odjava</translation>
     </message>
@@ -123,20 +107,8 @@
         <translation>Jezik</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Prikaži status čitanja drugih</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Isključeno se ništa ne dohvaća o tome tko je što pročitao, što razgovor drži i tečnijim. Uključeno tvoje poruke pokazuju koliko ih je ljudi pročitalo.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Glasovne poruke</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Uključeno je pored polja za poruku mikrofon: drži za snimanje, pusti za slanje. Isključeno ga nema.</translation>
+        <source>Privacy</source>
+        <translation>Privatnost</translation>
     </message>
 </context>
 <context>
@@ -248,6 +220,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Isključeno se reakcija crta kao znak koji jest — uvijek točno i besplatno. Uključeno xmatic za nju traži tvoju vlastitu sliku u %1, nazvanu po njezinim kodnim točkama (1f44d.svg). Ništa se ne isporučuje niti preuzima. Odvagni: slikovnu datoteku otvara dekoder slika, a ondje je aplikacija ove vrste najizloženija.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Odaberi emoji sličice</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Čitanje sličica…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 preuzeto, %2 odbijeno</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Sličice su se promijenile nakon učitavanja i ne prikazuju se.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Vrati zadane boje</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Ukloni emoji sličice</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -337,6 +333,22 @@
     <message>
         <source>Hang up</source>
         <translation>Prekini</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Prihvati bez kamere</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Prihvati s kamerom</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Dolazni videopoziv</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Videopozivi su isključeni u Privatnosti; ovaj se prihvaća kao glasovni poziv.</translation>
     </message>
 </context>
 <context>
@@ -652,7 +664,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@ime:poslužitelj</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -924,6 +936,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Matični poslužitelj nije vratio kod za prijavu.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Spremljeni popisi trenutačno se ne mogu pročitati.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Tvoja je sesija završila. Prijavi se ponovno.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1106,6 +1126,14 @@
         <source>No other shared rooms</source>
         <translation>Nema drugih zajedničkih soba</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Zabrani pozive</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Dopusti pozive</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1152,6 +1180,10 @@
     <message>
         <source>React</source>
         <translation>Reagiraj</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Odgovori u niti</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1245,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Drži poruku u razgovoru pritisnutom da je prikvačiš.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Privatnost</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Tko te smije nazvati</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Svi</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Ljudi s kojima imaš izravni razgovor</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Samo moj popis</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Pozivi iz grupnih soba</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Videopozivi</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Šalji potvrde o čitanju</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Dopušteni pozivatelji</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix adresa</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Dopusti pozive</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Još nitko.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Ukloni</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Poziv zvoni i u utišanoj sobi. Odbijeni ne zvone, a pozivatelj ne sazna ništa.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>U grupnoj sobi poziv vide svi. Popis to ne poništava.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Isključeno: ponuda s videom prihvaća se kao glasovni poziv.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Isključeno zadržava tvoje čitanje za tebe, u oba smjera.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Uvijek smiju nazvati. Popis ostaje na ovom uređaju.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Na ovom uređaju</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Što drugi saznaju</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Tekst poruke u obavijestima</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Isključeno: obavijest kaže samo koliko je poruka stiglo. Uključeno: pokazuje zadnju poruku — i na zaključanom zaslonu.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Prikaži status čitanja drugih</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Isključeno se ništa ne dohvaća o tome tko je što pročitao, što razgovor drži i tečnijim. Uključeno tvoje poruke pokazuju koliko ih je ljudi pročitalo.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Glasovne poruke</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Uključeno je pored polja za poruku mikrofon: drži za snimanje, pusti za slanje. Isključeno ga nema.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Poveznice koje se mogu dodirnuti</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Uključeno: poveznica u poruci na dodir otvara preglednik. Isključeno: poveznice ostaju obični tekst.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Izbriši medije sada</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Poruke i ključevi spremaju se šifrirano. Otvorene slike, videozapisi i dokumenti ne — leže na uređaju kao i one u galeriji, čitljive svakome tko ga drži.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Brisanje preuzetih medija</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Nikad</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Pri zatvaranju aplikacije</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Čim aplikacija nije sprijeda</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Prema zadanome brišu se pri odjavi, pa spremi ono što želiš zadržati.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>„Nikad“ ih čuva zauvijek — udobno i nepreporučljivo.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Obrisano se ponovno preuzima kad ga otvoriš.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Pri odjavi</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Ograniči ponovljene pozive</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Uključeno: ista osoba može ponovno nazvati tek nakon kratke stanke. To odgađa i drugi, pravi pokušaj.</translation>
     </message>
 </context>
 <context>
@@ -1549,10 +1748,6 @@
         <translation>Račun</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Odjava</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Označi kao pročitano</translation>
     </message>
@@ -1859,6 +2054,42 @@
     <message>
         <source>React</source>
         <translation>Reagiraj</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Odgovori u niti</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Kopiraj poveznicu sobe</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Poveznica sobe kopirana</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Poslano nešifrirano</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nije poslao navedeni račun</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Ključevi pošiljatelja su se promijenili</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>S neprovjerenog uređaja</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Od neprovjerene osobe</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Vjerodostojnost nije potvrđena</translation>
     </message>
 </context>
 <context>
@@ -2232,6 +2463,18 @@
             <numerusform>%n nove poruke</numerusform>
             <numerusform>%n novih poruka</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Dolazni videopoziv</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Dolazni poziv</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nova poruka</translation>
     </message>
 </context>
 </TS>

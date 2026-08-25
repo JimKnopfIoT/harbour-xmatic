@@ -347,7 +347,7 @@ pub async fn login_flows(client: &Client) -> Result<Vec<String>, String> {
         .map_err(|error| {
             format!(
                 "could not ask for the sign-in methods: {}",
-                crate::timeline::scrub_ids(&error.to_string())
+                crate::text::scrub_ids(&error.to_string())
             )
         })?;
 

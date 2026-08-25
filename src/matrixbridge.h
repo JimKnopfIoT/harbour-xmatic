@@ -30,6 +30,7 @@
 /// therefore does nothing but re-post the message into the Qt event loop, so
 /// everything below runs on the UI thread.
 class AppSettings;
+class EmojiStore;
 
 class MatrixBridge : public QObject
 {
@@ -37,6 +38,8 @@ class MatrixBridge : public QObject
 
     Q_PROPERTY(QString coreVersion READ coreVersion CONSTANT)
     Q_PROPERTY(QString emojiDirectory READ emojiDirectory CONSTANT)
+    Q_PROPERTY(int emojiRevision READ emojiRevision NOTIFY emojiRevisionChanged)
+    Q_PROPERTY(QStringList allowedCallers READ allowedCallers NOTIFY privateListsChanged)
     Q_PROPERTY(QString sessionState READ sessionState NOTIFY sessionChanged)
     Q_PROPERTY(QString syncState READ syncState NOTIFY syncStateChanged)
     /// False when the homeserver does not advertise the sync this app is
@@ -413,6 +416,46 @@ public:
     /// Sends a read receipt for the open room.
     Q_INVOKABLE void markRead();
 
+    /// The checked picture set, once it exists. Without one the app keeps
+    /// looking pictures up as plain files, which is how a hand-copied set
+    /// works - unchecked, and openly so.
+    void setEmojiStore(EmojiStore *store);
+
+    /// Bumped whenever the picture set changed under the app. QML has to read
+    /// this where it asks for a picture: emojiSource() is a function call, not
+    /// a property, so nothing else would tell a binding to ask again - and a
+    /// set that was just read in would stay invisible until the next start.
+    int emojiRevision() const { return m_emojiRevision; }
+
+    /// The lists that name people. They live encrypted in the core; this is
+    /// the copy the UI reads, refreshed from every answer.
+    QStringList allowedCallers() const { return m_privateLists.value(QStringLiteral("callers")); }
+    Q_INVOKABLE bool callerAllowed(const QString &userId) const;
+    Q_INVOKABLE void allowCaller(const QString &userId);
+    Q_INVOKABLE void forbidCaller(const QString &userId);
+
+    /// Recipients the send warning is switched off for.
+    Q_INVOKABLE bool recipientTrusted(const QString &userId) const;
+    Q_INVOKABLE void trustRecipient(const QString &userId);
+    Q_INVOKABLE int resetRecipientWarnings();
+
+    /// Removes the downloaded media and the recordings. On the way out when
+    /// the privacy page asks for it, once at start because a killed process
+    /// never gets to the way out, and on demand from that page.
+    Q_INVOKABLE void clearMediaCache();
+
+    /// Whether a path handed in from outside may be sent. Refuses anything
+    /// inside this app's own directories: the share dialog names a file, not a
+    /// command, and the session token and the crypto store live there.
+    Q_INVOKABLE bool shareableFile(const QString &path) const;
+
+    /// Asks for the room's matrix.to link. Answered by roomLinkReady().
+    Q_INVOKABLE void loadRoomLink(const QString &roomId);
+
+    /// Asks who has read up to this message. Answered by readersReady(); the
+    /// rows carry only the count, names are fetched when they are wanted.
+    Q_INVOKABLE void loadReaders(const QString &eventId);
+
     /// Accepts an invitation or joins a known room.
     Q_INVOKABLE void joinRoom(const QString &roomId);
 
@@ -447,6 +490,9 @@ public:
 
     /// Rejects the request or aborts the comparison.
     Q_INVOKABLE void cancelVerification();
+    /// The emoji did not match. A different code on the wire from an ordinary
+    /// cancel, and the only one that warns the other side.
+    Q_INVOKABLE void reportVerificationMismatch();
 
     /// Forgets a finished verification so the page can close.
     Q_INVOKABLE void clearVerification();
@@ -598,6 +644,13 @@ signals:
 
     /// A member's profile, for the member-profile page.
     void memberProfileReady(const QVariantMap &profileData);
+    /// Answer to loadRoomLink().
+    void roomLinkReady(const QString &link);
+
+    /// Answer to loadReaders(): who has read up to that message.
+    void readersReady(const QString &eventId, const QVariantList &readers);
+    void emojiRevisionChanged();
+    void privateListsChanged();
 
     /// A moderation or ignore action succeeded; no diff follows, so the open
     /// profile page reloads on this.
@@ -702,6 +755,9 @@ private:
                  const QJsonObject &arguments = QJsonObject(),
                  bool wipePayload = false);
     void applySession(const QJsonObject &data);
+    /// Hands the privacy page's call rules to the core, which enforces them
+    /// before anything rings.
+    void pushCallPolicy();
     void reportNewMessages(const QJsonArray &operations);
     void updateSpaceChildren(const QJsonObject &spaces);
     void bumpSpaceCounts();
@@ -718,8 +774,19 @@ private:
     /// Where the session file and the stores live; the unlock retry asks
     /// the secrets keeper for the key against it.
     QString m_dataDirectory;
+    QString m_cacheDirectory;
     /// Answers of emojiSource(), which QML asks once per chip per rebuild.
     mutable QHash<QString, QString> m_emojiSources;
+    EmojiStore *m_emojiStore = nullptr;
+    /// Mirror of the core's encrypted lists, by name.
+    QHash<QString, QStringList> m_privateLists;
+    /// Whether the encrypted file could be read. False means locked or
+    /// damaged - the lists must not be written over in that state.
+    bool m_privateListsReadable = false;
+    bool m_legacyDropPending = false;
+    void sendPrivateList(const QString &list, const QStringList &values);
+    void sendPrivateLists();
+    int m_emojiRevision = 0;
     QString m_sessionState = QStringLiteral("none");
     QString m_syncState = QStringLiteral("idle");
     bool m_serverSupported = true;
@@ -782,6 +849,28 @@ private:
     /// reportNewMessages.
     QHash<QString, int> m_notified;
 
+    /// A banner whose text is not there yet. The SDK fills the room's latest
+    /// event in a second pass, after the one that raises the counts, so the
+    /// diff that says "something arrived" still carries the *previous*
+    /// message — a banner built from it is always one message behind. The
+    /// announcement therefore waits for the pass that moves the room's
+    /// timestamp, and goes out with a count only if that never comes.
+    struct PendingBanner {
+        QString name;
+        int notifications = 0;
+        int mentions = 0;
+        /// The latest-event timestamp seen when the counts rose. The preview
+        /// belongs to this one; anything newer is the message just announced.
+        quint64 timestamp = 0;
+    };
+    QHash<QString, PendingBanner> m_pendingBanners;
+    /// Rooms whose call this device refused, with the moment it happened: the
+    /// counter the invitation raised must not ring as a message.
+    QHash<QString, qint64> m_blockedCallRooms;
+    QTimer m_bannerTimeout;
+    void publishBanner(const QString &roomId, const PendingBanner &pending,
+                       const QJsonObject &room);
+
     /// Per-space child structure from the core: the member rooms whose unread
     /// counts make up a space's badge, and how many children are sub-spaces.
     QHash<QString, QStringList> m_spaceChildRooms;
@@ -798,6 +887,11 @@ private:
     MemberModel m_members;
     /// Which user a pending `member.remove` request is for.
     QHash<quint64, QString> m_removeRequests;
+    /// Which message a pending `timeline.readers` request is about.
+    QHash<quint64, QString> m_readerRequests;
+    /// Recordings waiting for their send to come back, so they can go.
+    QHash<quint64, QString> m_voiceSends;
+    QString m_voiceDirectory;
 
     quint64 m_nextId = 1;
 

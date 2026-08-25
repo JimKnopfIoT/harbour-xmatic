@@ -94,22 +94,6 @@
         <translation>Ingen undertrykte advarsler</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Beskedtekst i notifikationer</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Fra fortæller en notifikation kun, hvor mange beskeder der er kommet. Til viser den den seneste besked — også på låseskærmen.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Weblinks der kan trykkes på</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Til åbner et link i en besked browseren, når du trykker på det. Fra forbliver links almindelig tekst.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Log ud</translation>
     </message>
@@ -122,20 +106,8 @@
         <translation>Sprog</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Vis andres læsestatus</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Slået fra hentes intet om, hvem der har læst hvad, hvilket også holder samtalen mere glidende. Slået til viser dine egne beskeder, hvor mange der har læst dem.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Talebeskeder</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Slået til sidder der en mikrofon ved siden af beskedfeltet: hold den nede for at optage, slip for at sende. Slået fra er den der ikke.</translation>
+        <source>Privacy</source>
+        <translation>Privatliv</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Slået fra tegnes en reaktion som det tegn, den er — altid rigtigt og gratis. Slået til leder xmatic efter dit eget billede til den i %1, opkaldt efter dens kodepunkter (1f44d.svg). Intet leveres med, og intet hentes. Vej det op: en billedfil åbnes af en billeddekoder, og dér er en app som denne mest udsat.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Vælg emoji-billeder</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Læser billederne…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 overtaget, %2 afvist</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>Billederne har ændret sig siden indlæsningen og vises ikke.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Nulstil farver til standard</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Fjern emoji-billeder</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Læg på</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Acceptér uden kamera</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Acceptér med kamera</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Indgående videoopkald</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Videoopkald er slået fra under Privatliv; dette besvares som et taleopkald.</translation>
     </message>
 </context>
 <context>
@@ -650,7 +662,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@navn:server</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -922,6 +934,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Hjemmeserveren returnerede ingen loginkode.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>De gemte lister kan ikke læses lige nu.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Din session er slut. Log ind igen.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Ingen andre fælles rum</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Forbyd opkald</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Tillad opkald</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Reagér</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svar i tråden</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Hold en besked i samtalen nede for at fastgøre den.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Privatliv</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Hvem må ringe til dig</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Alle</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Folk du har en direkte chat med</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Kun min liste</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Opkald fra grupperum</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Videoopkald</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Send læsekvitteringer</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Tilladte opkaldere</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix-adresse</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Tillad opkald</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Ingen endnu.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Fjern</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Et opkald ringer også i et lydløst rum. Afviste ringer ikke, og den der ringer får intet at vide.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>I et grupperum ser alle opkaldet. Listen tilsidesætter ikke det.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Fra: et tilbud med video besvares som et taleopkald.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Fra holder din læsning for dig selv, begge veje.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>De må altid ringe. Listen bliver på denne enhed.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>På denne enhed</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Hvad andre får at vide</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Beskedtekst i notifikationer</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Fra fortæller en notifikation kun, hvor mange beskeder der er kommet. Til viser den den seneste besked — også på låseskærmen.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Vis andres læsestatus</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Slået fra hentes intet om, hvem der har læst hvad, hvilket også holder samtalen mere glidende. Slået til viser dine egne beskeder, hvor mange der har læst dem.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Talebeskeder</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Slået til sidder der en mikrofon ved siden af beskedfeltet: hold den nede for at optage, slip for at sende. Slået fra er den der ikke.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Weblinks der kan trykkes på</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Til åbner et link i en besked browseren, når du trykker på det. Fra forbliver links almindelig tekst.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Slet medier nu</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Beskeder og nøgler gemmes krypteret. Billeder, videoer og dokumenter, du har åbnet, gør ikke — de ligger på enheden som dem i galleriet, læsbare for enhver der har den.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Slet hentede medier</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Aldrig</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Når appen lukkes</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Så snart appen ikke er forrest</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Som standard slettes de når du logger ud, så gem det, du vil beholde.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>“Aldrig” beholder dem for altid — bekvemt og ikke anbefalet.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Det slettede hentes igen når du åbner det.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Ved log ud</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Begræns gentagne opkald</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Til: den samme person kan først ringe igen efter en kort pause. Det forsinker også et andet, ægte forsøg.</translation>
     </message>
 </context>
 <context>
@@ -1547,10 +1746,6 @@
         <translation>Konto</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Log ud</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Markér som læst</translation>
     </message>
@@ -1855,6 +2050,42 @@
     <message>
         <source>React</source>
         <translation>Reagér</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svar i tråden</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Kopiér rumlink</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Rumlink kopieret</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Sendt ukrypteret</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ikke sendt af den konto der nævnes</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Afsenderens nøgler er ændret</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Fra en ikke-verificeret enhed</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Fra en ikke-verificeret person</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Ægthed ikke bekræftet</translation>
     </message>
 </context>
 <context>
@@ -2224,6 +2455,18 @@
             <numerusform>%n ny besked</numerusform>
             <numerusform>%n nye beskeder</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Indgående videoopkald</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Indgående opkald</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Ny besked</translation>
     </message>
 </context>
 </TS>

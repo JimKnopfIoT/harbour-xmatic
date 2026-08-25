@@ -96,22 +96,6 @@
         <translation>Ebda twissija mrażżna</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>It-test tal-messaġġ fin-notifiki</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Mitfi, in-notifika tgħid biss kemm waslu messaġġi. Mixgħul, turi l-aħħar messaġġ — anke fuq l-iskrin imsakkar.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Links tal-web li jistgħu jintmessu</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Mixgħul, link f&apos;messaġġ jiftaħ il-browser meta tmissu. Mitfi, il-links jibqgħu test sempliċi.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Oħroġ</translation>
     </message>
@@ -124,20 +108,8 @@
         <translation>Lingwa</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Uri l-istat tal-qari ta&apos; oħrajn</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Mitfi, ma jinġieb xejn dwar min qara xiex, li jżomm ukoll il-konversazzjoni aktar bla xkiel. Mixgħul, il-messaġġi tiegħek juru kemm-il persuna qrathom.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Messaġġi bil-vuċi</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Mixgħul, hemm mikrofonu ħdejn il-qasam tal-messaġġ: żommu biex tirrekordja, itilqu biex tibgħat. Mitfi, mhuwiex hemm.</translation>
+        <source>Privacy</source>
+        <translation>Privatezza</translation>
     </message>
 </context>
 <context>
@@ -249,6 +221,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Mitfi, reazzjoni titpinġa bħala l-karattru li hi — dejjem tajjeb u bla ħlas. Mixgħul, xmatic ifittex għaliha stampa tiegħek f&apos;%1, imsemmija skont il-code points tagħha (1f44d.svg). Xejn ma jinġieb miegħu u xejn ma jitniżżel. Iżen: fajl ta&apos; stampa jinfetaħ minn dekowder tal-istampi, u hemm hu fejn app ta&apos; din ix-xorta hija l-aktar esposta.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Agħżel stampi tal-emoji</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Qed jinqraw l-istampi…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 aċċettati, %2 miċħuda</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>L-istampi nbidlu minn meta nqraw u mhumiex qed jintwerew.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Erġa&apos; lura għall-kuluri awtomatiċi</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Neħħi l-istampi tal-emoji</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -338,6 +334,22 @@
     <message>
         <source>Hang up</source>
         <translation>Agħlaq</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Aċċetta mingħajr kamera</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Aċċetta bil-kamera</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Ċemplija bil-vidjo deħla</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Iċ-ċemplijiet bil-vidjo huma mitfija fil-Privatezza; din tiġi aċċettata bħala ċemplija bil-vuċi.</translation>
     </message>
 </context>
 <context>
@@ -654,7 +666,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@isem:server</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -926,6 +938,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>Is-server tad-dar ma rritornax kodiċi tad-dħul.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>Il-listi maħżuna ma jistgħux jinqraw bħalissa.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Is-sessjoni tiegħek intemmet. Idħol mill-ġdid.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1108,6 +1128,14 @@
         <source>No other shared rooms</source>
         <translation>Ebda kamra komuni oħra</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Ipprojbixxi ċ-ċemplijiet</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Ippermetti ċ-ċemplijiet</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1154,6 +1182,10 @@
     <message>
         <source>React</source>
         <translation>Irreaġixxi</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Wieġeb fil-fjul</translation>
     </message>
 </context>
 <context>
@@ -1215,6 +1247,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Żomm messaġġ fil-konversazzjoni biex twaħħlu.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Privatezza</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Min jista&apos; jċemplek</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Kulħadd</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Nies li għandek chat dirett magħhom</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Il-lista tiegħi biss</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Ċemplijiet minn kmamar ta&apos; grupp</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Ċemplijiet bil-vidjo</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Ibgħat irċevuti tal-qari</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Min jista&apos; jċempel</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Indirizz Matrix</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Ippermetti ċ-ċemplijiet</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Ħadd s&apos;issa.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Neħħi</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Ċempil idoqq anke f&apos;kamra mutata. Dawk imċaħħda ma jdoqqux, u min iċempel ma jsir jaf xejn.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>F&apos;kamra ta&apos; grupp kulħadd jara ċ-ċempil. Il-lista ma tegħlibx dan.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Mitfi: offerta bil-vidjo tiġi aċċettata bħala ċemplija bil-vuċi.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Mitfi jżomm il-qari tiegħek għalik, fiż-żewġ direzzjonijiet.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Dejjem jistgħu jċemplu. Il-lista tibqa&apos; f&apos;dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Fuq dan l-apparat</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>X&apos;jitgħallmu l-oħrajn</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>It-test tal-messaġġ fin-notifiki</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Mitfi, in-notifika tgħid biss kemm waslu messaġġi. Mixgħul, turi l-aħħar messaġġ — anke fuq l-iskrin imsakkar.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Uri l-istat tal-qari ta&apos; oħrajn</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Mitfi, ma jinġieb xejn dwar min qara xiex, li jżomm ukoll il-konversazzjoni aktar bla xkiel. Mixgħul, il-messaġġi tiegħek juru kemm-il persuna qrathom.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Messaġġi bil-vuċi</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Mixgħul, hemm mikrofonu ħdejn il-qasam tal-messaġġ: żommu biex tirrekordja, itilqu biex tibgħat. Mitfi, mhuwiex hemm.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Links tal-web li jistgħu jintmessu</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Mixgħul, link f&apos;messaġġ jiftaħ il-browser meta tmissu. Mitfi, il-links jibqgħu test sempliċi.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Ħassar il-midja issa</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Il-messaġġi u ċ-ċwievet jinżammu kriptati. L-istampi, il-vidjos u d-dokumenti li ftaħt le — jinsabu fuq l-apparat bħal dawk tal-gallerija, jinqraw minn kull min ikollu l-apparat.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Tħassir tal-midja mniżżla</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Qatt</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Meta tingħalaq l-applikazzjoni</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Malli l-applikazzjoni ma tibqax quddiem</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>B&apos;mod awtomatiku jitħassru meta toħroġ mill-kont, mela ħażżen dak li trid iżżomm.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>“Qatt” iżommhom għal dejjem — komdu u mhux rakkomandat.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Dak li jitħassar jinġieb mill-ġdid meta tiftħu.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Meta toħroġ mill-kont</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Illimita ċ-ċemplijiet ripetuti</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Mixgħul: l-istess persuna tista&apos; terġa&apos; ċċempel biss wara waqfa qasira. Idewwem ukoll it-tieni tentattiv ġenwin.</translation>
     </message>
 </context>
 <context>
@@ -1551,10 +1750,6 @@
         <translation>Kont</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Oħroġ</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Immarka bħala moqri</translation>
     </message>
@@ -1863,6 +2058,42 @@
     <message>
         <source>React</source>
         <translation>Irreaġixxi</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Wieġeb fil-fjul</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Ikkopja l-link tal-kamra</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Il-link tal-kamra ġie kkupjat</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Mibgħut mhux kriptat</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ma ntbagħatx mill-kont imsemmi</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Iċ-ċwievet ta&apos; min bagħat inbidlu</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Minn apparat mhux verifikat</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Minn persuna mhux verifikata</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>L-awtentiċità mhix ikkonfermata</translation>
     </message>
 </context>
 <context>
@@ -2240,6 +2471,18 @@
             <numerusform>%n messaġġi ġodda</numerusform>
             <numerusform>%n messaġġi ġodda</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Ċemplija bil-vidjo deħla</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Sejħa deħlin</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Messaġġ ġdid</translation>
     </message>
 </context>
 </TS>

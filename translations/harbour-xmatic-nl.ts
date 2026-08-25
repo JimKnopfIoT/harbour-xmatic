@@ -94,22 +94,6 @@
         <translation>Geen onderdrukte waarschuwingen</translation>
     </message>
     <message>
-        <source>Message text in notifications</source>
-        <translation>Berichttekst in meldingen</translation>
-    </message>
-    <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Uit, een melding zegt alleen hoeveel berichten er zijn. Aan, toont het laatste bericht — ook op het vergrendelscherm.</translation>
-    </message>
-    <message>
-        <source>Tappable web links</source>
-        <translation>Aantikbare weblinks</translation>
-    </message>
-    <message>
-        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
-        <translation>Aan, een link in een bericht opent bij aantikken de browser. Uit, links blijven gewone tekst.</translation>
-    </message>
-    <message>
         <source>Sign out</source>
         <translation>Afmelden</translation>
     </message>
@@ -122,20 +106,8 @@
         <translation>Taal</translation>
     </message>
     <message>
-        <source>Show others&apos; read status</source>
-        <translation>Leesstatus van anderen tonen</translation>
-    </message>
-    <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Uit wordt er niets opgehaald over wie wat gelezen heeft, wat het gesprek ook soepeler houdt. Aan vermelden je eigen berichten hoeveel mensen ze gelezen hebben.</translation>
-    </message>
-    <message>
-        <source>Voice messages</source>
-        <translation>Spraakberichten</translation>
-    </message>
-    <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Aan staat er een microfoon naast het berichtveld: ingedrukt houden neemt op, loslaten verstuurt. Uit is hij er niet.</translation>
+        <source>Privacy</source>
+        <translation>Privacy</translation>
     </message>
 </context>
 <context>
@@ -247,6 +219,30 @@
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Uit wordt een reactie getekend als het teken dat ze is — altijd juist en gratis. Aan zoekt xmatic er een eigen afbeelding voor in %1, genoemd naar de code points (1f44d.svg). Er wordt niets meegeleverd en niets gedownload. Weeg af: een afbeeldingsbestand wordt door een beelddecoder geopend, en daar is een app als deze het kwetsbaarst.</translation>
     </message>
+    <message>
+        <source>Choose emoji pictures</source>
+        <translation>Emoji-afbeeldingen kiezen</translation>
+    </message>
+    <message>
+        <source>Reading the pictures…</source>
+        <translation>Afbeeldingen worden gelezen…</translation>
+    </message>
+    <message>
+        <source>%1 taken over, %2 refused</source>
+        <translation>%1 overgenomen, %2 geweigerd</translation>
+    </message>
+    <message>
+        <source>The pictures have changed since they were read in and are not shown.</source>
+        <translation>De afbeeldingen zijn sinds het inlezen veranderd en worden niet getoond.</translation>
+    </message>
+    <message>
+        <source>Reset colours to defaults</source>
+        <translation>Kleuren terugzetten</translation>
+    </message>
+    <message>
+        <source>Remove emoji pictures</source>
+        <translation>Emoji-afbeeldingen verwijderen</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -336,6 +332,22 @@
     <message>
         <source>Hang up</source>
         <translation>Ophangen</translation>
+    </message>
+    <message>
+        <source>Accept without camera</source>
+        <translation>Aannemen zonder camera</translation>
+    </message>
+    <message>
+        <source>Accept with camera</source>
+        <translation>Aannemen met camera</translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Inkomend videogesprek</translation>
+    </message>
+    <message>
+        <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
+        <translation>Videogesprekken staan uit bij Privacy; dit wordt als spraakoproep aangenomen.</translation>
     </message>
 </context>
 <context>
@@ -650,7 +662,7 @@
     </message>
     <message>
         <source>@name:server</source>
-        <translation>@naam:server</translation>
+        <translation>@name:server</translation>
     </message>
     <message>
         <source>Verify this user</source>
@@ -922,6 +934,14 @@
         <source>The homeserver did not return a sign-in code.</source>
         <translation>De homeserver gaf geen aanmeldcode terug.</translation>
     </message>
+    <message>
+        <source>The stored lists cannot be read right now.</source>
+        <translation>De opgeslagen lijsten zijn nu niet leesbaar.</translation>
+    </message>
+    <message>
+        <source>Your session has ended. Please sign in again.</source>
+        <translation>Je sessie is beëindigd. Log opnieuw in.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1104,6 +1124,14 @@
         <source>No other shared rooms</source>
         <translation>Geen andere gedeelde kamers</translation>
     </message>
+    <message>
+        <source>Forbid calls</source>
+        <translation>Oproepen verbieden</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Oproepen toestaan</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1150,6 +1178,10 @@
     <message>
         <source>React</source>
         <translation>Reageren</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>In draad antwoorden</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1243,173 @@
     <message>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>Houd een bericht in het gesprek ingedrukt om het vast te maken.</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyPage</name>
+    <message>
+        <source>Privacy</source>
+        <translation>Privacy</translation>
+    </message>
+    <message>
+        <source>Who may call you</source>
+        <translation>Wie je mag bellen</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Iedereen</translation>
+    </message>
+    <message>
+        <source>People you have a direct chat with</source>
+        <translation>Mensen met wie je een direct gesprek hebt</translation>
+    </message>
+    <message>
+        <source>Only my list</source>
+        <translation>Alleen mijn lijst</translation>
+    </message>
+    <message>
+        <source>Calls from group rooms</source>
+        <translation>Oproepen uit groepskamers</translation>
+    </message>
+    <message>
+        <source>Video calls</source>
+        <translation>Videogesprekken</translation>
+    </message>
+    <message>
+        <source>Send read receipts</source>
+        <translation>Leesbevestigingen sturen</translation>
+    </message>
+    <message>
+        <source>Allowed callers</source>
+        <translation>Toegestane bellers</translation>
+    </message>
+    <message>
+        <source>Matrix address</source>
+        <translation>Matrix-adres</translation>
+    </message>
+    <message>
+        <source>@name:server</source>
+        <translation>@name:server</translation>
+    </message>
+    <message>
+        <source>Allow calls</source>
+        <translation>Oproepen toestaan</translation>
+    </message>
+    <message>
+        <source>Nobody yet.</source>
+        <translation>Nog niemand.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
+        <translation>Een oproep gaat ook over in een gedempte kamer. Geweigerde gaan niet over en de beller komt niets te weten.</translation>
+    </message>
+    <message>
+        <source>In a group room everybody sees the call. The list does not override this.</source>
+        <translation>In een groepskamer ziet iedereen de oproep. De lijst gaat daar niet overheen.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call.</source>
+        <translation>Uit: een aanbod met video wordt als spraakoproep aangenomen.</translation>
+    </message>
+    <message>
+        <source>Off keeps your reading to yourself, in both directions.</source>
+        <translation>Uit houdt je lezen voor jezelf, in beide richtingen.</translation>
+    </message>
+    <message>
+        <source>They may always call. The list stays on this device.</source>
+        <translation>Zij mogen altijd bellen. De lijst blijft op dit apparaat.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Op dit apparaat</translation>
+    </message>
+    <message>
+        <source>What others learn</source>
+        <translation>Wat anderen te weten komen</translation>
+    </message>
+    <message>
+        <source>Message text in notifications</source>
+        <translation>Berichttekst in meldingen</translation>
+    </message>
+    <message>
+        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Uit, een melding zegt alleen hoeveel berichten er zijn. Aan, toont het laatste bericht — ook op het vergrendelscherm.</translation>
+    </message>
+    <message>
+        <source>Show others&apos; read status</source>
+        <translation>Leesstatus van anderen tonen</translation>
+    </message>
+    <message>
+        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Uit wordt er niets opgehaald over wie wat gelezen heeft, wat het gesprek ook soepeler houdt. Aan vermelden je eigen berichten hoeveel mensen ze gelezen hebben.</translation>
+    </message>
+    <message>
+        <source>Voice messages</source>
+        <translation>Spraakberichten</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
+        <translation>Aan staat er een microfoon naast het berichtveld: ingedrukt houden neemt op, loslaten verstuurt. Uit is hij er niet.</translation>
+    </message>
+    <message>
+        <source>Tappable web links</source>
+        <translation>Aantikbare weblinks</translation>
+    </message>
+    <message>
+        <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
+        <translation>Aan, een link in een bericht opent bij aantikken de browser. Uit, links blijven gewone tekst.</translation>
+    </message>
+    <message>
+        <source>Delete media now</source>
+        <translation>Media nu wissen</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Berichten en sleutels worden versleuteld bewaard. Geopende afbeeldingen, video&apos;s en documenten niet — die staan op het apparaat zoals die in de galerij, leesbaar voor iedereen die het heeft.</translation>
+    </message>
+    <message>
+        <source>Delete downloaded media</source>
+        <translation>Gedownloade media wissen</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Nooit</translation>
+    </message>
+    <message>
+        <source>When the app is closed</source>
+        <translation>Als de app sluit</translation>
+    </message>
+    <message>
+        <source>As soon as the app is not in front</source>
+        <translation>Zodra de app niet meer vooraan is</translation>
+    </message>
+    <message>
+        <source>By default they are deleted when you sign out, so save what you want to keep.</source>
+        <translation>Standaard worden ze bij het uitloggen gewist, dus bewaar wat je wilt houden.</translation>
+    </message>
+    <message>
+        <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
+        <translation>‘Nooit’ houdt ze voorgoed — makkelijk en niet aanbevolen.</translation>
+    </message>
+    <message>
+        <source>Anything deleted is fetched again when you open it.</source>
+        <translation>Wat gewist is, wordt opnieuw opgehaald als je het opent.</translation>
+    </message>
+    <message>
+        <source>When you sign out</source>
+        <translation>Bij uitloggen</translation>
+    </message>
+    <message>
+        <source>Limit repeated calls</source>
+        <translation>Herhaalde oproepen beperken</translation>
+    </message>
+    <message>
+        <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
+        <translation>Aan: dezelfde persoon kan pas na een korte pauze opnieuw bellen. Het vertraagt ook een tweede, echte poging.</translation>
     </message>
 </context>
 <context>
@@ -1547,10 +1746,6 @@
         <translation>Account</translation>
     </message>
     <message>
-        <source>Sign out</source>
-        <translation>Afmelden</translation>
-    </message>
-    <message>
         <source>Mark as read</source>
         <translation>Als gelezen markeren</translation>
     </message>
@@ -1855,6 +2050,42 @@
     <message>
         <source>React</source>
         <translation>Reageren</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>In draad antwoorden</translation>
+    </message>
+    <message>
+        <source>Copy room link</source>
+        <translation>Kamerlink kopiëren</translation>
+    </message>
+    <message>
+        <source>Room link copied</source>
+        <translation>Kamerlink gekopieerd</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Onversleuteld verzonden</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Niet verzonden door het genoemde account</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>De sleutels van de afzender zijn veranderd</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Van een niet-geverifieerd apparaat</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Van een niet-geverifieerd persoon</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Echtheid niet bevestigd</translation>
     </message>
 </context>
 <context>
@@ -2224,6 +2455,18 @@
             <numerusform>%n nieuw bericht</numerusform>
             <numerusform>%n nieuwe berichten</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Incoming video call</source>
+        <translation>Inkomend videogesprek</translation>
+    </message>
+    <message>
+        <source>Incoming call</source>
+        <translation>Inkomende oproep</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nieuw bericht</translation>
     </message>
 </context>
 </TS>

@@ -65,36 +65,98 @@ Page {
                 }
             }
         }
-        contentWidth: Math.max(width, picture.width * picture.scale)
-        contentHeight: Math.max(height, picture.height * picture.scale)
+        // A rotation changes what "fitted" means, and the sizes above are no
+        // longer bound to anything after the first zoom - so the zoom starts
+        // over rather than keeping a size that belonged to the other
+        // orientation.
+        onWidthChanged: fitContent()
+        onHeightChanged: fitContent()
 
+        function fitContent() {
+            contentWidth = width
+            contentHeight = height
+            returnToBounds()
+        }
+
+        // Set once and then owned by resizeContent(): zooming rewrites these,
+        // which is exactly what makes the picture grow around the fingers
+        // instead of around its own middle.
+        contentWidth: width
+        contentHeight: height
+
+        // Zoom that stays under the fingers. Scaling the picture itself grows
+        // it around its transform origin - the middle - so the spot being
+        // pinched wanders off, which is what was reported. The flickable's own
+        // resizeContent() takes the centre of the gesture and keeps that point
+        // where it is; the two lines above it follow the fingers while they
+        // also move.
         PinchArea {
+            id: zoom
+
             width: Math.max(flickable.contentWidth, flickable.width)
             height: Math.max(flickable.contentHeight, flickable.height)
 
-            pinch.target: picture
-            pinch.minimumScale: 1.0
-            pinch.maximumScale: 6.0
-            pinch.dragAxis: Pinch.XAndYAxis
+            /// How far in the picture may go, as a multiple of the fitted size.
+            readonly property real maximumZoom: 6.0
+
+            property real startWidth: 0
+            property real startHeight: 0
+
+            onPinchStarted: {
+                startWidth = flickable.contentWidth
+                startHeight = flickable.contentHeight
+            }
+
+            onPinchUpdated: {
+                flickable.contentX += pinch.previousCenter.x - pinch.center.x
+                flickable.contentY += pinch.previousCenter.y - pinch.center.y
+
+                var wanted = startWidth * pinch.scale
+                var least = flickable.width
+                var most = flickable.width * maximumZoom
+                var target = Math.max(least, Math.min(wanted, most))
+                flickable.resizeContent(target, startHeight * (target / startWidth),
+                                        pinch.center)
+            }
+
+            onPinchFinished: flickable.returnToBounds()
 
             Image {
                 id: picture
 
-                anchors.centerIn: parent
-                width: flickable.width
-                height: flickable.height
+                // The picture *is* the content: growing the content grows it,
+                // and panning is then the flickable's ordinary job.
+                width: flickable.contentWidth
+                height: flickable.contentHeight
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
+                // A ceiling on the decode, not on the zoom: the size of the
+                // allocation must not be the sender's decision. Three times
+                // the view keeps a deep zoom sharp, the absolute cap keeps a
+                // huge picture from deciding how much memory this costs.
+                sourceSize.width: Math.min(2048, Math.round(flickable.width * 3))
+                // Both axes, for the same reason as in the conversation: a
+                // width alone lets the height follow the sender's aspect ratio.
+                sourceSize.height: Math.min(2048, Math.round(flickable.height * 3))
                 smooth: true
-                transformOrigin: Item.Center
                 source: page.source
             }
 
             MouseArea {
                 anchors.fill: parent
                 // Double tap toggles between fit and a useful magnification —
-                // the gesture people try first when pinching is awkward.
-                onDoubleClicked: picture.scale = picture.scale > 1.0 ? 1.0 : 2.5
+                // the gesture people try first when pinching is awkward. It
+                // zooms around the tapped point, for the same reason the pinch
+                // does.
+                onDoubleClicked: {
+                    var zoomedIn = flickable.contentWidth > flickable.width * 1.05
+                    var target = zoomedIn ? flickable.width : flickable.width * 2.5
+                    flickable.resizeContent(target,
+                                            flickable.contentHeight
+                                            * (target / flickable.contentWidth),
+                                            Qt.point(mouse.x, mouse.y))
+                    flickable.returnToBounds()
+                }
             }
         }
     }

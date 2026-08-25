@@ -224,8 +224,11 @@ void CameraSource::stop()
     QCamera *camera = m_camera;
     m_camera = nullptr;
 
-    camera->stop();
+    // Disconnected before it is stopped: the error handler reads m_camera,
+    // which is already null, and a camera that reports an error while stopping
+    // is not unusual. That order was a segfault on hanging up.
     disconnect(camera, nullptr, this, nullptr);
+    camera->stop();
     camera->deleteLater();
 
     if (isActive()) {
