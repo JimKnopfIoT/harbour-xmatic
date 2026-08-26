@@ -52,7 +52,7 @@ VoiceRecorder::VoiceRecorder(const QString &cacheDirectory, QObject *parent)
                     return;
                 }
 
-                emit finished(path, m_mimeType);
+                emit finished(path, m_mimeType, m_lastDuration);
             });
 
     connect(m_recorder, &QAudioRecorder::stateChanged, this, [this](QMediaRecorder::State) {
@@ -125,6 +125,7 @@ void VoiceRecorder::start()
     m_currentPath = QStringLiteral("%1/voice-%2.%3").arg(m_cacheDirectory, stamp, suffix);
     m_discard = false;
 
+    m_lastDuration = 0;
     m_recorder->setOutputLocation(QUrl::fromLocalFile(m_currentPath));
     m_recorder->record();
     qInfo("xmatic: recording started");
@@ -136,6 +137,9 @@ void VoiceRecorder::stop()
     if (!recording()) {
         return;
     }
+    // Before stopping: the recorder answers 0 once it has stopped, and the
+    // file is only written out later still.
+    m_lastDuration = m_recorder->duration();
     m_recorder->stop();
 }
 

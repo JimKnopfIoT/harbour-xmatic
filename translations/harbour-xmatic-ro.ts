@@ -110,6 +110,10 @@
         <source>Privacy</source>
         <translation>Confidențialitate</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Sesiunea și baza de date cu mesaje sunt necriptate pe acest dispozitiv. Atinge ca să le criptezi.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1431,6 +1435,14 @@
         <source>Something else</source>
         <translation>Altceva</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Nimic aici</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Ține apăsat un emoji din altă filă ca să-l păstrezi aici</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2035,14 +2047,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Acel mesaj nu se află în istoricul încărcat</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>citit de %n</numerusform>
-            <numerusform>citit de %n</numerusform>
-            <numerusform>citit de %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Renunță</translation>
@@ -2284,6 +2288,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Răspunde în fir</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Trimis necriptat</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nu a fost trimis de contul indicat</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Cheile expeditorului s-au schimbat</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>De pe un dispozitiv neverificat</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>De la o persoană neverificată</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autenticitate neconfirmată</translation>
     </message>
 </context>
 <context>

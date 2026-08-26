@@ -12,6 +12,16 @@ Page {
     property string roomId
     property string roomName
     property string rootEventId
+    /// Whether the room this thread belongs to is encrypted. Everything the
+    /// warning below rests on hangs off it, and a thread is exactly as
+    /// encrypted as its room.
+    property bool encrypted: false
+
+    /// Recipients of that room whose devices are unverified, as the room view
+    /// holds them. A thread reaches the same people as the room does, so it
+    /// asks the same question before sending - it used to reach them without
+    /// asking anything.
+    property var unverifiedUsers: []
 
     // Page-local: matrix.lastError is global and would show a stray failure
     // from anywhere as this thread's.
@@ -19,12 +29,73 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    Component.onCompleted: matrix.openThread(roomId, rootEventId)
+    Component.onCompleted: {
+        matrix.openThread(roomId, rootEventId)
+        refreshRecipients()
+    }
     Component.onDestruction: matrix.closeThread()
 
     Connections {
         target: matrix
         onThreadFailed: page.error = message
+        onRecipientsChecked: {
+            if (roomId === page.roomId) {
+                page.unverifiedUsers = users
+            }
+        }
+    }
+
+    function refreshRecipients() {
+        if (page.encrypted) {
+            matrix.checkRecipients(page.roomId)
+        }
+    }
+
+    /// The one line a message carries when its authenticity is in doubt. Same
+    /// codes and same wording as the room view: a thread is part of the same
+    /// conversation and must not say less about a message than the room does.
+    function shieldText(shield) {
+        if (!shield) {
+            return ""
+        }
+        switch (shield.reason) {
+        case "sentInClear": return qsTr("Sent unencrypted")
+        case "mismatchedSender": return qsTr("Not sent by the account it names")
+        case "identityChanged": return qsTr("The sender's keys changed")
+        case "unsignedDevice":
+        case "unknownDevice": return qsTr("From an unverified device")
+        case "unverifiedIdentity": return qsTr("From an unverified person")
+        default: return qsTr("Authenticity not confirmed")
+        }
+    }
+
+    /// Recipients the user has not chosen to trust yet. Empty means nothing
+    /// stands in the way of sending.
+    function pendingUnverified() {
+        var out = []
+        for (var i = 0; i < unverifiedUsers.length; i++) {
+            var entry = unverifiedUsers[i]
+            if (!matrix.recipientTrusted(entry.userId)) {
+                out.push(entry)
+            }
+        }
+        return out
+    }
+
+    function submit() {
+        var pending = pendingUnverified()
+        if (pending.length > 0) {
+            var dialog = pageStack.push(Qt.resolvedUrl("UnverifiedRecipientsDialog.qml"),
+                                        { users: pending })
+            dialog.accepted.connect(page.doSubmit)
+            return
+        }
+        doSubmit()
+    }
+
+    function doSubmit() {
+        matrix.sendThreadMessage(threadInput.text)
+        threadInput.text = ""
     }
 
     // A tapped link, as in the room below: a Matrix address is answered inside
@@ -226,6 +297,20 @@ Page {
                         return model.body || ""
                     }
                 }
+
+                // What the SDK will not vouch for. Red is a message that is
+                // not what it claims to be, grey one it cannot check; silent
+                // otherwise.
+                Label {
+                    width: parent.width
+                    visible: !!model.shield
+                    wrapMode: Text.Wrap
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: model.shield && model.shield.level === "red"
+                           ? Theme.errorColor : Theme.secondaryColor
+                    textFormat: Text.PlainText
+                    text: page.shieldText(model.shield)
+                }
             }
         }
 
@@ -267,10 +352,7 @@ Page {
             width: Theme.itemSizeSmall
             icon.source: "image://theme/icon-m-send"
             enabled: threadInput.text.trim().length > 0
-            onClicked: {
-                matrix.sendThreadMessage(threadInput.text)
-                threadInput.text = ""
-            }
+            onClicked: page.submit()
         }
     }
 }

@@ -7,9 +7,10 @@
 //! place and the Qt side free of crypto.
 
 use std::path::{Path, PathBuf};
+use std::time::Duration;
 
 use matrix_sdk::{
-    attachment::AttachmentConfig as RoomAttachmentConfig,
+    attachment::{AttachmentConfig as RoomAttachmentConfig, AttachmentInfo, BaseAudioInfo},
     media::{MediaFormat, MediaRequestParameters, MediaThumbnailSettings, UniqueKey},
     ruma::{
         api::client::media::get_media_config,
@@ -34,6 +35,10 @@ const MAX_ATTACHMENT_BYTES: u64 = 100 * 1024 * 1024;
 /// Largest avatar. A profile picture is scaled down by everything that shows
 /// it, so anything past this is a mistake rather than an intention.
 pub const MAX_AVATAR_BYTES: u64 = 10 * 1024 * 1024;
+
+/// Largest attachment this app will take in. Both halves of the check use it:
+/// what the event declares, and what the download actually weighed.
+const MAX_MEDIA_BYTES: u64 = 100 * 1024 * 1024;
 
 /// How big a file is, without opening it.
 pub fn file_size(path: &str) -> Result<u64, String> {
@@ -80,6 +85,7 @@ pub async fn fetch(
     cache_dir: &Path,
     source: Value,
     thumbnail: bool,
+    declared: u64,
 ) -> Result<String, String> {
     // The parse error is deliberately not passed on: serde quotes the input it
     // choked on, and the input is a media address including the homeserver —
@@ -113,6 +119,18 @@ pub async fn fetch(
         return Ok(path.to_string_lossy().into_owned());
     }
 
+    // The event's own figure, before anything is asked for. The SDK hands
+    // media over as one `Vec<u8>` and offers no way to stream it - its
+    // `get_media_file` calls the same function and writes the result - so the
+    // only place a download can be stopped without holding it in memory first
+    // is here, before the request goes out.
+    //
+    // The sender writes that figure, so this is a gate and not a guarantee:
+    // whoever lies about it still runs into the check below, which weighs what
+    // actually arrived. Two halves of one protection - the first costs the
+    // attacker the download, the second costs us the memory.
+    check_size(declared, MAX_MEDIA_BYTES, "attachment")?;
+
     let bytes = client
         .media()
         .get_media_content(&request, false)
@@ -124,13 +142,7 @@ pub async fn fetch(
     // memory-exhaustion lever; the image and video decoders on this old Qt are
     // the real target, and a hundred megabytes is already far past any genuine
     // thumbnail or clip.
-    const MAX_MEDIA_BYTES: usize = 100 * 1024 * 1024;
-    if bytes.len() > MAX_MEDIA_BYTES {
-        return Err(format!(
-            "attachment too large: {} MiB",
-            bytes.len() / (1024 * 1024)
-        ));
-    }
+    check_size(bytes.len() as u64, MAX_MEDIA_BYTES, "attachment")?;
 
     // Write beside the target and rename, so a cancelled download can never be
     // mistaken for a complete file.
@@ -214,6 +226,7 @@ pub async fn send(
     mime_type: &str,
     caption: &str,
     reply_to: &str,
+    voice: Option<u64>,
 ) -> Result<(), String> {
     let mime: mime::Mime = mime_type
         .parse()
@@ -249,6 +262,21 @@ pub async fn send(
         .unwrap_or_else(|| "attachment".to_owned());
 
     let mut config = AttachmentConfig::default();
+
+    // A recording of one's own is a voice message, not an audio file. The
+    // difference is one marker (MSC3245) plus the length, and it is not
+    // cosmetic: clients draw a voice message differently, and the bridges to
+    // other networks make a native voice note only out of a message that
+    // carries it - one of them refuses everything else as an unsupported
+    // format, which reads as if the recording were broken.
+    if let Some(duration) = voice {
+        config.info = Some(AttachmentInfo::Voice(BaseAudioInfo {
+            duration: Some(Duration::from_millis(duration)),
+            size: UInt::try_from(size as u64).ok(),
+            waveform: None,
+        }));
+    }
+
     let caption = caption.trim();
     if !caption.is_empty() {
         config.caption = Some(TextMessageEventContent::plain(caption));

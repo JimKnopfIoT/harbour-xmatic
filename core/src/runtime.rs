@@ -118,6 +118,13 @@ struct State {
     /// `Subscriptions` — they have to be requested together or not at all.
     subscriptions: Mutex<Subscriptions>,
     directory: Mutex<Option<DirectoryHandle>>,
+    /// The observers that outlive a command: the recovery/backup state watcher
+    /// and the session watcher. Both hold a client clone, and a task holding
+    /// one keeps the SQLite pool open - `reset_store` on sign-out would then
+    /// delete the directory under a live connection, which is the one mistake
+    /// this project has already paid for. Kept here so they can be stopped
+    /// before the client goes.
+    observers: Mutex<Vec<tokio::task::JoinHandle<()>>>,
     verification: verification::Slot,
     sink: Arc<Sink>,
 }
@@ -263,6 +270,7 @@ pub fn spawn(
         opening_thread: Mutex::new(()),
         subscriptions: Mutex::new(Subscriptions::default()),
         directory: Mutex::new(None),
+        observers: Mutex::new(Vec::new()),
         verification: Arc::new(Mutex::new(None)),
         sink,
     });
@@ -303,6 +311,7 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::Logout { .. } => logout(&state, id).await,
         Command::RoomListStart { .. } => start_room_list(&state, id).await,
         Command::RoomListFilter { pattern, .. } => filter_room_list(&state, id, pattern).await,
+        Command::RoomListMore { .. } => load_more_rooms(&state, id).await,
         Command::RoomListStop { .. } => stop_room_list(&state, id).await,
         Command::SpacesStart { .. } => start_spaces(&state, id).await,
         Command::SpacesStop { .. } => stop_spaces(&state, id).await,
@@ -327,7 +336,7 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::TimelineClose { .. } => close_timeline(&state, id).await,
         Command::TimelinePaginate { .. } => paginate_timeline(&state, id).await,
         Command::TimelineSend { body, .. } => send_message(&state, id, body).await,
-        Command::TimelineMarkRead { .. } => mark_read(&state, id).await,
+        Command::TimelineMarkRead { receipt, .. } => mark_read(&state, id, receipt).await,
         Command::PrivateGet { .. } => {
             match private::load(&state.paths.private_file, state.store_key().as_ref()) {
                 private::Loaded::Lists(lists) => {
@@ -426,11 +435,18 @@ async fn handle(state: Arc<State>, command: Command) {
             mime_type,
             caption,
             reply_to,
+            voice,
+            duration,
             ..
-        } => send_media(&state, id, path, mime_type, caption, reply_to).await,
+        } => {
+            send_media(&state, id, path, mime_type, caption, reply_to, voice, duration).await
+        }
         Command::MediaFetch {
-            source, thumbnail, ..
-        } => fetch_media(&state, id, source, thumbnail).await,
+            source,
+            thumbnail,
+            size,
+            ..
+        } => fetch_media(&state, id, source, thumbnail, size).await,
         Command::RoomForward {
             room_id,
             body,
@@ -1150,6 +1166,17 @@ async fn open_timeline(
     // by awaiting inside that lock. It also has to be the state *before* this
     // visit marks anything read.
     let marker = timeline::own_read_marker(&client, &room_id).await;
+    // What this account may do in this room, for the menus that would
+    // otherwise offer an action the server refuses. Read here for the same
+    // reason as the marker: it is a store read, and it must not happen under
+    // the timeline lock.
+    let permissions = match matrix_sdk::ruma::RoomId::parse(&room_id)
+        .ok()
+        .and_then(|parsed| client.get_room(&parsed))
+    {
+        Some(room) => members::room_permissions(&client, &room).await,
+        None => json!({}),
+    };
 
     {
         let mut open = state.timeline.lock().await;
@@ -1164,7 +1191,12 @@ async fn open_timeline(
                 open.replace(previous);
                 state.sink.emit(reply_ok(
                     id,
-                    json!({ "open": true, "readMarker": marker, "rebuilt": false }),
+                    json!({
+                        "open": true,
+                        "readMarker": marker,
+                        "rebuilt": false,
+                        "can": permissions,
+                    }),
                 ));
                 return;
             }
@@ -1196,7 +1228,12 @@ async fn open_timeline(
             // reading stopped; the branch above kept the rows it had.
             state.sink.emit(reply_ok(
                 id,
-                json!({ "open": true, "readMarker": marker, "rebuilt": true }),
+                json!({
+                    "open": true,
+                    "readMarker": marker,
+                    "rebuilt": true,
+                    "can": permissions,
+                }),
             ));
         }
         Err(message) => state.sink.emit(reply_error(id, message)),
@@ -1422,6 +1459,7 @@ async fn redact_message(state: &Arc<State>, id: u64, event_id: String, txn_id: S
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 async fn send_media(
     state: &Arc<State>,
     id: u64,
@@ -1429,6 +1467,8 @@ async fn send_media(
     mime_type: String,
     caption: String,
     reply_to: String,
+    voice: bool,
+    duration: u64,
 ) {
     // Cloned out of the guard: the attachment upload takes a while and must
     // not hold the lock.
@@ -1439,7 +1479,8 @@ async fn send_media(
         return;
     };
 
-    match media::send(&timeline, &path, &mime_type, &caption, &reply_to).await {
+    let voice = if voice { Some(duration) } else { None };
+    match media::send(&timeline, &path, &mime_type, &caption, &reply_to, voice).await {
         Ok(()) => state.sink.emit(reply_ok(id, json!({ "sent": true }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
@@ -1479,21 +1520,21 @@ async fn forward(
     }
 }
 
-async fn fetch_media(state: &Arc<State>, id: u64, source: Value, thumbnail: bool) {
+async fn fetch_media(state: &Arc<State>, id: u64, source: Value, thumbnail: bool, size: u64) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
 
-    match media::fetch(&client, &state.paths.media_cache, source, thumbnail).await {
+    match media::fetch(&client, &state.paths.media_cache, source, thumbnail, size).await {
         Ok(path) => state.sink.emit(reply_ok(id, json!({ "path": path }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
 
-async fn mark_read(state: &Arc<State>, id: u64) {
+async fn mark_read(state: &Arc<State>, id: u64, receipt: bool) {
     let outcome = match state.timeline().await {
-        Some(handle) => handle.mark_read().await,
+        Some(handle) => handle.mark_read(receipt).await,
         None => Err("no timeline is open".to_owned()),
     };
 
@@ -1650,6 +1691,25 @@ async fn filter_room_list(state: &Arc<State>, id: u64, pattern: String) {
 
     if applied {
         state.sink.emit(reply_ok(id, json!({ "filtered": true })));
+    } else {
+        state.sink.emit(reply_error(id, "the room list is not running"));
+    }
+}
+
+/// One more page of rooms for a list that has reached its end.
+///
+/// The dynamic adapter behind the room list holds one page and grows only when
+/// told to (`add_one_page`), so an account with more rooms than a page simply
+/// had no others - and nothing said so. Asking again once everything is loaded
+/// does nothing, which is why this needs no "is there more" of its own.
+async fn load_more_rooms(state: &Arc<State>, id: u64) {
+    let asked = match &*state.rooms.lock().await {
+        Some(handle) => handle.load_more(),
+        None => false,
+    };
+
+    if asked {
+        state.sink.emit(reply_ok(id, json!({ "asked": true })));
     } else {
         state.sink.emit(reply_error(id, "the room list is not running"));
     }
@@ -1958,14 +2018,20 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
     verification::install(&client, state.sink.clone(), state.verification.clone());
     call::install(&client, state.sink.clone());
     // The backup unlocks itself once a verification hands over the key; only
-    // this stream says so.
-    recovery::watch(&client, state.sink.clone());
+    // this stream says so. Kept, not dropped: it holds a client clone and
+    // would otherwise still be holding one after a sign-out.
+    let recovery_task = recovery::watch(&client, state.sink.clone());
     // Rewritten once per restore so a plaintext session.json from before the
     // store key existed becomes encrypted now — token refreshes would do it
     // eventually for OAuth, but a classic session without refresh tokens
     // would otherwise stay plaintext forever.
     persist(state, &client, homeserver.clone()).await;
-    watch_session(state, &client, homeserver);
+    let session_task = watch_session(state, &client, homeserver);
+    state
+        .observers
+        .lock()
+        .await
+        .extend([recovery_task, session_task]);
 
     *state.client.lock().await = Some(client);
     let data = state.session_data().await;
@@ -2111,9 +2177,14 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
             Ok(true) => {
                 verification::install(&client, waiter.sink.clone(), waiter.verification.clone());
                 call::install(&client, waiter.sink.clone());
-                recovery::watch(&client, waiter.sink.clone());
+                let recovery_task = recovery::watch(&client, waiter.sink.clone());
                 persist(&waiter, &client, homeserver.clone()).await;
-                watch_session(&waiter, &client, homeserver);
+                let session_task = watch_session(&waiter, &client, homeserver);
+                waiter
+                    .observers
+                    .lock()
+                    .await
+                    .extend([recovery_task, session_task]);
                 let data = waiter.session_data().await;
                 waiter.sink.emit(event("session.changed", data));
             }
@@ -2206,9 +2277,14 @@ async fn password_login(
 
     verification::install(&client, state.sink.clone(), state.verification.clone());
     call::install(&client, state.sink.clone());
-    recovery::watch(&client, state.sink.clone());
+    let recovery_task = recovery::watch(&client, state.sink.clone());
     persist(state, &client, homeserver.clone()).await;
-    watch_session(state, &client, homeserver);
+    let session_task = watch_session(state, &client, homeserver);
+    state
+        .observers
+        .lock()
+        .await
+        .extend([recovery_task, session_task]);
     *state.client.lock().await = Some(client);
 
     let data = state.session_data().await;
@@ -2265,9 +2341,14 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
             Ok(()) => {
                 verification::install(&client, waiter.sink.clone(), waiter.verification.clone());
                 call::install(&client, waiter.sink.clone());
-                recovery::watch(&client, waiter.sink.clone());
+                let recovery_task = recovery::watch(&client, waiter.sink.clone());
                 persist(&waiter, &client, homeserver.clone()).await;
-                watch_session(&waiter, &client, homeserver);
+                let session_task = watch_session(&waiter, &client, homeserver);
+                waiter
+                    .observers
+                    .lock()
+                    .await
+                    .extend([recovery_task, session_task]);
                 let data = waiter.session_data().await;
                 waiter.sink.emit(event("session.changed", data));
             }
@@ -2320,7 +2401,11 @@ async fn persist(state: &Arc<State>, client: &Client, homeserver: String) {
 ///
 /// This is a broadcast subscription, not a `Client::add_event_handler` handler,
 /// so listening in a spawned task does not wedge the sync loop.
-fn watch_session(state: &Arc<State>, client: &Client, homeserver: String) {
+fn watch_session(
+    state: &Arc<State>,
+    client: &Client,
+    homeserver: String,
+) -> tokio::task::JoinHandle<()> {
     let state = state.clone();
     let client = client.clone();
     let mut changes = client.subscribe_to_session_changes();
@@ -2333,11 +2418,19 @@ fn watch_session(state: &Arc<State>, client: &Client, homeserver: String) {
                 Ok(SessionChange::UnknownToken(_)) => {
                     // The refresh token is gone for good and only a new login can
                     // recover. Say so, rather than leaving the UI to show empty
-                    // rooms that look like a bug.
+                    // rooms that look like a bug - and stop everything that is
+                    // still talking to a server which has thrown this session
+                    // away, instead of leaving a sync service to retry against
+                    // it for as long as the app runs.
+                    session_expired(&state).await;
                     state.sink.emit(event(
                         "session.expired",
                         json!({ "message": "the session has expired, please sign in again" }),
                     ));
+                    // Nothing more can arrive on this subscription, and the
+                    // clone this task holds is the last thing keeping the old
+                    // client alive.
+                    break;
                 }
                 // Missing a refresh notification only costs a redundant write
                 // next time; keep listening.
@@ -2345,7 +2438,7 @@ fn watch_session(state: &Arc<State>, client: &Client, homeserver: String) {
                 Err(RecvError::Closed) => break,
             }
         }
-    });
+    })
 }
 
 async fn registration_url(state: &Arc<State>, id: u64, homeserver: String) {
@@ -2386,7 +2479,53 @@ async fn abort_login(state: &Arc<State>, id: u64) {
     state.sink.emit(reply_ok(id, json!({ "state": "none" })));
 }
 
+/// Stops the observers that hold a client clone. Called before the client is
+/// dropped, by both the deliberate sign-out and an expired session.
+async fn stop_observers(state: &Arc<State>) {
+    for task in state.observers.lock().await.drain(..) {
+        task.abort();
+    }
+}
+
+/// What is done when the server says this session no longer exists.
+///
+/// The same teardown as signing out, minus two things: there is no point
+/// telling the server about a token it has already thrown away, and the stores
+/// stay where they are - the account is unchanged, a fresh login resets the
+/// store itself, and wiping the crypto store here would take the device's keys
+/// with it for a session that may only have been revoked by mistake.
+///
+/// The session file does go: left on disk it would be restored at the next
+/// start, fail every sync, and show as "offline" over an empty room list
+/// instead of as the login page.
+async fn session_expired(state: &Arc<State>) {
+    stop_observers(state).await;
+    if let Some(handle) = state.timeline.lock().await.take() {
+        handle.close();
+    }
+    if let Some(handle) = state.thread.lock().await.take() {
+        handle.close();
+    }
+    if let Some(handle) = state.directory.lock().await.take() {
+        handle.task.abort();
+    }
+    if let Some(task) = state.open_space.lock().await.take() {
+        task.abort();
+    }
+    if let Some(task) = state.spaces.lock().await.take() {
+        task.abort();
+    }
+    if let Some(handle) = state.rooms.lock().await.take() {
+        handle.stop().await;
+    }
+    state.client.lock().await.take();
+    session::forget(&state.paths.session_file);
+}
+
 async fn logout(state: &Arc<State>, id: u64) {
+    // First, because everything below assumes nothing else is holding the
+    // client - the store is deleted at the end of this function.
+    stop_observers(state).await;
     if let Some(handle) = state.timeline.lock().await.take() {
         handle.close();
     }

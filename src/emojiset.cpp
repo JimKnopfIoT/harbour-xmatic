@@ -140,7 +140,10 @@ QByteArray convert(const QFileInfo &source, const QString &targetPath)
     }
     target.close();
 
-    return QCryptographicHash::hash(bytes, QCryptographicHash::Md5).toHex();
+    // SHA-256, and the manifest says so: a checksum here is what stands
+    // between the decoder and a file that changed after it was checked, and a
+    // digest one can build a collision for weakens exactly that.
+    return QCryptographicHash::hash(bytes, QCryptographicHash::Sha256).toHex();
 }
 
 }

@@ -198,6 +198,28 @@ void AppSettings::setDirectoryServer(const QString &server)
     emit directoryServerChanged();
 }
 
+QStringList AppSettings::emojiFavourites() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("ui/emojiFavourites")).toStringList();
+}
+
+bool AppSettings::hasEmojiFavourites() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.contains(QStringLiteral("ui/emojiFavourites"));
+}
+
+void AppSettings::setEmojiFavourites(const QStringList &keys)
+{
+    if (hasEmojiFavourites() && keys == emojiFavourites()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("ui/emojiFavourites"), keys, "the emoji favourites");
+    emit emojiFavouritesChanged();
+}
+
 QStringList AppSettings::directoryServers() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

@@ -192,6 +192,33 @@ Page {
                 height: Theme.paddingLarge
             }
 
+            // Said where somebody comes past it, not only where somebody goes
+            // looking for it. The encryption page has stated this since the
+            // stores could be encrypted at all, but a state one has to seek
+            // out is a state nobody knows about - which is exactly what an
+            // outside reader of this app pointed at. Only where a key could be
+            // had: without secretsd there is nothing to act on, and a line
+            // that offers nothing is a nag.
+            BackgroundItem {
+                width: parent.width
+                height: unencryptedWarning.height + 2 * Theme.paddingMedium
+                visible: !matrix.storageStatus.encrypted
+                         && matrix.storageStatus.keyAvailable
+                onClicked: pageStack.push(Qt.resolvedUrl("EncryptionPage.qml"))
+
+                Label {
+                    id: unencryptedWarning
+
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    wrapMode: Text.Wrap
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.errorColor
+                    text: qsTr("Session and message database lie on this device unencrypted. Tap to encrypt them.")
+                }
+            }
+
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin

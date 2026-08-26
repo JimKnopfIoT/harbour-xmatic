@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Integritet</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Sessionen och meddelandedatabasen ligger okrypterade på den här enheten. Tryck för att kryptera dem.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Något annat</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Inget sparat här</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Håll in en emoji i en annan flik för att spara den här</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Det meddelandet finns inte i den laddade historiken</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>läst av %n</numerusform>
-            <numerusform>läst av %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Kasta</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Svara i tråden</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Skickat okrypterat</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Skickades inte av kontot som anges</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Avsändarens nycklar har ändrats</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Från en overifierad enhet</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Från en overifierad person</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Äktheten är inte bekräftad</translation>
     </message>
 </context>
 <context>

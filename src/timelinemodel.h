@@ -1,6 +1,8 @@
 #ifndef TIMELINEMODEL_H
 #define TIMELINEMODEL_H
 
+#include <QHash>
+#include <QString>
 #include <QVector>
 
 #include "difflistmodel.h"
@@ -55,6 +57,17 @@ public:
     /// message that is already loaded.
     Q_INVOKABLE int indexOfEvent(const QString &eventId) const;
 
+    /// The room's thread roots as the server lists them, event id to reply
+    /// count.
+    ///
+    /// The marker that opens a thread hangs on the SDK's thread summary, and a
+    /// root that was cached before threading was switched on carries none - on
+    /// one test device every thread was reachable and on the other none was,
+    /// same version, same room, different store. The server's `/threads`
+    /// answer is laid over the rows so the way in does not depend on what the
+    /// cache happens to hold.
+    void setThreadRoots(const QHash<QString, int> &roots);
+
 private:
     /// How many other people have read each own message.
     ///
@@ -69,6 +82,7 @@ private:
 
     QVector<int> m_readCounts;
     bool m_updatingReadCounts = false;
+    QHash<QString, int> m_threadRoots;
 };
 
 #endif // TIMELINEMODEL_H

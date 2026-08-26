@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Privaatsus</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Sessioon ja sõnumite andmebaas on selles seadmes krüptimata. Puuduta, et need krüptida.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Midagi muud</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Siin pole midagi</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Hoia teisel kaardil emojit all, et see siia salvestada</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Seda sõnumit pole laaditud ajaloos</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>lugenud: %n</numerusform>
-            <numerusform>lugenud: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Loobu</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Vasta lõimes</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Saadetud krüptimata</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ei saatnud see konto, mida nimetatakse</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Saatja võtmed muutusid</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Kinnitamata seadmest</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Kinnitamata inimeselt</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Ehtsus kinnitamata</translation>
     </message>
 </context>
 <context>

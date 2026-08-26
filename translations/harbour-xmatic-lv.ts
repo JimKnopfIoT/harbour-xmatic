@@ -110,6 +110,10 @@
         <source>Privacy</source>
         <translation>Privātums</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Sesija un ziņu datubāze šajā ierīcē ir nešifrētas. Pieskaries, lai tās šifrētu.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1431,6 +1435,14 @@
         <source>Something else</source>
         <translation>Kaut kas cits</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Šeit nekā nav</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Citā cilnē turi emocijzīmi nospiestu, lai to saglabātu šeit</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2035,14 +2047,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Šī ziņa nav ielādētajā vēsturē</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>izlasījuši: %n</numerusform>
-            <numerusform>izlasījuši: %n</numerusform>
-            <numerusform>izlasījuši: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Atmest</translation>
@@ -2284,6 +2288,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Atbildēt pavedienā</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Nosūtīts nešifrēts</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nosūtīja nevis nosauktais konts</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Sūtītāja atslēgas ir mainījušās</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>No neapstiprinātas ierīces</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>No neapstiprinātas personas</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autentiskums nav apstiprināts</translation>
     </message>
 </context>
 <context>

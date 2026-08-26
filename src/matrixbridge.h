@@ -88,6 +88,12 @@ class MatrixBridge : public QObject
     /// Filled from `storage.status`, which needs no session — the answer is
     /// available before the first login.
     Q_PROPERTY(QVariantMap storageStatus READ storageStatus NOTIFY storageChanged)
+    /// What the signed-in user may do in the room that is open: `pin`,
+    /// `invite`, `redactOthers`, `topic`, `name`. Empty until a room has been
+    /// opened, and a missing entry means "not answered yet" - a menu should
+    /// then show rather than hide, so a slow answer never takes an action away
+    /// from somebody who has it.
+    Q_PROPERTY(QVariantMap roomPermissions READ roomPermissions NOTIFY roomPermissionsChanged)
     Q_PROPERTY(QString profileName READ profileName NOTIFY profileChanged)
     Q_PROPERTY(QString profileAvatar READ profileAvatar NOTIFY profileChanged)
     Q_PROPERTY(QObject *directory READ directory CONSTANT)
@@ -188,6 +194,7 @@ public:
     /// Members: recovery, backup, backupEnabled, backupOnServer, crossSigned.
     QVariantMap encryptionStatus() const { return m_encryptionStatus; }
     QVariantMap storageStatus() const { return m_storageStatus; }
+    QVariantMap roomPermissions() const { return m_roomPermissions; }
 
     QString profileName() const { return m_profileName; }
     QString profileAvatar() const { return m_profileAvatar; }
@@ -240,6 +247,11 @@ public:
 
     /// Narrows the room list; an empty pattern shows everything again.
     Q_INVOKABLE void setRoomFilter(const QString &pattern);
+
+    /// Asks for one more page of rooms. The list holds one page and grows only
+    /// on request, so an account with more rooms than that had no others at
+    /// all. Harmless once everything is loaded.
+    Q_INVOKABLE void loadMoreRooms();
 
     /// Starts streaming the joined spaces into the `spaces` model.
     Q_INVOKABLE void startSpaces();
@@ -537,13 +549,23 @@ public:
     /// with it and `replyTo` the event it answers; both may be empty. Neither
     /// can be added afterwards, which is why the send page asks for them
     /// before the upload starts.
+    /// A recording of one's own goes out as a voice message rather than as an
+    /// audio file: `voiceDuration` above zero marks it as one, which is what
+    /// other clients draw a waveform for and what the bridges to other
+    /// networks turn into a native voice note.
     Q_INVOKABLE void sendMedia(const QString &path, const QString &mimeType,
                                const QString &caption = QString(),
-                               const QString &replyTo = QString());
+                               const QString &replyTo = QString(),
+                               qint64 voiceDuration = 0);
 
     /// Downloads an attachment. The result arrives as mediaReady(key, path);
     /// an already downloaded file is reported immediately.
-    Q_INVOKABLE void requestMedia(const QString &key, const QVariant &source, bool thumbnail);
+    /// `declaredSize` is what the event says the file weighs, zero where it
+    /// says nothing. Passed on so the core can refuse an outsized attachment
+    /// before it downloads it - the SDK has no way to stream one, so a file
+    /// that is asked for is a file that is held in memory whole.
+    Q_INVOKABLE void requestMedia(const QString &key, const QVariant &source, bool thumbnail,
+                                  qint64 declaredSize = 0);
 
     /// The local path of an attachment that was already downloaded, or empty.
     Q_INVOKABLE QString mediaPath(const QString &key) const { return m_media.value(key); }
@@ -610,6 +632,7 @@ signals:
     /// The freshly created recovery key. Shown once, never stored.
     void recoveryKeyReady(const QString &key);
     void storageChanged();
+    void roomPermissionsChanged();
 
     /// A request for older messages came back. Carries no row count on
     /// purpose: the rows it fetched reach the model through the diff stream,
@@ -836,6 +859,7 @@ private:
     QVariantList m_verificationEmoji;
     QVariantMap m_encryptionStatus;
     QVariantMap m_storageStatus;
+    QVariantMap m_roomPermissions;
 
     /// Downloaded attachments by request key, and the requests in flight.
     QHash<QString, QString> m_media;

@@ -215,8 +215,9 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     m_voiceDirectory = cacheDirectory + QStringLiteral("/voice");
     m_recorder = new VoiceRecorder(m_voiceDirectory, this);
     connect(m_recorder, &VoiceRecorder::finished, this, [this](const QString &path,
-                                                               const QString &mimeType) {
-        sendMedia(path, mimeType);
+                                                               const QString &mimeType,
+                                                               qint64 duration) {
+        sendMedia(path, mimeType, QString(), QString(), duration);
     });
     connect(m_recorder, &VoiceRecorder::failed, this, [this](const QString &message) {
         setLastError(message);
@@ -476,6 +477,11 @@ void MatrixBridge::setRoomFilter(const QString &pattern)
     QJsonObject arguments;
     arguments.insert(QStringLiteral("pattern"), pattern);
     send(QStringLiteral("roomlist.filter"), arguments);
+}
+
+void MatrixBridge::loadMoreRooms()
+{
+    send(QStringLiteral("roomlist.more"));
 }
 
 void MatrixBridge::startSpaces()
@@ -1046,13 +1052,15 @@ void MatrixBridge::sendMessage(const QString &body)
 
 void MatrixBridge::markRead()
 {
-    // Reading without telling anybody is a choice the privacy page offers.
-    // Only the automatic receipt is held back here; "mark as read" in the chat
-    // list stays a deliberate action and still sends one.
-    if (m_settings && !m_settings->sendReadReceipts()) {
-        return;
-    }
-    send(QStringLiteral("timeline.markRead"));
+    // Reading without telling anybody is a choice the privacy page offers, and
+    // it governs the receipt others see - not the fully-read marker, which is
+    // private account data. Holding that one back as well hid nothing from
+    // anybody and cost this device the line in the conversation and the
+    // position the room opens at: both follow the marker.
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("receipt"),
+                     !m_settings || m_settings->sendReadReceipts());
+    send(QStringLiteral("timeline.markRead"), arguments);
 }
 
 bool MatrixBridge::shareableFile(const QString &path) const
@@ -1481,7 +1489,8 @@ void MatrixBridge::deleteMessage(const QString &eventId, const QString &txnId)
 }
 
 void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
-                             const QString &caption, const QString &replyTo)
+                             const QString &caption, const QString &replyTo,
+                             qint64 voiceDuration)
 {
     // The type, never the name: a file name carries whatever the user called
     // it, and the log is not the place for that.
@@ -1498,6 +1507,10 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                      mimeType.isEmpty() ? QStringLiteral("application/octet-stream") : mimeType);
     arguments.insert(QStringLiteral("caption"), caption);
     arguments.insert(QStringLiteral("replyTo"), replyTo);
+    if (voiceDuration > 0) {
+        arguments.insert(QStringLiteral("voice"), true);
+        arguments.insert(QStringLiteral("duration"), double(voiceDuration));
+    }
     const quint64 id = send(QStringLiteral("timeline.sendMedia"), arguments);
     // A recording of one's own is not a document the user keeps: it goes as
     // soon as it is out.
@@ -1596,7 +1609,8 @@ QString MatrixBridge::saveInto(QStandardPaths::StandardLocation location,
     return candidate;
 }
 
-void MatrixBridge::requestMedia(const QString &key, const QVariant &source, bool thumbnail)
+void MatrixBridge::requestMedia(const QString &key, const QVariant &source, bool thumbnail,
+                                qint64 declaredSize)
 {
     if (key.isEmpty() || !source.isValid()) {
         return;
@@ -1629,6 +1643,9 @@ void MatrixBridge::requestMedia(const QString &key, const QVariant &source, bool
     QJsonObject arguments;
     arguments.insert(QStringLiteral("source"), encoded);
     arguments.insert(QStringLiteral("thumbnail"), thumbnail);
+    if (declaredSize > 0) {
+        arguments.insert(QStringLiteral("size"), double(declaredSize));
+    }
 
     const quint64 id = m_nextId;
     m_mediaRequests.insert(id, key);
@@ -2096,6 +2113,22 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
 
     if (command == QLatin1String("timeline.open")) {
         setTimelineReady(true);
+        // What this account may do in the room that was just opened. Menus
+        // ask this instead of offering everything and letting the server
+        // refuse - a menu entry that always fails is a dead end, and this app
+        // does not build those.
+        // A rebuilt timeline is a different room (or a fresh view of this
+        // one), and the core asks the server for its thread roots as part of
+        // building it. A kept timeline keeps its roots: the answer would not
+        // come a second time, and clearing them would take the markers away.
+        if (data.value(QStringLiteral("rebuilt")).toBool()) {
+            m_timeline.setThreadRoots(QHash<QString, int>());
+        }
+        const QVariantMap can = data.value(QStringLiteral("can")).toObject().toVariantMap();
+        if (can != m_roomPermissions) {
+            m_roomPermissions = can;
+            emit roomPermissionsChanged();
+        }
         // Only for the live view. A focused open - the pinned overview, a
         // permalink - shows a different slice of the room, and the room's
         // read marker means nothing in it.
@@ -2338,6 +2371,25 @@ bool MatrixBridge::eventTimeline(const QString &name, const QJsonObject &data)
         qInfo("xmatic: reply details failed for %s: %s",
               qPrintable(data.value(QStringLiteral("eventId")).toString()),
               qPrintable(data.value(QStringLiteral("error")).toString()));
+    } else if (name == QLatin1String("timeline.threads")) {
+        // The server's list of this room's thread roots. It is the way into a
+        // thread whose root the store knows without a summary - the case every
+        // room is in after an update, because every event cached before
+        // threading was switched on lacks one.
+        if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
+            QHash<QString, int> roots;
+            const QJsonArray listed = data.value(QStringLiteral("roots")).toArray();
+            for (const QJsonValue &value : listed) {
+                const QJsonObject entry = value.toObject();
+                const QString id = entry.value(QStringLiteral("eventId")).toString();
+                if (!id.isEmpty()) {
+                    roots.insert(id, entry.value(QStringLiteral("count")).toInt(1));
+                }
+            }
+            qInfo("xmatic: the server lists %d thread root(s) in this room", roots.count());
+            m_timeline.setThreadRoots(roots);
+        }
+        return true;
     } else if (name == QLatin1String("timeline.pinned")) {
         if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
             QStringList ids;

@@ -23,7 +23,35 @@ QVariant TimelineModel::data(const QModelIndex &index, int role) const
     if (role == ReadMarkByRole) {
         return m_readCounts.value(index.row());
     }
+    if (role == ThreadCountRole && !m_threadRoots.isEmpty()) {
+        // The row's own number first: it comes from the SDK's summary and is
+        // the live one, kept up to date as replies arrive. The server's list is
+        // the fallback for the roots that summary does not know - it is fetched
+        // once when the room opens and does not grow afterwards.
+        const int own = DiffListModel::data(index, role).toInt();
+        if (own > 0) {
+            return own;
+        }
+        const QString id = DiffListModel::data(index, EventIdRole).toString();
+        if (!id.isEmpty()) {
+            const int listed = m_threadRoots.value(id, 0);
+            if (listed > 0) {
+                return listed;
+            }
+        }
+    }
     return DiffListModel::data(index, role);
+}
+
+void TimelineModel::setThreadRoots(const QHash<QString, int> &roots)
+{
+    if (roots == m_threadRoots) {
+        return;
+    }
+    m_threadRoots = roots;
+    if (rowCount() > 0) {
+        emit dataChanged(index(0), index(rowCount() - 1), QVector<int>() << ThreadCountRole);
+    }
 }
 
 void TimelineModel::updateReadCounts()

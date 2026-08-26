@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Privacy</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>La sessione e il database dei messaggi sono in chiaro su questo dispositivo. Tocca per cifrarli.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Altro</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Qui non c&apos;è nulla</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Tieni premuta un&apos;emoji in un&apos;altra scheda per tenerla qui</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Quel messaggio non è nella cronologia caricata</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>letto da %n</numerusform>
-            <numerusform>letto da %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Scarta</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Rispondi nella discussione</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Inviato in chiaro</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Non inviato dall&apos;account indicato</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Le chiavi del mittente sono cambiate</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Da un dispositivo non verificato</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Da una persona non verificata</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autenticità non confermata</translation>
     </message>
 </context>
 <context>

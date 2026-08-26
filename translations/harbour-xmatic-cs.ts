@@ -110,6 +110,10 @@
         <source>Privacy</source>
         <translation>Soukromí</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Relace a databáze zpráv leží na tomto zařízení nezašifrované. Klepnutím je zašifruješ.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1431,6 +1435,14 @@
         <source>Something else</source>
         <translation>Něco jiného</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Nic tu není</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Podrž emoji v jiné záložce, aby se sem uložilo</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2035,14 +2047,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Tato zpráva není v načtené historii</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>přečteno: %n</numerusform>
-            <numerusform>přečteno: %n</numerusform>
-            <numerusform>přečteno: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Zahodit</translation>
@@ -2284,6 +2288,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Odpovědět ve vlákně</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Odesláno nešifrovaně</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Neodeslal to účet, který je uveden</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Klíče odesílatele se změnily</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Z neověřeného zařízení</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Od neověřené osoby</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Pravost nepotvrzena</translation>
     </message>
 </context>
 <context>

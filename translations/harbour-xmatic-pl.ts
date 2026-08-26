@@ -110,6 +110,10 @@
         <source>Privacy</source>
         <translation>Prywatność</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Sesja i baza wiadomości leżą na tym urządzeniu bez szyfrowania. Dotknij, aby je zaszyfrować.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1431,6 +1435,14 @@
         <source>Something else</source>
         <translation>Coś innego</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Nic tu nie ma</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Przytrzymaj emoji w innej zakładce, aby zachować je tutaj</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2035,14 +2047,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Tej wiadomości nie ma we wczytanej historii</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>przeczytane przez %n</numerusform>
-            <numerusform>przeczytane przez %n</numerusform>
-            <numerusform>przeczytane przez %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Odrzuć</translation>
@@ -2284,6 +2288,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Odpowiedz w wątku</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Wysłane bez szyfrowania</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nie wysłało tego wskazane konto</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Klucze nadawcy się zmieniły</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Z niezweryfikowanego urządzenia</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Od niezweryfikowanej osoby</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autentyczność niepotwierdzona</translation>
     </message>
 </context>
 <context>

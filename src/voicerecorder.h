@@ -39,8 +39,11 @@ signals:
     void recordingChanged();
     void durationChanged();
 
-    /// A recording is complete and ready to be sent.
-    void finished(const QString &path, const QString &mimeType);
+    /// A recording is complete and ready to be sent. The length goes with it:
+    /// a voice message without one is a plain audio attachment to every other
+    /// client, and the bridges that turn one into a native voice note refuse
+    /// it.
+    void finished(const QString &path, const QString &mimeType, qint64 duration);
 
     void failed(const QString &message);
 
@@ -51,6 +54,9 @@ private:
     QString m_cacheDirectory;
     QString m_currentPath;
     QString m_mimeType = QStringLiteral("audio/ogg");
+    /// Read when the recording is stopped: the recorder's own duration is back
+    /// to zero by the time the file has been written out.
+    qint64 m_lastDuration = 0;
     bool m_discard = false;
 };
 

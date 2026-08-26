@@ -335,16 +335,21 @@ impl TimelineHandle {
     /// The marker is not decoration: it is what the line in the conversation
     /// follows and what "open where I stopped" reads on the next visit. Sending
     /// only the receipt left that line standing where it first appeared.
-    pub async fn mark_read(&self) -> Result<(), String> {
+    ///
+    /// `receipt` is the user's choice about what *others* learn, and it governs
+    /// only the receipt. The marker goes out either way: it is private account
+    /// data, so withholding it hides nothing from anybody and only costs this
+    /// account the line and the position the room opens at.
+    pub async fn mark_read(&self, receipt: bool) -> Result<(), String> {
         let Some(event_id) = self.timeline.latest_event_id().await else {
             return Ok(());
         };
+        let mut receipts = Receipts::new().fully_read_marker(event_id.clone());
+        if receipt {
+            receipts = receipts.public_read_receipt(event_id);
+        }
         self.timeline
-            .send_multiple_receipts(
-                Receipts::new()
-                    .public_read_receipt(event_id.clone())
-                    .fully_read_marker(event_id),
-            )
+            .send_multiple_receipts(receipts)
             .await
             .map_err(|error| format!("read receipt could not be sent: {error}"))
     }
@@ -1152,14 +1157,32 @@ fn id_prefix(room_id: &str, focus: &str) -> String {
     format!("{:x}/", hasher.finish())
 }
 
-/// The event this device last sent a read receipt for, so the view can open
-/// where reading stopped instead of at the newest message.
+/// Where this account stopped reading, so the view can open there instead of at
+/// the newest message.
 ///
-/// Read from the room's stored receipts, not from the timeline: that keeps the
-/// jump working with receipt tracking switched off, which is the default.
+/// The fully-read marker first, because that is what the line in the
+/// conversation follows - the position and the line have to name the same
+/// event, or the room opens somewhere the line is not. It is also the only one
+/// of the two that is always written: the receipt others see is a choice, and
+/// with it switched off the receipt stands wherever it stood when it was
+/// switched off. The receipt is the fallback for an account whose marker was
+/// never set, by this client or another.
+///
+/// Read from the room's account data and its stored receipts, not from the
+/// timeline: that keeps the jump working with receipt tracking switched off,
+/// which is the default.
 pub async fn own_read_marker(client: &Client, room_id: &str) -> Option<String> {
+    use matrix_sdk::ruma::events::fully_read::FullyReadEventContent;
+
     let parsed = RoomId::parse(room_id).ok()?;
     let room = client.get_room(&parsed)?;
+
+    if let Ok(Some(raw)) = room.account_data_static::<FullyReadEventContent>().await {
+        if let Ok(marker) = raw.deserialize() {
+            return Some(marker.content.event_id.to_string());
+        }
+    }
+
     let user = client.user_id()?;
     let (event_id, _) = room
         .load_user_receipt(StoredReceiptType::Read, ReceiptThread::Unthreaded, user)
@@ -1201,6 +1224,21 @@ pub async fn open(
 
     let timeline = if live {
         room.timeline_builder()
+            // A thread's replies belong in the thread, not twice in the room -
+            // the SDK words the condition for this flag as "when the client can
+            // create Thread-focused timelines from the thread roots
+            // themselves", and since 0.24.0 this one can.
+            //
+            // Hiding them makes the marker on the root the only way in, so the
+            // marker may not depend on luck. It hangs on the SDK's
+            // `ThreadSummary`, and a root that was already in the store before
+            // threading was switched on carries none - measured on the device:
+            // hidden replies, no marker, a conversation with no door. The
+            // roots are therefore asked of the server as well (`list_threads`,
+            // below), and that answer decides.
+            .with_focus(TimelineFocus::Live {
+                hide_threaded_events: true,
+            })
             .track_read_marker_and_receipts(tracking)
             .with_internal_id_prefix(prefix)
             .build()
@@ -1272,6 +1310,56 @@ pub async fn open(
         let timeline = timeline.clone();
         tokio::spawn(async move {
             timeline.fetch_members().await;
+        });
+    }
+
+    // Which events in this room are thread roots, from the server rather than
+    // from what the store happens to hold. The marker on a root is the only way
+    // into a thread now that replies are not shown in the room, and the SDK's
+    // own summary is missing for every root that was cached before threading
+    // was switched on - which is every older thread in every room. The
+    // `/threads` endpoint knows them regardless.
+    //
+    // Spawned, and its failure is silent: a homeserver without the endpoint
+    // leaves the marker where the SDK's summary puts it, which is exactly the
+    // old behaviour.
+    if live {
+        let thread_room = room.clone();
+        let thread_sink = sink.clone();
+        let thread_room_id = room_id.to_owned();
+        tokio::spawn(async move {
+            let roots = match thread_room
+                .list_threads(matrix_sdk::room::ListThreadsOptions::default())
+                .await
+            {
+                Ok(roots) => roots,
+                Err(_) => return,
+            };
+            let entries: Vec<Value> = roots
+                .chunk
+                .iter()
+                .filter_map(|event| {
+                    let raw = event.raw().json();
+                    let value: Value = serde_json::from_str(raw.get()).ok()?;
+                    let id = value.get("event_id")?.as_str()?.to_owned();
+                    // The reply count travels in the bundled aggregation. Where
+                    // the server sends none, one reply is the truthful floor:
+                    // an event the server lists as a thread root has at least
+                    // that.
+                    let count = value
+                        .pointer("/unsigned/m.relations/m.thread/count")
+                        .and_then(|count| count.as_u64())
+                        .unwrap_or(1);
+                    Some(json!({ "eventId": id, "count": count }))
+                })
+                .collect();
+            if entries.is_empty() {
+                return;
+            }
+            thread_sink.emit(event(
+                "timeline.threads",
+                json!({ "roomId": thread_room_id, "roots": entries }),
+            ));
         });
     }
 

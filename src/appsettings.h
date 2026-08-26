@@ -45,6 +45,8 @@ class AppSettings : public QObject
     Q_PROPERTY(bool sendReadReceipts READ sendReadReceipts WRITE setSendReadReceipts
                NOTIFY sendReadReceiptsChanged)
     Q_PROPERTY(QString mediaWipe READ mediaWipe WRITE setMediaWipe NOTIFY mediaWipeChanged)
+    Q_PROPERTY(QStringList emojiFavourites READ emojiFavourites WRITE setEmojiFavourites
+               NOTIFY emojiFavouritesChanged)
 
 public:
     explicit AppSettings(QObject *parent = nullptr);
@@ -128,6 +130,15 @@ public:
     Q_INVOKABLE void addDirectoryServer(const QString &server);
     Q_INVOKABLE void removeDirectoryServer(const QString &server);
 
+    /// The emoji the picker offers first. Empty and never written are two
+    /// different states: never written means the built-in handful is shown,
+    /// written and empty means the user has taken them all out. The list the
+    /// picker starts from lives in `qml/pages/Emoji.js`, not here - this only
+    /// keeps what the user made of it.
+    QStringList emojiFavourites() const;
+    void setEmojiFavourites(const QStringList &keys);
+    Q_INVOKABLE bool hasEmojiFavourites() const;
+
     /// Recipients the user chose not to be warned about again before sending
     /// into an encrypted room.
 
@@ -147,6 +158,7 @@ signals:
     void callPolicyChanged();
     void sendReadReceiptsChanged();
     void mediaWipeChanged();
+    void emojiFavouritesChanged();
 };
 
 #endif // APPSETTINGS_H

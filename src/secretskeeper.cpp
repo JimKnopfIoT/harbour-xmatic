@@ -33,6 +33,24 @@ Secret::Identifier keyIdentifier()
                               SecretManager::DefaultEncryptedStoragePluginName);
 }
 
+/// Overwrites a buffer so that the write survives the optimiser.
+///
+/// `QByteArray::fill` is a memset on a buffer that is about to die, and a
+/// compiler may drop a write nobody reads afterwards - which is the definition
+/// of wiping a secret. Writing through a volatile pointer is the portable way
+/// to say that the write itself is the point. `data()` also detaches, so this
+/// is the array's own memory and not a copy somebody else still holds.
+void wipe(QByteArray &bytes)
+{
+    if (bytes.isEmpty()) {
+        return;
+    }
+    volatile char *raw = bytes.data();
+    for (int i = 0; i < bytes.size(); ++i) {
+        raw[i] = '\0';
+    }
+}
+
 QByteArray randomKey()
 {
     // /dev/urandom rather than qrand: Qt 5.6 has no QRandomGenerator, and a
@@ -61,7 +79,7 @@ bool encryptedDataPresent(const QString &dataDirectory)
     // at, the bytes are dropped right away.
     QByteArray head = session.read(64);
     const bool envelope = head.contains("\"encrypted\"");
-    head.fill('\0');
+    wipe(head);
     return envelope;
 }
 
@@ -84,8 +102,13 @@ QString obtainStoreKey(const QString &dataDirectory)
         if (result.code() == Result::Succeeded) {
             QByteArray data = read.secret().data();
             if (data.size() == 32) {
-                const QString encoded = QString::fromLatin1(data.toBase64());
-                data.fill('\0');
+                // The base64 is wiped too: `toBase64()` builds a second buffer
+                // holding the same key in another alphabet, and wiping only
+                // the first one left the key in memory anyway.
+                QByteArray encoded64 = data.toBase64();
+                const QString encoded = QString::fromLatin1(encoded64);
+                wipe(encoded64);
+                wipe(data);
                 qInfo("xmatic: store key loaded from the device's secrets storage");
                 return encoded;
             }
@@ -155,12 +178,14 @@ QString obtainStoreKey(const QString &dataDirectory)
         qWarning("xmatic: secrets storage unavailable (%d: %s); stores stay unencrypted",
                  static_cast<int>(store.result().errorCode()),
                  qPrintable(store.result().errorMessage()));
-        key.fill('\0');
+        wipe(key);
         return QString();
     }
 
-    const QString encoded = QString::fromLatin1(key.toBase64());
-    key.fill('\0');
+    QByteArray encoded64 = key.toBase64();
+    const QString encoded = QString::fromLatin1(encoded64);
+    wipe(encoded64);
+    wipe(key);
     qInfo("xmatic: store key created in the device's secrets storage");
     return encoded;
 }
