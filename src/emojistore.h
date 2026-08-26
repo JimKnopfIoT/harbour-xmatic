@@ -2,6 +2,7 @@
 #define EMOJISTORE_H
 
 #include <QByteArray>
+#include <QCryptographicHash>
 #include <QHash>
 #include <QMutex>
 #include <QObject>
@@ -67,12 +68,21 @@ signals:
     void tamperedChanged();
     void contentChanged();
 
+public:
+    /// The digest a manifest's checksums were taken with. Written into the
+    /// manifest since the set is checked with SHA-256; a manifest from before
+    /// that names none and is read with MD5, so a set already on the device
+    /// keeps working instead of failing its check as a whole on the first
+    /// start after an update.
+    static QCryptographicHash::Algorithm algorithmFor(const QString &name);
+
 private:
     QString m_directory;
     QString m_manifestPath;
 
     mutable QMutex m_lock;
     QHash<QString, QByteArray> m_checksums;
+    QCryptographicHash::Algorithm m_algorithm = QCryptographicHash::Md5;
     bool m_tampered = false;
 };
 

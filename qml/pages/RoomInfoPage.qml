@@ -265,7 +265,11 @@ Page {
             BackgroundItem {
                 width: parent.width
                 height: visible ? Theme.itemSizeSmall : 0
-                visible: !page.invited
+                // Inviting is a power level like any other, and plenty of
+                // rooms keep it above the ordinary member. Offering it there
+                // led to a dialog whose only possible outcome was the server's
+                // refusal.
+                visible: !page.invited && matrix.roomPermissions.invite !== false
                 onClicked: pageStack.push(Qt.resolvedUrl("InviteToRoomDialog.qml"), {
                                               roomId: page.roomId,
                                               roomName: page.roomName

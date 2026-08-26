@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Yksityisyys</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Istunto ja viestitietokanta ovat tällä laitteella salaamattomina. Salaa ne napauttamalla.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Jokin muu</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Täällä ei ole mitään</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Paina emojia pitkään toisessa välilehdessä, niin se tallentuu tähän</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Kyseinen viesti ei ole ladatussa historiassa</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>lukijoita: %n</numerusform>
-            <numerusform>lukijoita: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Hylkää</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Vastaa ketjussa</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Lähetetty salaamattomana</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ei lähettänyt mainittu tili</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Lähettäjän avaimet muuttuivat</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Vahvistamattomalta laitteelta</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Vahvistamattomalta henkilöltä</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Aitoutta ei vahvistettu</translation>
     </message>
 </context>
 <context>

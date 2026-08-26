@@ -110,6 +110,10 @@
         <source>Privacy</source>
         <translation>Súkromie</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Relácia a databáza správ ležia na tomto zariadení nezašifrované. Ťuknutím ich zašifruješ.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1431,6 +1435,14 @@
         <source>Something else</source>
         <translation>Niečo iné</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Nič tu nie je</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Podrž emodži na inej karte, aby sa sem uložilo</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2035,14 +2047,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Táto správa nie je v načítanej histórii</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>prečítané: %n</numerusform>
-            <numerusform>prečítané: %n</numerusform>
-            <numerusform>prečítané: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Zahodiť</translation>
@@ -2284,6 +2288,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Odpovedať vo vlákne</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Odoslané nešifrovane</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Neodoslal to uvedený účet</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Kľúče odosielateľa sa zmenili</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Z neovereného zariadenia</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Od neoverenej osoby</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Pravosť nepotvrdená</translation>
     </message>
 </context>
 <context>

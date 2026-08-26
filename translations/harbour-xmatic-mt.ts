@@ -111,6 +111,10 @@
         <source>Privacy</source>
         <translation>Privatezza</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Is-sessjoni u d-database tal-messaġġi jinsabu mhux ikkriptati fuq dan l-apparat. Agħfas biex tikkriptahom.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1433,6 +1437,14 @@
         <source>Something else</source>
         <translation>Xi ħaġa oħra</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>M&apos;hawn xejn hawn</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Żomm emoji f&apos;tab ieħor biex iżżommha hawn</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2038,15 +2050,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Dak il-messaġġ mhux fl-istorja mniżżla</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>moqri minn %n</numerusform>
-            <numerusform>moqri minn %n</numerusform>
-            <numerusform>moqri minn %n</numerusform>
-            <numerusform>moqri minn %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Warrab</translation>
@@ -2289,6 +2292,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Wieġeb fil-fjul</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Mibgħut mhux kriptat</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ma ntbagħatx mill-kont imsemmi</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Iċ-ċwievet ta&apos; min bagħat inbidlu</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Minn apparat mhux verifikat</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Minn persuna mhux verifikata</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>L-awtentiċità mhix ikkonfermata</translation>
     </message>
 </context>
 <context>

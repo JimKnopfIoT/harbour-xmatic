@@ -110,6 +110,10 @@
         <source>Privacy</source>
         <translation>Príobháideachas</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Tá an seisiún agus bunachar na dteachtaireachtaí gan chriptiú ar an ngléas seo. Tapáil chun iad a chriptiú.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1431,6 +1435,14 @@
         <source>Something else</source>
         <translation>Rud éigin eile</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Níl aon rud anseo</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Coinnigh emoji i gcluaisín eile síos chun é a choinneáil anseo</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2035,14 +2047,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Níl an teachtaireacht sin sa stair luchtaithe</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>léite ag %n</numerusform>
-            <numerusform>léite ag %n</numerusform>
-            <numerusform>léite ag %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Caith uait</translation>
@@ -2284,6 +2288,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Freagair sa snáithe</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Seoladh gan chriptiú</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Níorbh é an cuntas atá luaite a sheol é</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Athraigh eochracha an tseoltóra</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Ó ghléas neamhfhíoraithe</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Ó dhuine neamhfhíoraithe</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Barántúlacht gan deimhniú</translation>
     </message>
 </context>
 <context>

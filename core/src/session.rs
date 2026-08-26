@@ -13,7 +13,7 @@ use matrix_sdk::{
     authentication::oauth::{ClientId, OAuthSession, UserSession},
     cross_process_lock::CrossProcessLockConfig,
     encryption::{BackupDownloadStrategy, EncryptionSettings},
-    AuthSession, Client, SqliteStoreConfig,
+    AuthSession, Client, SqliteStoreConfig, ThreadingSupport,
 };
 use matrix_sdk_store_encryption::StoreCipher;
 use serde::{Deserialize, Serialize};
@@ -264,6 +264,35 @@ pub async fn build_client(
         // read — the two are an exact equality check in the SDK
         // (`encryption/mod.rs`), not a fallback chain, which is what the
         // comment here used to claim.
+        // Threading has to be switched on here or a thread is an empty page.
+        // Measured on the device: a thread opened from a message showed its
+        // root and nothing else, an own reply appeared as a local echo and was
+        // gone again on the next visit, and a reply written in another client
+        // never arrived - while the same reply stood in the room's own
+        // timeline, so it was neither a delivery nor a decryption problem.
+        //
+        // The reason is one condition in the event cache: every piece of
+        // thread bookkeeping - sorting a synced event into its thread's linked
+        // chunk, and updating the thread at all - sits behind
+        // `if self.state.enabled_thread_support`
+        // (`event_cache/caches/room/state.rs`), and that flag is this one.
+        // With it off, a `TimelineFocus::Thread` timeline has nothing to be
+        // fed from and nothing to load.
+        //
+        // It is not free. With threading on, a reply inside a thread no longer
+        // raises the room's unread and notification counts
+        // (`event_cache/caches/read_receipts.rs` returns early for any event
+        // carrying a thread root), because a client with threads is expected
+        // to count them per thread, which this app does not do yet. That is
+        // the trade: thread replies still appear in the room's timeline, they
+        // just no longer make the badge rise on their own. A thread that works
+        // is worth more than a count that includes it.
+        //
+        // `with_subscriptions: false`: the other half of the flag is thread
+        // subscriptions (MSC4306/4308), which needs a server that advertises
+        // the feature and changes what the room list requests. Not needed to
+        // read a thread.
+        .with_threading_support(ThreadingSupport::Enabled { with_subscriptions: false })
         .with_encryption_settings(EncryptionSettings {
             auto_enable_cross_signing: false,
             backup_download_strategy: BackupDownloadStrategy::AfterDecryptionFailure,

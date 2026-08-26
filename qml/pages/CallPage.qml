@@ -41,6 +41,8 @@ Page {
     // The own camera, small and out of the way — the same picture the other
     // side receives, already rotated by the pipeline.
     VideoOutput {
+        id: selfView
+
         anchors {
             right: parent.right
             bottom: parent.bottom
@@ -51,12 +53,27 @@ Page {
         visible: matrix.calls.selfVideo.active
         fillMode: VideoOutput.PreserveAspectFit
         source: matrix.calls.selfVideo
+
+        // Turned left to right, and only here: this is the preview, not the
+        // picture that goes out. Qt 5.6's VideoOutput has no `mirror` of its
+        // own, so it is a transform on the item — the pipeline is untouched
+        // and the other side keeps seeing what the camera sees.
+        transform: Scale {
+            origin.x: selfView.width / 2
+            xScale: -1
+        }
     }
+
+    // While the other side's picture fills the page, the controls have
+    // something to be out of the way of. In a voice call they have not, and
+    // the middle of an empty page is where they belong.
+    readonly property bool videoMode: matrix.calls.remoteVideo.active
 
     Column {
         anchors.centerIn: parent
         width: parent.width - 2 * Theme.horizontalPageMargin
         spacing: Theme.paddingLarge
+        visible: !page.videoMode
 
         Label {
             width: parent.width
@@ -147,6 +164,40 @@ Page {
                          ? "image://theme/icon-m-mic-mute"
                          : "image://theme/icon-m-mic"
             onClicked: matrix.calls.setMuted(!matrix.calls.muted)
+        }
+    }
+
+    // The same two actions during a video call: symbols in the lower left
+    // corner, over the picture instead of across the face in the middle of it.
+    // Left, because the own camera sits in the other corner. Half transparent,
+    // because they are a means and the picture is the point.
+    Row {
+        anchors {
+            left: parent.left
+            leftMargin: Theme.horizontalPageMargin
+            bottom: parent.bottom
+            bottomMargin: Theme.paddingLarge
+        }
+        spacing: Theme.paddingLarge
+        visible: page.videoMode
+        opacity: 0.6
+
+        IconButton {
+            visible: matrix.calls.state === "active"
+            icon.source: matrix.calls.muted
+                         ? "image://theme/icon-m-mic-mute"
+                         : "image://theme/icon-m-mic"
+            onClicked: matrix.calls.setMuted(!matrix.calls.muted)
+        }
+
+        IconButton {
+            // The cover-sized icon, scaled down: Silica ships no hang-up at
+            // icon-m size, and a picture made smaller stays sharp where one
+            // made larger does not.
+            icon.source: "image://theme/icon-cover-hangup"
+            icon.width: Theme.iconSizeMedium
+            icon.height: Theme.iconSizeMedium
+            onClicked: matrix.calls.hangUp()
         }
     }
 }

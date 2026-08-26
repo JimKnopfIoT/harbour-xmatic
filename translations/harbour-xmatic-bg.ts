@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Поверителност</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Сесията и базата с съобщенията стоят нешифрирани на това устройство. Докосни, за да ги шифрираш.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Нещо друго</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Тук няма нищо</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Задръж емоджи в друг раздел, за да го запазиш тук</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Това съобщение не е в заредената история</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>прочетено от: %n</numerusform>
-            <numerusform>прочетено от: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Отхвърли</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Отговори в темата</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Изпратено нешифровано</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Не е изпратено от посочения акаунт</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Ключовете на подателя са променени</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>От непроверено устройство</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>От непроверен човек</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Автентичността не е потвърдена</translation>
     </message>
 </context>
 <context>

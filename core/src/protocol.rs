@@ -114,6 +114,11 @@ pub enum Command {
     #[serde(rename = "roomlist.filter")]
     RoomListFilter { id: u64, pattern: String },
 
+    /// One more page of rooms. The list starts at one page and grows only on
+    /// request; the front end asks when it has been scrolled to its end.
+    #[serde(rename = "roomlist.more")]
+    RoomListMore { id: u64 },
+
     /// Stop syncing and drop the room list stream.
     #[serde(rename = "roomlist.stop")]
     RoomListStop { id: u64 },
@@ -280,6 +285,16 @@ pub enum Command {
         caption: String,
         #[serde(rename = "replyTo", default)]
         reply_to: String,
+        /// A recording of one's own rather than an audio file that was picked.
+        /// It goes out marked as a voice message (MSC3245), which is what
+        /// other clients draw as one and what the bridges to other networks
+        /// need to make a native voice note of it.
+        #[serde(default)]
+        voice: bool,
+        /// Its length in milliseconds. Part of the same marking: a voice
+        /// message whose length is unknown is treated as a plain audio file.
+        #[serde(default)]
+        duration: u64,
     },
 
     /// Send a copy of something to another room.
@@ -303,11 +318,24 @@ pub enum Command {
         source: serde_json::Value,
         #[serde(default)]
         thumbnail: bool,
+        /// What the event says the file weighs, zero where it says nothing.
+        /// Refusing on this costs no download at all; the sender writes the
+        /// number, so it is a first gate and not the guarantee - the size of
+        /// what actually arrived is checked as well.
+        #[serde(default)]
+        size: u64,
     },
 
-    /// Send a read receipt for the open room.
+    /// Mark the open room read: the fully-read marker always, the receipt
+    /// others see only where the user allows it. The marker is private account
+    /// data - holding it back tells nobody anything and only costs this device
+    /// the line in the conversation and the position the room opens at.
     #[serde(rename = "timeline.markRead")]
-    TimelineMarkRead { id: u64 },
+    TimelineMarkRead {
+        id: u64,
+        #[serde(default = "default_true")]
+        receipt: bool,
+    },
 
     /// The encrypted lists that name people. `get` answers with all of them;
     /// `set` replaces one.
@@ -791,6 +819,7 @@ impl Command {
             | Command::Logout { id }
             | Command::RoomListStart { id }
             | Command::RoomListFilter { id, .. }
+            | Command::RoomListMore { id }
             | Command::RoomListStop { id }
             | Command::SpacesStart { id }
             | Command::SpacesStop { id }
@@ -804,7 +833,7 @@ impl Command {
             | Command::TimelineClose { id }
             | Command::TimelinePaginate { id }
             | Command::TimelineSend { id, .. }
-            | Command::TimelineMarkRead { id }
+            | Command::TimelineMarkRead { id, .. }
             | Command::TimelineReaders { id, .. }
             | Command::RoomPermalink { id, .. }
             | Command::CallsSetPolicy { id, .. }

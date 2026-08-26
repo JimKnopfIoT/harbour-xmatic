@@ -110,6 +110,10 @@
         <source>Privacy</source>
         <translation>Privatumas</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Seansas ir žinučių duomenų bazė šiame įrenginyje yra neužšifruoti. Bakstelėk, kad juos užšifruotum.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1431,6 +1435,14 @@
         <source>Something else</source>
         <translation>Kas nors kita</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Čia nieko nėra</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Kitoje kortelėje palaikyk jaustuką, kad jį čia išsaugotum</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2035,14 +2047,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Šios žinutės nėra įkeltoje istorijoje</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>perskaitė: %n</numerusform>
-            <numerusform>perskaitė: %n</numerusform>
-            <numerusform>perskaitė: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Atmesti</translation>
@@ -2284,6 +2288,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Atsakyti gijoje</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Išsiųsta neužšifruota</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Išsiuntė ne nurodyta paskyra</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Siuntėjo raktai pasikeitė</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Iš nepatvirtinto įrenginio</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Iš nepatvirtinto asmens</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autentiškumas nepatvirtintas</translation>
     </message>
 </context>
 <context>

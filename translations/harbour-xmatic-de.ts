@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Privatsphäre</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Sitzung und Nachrichtendatenbank liegen unverschlüsselt auf diesem Gerät. Zum Verschlüsseln antippen.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Etwas anderes</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Nichts abgelegt</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Halte in einem anderen Reiter ein Emoji gedrückt, um es hier abzulegen</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Diese Nachricht liegt nicht im geladenen Verlauf</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>von %n gelesen</numerusform>
-            <numerusform>von %n gelesen</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Verwerfen</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Event</source>
         <translation>Ereignis</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Unverschlüsselt gesendet</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nicht von dem genannten Konto gesendet</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Die Schlüssel des Absenders haben sich geändert</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Von einem unverifizierten Gerät</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Von einer unverifizierten Person</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Echtheit nicht bestätigt</translation>
     </message>
 </context>
 <context>

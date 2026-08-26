@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Personvern</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Økten og meldingsdatabasen ligger ukryptert på denne enheten. Trykk for å kryptere dem.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Noe annet</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Ingenting her</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Hold inne en emoji i en annen fane for å ta vare på den her</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Den meldingen er ikke i den innlastede historikken</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>lest av %n</numerusform>
-            <numerusform>lest av %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Forkast</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Svar i tråden</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Sendt ukryptert</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ikke sendt av kontoen som oppgis</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Avsenderens nøkler er endret</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Fra en uverifisert enhet</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Fra en uverifisert person</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Ekthet ikke bekreftet</translation>
     </message>
 </context>
 <context>

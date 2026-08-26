@@ -91,6 +91,17 @@ Page {
         anchors.fill: parent
         model: matrix.rooms
 
+        // The list the core streams holds one page of rooms and grows only
+        // when asked. Reaching the end is the moment to ask - an account past
+        // a page simply had no further rooms, and nothing said they existed.
+        // Asking again once everything is loaded costs nothing, so this needs
+        // no "is there more" of its own.
+        onAtYEndChanged: {
+            if (atYEnd && count > 0) {
+                matrix.loadMoreRooms()
+            }
+        }
+
         header: Column {
             width: roomList.width
 

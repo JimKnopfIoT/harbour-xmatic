@@ -21,8 +21,9 @@ repository.
   low priority, mute
 * Timeline in encrypted rooms: send, reply, edit, delete, paginate. A message
   that could not be sent can be sent again or discarded
-* Reactions, sent and shown, grouped by character with a count; the picker
-  holds the common handful and the keyboard the rest
+* Reactions, sent and shown, grouped by character with a count; the picker's
+  first tab is yours to fill - press and hold any emoji to keep it there - and
+  the keyboard covers what the set does not
 * Formatted messages rendered as formatting — bold, italic, code, quotes,
   lists, headings, links. The HTML a message carries is rewritten inside the
   app instead of being handed to a markup parser
@@ -44,10 +45,13 @@ repository.
   moved by long-press, either list as the start page
 * Members: list per room, profile with the encryption identity, moderation
   where the power levels allow it, account-wide ignore list
-* Threads, pinned messages, own display name and avatar, profile pictures
+* Threads: answer in one, or start one from any message; replies stay in the
+  room's timeline as well
+* Pinned messages, own display name and avatar, profile pictures
 * A share target for the system's share dialog, running or not
-* Voice and video calls over WebRTC, encrypted, with the homeserver's TURN
-  relay
+* Voice and video calls over WebRTC. The media is encrypted between the two
+  devices either way; in an encrypted room the signalling is too, which is what
+  makes the call end-to-end and not merely encrypted on the wire
 * Twenty-nine interface languages, picked in the app rather than only by the
   phone's setting
 

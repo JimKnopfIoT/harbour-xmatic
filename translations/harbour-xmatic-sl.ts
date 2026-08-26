@@ -111,6 +111,10 @@
         <source>Privacy</source>
         <translation>Zasebnost</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Seja in zbirka sporočil sta na tej napravi nešifrirani. Dotakni se, da ju šifriraš.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1433,6 +1437,14 @@
         <source>Something else</source>
         <translation>Nekaj drugega</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Tukaj ni ničesar</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Pridrži emotikon v drugem zavihku, da ga shraniš sem</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2038,15 +2050,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Tega sporočila ni v naloženi zgodovini</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>prebrano: %n</numerusform>
-            <numerusform>prebrano: %n</numerusform>
-            <numerusform>prebrano: %n</numerusform>
-            <numerusform>prebrano: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Zavrzi</translation>
@@ -2289,6 +2292,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Odgovori v niti</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Poslano nešifrirano</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ni poslal navedeni račun</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Ključi pošiljatelja so se spremenili</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Z nepreverjene naprave</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Od nepreverjene osebe</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Pristnost ni potrjena</translation>
     </message>
 </context>
 <context>

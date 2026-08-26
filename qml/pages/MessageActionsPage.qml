@@ -148,7 +148,10 @@ Page {
 
             ListItem {
                 contentHeight: Theme.itemSizeSmall
+                // As in the room's own menu: hidden only where the room has
+                // answered that this account may not pin.
                 visible: page.eventId.length > 0
+                         && matrix.roomPermissions.pin !== false
                 onClicked: {
                     matrix.pinMessage(page.eventId, true)
                     pageStack.pop()

@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Persónuvernd</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Setan og skilaboðagagnagrunnurinn liggja ódulkóðuð í þessu tæki. Ýttu til að dulkóða þau.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Eitthvað annað</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Ekkert hér</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Haltu inni emoji í öðrum flipa til að geyma það hér</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Þessi skilaboð eru ekki í hlaðnu sögunni</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>lesið af %n</numerusform>
-            <numerusform>lesið af %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Henda</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Svara í þræðinum</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Sent ódulkóðað</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ekki sent af reikningnum sem er nefndur</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Lyklar sendanda breyttust</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Úr óstaðfestu tæki</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Frá óstaðfestum aðila</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Áreiðanleiki óstaðfestur</translation>
     </message>
 </context>
 <context>

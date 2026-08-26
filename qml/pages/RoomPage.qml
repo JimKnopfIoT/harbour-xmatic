@@ -97,9 +97,16 @@ Page {
     }
 
     // Where reading stopped last time, until the row it names is on screen.
-    // Not hunted for through the history like a permalink jump: if it is not
-    // in the loaded window, the room simply opens at the newest message.
     property string unreadFromId: ""
+
+    // How many pages of history the search for that row may still ask for.
+    // It is hunted for after all: the first batch a room hands over is the
+    // newest slice of the event cache, and the more there is unread the surer
+    // the marker sits further back than that - which is exactly the room the
+    // jump exists for. Giving up on the first look meant the feature worked
+    // where it was not needed and failed where it was.
+    property int unreadPagesLeft: 0
+    readonly property int unreadPageLimit: 8
 
     // Once per built timeline. The page stays alive while a sub-page is on top,
     // and coming back re-opens the same one - the position must not jump then.
@@ -120,6 +127,14 @@ Page {
             }
             page.unreadHandled = true
             page.unreadFromId = readMarker
+            page.unreadPagesLeft = page.unreadPageLimit
+            // The tail is let go of before the search starts, not when it
+            // succeeds: a view that follows the newest row marks the room read
+            // after eight hundred milliseconds, and that moves the very marker
+            // this is looking for.
+            if (readMarker.length > 0) {
+                page.followTail = false
+            }
             unreadTimer.restart()
         }
     }
@@ -172,27 +187,73 @@ Page {
         }
     }
 
-    // Opens at the first message that arrived after this device last read the
-    // room. Silent when the marker is the newest row - then there is nothing
-    // unread and the view belongs at the bottom, where it already is.
+    // Opens where this account stopped reading. The marker names the last read
+    // message, so that message goes to the top of the screen: the line sits
+    // under it and the first unread message under that, both in view. Putting
+    // the first unread at the top instead left the line off the screen, and
+    // nothing showed what had been read before it.
+    //
+    // Where the row is not loaded yet, history is fetched until it is - a
+    // bounded number of pages, after which the room stays at its newest
+    // message like before.
     function showFirstUnread() {
         var marker = page.unreadFromId
-        page.unreadFromId = ""
         if (marker.length === 0 || page.jumpTargetId.length > 0) {
+            page.unreadFromId = ""
+            unreadRetry.stop()
             return
         }
         var idx = matrix.timeline.indexOfEvent(marker)
-        if (idx < 0 || idx >= matrix.timeline.count - 1) {
+        if (idx >= 0) {
+            page.unreadFromId = ""
+            unreadRetry.stop()
+            // The marker on the newest row means everything is read: nothing
+            // to jump to, and the room belongs at its end.
+            if (idx >= matrix.timeline.count - 1) {
+                page.stayAtEnd()
+                return
+            }
+            timelineView.positionViewAtIndex(idx, ListView.Beginning)
+            // What "at the end" means is only known once the view has settled.
+            // Two unread messages fit on the screen, so the jump lands at the
+            // end and the room is being read; a longer run does not, and it is
+            // not. Without asking, the room stayed parked: new messages no
+            // longer followed, and nothing counted as read either.
+            followCheck.restart()
             return
         }
-        page.followTail = false
-        timelineView.positionViewAtIndex(idx + 1, ListView.Beginning)
-        // What "at the end" means is only known once the view has settled.
-        // Two unread messages fit on the screen, so the jump lands at the end
-        // and the room is being read; a longer run does not, and it is not.
-        // Without asking, the room stayed parked: new messages no longer
-        // followed, and nothing counted as read either.
-        followCheck.restart()
+        if (page.unreadPagesLeft > 0 && !matrix.timelineAtStart) {
+            // One request at a time; the timer brings us back either way. On a
+            // timer and not on the row count, for the same reason the permalink
+            // jump is: a page of history can arrive full of events that render
+            // as nothing, and then the count never changes.
+            if (!matrix.paginating) {
+                page.unreadPagesLeft--
+                matrix.loadOlder()
+            }
+            unreadRetry.restart()
+            return
+        }
+        // Out of reach: the room opens at its newest message, which is where
+        // it stood before this looked.
+        page.unreadFromId = ""
+        unreadRetry.stop()
+        page.stayAtEnd()
+    }
+
+    // The end, and everything that goes with being there: the newest rows are
+    // followed again and the room counts as read.
+    function stayAtEnd() {
+        page.followTail = true
+        timelineView.positionViewAtEnd()
+        readTimer.restart()
+    }
+
+    Timer {
+        id: unreadRetry
+
+        interval: 700
+        onTriggered: page.showFirstUnread()
     }
 
     Timer {
@@ -1042,7 +1103,8 @@ Page {
                                                       rootEventId: model.threadRoot
                                                                    && model.threadRoot.length > 0
                                                                    ? model.threadRoot
-                                                                   : model.eventId
+                                                                   : model.eventId,
+                                                      encrypted: page.encrypted
                                                   })
                     }
 
@@ -1069,8 +1131,14 @@ Page {
 
                     MenuItem {
                         text: qsTr("Pin")
+                        // Only where this account may write the room's pinned
+                        // list. `!== false` and not a plain test: until the
+                        // room's answer is in, the map has no entry, and a
+                        // slow answer must not take an action away from
+                        // somebody who has it.
                         visible: model.kind === "message" && (model.eventId || "").length > 0
                                  && !page.isLandscape
+                                 && matrix.roomPermissions.pin !== false
                         onClicked: matrix.pinMessage(model.eventId, true)
                     }
 
@@ -1324,9 +1392,11 @@ Page {
                                         if (known.length > 0) {
                                             source = "file://" + known
                                         } else if (quotedMedia.thumbnailSource) {
-                                            matrix.requestMedia(mediaKey, quotedMedia.thumbnailSource, false)
+                                            matrix.requestMedia(mediaKey, quotedMedia.thumbnailSource, false,
+                                                                quotedMedia.size || 0)
                                         } else {
-                                            matrix.requestMedia(mediaKey, quotedMedia.source, true)
+                                            matrix.requestMedia(mediaKey, quotedMedia.source, true,
+                                                                quotedMedia.size || 0)
                                         }
                                     }
 
@@ -1479,9 +1549,11 @@ Page {
                                 // in encrypted rooms, the only one that exists. A
                                 // video has no other preview at all.
                                 if (model.media.thumbnailSource) {
-                                    matrix.requestMedia(model.id, model.media.thumbnailSource, false)
+                                    matrix.requestMedia(model.id, model.media.thumbnailSource, false,
+                                                        model.media.size || 0)
                                 } else {
-                                    matrix.requestMedia(model.id, model.media.source, true)
+                                    matrix.requestMedia(model.id, model.media.source, true,
+                                                        model.media.size || 0)
                                 }
                             }
 
@@ -1673,7 +1745,8 @@ Page {
                                                    roomName: page.roomName,
                                                    rootEventId: model.threadCount > 0
                                                                 ? model.eventId
-                                                                : model.threadRoot
+                                                                : model.threadRoot,
+                                                   encrypted: page.encrypted
                                                })
                                 onPressAndHold: row.openMenu()
                             }
@@ -1771,8 +1844,11 @@ Page {
                             }
                         }
 
-                        Label {
-                            id: metaLabel
+                        // The time, and beside it how many have read this far.
+                        // An Item around the line, because the read mark is a
+                        // drawn icon and an icon cannot sit inside a string.
+                        Item {
+                            id: metaLine
 
                             // Right-aligned inside whatever the bubble ended up
                             // being, so it reads from the widest sibling.
@@ -1782,41 +1858,94 @@ Page {
                                             senderLabel.visible ? senderLabel.width : 0,
                                             replyQuote.visible ? replyQuote.width : 0,
                                             threadLabel.visible ? threadLabel.width : 0,
-                                            implicitWidth)
-                            horizontalAlignment: Text.AlignRight
-                            font.pixelSize: Theme.fontSizeTiny
-                            // A message that did not get out is the one thing in
-                            // this line worth a colour: half opacity alone reads
-                            // as "still going" and let someone send the same text
-                            // a second time.
-                            color: model.sendState === "failed"
-                                   ? Theme.errorColor : Theme.secondaryColor
-                            // Only messages carry a timestamp; the shared delegate
-                            // instantiates this label for every row regardless.
-                            text: row.isBubble
-                                  ? (matrix.pinnedEventIds.indexOf(model.eventId) >= 0 ? "📌 " : "")
-                                    + (model.sendState === "failed"
-                                       ? qsTr("not sent") + " · " : "")
-                                    + (model.edited === true ? qsTr("edited") + " · " : "")
-                                    + Format.formatDate(new Date(model.timestamp), Formatter.TimeValue)
-                                    // On the newest own message the others
-                                    // have read up to, which is where a
-                                    // receipt actually means something - it
-                                    // usually hangs on their own latest
-                                    // message, not on ours. Empty while the
-                                    // status is switched off: nothing is
-                                    // tracked then.
-                                    + (model.readMark === true && model.readMarkBy > 0
-                                       ? " · " + qsTr("read by %n", "", model.readMarkBy) : "")
-                                  : ""
+                                            metaContent.width)
+                            height: metaContent.height
 
-                            // Only where there is something to unfold, so the
-                            // long press on every other message still belongs
-                            // to the message menu.
-                            MouseArea {
-                                anchors.fill: parent
-                                enabled: model.readMark === true && model.readMarkBy > 0
-                                onPressAndHold: page.showReaders(model.eventId)
+                            Row {
+                                id: metaContent
+
+                                anchors.right: parent.right
+                                spacing: Theme.paddingSmall
+
+                                Label {
+                                    id: metaLabel
+
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    font.pixelSize: Theme.fontSizeTiny
+                                    // A message that did not get out is the one
+                                    // thing in this line worth a colour: half
+                                    // opacity alone reads as "still going" and
+                                    // let someone send the same text a second
+                                    // time.
+                                    color: model.sendState === "failed"
+                                           ? Theme.errorColor : Theme.secondaryColor
+                                    // Only messages carry a timestamp; the shared
+                                    // delegate instantiates this label for every
+                                    // row regardless.
+                                    text: row.isBubble
+                                          ? (matrix.pinnedEventIds.indexOf(model.eventId) >= 0 ? "📌 " : "")
+                                            + (model.sendState === "failed"
+                                               ? qsTr("not sent") + " · " : "")
+                                            + (model.edited === true ? qsTr("edited") + " · " : "")
+                                            + Format.formatDate(new Date(model.timestamp), Formatter.TimeValue)
+                                          : ""
+                                }
+
+                                // On the newest own message the others have read
+                                // up to, which is where a receipt actually means
+                                // something - it usually hangs on their own
+                                // latest message, not on ours. Gone entirely
+                                // while the status is switched off: nothing is
+                                // tracked then.
+                                //
+                                // An eye and a number instead of the words: the
+                                // line already carries the time, and "read by
+                                // three" took more of the bubble than the fact
+                                // is worth.
+                                Item {
+                                    id: readMark
+
+                                    visible: model.readMark === true && model.readMarkBy > 0
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: readMarkRow.width
+                                    height: readMarkRow.height
+
+                                    Row {
+                                        id: readMarkRow
+
+                                        spacing: Theme.paddingSmall / 2
+
+                                        EyeIcon {
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            // A step larger than the digit next
+                                            // to it, the way the icon in the
+                                            // composer stands over its text.
+                                            size: Math.round(Theme.fontSizeTiny * 1.7)
+                                            color: Theme.secondaryColor
+                                        }
+
+                                        Label {
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            font.pixelSize: Theme.fontSizeTiny
+                                            color: Theme.secondaryColor
+                                            text: model.readMarkBy
+                                        }
+                                    }
+
+                                    // Both the eye and the number, and a good
+                                    // deal of air around them: the mark is a
+                                    // couple of millimetres tall and a finger
+                                    // is not. Negative margins grow what can be
+                                    // hit without moving anything.
+                                    MouseArea {
+                                        anchors {
+                                            fill: parent
+                                            margins: -Theme.paddingMedium
+                                        }
+                                        onClicked: page.showReaders(model.eventId)
+                                        onPressAndHold: page.showReaders(model.eventId)
+                                    }
+                                }
                             }
                         }
 
@@ -1826,7 +1955,7 @@ Page {
                         Label {
                             visible: page.readersEventId === model.eventId
                                      && page.readerNames.length > 0
-                            width: metaLabel.width
+                            width: metaLine.width
                             // Left, unlike the time line above it: this runs
                             // over several lines, and a wrapped block with a
                             // ragged left edge is read line by line instead of
@@ -1907,6 +2036,11 @@ Page {
 
             onMovementEnded: {
                 page.followTail = atYEnd
+                // A hand on the list outranks the search for the read marker:
+                // being carried off to a jump one has just scrolled away from
+                // is worse than not being taken there at all.
+                page.unreadFromId = ""
+                unreadRetry.stop()
                 // Scrolling down to the newest message is the other moment
                 // something becomes read.
                 if (atYEnd) {
@@ -2111,6 +2245,39 @@ Page {
                     width: parent.width
                     height: Math.max(Theme.itemSizeMedium, messageField.height + Theme.paddingMedium)
 
+                    // Whether what is typed here will be encrypted, said where
+                    // it is being typed. The header states it in words; this
+                    // is the reminder one does not have to look up for.
+                    //
+                    // In front of the text rather than behind it: a watermark
+                    // under the writing is read as part of the writing, and at
+                    // this weight it disappeared under the first line anyway.
+                    // It stands on the field's own line, at the size of the
+                    // text beside it.
+                    LockIcon {
+                        id: lockMark
+
+                        anchors {
+                            left: attachButton.visible ? attachButton.right
+                                                       : parent.left
+                            // Pulled back into the clip's own box. A button
+                            // carries air around its glyph so a finger has
+                            // something to land on; a mark that cannot be
+                            // pressed has no business paying for it, and the
+                            // measured gap was fifty pixels of nothing.
+                            leftMargin: -Theme.paddingLarge
+                            bottom: messageField.bottom
+                            bottomMargin: Theme.paddingMedium
+                        }
+                        size: Math.round(Theme.fontSizeLarge * 1.4)
+                        locked: page.encrypted
+                        color: Theme.primaryColor
+                        // Faint to the point of being a texture: it is there
+                        // for the glance that looks for it, not for the eye
+                        // that is reading.
+                        opacity: 0.07
+                    }
+
                     IconButton {
                         id: attachButton
 
@@ -2121,6 +2288,12 @@ Page {
                         }
                         visible: page.editingEventId.length === 0
                         icon.source: "image://theme/icon-m-attach"
+                        // The same step down as the face beside it. The two
+                        // are offers; the send arrow is the action, and it is
+                        // the one thing in this row that may brighten - which
+                        // it does by itself the moment there is something to
+                        // send.
+                        icon.opacity: Theme.opacityLow
                         onClicked: pageStack.push(contentPicker)
                     }
 
@@ -2128,10 +2301,17 @@ Page {
                         id: messageField
 
                         anchors {
-                            left: attachButton.visible ? attachButton.right : parent.left
+                            left: lockMark.right
                             right: emojiButton.left
                             verticalCenter: parent.verticalCenter
                         }
+                        // The field brings a page margin of its own on both
+                        // sides, and in a row that already has a button at
+                        // each end it is margin twice over: it pushed the text
+                        // a finger's width away from the lock and cut the line
+                        // short of the face. The row's own spacing does that
+                        // job here.
+                        textMargin: 0
                         placeholderText: page.editingEventId.length > 0
                                          ? qsTr("New text")
                                          : qsTr("Message")
@@ -2181,7 +2361,7 @@ Page {
 
                         anchors {
                             right: sendButton.left
-                            rightMargin: Theme.paddingMedium
+                            rightMargin: Theme.paddingSmall
                             verticalCenter: parent.verticalCenter
                         }
                         width: Theme.itemSizeSmall
@@ -2191,7 +2371,15 @@ Page {
 
                         FaceIcon {
                             anchors.centerIn: parent
-                            size: Theme.iconSizeMedium
+                            // Measured against the theme's own icons in this
+                            // row rather than set to the same nominal size:
+                            // what the eye compares is the drawn figure, and
+                            // the theme's icons fill their box to different
+                            // degrees. At iconSizeMedium the face came out a
+                            // third taller than the send arrow beside it -
+                            // three buttons, three sizes. 0.78 puts its circle
+                            // at the height of the paper clip's ink.
+                            size: Math.round(Theme.iconSizeMedium * 0.78)
                             color: emojiButton.pressed ? Theme.highlightColor
                                                        : Theme.primaryColor
                         }
@@ -2208,6 +2396,13 @@ Page {
                         visible: !recordButton.visible
                         enabled: messageField.text.trim().length > 0
                         icon.source: "image://theme/icon-m-send"
+                        // The arrow is a flat wide triangle and fills barely
+                        // half the height its box has, which next to the clip
+                        // reads as a smaller button rather than a different
+                        // shape. Scaled, not replaced: the artwork is the
+                        // platform's, and the alternative would be drawing an
+                        // arrow of our own beside the platform's clip.
+                        icon.scale: 1.25
                         onClicked: page.submit()
                     }
                 }
@@ -2388,13 +2583,13 @@ Page {
             return
         }
         page.pendingPlayKey = key
-        matrix.requestMedia(key, media.source, false)
+        matrix.requestMedia(key, media.source, false, media.size || 0)
     }
 
     function openVideo(itemId, media) {
         var key = itemId + "/full"
         var known = matrix.mediaPath(key)
-        matrix.requestMedia(key, media.source, false)
+        matrix.requestMedia(key, media.source, false, media.size || 0)
         pageStack.push(Qt.resolvedUrl("VideoPage.qml"), {
                            mediaKey: key,
                            source: known.length > 0 ? "file://" + known : "",
@@ -2414,7 +2609,7 @@ Page {
         page.pendingSaveKey = key
         page.pendingSaveIsImage = item.msgtype === "m.image"
         page.pendingSaveName = item.media ? (item.media.filename || "") : ""
-        matrix.requestMedia(key, item.media.source, false)
+        matrix.requestMedia(key, item.media.source, false, item.media.size || 0)
     }
 
     // A message body is untrusted and is never rendered as markup. When it
@@ -2427,7 +2622,8 @@ Page {
         pageStack.push(Qt.resolvedUrl("ThreadPage.qml"), {
                            roomId: page.roomId,
                            roomName: page.roomName,
-                           rootEventId: eventId
+                           rootEventId: eventId,
+                           encrypted: page.encrypted
                        })
     }
 
@@ -2649,7 +2845,7 @@ Page {
         // plain item id, and both are worth keeping.
         var key = itemId + "/full"
         var known = matrix.mediaPath(key)
-        matrix.requestMedia(key, media.source, false)
+        matrix.requestMedia(key, media.source, false, media.size || 0)
         pageStack.push(Qt.resolvedUrl("ImageViewPage.qml"), {
                            mediaKey: key,
                            source: known.length > 0 ? "file://" + known : "",

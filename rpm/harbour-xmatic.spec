@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.23.0
+Version:    0.24.0
 Release:    1
 License:    ASL 2.0
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -84,6 +84,79 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Aug 26 2026 harbour-xmatic contributors 0.24.0-1
+- A thread's replies stay in the thread instead of standing in the room a
+  second time. The way in is the marker on the root, and it no longer depends
+  on what the local store happens to know: the room's thread roots are asked of
+  the server as well, so threads that existed before this version are reachable
+  too. Measured on two devices - on the one whose store predated threads, every
+  thread was doorless without that question.
+- The picture of your own camera during a video call is shown the way a mirror
+  shows it. Only the preview: what the other side receives is untouched.
+- Threads carry their replies. A thread opened from a message showed its root
+  and nothing more: an own reply was gone again on the next visit, and a reply
+  written in another client never arrived - while that same reply stood in the
+  room's timeline, so nothing was lost on the way. The SDK keeps a thread's
+  events only where threading is switched on, and it never was. Threads have
+  therefore not worked since they were built. What it costs to switch on: a
+  reply inside a thread no longer raises the room's badge by itself.
+- A room with a lot unread opens where reading stopped. The row was looked for
+  once, in the newest slice a room hands over first, and dropped without a word
+  when it was not there - which is precisely the room with a lot unread. It is
+  fetched now, and the last read message goes to the top of the screen, so the
+  line and the first unread message are both in view.
+- The fully-read marker is sent even with read receipts switched off. It is
+  private account data: holding it back told nobody anything and only cost this
+  device the line in the conversation and the place a room opens at.
+- Who read a message is an eye and a number instead of the words "read by", and
+  a tap on it unfolds the names - it took a long press before.
+- The emoji offered first are the user's own: press and hold one in any other
+  tab to keep it in the first, press and hold it there to take it out again. It
+  stays where it was, and the first tab holds as many as fit.
+- A recording of one's own goes out marked as a voice message (MSC3245) with
+  its length instead of as a plain audio file. Other clients draw it as a voice
+  message, and a bridge to another network can make a native voice note of it -
+  one of them refused everything else as an unsupported format, which read as
+  if the recording were broken.
+- The message line says whether what is typed there will be encrypted: a
+  padlock before the text, struck through where the room is not, faint enough
+  to stay out of the way. Its three buttons are the same size and the same
+  weight to look at now, and the line itself is longer.
+- During a video call the microphone and the hang-up sit in the lower left
+  corner as half-transparent symbols, out of the picture instead of across the
+  middle of it.
+- A room list longer than fifty rooms grows when it is scrolled to its end.
+  Before, those fifty were all there were, with nothing saying so.
+- A thread says as much about a message as the room does: the line naming what
+  the sender's keys do not vouch for, and the warning before sending to
+  somebody whose devices were never verified. Both were missing there.
+- "Pin" and "Invite" are offered where the room allows them. A room that keeps
+  either above the ordinary member turned them into a tap whose only possible
+  outcome was the server's refusal.
+- The account page says it when session and message database lie on the device
+  unencrypted, and leads to where that can be changed. It was said only on the
+  encryption page, which one has to go looking for.
+- An attachment larger than this app will take is refused before it is
+  downloaded, from the size the event declares, instead of after a hundred
+  megabytes have been held in memory. What actually arrives is still weighed:
+  the sender writes that figure.
+- The emoji set's checksums are SHA-256 and its list is written whole or not at
+  all. A set read in before this keeps working - the list says which digest it
+  was taken with, and one that says nothing is read the old way. A list cut
+  short by a crash used to read as no list at all, and the pictures were then
+  drawn unchecked.
+- The drawn marks - the padlock, the face, the eye - survive a trip through the
+  tile view. They were painted into a framebuffer, and a window that leaves the
+  screen hands its framebuffer back; what came back was empty.
+- The store key is wiped where it is held, in a way the compiler may not
+  optimise away, and the second copy that encoding it produces is wiped too.
+- Signing out stops the watchers first. Two of them held a client of their own
+  and kept running afterwards, which means they held the store open while it
+  was being deleted.
+- A session the server has thrown away is taken down instead of only reported:
+  everything still talking to that server stops, and the stored session goes,
+  so the next start shows the login page instead of a sync that can only fail.
+
 * Wed Aug 26 2026 harbour-xmatic contributors 0.23.0-1
 - Privacy has a page of its own under Account: who may call you (everyone,
   people you have a direct chat with, or only a list you keep), whether group

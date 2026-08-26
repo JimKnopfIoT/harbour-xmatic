@@ -108,6 +108,10 @@
         <source>Privacy</source>
         <translation>Adatvédelem</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>A munkamenet és az üzenet-adatbázis titkosítatlanul van ezen az eszközön. Koppints a titkosításhoz.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1427,6 +1431,14 @@
         <source>Something else</source>
         <translation>Valami más</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Itt nincs semmi</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Tarts nyomva egy emodzsit egy másik lapon, hogy ide kerüljön</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2029,12 +2041,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Ez az üzenet nincs a betöltött előzményekben</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>elolvasta: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Elvetés</translation>
@@ -2274,6 +2280,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Válasz a szálban</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Titkosítás nélkül küldve</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nem a megnevezett fiók küldte</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>A feladó kulcsai megváltoztak</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Nem ellenőrzött eszközről</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Nem ellenőrzött személytől</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>A hitelesség nincs megerősítve</translation>
     </message>
 </context>
 <context>

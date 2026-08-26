@@ -255,6 +255,35 @@ fn parsed_user(user_id: &str) -> Result<&UserId, String> {
     <&UserId>::try_from(user_id).map_err(|_| "not a user identifier".to_owned())
 }
 
+/// What the signed-in user is allowed to do in this room, as the UI needs to
+/// know it: which entries to offer at all.
+///
+/// Asked once when a room is opened rather than per menu, because it is a
+/// store read and the answer does not change while a menu is open. Offering an
+/// action that the server will refuse is the kind of dead end this app avoids
+/// everywhere else; the member list has asked these questions since it was
+/// built, the room itself never did.
+///
+/// Deliberately generous where the answer is unknown: a room whose power
+/// levels cannot be read at all answers with the defaults, which is what the
+/// server would apply too.
+pub async fn room_permissions(client: &Client, room: &Room) -> Value {
+    use matrix_sdk::ruma::events::StateEventType;
+
+    let Some(own) = client.user_id() else {
+        return json!({});
+    };
+    let levels = room.power_levels_or_default().await;
+
+    json!({
+        "pin": levels.user_can_send_state(own, StateEventType::RoomPinnedEvents),
+        "invite": levels.user_can_invite(own),
+        "redactOthers": levels.user_can_redact_event_of_other(own),
+        "topic": levels.user_can_send_state(own, StateEventType::RoomTopic),
+        "name": levels.user_can_send_state(own, StateEventType::RoomName),
+    })
+}
+
 /// Everything the member-profile page shows about one user in one room, as
 /// one object. Verification: `verified`, `violation` (was verified, keys
 /// changed since), `unverified`, `unknown`.

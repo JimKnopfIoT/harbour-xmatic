@@ -58,6 +58,9 @@ const PAGE_SIZE: usize = 50;
 pub struct RoomListHandle {
     sync: Arc<SyncService>,
     filters: mpsc::UnboundedSender<String>,
+    /// Asks for one more page of rooms. The dynamic list starts at `PAGE_SIZE`
+    /// and grows only when told to.
+    more: mpsc::UnboundedSender<()>,
     task: tokio::task::JoinHandle<()>,
     states: tokio::task::JoinHandle<()>,
     queue: tokio::task::JoinHandle<()>,
@@ -72,6 +75,12 @@ impl RoomListHandle {
     /// Applies a search pattern. An empty pattern shows all rooms again.
     pub fn set_filter(&self, pattern: String) -> bool {
         self.filters.send(pattern).is_ok()
+    }
+
+    /// One more page of rooms, for a list that has been scrolled to its end.
+    /// A no-op once every room is loaded.
+    pub fn load_more(&self) -> bool {
+        self.more.send(()).is_ok()
     }
 
     pub async fn stop(self) {
@@ -464,6 +473,12 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
         .map_err(|error| format!("room list unavailable: {error}"))?;
 
     let (filters, mut filter_updates) = mpsc::unbounded_channel::<String>();
+    // The list does not hold every room the account has: the dynamic adapter
+    // starts at one page and grows only when asked. Somebody has to ask, and
+    // the only place that knows the list has been scrolled to its end is the
+    // front end - so it says so through here. Without it an account past
+    // fifty rooms simply had no older rooms, with nothing saying they existed.
+    let (more, mut more_requests) = mpsc::unbounded_channel::<()>();
 
     let task = tokio::spawn(async move {
         let (stream, controller) = room_list.entries_with_dynamic_adapters(PAGE_SIZE);
@@ -486,6 +501,10 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
                     let Some(pattern) = pattern else { break };
                     controller.set_filter(main_list_filter(pattern.trim()));
                 }
+                request = more_requests.recv() => {
+                    let Some(()) = request else { break };
+                    controller.add_one_page();
+                }
             }
         }
     });
@@ -493,6 +512,7 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
     Ok(RoomListHandle {
         sync,
         filters,
+        more,
         task,
         states,
         queue,

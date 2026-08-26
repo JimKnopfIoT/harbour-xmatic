@@ -110,6 +110,10 @@
         <source>Privacy</source>
         <translation>Приватность</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Сессия и база сообщений лежат на этом устройстве незашифрованными. Нажми, чтобы зашифровать их.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1431,6 +1435,14 @@
         <source>Something else</source>
         <translation>Что-то другое</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Здесь ничего нет</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Задержи эмодзи в другой вкладке, чтобы оставить его здесь</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2035,14 +2047,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Этого сообщения нет в загруженной истории</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>прочитали: %n</numerusform>
-            <numerusform>прочитали: %n</numerusform>
-            <numerusform>прочитали: %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Отменить</translation>
@@ -2284,6 +2288,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Ответить в теме</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Отправлено без шифрования</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Отправлено не тем аккаунтом, который указан</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Ключи отправителя изменились</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>С непроверенного устройства</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>От непроверённого человека</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Подлинность не подтверждена</translation>
     </message>
 </context>
 <context>

@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Privacy</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>De sessie en de berichtendatabase staan onversleuteld op dit apparaat. Tik om ze te versleutelen.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Iets anders</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Hier staat niets</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Houd een emoji in een ander tabblad ingedrukt om hem hier te bewaren</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Dat bericht staat niet in de geladen geschiedenis</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>gelezen door %n</numerusform>
-            <numerusform>gelezen door %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Weggooien</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>In draad antwoorden</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Onversleuteld verzonden</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Niet verzonden door het genoemde account</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>De sleutels van de afzender zijn veranderd</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Van een niet-geverifieerd apparaat</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Van een niet-geverifieerd persoon</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Echtheid niet bevestigd</translation>
     </message>
 </context>
 <context>

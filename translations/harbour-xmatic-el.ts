@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Απόρρητο</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>Η συνεδρία και η βάση μηνυμάτων βρίσκονται μη κρυπτογραφημένες σε αυτή τη συσκευή. Πάτα για να τις κρυπτογραφήσεις.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Κάτι άλλο</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Δεν υπάρχει τίποτα εδώ</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Κράτα πατημένο ένα emoji σε άλλη καρτέλα για να το κρατήσεις εδώ</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Αυτό το μήνυμα δεν είναι στο φορτωμένο ιστορικό</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>διαβάστηκε από %n</numerusform>
-            <numerusform>διαβάστηκε από %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Απόρριψη</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Απάντηση στο νήμα</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Στάλθηκε χωρίς κρυπτογράφηση</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Δεν στάλθηκε από τον λογαριασμό που αναφέρεται</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Τα κλειδιά του αποστολέα άλλαξαν</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Από μη επαληθευμένη συσκευή</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Από μη επαληθευμένο άτομο</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Η γνησιότητα δεν επιβεβαιώθηκε</translation>
     </message>
 </context>
 <context>

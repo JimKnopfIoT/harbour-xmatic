@@ -109,6 +109,10 @@
         <source>Privacy</source>
         <translation>Privacidade</translation>
     </message>
+    <message>
+        <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
+        <translation>A sessão e a base de dados de mensagens estão sem cifra neste dispositivo. Toca para as cifrares.</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -1429,6 +1433,14 @@
         <source>Something else</source>
         <translation>Outra coisa</translation>
     </message>
+    <message>
+        <source>Nothing kept here</source>
+        <translation>Aqui não há nada</translation>
+    </message>
+    <message>
+        <source>Press and hold an emoji in another tab to keep it here</source>
+        <translation>Mantém premido um emoji noutro separador para o guardares aqui</translation>
+    </message>
 </context>
 <context>
     <name>RoomActionsPage</name>
@@ -2032,13 +2044,6 @@
         <source>That message is not in the loaded history</source>
         <translation>Essa mensagem não está no histórico carregado</translation>
     </message>
-    <message numerus="yes">
-        <source>read by %n</source>
-        <translation>
-            <numerusform>lido por %n</numerusform>
-            <numerusform>lido por %n</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Discard</source>
         <translation>Descartar</translation>
@@ -2279,6 +2284,30 @@
     <message>
         <source>Reply in thread</source>
         <translation>Responder no tópico</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Enviado sem cifra</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Não foi enviado pela conta indicada</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>As chaves do remetente mudaram</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>De um dispositivo não verificado</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>De uma pessoa não verificada</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autenticidade não confirmada</translation>
     </message>
 </context>
 <context>
