@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Poista emoji-kuvat</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Piilota näppäimistö lähetyksen jälkeen</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Päällä näppäimistö sulkeutuu heti kun viesti on lähtenyt ja keskustelu näkyy taas kokonaan. Pois päältä se jää auki seuraavaa viestiä varten.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Tallennus ei onnistunut</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Tätä liitettä ei voitu ladata</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>Ryhmähuoneessa kaikki näkevät puhelun. Lista ei kumoa tätä.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Pois: videotarjoukseen vastataan äänipuheluna.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Pois pitää lukemisesi omana tietonasi, molempiin suuntiin.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>He saavat aina soittaa. Lista pysyy tällä laitteella.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Poista mediat nyt</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Viestit ja avaimet säilytetään salattuina. Avaamasi kuvat, videot ja asiakirjat eivät — ne ovat laitteella kuten galleriankin kuvat, kenen tahansa luettavissa jolla laite on.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Ladattujen medioiden poisto</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Päällä: sama henkilö voi soittaa uudelleen vasta lyhyen tauon jälkeen. Se viivyttää myös toista, aitoa yritystä.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Viestit ja avaimet säilytetään salattuina.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Viestit ja avaimet ovat tällä laitteella salaamattomina — salaussivu kertoo miksi ja mitä asialle voi tehdä.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Avaamasi kuvat, videot ja asiakirjat eivät — ne ovat laitteella kuten galleriankin kuvat, kenen tahansa luettavissa jolla laite on.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Pois: videota tarjoava puhelu vastataan äänipuheluna — kamerasi pysyy kiinni eikä kuvaa näytetä. Toinen osapuoli voi silti lähettää sellaisen, jonka tämä puhelin hylkää.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Pois: kukaan ei saa tietää, kuinka pitkälle olet lukenut. Sen, mitä muut ovat lukeneet, ratkaisee alla oleva asetus.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Luettelo on salattu eikä sen avain ole käytettävissä. Se on jälleen luettavissa, kun laitteen lukitus on avattu ja sovellus käynnistetty uudelleen.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Kutsu</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Päästä päähän -salattu</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Ei salattu</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Tämä huone on korvattu</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Aitoutta ei vahvistettu</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Hylätään</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Poistetaan</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Tämä reaktio kätkee tekstiä eikä sitä lähetetty</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Kuva</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Tätä liitettä ei voitu ladata</translation>
     </message>
 </context>
 <context>

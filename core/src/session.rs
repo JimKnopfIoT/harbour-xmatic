@@ -187,7 +187,13 @@ pub fn storage_state(paths: &Paths, key: Option<&StoreKey>) -> StorageState {
             bytes.zeroize();
             (true, encrypted)
         }
-        Err(_) => (false, false),
+        // Not there is one thing; could not be read is another. Answering the
+        // second with "no session file" makes `fully_encrypted()` report the
+        // good case, and the privacy page states it as fact. A statement about
+        // encryption may not rest on a failed look: an unreadable file counts
+        // as present and not known to be encrypted.
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => (false, false),
+        Err(_) => (true, false),
     };
 
     StorageState {
@@ -205,9 +211,21 @@ fn store_key_applies(paths: &Paths, key: Option<&StoreKey>) -> bool {
     if store_marked_encrypted(paths) {
         return true;
     }
+    // "Could not look" is not "empty". Answering it with `true` writes the
+    // marker and hands the key to a store that may already hold unencrypted
+    // data - which the SDK then re-ciphers, and that is the total loss this
+    // whole function exists to avoid. The failure direction of a test whose
+    // wrong answer destroys data is the one that changes nothing.
+    //
+    // A directory that is not there yet is the exception, and it is spelled
+    // out rather than left to a caller: today every `build_client` runs after
+    // a `prepare()` that creates it, so `ENOENT` cannot happen - but that is
+    // another function's guarantee, and one that a later caller can forget.
+    // Not there and nothing in it are the same thing to this question.
     let fresh = match std::fs::read_dir(&paths.store) {
         Ok(mut entries) => entries.next().is_none(),
-        Err(_) => true,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => true,
+        Err(_) => false,
     };
     if fresh {
         // Losing the marker while keeping the store would flip the store
@@ -235,6 +253,13 @@ pub async fn build_client(
 
     let client = Client::builder()
         .server_name_or_homeserver_url(server)
+        // The homeserver stays what discovery decided, whatever the login
+        // response would like it to be. The SDK otherwise takes the `well_known`
+        // out of a successful password login and calls `set_homeserver` with it,
+        // unchecked - so a server could answer the sign-in with an http address
+        // and every request after it, access token included, would go in the
+        // clear past the https rule the login paths enforce.
+        .respect_login_well_known(false)
         .sqlite_store_with_config_and_cache_path(store_config, None::<&Path>)
         .handle_refresh_tokens()
         // SingleProcess, deliberately. The multi-process lock guards against a
@@ -444,8 +469,20 @@ pub enum LoadOutcome {
 }
 
 pub fn load(path: &Path, key: Option<&StoreKey>) -> LoadOutcome {
-    let Ok(bytes) = std::fs::read(path) else {
-        return LoadOutcome::None;
+    let bytes = match std::fs::read(path) {
+        Ok(bytes) => bytes,
+        // Only "there is no file" means there is no session. Every other
+        // reason - a busy device out of file descriptors, a sandbox that
+        // refused for a moment, an I/O error - means "I could not look", and
+        // that must never be answered with "nothing is here": `None` is the
+        // one outcome a fresh login resets the store on, so a moment's bad
+        // luck would take the crypto store and the device identity with it.
+        // Reported as locked instead: the same wall an unavailable key gets,
+        // with the same way out.
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            return LoadOutcome::None;
+        }
+        Err(_) => return LoadOutcome::Locked,
     };
     if let Ok(session) = serde_json::from_slice::<StoredSession>(&bytes) {
         return LoadOutcome::Session(session);

@@ -6,22 +6,29 @@
 TimelineModel::TimelineModel(QObject *parent)
     : DiffListModel(parent)
 {
-    // Whenever the rows move, the read mark may move with them. Recomputed
-    // here rather than in data(): it is one pass over the list, and asking per
-    // row would make every redraw quadratic.
-    connect(this, &QAbstractItemModel::modelReset, this, &TimelineModel::updateReadCounts);
-    connect(this, &QAbstractItemModel::rowsInserted, this, &TimelineModel::updateReadCounts);
-    connect(this, &QAbstractItemModel::rowsRemoved, this, &TimelineModel::updateReadCounts);
-    connect(this, &QAbstractItemModel::dataChanged, this, &TimelineModel::updateReadCounts);
+    // Whenever the rows move, the read mark may move with them. Recomputed in
+    // one pass rather than in data(): asking per row would make every redraw
+    // quadratic. Queued, never inline - see scheduleReadCounts().
+    // A reset is a different timeline: what the old one had been read to says
+    // nothing about this one.
+    connect(this, &QAbstractItemModel::modelReset, this, [this] {
+        m_readCounts.clear();
+        scheduleReadCounts();
+    });
+    connect(this, &QAbstractItemModel::rowsInserted, this, [this] { scheduleReadCounts(); });
+    connect(this, &QAbstractItemModel::rowsRemoved, this, [this] { scheduleReadCounts(); });
+    connect(this, &QAbstractItemModel::dataChanged, this, [this] { scheduleReadCounts(); });
 }
 
 QVariant TimelineModel::data(const QModelIndex &index, int role) const
 {
-    if (role == ReadMarkRole) {
-        return m_readCounts.value(index.row()) > 0;
-    }
-    if (role == ReadMarkByRole) {
-        return m_readCounts.value(index.row());
+    if (role == ReadMarkRole || role == ReadMarkByRole) {
+        // Looked up by the row's own event id. By row number it was one off
+        // after every page of older messages that arrived at the top, and the
+        // mark then stood on the message below the one it belonged to.
+        const QString eventId = DiffListModel::data(index, EventIdRole).toString();
+        const int count = eventId.isEmpty() ? 0 : m_readCounts.value(eventId);
+        return role == ReadMarkRole ? QVariant(count > 0) : QVariant(count);
     }
     if (role == ThreadCountRole && !m_threadRoots.isEmpty()) {
         // The row's own number first: it comes from the SDK's summary and is
@@ -54,12 +61,19 @@ void TimelineModel::setThreadRoots(const QHash<QString, int> &roots)
     }
 }
 
-void TimelineModel::updateReadCounts()
+void TimelineModel::scheduleReadCounts()
 {
-    // The emits below come back here through dataChanged.
-    if (m_updatingReadCounts) {
+    // The emit at the end of the recount comes back here through dataChanged.
+    if (m_updatingReadCounts || m_readCountsQueued) {
         return;
     }
+    m_readCountsQueued = true;
+    QMetaObject::invokeMethod(this, "updateReadCounts", Qt::QueuedConnection);
+}
+
+void TimelineModel::updateReadCounts()
+{
+    m_readCountsQueued = false;
 
     // One pass from the newest row backwards, carrying everyone met so far.
     // A receipt marks the newest event a person has read, so whoever appears
@@ -67,7 +81,7 @@ void TimelineModel::updateReadCounts()
     // therefore exactly "who has read this far" for each row in turn. Their
     // own messages count as read by them, which is what the SDK's implicit
     // receipt on a sent event says.
-    QVector<int> counts(rows().count(), 0);
+    QHash<QString, int> counts;
     QSet<QString> seen;
     for (int i = rows().count() - 1; i >= 0; --i) {
         const QJsonObject &row = rows().at(i);
@@ -75,9 +89,18 @@ void TimelineModel::updateReadCounts()
         for (const QJsonValue &user : users) {
             seen.insert(user.toString());
         }
-        if (row.value(QStringLiteral("own")).toBool()
+        const QString eventId = row.value(QStringLiteral("eventId")).toString();
+        if (!eventId.isEmpty()
+            && row.value(QStringLiteral("own")).toBool()
             && row.value(QStringLiteral("kind")).toString() == QLatin1String("message")) {
-            counts[i] = seen.count();
+            // Never below what this message has already shown. A receipt is
+            // moved from one timeline item to the next as the conversation
+            // goes on, and the SDK takes it off the old row before it puts it
+            // on the new one: for that moment nobody has read this far, the
+            // mark vanishes and comes back - reported as an eye that is there
+            // sometimes and sometimes not. Being read is not a state that can
+            // be taken back, so it is not tracked as one.
+            counts.insert(eventId, qMax(seen.count(), m_readCounts.value(eventId)));
         }
     }
 

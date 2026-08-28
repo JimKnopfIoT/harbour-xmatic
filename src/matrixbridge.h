@@ -40,6 +40,11 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QString emojiDirectory READ emojiDirectory CONSTANT)
     Q_PROPERTY(int emojiRevision READ emojiRevision NOTIFY emojiRevisionChanged)
     Q_PROPERTY(QStringList allowedCallers READ allowedCallers NOTIFY privateListsChanged)
+    /// Whether the encrypted lists could be read at all. False means the key is
+    /// not available - after a reboot, until the device is unlocked once - and
+    /// an empty list then says nothing about what is in the file. A page that
+    /// prints "nobody yet" has to know the difference.
+    Q_PROPERTY(bool privateListsReadable READ privateListsReadable NOTIFY privateListsChanged)
     Q_PROPERTY(QString sessionState READ sessionState NOTIFY sessionChanged)
     Q_PROPERTY(QString syncState READ syncState NOTIFY syncStateChanged)
     /// False when the homeserver does not advertise the sync this app is
@@ -301,6 +306,14 @@ public:
     /// needed, and answers with `successorReady` so the UI can open it.
     Q_INVOKABLE void followSuccessor(const QString &roomId);
 
+    /// What was typed into a room's message field and not sent. Kept for as
+    /// long as the app runs and never written to disk: a draft is message text,
+    /// and the only unencrypted place this app has is its settings file. So it
+    /// survives the way back to the chat list and the trip through another room
+    /// - which is what it was reported for - and not a restart.
+    Q_INVOKABLE void setDraft(const QString &roomId, const QString &text);
+    Q_INVOKABLE QString draft(const QString &roomId) const;
+
     /// Asks for everything the room-info page shows; the answer arrives as
     /// `roomInfoReady`. Read from local state, so it comes back at once.
     Q_INVOKABLE void loadRoomInfo(const QString &roomId);
@@ -442,6 +455,7 @@ public:
     /// The lists that name people. They live encrypted in the core; this is
     /// the copy the UI reads, refreshed from every answer.
     QStringList allowedCallers() const { return m_privateLists.value(QStringLiteral("callers")); }
+    bool privateListsReadable() const { return m_privateListsReadable; }
     Q_INVOKABLE bool callerAllowed(const QString &userId) const;
     Q_INVOKABLE void allowCaller(const QString &userId);
     Q_INVOKABLE void forbidCaller(const QString &userId);
@@ -467,6 +481,16 @@ public:
     /// Asks who has read up to this message. Answered by readersReady(); the
     /// rows carry only the count, names are fetched when they are wanted.
     Q_INVOKABLE void loadReaders(const QString &eventId);
+
+    /// Empties the last error. A page that shows the field wants what happened
+    /// *there*, not what some other command left behind - the field is global,
+    /// and pages that care clear it when they open.
+    Q_INVOKABLE void clearLastError();
+
+    /// Asks who reacted to this message with this key. Answered by
+    /// reactorsReady(); the rows carry a count and nothing else, so the people
+    /// behind it are fetched only when one reaction is held down.
+    Q_INVOKABLE void loadReactors(const QString &eventId, const QString &key);
 
     /// Accepts an invitation or joins a known room.
     Q_INVOKABLE void joinRoom(const QString &roomId);
@@ -670,8 +694,16 @@ signals:
     /// Answer to loadRoomLink().
     void roomLinkReady(const QString &link);
 
+    /// A media fetch that will not arrive - refused, failed or given up on.
+    /// The row that asked stops waiting instead of spinning for good.
+    void mediaFailed(const QString &key);
+
     /// Answer to loadReaders(): who has read up to that message.
     void readersReady(const QString &eventId, const QVariantList &readers);
+
+    /// Answer to loadReactors(): who reacted with that key.
+    void reactorsReady(const QString &eventId, const QString &key,
+                       const QVariantList &reactors);
     void emojiRevisionChanged();
     void privateListsChanged();
 
@@ -840,6 +872,8 @@ private:
     /// Transaction ids of messages whose failure was already reported, so a
     /// row that is rewritten does not repeat itself in the journal.
     QSet<QString> m_reportedSendFailures;
+    /// Unsent message text per room. Memory only, cleared on sign-out.
+    QHash<QString, QString> m_drafts;
     QString m_openRoomId;
     /// The room actually on screen; see setVisibleRoom.
     QString m_visibleRoomId;
@@ -911,8 +945,15 @@ private:
     MemberModel m_members;
     /// Which user a pending `member.remove` request is for.
     QHash<quint64, QString> m_removeRequests;
+    /// Lets go of everything a finished, failed or abandoned command was
+    /// remembered by.
+    void forgetRequest(quint64 id);
+
     /// Which message a pending `timeline.readers` request is about.
     QHash<quint64, QString> m_readerRequests;
+    /// Which message and key a pending `timeline.reactors` request is about.
+    /// The core answers with both, so this only says the request was ours.
+    QSet<quint64> m_reactorRequests;
     /// Recordings waiting for their send to come back, so they can go.
     QHash<quint64, QString> m_voiceSends;
     QString m_voiceDirectory;

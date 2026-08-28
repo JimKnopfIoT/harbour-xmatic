@@ -248,6 +248,14 @@
         <source>Remove emoji pictures</source>
         <translation>Usuń obrazki emoji</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Ukryj klawiaturę po wysłaniu</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Włączone: klawiatura zamyka się, gdy wiadomość zostanie wysłana, i znów widać całą rozmowę. Wyłączone: zostaje otwarta na kolejną wiadomość.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -766,6 +774,10 @@
     <message>
         <source>Could not save</source>
         <translation>Nie udało się zapisać</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Nie udało się wczytać tego załącznika</translation>
     </message>
 </context>
 <context>
@@ -1318,14 +1330,6 @@
         <translation>W pokoju grupowym połączenie widzą wszyscy. Lista tego nie znosi.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Wyłączone: ofertę z wideo odbiera się jako połączenie głosowe.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Wyłączone zachowuje twoje czytanie dla ciebie, w obie strony.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Zawsze mogą dzwonić. Lista zostaje na tym urządzeniu.</translation>
     </message>
@@ -1374,10 +1378,6 @@
         <translation>Usuń multimedia teraz</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Wiadomości i klucze są przechowywane zaszyfrowane. Otwarte obrazy, filmy i dokumenty nie — leżą na urządzeniu jak te w galerii, czytelne dla każdego, kto je ma.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Usuwanie pobranych multimediów</translation>
     </message>
@@ -1416,6 +1416,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Włączone: ta sama osoba może zadzwonić ponownie dopiero po krótkiej przerwie. Opóźnia to także drugą, prawdziwą próbę.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Wiadomości i klucze są przechowywane zaszyfrowane.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Wiadomości i klucze leżą na tym urządzeniu niezaszyfrowane — strona szyfrowania mówi dlaczego i co można z tym zrobić.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Otwarte obrazy, filmy i dokumenty nie — leżą na urządzeniu jak te w galerii, czytelne dla każdego, kto je ma.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Wyłączone: oferta z obrazem zostaje odebrana jako połączenie głosowe — twój aparat pozostaje zamknięty i nie widać obrazu. Druga strona może go mimo to wysłać, a ten telefon go odrzuca.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Wyłączone: nikt nie dowie się, jak daleko przeczytałeś. To, co przeczytali inni, ustawia opcja poniżej.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Lista jest zaszyfrowana, a jej klucz jest niedostępny. Będzie znów czytelna po odblokowaniu urządzenia i ponownym uruchomieniu aplikacji.</translation>
     </message>
 </context>
 <context>
@@ -1879,14 +1903,6 @@
         <translation>Zaproszenie</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Szyfrowany end-to-end</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Nieszyfrowany</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Ten pokój został zastąpiony</translation>
     </message>
@@ -2094,6 +2110,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Autentyczność niepotwierdzona</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Odrzucanie</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Usuwanie</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Ta reakcja ukrywa tekst i nie została wysłana</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Obraz</translation>
     </message>
 </context>
 <context>
@@ -2441,6 +2473,10 @@
     <message>
         <source>Save</source>
         <translation>Zapisz</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Nie udało się wczytać tego załącznika</translation>
     </message>
 </context>
 <context>

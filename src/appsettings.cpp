@@ -162,6 +162,26 @@ void AppSettings::setVoiceMessages(bool enabled)
     emit voiceMessagesChanged();
 }
 
+bool AppSettings::hideKeyboardOnSend() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("ui/hideKeyboardOnSend"), true).toBool();
+}
+
+void AppSettings::setHideKeyboardOnSend(bool enabled)
+{
+    if (enabled == hideKeyboardOnSend()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("ui/hideKeyboardOnSend"), enabled,
+          "the keyboard setting");
+    if (settings.status() == QSettings::NoError) {
+        qInfo("xmatic: keyboard after sending %s", enabled ? "hidden" : "kept");
+    }
+    emit hideKeyboardOnSendChanged();
+}
+
 bool AppSettings::emojiImages() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

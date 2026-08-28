@@ -249,6 +249,14 @@
         <source>Remove emoji pictures</source>
         <translation>Neħħi l-istampi tal-emoji</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Aħbi t-tastiera wara li tibgħat</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Mixgħul, it-tastiera tingħalaq malli l-messaġġ jitlaq u l-konversazzjoni terġa&apos; tidher kollha. Mitfi, tibqa&apos; miftuħa għall-messaġġ li jmiss.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -768,6 +776,10 @@
     <message>
         <source>Could not save</source>
         <translation>Ma setax jiġi ssejvjat</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Dan l-anness ma setax jitniżżel</translation>
     </message>
 </context>
 <context>
@@ -1320,14 +1332,6 @@
         <translation>F&apos;kamra ta&apos; grupp kulħadd jara ċ-ċempil. Il-lista ma tegħlibx dan.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Mitfi: offerta bil-vidjo tiġi aċċettata bħala ċemplija bil-vuċi.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Mitfi jżomm il-qari tiegħek għalik, fiż-żewġ direzzjonijiet.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Dejjem jistgħu jċemplu. Il-lista tibqa&apos; f&apos;dan l-apparat.</translation>
     </message>
@@ -1376,10 +1380,6 @@
         <translation>Ħassar il-midja issa</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Il-messaġġi u ċ-ċwievet jinżammu kriptati. L-istampi, il-vidjos u d-dokumenti li ftaħt le — jinsabu fuq l-apparat bħal dawk tal-gallerija, jinqraw minn kull min ikollu l-apparat.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Tħassir tal-midja mniżżla</translation>
     </message>
@@ -1418,6 +1418,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Mixgħul: l-istess persuna tista&apos; terġa&apos; ċċempel biss wara waqfa qasira. Idewwem ukoll it-tieni tentattiv ġenwin.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Il-messaġġi u ċ-ċwievet jinżammu kriptati.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Il-messaġġi u ċ-ċwievet jinsabu fuq dan l-apparat mhux ikkriptati — il-paġna tal-kriptaġġ tgħid għaliex u x&apos;jista&apos; jsir.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>L-istampi, il-vidjos u d-dokumenti li ftaħt le — jinsabu fuq l-apparat bħal dawk tal-gallerija, jinqraw minn kull min ikollu l-apparat.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Mitfi: offerta bil-vidjo tiġi mwieġba bħala sejħa bil-vuċi — il-kamera tiegħek tibqa&apos; magħluqa u ma tintwera l-ebda stampa. In-naħa l-oħra xorta tista&apos; tibgħat waħda, li dan it-telefon jarmi.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Mitfi: ħadd ma jsir jaf sa fejn qrajt. X&apos;qraw l-oħrajn jiddependi mis-setting t&apos;hawn taħt.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Il-lista hija kkriptata u ċ-ċavetta tagħha mhijiex disponibbli. Terġa&apos; tkun tista&apos; tinqara wara li l-apparat jinfetaħ u l-app terġa&apos; tinbeda.</translation>
     </message>
 </context>
 <context>
@@ -1881,14 +1905,6 @@
         <translation>Stedina</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Iċċifrata minn tarf sa tarf</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Mhux iċċifrata</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Din il-kamra ġiet mibdula</translation>
     </message>
@@ -2097,6 +2113,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>L-awtentiċità mhix ikkonfermata</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Qed jintrema</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Qed jitħassar</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Din ir-reazzjoni taħbi test u ma ntbagħtitx</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Ritratt</translation>
     </message>
 </context>
 <context>
@@ -2446,6 +2478,10 @@
     <message>
         <source>Save</source>
         <translation>Issejvja</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Dan l-anness ma setax jitniżżel</translation>
     </message>
 </context>
 <context>

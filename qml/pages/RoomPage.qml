@@ -22,6 +22,18 @@ Page {
     // Defaults to true so push sites that do not know the state never offer
     // enabling encryption where it may already be on.
     property bool encrypted: true
+    // Whether that value came from the room itself rather than from whoever
+    // pushed this page. The padlock is the only thing that still states the
+    // room's encryption, and half the ways in here (a notification, the D-Bus
+    // start, a tapped room link) carry nothing - while the property defaults to
+    // "encrypted". A security mark whose failure state is "safe" is worse than
+    // none, so it says nothing until the room has answered.
+    property bool encryptionKnown: false
+
+    // Media keys whose fetch came back as a failure - refused for size, dropped
+    // by the network, given up on by the watchdog. Without them the row cannot
+    // tell "still loading" from "never coming" and turns its indicator for good.
+    property var failedMedia: ({})
 
     // Set while an already sent message is being rewritten.
     property string editingEventId: ""
@@ -33,8 +45,21 @@ Page {
 
     allowedOrientations: Orientation.All
 
+    // The sender's picture in the conversation, and the gap it leaves in front
+    // of the bubble. The same size the chat list gives a room - reported as too
+    // small next to it, and the two are looked at one after the other. One
+    // number for all three places: the picture, the bubble's left margin and
+    // the width the text may take. Never read off the item itself, which is the
+    // width rule this delegate has already paid for three times.
+    readonly property real avatarSize: Theme.iconSizeMedium
+
     // Whether new messages should scroll the view along.
     property bool followTail: true
+
+    // The timeline's own height, as it was before the last change. The
+    // keyboard, the pinned banner and a growing composer all take height away
+    // from the list, and what was on screen has to stay on screen.
+    property real lastTimelineHeight: 0
 
     // A save that is waiting for its download to finish.
     property string pendingSaveKey: ""
@@ -52,6 +77,10 @@ Page {
     // How many pages of history a jump may still fetch before giving up. An
     // old pin can sit far beyond what is loaded.
     property int jumpPagesLeft: 0
+    // How many turns it may spend waiting for the live timeline to be there at
+    // all - roughly ten seconds, after which the room is plainly not coming.
+    property int jumpWaitsLeft: 0
+    readonly property int jumpWaitLimit: 15
 
     // Recipients of this encrypted room that still have unverified devices,
     // filled by the core's answer to checkRecipients. Drives the pre-send
@@ -66,6 +95,17 @@ Page {
     // again: reply and edit put the cursor in the composer, and focus set
     // while the stack is still animating does not stick.
     property var pendingAction: null
+
+    // The way out is the way the draft is kept: this fires before the children
+    // go, so the field can still be read. An edit in progress is not a draft -
+    // its text belongs to a message that already exists - and neither is an
+    // empty field, which removes whatever stood there before.
+    Component.onDestruction: {
+        if (!invited) {
+            matrix.setDraft(roomId,
+                            page.editingEventId.length > 0 ? "" : messageField.text)
+        }
+    }
 
     // Leaving the foreground aborts a running countdown at once, instead of only
     // suppressing it when it expires. Suppressing at expiry was not enough:
@@ -83,17 +123,46 @@ Page {
 
     Component.onCompleted: {
         if (!invited) {
+            // What was typed here last time and never sent. Going back to the
+            // chat list destroys this page, so the field has to be filled from
+            // somewhere that outlives it.
+            messageField.text = matrix.draft(roomId)
             matrix.openRoom(roomId)
-            refreshRecipients()
+            refreshRecipients(true)
+            // The lock at the top says whether this room is encrypted, so the
+            // answer has to be the room's and not the caller's guess: not every
+            // way in here carries one, and the property defaults to encrypted.
+            // Read from local state, so it comes back at once.
+            matrix.loadRoomInfo(roomId)
         }
     }
 
+    // When the recipients were last asked about, so a return to this page does
+    // not ask again straight away.
+    property double lastRecipientCheck: 0
+    readonly property int recipientCheckInterval: 60000
+
     // The warning only makes sense for an encrypted room; an unencrypted one
     // has no device trust to check. The core answers with recipientsChecked.
-    function refreshRecipients() {
-        if (page.encrypted) {
-            matrix.checkRecipients(page.roomId)
+    //
+    // Throttled, because this walks every member of the room and asks the
+    // server about each one whose devices are not in the store yet. It used to
+    // run on every `PageStatus.Active` - so closing the member list, an
+    // attachment, a picture, or in landscape any message action at all paid for
+    // a full pass through a five-hundred-member room. Devices do not change
+    // that fast; a minute is closer to the truth than "every time a sub-page
+    // pops".
+    function refreshRecipients(force) {
+        if (!page.encrypted) {
+            return
         }
+        var now = new Date().getTime()
+        if (!force && page.lastRecipientCheck > 0
+                && now - page.lastRecipientCheck < page.recipientCheckInterval) {
+            return
+        }
+        page.lastRecipientCheck = now
+        matrix.checkRecipients(page.roomId)
     }
 
     // Where reading stopped last time, until the row it names is on screen.
@@ -118,7 +187,32 @@ Page {
     Connections {
         target: matrix
 
+        onMediaFailed: {
+            var marked = page.failedMedia
+            marked[key] = true
+            // Reassigned, not mutated in place: a JavaScript object changed
+            // through its own reference tells no binding anything.
+            page.failedMedia = marked
+        }
+
+        // What the room says about itself, as against what whoever pushed this
+        // page believed. Only the encryption is taken: everything else on this
+        // page comes from the timeline.
+        onRoomInfoReady: {
+            if (info.roomId === page.roomId) {
+                page.encrypted = info.encrypted === true
+                page.encryptionKnown = true
+            }
+        }
+
         onTimelineOpened: {
+            // The live timeline is back - which is what a pending jump has
+            // been waiting for. It goes first: where reading stopped matters
+            // less than the message the user just asked to be taken to, and
+            // showFirstUnread stands aside for exactly that reason.
+            if (page.jumpTargetId.length > 0) {
+                page.tryJump()
+            }
             if (rebuilt) {
                 page.unreadHandled = false
             }
@@ -159,7 +253,28 @@ Page {
             // Only while the room is really being looked at, and only from the
             // tail: a view parked at the first unread message has not read what
             // is below it.
-            if (page.followTail && page.status === PageStatus.Active
+            //
+            // `atYEnd` counts as much as the flag. The flag says the view is
+            // *meant* to follow, and it is switched off by a jump, by the
+            // opening at the first unread message and by a room that is
+            // re-entered with its rows kept - after all of which the newest
+            // message can perfectly well be on screen. Only the flag was asked,
+            // and the room then stayed unread while it was being read, which is
+            // how "it does not mark as read on its own" was reported. Leaving
+            // the page has always asked both.
+            //
+            // But not while the search for the read marker is still running.
+            // A room opens at its end, so `atYEnd` is true for the second or
+            // two that search needs - and marking read there moves the very
+            // marker it is looking for to the newest message. The next visit
+            // then has nothing to jump to, which is exactly the report that
+            // "opening at the last unread message does not work": it worked,
+            // and asking `atYEnd` here took it apart again.
+            if (page.unreadFromId.length > 0) {
+                return
+            }
+            if ((page.followTail || timelineView.atYEnd)
+                    && page.status === PageStatus.Active
                     && Qt.application.active) {
                 matrix.markRead()
             }
@@ -181,7 +296,8 @@ Page {
                 // Back in front: whether this counts as reading is decided by
                 // the same test as everywhere else, one timer tick later.
                 readTimer.restart()
-            } else if (page.followTail || timelineView.atYEnd) {
+            } else if (page.unreadFromId.length === 0
+                       && (page.followTail || timelineView.atYEnd)) {
                 matrix.markRead()
             }
         }
@@ -270,6 +386,12 @@ Page {
 
     Connections {
         target: matrix
+        // Verifying somebody is exactly the moment the warning should stop
+        // naming them. Without this the throttle keeps the old answer for up to
+        // a minute, and a warning that returns after the user did what it asked
+        // is the warning they switch off.
+        onVerificationChanged: page.refreshRecipients(true)
+
         onRecipientsChecked: {
             if (roomId === page.roomId) {
                 page.unverifiedUsers = users
@@ -295,7 +417,11 @@ Page {
             // is debounced by nearly a second, and stepping out inside that
             // second used to drop the receipt - the room then stood in the
             // list as unread although every message had been on screen.
-            if (!invited && (page.followTail || timelineView.atYEnd)) {
+            // Same guard as the timer: a room left while it is still looking
+            // for the marker has not been read to the end, whatever the view
+            // happens to be showing.
+            if (!invited && page.unreadFromId.length === 0
+                    && (page.followTail || timelineView.atYEnd)) {
                 matrix.markRead()
             }
         }
@@ -310,6 +436,10 @@ Page {
             // the user gets there.
             readTimer.restart()
             tryJump()
+            // The room's own state, again: encryption can have been switched
+            // on one page further in while this one was covered, and the lock
+            // at the top would otherwise still stand open.
+            matrix.loadRoomInfo(roomId)
             // Devices may have been verified (or new ones appeared) while the
             // page was covered; re-check so the warning stays current.
             refreshRecipients()
@@ -324,6 +454,14 @@ Page {
                     beginReply(action.eventId, action.senderName, action.body)
                 } else if (action.kind === "edit") {
                     beginEdit(action.eventId, action.body)
+                } else if (action.kind === "sendMedia") {
+                    submitMedia(action)
+                } else if (action.kind === "delete") {
+                    // The countdown belongs on the page that stays. Started on
+                    // the actions page it would be executed by Silica the
+                    // moment that page pops, which is the opposite of a way
+                    // back.
+                    confirmDelete(action.eventId, action.txnId, action.unsent)
                 }
             }
         }
@@ -373,6 +511,27 @@ Page {
                     })
     }
 
+    // Deleting is not undoable and it used to be one tap away, at the bottom of
+    // a menu that opens on a long press - the same reach that leaving a room
+    // has, and that one has had its countdown since the report. The message
+    // goes when the countdown runs out, on this page, with the app in front of
+    // the user; anything else cancels it. A send that failed is discarded
+    // rather than deleted: it never reached anybody, and it has no event id.
+    function confirmDelete(eventId, txnId, unsent) {
+        page.activeRemorse = Remorse.popupAction(
+                    page,
+                    unsent ? qsTr("Discarding") : qsTr("Deleting"),
+                    function() {
+                        // The same test the room's own remorse makes: Silica
+                        // executes a running countdown the moment its page
+                        // deactivates, and minimising leaves it running unseen.
+                        if (page.status !== PageStatus.Active || !Qt.application.active) {
+                            return
+                        }
+                        matrix.deleteMessage(eventId || "", txnId || "")
+                    })
+    }
+
     // What the row says instead of "not decryptable". The SDK works the reason
     // out and the core forwards it as a key; without the sentence every such
     // message reads the same, and the difference between "the sender withheld
@@ -409,7 +568,17 @@ Page {
         }
         jumpTargetId = eventId
         jumpPagesLeft = 10
-        tryJump()
+        jumpWaitsLeft = jumpWaitLimit
+        // Only when this page is the one on screen. The pinned overview calls
+        // this on the page underneath, and at that moment the shared model
+        // still holds the *pinned* view: the row is found there, the view is
+        // placed on it, and the switch back to the live timeline throws that
+        // away a fraction of a second later. That is exactly what was
+        // reported - the right message for a blink, then the end of the room.
+        // Left standing, the jump runs when the live timeline is back.
+        if (page.status === PageStatus.Active) {
+            tryJump()
+        }
     }
 
     // Kept under its old name for the pinned overview, which calls it on the
@@ -420,6 +589,20 @@ Page {
 
     function tryJump() {
         if (jumpTargetId.length === 0) {
+            return
+        }
+        // Nothing to look in yet: coming back from the pinned view empties the
+        // model and asks the core for the live one. Looking anyway would miss
+        // and start paging through a history that is about to arrive by
+        // itself. Bounded, so a room that never delivers stops asking.
+        if (!matrix.timelineReady || matrix.timeline.count === 0) {
+            if (jumpWaitsLeft > 0) {
+                jumpWaitsLeft--
+                jumpRetry.restart()
+                return
+            }
+            jumpTargetId = ""
+            jumpRetry.stop()
             return
         }
         var idx = matrix.timeline.indexOfEvent(jumpTargetId)
@@ -446,7 +629,7 @@ Page {
         }
         jumpTargetId = ""
         jumpRetry.stop()
-        jumpNoticeTimer.restart()
+        showNotice(qsTr("That message is not in the loaded history"))
     }
 
     Timer {
@@ -473,8 +656,19 @@ Page {
     // pull-down entry and the pull-to-top.
     property int fillEmptyRounds: 0
     readonly property int fillEmptyLimit: 3
-    /// Row count when the last automatic round was started, -1 for none yet.
-    property int fillLastCount: -1
+    /// How tall the conversation was when the last automatic round started,
+    /// -1 for none yet.
+    ///
+    /// Height, not row count. The loop runs while the content is shorter than
+    /// the screen, so height is the thing it is trying to change - and there
+    /// are rows that raise the count without raising it by a pixel: a pure
+    /// profile change renders as nothing at all. A room with a stretch of those
+    /// therefore never stopped asking, because every round "grew" and reset the
+    /// counter. Measured on the device: fifty-six rows to two hundred and
+    /// twenty-six in four seconds. This is the same lesson as the original
+    /// unbounded fill, applied to the size that decides rather than the one
+    /// that was easiest to read.
+    property real fillLastHeight: -1
 
     function fillScreen() {
         if (page.invited || !matrix.timelineReady || matrix.paginating
@@ -490,7 +684,8 @@ Page {
         // a path separate from the reply, and they regularly arrive after it —
         // measured on the device: "0 new rows" and thirty rows in the same
         // second. By the time the fill is asked again, they are applied.
-        if (page.fillLastCount >= 0 && timelineView.count <= page.fillLastCount) {
+        if (page.fillLastHeight >= 0
+                && timelineView.contentHeight <= page.fillLastHeight) {
             if (++page.fillEmptyRounds >= page.fillEmptyLimit) {
                 return
             }
@@ -498,7 +693,7 @@ Page {
             page.fillEmptyRounds = 0
         }
 
-        page.fillLastCount = timelineView.count
+        page.fillLastHeight = timelineView.contentHeight
         matrix.loadOlder()
     }
 
@@ -515,7 +710,7 @@ Page {
         // A different room, a fresh start.
         onTimelineReadyChanged: {
             page.fillEmptyRounds = 0
-            page.fillLastCount = -1
+            page.fillLastHeight = -1
             page.fillScreen()
         }
     }
@@ -709,19 +904,59 @@ Page {
                     verticalCenter: parent.verticalCenter
                 }
 
-                Label {
-                    width: parent.width
-                    horizontalAlignment: Text.AlignRight
-                    text: page.roomName
-                    font.pixelSize: Theme.fontSizeLarge
-                    font.family: Theme.fontFamilyHeading
-                    color: roomHeader.highlighted ? Theme.highlightColor
-                                                  : Theme.primaryColor
-                    truncationMode: TruncationMode.Fade
-                    // A room name with a newline in it would push the strip open
-                    // and take the space the conversation needs.
-                    wrapMode: Text.NoWrap
-                    maximumLineCount: 1
+                // The lock leads the room's name, a gap away from it. It says
+                // what the second line used to spell out in words: closed and
+                // green for an encrypted room, open and red for one without.
+                // A shape at the top of the room is looked at; a sentence
+                // under the name was read once and never again.
+                Row {
+                    anchors.right: parent.right
+                    spacing: Theme.paddingLarge
+
+                    LockIcon {
+                        id: headerLock
+
+                        // Against the Row, not against the name beside it: a
+                        // positioner sets its children's y, and two of them
+                        // reaching into each other for it is a fight nobody
+                        // needs.
+                        anchors.verticalCenter: parent.verticalCenter
+                        // An invitation says nothing reliable about the room's
+                        // encryption yet, and neither does a room that has not
+                        // answered: both claim nothing rather than the wrong
+                        // thing.
+                        visible: !page.invited && page.encryptionKnown
+                        size: Math.round(Theme.fontSizeLarge * 1.2)
+                        locked: page.encrypted
+                        // Faint, both states alike: the name is what the strip
+                        // is for, and the lock is the second thing the eye
+                        // lands on, not the first. Set by eye on the device -
+                        // half was still too present.
+                        opacity: 0.30
+                    }
+
+                    Label {
+                        id: nameLabel
+
+                        // The name takes what the lock leaves. Reading the
+                        // column's width is safe: it comes from the strip's
+                        // anchors, never from anything inside this Row.
+                        width: Math.min(implicitWidth,
+                                        headerColumn.width
+                                        - (headerLock.visible
+                                           ? headerLock.width + parent.spacing : 0))
+                        horizontalAlignment: Text.AlignRight
+                        text: page.roomName
+                        font.pixelSize: Theme.fontSizeLarge
+                        font.family: Theme.fontFamilyHeading
+                        color: roomHeader.highlighted ? Theme.highlightColor
+                                                      : Theme.primaryColor
+                        truncationMode: TruncationMode.Fade
+                        // A room name with a newline in it would push the strip
+                        // open and take the space the conversation needs.
+                        wrapMode: Text.NoWrap
+                        maximumLineCount: 1
+                    }
                 }
 
                 Label {
@@ -733,15 +968,15 @@ Page {
                     truncationMode: TruncationMode.Fade
                     wrapMode: Text.NoWrap
                     maximumLineCount: 1
-                    // Being cut off from the server outranks anything about the
-                    // room itself: a silently stale conversation is the one
-                    // thing the user cannot see for themselves.
+                    // Only what the lock cannot say. Being cut off from the
+                    // server outranks anything about the room itself: a
+                    // silently stale conversation is the one thing the user
+                    // cannot see for themselves. With nothing to report the
+                    // line is gone entirely, and the strip is one line high.
+                    visible: text.length > 0
                     text: matrix.syncState === "offline"
                           ? qsTr("Offline — waiting for the network")
-                          : page.invited
-                            ? qsTr("Invitation")
-                            : page.encrypted ? qsTr("End-to-end encrypted")
-                                             : qsTr("Not encrypted")
+                          : page.invited ? qsTr("Invitation") : ""
                 }
             }
         }
@@ -883,6 +1118,20 @@ Page {
             clip: true
             model: matrix.timeline
             cacheBuffer: page.height
+
+            // Air under the last message, and not for looks. The read mark -
+            // the eye and its number - sits on the bottom line of a bubble, and
+            // the area that takes the tap reaches a finger's width below that,
+            // which is exactly where the message field begins. A last message
+            // sitting flush on the field therefore had a mark that could not be
+            // hit, and the names it unfolds appeared behind the field. One line
+            // of the mark's own height plus that reach, so the bottom of the
+            // conversation always stands clear of the composer.
+            footer: Item {
+                width: 1
+                height: Math.round(Theme.fontSizeTiny * 1.7)
+                        + 2 * Theme.paddingMedium
+            }
 
             header: Column {
                 width: timelineView.width
@@ -1043,12 +1292,27 @@ Page {
                 // hint the decoder may ignore - an interlaced PNG or a GIF is
                 // decoded whole - so a picture whose own header claims absurd
                 // dimensions is not loaded at all.
+                // Dimensions the decoder can be trusted with. Separate from
+                // the size test below, because the two have different answers:
+                // a picture whose size nobody declared may still be opened on a
+                // tap, one whose declared dimensions are absurd may not - Qt's
+                // `sourceSize` is a hint an interlaced PNG is free to ignore,
+                // and the decoder then takes width × height × 4 bytes.
+                readonly property bool saneDimensions: !model.media
+                        || ((model.media.width || 0) <= 8192
+                            && (model.media.height || 0) <= 8192)
+
                 readonly property bool sanePicture: !model.media
-                        || (((model.media.width || 0) <= 8192
-                             && (model.media.height || 0) <= 8192)
+                        || (saneDimensions
                             // The declared size, before anything is fetched:
                             // the ceiling in the core only sees bytes that are
-                            // already in memory.
+                            // already in memory. A message that declares no
+                            // size at all walks past that ceiling, and the
+                            // preview is fetched by scrolling past it, not by
+                            // asking for it - so an attachment without a size
+                            // is not previewed. It stays a row that can be
+                            // tapped, and the tap is a decision the user made.
+                            && (model.media.size || 0) > 0
                             && (model.media.size || 0) <= 100 * 1024 * 1024)
 
                 readonly property bool hasPreview: sanePicture
@@ -1057,7 +1321,9 @@ Page {
 
                 width: timelineView.width
                 contentHeight: isBubble
-                               ? bubble.height + Theme.paddingMedium
+                               ? Math.max(bubble.height,
+                                          row.isOwn ? 0 : page.avatarSize)
+                                 + Theme.paddingMedium
                                : (model.kind === "date"
                                   ? dayLabel.height + Theme.paddingLarge
                                   : (isSystem
@@ -1165,8 +1431,9 @@ Page {
                         text: model.sendState === "failed"
                               ? qsTr("Discard") : qsTr("Delete")
                         visible: row.isOwn && !page.isLandscape
-                        onClicked: matrix.deleteMessage(model.eventId || "",
-                                                        model.txnId || "")
+                        onClicked: page.confirmDelete(model.eventId || "",
+                                                      model.txnId || "",
+                                                      model.sendState === "failed")
                     }
 
                     MenuItem {
@@ -1213,7 +1480,7 @@ Page {
                         leftMargin: Theme.horizontalPageMargin
                         top: parent.top
                     }
-                    size: Theme.iconSizeSmall
+                    size: page.avatarSize
                     source: model.senderAvatar || ""
                     name: model.senderName || model.sender || ""
 
@@ -1247,7 +1514,7 @@ Page {
                         // sibling's width here and its height back there is how
                         // this delegate earns a binding loop.
                         leftMargin: Theme.horizontalPageMargin
-                                    + Theme.iconSizeSmall + Theme.paddingSmall
+                                    + page.avatarSize + Theme.paddingSmall
                         top: parent.top
                     }
                     // Width follows the column, which sizes itself from the texts'
@@ -1283,7 +1550,7 @@ Page {
                         // gets correspondingly less.
                         property real maxTextWidth: timelineView.width * 0.82
                                                     - 2 * Theme.paddingMedium
-                                                    - (row.isOwn ? 0 : Theme.iconSizeSmall
+                                                    - (row.isOwn ? 0 : page.avatarSize
                                                                       + Theme.paddingSmall)
 
                         anchors {
@@ -1297,8 +1564,23 @@ Page {
                         // keeps the layout free of binding loops.
                         spacing: Theme.paddingSmall / 2
 
+                        // Which edge the children stand on. An own bubble is
+                        // anchored right and grows to the left, so everything in
+                        // it has to hang off the right edge - otherwise the read
+                        // marks unfolding under a three-letter answer widen the
+                        // bubble and drag the text and the reactions leftwards
+                        // with it. Somebody else's bubble grows to the right,
+                        // where left is the edge that stays put.
+                        //
+                        // This is x from the parent's width, not width from it:
+                        // the column still takes its width from the children,
+                        // and nothing here reads its own position back.
+                        readonly property bool holdRight: row.isOwn
+
                         Label {
                             id: senderLabel
+
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
 
                             width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
                             visible: !row.isOwn
@@ -1321,7 +1603,29 @@ Page {
                         // anchors), and the Item takes its size from the Row — parent reads
                         // child, child reads parent, never both directions in one subtree.
                         Item {
+                            id: replyBlock
+
+                            // The anchor belongs here, on the child of the
+                            // column - not on the Row inside, whose parent is
+                            // this Item and exactly as wide as itself, where it
+                            // was a no-op. Without it the quote was the one
+                            // thing in an own bubble that stayed on the left
+                            // when the bubble grew.
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+                            // Not for a row that belongs to a thread. The SDK
+                            // marks every threaded event as a reply to the one
+                            // before it in its thread, for clients that cannot
+                            // do threads, and only suppresses that inside a
+                            // thread-focused timeline. In the room it drew a
+                            // quote of the previous thread message under every
+                            // thread reply - a quote no other client shows, and
+                            // one fetch each to fill it in.
+                            // A real reply inside a thread loses its quote in
+                            // the room too - the SDK does not say which of the
+                            // two kinds this is, so the coarse rule is the only
+                            // one available. The thread view still shows it.
                             visible: !!model.replyTo
+                                     && (model.threadRoot || "").length === 0
                             width: replyQuote.width
                             height: replyQuote.height
 
@@ -1512,6 +1816,8 @@ Page {
                         Image {
                             id: attachment
 
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+
                             visible: row.hasPreview
                             width: row.hasPreview ? bubbleColumn.maxTextWidth : 0
                             height: visible
@@ -1576,7 +1882,11 @@ Page {
                             BusyIndicator {
                                 anchors.centerIn: parent
                                 size: BusyIndicatorSize.Medium
+                                // Not while waiting for something that is not
+                                // coming: a refused or failed download used to
+                                // leave this turning for the life of the page.
                                 running: attachment.visible && attachment.source == ""
+                                         && !page.failedMedia[model.id]
                             }
 
                             MouseArea {
@@ -1595,6 +1905,8 @@ Page {
                         // for a five second clip is more disruptive than useful.
                         Row {
                             id: audioRow
+
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
 
                             visible: row.isAudio
                             spacing: Theme.paddingMedium
@@ -1626,6 +1938,8 @@ Page {
 
                         Label {
                             id: bodyLabel
+
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
 
                             // Measured by the invisible twin below, never by
                             // the own implicit width: with wrap the implicit
@@ -1676,10 +1990,22 @@ Page {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                // Only for a video without a preview; with one the
-                                // picture itself is the target.
-                                enabled: row.isVideo && !row.hasPreview
-                                onClicked: page.openVideo(model.id, model.media)
+                                // Whatever carries a picture or a film and did
+                                // not get a preview. A video never gets one
+                                // without a thumbnail; a picture loses it when
+                                // the sender declared no size, and then this
+                                // line is the only way in - it used to be
+                                // nothing but text, and the attachment could
+                                // only be reached through "save" in the menu.
+                                enabled: (row.isVideo || row.isImage) && !row.hasPreview
+                                         && row.saneDimensions
+                                onClicked: {
+                                    if (row.isVideo) {
+                                        page.openVideo(model.id, model.media)
+                                        return
+                                    }
+                                    page.openImage(model.id, model.media)
+                                }
                                 onPressAndHold: row.openMenu()
                             }
 
@@ -1692,6 +2018,11 @@ Page {
                                 }
                                 if (model.kind === "redacted") {
                                     return qsTr("Message deleted")
+                                }
+                                if (row.isImage) {
+                                    // No preview, so the row says what it is
+                                    // and that it can be opened.
+                                    return "🖼 " + (model.body || qsTr("Picture"))
                                 }
                                 if (row.isFile) {
                                     return "📎 " + (model.body || "")
@@ -1707,6 +2038,7 @@ Page {
                         // that is not what it claims to be; grey is one it
                         // cannot check. Both are silent otherwise.
                         Label {
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
                             width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
                             visible: row.isBubble && !!model.shield
                             font.pixelSize: Theme.fontSizeExtraSmall
@@ -1720,6 +2052,8 @@ Page {
                         // reply shown inline names its thread. Both open it.
                         Label {
                             id: threadLabel
+
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
 
                             visible: row.isBubble
                                      && (model.threadCount > 0
@@ -1765,6 +2099,8 @@ Page {
                         Loader {
                             id: reactionBar
 
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+
                             active: row.hasReactions
                             visible: active
                             // No width or height here on purpose. A Loader
@@ -1791,9 +2127,35 @@ Page {
                                         // The delegate's own model is out of
                                         // scope inside the Loader; the row
                                         // hands the event id over instead.
-                                        onClicked: matrix.toggleReaction(row.rowEventId,
-                                                                         modelData.sendKey
-                                                                         || modelData.key)
+                                        onClicked: {
+                                            // Drawn is filtered and cut to 32
+                                            // characters, sent is the raw key.
+                                            // Where the two differ, the chip
+                                            // shows less than it would publish -
+                                            // a stranger can hide text behind
+                                            // zero-width characters and have it
+                                            // sent under this account's name,
+                                            // signed, from a single tap. Taking
+                                            // back one's own stays possible;
+                                            // joining a reaction one has not
+                                            // seen in full does not.
+                                            var sendKey = modelData.sendKey || modelData.key
+                                            if (!modelData.mine && sendKey !== modelData.key) {
+                                                page.showNotice(qsTr("This reaction hides text and was not sent"))
+                                                return
+                                            }
+                                            matrix.toggleReaction(row.rowEventId, sendKey)
+                                        }
+                                        // Held down, the chip says who set it -
+                                        // under the message, where the readers
+                                        // stand too. It takes the long press
+                                        // away from the message's own menu for
+                                        // the width of a chip; everywhere else
+                                        // on the bubble that menu is unchanged.
+                                        onPressAndHold: page.showReactors(
+                                                            row.rowEventId,
+                                                            modelData.sendKey || modelData.key,
+                                                            modelData.key)
 
                                         Rectangle {
                                             anchors.fill: parent
@@ -1818,7 +2180,14 @@ Page {
                                             EmojiItem {
                                                 anchors.verticalCenter: parent.verticalCenter
                                                 character: modelData.key
-                                                size: Theme.iconSizeExtraSmall
+                                                // Half again as large as the
+                                                // icon size it was drawn at:
+                                                // reported from a small screen,
+                                                // where an emoji at that size
+                                                // is a coloured speck and the
+                                                // difference between two of
+                                                // them cannot be made out.
+                                                size: Math.round(Theme.iconSizeExtraSmall * 1.5)
                                             }
 
                                             Label {
@@ -1856,8 +2225,14 @@ Page {
                                             attachment.width,
                                             audioRow.visible ? audioRow.width : 0,
                                             senderLabel.visible ? senderLabel.width : 0,
-                                            replyQuote.visible ? replyQuote.width : 0,
+                                            replyBlock.visible ? replyBlock.width : 0,
                                             threadLabel.visible ? threadLabel.width : 0,
+                                            // The names below can be the widest
+                                            // thing in the bubble; without them
+                                            // in this list the time would stand
+                                            // right of nothing.
+                                            readersLabel.visible ? readersLabel.width : 0,
+                                            reactionBar.visible ? reactionBar.width : 0,
                                             metaContent.width)
                             height: metaContent.height
 
@@ -1953,9 +2328,26 @@ Page {
                         // per row would push the conversation off the screen
                         // for an aside.
                         Label {
-                            visible: page.readersEventId === model.eventId
-                                     && page.readerNames.length > 0
-                            width: metaLine.width
+                            id: readersLabel
+
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+
+                            visible: page.namesEventId === model.eventId
+                                     && page.namesText.length > 0
+                            // Sixteen names do not belong in a column three
+                            // characters wide. The names widen the bubble to
+                            // the same limit every other text in it obeys, and
+                            // only what is longer than that wraps - an answer
+                            // of "Yes" used to hand them a bubble the width of
+                            // those three letters and let them run down it.
+                            //
+                            // Measured by the twin below, never by the own
+                            // implicit width: with wrap that follows the
+                            // laid-out width in this Qt, and reading it back is
+                            // the binding loop this delegate has paid for
+                            // already. Same rule as the message body.
+                            width: Math.min(readersMeasure.implicitWidth,
+                                            bubbleColumn.maxTextWidth)
                             // Left, unlike the time line above it: this runs
                             // over several lines, and a wrapped block with a
                             // ragged left edge is read line by line instead of
@@ -1966,7 +2358,20 @@ Page {
                             font.pixelSize: Theme.fontSizeTiny
                             color: Theme.secondaryColor
                             textFormat: Text.PlainText
-                            text: page.readerNames
+                            // Only the row the names belong to carries them.
+                            // The string is the page's, so without this test
+                            // every row in the timeline would hold it and its
+                            // hidden twin would lay it out.
+                            text: readersLabel.visible ? page.namesText : ""
+
+                            Label {
+                                id: readersMeasure
+
+                                visible: false
+                                textFormat: Text.PlainText
+                                font.pixelSize: readersLabel.font.pixelSize
+                                text: readersLabel.text
+                            }
                         }
                     }
                 }
@@ -2076,7 +2481,34 @@ Page {
             // addition, it is a load error that kills the page.
             onContentHeightChanged: {
                 page.fillScreen()
-                if (page.followTail) {
+                // A jump that is still looking for its row outranks the tail:
+                // the rows of the very pagination it asked for keep growing
+                // the content, and every one of those would drag the view back
+                // to the end under it.
+                if (page.followTail && page.jumpTargetId.length === 0) {
+                    tailTimer.restart()
+                }
+            }
+
+            // The viewport's own height changes under the list: the keyboard
+            // takes the lower half of the screen, the pinned banner appears,
+            // the composer grows with what is being typed. Qt keeps the
+            // content's *top* where it is, so everything the eye was on slides
+            // down out of sight - which is how "the message list does not move
+            // when the keyboard opens, only the text field does" was reported.
+            // Shrinking, the content is pushed down by exactly what was lost:
+            // the bottom edge, and with it the newest message, stays where it
+            // stood. Growing, whoever was following the tail is put back at the
+            // end, because a view scrolled past its content is a page of empty
+            // space that only a flick corrects.
+            onHeightChanged: {
+                var lost = page.lastTimelineHeight - height
+                page.lastTimelineHeight = height
+                if (lost > 0) {
+                    contentY = Math.min(contentY + lost,
+                                        originY + Math.max(0, contentHeight - height))
+                } else if (lost < 0 && page.followTail
+                           && page.jumpTargetId.length === 0) {
                     tailTimer.restart()
                 }
             }
@@ -2145,7 +2577,18 @@ Page {
             id: tailTimer
 
             interval: 1
-            onTriggered: timelineView.positionViewAtEnd()
+            onTriggered: {
+                // Never against a hand on the list. Reaching the top asks for
+                // older messages, they arrive as rows, and the row count is
+                // what tells the tail to follow - so the conversation jumped
+                // to its end in the middle of the swipe that fetched them.
+                // The flag only says where the view belongs when nobody is
+                // moving it; `moving` covers the drag and the flick after it.
+                if (timelineView.moving || timelineView.dragging) {
+                    return
+                }
+                timelineView.positionViewAtEnd()
+            }
         }
 
         // Composer, or the invitation prompt when the room has not been joined.
@@ -2245,39 +2688,6 @@ Page {
                     width: parent.width
                     height: Math.max(Theme.itemSizeMedium, messageField.height + Theme.paddingMedium)
 
-                    // Whether what is typed here will be encrypted, said where
-                    // it is being typed. The header states it in words; this
-                    // is the reminder one does not have to look up for.
-                    //
-                    // In front of the text rather than behind it: a watermark
-                    // under the writing is read as part of the writing, and at
-                    // this weight it disappeared under the first line anyway.
-                    // It stands on the field's own line, at the size of the
-                    // text beside it.
-                    LockIcon {
-                        id: lockMark
-
-                        anchors {
-                            left: attachButton.visible ? attachButton.right
-                                                       : parent.left
-                            // Pulled back into the clip's own box. A button
-                            // carries air around its glyph so a finger has
-                            // something to land on; a mark that cannot be
-                            // pressed has no business paying for it, and the
-                            // measured gap was fifty pixels of nothing.
-                            leftMargin: -Theme.paddingLarge
-                            bottom: messageField.bottom
-                            bottomMargin: Theme.paddingMedium
-                        }
-                        size: Math.round(Theme.fontSizeLarge * 1.4)
-                        locked: page.encrypted
-                        color: Theme.primaryColor
-                        // Faint to the point of being a texture: it is there
-                        // for the glance that looks for it, not for the eye
-                        // that is reading.
-                        opacity: 0.07
-                    }
-
                     IconButton {
                         id: attachButton
 
@@ -2301,7 +2711,14 @@ Page {
                         id: messageField
 
                         anchors {
-                            left: lockMark.right
+                            // Straight after the paper clip, and where that is
+                            // hidden (while editing) at the page margin. The
+                            // lock that used to stand in this gap says its
+                            // piece at the top of the room now.
+                            left: attachButton.visible ? attachButton.right
+                                                       : parent.left
+                            leftMargin: attachButton.visible
+                                        ? 0 : Theme.horizontalPageMargin
                             right: emojiButton.left
                             verticalCenter: parent.verticalCenter
                         }
@@ -2475,6 +2892,22 @@ Page {
                     replyTo: page.replyingEventId,
                     replySender: page.replyingTo,
                     replyBody: page.replyingBody,
+                    // Handed back here rather than sent from the dialog: the
+                    // warning about unverified recipients lives on this page,
+                    // and it was the one thing an attachment went past. The
+                    // word "hi" was held and the photograph was not.
+                    send: function (path, mimeType, caption, replyTo) {
+                        page.pendingAction = {
+                            "kind": "sendMedia",
+                            "path": path,
+                            "mimeType": mimeType,
+                            "caption": caption,
+                            "replyTo": replyTo
+                        }
+                    },
+                    // Only reached where this page does not take the send over
+                    // itself; kept so the dialog still works for any other
+                    // caller.
                     afterSend: function () {
                         page.clearReplyState()
                         page.followTail = true
@@ -2489,6 +2922,11 @@ Page {
             // rather than waiting for it forever.
             if (++tries > 25) {
                 tries = 0
+                // Stopped, not just reset: without this "give up" meant asking
+                // the stack to pop every second and a half for as long as the
+                // page lived.
+                stop()
+                page.pendingAttachment = null
                 pageStack.pop(page)
             }
         }
@@ -2521,20 +2959,55 @@ Page {
         doSubmit()
     }
 
+    // The keyboard after a message has gone out. Asked for, and it is what the
+    // big messengers do: what one wants to see once the message is away is the
+    // conversation, not the field one has just emptied. The setting keeps it up
+    // for whoever writes several in a row.
+    function afterSend() {
+        page.followTail = true
+        if (settings.hideKeyboardOnSend) {
+            messageField.focus = false
+        }
+    }
+
     function doSubmit() {
         if (page.editingEventId.length > 0) {
             matrix.editMessage(page.editingEventId, messageField.text)
+            // cancelEdit drops the focus by itself - an edit that is done is
+            // done, whatever the setting says.
             page.cancelEdit()
             return
         }
         if (page.replyingEventId.length > 0) {
             matrix.replyToMessage(page.replyingEventId, messageField.text)
             page.cancelReply()
-            page.followTail = true
+            page.afterSend()
             return
         }
         matrix.sendMessage(messageField.text)
         messageField.text = ""
+        page.afterSend()
+    }
+
+    /// An attachment, through the same gate a typed message goes through.
+    ///
+    /// What follows a send happens here, after the send: called off at the
+    /// warning, the reply this attachment was an answer to is still there, and
+    /// the conversation has not been scrolled anywhere.
+    function submitMedia(action) {
+        var pending = pendingUnverified()
+        if (pending.length > 0) {
+            var dialog = pageStack.push(Qt.resolvedUrl("UnverifiedRecipientsDialog.qml"),
+                                        { users: pending })
+            dialog.accepted.connect(function() { page.sendMediaNow(action) })
+            return
+        }
+        page.sendMediaNow(action)
+    }
+
+    function sendMediaNow(action) {
+        matrix.sendMedia(action.path, action.mimeType, action.caption, action.replyTo)
+        page.clearReplyState()
         page.followTail = true
     }
 
@@ -2641,20 +3114,50 @@ Page {
 
     // Which message's readers are unfolded, and their names as one line. Only
     // ever one at a time: the names are an aside, not a second conversation.
-    property string readersEventId: ""
-    property string readerNames: ""
+    // Names under a message, unfolded on demand: who has read up to here (the
+    // eye), or who set one reaction (a chip held down). One line and one state
+    // for both - a second line would mean a second label in every row of the
+    // conversation, and the rows are what this page pays for.
+    property string namesEventId: ""
+    /// Which reaction the names belong to; empty when they are the readers.
+    property string namesKey: ""
+    /// What stands in front of them - the reaction itself, so the line says
+    /// what it is a list of without a word.
+    property string namesPrefix: ""
+    property string namesText: ""
 
-    /// Long press on the "read by" line. Asks the core for the names - the
-    /// rows carry only the count - and folds them away again on a second press.
+    function clearNames() {
+        page.namesEventId = ""
+        page.namesKey = ""
+        page.namesPrefix = ""
+        page.namesText = ""
+    }
+
+    /// Tap on the "read by" mark. Asks the core for the names - the rows carry
+    /// only the count - and folds them away again on a second tap.
     function showReaders(eventId) {
-        if (page.readersEventId === eventId) {
-            page.readersEventId = ""
-            page.readerNames = ""
+        if (page.namesEventId === eventId && page.namesKey.length === 0) {
+            page.clearNames()
             return
         }
-        page.readersEventId = eventId
-        page.readerNames = ""
+        page.clearNames()
+        page.namesEventId = eventId
         matrix.loadReaders(eventId)
+    }
+
+    /// Press and hold on a reaction: who set it. A tap keeps doing what a chip
+    /// is for, which is adding or taking back one's own. The key that goes to
+    /// the core is the one the row sends with, not the one it draws.
+    function showReactors(eventId, sendKey, shownKey) {
+        if (page.namesEventId === eventId && page.namesKey === sendKey) {
+            page.clearNames()
+            return
+        }
+        page.clearNames()
+        page.namesEventId = eventId
+        page.namesKey = sendKey
+        page.namesPrefix = shownKey + " "
+        matrix.loadReactors(eventId, sendKey)
     }
 
     Connections {
@@ -2679,14 +3182,32 @@ Page {
     Connections {
         target: matrix
         onReadersReady: {
-            if (eventId !== page.readersEventId) {
+            if (eventId !== page.namesEventId || page.namesKey.length > 0) {
                 return
             }
             var names = []
             for (var i = 0; i < readers.length; i++) {
                 names.push(readers[i].name)
             }
-            page.readerNames = names.join(", ")
+            page.namesText = names.join(", ")
+        }
+
+        onReactorsReady: {
+            if (eventId !== page.namesEventId || key !== page.namesKey) {
+                return
+            }
+            var who = []
+            for (var i = 0; i < reactors.length; i++) {
+                who.push(reactors[i].name)
+            }
+            // Nobody to name: fold the line away again instead of leaving the
+            // reaction standing on its own, which reads as a line that failed
+            // to load rather than as an answer.
+            if (who.length === 0) {
+                page.clearNames()
+                return
+            }
+            page.namesText = page.namesPrefix + who.join(", ")
         }
     }
 
@@ -2866,9 +3387,18 @@ Page {
         messageField.focus = false
     }
 
-    // Said out loud when a jump gives up. Silence was the old behaviour and it
-    // is indistinguishable from a tap that never registered — the user tries
-    // again instead of learning that the message is beyond reach.
+    // What the notice below is currently saying.
+    property string noticeText: ""
+
+    /// A short word over the conversation. Used where a tap does nothing on
+    /// purpose: silence is indistinguishable from a tap that never registered,
+    /// and the user tries again instead of learning why.
+    function showNotice(text) {
+        page.noticeText = text
+        jumpNoticeTimer.restart()
+    }
+
+    // Said out loud when a jump gives up.
     Rectangle {
         id: jumpNotice
 
@@ -2889,7 +3419,7 @@ Page {
             anchors.centerIn: parent
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.primaryColor
-            text: qsTr("That message is not in the loaded history")
+            text: page.noticeText
         }
 
         Behavior on opacity { FadeAnimation { } }

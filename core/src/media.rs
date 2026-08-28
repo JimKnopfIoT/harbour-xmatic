@@ -40,6 +40,58 @@ pub const MAX_AVATAR_BYTES: u64 = 10 * 1024 * 1024;
 /// what the event declares, and what the download actually weighed.
 const MAX_MEDIA_BYTES: u64 = 100 * 1024 * 1024;
 
+/// How much of the device the downloaded media may occupy before the oldest of
+/// them are dropped.
+///
+/// Every picture in every room that was scrolled past used to stay for good:
+/// there was no age, no budget and no eviction anywhere in this file, and the
+/// only way out was the button on the privacy page. On a phone that is the
+/// disk, and it is the *decrypted* content of encrypted rooms. Dropping a file
+/// costs a re-download, which is why the budget is generous.
+const MAX_CACHE_BYTES: u64 = 256 * 1024 * 1024;
+
+/// Downloads between two sweeps. The sweep reads the directory, so it is not
+/// free, and the budget is large enough that a handful of files cannot cross
+/// it on their own.
+const SWEEP_EVERY: usize = 16;
+
+static SINCE_SWEEP: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+
+/// Drops the oldest files until the directory is back inside its budget.
+///
+/// Oldest by modification time, which for this directory is the time the file
+/// was downloaded. Everything here can be fetched again; nothing here is the
+/// only copy of anything - what the user asked to keep was copied out to their
+/// own folders at the moment they asked.
+fn sweep_cache(directory: &std::path::Path) {
+    let Ok(entries) = std::fs::read_dir(directory) else {
+        return;
+    };
+    let mut files: Vec<(std::time::SystemTime, u64, std::path::PathBuf)> = Vec::new();
+    let mut total: u64 = 0;
+    for entry in entries.flatten() {
+        let Ok(data) = entry.metadata() else { continue };
+        if !data.is_file() {
+            continue;
+        }
+        let age = data.modified().unwrap_or(std::time::UNIX_EPOCH);
+        total = total.saturating_add(data.len());
+        files.push((age, data.len(), entry.path()));
+    }
+    if total <= MAX_CACHE_BYTES {
+        return;
+    }
+    files.sort_by_key(|(age, _, _)| *age);
+    for (_, size, path) in files {
+        if total <= MAX_CACHE_BYTES {
+            break;
+        }
+        if std::fs::remove_file(&path).is_ok() {
+            total = total.saturating_sub(size);
+        }
+    }
+}
+
 /// How big a file is, without opening it.
 pub fn file_size(path: &str) -> Result<u64, String> {
     std::fs::metadata(path)
@@ -156,6 +208,15 @@ pub async fn fetch(
         let _ = std::fs::set_permissions(&partial, std::fs::Permissions::from_mode(0o600));
     }
     std::fs::rename(&partial, &path).map_err(|error| format!("could not store media: {error}"))?;
+
+    // Every so often, and only after the file this call was asked for is safely
+    // in place: the sweep may drop something, and it must never be the one the
+    // caller is about to open.
+    if SINCE_SWEEP.fetch_add(1, std::sync::atomic::Ordering::Relaxed) % SWEEP_EVERY == 0 {
+        if let Some(directory) = path.parent() {
+            sweep_cache(directory);
+        }
+    }
 
     Ok(path.to_string_lossy().into_owned())
 }

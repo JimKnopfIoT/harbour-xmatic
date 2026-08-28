@@ -248,6 +248,14 @@
         <source>Remove emoji pictures</source>
         <translation>Pašalinti jaustukų paveikslėlius</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Slėpti klaviatūrą po išsiuntimo</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Įjungta: klaviatūra užsiveria vos žinutei išėjus ir pokalbis vėl matomas visas. Išjungta: ji lieka atverta kitai žinutei.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -766,6 +774,10 @@
     <message>
         <source>Could not save</source>
         <translation>Nepavyko įrašyti</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Šio priedo nepavyko įkelti</translation>
     </message>
 </context>
 <context>
@@ -1318,14 +1330,6 @@
         <translation>Grupės kambaryje skambutį mato visi. Sąrašas to nepanaikina.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Išjungta: pasiūlymas su vaizdu priimamas kaip balso skambutis.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Išjungta palieka tavo skaitymą tau, abiem kryptimis.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Jie visada gali skambinti. Sąrašas lieka šiame įrenginyje.</translation>
     </message>
@@ -1374,10 +1378,6 @@
         <translation>Ištrinti mediją dabar</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Žinutės ir raktai saugomi užšifruoti. Atverti paveikslėliai, vaizdo įrašai ir dokumentai — ne: jie guli įrenginyje kaip ir galerijos, perskaitomi bet kam, kas jį turi.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Atsisiųstos medijos trynimas</translation>
     </message>
@@ -1416,6 +1416,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Įjungta: tas pats žmogus gali skambinti vėl tik po trumpos pertraukos. Tai atitolina ir antrą, tikrą bandymą.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Žinutės ir raktai saugomi užšifruoti.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Žinutės ir raktai šiame įrenginyje laikomi nešifruoti — šifravimo puslapis paaiškina kodėl ir ką galima padaryti.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Atverti paveikslėliai, vaizdo įrašai ir dokumentai — ne: jie guli įrenginyje kaip ir galerijos, perskaitomi bet kam, kas jį turi.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Išjungta: pasiūlymas su vaizdu atsiliepiamas kaip balso skambutis — tavo kamera lieka išjungta ir vaizdas nerodomas. Kita pusė vis tiek gali jį siųsti, o šis telefonas jį atmeta.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Išjungta: niekas nesužinos, kiek toli perskaitei. Ką perskaitė kiti, lemia nustatymas žemiau.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Sąrašas užšifruotas, o jo raktas neprieinamas. Jį vėl bus galima perskaityti atrakinus įrenginį ir iš naujo paleidus programą.</translation>
     </message>
 </context>
 <context>
@@ -1879,14 +1903,6 @@
         <translation>Pakvietimas</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Šifruotas ištisai</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Nešifruotas</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Šis kambarys buvo pakeistas</translation>
     </message>
@@ -2094,6 +2110,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Autentiškumas nepatvirtintas</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Atmetama</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Trinama</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Ši reakcija slepia tekstą ir nebuvo išsiųsta</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Paveikslėlis</translation>
     </message>
 </context>
 <context>
@@ -2441,6 +2473,10 @@
     <message>
         <source>Save</source>
         <translation>Įrašyti</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Šio priedo nepavyko įkelti</translation>
     </message>
 </context>
 <context>

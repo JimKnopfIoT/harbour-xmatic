@@ -70,9 +70,24 @@ bool encryptedDataPresent(const QString &dataDirectory)
     if (QFile::exists(dataDirectory + QStringLiteral("/store/.encrypted"))) {
         return true;
     }
+    // The lists that name people are encrypted under the same key and can be
+    // the only thing on disk: somebody who allowed a caller and then signed
+    // out has a `private.json` and neither a store marker nor a session. Minting
+    // a fresh key over it makes it unreadable for good, with no way back in the
+    // interface.
+    if (QFile::exists(dataDirectory + QStringLiteral("/private.json"))) {
+        return true;
+    }
     QFile session(dataDirectory + QStringLiteral("/session.json"));
-    if (!session.open(QIODevice::ReadOnly)) {
+    if (!session.exists()) {
         return false;
+    }
+    if (!session.open(QIODevice::ReadOnly)) {
+        // It is there and cannot be read. That is not "nothing is encrypted" -
+        // the answer to this question decides whether a new key is put over the
+        // old one, and a test whose wrong answer destroys data fails towards
+        // doing nothing. Same rule as `session::load` in the core.
+        return true;
     }
     // The envelope the core writes starts with its one top-level key; a
     // plaintext session starts with the homeserver. Only the shape is looked

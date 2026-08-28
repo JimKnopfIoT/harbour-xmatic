@@ -13,6 +13,22 @@ ListItem {
     // ordinary rooms.
     property string trailingText: ""
 
+    // When the room was last active. Silica's relative timepoint gives the
+    // time, the weekday or a day and month - and no year, which is right for
+    // this week and wrong for a conversation that stopped in 2025: it reads as
+    // if it had happened this year. Anything outside the current year is
+    // therefore written out in full.
+    readonly property string activityText: {
+        if (!(model.timestamp > 0)) {
+            return ""
+        }
+        var when = new Date(model.timestamp)
+        return Format.formatDate(when,
+                                 when.getFullYear() === new Date().getFullYear()
+                                 ? Formatter.TimepointRelative
+                                 : Formatter.DateMedium)
+    }
+
     contentHeight: Theme.itemSizeMedium
 
     Avatar {
@@ -136,9 +152,7 @@ ListItem {
                      ? qsTr("Replaced by a new room")
                      : (model.space
                         ? qsTr("Space")
-                        : (model.timestamp > 0
-                           ? Format.formatDate(new Date(model.timestamp), Formatter.TimepointRelative)
-                           : "")))
+                        : roomItem.activityText))
         }
     }
 

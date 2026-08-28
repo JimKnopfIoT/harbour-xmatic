@@ -33,6 +33,8 @@ class AppSettings : public QObject
                NOTIFY clickableLinksChanged)
     Q_PROPERTY(bool voiceMessages READ voiceMessages WRITE setVoiceMessages
                NOTIFY voiceMessagesChanged)
+    Q_PROPERTY(bool hideKeyboardOnSend READ hideKeyboardOnSend WRITE setHideKeyboardOnSend
+               NOTIFY hideKeyboardOnSendChanged)
     Q_PROPERTY(bool emojiImages READ emojiImages WRITE setEmojiImages
                NOTIFY emojiImagesChanged)
     Q_PROPERTY(QString directoryServer READ directoryServer WRITE setDirectoryServer
@@ -114,6 +116,13 @@ public:
     bool voiceMessages() const;
     void setVoiceMessages(bool enabled);
 
+    /// Whether the keyboard goes away once a message is sent, the way the
+    /// big messengers do it. On by default - asked for, and the conversation
+    /// is what one wants to see after sending, not the field one has just
+    /// emptied. Off keeps the keyboard up for the next message.
+    bool hideKeyboardOnSend() const;
+    void setHideKeyboardOnSend(bool enabled);
+
     /// Whether reactions are drawn from image files the user put there. Off by
     /// default, and deliberately so: the characters cost nothing and are always
     /// right, while an image is a file for a decoder to open - see
@@ -152,6 +161,7 @@ signals:
     void showReadStatusChanged();
     void clickableLinksChanged();
     void voiceMessagesChanged();
+    void hideKeyboardOnSendChanged();
     void emojiImagesChanged();
     void directoryServerChanged();
     void directoryServersChanged();

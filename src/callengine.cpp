@@ -849,9 +849,14 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
     const bool isVideo = name && g_str_has_prefix(name, "video/");
     gst_caps_unref(caps);
 
-    // A call answered without video decodes no video. The privacy switch shut
-    // the camera; it has to shut the decoder too, or the other side still
-    // chooses which of this phone's decoders runs on its bytes.
+    // Dropped here, which is later than it should be. The stream has already
+    // been through `decodebin` by the time this runs, so the other side still
+    // picks which of this phone's decoders sees their bytes - the switch shuts
+    // the camera and the picture, not the decoder. Shutting the decoder means
+    // refusing the video line in the SDP answer instead of discarding the pad
+    // afterwards, and an unlinked pad is exactly what can take the whole call
+    // down with it (see the notes further down), so it is not a change to make
+    // without a device to test it on.
     if (isVideo && !engine->m_withVideo) {
         return;
     }

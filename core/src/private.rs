@@ -42,9 +42,19 @@ fn invalid(error: String) -> std::io::Error {
 }
 
 pub fn load(path: &Path, key: Option<&StoreKey>) -> Loaded {
-    let Ok(raw) = std::fs::read(path) else {
-        // No file: nothing was ever written, and writing now is safe.
-        return Loaded::Empty;
+    let raw = match std::fs::read(path) {
+        Ok(raw) => raw,
+        // Only "there is no file" means nothing was ever written and writing
+        // now is safe. Every other reason - out of file descriptors, an I/O
+        // error, a sandbox that refused for a moment - means "I could not
+        // look", and answering that with `Empty` invites the next write to
+        // replace a file it never read. That is the caller's allow list gone,
+        // silently, in a state where nobody gets through any more. The
+        // doc comment on `Loaded` above says exactly this; the code did not.
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            return Loaded::Empty;
+        }
+        Err(_) => return Loaded::Unreadable,
     };
     let Some(key) = key else {
         return Loaded::Unreadable;

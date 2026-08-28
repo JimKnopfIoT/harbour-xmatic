@@ -210,6 +210,10 @@ pub enum Command {
         id: u64,
         #[serde(rename = "roomId")]
         room_id: String,
+        /// Whether the others may see it. Defaults to *not* telling them: a
+        /// privacy flag that goes missing must fall silent, not talk.
+        #[serde(default)]
+        receipt: bool,
     },
 
     /// Close the open timeline.
@@ -333,7 +337,8 @@ pub enum Command {
     #[serde(rename = "timeline.markRead")]
     TimelineMarkRead {
         id: u64,
-        #[serde(default = "default_true")]
+        /// Same rule as above: absent means "do not tell them".
+        #[serde(default)]
         receipt: bool,
     },
 
@@ -384,6 +389,17 @@ pub enum Command {
         id: u64,
         #[serde(rename = "eventId")]
         event_id: String,
+    },
+
+    /// Who reacted to the given event with the given key, with their names.
+    /// Asked only when a reaction is held down, for the same reason the readers
+    /// are: the rows carry a count, never a list of people.
+    #[serde(rename = "timeline.reactors")]
+    TimelineReactors {
+        id: u64,
+        #[serde(rename = "eventId")]
+        event_id: String,
+        key: String,
     },
 
     /// Report the state of key backup and recovery.
@@ -835,6 +851,7 @@ impl Command {
             | Command::TimelineSend { id, .. }
             | Command::TimelineMarkRead { id, .. }
             | Command::TimelineReaders { id, .. }
+            | Command::TimelineReactors { id, .. }
             | Command::RoomPermalink { id, .. }
             | Command::CallsSetPolicy { id, .. }
             | Command::PrivateGet { id }

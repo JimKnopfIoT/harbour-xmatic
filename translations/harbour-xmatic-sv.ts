@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Ta bort emoji-bilder</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Dölj tangentbordet efter sändning</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>På stängs tangentbordet så snart meddelandet är skickat och samtalet syns helt igen. Av stannar det kvar till nästa meddelande.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Kunde inte spara</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Den här bilagan kunde inte läsas in</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>I ett grupprum ser alla samtalet. Listan går inte före det.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Av: ett erbjudande med video besvaras som ett röstsamtal.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Av behåller din läsning för dig själv, åt båda hållen.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>De får alltid ringa. Listan stannar på den här enheten.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Radera media nu</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Meddelanden och nycklar lagras krypterade. Bilder, videor och dokument du öppnat gör det inte — de ligger på enheten som de i galleriet, läsbara för vem som helst som har den.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Radera hämtade media</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>På: samma person kan ringa igen först efter en kort paus. Det fördröjer också ett andra, äkta försök.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Meddelanden och nycklar lagras krypterade.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Meddelanden och nycklar ligger okrypterade på den här enheten — krypteringssidan säger varför och vad som går att göra.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Bilder, videor och dokument du öppnat gör det inte — de ligger på enheten som de i galleriet, läsbara för vem som helst som har den.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Av: ett erbjudande med video besvaras som ett röstsamtal — din kamera förblir stängd och ingen bild visas. Motparten kan ändå skicka en, som den här telefonen kastar.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Av: ingen får veta hur långt du har läst. Vad andra har läst styrs av inställningen nedan.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Listan är krypterad och nyckeln är inte tillgänglig. Den går att läsa igen när enheten har låsts upp och appen startats om.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Inbjudan</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Totalsträckskrypterat</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Inte krypterat</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Det här rummet har ersatts</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Äktheten är inte bekräftad</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Kastar</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Raderar</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Den här reaktionen döljer text och skickades inte</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Bild</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Spara</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Den här bilagan kunde inte läsas in</translation>
     </message>
 </context>
 <context>

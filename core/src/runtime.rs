@@ -126,6 +126,15 @@ struct State {
     /// before the client goes.
     observers: Mutex<Vec<tokio::task::JoinHandle<()>>>,
     verification: verification::Slot,
+    /// How many command tasks are in flight.
+    ///
+    /// Each of them runs on its own and most hold a clone of the client, so a
+    /// sign-out can delete the store directory while one is still inside a
+    /// request - the same fault the timeline handles were taught to avoid, on
+    /// the one path that has no handle to close. They cannot be aborted
+    /// (a command that is half-way through a send has to finish), so they are
+    /// counted, and the sign-out waits briefly for the count to fall.
+    running: std::sync::atomic::AtomicUsize,
     sink: Arc<Sink>,
 }
 
@@ -193,6 +202,22 @@ impl State {
 
     async fn thread(&self) -> Option<Arc<TimelineHandle>> {
         self.thread.lock().await.clone()
+    }
+
+    /// Waits, briefly, for the running commands to finish.
+    ///
+    /// Bounded on purpose: a command stuck in the SDK's retry budget must not
+    /// hold a sign-out for a quarter of an hour, and what one of them can still
+    /// do after this wait is a single request against a server that is about to
+    /// forget the session anyway. The sign-out itself is one of the commands,
+    /// hence the comparison against one rather than zero.
+    async fn drain_commands(&self, limit: std::time::Duration) {
+        let deadline = tokio::time::Instant::now() + limit;
+        while self.running.load(std::sync::atomic::Ordering::SeqCst) > 1
+            && tokio::time::Instant::now() < deadline
+        {
+            tokio::time::sleep(std::time::Duration::from_millis(20)).await;
+        }
     }
 
     /// Records what a part of the app needs subscribed and asks the sliding
@@ -272,6 +297,7 @@ pub fn spawn(
         directory: Mutex::new(None),
         observers: Mutex::new(Vec::new()),
         verification: Arc::new(Mutex::new(None)),
+        running: std::sync::atomic::AtomicUsize::new(0),
         sink,
     });
 
@@ -280,7 +306,12 @@ pub fn spawn(
             let state = state.clone();
             // Boxed: the combined future of all command arms is large, and
             // moving it to the heap keeps the task allocation small.
-            tokio::spawn(Box::pin(handle(state, command)));
+            state.running.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+            tokio::spawn(Box::pin(async move {
+                let counted = state.clone();
+                handle(state, command).await;
+                counted.running.fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+            }));
         }
     });
 
@@ -331,7 +362,9 @@ async fn handle(state: Arc<State>, command: Command) {
             receipts,
             ..
         } => open_timeline(&state, id, room_id, focus, receipts).await,
-        Command::RoomMarkRead { room_id, .. } => mark_room_read(&state, id, room_id).await,
+        Command::RoomMarkRead { room_id, receipt, .. } => {
+            mark_room_read(&state, id, room_id, receipt).await
+        }
         Command::RoomResolve { address, .. } => resolve_room(&state, id, address).await,
         Command::TimelineClose { .. } => close_timeline(&state, id).await,
         Command::TimelinePaginate { .. } => paginate_timeline(&state, id).await,
@@ -342,9 +375,17 @@ async fn handle(state: Arc<State>, command: Command) {
                 private::Loaded::Lists(lists) => {
                     state.sink.emit(reply_ok(id, json!({ "lists": lists, "readable": true })))
                 }
-                private::Loaded::Empty => state
-                    .sink
-                    .emit(reply_ok(id, json!({ "lists": {}, "readable": true }))),
+                // Empty *and* writable is only true where a key exists. Without
+                // one every write is refused, and answering "readable" sent the
+                // app into the legacy migration, whose failure asks again -
+                // measured as an endless command loop on a device whose secrets
+                // collection was still locked after a reboot.
+                private::Loaded::Empty => {
+                    let readable = state.store_key().is_some();
+                    state
+                        .sink
+                        .emit(reply_ok(id, json!({ "lists": {}, "readable": readable })))
+                }
                 // Locked or damaged: say so rather than answering "there is
                 // nothing", which is what a write would then destroy.
                 private::Loaded::Unreadable => state
@@ -418,6 +459,19 @@ async fn handle(state: Arc<State>, command: Command) {
                 Ok(readers) => state
                     .sink
                     .emit(reply_ok(id, json!({ "readers": readers }))),
+                Err(message) => state.sink.emit(reply_error(id, message)),
+            }
+        }
+        Command::TimelineReactors { event_id, key, .. } => {
+            let outcome = match state.timeline().await {
+                Some(handle) => handle.reactors(&event_id, &key).await,
+                None => Err("no timeline is open".to_owned()),
+            };
+            match outcome {
+                Ok(reactors) => state.sink.emit(reply_ok(
+                    id,
+                    json!({ "eventId": event_id, "key": key, "reactors": reactors }),
+                )),
                 Err(message) => state.sink.emit(reply_error(id, message)),
             }
         }
@@ -1200,7 +1254,7 @@ async fn open_timeline(
                 ));
                 return;
             }
-            previous.close();
+            previous.close().await;
         }
     }
 
@@ -1208,7 +1262,7 @@ async fn open_timeline(
     // a thread belongs to the view it was opened from, and a stream left
     // running would keep emitting `thread.diff` for the room just left.
     if let Some(handle) = state.thread.lock().await.take() {
-        handle.close();
+        handle.close().await;
     }
 
     // Sliding sync only sends a minimal timeline for rooms in the list — one
@@ -1259,12 +1313,12 @@ async fn resolve_room(state: &Arc<State>, id: u64, address: String) {
 
 /// The chat list's "mark as read": no timeline is opened for it, so it cannot
 /// go through the open handle the way the room's own does.
-async fn mark_room_read(state: &Arc<State>, id: u64, room_id: String) {
+async fn mark_room_read(state: &Arc<State>, id: u64, room_id: String, receipt: bool) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
-    match roomlist::mark_read(&client, &room_id).await {
+    match roomlist::mark_read(&client, &room_id, receipt).await {
         Ok(marked) => state
             .sink
             .emit(reply_ok(id, json!({ "roomId": room_id, "marked": marked }))),
@@ -1274,11 +1328,11 @@ async fn mark_room_read(state: &Arc<State>, id: u64, room_id: String) {
 
 async fn close_timeline(state: &Arc<State>, id: u64) {
     if let Some(handle) = state.timeline.lock().await.take() {
-        handle.close();
+        handle.close().await;
     }
     // A thread never outlives its room's view.
     if let Some(handle) = state.thread.lock().await.take() {
-        handle.close();
+        handle.close().await;
     }
     state.sink.emit(reply_ok(id, json!({ "open": false })));
 }
@@ -1298,7 +1352,7 @@ async fn open_thread(
     let _opening = state.opening_thread.lock().await;
 
     if let Some(previous) = state.thread.lock().await.take() {
-        previous.close();
+        previous.close().await;
     }
 
     match timeline::open_thread(&client, &room_id, &root_event_id, &token, state.sink.clone()).await
@@ -1322,7 +1376,7 @@ async fn close_thread(state: &Arc<State>, id: u64, root_event_id: String) {
         .unwrap_or(false);
     if matches {
         if let Some(handle) = open.take() {
-            handle.close();
+            handle.close().await;
         }
     }
     drop(open);
@@ -1533,13 +1587,23 @@ async fn fetch_media(state: &Arc<State>, id: u64, source: Value, thumbnail: bool
 }
 
 async fn mark_read(state: &Arc<State>, id: u64, receipt: bool) {
-    let outcome = match state.timeline().await {
+    // The room goes back with the answer: a receipt does not reliably come
+    // back as a room-list diff, so the app clears the badge itself - and it
+    // may only do that for the room this actually marked.
+    let handle = state.timeline().await;
+    let room_id = handle
+        .as_ref()
+        .map(|handle| handle.room_id().to_owned())
+        .unwrap_or_default();
+    let outcome = match handle {
         Some(handle) => handle.mark_read(receipt).await,
         None => Err("no timeline is open".to_owned()),
     };
 
     match outcome {
-        Ok(()) => state.sink.emit(reply_ok(id, json!({ "read": true }))),
+        Ok(read) => state
+            .sink
+            .emit(reply_ok(id, json!({ "read": read, "roomId": room_id }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
@@ -2005,6 +2069,15 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
         }
     };
 
+    // Before the token is handed to the client, not after: the stored server
+    // string goes through discovery again on every start, and a `.well-known`
+    // that changed to http would put the access token in the clear from then
+    // on. The rule that guards the first sign-in has to guard every one after.
+    if let Err(message) = require_https(&client) {
+        state.sink.emit(reply_error(id, message));
+        return;
+    }
+
     if let Err(error) = client
         .restore_session_with(stored.into_auth_session(), RoomLoadSettings::default())
         .await
@@ -2075,6 +2148,26 @@ async fn prepare_fresh_login(state: &Arc<State>) -> Result<(), String> {
         .map_err(|error| format!("could not prepare storage: {error}"))
 }
 
+/// Refuses a homeserver that is not reached over https.
+///
+/// Asked of the client, not of what was typed: a homeserver may be found
+/// through `.well-known`, and that document is free to name an http URL.
+/// Without this the SDK notices the plain scheme itself and switches OAuth
+/// into its insecure mode - after which the client registration, the token
+/// exchange and every request carrying the token go over the wire in the
+/// clear. An access token opens the same account a password does.
+///
+/// One function rather than the same three lines at each entrance: the rule
+/// was written four times and still missed the two paths that matter most -
+/// restoring a stored session, which runs at every single start, and the
+/// registration page, which sends the user off to create an account.
+fn require_https(client: &Client) -> Result<(), String> {
+    if client.homeserver().scheme() == "https" {
+        return Ok(());
+    }
+    Err("this homeserver is not reached over https".to_owned())
+}
+
 async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
     if let Err(message) = prepare_fresh_login(state).await {
         state.sink.emit(reply_error(id, message));
@@ -2091,6 +2184,11 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
         }
     };
 
+    if let Err(message) = require_https(&client) {
+        state.sink.emit(reply_error(id, message));
+        return;
+    }
+
     // Which sign-in does this server speak? OAuth discovery decides. The
     // password form is only ever offered on the affirmative `NotSupported`
     // answer — a transport error, a timeout or a broken authentication
@@ -2101,13 +2199,8 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
             let flows = login::login_flows(&client).await;
             match flows.as_ref().map(|list| list.iter().any(|flow| flow == "password")) {
                 Ok(true) => {
-                    if client.homeserver().scheme() != "https" {
-                        state.sink.emit(reply_error(
-                            id,
-                            "the password sign-in needs an https homeserver",
-                        ));
-                        return;
-                    }
+                    // No scheme check here: this function refused anything but
+                    // https before it got this far.
                     // Kept so `login.password` reuses this client — and with
                     // it this discovery result — instead of trusting the UI.
                     *state.client.lock().await = Some(client);
@@ -2245,11 +2338,8 @@ async fn password_login(
         }
     };
 
-    if client.homeserver().scheme() != "https" {
-        state.sink.emit(reply_error(
-            id,
-            "the password sign-in needs an https homeserver",
-        ));
+    if let Err(message) = require_https(&client) {
+        state.sink.emit(reply_error(id, message));
         return;
     }
 
@@ -2310,6 +2400,11 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
             return;
         }
     };
+
+    if let Err(message) = require_https(&client) {
+        state.sink.emit(reply_error(id, message));
+        return;
+    }
 
     let pending = match login::start_device(&client).await {
         Ok(pending) => pending,
@@ -2459,6 +2554,11 @@ async fn registration_url(state: &Arc<State>, id: u64, homeserver: String) {
         }
     };
 
+    if let Err(message) = require_https(&client) {
+        state.sink.emit(reply_error(id, message));
+        return;
+    }
+
     match login::registration_url(&client).await {
         Ok(url) => state.sink.emit(reply_ok(id, json!({ "url": url }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
@@ -2501,11 +2601,14 @@ async fn stop_observers(state: &Arc<State>) {
 async fn session_expired(state: &Arc<State>) {
     stop_observers(state).await;
     if let Some(handle) = state.timeline.lock().await.take() {
-        handle.close();
+        handle.close().await;
     }
     if let Some(handle) = state.thread.lock().await.take() {
-        handle.close();
+        handle.close().await;
     }
+    // Same as in `logout`: the verification request holds a client.
+    verification::cancel_active(&state.verification).await;
+    drop(state.verification.lock().await.take());
     if let Some(handle) = state.directory.lock().await.take() {
         handle.task.abort();
     }
@@ -2527,14 +2630,21 @@ async fn logout(state: &Arc<State>, id: u64) {
     // client - the store is deleted at the end of this function.
     stop_observers(state).await;
     if let Some(handle) = state.timeline.lock().await.take() {
-        handle.close();
+        handle.close().await;
     }
     // A thread handle holds the timeline, and through it the client and the
     // open SQLite pool — `reset_store` below would delete the directory from
     // under it.
     if let Some(handle) = state.thread.lock().await.take() {
-        handle.close();
+        handle.close().await;
     }
+    // And a verification in progress holds one too: the SDK's request type
+    // carries a `Client` of its own, so a sign-out during a verification left
+    // the store open under the very `reset_store` at the end of this function -
+    // the fault that cost this project its users' device identities once
+    // already, in a different module.
+    verification::cancel_active(&state.verification).await;
+    drop(state.verification.lock().await.take());
     if let Some(handle) = state.directory.lock().await.take() {
         handle.task.abort();
     }
@@ -2547,12 +2657,25 @@ async fn logout(state: &Arc<State>, id: u64) {
     if let Some(handle) = state.rooms.lock().await.take() {
         handle.stop().await;
     }
+    // The handles above are ours to close; the command tasks are not, so the
+    // sign-out gives them a moment to finish before the store goes. Bounded -
+    // see `drain_commands`.
+    state.drain_commands(std::time::Duration::from_secs(2)).await;
     let client = state.client.lock().await.take();
     if let Some(client) = client {
-        // Best effort: even if the server cannot be reached, the local session
-        // must go away. The generic call dispatches to whichever auth API owns
-        // the session — OAuth or, since the password login, the Matrix one.
-        let _ = client.logout().await;
+        // Best effort, and bounded. Even if the server cannot be reached, the
+        // local session must go away - but the SDK's retry policy has no
+        // attempt limit and a fifteen-minute budget, so an unanswered logout
+        // used to hold up everything below it: the session file, the crypto
+        // store and, because the app clears the media on the state change that
+        // comes last, every downloaded picture. Signing out in a dead spot
+        // looked like nothing happening, and the next start restored the
+        // session. Ten seconds is a server saying yes; anything longer is the
+        // local wipe's business alone.
+        let _ = tokio::time::timeout(std::time::Duration::from_secs(10), client.logout()).await;
+        // Explicit: `reset_store` below must not run while a client still has
+        // the store directory open.
+        drop(client);
     }
     session::forget(&state.paths.session_file);
     // The lists that name people belong to the account that is leaving.

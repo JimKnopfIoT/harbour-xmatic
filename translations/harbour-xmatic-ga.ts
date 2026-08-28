@@ -248,6 +248,14 @@
         <source>Remove emoji pictures</source>
         <translation>Bain na híomhánna emoji</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Folaigh an méarchlár tar éis seolta</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Ann, dúnann an méarchlár chomh luath is a imíonn an teachtaireacht agus feictear an comhrá ina iomláine arís. As, fanann sé oscailte don chéad cheann eile.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -766,6 +774,10 @@
     <message>
         <source>Could not save</source>
         <translation>Níorbh fhéidir é a shábháil</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Níorbh fhéidir an ceangaltán seo a lódáil</translation>
     </message>
 </context>
 <context>
@@ -1318,14 +1330,6 @@
         <translation>I seomra grúpa feiceann gach duine an glao. Ní sháraíonn an liosta é sin.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>As: freagraítear tairiscint le físeán mar ghlao gutha.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>As, coinníonn tú do chuid léitheoireachta duit féin, sa dá threo.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Is féidir leo glaoch i gcónaí. Fanann an liosta ar an ngléas seo.</translation>
     </message>
@@ -1374,10 +1378,6 @@
         <translation>Scrios na meáin anois</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Stóráiltear teachtaireachtaí agus eochracha criptithe. Ní hamhlaidh do phictiúir, físeáin agus cáipéisí a d&apos;oscail tú — luíonn siad ar an ngléas mar a dhéanann cinn an ghailearaí, inléite ag duine ar bith a bhfuil sé aige.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Scrios na meáin íoslódáilte</translation>
     </message>
@@ -1416,6 +1416,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Air: ní féidir leis an duine céanna glaoch arís ach tar éis sos gearr. Cuireann sé moill freisin ar dhara hiarracht dháiríre.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Stóráiltear teachtaireachtaí agus eochracha criptithe.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Tá na teachtaireachtaí agus na heochracha ar an ngléas seo gan chriptiú — míníonn leathanach an chriptithe cén fáth agus cad is féidir a dhéanamh.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Ní hamhlaidh do phictiúir, físeáin agus cáipéisí a d&apos;oscail tú — luíonn siad ar an ngléas mar a dhéanann cinn an ghailearaí, inléite ag duine ar bith a bhfuil sé aige.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>As: freagraítear tairiscint le físeán mar ghlao gutha — fanann do cheamara dúnta agus ní thaispeántar aon phictiúr. Féadfaidh an taobh eile ceann a sheoladh mar sin féin, agus caitheann an fón seo uaidh é.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>As: ní bhfaigheann duine ar bith amach cá fhad a léigh tú. Is é an socrú thíos a shocraíonn cad a léigh daoine eile.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Tá an liosta criptithe agus níl a eochair ar fáil. Beidh sé inléite arís tar éis an gléas a dhíghlasáil agus an feidhmchlár a atosú.</translation>
     </message>
 </context>
 <context>
@@ -1879,14 +1903,6 @@
         <translation>Cuireadh</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Criptithe ceann go ceann</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Gan criptiú</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Cuireadh seomra nua in áit an tseomra seo</translation>
     </message>
@@ -2094,6 +2110,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Barántúlacht gan deimhniú</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Á chaitheamh</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Á scriosadh</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Cuireann an freagairt seo téacs i bhfolach agus níor seoladh í</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Pictiúr</translation>
     </message>
 </context>
 <context>
@@ -2441,6 +2473,10 @@
     <message>
         <source>Save</source>
         <translation>Sábháil</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Níorbh fhéidir an ceangaltán seo a lódáil</translation>
     </message>
 </context>
 <context>

@@ -11,12 +11,22 @@ Page {
 
     property string mediaKey
     property string source: ""
+    /// The fetch came back as a failure - refused for its size, dropped, or
+    /// given up on. Without it the indicator turns for as long as the page
+    /// lives over something that is not coming.
+    property bool mediaFailed: false
     property string fileName: ""
 
     allowedOrientations: Orientation.All
 
     Connections {
         target: matrix
+        onMediaFailed: {
+            if (key === page.mediaKey) {
+                page.mediaFailed = true
+            }
+        }
+
         onMediaReady: {
             if (key === page.mediaKey) {
                 page.source = "file://" + path
@@ -59,7 +69,21 @@ Page {
     BusyIndicator {
         anchors.centerIn: parent
         size: BusyIndicatorSize.Large
-        running: page.source.length === 0
+        running: page.source.length === 0 && !page.mediaFailed
+    }
+
+    // A state with no action and no explanation is a dead end; this one at
+    // least says what happened. The attachment is still in the room, so trying
+    // again is leaving and coming back.
+    Label {
+        anchors.centerIn: parent
+        width: parent.width - 4 * Theme.horizontalPageMargin
+        visible: page.mediaFailed
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.Wrap
+        color: Theme.secondaryColor
+        textFormat: Text.PlainText
+        text: qsTr("This attachment could not be loaded")
     }
 
     PullDownMenu {

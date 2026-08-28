@@ -242,6 +242,14 @@ Page {
             }
 
             TextSwitch {
+                text: qsTr("Hide the keyboard after sending")
+                description: qsTr("On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.")
+                checked: settings.hideKeyboardOnSend
+                automaticCheck: false
+                onClicked: settings.hideKeyboardOnSend = !settings.hideKeyboardOnSend
+            }
+
+            TextSwitch {
                 text: qsTr("Reactions as pictures")
                 // The path and the warning belong where the choice is made,
                 // not in a manual nobody has.

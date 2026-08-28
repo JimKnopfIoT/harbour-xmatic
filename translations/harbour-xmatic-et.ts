@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Eemalda emoji-pildid</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Peida klaviatuur pärast saatmist</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Sees sulgub klaviatuur kohe, kui sõnum on läinud, ja vestlus on jälle täies ulatuses näha. Väljas jääb see järgmise sõnumi jaoks avatuks.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Salvestamine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Seda manust ei õnnestunud laadida</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>Rühmaruumis näevad kõnet kõik. Loend seda ei tühista.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Väljas: videopakkumisele vastatakse häälkõnena.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Väljas hoiab lugemise sinu teada, mõlemas suunas.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Nad tohivad alati helistada. Loend jääb sellesse seadmesse.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Kustuta meedia kohe</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Sõnumid ja võtmed on salvestatud krüptitult. Avatud pildid, videod ja dokumendid mitte — need on seadmes nagu galerii omad, loetavad igaühele, kelle käes seade on.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Allalaaditud meedia kustutamine</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Sees: sama inimene saab uuesti helistada alles pärast lühikest pausi. See lükkab edasi ka teise, tõelise katse.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Sõnumid ja võtmed on salvestatud krüptitult.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Sõnumid ja võtmed on selles seadmes krüptimata — krüptimislehekülg ütleb, miks ja mida teha saab.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Avatud pildid, videod ja dokumendid mitte — need on seadmes nagu galerii omad, loetavad igaühele, kelle käes seade on.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Väljas: videoga pakkumisele vastatakse häälkõnena — su kaamera jääb kinni ja pilti ei näidata. Teine pool võib siiski pildi saata, mille see telefon kõrvale heidab.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Väljas: keegi ei saa teada, kui kaugele sa oled lugenud. Mida teised on lugenud, otsustab allpool olev säte.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Loend on krüptitud ja selle võti pole saadaval. Seda saab uuesti lugeda, kui seade on lukust avatud ja rakendus taaskäivitatud.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Kutse</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Otspunktkrüptitud</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Krüptimata</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>See tuba on asendatud</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Ehtsus kinnitamata</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Loobun</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Kustutan</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>See reaktsioon peidab teksti ja seda ei saadetud</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Pilt</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Salvesta</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Seda manust ei õnnestunud laadida</translation>
     </message>
 </context>
 <context>

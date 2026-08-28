@@ -35,6 +35,17 @@ Item {
         // in this row is drawn, which is why nothing else showed it.
         renderTarget: Canvas.Image
 
+        // A canvas draws nothing while it is invisible, and the delegates of
+        // a conversation are recycled: one that comes back showing a mark it
+        // did not show before had an empty canvas over it - the number stood
+        // there without its picture. Asking for the paint when it becomes
+        // visible costs nothing where it was visible all along.
+        onVisibleChanged: {
+            if (visible) {
+                requestPaint()
+            }
+        }
+
         Connections {
             target: Qt.application
             onActiveChanged: {

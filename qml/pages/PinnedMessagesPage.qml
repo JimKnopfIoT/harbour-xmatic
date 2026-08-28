@@ -59,10 +59,17 @@ Page {
                     color: pinnedItem.highlighted ? Theme.secondaryHighlightColor
                                                   : Theme.secondaryColor
                     textFormat: Text.PlainText
+                    // The same rule the chat list follows: the relative
+                    // timepoint carries no year, and a pin is exactly the kind
+                    // of message that is years old.
                     text: (model.senderName || model.sender || "")
                           + (model.timestamp > 0
-                             ? " · " + Format.formatDate(new Date(model.timestamp),
-                                                         Formatter.TimepointRelative)
+                             ? " · " + Format.formatDate(
+                                   new Date(model.timestamp),
+                                   new Date(model.timestamp).getFullYear()
+                                   === new Date().getFullYear()
+                                   ? Formatter.TimepointRelative
+                                   : Formatter.DateMedium)
                              : "")
                 }
 
@@ -78,13 +85,27 @@ Page {
             menu: ContextMenu {
                 MenuItem {
                     text: qsTr("Show in conversation")
-                    // Back into the normal room window underneath, which then
-                    // scrolls to the message — no separate view, and the way
-                    // back here stays the banner.
+                    // Back into the normal room window, which then scrolls to
+                    // the message - no separate view, and the way back here
+                    // stays the banner.
+                    //
+                    // The conversation is not necessarily the page underneath:
+                    // this list is reached from the banner in the room *and*
+                    // from the room's info page, and in the second case the
+                    // page below is that info page. Asking it to jump did
+                    // nothing at all, and what the user saw was the room at its
+                    // end - which is where it opens when there is nothing
+                    // unread. So the room is looked for in the stack and the
+                    // stack is unwound back to it; a jump behind a page that is
+                    // still on top would be lost the same way.
                     onClicked: {
-                        var room = pageStack.previousPage(page)
+                        var room = pageStack.find(function(candidate) {
+                            return candidate.objectName === "roomPage"
+                        })
                         if (room && room.jumpToPinned) {
                             room.jumpToPinned(model.eventId)
+                            pageStack.pop(room)
+                            return
                         }
                         pageStack.pop()
                     }

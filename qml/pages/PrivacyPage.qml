@@ -9,6 +9,13 @@ Page {
 
     allowedOrientations: Orientation.All
 
+    // Anything left over from another page is not this page's news.
+    onStatusChanged: {
+        if (status === PageStatus.Activating) {
+            matrix.clearLastError()
+        }
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height
@@ -28,6 +35,26 @@ Page {
 
             PageHeader {
                 title: qsTr("Privacy")
+            }
+
+            // What went wrong, where it went wrong. Writing the lists that name
+            // people is refused while the store key is unavailable - after a
+            // reboot, until the device is unlocked once - and this page had
+            // nowhere to say so: an address was entered, nothing appeared, and
+            // with "only these may call" that means nobody gets through while
+            // the user believes the opposite.
+            //
+            // The field is the app's only one, so it is emptied when this page
+            // opens (below): what stands here afterwards was caused here.
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.errorColor
+                textFormat: Text.PlainText
+                visible: matrix.lastError.length > 0
+                text: matrix.lastError
             }
 
             ComboBox {
@@ -67,7 +94,13 @@ Page {
 
             TextSwitch {
                 text: qsTr("Video calls")
-                description: qsTr("Off, an offer with video is answered as a voice call.")
+                // Says what the switch does and stops there. It shuts this
+                // phone's camera and shows no picture; it does not stop the
+                // other side from sending one, and their stream is still
+                // decoded before it is thrown away. Refusing the video line in
+                // the SDP answer is the fix for that, and it belongs with the
+                // other call work.
+                description: qsTr("Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.")
                 checked: settings.videoCalls
                 automaticCheck: false
                 onClicked: settings.videoCalls = !settings.videoCalls
@@ -87,7 +120,11 @@ Page {
 
             TextSwitch {
                 text: qsTr("Send read receipts")
-                description: qsTr("Off keeps your reading to yourself, in both directions.")
+                // Says the one direction this switch actually governs. The
+                // other one - whether *their* reading is shown here - is the
+                // switch below, and claiming both made this one look broken to
+                // anybody who left that one on.
+                description: qsTr("Off, nobody is told how far you have read. What others read is the setting below.")
                 checked: settings.sendReadReceipts
                 automaticCheck: false
                 onClicked: settings.sendReadReceipts = !settings.sendReadReceipts
@@ -131,7 +168,17 @@ Page {
                 // the second one is bold because it is the one that costs
                 // something when it is overlooked.
                 textFormat: Text.StyledText
-                text: qsTr("Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.")
+                // Asked, not claimed. The local storage is encrypted where a
+                // key could be minted and unencrypted where it could not, and
+                // this page used to state the good case unconditionally - on a
+                // device without secrets storage the privacy page said the
+                // opposite of the truth, in the very paragraph that is otherwise
+                // scrupulous about what is *not* protected.
+                text: (matrix.storageStatus.encrypted
+                       ? qsTr("Messages and keys are stored encrypted.")
+                       : qsTr("Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it."))
+                      + " "
+                      + qsTr("Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.")
                       + " <b>" + qsTr("By default they are deleted when you sign out, so save what you want to keep.") + "</b> "
                       + qsTr("\"Never\" keeps them for good - convenient, and not recommended.")
             }
@@ -215,8 +262,15 @@ Page {
                 visible: matrix.allowedCallers.length === 0
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryHighlightColor
-                text: qsTr("Nobody yet.")
+                color: matrix.privateListsReadable ? Theme.secondaryHighlightColor
+                                                   : Theme.errorColor
+                // An empty list and a list that could not be read look the same
+                // from here, and they are opposites: with "only these may call"
+                // the second means everybody is refused while the page claims
+                // there is nobody to refuse.
+                text: matrix.privateListsReadable
+                      ? qsTr("Nobody yet.")
+                      : qsTr("The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.")
             }
 
             Repeater {

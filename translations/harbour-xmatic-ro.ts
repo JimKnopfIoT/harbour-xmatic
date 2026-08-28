@@ -248,6 +248,14 @@
         <source>Remove emoji pictures</source>
         <translation>Elimină imaginile emoji</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Ascunde tastatura după trimitere</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Activat, tastatura se închide de îndată ce mesajul a plecat și conversația se vede din nou întreagă. Dezactivat, rămâne deschisă pentru următorul mesaj.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -766,6 +774,10 @@
     <message>
         <source>Could not save</source>
         <translation>Nu s-a putut salva</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Acest atașament nu a putut fi încărcat</translation>
     </message>
 </context>
 <context>
@@ -1318,14 +1330,6 @@
         <translation>Într-o cameră de grup apelul îl văd toți. Lista nu anulează asta.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Oprit: o ofertă cu video este acceptată ca apel vocal.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Oprit îți păstrează cititul pentru tine, în ambele sensuri.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Pot suna oricând. Lista rămâne pe acest dispozitiv.</translation>
     </message>
@@ -1374,10 +1378,6 @@
         <translation>Șterge media acum</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Mesajele și cheile sunt păstrate criptat. Imaginile, filmele și documentele pe care le-ai deschis nu — stau pe dispozitiv ca cele din galerie, lizibile pentru oricine îl are.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Ștergerea media descărcate</translation>
     </message>
@@ -1416,6 +1416,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Pornit: aceeași persoană poate suna din nou doar după o scurtă pauză. Întârzie și o a doua încercare autentică.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Mesajele și cheile sunt păstrate criptat.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Mesajele și cheile stau necriptate pe acest dispozitiv — pagina de criptare spune de ce și ce se poate face.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Imaginile, filmele și documentele pe care le-ai deschis nu — stau pe dispozitiv ca cele din galerie, lizibile pentru oricine îl are.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Dezactivat: o ofertă cu video este preluată ca apel vocal — camera ta rămâne închisă și nu se afișează nicio imagine. Cealaltă parte poate trimite totuși una, pe care acest telefon o aruncă.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Dezactivat: nimeni nu află până unde ai citit. Ce au citit ceilalți ține de setarea de mai jos.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Lista este criptată, iar cheia ei nu este disponibilă. Va putea fi citită din nou după deblocarea dispozitivului și repornirea aplicației.</translation>
     </message>
 </context>
 <context>
@@ -1879,14 +1903,6 @@
         <translation>Invitație</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Criptată cap-coadă</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Necriptată</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Această cameră a fost înlocuită</translation>
     </message>
@@ -2094,6 +2110,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Autenticitate neconfirmată</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Se renunță</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Se șterge</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Această reacție ascunde text și nu a fost trimisă</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Imagine</translation>
     </message>
 </context>
 <context>
@@ -2441,6 +2473,10 @@
     <message>
         <source>Save</source>
         <translation>Salvează</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Acest atașament nu a putut fi încărcat</translation>
     </message>
 </context>
 <context>
