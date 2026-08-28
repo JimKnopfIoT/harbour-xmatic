@@ -882,6 +882,20 @@ Page {
                 left: parent.left
                 right: parent.right
                 top: parent.top
+                // Out from under the camera cutout. This strip is the room's
+                // own, not a `PageHeader` - which is exactly why it needed
+                // saying: Silica gives its own header the same margin by the
+                // same rule (`_minimumTopMargin` in PageHeader.qml), so every
+                // page that uses one is already clear and this one was not.
+                // Measured on a device with a wide cutout: the notch edge cut
+                // through the room name at the height of a lower-case letter.
+                //
+                // Portrait only, as Silica has it: in landscape the cutout is
+                // at the side and a top margin would be a gap for nothing. On
+                // a device without one the rectangle is empty and this is zero,
+                // so it costs the other phones nothing.
+                topMargin: page.orientation === Orientation.Portrait
+                           ? Screen.topCutout.height : 0
             }
             height: headerColumn.height + 2 * Theme.paddingMedium
             // The room's name leads to what the room is — including, for an
