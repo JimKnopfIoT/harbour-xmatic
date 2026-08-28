@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QGuiApplication>
+#include <QImageReader>
 #include <QJSValue>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -1579,6 +1580,34 @@ void MatrixBridge::deleteMessage(const QString &eventId, const QString &txnId)
     send(QStringLiteral("timeline.redact"), arguments);
 }
 
+/// The picture's own measurements, for the event that carries it.
+///
+/// Read from the header, not by decoding: `QImageReader::size()` parses as far
+/// as the dimensions and stops. Anything that is not a picture, or a picture
+/// whose header this Qt cannot read, leaves both at zero and the core then
+/// writes no measurements at all.
+///
+/// This exists because the SDK writes an empty `info` when it is given none,
+/// so every picture this app sent carried neither size nor width nor height -
+/// which other clients need to lay out the row, and which this app's own
+/// preview rule read as "nothing declared".
+static void insertDimensions(QJsonObject &arguments, const QString &localPath,
+                             const QString &mimeType)
+{
+    if (!mimeType.startsWith(QLatin1String("image/"))) {
+        return;
+    }
+
+    QImageReader reader(localPath);
+    const QSize size = reader.size();
+    if (!size.isValid() || size.isEmpty()) {
+        return;
+    }
+
+    arguments.insert(QStringLiteral("width"), double(size.width()));
+    arguments.insert(QStringLiteral("height"), double(size.height()));
+}
+
 void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                              const QString &caption, const QString &replyTo,
                              qint64 voiceDuration)
@@ -1598,6 +1627,7 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                      mimeType.isEmpty() ? QStringLiteral("application/octet-stream") : mimeType);
     arguments.insert(QStringLiteral("caption"), caption);
     arguments.insert(QStringLiteral("replyTo"), replyTo);
+    insertDimensions(arguments, local, mimeType);
     if (voiceDuration > 0) {
         arguments.insert(QStringLiteral("voice"), true);
         arguments.insert(QStringLiteral("duration"), double(voiceDuration));
@@ -1629,6 +1659,7 @@ void MatrixBridge::forwardToRoom(const QString &roomId,
     arguments.insert(QStringLiteral("body"), body);
     arguments.insert(QStringLiteral("path"), local);
     arguments.insert(QStringLiteral("mimeType"), mimeType);
+    insertDimensions(arguments, local, mimeType);
     send(QStringLiteral("room.forward"), arguments);
 }
 
