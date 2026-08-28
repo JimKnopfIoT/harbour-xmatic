@@ -10,7 +10,10 @@ use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 use matrix_sdk::{
-    attachment::{AttachmentConfig as RoomAttachmentConfig, AttachmentInfo, BaseAudioInfo},
+    attachment::{
+        AttachmentConfig as RoomAttachmentConfig, AttachmentInfo, BaseAudioInfo, BaseFileInfo,
+        BaseImageInfo, BaseVideoInfo,
+    },
     media::{MediaFormat, MediaRequestParameters, MediaThumbnailSettings, UniqueKey},
     ruma::{
         api::client::media::get_media_config,
@@ -221,6 +224,68 @@ pub async fn fetch(
     Ok(path.to_string_lossy().into_owned())
 }
 
+/// What this app can say about a file it is about to send.
+///
+/// The SDK writes an empty `info` when it is handed none: no size, no width,
+/// no height. Every receiving client then has to guess how much room to leave
+/// for the picture and how big it is before fetching it - this one included,
+/// which is how 0.25.0 came to show its own pictures as an attachment line.
+/// The figures are cheap and every client writes them, so they are written
+/// here, at the one place both send paths pass through.
+///
+/// The variant has to match the media type. The SDK maps an `Image` info onto
+/// a video event as an empty `VideoInfo`, so a mismatch is not an error, it is
+/// silence.
+fn attachment_info(
+    mime: &mime::Mime,
+    size: usize,
+    dimensions: Option<(u64, u64)>,
+    voice: Option<u64>,
+) -> AttachmentInfo {
+    let size = UInt::try_from(size as u64).ok();
+    let (width, height) = match dimensions {
+        Some((width, height)) => (UInt::try_from(width).ok(), UInt::try_from(height).ok()),
+        None => (None, None),
+    };
+
+    // A recording of one's own is a voice message, not an audio file. The
+    // difference is one marker (MSC3245) plus the length, and it is not
+    // cosmetic: clients draw a voice message differently, and the bridges to
+    // other networks make a native voice note only out of a message that
+    // carries it - one of them refuses everything else as an unsupported
+    // format, which reads as if the recording were broken.
+    if let Some(duration) = voice {
+        return AttachmentInfo::Voice(BaseAudioInfo {
+            duration: Some(Duration::from_millis(duration)),
+            size,
+            waveform: None,
+        });
+    }
+
+    match mime.type_() {
+        mime::IMAGE => AttachmentInfo::Image(BaseImageInfo {
+            height,
+            width,
+            size,
+            blurhash: None,
+            is_animated: None,
+        }),
+        mime::VIDEO => AttachmentInfo::Video(BaseVideoInfo {
+            duration: None,
+            height,
+            width,
+            size,
+            blurhash: None,
+        }),
+        mime::AUDIO => AttachmentInfo::Audio(BaseAudioInfo {
+            duration: None,
+            size,
+            waveform: None,
+        }),
+        _ => AttachmentInfo::File(BaseFileInfo { size }),
+    }
+}
+
 /// Sends a file from disk to a room that is not the open one.
 ///
 /// Forwarding re-uploads: the picture was decrypted for display, and the
@@ -230,6 +295,7 @@ pub async fn forward_file(
     room_id: &str,
     path: &str,
     mime_type: &str,
+    dimensions: Option<(u64, u64)>,
 ) -> Result<(), String> {
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let room = client
@@ -248,7 +314,10 @@ pub async fn forward_file(
         .map(|name| name.to_string_lossy().into_owned())
         .unwrap_or_else(|| "attachment".to_owned());
 
-    room.send_attachment(filename, &mime, data, RoomAttachmentConfig::default())
+    let config = RoomAttachmentConfig::default()
+        .info(attachment_info(&mime, data.len(), dimensions, None));
+
+    room.send_attachment(filename, &mime, data, config)
         .await
         .map(|_| ())
         .map_err(|error| format!("could not forward the attachment: {error}"))
@@ -288,6 +357,7 @@ pub async fn send(
     caption: &str,
     reply_to: &str,
     voice: Option<u64>,
+    dimensions: Option<(u64, u64)>,
 ) -> Result<(), String> {
     let mime: mime::Mime = mime_type
         .parse()
@@ -323,20 +393,7 @@ pub async fn send(
         .unwrap_or_else(|| "attachment".to_owned());
 
     let mut config = AttachmentConfig::default();
-
-    // A recording of one's own is a voice message, not an audio file. The
-    // difference is one marker (MSC3245) plus the length, and it is not
-    // cosmetic: clients draw a voice message differently, and the bridges to
-    // other networks make a native voice note only out of a message that
-    // carries it - one of them refuses everything else as an unsupported
-    // format, which reads as if the recording were broken.
-    if let Some(duration) = voice {
-        config.info = Some(AttachmentInfo::Voice(BaseAudioInfo {
-            duration: Some(Duration::from_millis(duration)),
-            size: UInt::try_from(size as u64).ok(),
-            waveform: None,
-        }));
-    }
+    config.info = Some(attachment_info(&mime, size, dimensions, voice));
 
     let caption = caption.trim();
     if !caption.is_empty() {

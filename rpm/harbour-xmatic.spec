@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.25.1
+Version:    0.25.2
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -93,6 +93,17 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Aug 28 2026 harbour-xmatic contributors 0.25.2-1
+- Pictures show themselves again. 0.25.0 asked an attachment to declare its
+  size before a preview was drawn for it, and one that declared none stayed a
+  line with a small mark that had to be tapped. The app's own pictures declared
+  nothing at all: the library writes an empty description when it is handed
+  none, so everything sent from here travelled without size, width or height -
+  to every client, not only to this one. Both halves are fixed: the preview no
+  longer asks for a figure the sender is free to omit, and a picture sent from
+  here now carries its size and its measurements. The ceiling that protects the
+  decoder is unchanged; it weighs what actually arrived, which is the half that
+  never depended on the sender.
 * Fri Aug 28 2026 harbour-xmatic contributors 0.25.1-1
 - The room's name strip keeps out from under a camera cutout. On a phone with a
   wide one the notch cut through the room name at the height of a lower-case

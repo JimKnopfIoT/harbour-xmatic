@@ -1320,13 +1320,18 @@ Page {
                         || (saneDimensions
                             // The declared size, before anything is fetched:
                             // the ceiling in the core only sees bytes that are
-                            // already in memory. A message that declares no
-                            // size at all walks past that ceiling, and the
-                            // preview is fetched by scrolling past it, not by
-                            // asking for it - so an attachment without a size
-                            // is not previewed. It stays a row that can be
-                            // tapped, and the tap is a decision the user made.
-                            && (model.media.size || 0) > 0
+                            // already in memory.
+                            //
+                            // Nothing is required of that figure. 0.25.0 asked
+                            // for it to be there and dropped the preview where
+                            // it was not - which took every picture this app
+                            // sends itself, because the SDK writes an empty
+                            // `info` when it is handed none (fixed in the core
+                            // as well). A missing size is the common case, not
+                            // a suspicious one; what protects the decoder is
+                            // the second ceiling in `media::fetch`, which
+                            // weighs the bytes that actually arrived and does
+                            // not care what was declared.
                             && (model.media.size || 0) <= 100 * 1024 * 1024)
 
                 readonly property bool hasPreview: sanePicture

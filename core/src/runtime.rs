@@ -491,9 +491,14 @@ async fn handle(state: Arc<State>, command: Command) {
             reply_to,
             voice,
             duration,
+            width,
+            height,
             ..
         } => {
-            send_media(&state, id, path, mime_type, caption, reply_to, voice, duration).await
+            send_media(
+                &state, id, path, mime_type, caption, reply_to, voice, duration, width, height,
+            )
+            .await
         }
         Command::MediaFetch {
             source,
@@ -506,8 +511,10 @@ async fn handle(state: Arc<State>, command: Command) {
             body,
             path,
             mime_type,
+            width,
+            height,
             ..
-        } => forward(&state, id, room_id, body, path, mime_type).await,
+        } => forward(&state, id, room_id, body, path, mime_type, width, height).await,
         Command::RoomJoin { room_id, .. } => join_room(&state, id, room_id).await,
         Command::RoomFollowSuccessor { room_id, .. } => {
             follow_successor(&state, id, room_id).await
@@ -1513,6 +1520,18 @@ async fn redact_message(state: &Arc<State>, id: u64, event_id: String, txn_id: S
     }
 }
 
+/// Zero means "not measured": the bridge reads a picture's size before it
+/// hands the file over and leaves both at zero for everything else. A
+/// half-known pair is no measurement either - a client that is told a width
+/// and no height lays out worse than one that is told nothing.
+fn dimensions(width: u64, height: u64) -> Option<(u64, u64)> {
+    if width > 0 && height > 0 {
+        Some((width, height))
+    } else {
+        None
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
 async fn send_media(
     state: &Arc<State>,
@@ -1523,6 +1542,8 @@ async fn send_media(
     reply_to: String,
     voice: bool,
     duration: u64,
+    width: u64,
+    height: u64,
 ) {
     // Cloned out of the guard: the attachment upload takes a while and must
     // not hold the lock.
@@ -1534,7 +1555,18 @@ async fn send_media(
     };
 
     let voice = if voice { Some(duration) } else { None };
-    match media::send(&timeline, &path, &mime_type, &caption, &reply_to, voice).await {
+    let dimensions = dimensions(width, height);
+    match media::send(
+        &timeline,
+        &path,
+        &mime_type,
+        &caption,
+        &reply_to,
+        voice,
+        dimensions,
+    )
+    .await
+    {
         Ok(()) => state.sink.emit(reply_ok(id, json!({ "sent": true }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
@@ -1549,6 +1581,8 @@ async fn forward(
     body: String,
     path: String,
     mime_type: String,
+    width: u64,
+    height: u64,
 ) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
@@ -1561,7 +1595,7 @@ async fn forward(
         } else {
             mime_type
         };
-        media::forward_file(&client, &room_id, &path, &mime).await
+        media::forward_file(&client, &room_id, &path, &mime, dimensions(width, height)).await
     } else if !body.trim().is_empty() {
         media::forward_text(&client, &room_id, body).await
     } else {

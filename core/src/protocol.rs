@@ -299,6 +299,14 @@ pub enum Command {
         /// message whose length is unknown is treated as a plain audio file.
         #[serde(default)]
         duration: u64,
+        /// The picture's own measurements, read by the bridge before the file
+        /// is handed over; zero where it is not a picture or could not be
+        /// read. They go into the event so the receiving client knows how much
+        /// room to leave before a byte is fetched.
+        #[serde(default)]
+        width: u64,
+        #[serde(default)]
+        height: u64,
     },
 
     /// Send a copy of something to another room.
@@ -313,6 +321,12 @@ pub enum Command {
         path: String,
         #[serde(rename = "mimeType", default)]
         mime_type: String,
+        /// As in `timeline.sendMedia`: a forward re-uploads, so it writes the
+        /// same description of the file that a first send does.
+        #[serde(default)]
+        width: u64,
+        #[serde(default)]
+        height: u64,
     },
 
     /// Download an attachment and report where it was stored.
