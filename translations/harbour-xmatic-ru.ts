@@ -248,6 +248,14 @@
         <source>Remove emoji pictures</source>
         <translation>Удалить картинки эмодзи</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Скрывать клавиатуру после отправки</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Включено: клавиатура закрывается, как только сообщение ушло, и разговор снова виден целиком. Выключено: она остаётся открытой для следующего сообщения.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -766,6 +774,10 @@
     <message>
         <source>Could not save</source>
         <translation>Не удалось сохранить</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Это вложение не удалось загрузить</translation>
     </message>
 </context>
 <context>
@@ -1318,14 +1330,6 @@
         <translation>В групповой комнате звонок видят все. Список это не отменяет.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Выключено: предложение с видео принимается как голосовой звонок.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Выключено оставляет твоё чтение при тебе — в обе стороны.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Им звонить можно всегда. Список остаётся на этом устройстве.</translation>
     </message>
@@ -1374,10 +1378,6 @@
         <translation>Удалить медиа сейчас</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Сообщения и ключи хранятся зашифрованными. Открытые картинки, видео и документы — нет: они лежат на устройстве так же, как снимки в галерее, и доступны любому, у кого оно в руках.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Удаление скачанных медиа</translation>
     </message>
@@ -1416,6 +1416,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Включено: тот же человек может позвонить снова только после короткой паузы. Это задерживает и вторую, настоящую попытку.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Сообщения и ключи хранятся зашифрованными.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Сообщения и ключи лежат на этом устройстве незашифрованными — страница шифрования объясняет, почему и что можно сделать.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Открытые картинки, видео и документы — нет: они лежат на устройстве так же, как снимки в галерее, и доступны любому, у кого оно в руках.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Выключено: предложение с видео принимается как голосовой вызов — твоя камера остаётся закрытой и картинка не показывается. Другая сторона всё равно может её слать, и этот телефон её отбрасывает.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Выключено: никто не узнает, до какого места ты дочитал. Что прочли другие, определяет настройка ниже.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Список зашифрован, и его ключ недоступен. Он снова станет читаемым после разблокировки устройства и перезапуска приложения.</translation>
     </message>
 </context>
 <context>
@@ -1879,14 +1903,6 @@
         <translation>Приглашение</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Со сквозным шифрованием</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Без шифрования</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Эта комната была заменена</translation>
     </message>
@@ -2094,6 +2110,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Подлинность не подтверждена</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Отклонение</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Удаление</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Эта реакция скрывает текст и не была отправлена</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Изображение</translation>
     </message>
 </context>
 <context>
@@ -2441,6 +2473,10 @@
     <message>
         <source>Save</source>
         <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Это вложение не удалось загрузить</translation>
     </message>
 </context>
 <context>

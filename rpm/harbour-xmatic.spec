@@ -4,9 +4,9 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.24.0
+Version:    0.25.0
 Release:    1
-License:    ASL 2.0
+License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
 Source0:    %{name}-%{version}.tar.bz2
 Vendor:     harbour-xmatic contributors
@@ -15,6 +15,11 @@ Packager:   harbour-xmatic contributors
 Requires:   sailfishsilica-qt5
 # Round profile pictures are masked with QtGraphicalEffects (Avatar.qml).
 Requires:   qt5-qtgraphicaleffects
+# Both are QML imports, which RPM does not resolve on its own: Sailfish.Share
+# in the root document (without it the app does not start at all) and
+# Sailfish.Pickers wherever a file or a folder is chosen.
+Requires:   sailfishshare-components
+Requires:   sailfish-components-pickers-qt5
 Requires:   sailfish-content-graphics
 Requires:   nemo-qml-plugin-notifications-qt5
 # Calls load these at run time rather than linking them, so they have to be
@@ -74,6 +79,10 @@ strip %{buildroot}%{_bindir}/%{name}
 %files
 %defattr(-,root,root,-)
 %license LICENSE
+# The static Rust library carries three hundred and sixty-two crates into the
+# binary, ten of them weak-copyleft. A binary that carries them carries their
+# notices.
+%license THIRD-PARTY.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
@@ -84,6 +93,72 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Aug 27 2026 harbour-xmatic contributors 0.25.0-1
+- The padlock at the top of a room carries no colour any more. Red and green
+  over the room's name shouted louder than everything else in the strip; the
+  shape says it instead - closed, or open with its body struck through - drawn
+  in the theme's ink at a third of its strength and with the same hairline as
+  the face beside the message field.
+- The read mark stood on the wrong message. It was kept per row number, and a
+  page of older messages arriving at the top shifts every row under it: the eye
+  then sat on the neighbour's message, and it appeared and vanished as the
+  conversation went on. It is kept per message now, recounted after the current
+  model signal rather than inside it, and it never falls - a receipt is taken
+  off its old row before it is put on the new one, and for that moment nobody
+  had read anything.
+- "Show in conversation" works from the room's info page too. It asked the page
+  directly underneath to jump, which is the conversation only when the pinned
+  list was opened from the banner; opened from the info page nothing happened at
+  all and the room stood at its end.
+- Who set a reaction: hold it down. The names appear under the message, where
+  the readers appear, with the reaction in front of them. A tap still adds or
+  takes back one's own.
+- Deleting a message takes a countdown, like leaving a room - it was one tap at
+  the bottom of a menu, and it cannot be undone.
+- The read mark can be reached. It sits on the bottom line of a bubble and its
+  tap area reaches below that, which is where the message field begins: on the
+  last message it could not be hit, and the names it unfolds appeared behind the
+  field. The conversation now keeps that much air under its last row.
+- A list of names no longer runs down a column three characters wide. It widens
+  the bubble to the left instead, up to the width every other text in it obeys -
+  and the message, its reactions and its time stay where they were while it
+  does.
+- The conversation no longer jumps to its end under a moving finger. Reaching
+  the top asks for older messages, they arrive as rows, and the row count is
+  what tells the view to follow the newest - so the swipe that fetched them
+  threw the view to the bottom.
+* Thu Aug 27 2026 harbour-xmatic contributors 0.24.1-1
+- Whether a room is encrypted is a padlock at the top, in front of its name:
+  closed and green, or open and red with its body struck through. It says what
+  the line under the name used to spell out and what the mark behind the message
+  field was too faint to say.
+- The sender's picture in a conversation is as large as a room's picture in the
+  chat list. It was half that, and the two are looked at one after the other.
+- A reaction is drawn half again as large. On a small screen one emoji at the
+  old size could not be told from another.
+- The keyboard goes away once a message is sent, and the conversation is back in
+  full height. "Hide the keyboard after sending" under Appearance keeps it up
+  for whoever writes several in a row.
+- Text typed and not sent survives the way back to the chat list and a trip
+  through another room. It is kept for as long as the app runs and never written
+  to disk.
+- "Show in conversation" from the pinned messages goes to the pinned message
+  instead of showing it for a blink and then dropping to the end of the room.
+  The jump was resolved against the pinned view of the timeline, which the way
+  back replaced a moment later.
+- A thread opens at its newest post and stays there. Counting rows was not
+  enough: a row is laid out before its text has wrapped, and the header settles
+  later still.
+- The conversation keeps its place when the keyboard opens. The list loses
+  height at its bottom edge, and a Flickable holds its top - so the newest
+  message slid out of sight behind the keyboard while the message field rose.
+- A room is marked read while it is being read, not only when it is left, and
+  its badge in the chat list goes with it. Two halves: the check asked a flag
+  that a jump and the opening at the first unread message both switch off, and a
+  receipt does not reliably come back as a room-list diff.
+- The time of last activity in the chat list carries the year wherever it is not
+  the current one. A conversation that stopped in 2025 read as if it had been
+  this year.
 * Wed Aug 26 2026 harbour-xmatic contributors 0.24.0-1
 - A thread's replies stay in the thread instead of standing in the room a
   second time. The way in is the marker on the root, and it no longer depends

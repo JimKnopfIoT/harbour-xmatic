@@ -353,9 +353,20 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                 // invite's own `lifetime` is exactly that window; once the event
                 // is older than that, the other side has stopped ringing too, so
                 // drop it instead of surfacing a phantom incoming call.
+                // The two clocks are not the same clock: `now` is this device's,
+                // `sent` is the server's. A phone whose clock runs a couple of
+                // minutes fast would find every invite older than its lifetime
+                // - typically sixty seconds - and drop the lot, silently, with
+                // no log and nothing on screen. That is a phone that never
+                // rings and cannot say why. The tolerance is deliberately much
+                // larger than the lifetime it guards: a stale invite that gets
+                // through rings once against a caller who has already given up,
+                // which is a nuisance; a fast clock that eats every call is a
+                // broken feature.
+                const CLOCK_SKEW_MS: u64 = 5 * 60 * 1000;
                 let now = u64::from(MilliSecondsSinceUnixEpoch::now().get());
                 let sent = u64::from(ev.origin_server_ts.get());
-                if now.saturating_sub(sent) > u64::from(ev.content.lifetime) {
+                if now.saturating_sub(sent) > u64::from(ev.content.lifetime) + CLOCK_SKEW_MS {
                     return;
                 }
 

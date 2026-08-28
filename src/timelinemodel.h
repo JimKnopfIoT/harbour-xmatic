@@ -68,7 +68,7 @@ public:
     /// cache happens to hold.
     void setThreadRoots(const QHash<QString, int> &roots);
 
-private:
+private slots:
     /// How many other people have read each own message.
     ///
     /// A read receipt marks the newest event someone has read, and that is
@@ -80,8 +80,26 @@ private:
     /// people got at least that far.
     void updateReadCounts();
 
-    QVector<int> m_readCounts;
+private:
+    /// Asks for a recount after the current signal has been delivered.
+    ///
+    /// Never during one: the recount ends in a `dataChanged` of its own, and a
+    /// model that emits one signal while the view is still working through
+    /// another gets that second one dropped. The counts were then right and
+    /// the screen was not - the mark stood on the neighbour's message, one row
+    /// off, after every page of history that arrived at the top.
+    void scheduleReadCounts();
+
+    /// How many have read each own message, by event id.
+    ///
+    /// By id and not by row number: a page of older messages shifts every row
+    /// under the marks, and a number kept per row then belongs to somebody
+    /// else's message. The value never falls while a message is in the model -
+    /// a receipt is taken off its old row before it is put on the new one, and
+    /// for that moment nobody has read anything.
+    QHash<QString, int> m_readCounts;
     bool m_updatingReadCounts = false;
+    bool m_readCountsQueued = false;
     QHash<QString, int> m_threadRoots;
 };
 

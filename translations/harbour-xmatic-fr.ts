@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Supprimer les images d&apos;émoji</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Masquer le clavier après l&apos;envoi</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Activé, le clavier se ferme dès que le message est parti et la conversation reprend toute la place. Désactivé, il reste ouvert pour le suivant.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Échec de l&apos;enregistrement</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Cette pièce jointe n&apos;a pas pu être chargée</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>Dans un salon de groupe, tout le monde voit l&apos;appel. La liste ne l&apos;emporte pas.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Désactivé : une offre avec vidéo est acceptée comme appel vocal.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Désactivé garde ta lecture pour toi, dans les deux sens.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Ils peuvent toujours appeler. La liste reste sur cet appareil.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Supprimer les médias maintenant</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Les messages et les clés sont stockés chiffrés. Les images, vidéos et documents que tu as ouverts, non : ils se trouvent sur l&apos;appareil comme ceux de la galerie, lisibles par quiconque l&apos;a en main.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Supprimer les médias téléchargés</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Activé : la même personne ne peut rappeler qu&apos;après une courte pause. Cela retarde aussi une deuxième tentative sincère.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Les messages et les clés sont stockés chiffrés.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Les messages et les clés se trouvent en clair sur cet appareil — la page de chiffrement explique pourquoi et ce qu&apos;on peut y faire.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Les images, vidéos et documents que tu as ouverts, non : ils se trouvent sur l&apos;appareil comme ceux de la galerie, lisibles par quiconque l&apos;a en main.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Désactivé : une offre avec vidéo est acceptée comme appel vocal — ta caméra reste fermée et aucune image n&apos;est affichée. L&apos;autre côté peut quand même en envoyer une, que ce téléphone jette.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Désactivé : personne n&apos;apprend jusqu&apos;où tu as lu. Ce que les autres ont lu dépend du réglage ci-dessous.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>La liste est chiffrée et sa clé n&apos;est pas disponible. Elle sera lisible de nouveau une fois l&apos;appareil déverrouillé et l&apos;application redémarrée.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Invitation</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Chiffré de bout en bout</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Non chiffré</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Ce salon a été remplacé</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Authenticité non confirmée</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Abandon</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Suppression</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Cette réaction cache du texte et n&apos;a pas été envoyée</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Image</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Cette pièce jointe n&apos;a pas pu être chargée</translation>
     </message>
 </context>
 <context>

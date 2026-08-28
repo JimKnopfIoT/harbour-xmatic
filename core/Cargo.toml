@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.24.0"
+version = "0.25.0"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -27,6 +27,26 @@ matrix-sdk = { version = "=0.18.0", default-features = false, features = [
     "e2e-encryption",
     "sqlite",
     "bundled-sqlite",
+    # Two mechanisms in one feature: this device asking its *own* verified
+    # devices for a Megolm key it lacks, and answering such a request. Without
+    # it neither exists - the flags and even their setters sit behind this
+    # `cfg` in matrix-sdk-crypto, so it could not be turned on at run time
+    # either, and a message that arrived without its key had no second chance
+    # on a device whose owner also runs another one.
+    #
+    # The sharing half is narrower than its name: `should_share_key` gives a
+    # whole session only to an own *verified* device, re-shares to somebody
+    # else's device only from the index it was already given, and refuses
+    # anything it has no record of. Nobody receives what they never had.
+    #
+    # What it costs in metadata, because that is not nothing: the request is an
+    # unencrypted to-device event to all of this account's own devices, naming
+    # the room, the session and the asking device. The homeserver therefore
+    # learns "device D of U could not decrypt session S in room R at time T"
+    # whenever a message arrives without its key. It is sent only where at least
+    # one *other* own device is verified - a single-device account produces none
+    # of this - and duplicates are suppressed in the crypto store.
+    "automatic-room-key-forwarding",
 ] }
 matrix-sdk-ui = "=0.18.0"
 # Only for `UtdCause`: the timeline hands the reason a message could not be
@@ -42,7 +62,10 @@ matrix-sdk-base = { version = "=0.18.0", default-features = false, features = [
 oauth2 = { version = "=5.0.0", default-features = false }
 oauth2-reqwest = "=0.1.0-alpha.3"
 reqwest = { version = "0.13", default-features = false, features = ["rustls", "json"] }
-tokio = { version = "1", features = ["rt-multi-thread", "time"] }
+# `sync` is used directly (mpsc, Mutex, RwLock, Semaphore) and was only
+# compiling because the SDK happens to switch it on. A dependency on another
+# crate's feature choice is not a dependency.
+tokio = { version = "1", features = ["rt-multi-thread", "time", "sync"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 futures-util = "0.3"

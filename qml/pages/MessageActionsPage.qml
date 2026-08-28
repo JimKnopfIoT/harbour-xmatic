@@ -45,7 +45,12 @@ Page {
             "kind": kind,
             "eventId": page.eventId,
             "senderName": page.senderName,
-            "body": page.body
+            "body": page.body,
+            // Deleting hands back for a different reason than reply and edit:
+            // its countdown has to run where it can be seen and called off,
+            // and this page is gone a moment later.
+            "txnId": page.txnId,
+            "unsent": page.unsent
         }
         pageStack.pop()
     }
@@ -222,10 +227,7 @@ Page {
             ListItem {
                 contentHeight: Theme.itemSizeSmall
                 visible: page.isOwn
-                onClicked: {
-                    matrix.deleteMessage(page.eventId, page.txnId)
-                    pageStack.pop()
-                }
+                onClicked: page.handBack("delete")
                 Label {
                     anchors {
                         left: parent.left

@@ -48,6 +48,13 @@ repository.
 * Threads: answer in one, or start one from any message; replies stay in the
   room's timeline as well
 * Pinned messages, own display name and avatar, profile pictures
+* Whether a room is encrypted is a padlock in front of its name: closed, or
+  open with its body struck through
+* Text typed and not sent stays in the room until it is; it is kept in memory
+  only and never written to disk
+* Who read a message, and who set a reaction — both asked for on demand rather
+  than carried by every row
+* Deleting a message takes a countdown, the way leaving a room does
 * A share target for the system's share dialog, running or not
 * Voice and video calls over WebRTC. The media is encrypted between the two
   devices either way; in an encrypted room the signalling is too, which is what

@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Remove emoji pictures</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Hide the keyboard after sending</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Could not save</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>This attachment could not be loaded</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>In a group room everybody sees the call. The list does not override this.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Off, an offer with video is answered as a voice call.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Off keeps your reading to yourself, in both directions.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>They may always call. The list stays on this device.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Delete media now</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Delete downloaded media</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Messages and keys are stored encrypted.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Off, nobody is told how far you have read. What others read is the setting below.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Invitation</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>End-to-end encrypted</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Not encrypted</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>This room has been replaced</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Authenticity not confirmed</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Discarding</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Deleting</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>This reaction hides text and was not sent</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Picture</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Save</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>This attachment could not be loaded</translation>
     </message>
 </context>
 <context>

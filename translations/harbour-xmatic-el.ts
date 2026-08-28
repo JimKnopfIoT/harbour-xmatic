@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Αφαίρεση εικόνων emoji</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Απόκρυψη πληκτρολογίου μετά την αποστολή</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Ενεργό: το πληκτρολόγιο κλείνει μόλις φύγει το μήνυμα και η συνομιλία φαίνεται πάλι ολόκληρη. Ανενεργό: μένει ανοιχτό για το επόμενο μήνυμα.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Η αποθήκευση απέτυχε</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Αυτό το συνημμένο δεν φορτώθηκε</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>Σε ομαδικό δωμάτιο όλοι βλέπουν την κλήση. Η λίστα δεν το ακυρώνει.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Ανενεργό: μια πρόταση με βίντεο απαντάται ως φωνητική κλήση.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Ανενεργό κρατά την ανάγνωσή σου για σένα, και στις δύο κατευθύνσεις.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Μπορούν πάντα να καλούν. Η λίστα μένει σε αυτή τη συσκευή.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Διαγραφή πολυμέσων τώρα</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Τα μηνύματα και τα κλειδιά αποθηκεύονται κρυπτογραφημένα. Οι εικόνες, τα βίντεο και τα έγγραφα που άνοιξες όχι — βρίσκονται στη συσκευή όπως αυτά της συλλογής, αναγνώσιμα από όποιον την κρατά.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Διαγραφή ληφθέντων πολυμέσων</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Ενεργό: το ίδιο άτομο μπορεί να ξανακαλέσει μόνο μετά από σύντομη παύση. Καθυστερεί και μια δεύτερη, πραγματική προσπάθεια.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Τα μηνύματα και τα κλειδιά αποθηκεύονται κρυπτογραφημένα.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Τα μηνύματα και τα κλειδιά βρίσκονται σε αυτή τη συσκευή χωρίς κρυπτογράφηση — η σελίδα κρυπτογράφησης λέει γιατί και τι μπορεί να γίνει.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Οι εικόνες, τα βίντεο και τα έγγραφα που άνοιξες όχι — βρίσκονται στη συσκευή όπως αυτά της συλλογής, αναγνώσιμα από όποιον την κρατά.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Ανενεργό: μια πρόταση με βίντεο απαντάται ως φωνητική κλήση — η κάμερά σου μένει κλειστή και δεν εμφανίζεται εικόνα. Η άλλη πλευρά μπορεί να στέλνει έτσι κι αλλιώς, και αυτό το τηλέφωνο την πετάει.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Ανενεργό: κανείς δεν μαθαίνει ως πού έχεις διαβάσει. Τι έχουν διαβάσει οι άλλοι το ορίζει η ρύθμιση παρακάτω.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Η λίστα είναι κρυπτογραφημένη και το κλειδί της δεν είναι διαθέσιμο. Θα ξαναδιαβαστεί αφού ξεκλειδώσεις τη συσκευή και επανεκκινήσεις την εφαρμογή.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Πρόσκληση</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Κρυπτογραφημένο άκρο σε άκρο</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Μη κρυπτογραφημένο</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Αυτό το δωμάτιο αντικαταστάθηκε</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Η γνησιότητα δεν επιβεβαιώθηκε</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Απόρριψη</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Διαγραφή</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Αυτή η αντίδραση κρύβει κείμενο και δεν στάλθηκε</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Εικόνα</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Αποθήκευση</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Αυτό το συνημμένο δεν φορτώθηκε</translation>
     </message>
 </context>
 <context>

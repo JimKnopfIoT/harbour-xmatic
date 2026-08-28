@@ -54,7 +54,23 @@ Dialog {
         }
     }
 
+    /// Who actually sends. Set by the room, because the room owns the warning
+    /// about recipients whose devices were never verified - and a dialog that
+    /// is closing cannot put another one over itself. Unset, this page sends by
+    /// itself, which is what every caller did before.
+    property var send: null
+
     onAccepted: {
+        if (dialog.send) {
+            // Handed over, not sent: the room may still have to ask about
+            // unverified recipients, and what follows a send belongs after the
+            // send. Calling `afterSend` here cleared the reply the attachment
+            // was an answer to, before it was established that anything would
+            // go at all.
+            dialog.send(dialog.plainPath, dialog.mimeType,
+                        captionField.text, dialog.replyTo)
+            return
+        }
         matrix.sendMedia(dialog.plainPath, dialog.mimeType,
                          captionField.text, dialog.replyTo)
         if (dialog.afterSend) {

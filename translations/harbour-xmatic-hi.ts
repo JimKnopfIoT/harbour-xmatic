@@ -272,36 +272,46 @@
     </message>
     <message>
         <location filename="../qml/pages/AppearancePage.qml" line="245"/>
+        <source>Hide the keyboard after sending</source>
+        <translation>भेजने के बाद कीबोर्ड छिपाएँ</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="246"/>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>चालू होने पर संदेश जाते ही कीबोर्ड बंद हो जाता है और बातचीत फिर पूरी दिखती है। बंद होने पर वह अगले संदेश के लिए खुला रहता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="253"/>
         <source>Reactions as pictures</source>
         <translation>प्रतिक्रियाएँ चित्रों के रूप में</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="248"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="256"/>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>बंद होने पर प्रतिक्रिया उसी अक्षर के रूप में खींची जाती है जो वह है — हमेशा सही और मुफ़्त। चालू होने पर xmatic उसके लिए तुम्हारा अपना चित्र %1 में खोजता है, जिसका नाम उसके कोड पॉइंट पर होता है (1f44d.svg)। कुछ भी साथ नहीं आता और कुछ भी डाउनलोड नहीं होता। तौलो: चित्र फ़ाइल को एक इमेज डिकोडर खोलता है, और वहीं इस तरह का ऐप सबसे असुरक्षित होता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="265"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="273"/>
         <source>Choose emoji pictures</source>
         <translation>इमोजी चित्र चुनें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="276"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="284"/>
         <source>Reading the pictures…</source>
         <translation>चित्र पढ़े जा रहे हैं…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="286"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="294"/>
         <source>%1 taken over, %2 refused</source>
         <translation>%1 लिए गए, %2 अस्वीकृत</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="297"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="305"/>
         <source>The pictures have changed since they were read in and are not shown.</source>
         <translation>पढ़ने के बाद चित्र बदल गए हैं और दिखाए नहीं जा रहे।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="306"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="314"/>
         <source>Remove emoji pictures</source>
         <translation>इमोजी चित्र हटाएँ</translation>
     </message>
@@ -365,12 +375,12 @@
         <translation>दूसरी ओर से कॉल काट दी गई</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1211"/>
+        <location filename="../src/callengine.cpp" line="1216"/>
         <source>the connection was lost</source>
         <translation>कनेक्शन टूट गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1223"/>
+        <location filename="../src/callengine.cpp" line="1228"/>
         <source>connected</source>
         <translation>जुड़ गया</translation>
     </message>
@@ -921,32 +931,37 @@
 <context>
     <name>ImageViewPage</name>
     <message>
-        <location filename="../qml/pages/ImageViewPage.qml" line="41"/>
+        <location filename="../qml/pages/ImageViewPage.qml" line="51"/>
         <source>Forward</source>
         <translation>आगे भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ImageViewPage.qml" line="50"/>
+        <location filename="../qml/pages/ImageViewPage.qml" line="60"/>
         <source>Share</source>
         <translation>साझा करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ImageViewPage.qml" line="59"/>
+        <location filename="../qml/pages/ImageViewPage.qml" line="69"/>
         <source>Save to gallery</source>
         <translation>गैलरी में सहेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ImageViewPage.qml" line="174"/>
+        <location filename="../qml/pages/ImageViewPage.qml" line="191"/>
+        <source>This attachment could not be loaded</source>
+        <translation>यह अनुलग्नक लोड नहीं हो सका</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/ImageViewPage.qml" line="198"/>
         <source>Share picture</source>
         <translation>चित्र साझा करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ImageViewPage.qml" line="199"/>
+        <location filename="../qml/pages/ImageViewPage.qml" line="223"/>
         <source>Saved to gallery</source>
         <translation>गैलरी में सहेजा गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ImageViewPage.qml" line="199"/>
+        <location filename="../qml/pages/ImageViewPage.qml" line="223"/>
         <source>Could not save</source>
         <translation>सहेजा नहीं जा सका</translation>
     </message>
@@ -1137,46 +1152,46 @@
         <translation>प्रोटोकॉल कोर उपलब्ध नहीं है।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="388"/>
-        <location filename="../src/matrixbridge.cpp" line="428"/>
-        <location filename="../src/matrixbridge.cpp" line="444"/>
+        <location filename="../src/matrixbridge.cpp" line="411"/>
+        <location filename="../src/matrixbridge.cpp" line="451"/>
+        <location filename="../src/matrixbridge.cpp" line="467"/>
         <source>Enter a homeserver first.</source>
         <translation>पहले कोई होमसर्वर दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="410"/>
+        <location filename="../src/matrixbridge.cpp" line="433"/>
         <source>Enter username and password first.</source>
         <translation>पहले उपयोगकर्ता नाम और पासवर्ड दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1171"/>
-        <location filename="../src/matrixbridge.cpp" line="1186"/>
+        <location filename="../src/matrixbridge.cpp" line="1251"/>
+        <location filename="../src/matrixbridge.cpp" line="1266"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>सहेजी सूचियाँ अभी पढ़ी नहीं जा सकतीं।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1410"/>
+        <location filename="../src/matrixbridge.cpp" line="1501"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1578"/>
-        <location filename="../src/matrixbridge.cpp" line="1606"/>
+        <location filename="../src/matrixbridge.cpp" line="1669"/>
+        <location filename="../src/matrixbridge.cpp" line="1697"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1821"/>
+        <location filename="../src/matrixbridge.cpp" line="1928"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1841"/>
+        <location filename="../src/matrixbridge.cpp" line="1948"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2486"/>
+        <location filename="../src/matrixbridge.cpp" line="2625"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
@@ -1421,62 +1436,62 @@
 <context>
     <name>MessageActionsPage</name>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="63"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="68"/>
         <source>Message</source>
         <translation>संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="82"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="87"/>
         <source>Copy</source>
         <translation>कॉपी करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="95"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="100"/>
         <source>Reply</source>
         <translation>उत्तर दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="112"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="117"/>
         <source>Save</source>
         <translation>सहेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="131"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="136"/>
         <source>Forward</source>
         <translation>आगे भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="145"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="150"/>
         <source>Edit</source>
         <translation>संपादित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="165"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="170"/>
         <source>Pin</source>
         <translation>पिन करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="183"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="188"/>
         <source>Reply in thread</source>
         <translation>सूत्र में उत्तर दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="201"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="206"/>
         <source>React</source>
         <translation>प्रतिक्रिया दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="218"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="223"/>
         <source>Send again</source>
         <translation>फिर से भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="235"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="237"/>
         <source>Discard</source>
         <translation>छोड़ दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MessageActionsPage.qml" line="235"/>
+        <location filename="../qml/pages/MessageActionsPage.qml" line="237"/>
         <source>Delete</source>
         <translation>मिटाएँ</translation>
     </message>
@@ -1525,32 +1540,32 @@
         <translation>पिन किए संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PinnedMessagesPage.qml" line="80"/>
+        <location filename="../qml/pages/PinnedMessagesPage.qml" line="87"/>
         <source>Show in conversation</source>
         <translation>बातचीत में दिखाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PinnedMessagesPage.qml" line="94"/>
+        <location filename="../qml/pages/PinnedMessagesPage.qml" line="115"/>
         <source>Unpin</source>
         <translation>पिन हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PinnedMessagesPage.qml" line="106"/>
+        <location filename="../qml/pages/PinnedMessagesPage.qml" line="127"/>
         <source>Pinned messages unavailable</source>
         <translation>पिन किए संदेश उपलब्ध नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PinnedMessagesPage.qml" line="107"/>
+        <location filename="../qml/pages/PinnedMessagesPage.qml" line="128"/>
         <source>No pinned messages</source>
         <translation>कोई पिन किया संदेश नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PinnedMessagesPage.qml" line="109"/>
+        <location filename="../qml/pages/PinnedMessagesPage.qml" line="130"/>
         <source>The server does not hand out these messages. They are older than this server&apos;s copy of the room.</source>
         <translation>सर्वर ये संदेश नहीं देता। वे इस सर्वर के पास मौजूद कक्ष की प्रति से भी पुराने हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PinnedMessagesPage.qml" line="110"/>
+        <location filename="../qml/pages/PinnedMessagesPage.qml" line="131"/>
         <source>Long-press a message in the conversation to pin it.</source>
         <translation>किसी संदेश को पिन करने के लिए बातचीत में उसे दबाकर रखो।</translation>
     </message>
@@ -1558,207 +1573,222 @@
 <context>
     <name>PrivacyPage</name>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="30"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="37"/>
         <source>Privacy</source>
         <translation>निजता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="35"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="62"/>
         <source>Who may call you</source>
         <translation>आपको कौन कॉल कर सकता है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="41"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="68"/>
         <source>Everyone</source>
         <translation>सभी</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="42"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="69"/>
         <source>People you have a direct chat with</source>
         <translation>वे लोग जिनसे आपकी सीधी बातचीत है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="43"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="70"/>
         <source>Only my list</source>
         <translation>केवल मेरी सूची</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="53"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="80"/>
         <source>Calls from group rooms</source>
         <translation>समूह कक्षों से कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="69"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="96"/>
         <source>Video calls</source>
         <translation>वीडियो कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="89"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="103"/>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>बंद: वीडियो वाली पेशकश को वॉइस कॉल की तरह लिया जाता है — तुम्हारा कैमरा बंद रहता है और कोई तस्वीर नहीं दिखती। सामने वाला फिर भी भेज सकता है, जिसे यह फ़ोन छोड़ देता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="122"/>
         <source>Send read receipts</source>
         <translation>पढ़ने की रसीदें भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="135"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="127"/>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>बंद: किसी को पता नहीं चलता कि तुमने कहाँ तक पढ़ा। दूसरों ने क्या पढ़ा, यह नीचे की सेटिंग तय करती है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="178"/>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>संदेश और कुंजियाँ एन्क्रिप्टेड रखी जाती हैं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="179"/>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>इस डिवाइस पर संदेश और कुंजियाँ बिना एन्क्रिप्शन के पड़ी हैं — एन्क्रिप्शन पृष्ठ बताता है क्यों और क्या किया जा सकता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="181"/>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>आपने जो चित्र, वीडियो और दस्तावेज़ खोले, वे नहीं — वे गैलरी के चित्रों की तरह उपकरण पर पड़े रहते हैं, जिसके पास उपकरण हो वह पढ़ सकता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="182"/>
         <source>By default they are deleted when you sign out, so save what you want to keep.</source>
         <translation>डिफ़ॉल्ट रूप से वे साइन आउट करने पर हट जाते हैं, इसलिए जो रखना है उसे पहले सहेज लें।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="136"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="183"/>
         <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
         <translation>„कभी नहीं“ उन्हें हमेशा रखता है — सुविधाजनक, पर अनुशंसित नहीं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="141"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="188"/>
         <source>Delete downloaded media</source>
         <translation>डाउनलोड किया मीडिया हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="153"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="200"/>
         <source>Never</source>
         <translation>कभी नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="154"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="201"/>
         <source>When you sign out</source>
         <translation>साइन आउट करने पर</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="155"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="202"/>
         <source>When the app is closed</source>
         <translation>ऐप बंद होने पर</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="156"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="203"/>
         <source>As soon as the app is not in front</source>
         <translation>जैसे ही ऐप सामने न रहे</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="179"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="226"/>
         <source>Allowed callers</source>
         <translation>अनुमत कॉल करने वाले</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="36"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="273"/>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>सूची एन्क्रिप्टेड है और उसकी कुंजी उपलब्ध नहीं है। डिवाइस अनलॉक करने और ऐप को दोबारा शुरू करने के बाद यह फिर पढ़ी जा सकेगी।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="63"/>
         <source>A call rings past a muted room. Refused calls never ring, and the caller learns nothing.</source>
         <translation>म्यूट किए कक्ष में भी कॉल बजती है। अस्वीकृत कॉल नहीं बजतीं और कॉल करने वाले को कुछ पता नहीं चलता।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="54"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="81"/>
         <source>In a group room everybody sees the call. The list does not override this.</source>
         <translation>समूह कक्ष में कॉल सभी को दिखती है। सूची इसे नहीं बदलती।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="61"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="88"/>
         <source>Limit repeated calls</source>
         <translation>बार-बार की कॉल सीमित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="62"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="89"/>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>चालू: वही व्यक्ति थोड़े विराम के बाद ही दोबारा कॉल कर सकता है। इससे दूसरा असली प्रयास भी टल जाता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="70"/>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>बंद: वीडियो वाले प्रस्ताव को वॉइस कॉल के रूप में स्वीकारा जाता है।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="77"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="110"/>
         <source>What others learn</source>
         <translation>दूसरों को क्या पता चलता है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="81"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="114"/>
         <source>Message text in notifications</source>
         <translation>सूचनाओं में संदेश का पाठ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="82"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="115"/>
         <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
         <translation>बंद होने पर सूचना केवल बताती है कि कितने संदेश आए। चालू होने पर वह नवीनतम संदेश दिखाती है — लॉक स्क्रीन पर भी।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="90"/>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>बंद रहने पर आपका पढ़ना आपके पास रहता है — दोनों दिशाओं में।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="97"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="134"/>
         <source>Show others&apos; read status</source>
         <translation>दूसरों की पढ़ने की स्थिति दिखाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="98"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="135"/>
         <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>बंद होने पर कौन क्या पढ़ चुका है इसके बारे में कुछ नहीं लाया जाता, जिससे बातचीत भी तेज़ रहती है। चालू होने पर तुम्हारे अपने संदेश बताते हैं कि कितने लोगों ने उन्हें पढ़ा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="105"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="142"/>
         <source>Voice messages</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="106"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="143"/>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
         <translation>चालू होने पर संदेश फ़ील्ड के बगल में माइक्रोफ़ोन होता है: रिकॉर्ड करने के लिए दबाए रखो, भेजने के लिए छोड़ दो। बंद होने पर वह नहीं होता।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="113"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="150"/>
         <source>Tappable web links</source>
         <translation>टैप करने योग्य वेब लिंक</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="114"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="151"/>
         <source>On, a link in a message opens the browser when tapped. Off, links stay plain text.</source>
         <translation>चालू होने पर संदेश में लिंक टैप करने से ब्राउज़र खुलता है। बंद होने पर लिंक सादा पाठ रहते हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="121"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="158"/>
         <source>On this device</source>
         <translation>इस उपकरण पर</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="134"/>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>संदेश और कुंजियाँ एन्क्रिप्टेड रखी जाती हैं। आपने जो चित्र, वीडियो और दस्तावेज़ खोले, वे नहीं — वे गैलरी के चित्रों की तरह उपकरण पर पड़े रहते हैं, जिसके पास उपकरण हो वह पढ़ सकता है।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="142"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="189"/>
         <source>Anything deleted is fetched again when you open it.</source>
         <translation>हटाया गया खोलने पर फिर से लाया जाता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="174"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="221"/>
         <source>Delete media now</source>
         <translation>मीडिया अभी हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="188"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="235"/>
         <source>They may always call. The list stays on this device.</source>
         <translation>वे हमेशा कॉल कर सकते हैं। सूची इसी उपकरण पर रहती है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="195"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="242"/>
         <source>Matrix address</source>
         <translation>Matrix पता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="196"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="243"/>
         <source>@name:server</source>
         <translation>@name:server</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="207"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="254"/>
         <source>Allow calls</source>
         <translation>कॉल की अनुमति दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="219"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="272"/>
         <source>Nobody yet.</source>
         <translation>अभी कोई नहीं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="230"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="284"/>
         <source>Remove</source>
         <translation>हटाएँ</translation>
     </message>
@@ -1826,17 +1856,17 @@
 <context>
     <name>RoomDelegate</name>
     <message>
-        <location filename="../qml/pages/RoomDelegate.qml" line="134"/>
+        <location filename="../qml/pages/RoomDelegate.qml" line="150"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomDelegate.qml" line="136"/>
+        <location filename="../qml/pages/RoomDelegate.qml" line="152"/>
         <source>Replaced by a new room</source>
         <translation>नए कक्ष से बदला गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomDelegate.qml" line="138"/>
+        <location filename="../qml/pages/RoomDelegate.qml" line="154"/>
         <source>Space</source>
         <translation>Space</translation>
     </message>
@@ -2196,182 +2226,182 @@
 <context>
     <name>RoomPage</name>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="339"/>
+        <location filename="../qml/pages/RoomPage.qml" line="477"/>
         <source>Really decline this invitation?</source>
         <translation>सचमुच यह निमंत्रण अस्वीकार करना है?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="340"/>
+        <location filename="../qml/pages/RoomPage.qml" line="478"/>
         <source>Really leave this room?</source>
         <translation>सचमुच यह कक्ष छोड़ना है?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="343"/>
+        <location filename="../qml/pages/RoomPage.qml" line="481"/>
         <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
         <translation>उसके बाद निमंत्रण नहीं रहेगा। तुम तभी लौट सकते हो जब कोई फिर से बुलाए।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="344"/>
+        <location filename="../qml/pages/RoomPage.qml" line="482"/>
         <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
         <translation>कक्ष छोड़ा और भुला दिया जाता है। वह चैट सूची से गायब हो जाता है, और वापस आने के लिए नया निमंत्रण या सार्वजनिक पता चाहिए।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="345"/>
+        <location filename="../qml/pages/RoomPage.qml" line="483"/>
         <source>Decline</source>
         <translation>अस्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="345"/>
+        <location filename="../qml/pages/RoomPage.qml" line="483"/>
         <source>Leave</source>
         <translation>छोड़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="353"/>
+        <location filename="../qml/pages/RoomPage.qml" line="491"/>
         <source>Declining</source>
         <translation>अस्वीकार किया जा रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="353"/>
+        <location filename="../qml/pages/RoomPage.qml" line="491"/>
         <source>Leaving room</source>
         <translation>कक्ष छोड़ा जा रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="384"/>
+        <location filename="../qml/pages/RoomPage.qml" line="543"/>
         <source>The sender did not share the key: they consider this device insecure. Verify this device.</source>
         <translation>भेजने वाले ने कुंजी साझा नहीं की: वे इस उपकरण को असुरक्षित मानते हैं। इस उपकरण को सत्यापित करो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="386"/>
+        <location filename="../qml/pages/RoomPage.qml" line="545"/>
         <source>The sender could not deliver the key to this device.</source>
         <translation>भेजने वाला कुंजी इस उपकरण तक नहीं पहुँचा सका।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="388"/>
+        <location filename="../qml/pages/RoomPage.qml" line="547"/>
         <source>The sender&apos;s identity has changed since you verified them, so the key was withheld.</source>
         <translation>तुम्हारे सत्यापन के बाद से भेजने वाले की पहचान बदल गई, इसलिए कुंजी रोक दी गई।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="390"/>
+        <location filename="../qml/pages/RoomPage.qml" line="549"/>
         <source>The sender&apos;s device is not signed by its owner.</source>
         <translation>भेजने वाले का उपकरण उसके मालिक द्वारा हस्ताक्षरित नहीं है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="392"/>
+        <location filename="../qml/pages/RoomPage.qml" line="551"/>
         <source>The sender&apos;s device is unknown here.</source>
         <translation>भेजने वाले का उपकरण यहाँ अज्ञात है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="394"/>
+        <location filename="../qml/pages/RoomPage.qml" line="553"/>
         <source>Sent before you joined the room.</source>
         <translation>तुम्हारे कक्ष में जुड़ने से पहले भेजा गया।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="396"/>
+        <location filename="../qml/pages/RoomPage.qml" line="555"/>
         <source>Older than this device, and there is no key backup.</source>
         <translation>इस उपकरण से पुराना, और कोई कुंजी बैकअप नहीं है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="398"/>
+        <location filename="../qml/pages/RoomPage.qml" line="557"/>
         <source>Older than this device. Verify this device to read it.</source>
         <translation>इस उपकरण से पुराना। पढ़ने के लिए इस उपकरण को सत्यापित करो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="400"/>
+        <location filename="../qml/pages/RoomPage.qml" line="559"/>
         <source>Cannot be decrypted — this device is missing the key</source>
         <translation>डिक्रिप्ट नहीं हो सका — इस उपकरण के पास कुंजी नहीं है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="599"/>
+        <location filename="../qml/pages/RoomPage.qml" line="794"/>
         <source>Decline invitation</source>
         <translation>निमंत्रण अस्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="599"/>
+        <location filename="../qml/pages/RoomPage.qml" line="794"/>
         <source>Leave room</source>
         <translation>कक्ष छोड़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="604"/>
+        <location filename="../qml/pages/RoomPage.qml" line="799"/>
         <source>Call</source>
         <translation>कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="616"/>
+        <location filename="../qml/pages/RoomPage.qml" line="811"/>
         <source>Video call</source>
         <translation>वीडियो कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="626"/>
+        <location filename="../qml/pages/RoomPage.qml" line="821"/>
         <source>Back to the call</source>
         <translation>कॉल पर लौटें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="635"/>
+        <location filename="../qml/pages/RoomPage.qml" line="830"/>
         <source>Go to the new room</source>
         <translation>नए कक्ष में जाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="636"/>
+        <location filename="../qml/pages/RoomPage.qml" line="831"/>
         <source>Join the new room</source>
         <translation>नए कक्ष में जुड़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="670"/>
+        <location filename="../qml/pages/RoomPage.qml" line="865"/>
         <source>Load older messages</source>
         <translation>पुराने संदेश लाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="658"/>
+        <location filename="../qml/pages/RoomPage.qml" line="853"/>
         <source>Room info</source>
         <translation>कक्ष की जानकारी</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="647"/>
+        <location filename="../qml/pages/RoomPage.qml" line="523"/>
+        <source>Discarding</source>
+        <translation>छोड़ा जा रहा है</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="523"/>
+        <source>Deleting</source>
+        <translation>मिटाया जा रहा है</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="842"/>
         <source>Copy room link</source>
         <translation>रूम लिंक कॉपी करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="740"/>
+        <location filename="../qml/pages/RoomPage.qml" line="978"/>
         <source>Offline — waiting for the network</source>
         <translation>ऑफ़लाइन — नेटवर्क की प्रतीक्षा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="742"/>
+        <location filename="../qml/pages/RoomPage.qml" line="979"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="743"/>
-        <source>End-to-end encrypted</source>
-        <translation>एंड-टू-एंड एन्क्रिप्टेड</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RoomPage.qml" line="744"/>
-        <source>Not encrypted</source>
-        <translation>एन्क्रिप्टेड नहीं</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RoomPage.qml" line="793"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1028"/>
         <source>This room has been replaced</source>
         <translation>यह कक्ष बदला जा चुका है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="808"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1043"/>
         <source>Switching to the new room…</source>
         <translation>नए कक्ष में जाया जा रहा है…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="810"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1045"/>
         <source>Tap to open the new room</source>
         <translation>नया कक्ष खोलने के लिए टैप करो</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="811"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1046"/>
         <source>Tap to join the new room</source>
         <translation>नए कक्ष में जुड़ने के लिए टैप करो</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/pages/RoomPage.qml" line="870"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1105"/>
         <source>%n pinned message(s)</source>
         <translation>
             <numerusform>%n पिन किया संदेश</numerusform>
@@ -2379,228 +2409,238 @@
         </translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="906"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1155"/>
         <source>Beginning of the conversation</source>
         <translation>बातचीत की शुरुआत</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1026"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1275"/>
         <source>Call</source>
         <comment>timeline system line, a noun</comment>
         <translation>कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1027"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1276"/>
         <source>%1 joined</source>
         <translation>%1 जुड़ गए</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1028"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1277"/>
         <source>%1 left</source>
         <translation>%1 चले गए</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1029"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1278"/>
         <source>%1 was invited</source>
         <translation>%1 को आमंत्रित किया गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1030"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1279"/>
         <source>%1 was removed</source>
         <translation>%1 को हटाया गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1031"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1280"/>
         <source>%1 was banned</source>
         <translation>%1 को प्रतिबंधित किया गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1032"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1281"/>
         <source>%1 declined the invitation</source>
         <translation>%1 ने निमंत्रण अस्वीकार किया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1033"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1282"/>
         <source>%1 asked to join</source>
         <translation>%1 ने जुड़ने के लिए कहा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1034"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1283"/>
         <source>%1 changed membership</source>
         <translation>%1 की सदस्यता बदली</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1035"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1284"/>
         <source>%1 changed their profile</source>
         <translation>%1 ने अपनी प्रोफ़ाइल बदली</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1073"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1339"/>
         <source>Copy</source>
         <translation>कॉपी करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1079"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1345"/>
         <source>Reply</source>
         <translation>उत्तर दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1096"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1362"/>
         <source>Reply in thread</source>
         <translation>सूत्र में उत्तर दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1112"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1378"/>
         <source>Save</source>
         <translation>सहेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1118"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1384"/>
         <source>Forward</source>
         <translation>आगे भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1127"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1393"/>
         <source>Edit</source>
         <translation>संपादित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1133"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1399"/>
         <source>Pin</source>
         <translation>पिन करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1146"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1412"/>
         <source>React</source>
         <translation>प्रतिक्रिया दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1156"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1422"/>
         <source>Send again</source>
         <translation>फिर से भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1166"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1432"/>
         <source>Discard</source>
         <translation>छोड़ दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1166"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1432"/>
         <source>Delete</source>
         <translation>मिटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1173"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1440"/>
         <source>More…</source>
         <translation>और…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1482"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1786"/>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>उद्धृत संदेश नहीं लाया जा सका: वह अब मौजूद नहीं है या तुम्हें उसे देखने की अनुमति नहीं है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1623"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1935"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1694"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2020"/>
         <source>Message deleted</source>
         <translation>संदेश मिटाया गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1732"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2025"/>
+        <source>Picture</source>
+        <translation>चित्र</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="2066"/>
         <source>Thread · %1</source>
         <translation>सूत्र · %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1733"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2067"/>
         <source>In thread</source>
         <translation>सूत्र में</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1888"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2144"/>
+        <source>This reaction hides text and was not sent</source>
+        <translation>यह प्रतिक्रिया छिपा हुआ पाठ रखती है और भेजी नहीं गई</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="2263"/>
         <source>not sent</source>
         <translation>भेजा नहीं गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1889"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2264"/>
         <source>edited</source>
         <translation>संपादित</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2089"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2521"/>
         <source>No messages</source>
         <translation>कोई संदेश नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2115"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2547"/>
         <source>Room link copied</source>
         <translation>रूम लिंक कॉपी हो गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2169"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2612"/>
         <source>Accept invitation</source>
         <translation>निमंत्रण स्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2195"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2638"/>
         <source>Recording… %1 s</source>
         <translation>रिकॉर्ड हो रहा है… %1 से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2210"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2653"/>
         <source>Reply to %1</source>
         <translation>%1 को उत्तर</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2233"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2676"/>
         <source>Editing message</source>
         <translation>संदेश संपादित हो रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2316"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2733"/>
         <source>New text</source>
         <translation>नया पाठ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2317"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2734"/>
         <source>Message</source>
         <translation>संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2718"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3239"/>
         <source>Sent unencrypted</source>
         <translation>बिना एन्क्रिप्शन भेजा गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2719"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3240"/>
         <source>Not sent by the account it names</source>
         <translation>जिस खाते का नाम है, उसने नहीं भेजा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2720"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3241"/>
         <source>The sender&apos;s keys changed</source>
         <translation>भेजने वाले की कुंजियाँ बदल गईं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2722"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3243"/>
         <source>From an unverified device</source>
         <translation>अपुष्ट उपकरण से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2723"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3244"/>
         <source>From an unverified person</source>
         <translation>अपुष्ट व्यक्ति से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2724"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3245"/>
         <source>Authenticity not confirmed</source>
         <translation>प्रामाणिकता की पुष्टि नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2892"/>
+        <location filename="../qml/pages/RoomPage.qml" line="632"/>
         <source>That message is not in the loaded history</source>
         <translation>वह संदेश लाए गए इतिहास में नहीं है</translation>
     </message>
@@ -2608,22 +2648,22 @@
 <context>
     <name>SendMediaPage</name>
     <message>
-        <location filename="../qml/pages/SendMediaPage.qml" line="78"/>
+        <location filename="../qml/pages/SendMediaPage.qml" line="94"/>
         <source>Reply</source>
         <translation>उत्तर दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendMediaPage.qml" line="78"/>
+        <location filename="../qml/pages/SendMediaPage.qml" line="94"/>
         <source>Send</source>
         <translation>भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendMediaPage.qml" line="172"/>
+        <location filename="../qml/pages/SendMediaPage.qml" line="188"/>
         <source>Caption</source>
         <translation>शीर्षक</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SendMediaPage.qml" line="173"/>
+        <location filename="../qml/pages/SendMediaPage.qml" line="189"/>
         <source>Caption (optional)</source>
         <translation>शीर्षक (वैकल्पिक)</translation>
     </message>
@@ -2797,77 +2837,77 @@
 <context>
     <name>ThreadPage</name>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="62"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="70"/>
         <source>Sent unencrypted</source>
         <translation>बिना एन्क्रिप्शन भेजा गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="63"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="71"/>
         <source>Not sent by the account it names</source>
         <translation>जिस खाते का नाम है, उसने नहीं भेजा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="64"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="72"/>
         <source>The sender&apos;s keys changed</source>
         <translation>भेजने वाले की कुंजियाँ बदल गईं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="66"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="74"/>
         <source>From an unverified device</source>
         <translation>अपुष्ट उपकरण से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="67"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="75"/>
         <source>From an unverified person</source>
         <translation>अपुष्ट व्यक्ति से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="68"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="76"/>
         <source>Authenticity not confirmed</source>
         <translation>प्रामाणिकता की पुष्टि नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="169"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="229"/>
         <source>Load older posts</source>
         <translation>पुरानी पोस्टें लाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="178"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="238"/>
         <source>Thread</source>
         <translation>सूत्र</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="229"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="289"/>
         <source>Event</source>
         <translation>घटना</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="285"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="345"/>
         <source>Cannot be decrypted — this device is missing the key</source>
         <translation>डिक्रिप्ट नहीं हो सका — इस उपकरण के पास कुंजी नहीं है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="288"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="348"/>
         <source>Message deleted</source>
         <translation>संदेश मिटाया गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="291"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="351"/>
         <source>Attachment</source>
         <translation>संलग्नक</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="321"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="381"/>
         <source>Thread unavailable</source>
         <translation>सूत्र उपलब्ध नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="322"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="382"/>
         <source>Loading thread</source>
         <translation>सूत्र लाया जा रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="343"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="403"/>
         <source>Reply in thread</source>
         <translation>सूत्र में उत्तर दें</translation>
     </message>
@@ -3024,7 +3064,12 @@
 <context>
     <name>VideoPage</name>
     <message>
-        <location filename="../qml/pages/VideoPage.qml" line="67"/>
+        <location filename="../qml/pages/VideoPage.qml" line="86"/>
+        <source>This attachment could not be loaded</source>
+        <translation>यह अनुलग्नक लोड नहीं हो सका</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/VideoPage.qml" line="91"/>
         <source>Save</source>
         <translation>सहेजें</translation>
     </message>

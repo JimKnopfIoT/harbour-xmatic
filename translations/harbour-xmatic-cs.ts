@@ -248,6 +248,14 @@
         <source>Remove emoji pictures</source>
         <translation>Odstranit obrázky emodži</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Skrýt klávesnici po odeslání</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Zapnuto: klávesnice se zavře, jakmile zpráva odejde, a konverzace je zase celá vidět. Vypnuto: zůstane otevřená pro další zprávu.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -766,6 +774,10 @@
     <message>
         <source>Could not save</source>
         <translation>Nepodařilo se uložit</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Tuto přílohu se nepodařilo načíst</translation>
     </message>
 </context>
 <context>
@@ -1318,14 +1330,6 @@
         <translation>Ve skupinové místnosti hovor vidí všichni. Seznam to nepřebíjí.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Vypnuto: nabídka s videem se přijme jako hlasový hovor.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Vypnuto si čtení nechá pro sebe, v obou směrech.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Smějí volat vždy. Seznam zůstává v tomto zařízení.</translation>
     </message>
@@ -1374,10 +1378,6 @@
         <translation>Smazat média teď</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Zprávy a klíče jsou uloženy šifrovaně. Otevřené obrázky, videa a dokumenty ne — leží v zařízení jako ty v galerii, čitelné pro každého, kdo je má v ruce.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Mazání stažených médií</translation>
     </message>
@@ -1416,6 +1416,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Zapnuto: tentýž člověk může zavolat znovu až po krátké pauze. Zdrží to i druhý, opravdový pokus.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Zprávy a klíče jsou uloženy šifrovaně.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Zprávy a klíče leží na tomto zařízení nešifrované — stránka šifrování říká proč a co se s tím dá dělat.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Otevřené obrázky, videa a dokumenty ne — leží v zařízení jako ty v galerii, čitelné pro každého, kdo je má v ruce.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Vypnuto: nabídka s videem se přijme jako hlasový hovor — tvůj fotoaparát zůstane zavřený a žádný obraz se nezobrazí. Druhá strana ho přesto může posílat a tento telefon ho zahodí.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Vypnuto: nikdo se nedozví, kam až jsi četl. Co četli ostatní, řídí nastavení níže.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Seznam je šifrovaný a jeho klíč není k dispozici. Bude znovu čitelný po odemknutí zařízení a restartu aplikace.</translation>
     </message>
 </context>
 <context>
@@ -1879,14 +1903,6 @@
         <translation>Pozvání</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Šifrováno end-to-end</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Nešifrováno</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Tato místnost byla nahrazena</translation>
     </message>
@@ -2094,6 +2110,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Pravost nepotvrzena</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Zahazuje se</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Maže se</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Tato reakce skrývá text a nebyla odeslána</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Obrázek</translation>
     </message>
 </context>
 <context>
@@ -2441,6 +2473,10 @@
     <message>
         <source>Save</source>
         <translation>Uložit</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Tuto přílohu se nepodařilo načíst</translation>
     </message>
 </context>
 <context>

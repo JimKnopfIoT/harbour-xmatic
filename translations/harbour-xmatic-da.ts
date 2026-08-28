@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Fjern emoji-billeder</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Skjul tastaturet efter afsendelse</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Til lukker tastaturet, så snart beskeden er sendt, og samtalen fylder igen. Fra bliver det stående til den næste besked.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Kunne ikke gemmes</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Denne vedhæftning kunne ikke indlæses</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>I et grupperum ser alle opkaldet. Listen tilsidesætter ikke det.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Fra: et tilbud med video besvares som et taleopkald.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Fra holder din læsning for dig selv, begge veje.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>De må altid ringe. Listen bliver på denne enhed.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Slet medier nu</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Beskeder og nøgler gemmes krypteret. Billeder, videoer og dokumenter, du har åbnet, gør ikke — de ligger på enheden som dem i galleriet, læsbare for enhver der har den.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Slet hentede medier</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Til: den samme person kan først ringe igen efter en kort pause. Det forsinker også et andet, ægte forsøg.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Beskeder og nøgler gemmes krypteret.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Beskeder og nøgler ligger ukrypteret på denne enhed — krypteringssiden fortæller hvorfor og hvad der kan gøres.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Billeder, videoer og dokumenter, du har åbnet, gør ikke — de ligger på enheden som dem i galleriet, læsbare for enhver der har den.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Fra: et tilbud med video besvares som et taleopkald — dit kamera forbliver lukket, og der vises ikke noget billede. Den anden side kan stadig sende et, som denne telefon kasserer.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Fra: ingen får at vide, hvor langt du har læst. Hvad andre har læst, styres af indstillingen nedenfor.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Listen er krypteret, og nøglen er ikke tilgængelig. Den kan læses igen, når enheden er låst op og appen genstartet.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Invitation</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Ende-til-ende-krypteret</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Ikke krypteret</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Dette rum er blevet erstattet</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Ægthed ikke bekræftet</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Kasserer</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Sletter</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Denne reaktion skjuler tekst og blev ikke sendt</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Billede</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Gem</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Denne vedhæftning kunne ikke indlæses</translation>
     </message>
 </context>
 <context>

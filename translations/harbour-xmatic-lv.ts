@@ -248,6 +248,14 @@
         <source>Remove emoji pictures</source>
         <translation>Noņemt emocijzīmju attēlus</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Slēpt tastatūru pēc nosūtīšanas</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Ieslēgts: tastatūra aizveras, tiklīdz ziņa ir aizsūtīta, un saruna atkal redzama pilnībā. Izslēgts: tā paliek atvērta nākamajai ziņai.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -766,6 +774,10 @@
     <message>
         <source>Could not save</source>
         <translation>Neizdevās saglabāt</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Šo pielikumu neizdevās ielādēt</translation>
     </message>
 </context>
 <context>
@@ -1318,14 +1330,6 @@
         <translation>Grupas istabā zvanu redz visi. Saraksts to neatceļ.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Izslēgts: piedāvājumu ar video pieņem kā balss zvanu.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Izslēgts patur tavu lasīšanu pie sevis, abos virzienos.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Viņi drīkst zvanīt vienmēr. Saraksts paliek šajā ierīcē.</translation>
     </message>
@@ -1374,10 +1378,6 @@
         <translation>Dzēst medijus tagad</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Ziņas un atslēgas tiek glabātas šifrētas. Atvērtie attēli, video un dokumenti — nē: tie atrodas ierīcē tāpat kā galerijas attēli, lasāmi ikvienam, kam tā ir rokās.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Lejupielādēto mediju dzēšana</translation>
     </message>
@@ -1416,6 +1416,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Ieslēgts: tas pats cilvēks var zvanīt atkal tikai pēc īsas pauzes. Tas aizkavē arī otro, īsto mēģinājumu.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Ziņas un atslēgas tiek glabātas šifrētas.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Ziņas un atslēgas šajā ierīcē glabājas nešifrētas — šifrēšanas lapa paskaidro, kāpēc un ko var darīt.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Atvērtie attēli, video un dokumenti — nē: tie atrodas ierīcē tāpat kā galerijas attēli, lasāmi ikvienam, kam tā ir rokās.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Izslēgts: piedāvājums ar video tiek atbildēts kā balss zvans — tava kamera paliek aizvērta un attēls netiek rādīts. Otra puse tomēr var to sūtīt, un šis tālrunis to atmet.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Izslēgts: neviens neuzzina, cik tālu esi izlasījis. To, ko lasījuši citi, nosaka iestatījums zemāk.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Saraksts ir šifrēts, un tā atslēga nav pieejama. To varēs izlasīt atkal, kad ierīce būs atbloķēta un lietotne pārstartēta.</translation>
     </message>
 </context>
 <context>
@@ -1879,14 +1903,6 @@
         <translation>Ielūgums</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Pilnībā šifrēta</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Nešifrēta</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Šī istaba ir aizstāta</translation>
     </message>
@@ -2094,6 +2110,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Autentiskums nav apstiprināts</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Atmet</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Dzēš</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Šī reakcija slēpj tekstu un netika nosūtīta</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Attēls</translation>
     </message>
 </context>
 <context>
@@ -2441,6 +2473,10 @@
     <message>
         <source>Save</source>
         <translation>Saglabāt</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Šo pielikumu neizdevās ielādēt</translation>
     </message>
 </context>
 <context>

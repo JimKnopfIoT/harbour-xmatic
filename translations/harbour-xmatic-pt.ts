@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Remover as imagens de emoji</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Ocultar o teclado depois de enviar</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Ligado, o teclado fecha assim que a mensagem sai e a conversa volta a aparecer por inteiro. Desligado, fica aberto para a seguinte.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Não foi possível guardar</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Não foi possível carregar este anexo</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>Numa sala de grupo toda a gente vê a chamada. A lista não anula isso.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Desligado: uma oferta com vídeo é aceite como chamada de voz.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Desligado guarda a tua leitura para ti, nos dois sentidos.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Podem ligar sempre. A lista fica neste dispositivo.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Apagar os média agora</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>As mensagens e as chaves ficam guardadas cifradas. As imagens, vídeos e documentos que abriste não: estão no dispositivo como os da galeria, legíveis por quem o tiver.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Apagar os média descarregados</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Ligado: a mesma pessoa só pode voltar a ligar após uma pequena pausa. Também atrasa uma segunda tentativa genuína.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>As mensagens e as chaves ficam guardadas cifradas.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>As mensagens e as chaves estão neste aparelho sem cifra — a página de cifra explica porquê e o que se pode fazer.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>As imagens, vídeos e documentos que abriste não: estão no dispositivo como os da galeria, legíveis por quem o tiver.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Desligado: uma oferta com vídeo é atendida como chamada de voz — a tua câmara fica fechada e não se mostra imagem nenhuma. O outro lado pode enviar uma na mesma, que este telefone descarta.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Desligado: ninguém fica a saber até onde leste. O que os outros leram é a definição abaixo.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>A lista está cifrada e a sua chave não está disponível. Volta a poder ler-se depois de desbloquear o aparelho e reiniciar a aplicação.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Convite</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Cifrada ponta a ponta</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Não cifrada</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Esta sala foi substituída</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Autenticidade não confirmada</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>A descartar</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>A eliminar</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Esta reação esconde texto e não foi enviada</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Imagem</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Guardar</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Não foi possível carregar este anexo</translation>
     </message>
 </context>
 <context>

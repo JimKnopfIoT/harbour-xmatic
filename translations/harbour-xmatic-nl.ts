@@ -247,6 +247,14 @@
         <source>Remove emoji pictures</source>
         <translation>Emoji-afbeeldingen verwijderen</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Toetsenbord verbergen na het verzenden</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Aan sluit het toetsenbord zodra het bericht weg is en zie je het gesprek weer helemaal. Uit blijft het open voor het volgende bericht.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -764,6 +772,10 @@
     <message>
         <source>Could not save</source>
         <translation>Opslaan mislukt</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Deze bijlage kon niet geladen worden</translation>
     </message>
 </context>
 <context>
@@ -1316,14 +1328,6 @@
         <translation>In een groepskamer ziet iedereen de oproep. De lijst gaat daar niet overheen.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Uit: een aanbod met video wordt als spraakoproep aangenomen.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Uit houdt je lezen voor jezelf, in beide richtingen.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Zij mogen altijd bellen. De lijst blijft op dit apparaat.</translation>
     </message>
@@ -1372,10 +1376,6 @@
         <translation>Media nu wissen</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Berichten en sleutels worden versleuteld bewaard. Geopende afbeeldingen, video&apos;s en documenten niet — die staan op het apparaat zoals die in de galerij, leesbaar voor iedereen die het heeft.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Gedownloade media wissen</translation>
     </message>
@@ -1414,6 +1414,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Aan: dezelfde persoon kan pas na een korte pauze opnieuw bellen. Het vertraagt ook een tweede, echte poging.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Berichten en sleutels worden versleuteld bewaard.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Berichten en sleutels staan onversleuteld op dit apparaat — de versleutelingspagina zegt waarom en wat eraan te doen is.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Geopende afbeeldingen, video&apos;s en documenten niet — die staan op het apparaat zoals die in de galerij, leesbaar voor iedereen die het heeft.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Uit: een aanbod met video wordt als spraakoproep beantwoord — je camera blijft dicht en er wordt geen beeld getoond. De andere kant kan er toch een sturen, die deze telefoon weggooit.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Uit: niemand komt te weten hoe ver je gelezen hebt. Wat anderen gelezen hebben regelt de instelling hieronder.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>De lijst is versleuteld en de sleutel is niet beschikbaar. Hij is weer leesbaar nadat het apparaat is ontgrendeld en de app opnieuw is gestart.</translation>
     </message>
 </context>
 <context>
@@ -1877,14 +1901,6 @@
         <translation>Uitnodiging</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>End-to-end versleuteld</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Niet versleuteld</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Deze kamer is vervangen</translation>
     </message>
@@ -2091,6 +2107,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Echtheid niet bevestigd</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Weggooien</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Deze reactie verbergt tekst en is niet verzonden</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Afbeelding</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2468,10 @@
     <message>
         <source>Save</source>
         <translation>Opslaan</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Deze bijlage kon niet geladen worden</translation>
     </message>
 </context>
 <context>

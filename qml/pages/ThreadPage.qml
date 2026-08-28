@@ -27,6 +27,14 @@ Page {
     // from anywhere as this thread's.
     property string error: ""
 
+    // Whether the view follows the newest post. True until the hand says
+    // otherwise, exactly as in the room.
+    property bool followTail: true
+
+    // The list's height before the last change, for the same reason the room
+    // keeps it: what was on screen has to stay on screen.
+    property real lastViewHeight: 0
+
     allowedOrientations: Orientation.All
 
     Component.onCompleted: {
@@ -96,6 +104,12 @@ Page {
     function doSubmit() {
         matrix.sendThreadMessage(threadInput.text)
         threadInput.text = ""
+        // The same rule as in the room below: with the setting on, the
+        // keyboard goes once the post is away.
+        page.followTail = true
+        if (settings.hideKeyboardOnSend) {
+            threadInput.focus = false
+        }
     }
 
     // A tapped link, as in the room below: a Matrix address is answered inside
@@ -156,12 +170,58 @@ Page {
 
         // New posts arrive at the end; without this they land outside the
         // view. The timer defers to after the row exists, as in RoomPage.
-        onCountChanged: tailTimer.restart()
+        onCountChanged: {
+            if (page.followTail) {
+                tailTimer.restart()
+            }
+        }
+
+        // Counting rows was not enough, which is what "it does not properly go
+        // to the bottom" was: a row is laid out before its text has wrapped,
+        // the page header settles a moment later, and every one of those grows
+        // the content under a view that already thought it was at the end.
+        // Both belong in this one handler - a second onContentHeightChanged in
+        // the same object is a load error, not an addition.
+        onContentHeightChanged: {
+            if (page.followTail) {
+                tailTimer.restart()
+            }
+        }
+
+        // The viewport's own height changes under the list - the keyboard
+        // takes the lower half of the screen, the composer grows with what is
+        // being typed - and Qt keeps the content's top where it is, so what
+        // was being read slides out of sight below. Shrinking, the content is
+        // pushed down by exactly what was lost; growing, whoever was following
+        // the tail goes back to the end. The room does the same.
+        onHeightChanged: {
+            var lost = page.lastViewHeight - height
+            page.lastViewHeight = height
+            if (lost > 0) {
+                contentY = Math.min(contentY + lost,
+                                    originY + Math.max(0, contentHeight - height))
+            } else if (lost < 0 && page.followTail) {
+                tailTimer.restart()
+            }
+        }
+
+        // A hand on the list decides where it stays - reading further up must
+        // not be undone by the next arriving post, and pulling down for older
+        // posts must not throw the view back to the end.
+        onMovementEnded: page.followTail = atYEnd
 
         Timer {
             id: tailTimer
             interval: 1
-            onTriggered: threadView.positionViewAtEnd()
+            onTriggered: {
+                // As in the room: a hand on the list outranks the tail, or
+                // the posts fetched by a swipe throw the view to the end
+                // under the finger that asked for them.
+                if (threadView.moving || threadView.dragging) {
+                    return
+                }
+                threadView.positionViewAtEnd()
+            }
         }
 
         PullDownMenu {

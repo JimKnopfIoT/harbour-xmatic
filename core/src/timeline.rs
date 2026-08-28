@@ -75,6 +75,11 @@ pub struct TimelineHandle {
     /// Whether this timeline was built tracking other people's receipts. Part
     /// of the handle because the setting can only be chosen at build time.
     receipts: bool,
+    /// Everything this timeline started: the lanes its quote fetches queue in
+    /// and a handle on every task. Closed with the timeline, so nothing of this
+    /// room is still holding the client when the next one opens - or when the
+    /// store is cleared.
+    tasks: TimelineTasks,
 }
 
 impl TimelineHandle {
@@ -340,18 +345,31 @@ impl TimelineHandle {
     /// only the receipt. The marker goes out either way: it is private account
     /// data, so withholding it hides nothing from anybody and only costs this
     /// account the line and the position the room opens at.
-    pub async fn mark_read(&self, receipt: bool) -> Result<(), String> {
+    /// Answers whether anything was sent: a room whose newest event this
+    /// device has not seen has nothing to point a marker at, and the caller
+    /// must not take that for "the room is read now".
+    pub async fn mark_read(&self, receipt: bool) -> Result<bool, String> {
         let Some(event_id) = self.timeline.latest_event_id().await else {
-            return Ok(());
+            return Ok(false);
         };
         let mut receipts = Receipts::new().fully_read_marker(event_id.clone());
         if receipt {
             receipts = receipts.public_read_receipt(event_id);
+        } else {
+            // Nobody is told, and the room still counts as read. The unread and
+            // notification counters anchor on `m.read` and `m.read.private`
+            // only - the fully-read marker is not among them - so sending the
+            // marker alone left the badge standing and the banner unretractable
+            // for exactly the user who asked for the quiet setting. The private
+            // receipt is what the SDK offers for this: it resets the counters
+            // and reaches nobody else.
+            receipts = receipts.private_read_receipt(event_id);
         }
         self.timeline
             .send_multiple_receipts(receipts)
             .await
-            .map_err(|error| format!("read receipt could not be sent: {error}"))
+            .map_err(|error| format!("read receipt could not be sent: {error}"))?;
+        Ok(true)
     }
 
     /// Everybody who has read up to `event_id` or past it, with the name and
@@ -414,11 +432,73 @@ impl TimelineHandle {
         Ok(readers)
     }
 
+    /// Who reacted to `event_id` with `key`, with the names the room knows
+    /// them under.
+    ///
+    /// The rows carry a count and never the people behind it - a name in every
+    /// row would be payload nobody reads - so this is asked when one reaction
+    /// is held down, exactly like the readers behind the eye. The key is the
+    /// one the row sends back (`sendKey`), not the filtered one it draws: two
+    /// keys that look alike but differ in a variation selector are two keys to
+    /// the server.
+    pub async fn reactors(&self, event_id: &str, key: &str) -> Result<Vec<Value>, String> {
+        let target = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
+        let items = self.timeline.items().await;
+        let room = self.timeline.room();
+
+        let mut users: Vec<OwnedUserId> = Vec::new();
+        let mut found = false;
+        for item in items.iter() {
+            let Some(event) = item.as_event() else {
+                continue;
+            };
+            if event.event_id() != Some(target.as_ref()) {
+                continue;
+            }
+            found = true;
+            if let TimelineItemContent::MsgLike(content) = event.content() {
+                for (reaction_key, senders) in content.reactions.iter() {
+                    if reaction_key.as_str() != key {
+                        continue;
+                    }
+                    for user in senders.keys() {
+                        users.push(user.clone());
+                    }
+                }
+            }
+            break;
+        }
+        if !found {
+            return Err("that message is not in the timeline".to_owned());
+        }
+
+        let mut reactors = Vec::with_capacity(users.len());
+        for user in users {
+            let member = room.get_member_no_sync(&user).await.ok().flatten();
+            let name = member
+                .as_ref()
+                .and_then(|member| member.display_name())
+                .map(strip_bidi)
+                .unwrap_or_else(|| user.as_str().to_owned());
+            reactors.push(json!({
+                "userId": user.as_str(),
+                "name": name,
+            }));
+        }
+        Ok(reactors)
+    }
+
     /// Takes `&self` rather than consuming the handle: the runtime keeps it
     /// behind an `Arc` so a command can work on it without holding the state
     /// lock, and an `Arc` cannot hand out ownership.
-    pub fn close(&self) {
+    pub async fn close(&self) {
         self.task.abort();
+        // The diff task was never the only one: every quote this timeline asked
+        // for runs in a task of its own, and each holds the timeline, the room
+        // and with it the open store. Aborting only the stream left them to
+        // finish in their own time - under a `reset_store` that must not have a
+        // client on the directory.
+        self.tasks.close().await;
     }
 }
 
@@ -538,6 +618,16 @@ fn reply_needing_details(item: &TimelineItem) -> Option<OwnedEventId> {
     let TimelineItemContent::MsgLike(content) = event.content() else {
         return None;
     };
+    // A row that belongs to a thread carries a quote it did not ask for: the
+    // SDK marks every threaded event as a reply to the previous one in its
+    // thread, for clients that cannot do threads, and it only suppresses that
+    // fallback in a thread-focused timeline (`controller/metadata.rs`, the
+    // `is_falling_back` branch). In the room this would mean one fetch per
+    // thread reply - the largest single consumer of the lanes above - for a
+    // quote no other client displays. The thread view shows the real replies.
+    if content.thread_root.is_some() {
+        return None;
+    }
     let in_reply_to = content.in_reply_to.as_ref()?;
     if !matches!(
         in_reply_to.event,
@@ -571,14 +661,132 @@ fn replies_needing_details(diff: &VectorDiff<Arc<TimelineItem>>) -> Vec<OwnedEve
 /// is also the last.
 const DETAIL_ATTEMPTS: u8 = 2;
 
+/// How many pinned events the diagnostic count may look at. A room may pin
+/// hundreds; the answer "N pinned, only M readable" does not get truer for
+/// every one of them, and each miss is a request.
+const PINNED_REPORT_LIMIT: usize = 20;
+
+/// How many of those may be in flight at once, per timeline.
+///
+/// One `tokio::spawn` per reply row and no limit meant a room whose first
+/// screens hold a hundred quoted messages fired a hundred requests at the
+/// homeserver the moment it opened - and the SDK's retry policy has no attempt
+/// limit and a fifteen-minute budget, so every 429 among them is nursed for
+/// that long. The app sets no `RequestConfig` anywhere, so this is the only
+/// place the number is decided. Four is enough to keep the quotes filling in
+/// while the user reads the newest ones.
+///
+/// Per timeline, not per process: a process-wide queue belongs to whoever
+/// filled it first, so the room the user just left kept the lanes and the room
+/// they are looking at waited behind it. A timeline that closes takes its own
+/// queue with it.
+const DETAIL_LANES: usize = 4;
+
+/// Everything one timeline set running, and the switch that ends it.
+///
+/// Every task spawned for a timeline holds an `Arc` on it, and through it on
+/// the room, the client and the open SQLite pool. `close()` used to abort the
+/// diff stream and nothing else, so a sign-out could delete the store
+/// directory while a quote fetch, a member load, a thread listing or a
+/// pagination was still inside it - the one situation this project has written
+/// down as never to allow. Queueing them behind four lanes made that window
+/// wider still, because a queued task can now wait a quarter of an hour.
+///
+/// So the handle owns them: the lanes for the quote fetches, the flag they
+/// check before spending a permit, and an abort handle for every task the
+/// timeline started - including the ones that have nothing to do with quotes.
+/// A new `tokio::spawn` in this file that is not registered here is the next
+/// instance of the same bug, which is why `spawn_tracked` is the only way it
+/// should be written.
+#[derive(Clone)]
+struct TimelineTasks {
+    permits: Arc<tokio::sync::Semaphore>,
+    open: Arc<AtomicBool>,
+    /// Every fetch this timeline started and that may still be running. Closing
+    /// the queue is not enough: a task that already holds a permit sits inside
+    /// the request, and the SDK will nurse a 429 for a quarter of an hour - so
+    /// up to four of them would still be holding the client, and through it the
+    /// open store, while `reset_store` runs.
+    running: Arc<tokio::sync::Mutex<Vec<tokio::task::JoinHandle<()>>>>,
+}
+
+impl TimelineTasks {
+    fn new() -> Self {
+        Self {
+            permits: Arc::new(tokio::sync::Semaphore::new(DETAIL_LANES)),
+            open: Arc::new(AtomicBool::new(true)),
+            running: Arc::new(tokio::sync::Mutex::new(Vec::new())),
+        }
+    }
+
+    /// Spawns a task that belongs to this timeline and dies with it. Pruning
+    /// happens here rather than in the tasks: one that is being aborted is in
+    /// no position to tidy up after itself.
+    ///
+    /// A closed timeline starts nothing. The stream task keeps running until
+    /// its next await point and can ask for one more quote fetch after
+    /// `close()` has already emptied the list - registered too late is the same
+    /// as not registered.
+    async fn spawn_tracked<F>(&self, future: F)
+    where
+        F: std::future::Future<Output = ()> + Send + 'static,
+    {
+        if !self.open.load(Ordering::SeqCst) {
+            return;
+        }
+        let handle = tokio::spawn(future);
+        let mut running = self.running.lock().await;
+        running.retain(|existing| !existing.is_finished());
+        running.push(handle);
+    }
+
+    /// Ends everything and waits for it to be over.
+    ///
+    /// Waiting is the point: `abort()` only marks a task, and the caller of
+    /// `close()` goes straight on to delete the store directory. What made that
+    /// safe until now was the ten-second logout in between, which is a
+    /// coincidence of ordering rather than a guarantee. Joining afterwards
+    /// turns "probably gone" into "gone".
+    ///
+    /// What this cannot reach: `paginate_backwards` only *waits* on a shared
+    /// future - the pagination itself runs in a task of the SDK's own, which
+    /// holds the event-cache store and keeps itself alive. No abort handle of
+    /// this app touches it. The window is a scheduler pass instead of minutes;
+    /// it is not shut, and pretending otherwise in this comment was the earlier
+    /// version of it.
+    async fn close(&self) {
+        self.open.store(false, Ordering::SeqCst);
+        // Wakes everything that is waiting; `acquire_owned` then fails and the
+        // task drops its handle instead of holding it for the next quarter of
+        // an hour.
+        self.permits.close();
+        let handles: Vec<_> = {
+            let mut running = self.running.lock().await;
+            running.drain(..).collect()
+        };
+        for handle in &handles {
+            handle.abort();
+        }
+        for handle in handles {
+            // The abort is what ends it; this only waits for the drop to have
+            // happened, so the `Arc` on the client is really gone.
+            let _ = handle.await;
+        }
+    }
+}
+
 /// Spawns a detail fetch for each reply target that has attempts left.
 /// Failures go out as `timeline.detailError` (truncated id, scrubbed error)
 /// so they land in the journal instead of vanishing.
-fn request_reply_details(
-    ids: impl IntoIterator<Item = OwnedEventId>,
+async fn request_reply_details(
+    // A vector rather than an iterator: this is an async function now, and a
+    // borrowed iterator in one turns into a lifetime the spawned task cannot
+    // satisfy. The lists are short - the reply rows of one diff.
+    ids: Vec<OwnedEventId>,
     requested: &mut HashMap<OwnedEventId, u8>,
     timeline: &Arc<matrix_sdk_ui::timeline::Timeline>,
     sink: &Arc<Sink>,
+    tasks: &TimelineTasks,
 ) {
     for id in ids {
         let attempts = requested.entry(id.clone()).or_insert(0);
@@ -588,7 +796,19 @@ fn request_reply_details(
         *attempts += 1;
         let source = timeline.clone();
         let sink = sink.clone();
-        tokio::spawn(async move {
+        let inner = tasks.clone();
+        tasks.spawn_tracked(async move {
+            // Queued, not dropped: every quote still gets its turn, four at a
+            // time. The permit is held for the request and released with it.
+            // A closed timeline fails the acquire, and a task that was already
+            // holding one checks before it spends it - either way what it holds
+            // is dropped instead of kept alive across a sign-out.
+            let Ok(_permit) = inner.permits.clone().acquire_owned().await else {
+                return;
+            };
+            if !inner.open.load(Ordering::SeqCst) {
+                return;
+            }
             if let Err(error) = source.fetch_details_for_event(&id).await {
                 // On a char boundary: `truncate` counts bytes and would panic
                 // on an id whose server part is not ASCII.
@@ -611,7 +831,8 @@ fn request_reply_details(
                     json!({ "eventId": short, "error": class }),
                 ));
             }
-        });
+        })
+        .await;
     }
 }
 
@@ -1224,20 +1445,28 @@ pub async fn open(
 
     let timeline = if live {
         room.timeline_builder()
-            // A thread's replies belong in the thread, not twice in the room -
-            // the SDK words the condition for this flag as "when the client can
-            // create Thread-focused timelines from the thread roots
-            // themselves", and since 0.24.0 this one can.
+            // A thread's replies stand in the room as well, and yes, that is
+            // twice: once inline and once inside the thread they belong to.
+            // Hiding them is the tidier arrangement, and it was this one
+            // until the price below was measured.
             //
-            // Hiding them makes the marker on the root the only way in, so the
-            // marker may not depend on luck. It hangs on the SDK's
-            // `ThreadSummary`, and a root that was already in the store before
-            // threading was switched on carries none - measured on the device:
-            // hidden replies, no marker, a conversation with no door. The
-            // roots are therefore asked of the server as well (`list_threads`,
-            // below), and that answer decides.
+            // The price: the SDK counts no threaded event towards a room's
+            // unread, notification and mention counters - it returns before
+            // computing them (`event_cache/caches/read_receipts.rs`, the
+            // thread-root check) - and those counters are the whole of this
+            // app's badge and banner. Hidden *and* uncounted means a mention
+            // written into a thread reaches the user nowhere at all: no badge,
+            // no banner, no sound, and nothing in the room to see either. The
+            // only trace is a number on the root's marker, for whoever thinks
+            // to look.
+            //
+            // Duplication is a blemish. A message that arrives with no sign of
+            // itself is a loss. So they stay visible until the counting the SDK
+            // offers for this - thread subscriptions, per-thread receipts,
+            // `LatestEvents::for_thread` - is actually built; that is a package
+            // of its own, not a flag.
             .with_focus(TimelineFocus::Live {
-                hide_threaded_events: true,
+                hide_threaded_events: false,
             })
             .track_read_marker_and_receipts(tracking)
             .with_internal_id_prefix(prefix)
@@ -1268,6 +1497,10 @@ pub async fn open(
             .map_err(|error| format!("timeline unavailable: {error}"))?
     };
     let timeline = Arc::new(timeline);
+    // Everything this timeline spawns is registered here and dies with it -
+    // see `TimelineTasks`. Declared before the first spawn on purpose: a task
+    // started above this line would be one nobody can stop.
+    let detail_tasks = TimelineTasks::new();
 
     // Owned: the stream task outlives this call, and every row it encodes
     // needs to know which receipt is ours so it is not counted as a reader.
@@ -1308,9 +1541,10 @@ pub async fn open(
     // event or through this fetch when the SDK marks the list as unsynced.
     if !room.are_members_synced() {
         let timeline = timeline.clone();
-        tokio::spawn(async move {
+        detail_tasks.spawn_tracked(async move {
             timeline.fetch_members().await;
-        });
+        })
+        .await;
     }
 
     // Which events in this room are thread roots, from the server rather than
@@ -1327,7 +1561,7 @@ pub async fn open(
         let thread_room = room.clone();
         let thread_sink = sink.clone();
         let thread_room_id = room_id.to_owned();
-        tokio::spawn(async move {
+        detail_tasks.spawn_tracked(async move {
             let roots = match thread_room
                 .list_threads(matrix_sdk::room::ListThreadsOptions::default())
                 .await
@@ -1360,7 +1594,8 @@ pub async fn open(
                 "timeline.threads",
                 json!({ "roomId": thread_room_id, "roots": entries }),
             ));
-        });
+        })
+        .await;
     }
 
     // The room's pinned messages, so the UI can show a banner and mark the
@@ -1370,10 +1605,10 @@ pub async fn open(
         let banner_room = room.clone();
         let banner_sink = sink.clone();
         let banner_room_id = room_id.to_owned();
-        tokio::spawn(async move {
+        detail_tasks.spawn_tracked(async move {
             let ids = banner_room.pinned_event_ids().unwrap_or_default();
             let preview = pinned_preview(&banner_room, &ids).await;
-            let (loaded, error) = pinned_load_report(&banner_room, &ids).await;
+            let (loaded, checked, error) = pinned_load_report(&banner_room, &ids).await;
             let ids: Vec<String> = ids.iter().map(|id| id.to_string()).collect();
             banner_sink.emit(event(
                 "timeline.pinned",
@@ -1382,10 +1617,16 @@ pub async fn open(
                     "eventIds": ids,
                     "preview": preview,
                     "loaded": loaded,
+                    // How many were looked at, which since the cap is not the
+                    // same as how many there are. Comparing `loaded` against the
+                    // full list made every room with more than the cap report a
+                    // failure it never had.
+                    "checked": checked,
                     "loadError": error,
                 }),
             ));
-        });
+        })
+        .await;
     }
 
     // Whether this room was replaced by a newer one. Read from the room's own
@@ -1403,6 +1644,7 @@ pub async fn open(
     }
 
     let room_id_owned = room_id.to_owned();
+    let task_tasks = detail_tasks.clone();
     let detail_source = timeline.clone();
     let initial_empty = initial.is_empty();
     let task = tokio::spawn(async move {
@@ -1416,11 +1658,13 @@ pub async fn open(
         // reply rows never pass through the stream — their quotes stayed
         // empty for good.
         request_reply_details(
-            initial.iter().filter_map(|item| reply_needing_details(item)),
+            initial.iter().filter_map(|item| reply_needing_details(item)).collect(),
             &mut requested,
             &detail_source,
             &sink,
-        );
+            &task_tasks,
+        )
+        .await;
 
         while let Some(diffs) = stream.next().await {
             let ops: Vec<Value> = diffs.iter().map(|diff| encode(diff, own.as_deref())).collect();
@@ -1436,11 +1680,13 @@ pub async fn open(
             // both its lines empty — for good, not "until it arrives", which is
             // what the comment on `reply_info` used to promise.
             request_reply_details(
-                diffs.iter().flat_map(replies_needing_details),
+                diffs.iter().flat_map(replies_needing_details).collect(),
                 &mut requested,
                 &detail_source,
                 &sink,
-            );
+                &task_tasks,
+            )
+            .await;
         }
     });
 
@@ -1453,9 +1699,10 @@ pub async fn open(
     // Focused views load their own content and do not paginate this way.
     if live && initial_empty {
         let timeline = timeline.clone();
-        tokio::spawn(async move {
+        detail_tasks.spawn_tracked(async move {
             let _ = timeline.paginate_backwards(PAGE_SIZE).await;
-        });
+        })
+        .await;
     }
 
     Ok(TimelineHandle {
@@ -1467,6 +1714,7 @@ pub async fn open(
         retried_from_end: AtomicBool::new(false),
         thread_root: String::new(),
         receipts,
+        tasks: detail_tasks,
     })
 }
 
@@ -1497,6 +1745,10 @@ pub async fn open_thread(
         .await
         .map_err(|error| format!("thread unavailable: {error}"))?;
     let timeline = Arc::new(timeline);
+    // Everything this timeline spawns is registered here and dies with it -
+    // see `TimelineTasks`. Declared before the first spawn on purpose: a task
+    // started above this line would be one nobody can stop.
+    let detail_tasks = TimelineTasks::new();
 
     // Owned: the stream task outlives this call, and every row it encodes
     // needs to know which receipt is ours so it is not counted as a reader.
@@ -1517,17 +1769,20 @@ pub async fn open_thread(
     let room_id_owned = room_id.to_owned();
     let root_owned = root.to_owned();
     let token_owned = token.to_owned();
+    let task_tasks = detail_tasks.clone();
     let detail_source = timeline.clone();
     let initial_empty = initial.is_empty();
     let error_sink = sink.clone();
     let task = tokio::spawn(async move {
         let mut requested: HashMap<OwnedEventId, u8> = HashMap::new();
         request_reply_details(
-            initial.iter().filter_map(|item| reply_needing_details(item)),
+            initial.iter().filter_map(|item| reply_needing_details(item)).collect(),
             &mut requested,
             &detail_source,
             &sink,
-        );
+            &task_tasks,
+        )
+        .await;
         while let Some(diffs) = stream.next().await {
             let ops: Vec<Value> = diffs.iter().map(|diff| encode(diff, own.as_deref())).collect();
             sink.emit(event(
@@ -1540,11 +1795,13 @@ pub async fn open_thread(
                 }),
             ));
             request_reply_details(
-                diffs.iter().flat_map(replies_needing_details),
+                diffs.iter().flat_map(replies_needing_details).collect(),
                 &mut requested,
                 &detail_source,
                 &sink,
-            );
+                &task_tasks,
+            )
+            .await;
         }
     });
 
@@ -1555,7 +1812,7 @@ pub async fn open_thread(
     if initial_empty {
         let timeline = timeline.clone();
         let root_owned = root.to_owned();
-        tokio::spawn(async move {
+        detail_tasks.spawn_tracked(async move {
             if let Err(error) = timeline.paginate_backwards(PAGE_SIZE).await {
                 error_sink.emit(event(
                     "thread.error",
@@ -1565,7 +1822,8 @@ pub async fn open_thread(
                     }),
                 ));
             }
-        });
+        })
+        .await;
     }
 
     Ok(TimelineHandle {
@@ -1577,6 +1835,7 @@ pub async fn open_thread(
         retried_from_end: AtomicBool::new(true),
         thread_root: root.to_owned(),
         receipts: false,
+        tasks: detail_tasks,
     })
 }
 
@@ -1598,11 +1857,18 @@ pub async fn open_thread(
 async fn pinned_load_report(
     room: &matrix_sdk::Room,
     ids: &[matrix_sdk::ruma::OwnedEventId],
-) -> (usize, String) {
+) -> (usize, usize, String) {
     let mut loaded = 0;
+    let mut checked = 0;
     let mut first_error = String::new();
-    for id in ids {
-        match room.event(id, None).await {
+    // Bounded, and out of the cache where the cache has it. This runs on every
+    // opening of the room, and `Room::event` always asks the server: a room
+    // with twenty pins made twenty requests each time it was entered, for a
+    // line in the journal. `load_or_fetch_event` answers from the event cache
+    // first, and after the first count the number is not news any more.
+    for id in ids.iter().take(PINNED_REPORT_LIMIT) {
+        checked += 1;
+        match room.load_or_fetch_event(id, None).await {
             Ok(_) => loaded += 1,
             Err(error) if first_error.is_empty() => {
                 first_error = scrub_ids(&error.to_string());
@@ -1610,7 +1876,7 @@ async fn pinned_load_report(
             Err(_) => {}
         }
     }
-    (loaded, first_error)
+    (loaded, checked, first_error)
 }
 
 /// The body of the newest pinned message, for the banner. Fetched from the
@@ -1623,7 +1889,9 @@ async fn pinned_preview(
     let Some(last) = ids.last() else {
         return String::new();
     };
-    let Ok(fetched) = room.event(last, None).await else {
+    // Cache first, for the same reason the report above uses it: the banner is
+    // rebuilt on every opening of the room.
+    let Ok(fetched) = room.load_or_fetch_event(last, None).await else {
         return String::new();
     };
     let Ok(value) = serde_json::from_str::<Value>(fetched.raw().json().get()) else {

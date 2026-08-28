@@ -249,6 +249,14 @@
         <source>Remove emoji pictures</source>
         <translation>Odstrani sličice emodži</translation>
     </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Skrij tipkovnico po pošiljanju</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Vklopljeno: tipkovnica se zapre, brž ko je sporočilo poslano, in pogovor je spet ves viden. Izklopljeno: ostane odprta za naslednje sporočilo.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -768,6 +776,10 @@
     <message>
         <source>Could not save</source>
         <translation>Shranjevanje ni uspelo</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Te priloge ni bilo mogoče naložiti</translation>
     </message>
 </context>
 <context>
@@ -1320,14 +1332,6 @@
         <translation>V skupinski sobi klic vidijo vsi. Seznam tega ne prekliče.</translation>
     </message>
     <message>
-        <source>Off, an offer with video is answered as a voice call.</source>
-        <translation>Izklopljeno: ponudba z videom se sprejme kot glasovni klic.</translation>
-    </message>
-    <message>
-        <source>Off keeps your reading to yourself, in both directions.</source>
-        <translation>Izklopljeno obdrži tvoje branje zase, v obe smeri.</translation>
-    </message>
-    <message>
         <source>They may always call. The list stays on this device.</source>
         <translation>Vedno smejo klicati. Seznam ostane na tej napravi.</translation>
     </message>
@@ -1376,10 +1380,6 @@
         <translation>Izbriši medije zdaj</translation>
     </message>
     <message>
-        <source>Messages and keys are stored encrypted. Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
-        <translation>Sporočila in ključi so shranjeni šifrirano. Odprte slike, videoposnetki in dokumenti ne — ležijo v napravi kot tisti v galeriji, berljivi vsakomur, ki jo ima.</translation>
-    </message>
-    <message>
         <source>Delete downloaded media</source>
         <translation>Brisanje prenesenih medijev</translation>
     </message>
@@ -1418,6 +1418,30 @@
     <message>
         <source>On, the same person can only ring again after a short pause. It also delays a second, genuine attempt.</source>
         <translation>Vklopljeno: ista oseba lahko znova pokliče šele po kratkem premoru. To zadrži tudi drugi, resnični poskus.</translation>
+    </message>
+    <message>
+        <source>Messages and keys are stored encrypted.</source>
+        <translation>Sporočila in ključi so shranjeni šifrirano.</translation>
+    </message>
+    <message>
+        <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
+        <translation>Sporočila in ključi ležijo na tej napravi nešifrirani — stran za šifriranje pove, zakaj in kaj se da storiti.</translation>
+    </message>
+    <message>
+        <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
+        <translation>Odprte slike, videoposnetki in dokumenti ne — ležijo v napravi kot tisti v galeriji, berljivi vsakomur, ki jo ima.</translation>
+    </message>
+    <message>
+        <source>Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.</source>
+        <translation>Izklopljeno: ponudba z videom se sprejme kot glasovni klic — tvoja kamera ostane zaprta in slika ni prikazana. Druga stran jo lahko vseeno pošilja, ta telefon pa jo zavrže.</translation>
+    </message>
+    <message>
+        <source>Off, nobody is told how far you have read. What others read is the setting below.</source>
+        <translation>Izklopljeno: nihče ne izve, kako daleč si prebral. Kaj so prebrali drugi, določa nastavitev spodaj.</translation>
+    </message>
+    <message>
+        <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
+        <translation>Seznam je šifriran in njegov ključ ni na voljo. Znova bo berljiv, ko bo naprava odklenjena in program znova zagnan.</translation>
     </message>
 </context>
 <context>
@@ -1881,14 +1905,6 @@
         <translation>Povabilo</translation>
     </message>
     <message>
-        <source>End-to-end encrypted</source>
-        <translation>Šifrirana od konca do konca</translation>
-    </message>
-    <message>
-        <source>Not encrypted</source>
-        <translation>Ni šifrirana</translation>
-    </message>
-    <message>
         <source>This room has been replaced</source>
         <translation>Ta soba je bila zamenjana</translation>
     </message>
@@ -2097,6 +2113,22 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Pristnost ni potrjena</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Zavrženje</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Brisanje</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Ta odziv skriva besedilo in ni bil poslan</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Slika</translation>
     </message>
 </context>
 <context>
@@ -2446,6 +2478,10 @@
     <message>
         <source>Save</source>
         <translation>Shrani</translation>
+    </message>
+    <message>
+        <source>This attachment could not be loaded</source>
+        <translation>Te priloge ni bilo mogoče naložiti</translation>
     </message>
 </context>
 <context>

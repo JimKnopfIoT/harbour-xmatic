@@ -55,6 +55,28 @@ use crate::text::strip_bidi;
 const PAGE_SIZE: usize = 50;
 
 /// Everything needed to keep the list running and to shut it down again.
+/// Tasks the room list started that hold a client and would otherwise outlive
+/// it. Same reason as `TimelineTasks` in `timeline.rs`: a task holding a client
+/// keeps the SQLite pool open, and a sign-out deletes the directory under it.
+static SIDE_TASKS: std::sync::Mutex<Vec<tokio::task::AbortHandle>> =
+    std::sync::Mutex::new(Vec::new());
+
+/// Registers such a task and forgets the ones that have finished.
+fn track_side_task(handle: tokio::task::AbortHandle) {
+    let mut running = SIDE_TASKS.lock().unwrap_or_else(|error| error.into_inner());
+    running.retain(|existing| !existing.is_finished());
+    running.push(handle);
+}
+
+/// Ends them. Called from `stop()`, which the sign-out runs before the store is
+/// cleared.
+fn stop_side_tasks() {
+    let mut running = SIDE_TASKS.lock().unwrap_or_else(|error| error.into_inner());
+    for handle in running.drain(..) {
+        handle.abort();
+    }
+}
+
 pub struct RoomListHandle {
     sync: Arc<SyncService>,
     filters: mpsc::UnboundedSender<String>,
@@ -87,6 +109,10 @@ impl RoomListHandle {
         self.task.abort();
         self.states.abort();
         self.queue.abort();
+        // The two loose ones as well: the room-name lookup holds a `Room` and
+        // the sliding-sync probe a `Client`, and both outlived every handle
+        // this struct knows about.
+        stop_side_tasks();
         self.sync.stop().await;
     }
 }
@@ -155,7 +181,7 @@ pub async fn resolve(client: &Client, address: &str) -> Result<Value, String> {
 /// A room whose latest event this device has not seen as a remote event - an
 /// empty room, or one that only holds a local echo - has nothing to point a
 /// receipt at, and answers that it did nothing rather than failing.
-pub async fn mark_read(client: &Client, room_id: &str) -> Result<bool, String> {
+pub async fn mark_read(client: &Client, room_id: &str, receipt: bool) -> Result<bool, String> {
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let room = client
         .get_room(&parsed)
@@ -169,13 +195,23 @@ pub async fn mark_read(client: &Client, room_id: &str) -> Result<bool, String> {
     };
     let event_id = parsed_event.event_id().to_owned();
 
-    // The receipt and the fully-read marker together, in one request: the
-    // marker is what the room opens at next time.
-    room.send_multiple_receipts(
-        Receipts::new()
-            .public_read_receipt(event_id.clone())
-            .fully_read_marker(event_id),
-    )
+    // The marker always, the public receipt only where the user allows it -
+    // the same rule the room's own "mark read" follows. This path used to send
+    // it unconditionally, so the privacy switch held in the room and was
+    // ignored by the chat list's own entry, which is where it is easiest to
+    // reach. The marker is private account data and is what the room opens at
+    // next time, so it goes either way.
+    let mut receipts = Receipts::new().fully_read_marker(event_id.clone());
+    if receipt {
+        receipts = receipts.public_read_receipt(event_id);
+    } else {
+        // The private receipt for the same reason the room's path sends one:
+        // the counters hang off the receipts, not off the marker, so without
+        // it the badge this entry exists to clear would come back with the
+        // next diff.
+        receipts = receipts.private_read_receipt(event_id);
+    }
+    room.send_multiple_receipts(receipts)
     .await
     .map_err(|error| format!("could not mark it read: {}", scrub_ids(&error.to_string())))?;
     // The flag is what a manual "unread" sets; a receipt alone would leave it
@@ -300,7 +336,7 @@ fn display_name(item: &RoomListItem) -> String {
     if !asked {
         let room = std::ops::Deref::deref(item).clone();
         let room_id = item.room_id().to_string();
-        tokio::spawn(async move {
+        let handle = tokio::spawn(async move {
             if room.display_name().await.is_err() {
                 // Marked before the attempt so two syncs do not both ask; on
                 // failure the mark goes, or one bad moment costs the room its
@@ -312,6 +348,7 @@ fn display_name(item: &RoomListItem) -> String {
                 }
             }
         });
+        track_side_task(handle.abort_handle());
     }
     String::new()
 }
@@ -435,7 +472,7 @@ async fn sliding_sync_supported(client: &Client) -> Result<bool, String> {
 /// Reports the outcome of that question as `sync.support`, so the UI can say
 /// "this server cannot do it" instead of showing a network error forever.
 fn spawn_support_check(client: Client, sink: Arc<Sink>) {
-    tokio::spawn(async move {
+    let handle = tokio::spawn(async move {
         let data = match sliding_sync_supported(&client).await {
             Ok(supported) => json!({ "supported": supported }),
             // Could not ask — no verdict. The usual reason is that there is
@@ -444,6 +481,7 @@ fn spawn_support_check(client: Client, sink: Arc<Sink>) {
         };
         sink.emit(event("sync.support", data));
     });
+    track_side_task(handle.abort_handle());
 }
 
 pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, String> {
