@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.25.0
+Version:    0.25.1
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -93,6 +93,13 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Aug 28 2026 harbour-xmatic contributors 0.25.1-1
+- The room's name strip keeps out from under a camera cutout. On a phone with a
+  wide one the notch cut through the room name at the height of a lower-case
+  letter, and the padlock in front of it was halved. Every other page in the app
+  uses Silica's own header, which has kept that margin all along; this strip is
+  the room's own and did not inherit it. It now follows the same rule, and on a
+  phone without a cutout the margin is zero.
 * Thu Aug 27 2026 harbour-xmatic contributors 0.25.0-1
 - The padlock at the top of a room carries no colour any more. Red and green
   over the room's name shouted louder than everything else in the strip; the
