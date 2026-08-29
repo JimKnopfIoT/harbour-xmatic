@@ -2173,6 +2173,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Cheia de recuperare a fost acceptată — se finalizează. Poate dura un moment.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Pentru acest cont încă nu există recuperare. Configurează o copie a cheilor pentru a crea una.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

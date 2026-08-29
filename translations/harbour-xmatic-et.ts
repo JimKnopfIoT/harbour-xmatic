@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Taastevõti vastu võetud — lõpetatakse. See võib võtta hetke.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Sellel kontol ei ole veel taastet. Seadista võtmete varukoopia, et see tekiks.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

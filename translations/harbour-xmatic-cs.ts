@@ -2173,6 +2173,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Obnovovací klíč přijat — dokončuje se. Může to chvíli trvat.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Pro tento účet zatím není obnovení. Nastav zálohu klíčů, aby vzniklo.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

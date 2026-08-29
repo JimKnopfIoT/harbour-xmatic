@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Ключът за възстановяване е приет — завършва се. Това може да отнеме момент.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>За този профил още няма възстановяване. Настрой архив на ключовете, за да се създаде.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

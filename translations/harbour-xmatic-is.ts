@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Endurheimtarlykill samþykktur — verið að ljúka. Það getur tekið augnablik.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Það er engin endurheimt fyrir þennan reikning enn. Settu upp lyklaafrit til að búa til eina.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

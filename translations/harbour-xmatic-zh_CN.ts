@@ -799,49 +799,49 @@
         <translation>验证此用户</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="141"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="152"/>
         <source>Unlock backup</source>
         <translation>解锁备份</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="150"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="163"/>
         <source>Enter the recovery key from your other client. This device then fetches the room keys it is missing, and older messages become readable.</source>
         <translation>输入你在其他客户端的恢复密钥。此设备随后会取回缺失的聊天室密钥，旧消息就能读取了。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="157"/>
-        <location filename="../qml/pages/EncryptionPage.qml" line="158"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="172"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="173"/>
         <source>Recovery key</source>
         <translation>恢复密钥</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="170"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="186"/>
         <source>Unlock</source>
         <translation>解锁</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="176"/>
-        <location filename="../qml/pages/EncryptionPage.qml" line="193"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="192"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="209"/>
         <source>Set up backup</source>
         <translation>设置备份</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="187"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="203"/>
         <source>Creates a backup of your room keys on the server, encrypted with a recovery key that only you hold. Without it, reinstalling loses every encrypted message.</source>
         <translation>在服务器上创建聊天室密钥的备份，用只有你持有的恢复密钥加密。没有它，重新安装会丢失所有加密消息。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="206"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="222"/>
         <source>Your recovery key</source>
         <translation>你的恢复密钥</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="225"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="241"/>
         <source>Write this down now. It is shown only once and is not stored on this device.</source>
         <translation>现在就把它记下来。它只显示一次，并且不会保存在此设备上。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="230"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="246"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
@@ -2651,47 +2651,52 @@
         <translation>恢复密钥已接受——正在完成。这可能需要片刻。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="44"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="50"/>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>此账户还没有恢复。设置密钥备份即可创建一个。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecurityRows.qml" line="52"/>
         <source>Enter your recovery key to unlock the backup on this device.</source>
         <translation>输入你的恢复密钥，以在本设备上解锁备份。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="49"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="57"/>
         <source>Cross-signing</source>
         <translation>交叉签名</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="52"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="60"/>
         <source>This device is signed as yours.</source>
         <translation>本设备已签名为你的设备。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="53"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="61"/>
         <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
         <translation>他人看到本设备为未验证。恢复密钥或来自另一台设备的验证可以解决。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="57"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="65"/>
         <source>Local storage</source>
         <translation>本地存储</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="62"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="70"/>
         <source>Session and message database are encrypted on this device.</source>
         <translation>会话和消息数据库在本设备上已加密。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="65"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="73"/>
         <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
         <translation>它们未加密，因为它们是在本应用还不能加密它们之前创建的。已有的数据库无法事后加密。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="68"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="76"/>
         <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
         <translation>它们未加密，因为系统的安全存储没有交出密钥。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="69"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="77"/>
         <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
         <translation>它们未加密，因为本系统缺少保管加密密钥的服务。</translation>
     </message>
@@ -2699,42 +2704,42 @@
 <context>
     <name>SecurityStatusPage</name>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="82"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="95"/>
         <source>Security</source>
         <translation>安全</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="90"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="103"/>
         <source>Something on this device is not in order yet. You can settle it now or later.</source>
         <translation>本设备上还有一处不妥。你可以现在处理，也可以稍后处理。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="110"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="128"/>
         <source>Enter recovery key</source>
         <translation>输入恢复密钥</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="111"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="129"/>
         <source>Set up backup now</source>
         <translation>立即设置备份</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="118"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="136"/>
         <source>Encrypt storage now</source>
         <translation>立即加密存储</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="126"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="144"/>
         <source>Why is that</source>
         <translation>这是为什么</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="132"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="150"/>
         <source>Later</source>
         <translation>稍后</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="142"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="160"/>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>这些内容你都能在“账户 › 加密”下重新找到。</translation>
     </message>

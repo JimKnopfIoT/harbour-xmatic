@@ -2173,6 +2173,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Atkūrimo raktas priimtas — baigiama. Tai gali užtrukti akimirką.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Šiai paskyrai atkūrimo dar nėra. Sukurk raktų atsarginę kopiją, kad jis atsirastų.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

@@ -2176,6 +2176,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Obnovitveni ključ sprejet — zaključuje se. To lahko traja trenutek.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Za ta račun še ni obnovitve. Nastavi varnostno kopijo ključev, da jo ustvariš.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

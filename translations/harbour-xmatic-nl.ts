@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Herstelsleutel geaccepteerd — wordt afgerond. Dat kan even duren.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Voor dit account bestaat nog geen herstel. Stel een sleutelback-up in om er een te maken.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

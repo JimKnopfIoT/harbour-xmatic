@@ -116,6 +116,15 @@ pub async fn status(client: &Client) -> Value {
 /// Unlocks the backup with the user's recovery key or passphrase and imports
 /// everything stored under it.
 pub async fn recover(client: &Client, key: &str) -> Result<(), String> {
+    // Asked before the key is offered to anything. An account with no secret
+    // storage has nothing a recovery key could open, and the SDK answers that
+    // with "the info about the secret key could not have been found in the
+    // account data of the user" - true, and not a sentence to put in front of
+    // somebody who has just typed out a key. The UI hides the field in this
+    // state; this is the second half of the same guard, for every other caller.
+    if client.encryption().recovery().state() == RecoveryState::Disabled {
+        return Err("this account has no key backup to unlock; set one up first".to_owned());
+    }
     client
         .encryption()
         .recovery()

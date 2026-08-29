@@ -2167,6 +2167,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Helyreállítási kulcs elfogadva — befejezés folyamatban. Ez eltarthat egy pillanatig.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Ehhez a fiókhoz még nincs helyreállítás. Állíts be kulcsmentést, hogy létrejöjjön.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

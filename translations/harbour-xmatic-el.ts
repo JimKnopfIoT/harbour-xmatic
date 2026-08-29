@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Το κλειδί ανάκτησης έγινε δεκτό — ολοκληρώνεται. Μπορεί να πάρει μια στιγμή.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Για αυτόν τον λογαριασμό δεν υπάρχει ακόμη ανάκτηση. Ρύθμισε ένα αντίγραφο κλειδιών για να δημιουργηθεί.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

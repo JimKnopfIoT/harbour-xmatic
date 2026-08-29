@@ -2173,6 +2173,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Ключ восстановления принят — завершается. Это может занять момент.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Для этой учётной записи восстановления пока нет. Настрой резервную копию ключей, чтобы оно появилось.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

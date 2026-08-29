@@ -2173,6 +2173,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Ključ za oporavak prihvaćen — dovršava se. To može potrajati trenutak.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Za ovaj račun još nema oporavka. Postavi sigurnosnu kopiju ključeva da ga stvoriš.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
