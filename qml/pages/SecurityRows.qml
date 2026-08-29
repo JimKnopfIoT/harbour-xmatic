@@ -41,6 +41,14 @@ Column {
             if (matrix.recoverySettling) {
                 return qsTr("Recovery key accepted — finishing. This can take a moment.")
             }
+            // "Not set up" and "not unlocked here" are different situations and
+            // want opposite advice. Telling somebody with no recovery at all to
+            // enter their recovery key sends them looking for something that
+            // does not exist - and the line above says red, which is the honest
+            // colour for it.
+            if (matrix.encryptionStatus.recovery === "disabled") {
+                return qsTr("There is no recovery for this account yet. Set up a key backup to create one.")
+            }
             return qsTr("Enter your recovery key to unlock the backup on this device.")
         }
     }

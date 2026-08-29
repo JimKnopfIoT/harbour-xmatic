@@ -2176,6 +2176,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Iċ-ċavetta tal-irkupru ġiet aċċettata — qed titlesta. Dan jista&apos; jieħu mument.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Għal dan il-kont għadu m&apos;hemmx irkupru. Issettja kopja taċ-ċwievet biex toħloq wieħed.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

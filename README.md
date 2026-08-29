@@ -73,13 +73,19 @@ repository.
 
 | | | |
 |---|---|---|
-| ![A conversation](screenshots/conversation.jpg) | ![Colours](screenshots/appearance.jpg) | ![Encryption](screenshots/encryption.jpg) |
-| A conversation: replies, reactions, pinned message, pictures | Every bubble, name and text colour is yours to set | What is safe on this device, in four lines |
-| ![Privacy](screenshots/privacy.jpg) | ![Languages](screenshots/languages.jpg) | ![Room directory](screenshots/directory.jpg) |
-| What others learn, and what stays here | Twenty-nine languages, switchable in the app | Public rooms, from your server or another |
+| ![The room list](screenshots/09-rooms.jpg) | ![A conversation](screenshots/10-conversation.jpg) | ![The room's menu](screenshots/11-room-menu.jpg) |
+| The room list, with search | Replies, reactions, a pinned message and a picture | What a room offers, including a call |
+| ![Room info](screenshots/12-room-info.jpg) | ![Starting something](screenshots/13-rooms-menu.jpg) | ![The room directory](screenshots/14-directory.jpg) |
+| A room's own settings and address | New chat, new room, join, discover | Public rooms, from your server or another |
+| ![Security at a glance](screenshots/01-security-status.jpg) | ![Encryption](screenshots/02-encryption.jpg) | ![The account](screenshots/03-account.jpg) |
+| What is not in order yet, and what to do about it | Backup, recovery, cross-signing, local storage | The account, the device and this app |
+| ![Colours](screenshots/04-appearance-colours.jpg) | ![More appearance](screenshots/05-appearance-options.jpg) | ![Languages](screenshots/08-languages.jpg) |
+| Every bubble, name and text colour is yours to set | Opacity, the keyboard, reactions as pictures | Twenty-nine languages, switchable in the app |
+| ![Privacy](screenshots/06-privacy.jpg) | ![On this device](screenshots/07-privacy-device.jpg) | |
+| Who may call, and what others learn | What stays here, and for how long | |
 
-Taken on a phone with a camera cutout, on two different ambiences — the app
-takes its colours from the one you use.
+Taken on a phone with a camera cutout, across several ambiences — the app takes
+its colours from the one you use.
 
 ## What does not
 

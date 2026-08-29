@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.26.1
+Version:    0.26.2
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -104,6 +104,20 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Aug 29 2026 harbour-xmatic contributors 0.26.2-1
+- The page that says what is not yet in order was itself not in order. Its
+  frame ran along the very top edge of the display and so passed under a camera
+  cutout, and it stopped where the text stopped instead of reaching the bottom
+  of the screen - a third of the display below it, empty, which reads as a
+  broken layout. Both fixed.
+- It also asked for a recovery key from accounts that have none. "Not set up"
+  and "not unlocked on this device" are different situations and want opposite
+  advice; the page now says which of the two it is, and offers to set a backup
+  up rather than pointing at a key that cannot exist.
+- The encryption page did the same in its own way: "Unlock backup" stood there
+  whatever the account looked like, and an attempt then came back with the
+  library's own words about account data. That section is only shown where
+  there is something to unlock.
 * Sat Aug 29 2026 harbour-xmatic contributors 0.26.1-1
 - A picture with a caption could go missing. Sending one while an earlier
   message was still on its way, on a slow connection, ended with the send button

@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Chiave di recupero accettata — completamento in corso. Può richiedere un momento.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Per questo account non esiste ancora un recupero. Configura un backup delle chiavi per crearne uno.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

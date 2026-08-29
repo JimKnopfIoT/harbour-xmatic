@@ -137,14 +137,27 @@ Page {
                 onClicked: page.verifyUser()
             }
 
+            // Only where there is something to unlock. An account with no
+            // secret storage has no recovery key to enter, and this section
+            // invited one anyway - the attempt then came back with the
+            // library's own words, "the info about the secret key could not
+            // have been found in the account data of the user", which is not a
+            // sentence anybody should have to read. Shown while the state is
+            // unknown: hiding the way in on a failed look is worse than
+            // offering it in vain.
+            readonly property bool canUnlockBackup:
+                matrix.encryptionStatus.recovery !== "disabled"
+
             SectionHeader {
                 text: qsTr("Unlock backup")
+                visible: column.canUnlockBackup
             }
 
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 wrapMode: Text.Wrap
+                visible: column.canUnlockBackup
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor
                 text: qsTr("Enter the recovery key from your other client. This device then fetches the room keys it is missing, and older messages become readable.")
@@ -152,6 +165,8 @@ Page {
 
             TextField {
                 id: recoveryField
+
+                visible: column.canUnlockBackup
 
                 width: parent.width
                 label: qsTr("Recovery key")
@@ -167,6 +182,7 @@ Page {
 
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
+                visible: column.canUnlockBackup
                 label: qsTr("Unlock")
                 enabled: !matrix.encryptionBusy && recoveryField.text.trim().length > 0
                 onClicked: page.useRecoveryKey(recoveryField.text)

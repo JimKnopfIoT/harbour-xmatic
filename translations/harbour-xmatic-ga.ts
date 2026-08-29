@@ -2173,6 +2173,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Glacadh leis an eochair athshlánaithe — á chríochnú. Féadfaidh sé nóiméad a thógáil.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Níl athshlánú ann don chuntas seo fós. Socraigh cúltaca eochracha chun ceann a chruthú.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

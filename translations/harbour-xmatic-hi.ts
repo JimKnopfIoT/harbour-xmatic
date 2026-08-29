@@ -801,49 +801,49 @@
         <translation>इस उपयोगकर्ता को सत्यापित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="141"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="152"/>
         <source>Unlock backup</source>
         <translation>बैकअप खोलें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="150"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="163"/>
         <source>Enter the recovery key from your other client. This device then fetches the room keys it is missing, and older messages become readable.</source>
         <translation>अपने दूसरे क्लाइंट से रिकवरी कुंजी दर्ज करो। यह उपकरण फिर वे कक्ष-कुंजियाँ ले आता है जो उसके पास नहीं हैं, और पुराने संदेश पढ़े जा सकते हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="157"/>
-        <location filename="../qml/pages/EncryptionPage.qml" line="158"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="172"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="173"/>
         <source>Recovery key</source>
         <translation>रिकवरी कुंजी</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="170"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="186"/>
         <source>Unlock</source>
         <translation>खोलें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="176"/>
-        <location filename="../qml/pages/EncryptionPage.qml" line="193"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="192"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="209"/>
         <source>Set up backup</source>
         <translation>बैकअप सेट करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="187"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="203"/>
         <source>Creates a backup of your room keys on the server, encrypted with a recovery key that only you hold. Without it, reinstalling loses every encrypted message.</source>
         <translation>सर्वर पर तुम्हारी कक्ष-कुंजियों का बैकअप बनाता है, एक रिकवरी कुंजी से एन्क्रिप्टेड जो केवल तुम्हारे पास है। इसके बिना दोबारा इंस्टॉल करने पर हर एन्क्रिप्टेड संदेश खो जाता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="206"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="222"/>
         <source>Your recovery key</source>
         <translation>तुम्हारी रिकवरी कुंजी</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="225"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="241"/>
         <source>Write this down now. It is shown only once and is not stored on this device.</source>
         <translation>इसे अभी लिख लो। यह केवल एक बार दिखती है और इस उपकरण पर सहेजी नहीं जाती।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="230"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="246"/>
         <source>Copy</source>
         <translation>कॉपी करें</translation>
     </message>
@@ -2654,47 +2654,52 @@
         <translation>पुनर्प्राप्ति कुंजी स्वीकार की गई — पूरा किया जा रहा है। इसमें एक क्षण लग सकता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="44"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="50"/>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>इस खाते के लिए अभी कोई पुनर्प्राप्ति नहीं है। एक बनाने के लिए कुंजी बैकअप सेट करें।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecurityRows.qml" line="52"/>
         <source>Enter your recovery key to unlock the backup on this device.</source>
         <translation>इस डिवाइस पर बैकअप अनलॉक करने के लिए अपनी पुनर्प्राप्ति कुंजी दर्ज करें।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="49"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="57"/>
         <source>Cross-signing</source>
         <translation>क्रॉस-साइनिंग</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="52"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="60"/>
         <source>This device is signed as yours.</source>
         <translation>यह डिवाइस आपके रूप में हस्ताक्षरित है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="53"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="61"/>
         <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
         <translation>दूसरे इस डिवाइस को असत्यापित देखते हैं। पुनर्प्राप्ति कुंजी या किसी अन्य डिवाइस से सत्यापन इसे हल कर देता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="57"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="65"/>
         <source>Local storage</source>
         <translation>स्थानीय भंडारण</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="62"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="70"/>
         <source>Session and message database are encrypted on this device.</source>
         <translation>सत्र और संदेश डेटाबेस इस डिवाइस पर एन्क्रिप्टेड हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="65"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="73"/>
         <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
         <translation>वे बिना एन्क्रिप्शन के हैं क्योंकि वे तब बने जब यह ऐप उन्हें एन्क्रिप्ट नहीं कर सकता था। मौजूदा डेटाबेस को बाद में एन्क्रिप्ट नहीं किया जा सकता।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="68"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="76"/>
         <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
         <translation>वे बिना एन्क्रिप्शन के हैं क्योंकि सिस्टम के सुरक्षित भंडार ने कोई कुंजी नहीं दी।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityRows.qml" line="69"/>
+        <location filename="../qml/pages/SecurityRows.qml" line="77"/>
         <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
         <translation>वे बिना एन्क्रिप्शन के हैं क्योंकि इस सिस्टम में वह सेवा नहीं है जो एन्क्रिप्शन कुंजियाँ रखती है।</translation>
     </message>
@@ -2702,42 +2707,42 @@
 <context>
     <name>SecurityStatusPage</name>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="82"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="95"/>
         <source>Security</source>
         <translation>सुरक्षा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="90"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="103"/>
         <source>Something on this device is not in order yet. You can settle it now or later.</source>
         <translation>इस डिवाइस पर कुछ अभी ठीक नहीं है। आप इसे अभी या बाद में ठीक कर सकते हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="110"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="128"/>
         <source>Enter recovery key</source>
         <translation>पुनर्प्राप्ति कुंजी दर्ज करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="111"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="129"/>
         <source>Set up backup now</source>
         <translation>अभी बैकअप सेट करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="118"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="136"/>
         <source>Encrypt storage now</source>
         <translation>अभी भंडार एन्क्रिप्ट करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="126"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="144"/>
         <source>Why is that</source>
         <translation>ऐसा क्यों है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="132"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="150"/>
         <source>Later</source>
         <translation>बाद में</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecurityStatusPage.qml" line="142"/>
+        <location filename="../qml/pages/SecurityStatusPage.qml" line="160"/>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>यह सब आपको फिर से खाता › एन्क्रिप्शन के अंतर्गत मिलेगा।</translation>
     </message>

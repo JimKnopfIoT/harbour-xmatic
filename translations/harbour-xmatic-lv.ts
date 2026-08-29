@@ -2173,6 +2173,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Atkopšanas atslēga pieņemta — tiek pabeigts. Tas var aizņemt brīdi.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Šim kontam vēl nav atkopšanas. Iestati atslēgu dublējumu, lai to izveidotu.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

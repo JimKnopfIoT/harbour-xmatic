@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Återställningsnyckeln godtagen — slutförs. Det kan ta ett ögonblick.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Det finns ännu ingen återställning för det här kontot. Konfigurera en nyckelsäkerhetskopia för att skapa en.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

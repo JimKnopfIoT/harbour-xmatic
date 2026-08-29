@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Gendannelsesnøglen accepteret — fuldføres. Det kan tage et øjeblik.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Der er endnu ingen gendannelse for denne konto. Sæt en nøglesikkerhedskopi op for at oprette en.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

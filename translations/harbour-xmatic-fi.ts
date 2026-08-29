@@ -2170,6 +2170,10 @@
         <source>Recovery key accepted — finishing. This can take a moment.</source>
         <translation>Palautusavain hyväksytty — viimeistellään. Tämä voi kestää hetken.</translation>
     </message>
+    <message>
+        <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
+        <translation>Tälle tilille ei ole vielä palautusta. Määritä avainvarmuuskopio, niin sellainen syntyy.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>

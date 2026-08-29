@@ -27,6 +27,14 @@ Page {
         SecurityStatus.color(SecurityStatus.ORANGE, Theme,
                              Theme.colorScheme === Theme.LightOnDark)
 
+    // Silica's PageHeader keeps clear of a camera cutout by itself; a strip
+    // drawn by this app does not, and this frame ran along the very top edge -
+    // straight under the notch. The same lesson 0.25.1 learned on the room's
+    // own header, in a new place. Portrait only, as Silica has it: in landscape
+    // the cutout is at the side, and on a phone without one this is zero.
+    readonly property real topInset: orientation === Orientation.Portrait
+                                     ? Screen.topCutout.height : 0
+
     Component.onCompleted: {
         matrix.refreshEncryptionStatus()
         matrix.refreshStorageStatus()
@@ -46,6 +54,7 @@ Page {
         id: flick
 
         anchors.fill: parent
+        anchors.topMargin: page.topInset
         contentHeight: column.height + 2 * Theme.paddingLarge
 
         // The frame encloses the content, not the screen - and that is the
@@ -63,8 +72,12 @@ Page {
         // decorates.
         Rectangle {
             z: -1
+            // Never shorter than the screen. Sized to the content alone it
+            // stopped where the text stopped and left a third of the display
+            // empty below it, which reads as a broken layout rather than as a
+            // frame. Longer than the screen only where the content really is.
             width: flick.width
-            height: flick.contentHeight
+            height: Math.max(flick.height, flick.contentHeight)
             color: "transparent"
             border.width: Math.round(Theme.paddingSmall / 2)
             border.color: page.frameColor
@@ -106,7 +119,12 @@ Page {
                 visible: SecurityStatus.backupLevel(matrix) !== SecurityStatus.GREEN
                          || SecurityStatus.recoveryLevel(matrix) !== SecurityStatus.GREEN
                          || SecurityStatus.crossSigningLevel(matrix) !== SecurityStatus.GREEN
+                // What the button offers has to match what is actually
+                // missing. A backup on the server with no recovery set up is a
+                // real state, and offering "enter your key" there points at
+                // something that does not exist.
                 label: matrix.encryptionStatus.backupOnServer
+                       && matrix.encryptionStatus.recovery !== "disabled"
                       ? qsTr("Enter recovery key")
                       : qsTr("Set up backup now")
                 onClicked: pageStack.push(Qt.resolvedUrl("EncryptionPage.qml"))
