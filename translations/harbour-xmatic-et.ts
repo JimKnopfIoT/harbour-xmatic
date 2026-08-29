@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Jätka ilma krüptimiseta</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Tagasi</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Kõik, mida xmatic sellesse seadmesse salvestab, jääb loetavaks: sinu seanss, sinu sõnumid ja sinu ruumivõtmed.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Vali see ainult siis, kui teenust ei saa sellesse seadmesse paigaldada. Kui paigaldad selle hiljem, saad krüptimislehel ümber lülituda — see maksab ühe väljalogimise ja sinu taastevõtme.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic näitab seda olekut edasi Krüptimise all.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -585,72 +608,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Veel pole võimalik: serveris pole võtmete varukoopiat. Praegu välja logimine muudaks kõik selle seadme krüptitud sõnumid jäädavalt loetamatuks. Seadista esmalt varukoopia ja tule siis siia tagasi.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Selles Sailfishi versioonis ei suuda brauser sisselogimist lõpetada. Tule tagasi valikuga „Logi sisse teises seadmes“ — see tee siin toimib.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Krüptimine</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Varukoopia</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>aktiivne</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>olemas, pole avatud</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>pole seadistatud</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Taastamine</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>seadistatud</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>poolik</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>tundmatu</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Ristallkirjastamine</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>täielik</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Kohalik hoidla</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>krüptitud</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>krüptimata</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Seanss ja sõnumite andmebaas on selles seadmes krüptimata. Need loodi enne, kui rakendus neid krüptida oskas, ja olemasolevat andmebaasi ei saa kohapeal krüptida.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Seanss ja sõnumite andmebaas on selles seadmes krüptimata, sest süsteemi turvahoidla ei andnud võtit. Igaüks, kes pääseb seadme failisüsteemi, saab neid lugeda.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -896,6 +863,14 @@
         <source>Cancel sign-in</source>
         <translation>Katkesta sisselogimine</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Selle Sailfishi versiooni brauser ei suuda tänapäevaste koduserverite sisselogimist lõpetada — see naaseb vormile. Kasuta valikut „Logi sisse teises seadmes“: xmatic näitab aadressi ja koodi, nendega logid sisse ükskõik millises teises seadmes ja see seade logib ise sisse.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Logi sisse brauseriga</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -914,6 +889,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Selle seadme võtmed kustutatakse koos seansiga. Krüptitud sõnumid jäävad loetavaks ainult siis, kui need on võtmete varukoopias, ja seade tuleb pärast sisselogimist uuesti kinnitada.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Selles Sailfishi versioonis ei suuda brauser sisselogimist lõpetada. Tule tagasi valikuga „Logi sisse teises seadmes“ — see tee siin toimib.</translation>
     </message>
 </context>
 <context>
@@ -2126,6 +2105,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Varukoopia</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Sinu ruumivõtmed on varundatud.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Varukoopia on serveris, kuid selles seadmes ei ole lahti lukustatud.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Võtmete varukoopiat ei ole. Ilma selleta muutuvad sõnumid loetamatuks niipea, kui see seade kaob.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Taastamine</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Taaste on seadistatud.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Sisesta oma taastevõti, et varukoopia selles seadmes lahti lukustada.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Ristallkirjastamine</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>See seade on allkirjastatud sinu omaks.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Teised näevad seda seadet kinnitamata seadmena. Taastevõti või kinnitus teisest seadmest lahendab selle.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Kohalik hoidla</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Seanss ja sõnumite andmebaas on selles seadmes krüptitud.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Need on krüptimata, sest need loodi enne, kui see rakendus neid krüptida oskas. Olemasolevat andmebaasi ei saa tagantjärele krüptida.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Need on krüptimata, sest süsteemi turvaline hoidla ei väljastanud võtit.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Need on krüptimata, sest selles süsteemis puudub teenus, mis krüptovõtmeid hoiab.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Taastevõti vastu võetud — lõpetatakse. See võib võtta hetke.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Turvalisus</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Miski selles seadmes ei ole veel korras. Võid selle korda ajada kohe või hiljem.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Sisesta taastevõti</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Seadista varukoopia</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Krüpti hoidla nüüd</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Miks see nii on</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Hiljem</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Kõik selle leiad uuesti Konto › Krüptimine alt.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2277,6 +2358,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Ruumid, mille liige sa oled, ilmuvad siia. Ruumid rühmitavad tube.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Krüptimine ei ole võimalik</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS-ile</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Turvaline hoidla ei väljastanud võtit, seega ei saa xmatic krüptitud andmebaasi luua.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Selles süsteemis puudub teenus, mis krüptovõtmeid hoiab, seega ei saa xmatic krüptitud andmebaasi luua.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>See on operatsioonisüsteemi omadus, mitte xmaticu viga. Pakett on olemas ja seda saab paigaldada; mõned Sailfishi tõmmised lihtsalt ei sisalda seda.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Süsteem teatas: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Kuidas seda parandada</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Lülita süsteemiseadetes sisse arendajarežiim, jaotises Seaded › Arendaja tööriistad.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Ava Terminali rakendus ja saa rootiks käsuga:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Paigalda teenus (puuduta rida, et see kopeerida):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Taaskäivita seade. Teenus käivitub seejärel ise.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Veendu ise, et see on olemas — see peab väljastama faili, mitte vea:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Käivita xmatic uuesti ja puuduta „Kontrolli uuesti“.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Kontrolli uuesti</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Kui see ei ole võimalik</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Võid xmaticut kasutada ka ilma kohaliku krüptimiseta. Seanss, sõnumite andmebaas ja ruumivõtmed on siis seadmes loetavad: kes pääseb selle failisüsteemi, loeb kaasa, ja kaotatud telefon annab välja kõik, mis sellel on.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Sõnumid jäävad võrgu kaudu liikudes igal juhul otsast lõpuni krüptituks. Siin on jutt ainult sellest, mis on seadmes.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Jätka ilma krüptimiseta</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Kontrollitud — teenus ei ole endiselt kättesaadav. Kas paigaldus läks lõpuni ja kas seade taaskäivitati?</translation>
     </message>
 </context>
 <context>

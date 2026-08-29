@@ -224,6 +224,13 @@ DISTFILES += \
     qml/pages/EncryptionPage.qml \
     qml/pages/LogoutDialog.qml \
     qml/pages/EncryptStorageDialog.qml \
+    qml/pages/SecurityStatus.js \
+    qml/pages/SecurityStatusPage.qml \
+    qml/pages/SecurityLamp.qml \
+    qml/pages/SecurityRow.qml \
+    qml/pages/SecurityRows.qml \
+    qml/pages/StorageBlockedPage.qml \
+    qml/pages/AcceptUnencryptedDialog.qml \
     qml/pages/LanguagePage.qml \
     qml/pages/Formatting.js \
     qml/pages/MatrixLinks.js \

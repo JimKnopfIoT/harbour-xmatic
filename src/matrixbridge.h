@@ -21,6 +21,7 @@
 #include "callengine.h"
 #include "voicerecorder.h"
 #include "timelinemodel.h"
+#include "secretskeeper.h"
 #include "xmatic_core.h"
 
 /// The single point of contact between QML and the Rust core.
@@ -93,6 +94,35 @@ class MatrixBridge : public QObject
     /// Filled from `storage.status`, which needs no session — the answer is
     /// available before the first login.
     Q_PROPERTY(QVariantMap storageStatus READ storageStatus NOTIFY storageChanged)
+    /// Whether this system has the Sailfish Secrets daemon installed at all.
+    /// False means no retry can help and a package has to be installed — the
+    /// difference between "the system cannot do this" and "not right now".
+    Q_PROPERTY(bool secretsDaemonPresent READ secretsDaemonPresent NOTIFY storageChanged)
+    /// True while a store must not be created: nothing lies on this device
+    /// yet, no key can be had, and the user has not said the app may run
+    /// unencrypted. The UI shows what to install instead of a login — the one
+    /// moment at which a plaintext store would come into existence.
+    Q_PROPERTY(bool storageBlocked READ storageBlocked NOTIFY storageChanged)
+    /// secretsd's own reason for the last failed attempt, for the page that
+    /// explains it. Empty where nothing failed; never carries key material.
+    Q_PROPERTY(QString storeKeyReason READ storeKeyReason NOTIFY storageChanged)
+    /// Whether this device's own browser can be expected to finish an OAuth
+    /// sign-in. False on Sailfish 4, whose Gecko cannot render the MAS pages:
+    /// the sign-in button loops back to the form, measured on hardware. The
+    /// login page then leads with the device-code route instead of offering it
+    /// third and unexplained.
+    Q_PROPERTY(bool browserLoginReliable READ browserLoginReliable CONSTANT)
+    /// True between a recovery key being accepted and the recovery state
+    /// actually settling.
+    ///
+    /// `encryption.recover` waits for the import and only then answers, but the
+    /// state itself arrives through the SDK's own stream and catches up in
+    /// stages - measured on one device as three steps inside a second, and on a
+    /// slower one against a rate-limiting server as long enough that a tester
+    /// entered the key a second time because the line simply stayed orange.
+    /// Saying "still finishing" is what stops the app from teaching people to
+    /// paste a recovery key twice.
+    Q_PROPERTY(bool recoverySettling READ recoverySettling NOTIFY encryptionChanged)
     /// What the signed-in user may do in the room that is open: `pin`,
     /// `invite`, `redactOthers`, `topic`, `name`. Empty until a room has been
     /// opened, and a missing entry means "not answered yet" - a menu should
@@ -106,12 +136,12 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *members READ members CONSTANT)
 
 public:
-    /// `storeKey` is the base64 store key from Sailfish Secrets, or empty
-    /// when the secrets service is unavailable — the core then runs with
-    /// unencrypted stores. It goes into the core's config and nowhere else.
+    /// `storeKey` carries the base64 store key from Sailfish Secrets and how
+    /// the attempt to get it ended. The key goes into the core's config and
+    /// nowhere else; the state decides what the UI may offer.
     explicit MatrixBridge(const QString &dataDirectory,
                           const QString &cacheDirectory,
-                          const QString &storeKey,
+                          const StoreKeyResult &storeKey,
                           AppSettings *settings,
                           QObject *parent = nullptr);
     ~MatrixBridge() override;
@@ -215,6 +245,17 @@ public:
     /// the key again — the system may show its unlock dialog — and retries
     /// the restore with it. Never touches the stored data.
     Q_INVOKABLE void retryUnlock();
+
+    /// Asks the secrets storage again from the blocked page. Unlike
+    /// `retryUnlock` there is no session to restore yet — this only updates
+    /// what the app knows about the key, so the gate can open.
+    Q_INVOKABLE void retryStoreKey();
+
+    bool secretsDaemonPresent() const { return m_secretsDaemonPresent; }
+    bool browserLoginReliable() const;
+    bool recoverySettling() const { return m_recoverySettling; }
+    bool storageBlocked() const;
+    QString storeKeyReason() const { return m_storeKeyReason; }
 
     /// Begins the browser login against `homeserver`, which may be a server
     /// name such as "matrix.org" or a full URL. On a server without OAuth
@@ -656,6 +697,11 @@ signals:
     /// The freshly created recovery key. Shown once, never stored.
     void recoveryKeyReady(const QString &key);
     void storageChanged();
+    /// A check asked for from the blocked page has finished. `available` says
+    /// whether a key came out of it. Emitted even when nothing changed, which
+    /// is the whole point: a button that runs and reports nothing is a button
+    /// that appears broken.
+    void storeKeyChecked(bool available);
     void roomPermissionsChanged();
 
     /// A request for older messages came back. Carries no row count on
@@ -829,6 +875,17 @@ private:
     /// Where the session file and the stores live; the unlock retry asks
     /// the secrets keeper for the key against it.
     QString m_dataDirectory;
+    /// What the last attempt at the store key produced. Re-measured by
+    /// `retryStoreKey`, so the gate reflects the device as it is now and not
+    /// as it was at start.
+    StoreKeyState m_storeKeyState = StoreKeyState::Unavailable;
+    QString m_storeKeyReason;
+    bool m_secretsDaemonPresent = false;
+    /// Set when a recovery key was accepted, cleared when the state settles or
+    /// the timer gives up. A claim that something is in progress may not
+    /// outlive the progress, so it is bounded.
+    bool m_recoverySettling = false;
+    QTimer m_recoverySettleTimeout;
     QString m_cacheDirectory;
     /// Answers of emojiSource(), which QML asks once per chip per rebuild.
     mutable QHash<QString, QString> m_emojiSources;

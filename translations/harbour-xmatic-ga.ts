@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Lean ar aghaidh gan chriptiú</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Ar ais</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Fanann gach rud a stórálann xmatic ar an ngléas seo inléite: do sheisiún, do theachtaireachtaí agus eochracha do sheomraí.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Ná roghnaigh é seo ach mura féidir an tseirbhís a shuiteáil ar an ngléas seo. Má shuiteálann tú níos déanaí í, is féidir leat athrú ar an leathanach criptithe — cosnaíonn sé logáil amach amháin agus d&apos;eochair athshlánaithe.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>Leanfaidh xmatic ag taispeáint na staide seo faoi Criptiú.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -587,72 +610,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Níl sé indéanta fós: níl aon chúltaca eochracha ar an bhfreastalaí. Dá síneofá amach anois bheadh gach teachtaireacht chriptithe ar an ngléas seo doléite go deo. Socraigh an cúltaca ar dtús, agus tar ar ais anseo.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Sa leagan Sailfish seo ní féidir leis an mbrabhsálaí an logáil isteach a chríochnú. Tar ar ais le „Logáil isteach ar ghléas eile“ — oibríonn an bealach sin anseo.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Criptiú</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Cúltaca</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>gníomhach</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>ann, gan díghlasáil</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>gan socrú</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Aisghabháil</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>socraithe</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>neamhiomlán</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>anaithnid</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Trasshíniú</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>iomlán</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Stóras áitiúil</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>criptithe</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>gan criptiú</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Tá an seisiún agus bunachar sonraí na dteachtaireachtaí ar an ngléas seo gan criptiú. Cruthaíodh iad sular fhéad an feidhmchlár seo iad a chriptiú, agus ní féidir bunachar sonraí atá ann a chriptiú ina áit.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Tá an seisiún agus bunachar sonraí na dteachtaireachtaí ar an ngléas seo gan criptiú, mar níor thug stóras slán an chórais eochair amach. Is féidir le duine ar bith a shroicheann córas comhad an ghléis iad a léamh.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -898,6 +865,14 @@
         <source>Cancel sign-in</source>
         <translation>Cealaigh an síniú isteach</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Ní féidir le brabhsálaí an leagain Sailfish seo logáil isteach freastalaithe nua-aimseartha a chríochnú — filleann sé ar an bhfoirm. Bain úsáid as „Logáil isteach ar ghléas eile“: taispeánann xmatic seoladh agus cód, logálann tú isteach leo ar aon ghléas eile, agus logálann an ceann seo isteach uaidh féin.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Logáil isteach tríd an mbrabhsálaí</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -916,6 +891,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Scriostar eochracha an ghléis seo in éineacht leis an seisiún. Ní fhanann teachtaireachtaí criptithe inléite ach amháin má tá siad i gcúltaca eochracha, agus caithfear an gléas seo a fhíorú arís i ndiaidh an tsínithe isteach.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Sa leagan Sailfish seo ní féidir leis an mbrabhsálaí an logáil isteach a chríochnú. Tar ar ais le „Logáil isteach ar ghléas eile“ — oibríonn an bealach sin anseo.</translation>
     </message>
 </context>
 <context>
@@ -2129,6 +2108,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Cúltaca</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Tá cúltaca ar eochracha do sheomraí.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Tá an cúltaca ar an bhfreastalaí ach níl sé díghlasáilte ar an ngléas seo.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Níl aon chúltaca eochracha ann. Gan é, éiríonn teachtaireachtaí do-léite chomh luath is a bhíonn an gléas seo imithe.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Aisghabháil</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Tá an t-athshlánú socraithe.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Cuir isteach d&apos;eochair athshlánaithe chun an cúltaca a dhíghlasáil ar an ngléas seo.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Trasshíniú</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Tá an gléas seo sínithe mar do cheannsa.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Feiceann daoine eile an gléas seo mar cheann neamhfhíoraithe. Réitíonn an eochair athshlánaithe nó fíorú ó ghléas eile é.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Stóras áitiúil</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Tá an seisiún agus bunachar na dteachtaireachtaí criptithe ar an ngléas seo.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Tá siad gan chriptiú mar cruthaíodh iad sular fhéad an feidhmchlár seo iad a chriptiú. Ní féidir bunachar atá ann cheana a chriptiú ina dhiaidh sin.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Tá siad gan chriptiú mar níor thug stóras slán an chórais eochair uaidh.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Tá siad gan chriptiú mar tá an tseirbhís a choinníonn eochracha criptithe in easnamh ar an gcóras seo.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Glacadh leis an eochair athshlánaithe — á chríochnú. Féadfaidh sé nóiméad a thógáil.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Slándáil</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Tá rud éigin ar an ngléas seo fós as ord. Is féidir leat é a réiteach anois nó níos déanaí.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Cuir isteach eochair athshlánaithe</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Socraigh cúltaca anois</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Criptigh an stóras anois</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Cén fáth é sin</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Níos déanaí</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Gheobhaidh tú é seo ar fad arís faoi Cuntas › Criptiú.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2281,6 +2362,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Taispeántar anseo na spásanna a bhfuil tú i do bhall díobh. Cuireann spásanna seomraí le chéile.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Ní féidir criptiú</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix do Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Níor thug an stóras slán eochair uaidh, mar sin ní féidir le xmatic bunachar criptithe a chruthú.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Tá an tseirbhís a choinníonn eochracha criptithe in easnamh ar an gcóras seo, mar sin ní féidir le xmatic bunachar criptithe a chruthú.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Airí den chóras oibriúcháin é seo, ní locht in xmatic. Tá an pacáiste ann agus is féidir é a shuiteáil; níl sé i ngach íomhá Sailfish.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Thuairiscigh an córas: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Conas é a réiteach</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Cuir an mód forbróra ar siúl i socruithe an chórais, faoi Socruithe › Uirlisí forbróra.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Oscail an feidhmchlár Teirminéal agus déan root díot féin le:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Suiteáil an tseirbhís (tapáil an líne chun í a chóipeáil):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Atosaigh an gléas. Tosaíonn an tseirbhís léi féin ina dhiaidh sin.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Deimhnigh duit féin go bhfuil sí ann — caithfidh sé seo comhad a phriontáil, ní earráid:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Tosaigh xmatic arís agus tapáil „Seiceáil arís“.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Seiceáil arís</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Mura féidir sin</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Is féidir leat xmatic a úsáid gan chriptiú áitiúil. Bíonn an seisiún, bunachar na dteachtaireachtaí agus eochracha na seomraí inléite ar an ngléas ansin: léann duine ar bith a shroicheann a chóras comhad leat, agus tugann fón caillte uaidh gach rud atá air.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Fanann teachtaireachtaí criptithe ó cheann go ceann ar a mbealach tríd an líonra ar aon nós. Níl anseo ach an méid atá ar an ngléas.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Lean ar aghaidh gan chriptiú</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Seiceáilte — níl an tseirbhís le sroicheadh fós. Ar chríochnaigh an tsuiteáil, agus ar atosaíodh an gléas?</translation>
     </message>
 </context>
 <context>

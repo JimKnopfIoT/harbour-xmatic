@@ -380,6 +380,24 @@ void AppSettings::setSendReadReceipts(bool enabled)
     emit sendReadReceiptsChanged();
 }
 
+bool AppSettings::unencryptedStorageAccepted() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("security/unencryptedStorageAccepted"), false)
+        .toBool();
+}
+
+void AppSettings::acceptUnencryptedStorage()
+{
+    if (unencryptedStorageAccepted()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("security/unencryptedStorageAccepted"), true,
+          "the unencrypted-storage consent");
+    emit unencryptedStorageAcceptedChanged();
+}
+
 QString AppSettings::mediaWipe() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

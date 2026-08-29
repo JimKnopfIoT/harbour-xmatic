@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Turpināt bez šifrēšanas</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Atpakaļ</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Viss, ko xmatic glabā šajā ierīcē, paliek lasāms: tava sesija, tavas ziņas un tavas istabu atslēgas.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Izvēlies to tikai tad, ja pakalpojumu šajā ierīcē nevar uzstādīt. Ja uzstādīsi to vēlāk, varēsi pārslēgties šifrēšanas lapā — tas maksās vienu izrakstīšanos un tavu atkopšanas atslēgu.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic turpinās rādīt šo stāvokli sadaļā Šifrēšana.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -587,72 +610,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Vēl nav iespējams: serverī nav atslēgu dublējuma. Atteikšanās tagad padarītu katru šifrēto ziņu šajā ierīcē uz visiem laikiem nesalasāmu. Vispirms iestati dublējumu un tad nāc atpakaļ šurp.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Šajā Sailfish versijā pārlūks nespēj pabeigt pieteikšanos. Atgriezies ar „Pieteikties citā ierīcē” — šis ceļš te darbojas.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Šifrēšana</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Dublējums</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>aktīvs</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>pastāv, nav atbloķēts</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>nav iestatīts</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Atkopšana</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>iestatīta</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>nepilnīga</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>nezināms</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Šķērsparakstīšana</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>pilnīga</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Vietējā krātuve</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>šifrēta</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>nešifrēta</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Sesija un ziņu datubāze šajā ierīcē glabājas nešifrētas. Tās izveidotas, pirms lietotne prata tās šifrēt, un esošu datubāzi nevar šifrēt uz vietas.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Sesija un ziņu datubāze šajā ierīcē glabājas nešifrētas, jo sistēmas drošā krātuve neizsniedza atslēgu. Ikviens, kas tiek pie ierīces failu sistēmas, var tās izlasīt.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -898,6 +865,14 @@
         <source>Cancel sign-in</source>
         <translation>Atcelt pieteikšanos</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Šīs Sailfish versijas pārlūks nespēj pabeigt pieteikšanos mūsdienīgos serveros — tas atgriežas pie veidlapas. Izmanto „Pieteikties citā ierīcē”: xmatic parāda adresi un kodu, ar tiem piesakies jebkurā citā ierīcē, un šī piesakās pati.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Pieteikties ar pārlūku</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -916,6 +891,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Šīs ierīces atslēgas tiek dzēstas kopā ar sesiju. Šifrētās ziņas paliek lasāmas tikai tad, ja tās ir atslēgu dublējumā, un ierīce pēc pieteikšanās jāapstiprina no jauna.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Šajā Sailfish versijā pārlūks nespēj pabeigt pieteikšanos. Atgriezies ar „Pieteikties citā ierīcē” — šis ceļš te darbojas.</translation>
     </message>
 </context>
 <context>
@@ -2129,6 +2108,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Dublējums</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Tavas istabu atslēgas ir dublētas.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Dublējums ir serverī, bet šajā ierīcē nav atbloķēts.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Atslēgu dublējuma nav. Bez tā ziņas kļūs nelasāmas, tiklīdz šī ierīce pazudīs.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Atkopšana</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Atkopšana ir iestatīta.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Ievadi savu atkopšanas atslēgu, lai šajā ierīcē atbloķētu dublējumu.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Šķērsparakstīšana</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Šī ierīce ir parakstīta kā tava.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Citi redz šo ierīci kā neapstiprinātu. To atrisina atkopšanas atslēga vai apstiprinājums no citas ierīces.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Vietējā krātuve</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Sesija un ziņu datubāze šajā ierīcē ir šifrētas.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Tās ir nešifrētas, jo tika izveidotas, pirms šī lietotne prata tās šifrēt. Esošu datubāzi nevar nošifrēt vēlāk.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Tās ir nešifrētas, jo sistēmas drošā krātuve neizsniedza atslēgu.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Tās ir nešifrētas, jo šajā sistēmā trūkst pakalpojuma, kas glabā šifrēšanas atslēgas.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Atkopšanas atslēga pieņemta — tiek pabeigts. Tas var aizņemt brīdi.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Drošība</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Kaut kas šajā ierīcē vēl nav kārtībā. Vari to nokārtot tagad vai vēlāk.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Ievadīt atkopšanas atslēgu</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Iestatīt dublējumu tagad</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Šifrēt krātuvi tagad</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Kāpēc tā</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Vēlāk</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Visu šo atradīsi atkal sadaļā Konts › Šifrēšana.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2281,6 +2362,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Telpas, kuru dalībnieks esi, parādās šeit. Telpas grupē istabas.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Šifrēšana nav iespējama</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix priekš Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Drošā krātuve neizsniedza atslēgu, tāpēc xmatic nevar izveidot šifrētu datubāzi.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Šajā sistēmā trūkst pakalpojuma, kas glabā šifrēšanas atslēgas, tāpēc xmatic nevar izveidot šifrētu datubāzi.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Tā ir operētājsistēmas īpašība, nevis xmatic kļūda. Pakotne pastāv un to var uzstādīt; daži Sailfish attēli to vienkārši nepiegādā.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Sistēma ziņoja: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Kā to salabot</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Ieslēdz izstrādātāja režīmu sistēmas iestatījumos, sadaļā Iestatījumi › Izstrādātāja rīki.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Atver Termināļa lietotni un kļūsti par root ar:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Uzstādi pakalpojumu (pieskaries rindai, lai to kopētu):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Restartē ierīci. Pakalpojums pēc tam startē pats.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Pārliecinies pats, ka tas ir — šim jāizvada fails, nevis kļūda:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Palaid xmatic vēlreiz un pieskaries „Pārbaudīt vēlreiz”.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Pārbaudīt vēlreiz</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Ja tas nav iespējams</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>xmatic vari lietot arī bez vietējās šifrēšanas. Sesija, ziņu datubāze un istabu atslēgas tad ierīcē ir lasāmas: kas piekļūst tās failu sistēmai, lasa līdzi, un pazaudēts tālrunis atdod visu, kas tajā ir.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Ziņas ceļā pa tīklu jebkurā gadījumā paliek šifrētas no gala līdz galam. Šeit runa ir tikai par to, kas atrodas ierīcē.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Turpināt bez šifrēšanas</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Pārbaudīts — pakalpojums joprojām nav sasniedzams. Vai uzstādīšana tika pabeigta un ierīce pārstartēta?</translation>
     </message>
 </context>
 <context>

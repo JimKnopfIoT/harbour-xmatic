@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Продолжить без шифрования</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Назад</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Всё, что xmatic хранит на этом устройстве, остаётся читаемым: твоя сессия, твои сообщения и твои ключи комнат.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Выбирай это только если службу нельзя установить на это устройство. Установишь её позже — сможешь переключиться на странице шифрования: это стоит одного выхода из аккаунта и твоего ключа восстановления.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic будет и дальше показывать это состояние в разделе Шифрование.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -587,72 +610,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Пока невозможно: на сервере нет резервной копии ключей. Выход сейчас навсегда сделает нечитаемым каждое зашифрованное сообщение на устройстве. Сначала настрой резервную копию, потом возвращайся сюда.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>В этой версии Sailfish браузер не может завершить вход. Вернись через «Войти на другом устройстве» — этот путь здесь работает.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Шифрование</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Резервная копия</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>активна</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>есть, не разблокирована</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>не настроена</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Восстановление</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>настроено</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>не завершено</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>неизвестно</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Перекрёстная подпись</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>завершена</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Локальное хранилище</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>зашифровано</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>не зашифровано</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Сессия и база сообщений лежат на устройстве без шифрования. Они созданы до того, как приложение научилось их шифровать, а существующую базу нельзя зашифровать на месте.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Сессия и база сообщений лежат на устройстве без шифрования, потому что защищённое хранилище системы не выдало ключ. Любой, кто доберётся до файловой системы устройства, сможет их прочитать.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -898,6 +865,14 @@
         <source>Cancel sign-in</source>
         <translation>Отменить вход</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Браузер этой версии Sailfish не может завершить вход на современных серверах — он возвращается к форме. Используй «Войти на другом устройстве»: xmatic покажет адрес и код, с ними ты войдёшь на любом другом устройстве, а это устройство войдёт само.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Войти через браузер</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -916,6 +891,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Ключи этого устройства удаляются вместе с сессией. Зашифрованные сообщения останутся читаемыми, только если они в резервной копии ключей, а устройство после входа придётся заново подтвердить.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>В этой версии Sailfish браузер не может завершить вход. Вернись через «Войти на другом устройстве» — этот путь здесь работает.</translation>
     </message>
 </context>
 <context>
@@ -2129,6 +2108,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Резервная копия</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Твои ключи комнат сохранены в резервной копии.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Резервная копия есть на сервере, но на этом устройстве не разблокирована.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Резервной копии ключей нет. Без неё сообщения станут нечитаемыми, как только это устройство исчезнет.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Восстановление</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Восстановление настроено.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Введи свой ключ восстановления, чтобы разблокировать резервную копию на этом устройстве.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Перекрёстная подпись</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Это устройство подписано как твоё.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Другие видят это устройство неподтверждённым. Ключ восстановления или подтверждение с другого устройства это решает.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Локальное хранилище</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Сессия и база сообщений на этом устройстве зашифрованы.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Они лежат незашифрованными, потому что появились раньше, чем приложение научилось их шифровать. Существующую базу нельзя зашифровать задним числом.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Они лежат незашифрованными, потому что защищённое хранилище системы не выдало ключ.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Они лежат незашифрованными, потому что в этой системе нет службы, хранящей ключи шифрования.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Ключ восстановления принят — завершается. Это может занять момент.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Безопасность</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Что-то на этом устройстве ещё не в порядке. Можешь решить это сейчас или позже.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Ввести ключ восстановления</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Настроить копию сейчас</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Зашифровать хранилище</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Почему так</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Позже</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Всё это ты снова найдёшь в Учётная запись › Шифрование.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2281,6 +2362,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Пространства, участником которых ты являешься, появляются здесь. Пространства объединяют комнаты.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Шифрование невозможно</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix для Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Защищённое хранилище не выдало ключ, поэтому xmatic не может создать зашифрованную базу.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>В этой системе нет службы, хранящей ключи шифрования, поэтому xmatic не может создать зашифрованную базу.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Это свойство операционной системы, а не ошибка xmatic. Пакет существует и его можно установить; некоторые образы Sailfish просто его не содержат.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Система сообщила: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Как это исправить</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Включи режим разработчика в системных настройках, в Настройки › Инструменты разработчика.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Открой приложение Терминал и стань root командой:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Установи службу (коснись строки, чтобы скопировать её):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Перезагрузи устройство. Служба потом запустится сама.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Убедись сам, что она есть — это должно вывести файл, а не ошибку:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Запусти xmatic снова и коснись «Проверить ещё раз».</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Проверить ещё раз</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Если это невозможно</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Ты можешь пользоваться xmatic и без локального шифрования. Сессия, база сообщений и ключи комнат будут тогда лежать на устройстве в читаемом виде: кто доберётся до его файловой системы, читает вместе с тобой, а потерянный телефон отдаёт всё, что на нём есть.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Сообщения в любом случае остаются зашифрованными от края до края на пути через сеть. Здесь речь только о том, что лежит на устройстве.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Продолжить без шифрования</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Проверено — служба по-прежнему недоступна. Установка прошла до конца и устройство было перезагружено?</translation>
     </message>
 </context>
 <context>

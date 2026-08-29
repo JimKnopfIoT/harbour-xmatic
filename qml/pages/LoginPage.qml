@@ -103,10 +103,44 @@ Page {
                 onClicked: page.signInWithPassword()
             }
 
+            // Where this device's browser cannot render the server's sign-in
+            // pages, the device-code route is not an alternative but the only
+            // way in - so it goes first and says why. The knowledge that 4.6
+            // loops back to the form was in a code comment while the button
+            // stood third and unexplained; the developer of this app walked
+            // into it himself.
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.errorColor
+                visible: !page.passwordLogin && !matrix.browserLoginReliable
+                         && !matrix.busy
+                text: qsTr("This Sailfish version's browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.")
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                // Offered on every release: it is the way in without this
+                // device's browser, wherever that browser is in the way.
+                visible: !page.passwordLogin
+                text: qsTr("Sign in on another device")
+                enabled: !matrix.busy && homeserverField.text.trim().length > 0
+                onClicked: {
+                    homeserverField.focus = false
+                    matrix.startDeviceCodeLogin(homeserverField.text)
+                }
+            }
+
+            // On a release whose browser cannot finish the sign-in, this is
+            // still offered - a server may not need the browser at all - but it
+            // stops being the obvious first choice.
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: !page.passwordLogin
-                text: qsTr("Sign in")
+                text: matrix.browserLoginReliable ? qsTr("Sign in")
+                                                  : qsTr("Sign in via browser")
                 enabled: !matrix.busy && homeserverField.text.trim().length > 0
                 onClicked: page.signIn()
             }
@@ -122,18 +156,6 @@ Page {
                 onClicked: matrix.requestRegistrationUrl(homeserverField.text)
             }
 
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                // The way in when this device's own browser cannot handle the
-                // server's sign-in pages, as on Sailfish 4.6.
-                visible: !page.passwordLogin
-                text: qsTr("Sign in on another device")
-                enabled: !matrix.busy && homeserverField.text.trim().length > 0
-                onClicked: {
-                    homeserverField.focus = false
-                    matrix.startDeviceCodeLogin(homeserverField.text)
-                }
-            }
 
             BusyIndicator {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -337,6 +359,12 @@ Page {
         // lives exactly as long as this call.
         var password = passwordField.text
         passwordField.text = ""
+        // Same rule as the recovery key on the encryption page: a pasted
+        // password stays in the clipboard, and only this exact text is taken
+        // out of it.
+        if (Clipboard.hasText && Clipboard.text === password) {
+            Clipboard.text = ""
+        }
         passwordField.focus = false
         homeserverField.focus = false
         matrix.startPasswordLogin(homeserverField.text, userField.text, password)

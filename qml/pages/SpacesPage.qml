@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "SecurityStatus.js" as SecurityStatus
+
 // The space overview: the joined spaces, each a folder of rooms. Tapping one
 // opens its rooms on their own page (SpacePage). Order, names and unread
 // counts come from the sync service in the core, exactly like the chat list;
@@ -82,6 +84,23 @@ Page {
             // doing so instead of leaving a silently stale list.
             description: matrix.syncState === "offline"
                          ? qsTr("Offline — waiting for the network") : ""
+
+            // Same indicator as on the chat list; a user who starts here must
+            // not have to know that the other page carries it.
+            MouseArea {
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.horizontalPageMargin
+                anchors.verticalCenter: parent.verticalCenter
+                width: Theme.itemSizeExtraSmall
+                height: width
+                visible: SecurityStatus.needsAttention(matrix)
+                onClicked: pageStack.push(Qt.resolvedUrl("SecurityStatusPage.qml"))
+
+                SecurityLamp {
+                    anchors.centerIn: parent
+                    overall: true
+                }
+            }
         }
 
         PullDownMenu {

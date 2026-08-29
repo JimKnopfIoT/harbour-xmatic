@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Halda áfram án dulkóðunar</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Til baka</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Allt sem xmatic geymir á þessu tæki er áfram læsilegt: setan þín, skilaboðin þín og herbergislyklarnir þínir.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Veldu þetta aðeins ef ekki er hægt að setja þjónustuna upp á þessu tæki. Setjir þú hana upp síðar geturðu skipt yfir á dulkóðunarsíðunni — það kostar eina útskráningu og endurheimtarlykilinn þinn.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic mun áfram sýna þetta ástand undir Dulkóðun.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -585,72 +608,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Ekki hægt enn: ekkert lyklaafrit er á þjóninum. Að skrá sig út núna gerði öll dulkóðuð skilaboð á þessu tæki ólæsileg að eilífu. Settu afritið upp fyrst og komdu svo hingað aftur.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Í þessari Sailfish-útgáfu getur vafrinn ekki lokið innskráningunni. Komdu aftur inn með „Skrá inn á öðru tæki“ — sú leið virkar hér.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Dulkóðun</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Afrit</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>virkt</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>er til, ekki opnað</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>ekki uppsett</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Endurheimt</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>uppsett</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>ófullgerð</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>óþekkt</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Krossundirritun</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>fullgerð</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Staðbundin geymsla</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>dulkóðuð</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>ódulkóðuð</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Lotan og skilaboðagagnagrunnurinn liggja ódulkóðuð í þessu tæki. Þau urðu til áður en forritið gat dulkóðað þau, og ekki er hægt að dulkóða gagnagrunn sem þegar er til á staðnum.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Lotan og skilaboðagagnagrunnurinn liggja ódulkóðuð í þessu tæki, því örugg geymsla kerfisins gaf engan lykil. Hver sem kemst í skráakerfi tækisins getur lesið þau.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -896,6 +863,14 @@
         <source>Cancel sign-in</source>
         <translation>Hætta við innskráningu</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Vafrinn í þessari Sailfish-útgáfu getur ekki lokið innskráningu nútíma heimaþjóna — hann fer aftur á eyðublaðið. Notaðu „Skrá inn á öðru tæki“: xmatic sýnir vistfang og kóða, þú skráir þig inn með þeim á hvaða öðru tæki sem er, og þetta tæki skráir sig inn sjálft.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Skrá inn um vafra</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -914,6 +889,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Lyklum þessa tækis er eytt ásamt lotunni. Dulkóðuð skilaboð haldast læsileg aðeins ef þau eru í lyklaafriti, og staðfesta þarf tækið á ný eftir innskráningu.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Í þessari Sailfish-útgáfu getur vafrinn ekki lokið innskráningunni. Komdu aftur inn með „Skrá inn á öðru tæki“ — sú leið virkar hér.</translation>
     </message>
 </context>
 <context>
@@ -2126,6 +2105,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Afrit</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Herbergislyklarnir þínir eru afritaðir.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Afritið er á þjóninum en hefur ekki verið aflæst á þessu tæki.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Það er ekkert lyklaafrit. Án þess verða skilaboð ólæsileg þegar þetta tæki er horfið.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Endurheimt</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Endurheimt er uppsett.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Sláðu inn endurheimtarlykilinn þinn til að aflæsa afritinu á þessu tæki.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Krossundirritun</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Þetta tæki er undirritað sem þitt.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Aðrir sjá þetta tæki sem óstaðfest. Endurheimtarlykillinn eða staðfesting frá öðru tæki leysir það.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Staðbundin geymsla</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Seta og skilaboðagagnagrunnur eru dulkóðuð á þessu tæki.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Þau liggja ódulkóðuð því þau voru búin til áður en forritið gat dulkóðað þau. Ekki er hægt að dulkóða gagnagrunn eftir á.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Þau liggja ódulkóðuð því örugga geymsla kerfisins afhenti engan lykil.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Þau liggja ódulkóðuð því á þetta kerfi vantar þjónustuna sem geymir dulkóðunarlykla.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Endurheimtarlykill samþykktur — verið að ljúka. Það getur tekið augnablik.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Öryggi</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Eitthvað á þessu tæki er ekki enn í lagi. Þú getur leyst það núna eða síðar.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Slá inn endurheimtarlykil</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Setja upp afrit núna</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Dulkóða geymslu núna</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Hvers vegna er það</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Síðar</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Allt þetta finnurðu aftur undir Reikningur › Dulkóðun.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2277,6 +2358,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Svæðin sem þú ert meðlimur í birtast hér. Svæði flokka herbergi saman.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Dulkóðun ekki möguleg</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix fyrir Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Örugga geymslan afhenti engan lykil, svo xmatic getur ekki búið til dulkóðaðan gagnagrunn.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Á þetta kerfi vantar þjónustuna sem geymir dulkóðunarlykla, svo xmatic getur ekki búið til dulkóðaðan gagnagrunn.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Þetta er eiginleiki stýrikerfisins, ekki villa í xmatic. Pakkinn er til og hægt er að setja hann upp; sumar Sailfish-kerfismyndir fylgja honum einfaldlega ekki.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Kerfið tilkynnti: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Svona lagarðu það</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Kveiktu á Þróunarham í kerfisstillingum, undir Stillingar › Þróunartól.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Opnaðu Skjáhermi-forritið og verðu root með:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Settu þjónustuna upp (pikkaðu á línuna til að afrita hana):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Endurræstu tækið. Þjónustan ræsist síðan sjálf.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Gakktu sjálf úr skugga um að hún sé til — þetta verður að prenta skrá, ekki villu:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Ræstu xmatic aftur og pikkaðu á „Athuga aftur“.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Athuga aftur</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Ef það er ekki hægt</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Þú getur notað xmatic án staðbundinnar dulkóðunar. Seta, skilaboðagagnagrunnur og herbergislyklar liggja þá læsileg á tækinu: hver sem kemst í skráakerfi þess les með, og týndur sími gefur frá sér allt sem á honum er.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Skilaboð haldast enda-í-enda dulkóðuð á leið sinni um netið hvort sem er. Hér snýst þetta aðeins um það sem liggur á tækinu.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Halda áfram án dulkóðunar</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Athugað — þjónustan næst enn ekki. Kláraðist uppsetningin og var tækið endurræst?</translation>
     </message>
 </context>
 <context>

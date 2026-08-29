@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Continuă fără criptare</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Înapoi</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Tot ce salvează xmatic pe acest dispozitiv rămâne lizibil: sesiunea ta, mesajele tale și cheile tale de cameră.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Alege asta doar dacă serviciul nu poate fi instalat pe acest dispozitiv. Dacă îl instalezi mai târziu, poți comuta din pagina de criptare — costă o deconectare și cheia ta de recuperare.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic va continua să arate această stare la Criptare.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -587,72 +610,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Încă nu se poate: nu există o copie de rezervă a cheilor pe server. Deconectarea acum ar face fiecare mesaj criptat de pe dispozitiv ilizibil pentru totdeauna. Configurează întâi copia de rezervă, apoi revino aici.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>În această versiune de Sailfish browserul nu poate finaliza autentificarea. Revino cu „Autentificare pe alt dispozitiv” — calea aceea funcționează aici.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Criptare</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Copie de rezervă</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>activă</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>există, nedeblocată</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>neconfigurată</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Recuperare</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>configurată</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>incompletă</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>necunoscut</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Semnare încrucișată</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>completă</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Stocare locală</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>criptată</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>necriptată</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Sesiunea și baza de date cu mesaje se află necriptate pe acest dispozitiv. Au fost create înainte ca aplicația să le poată cripta, iar o bază de date existentă nu poate fi criptată pe loc.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Sesiunea și baza de date cu mesaje se află necriptate pe acest dispozitiv, pentru că stocarea sigură a sistemului nu a furnizat o cheie. Oricine ajunge la sistemul de fișiere al dispozitivului le poate citi.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -898,6 +865,14 @@
         <source>Cancel sign-in</source>
         <translation>Anulează autentificarea</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Browserul acestei versiuni de Sailfish nu poate finaliza autentificarea la serverele moderne — revine la formular. Folosește „Autentificare pe alt dispozitiv”: xmatic arată o adresă și un cod, te autentifici cu ele pe orice alt dispozitiv, iar acesta intră singur.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Autentificare prin browser</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -916,6 +891,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Cheile acestui dispozitiv sunt șterse odată cu sesiunea. Mesajele criptate rămân lizibile doar dacă se află într-o copie de rezervă a cheilor, iar dispozitivul trebuie verificat din nou după autentificare.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>În această versiune de Sailfish browserul nu poate finaliza autentificarea. Revino cu „Autentificare pe alt dispozitiv” — calea aceea funcționează aici.</translation>
     </message>
 </context>
 <context>
@@ -2129,6 +2108,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Copie de rezervă</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Cheile tale de cameră au copie de siguranță.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Copia este pe server, dar nu este deblocată pe acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Nu există copie de siguranță a cheilor. Fără ea, mesajele devin ilizibile de îndată ce acest dispozitiv dispare.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Recuperare</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Recuperarea este configurată.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Introdu cheia ta de recuperare pentru a debloca copia pe acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Semnare încrucișată</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Acest dispozitiv este semnat ca fiind al tău.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Ceilalți văd acest dispozitiv ca neverificat. Cheia de recuperare sau o verificare de pe alt dispozitiv rezolvă asta.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Stocare locală</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Sesiunea și baza de mesaje sunt criptate pe acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Stau necriptate pentru că au fost create înainte ca această aplicație să le poată cripta. O bază existentă nu poate fi criptată ulterior.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Stau necriptate pentru că stocarea securizată a sistemului nu a eliberat nicio cheie.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Stau necriptate pentru că acestui sistem îi lipsește serviciul care păstrează cheile de criptare.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Cheia de recuperare a fost acceptată — se finalizează. Poate dura un moment.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Securitate</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Ceva pe acest dispozitiv nu este încă în regulă. Poți rezolva acum sau mai târziu.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Introdu cheia de recuperare</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Configurează copia acum</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Criptează stocarea acum</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>De ce se întâmplă</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Mai târziu</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Găsești toate acestea din nou la Cont › Criptare.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2281,6 +2362,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Spațiile în care ești membru apar aici. Spațiile grupează camere.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Criptarea nu este posibilă</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pentru Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Stocarea securizată nu a eliberat nicio cheie, așa că xmatic nu poate crea o bază criptată.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Acestui sistem îi lipsește serviciul care păstrează cheile de criptare, așa că xmatic nu poate crea o bază criptată.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Este o proprietate a sistemului de operare, nu un defect al xmatic. Pachetul există și poate fi instalat; unele imagini Sailfish pur și simplu nu îl includ.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Sistemul a raportat: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Cum să repari</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Activează modul dezvoltator în setările sistemului, la Setări › Instrumente pentru dezvoltatori.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Deschide aplicația Terminal și devino root cu:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Instalează serviciul (atinge linia pentru a o copia):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Repornește dispozitivul. Serviciul pornește apoi de la sine.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Convinge-te singur că există — asta trebuie să afișeze un fișier, nu o eroare:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Pornește xmatic din nou și atinge „Verifică din nou”.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Verifică din nou</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Dacă nu este posibil</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Poți folosi xmatic fără criptare locală. Sesiunea, baza de mesaje și cheile de cameră stau atunci lizibile pe dispozitiv: cine ajunge la sistemul lui de fișiere citește odată cu tine, iar un telefon pierdut dă tot ce are pe el.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Mesajele rămân oricum criptate cap la cap pe drumul lor prin rețea. Aici este vorba doar despre ce se află pe dispozitiv.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Continuă fără criptare</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Verificat — serviciul tot nu este accesibil. A mers instalarea până la capăt și a fost repornit dispozitivul?</translation>
     </message>
 </context>
 <context>

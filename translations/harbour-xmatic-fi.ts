@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Jatka ilman salausta</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Takaisin</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Kaikki, mitä xmatic tallentaa tälle laitteelle, pysyy luettavana: istuntosi, viestisi ja huoneavaimesi.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Valitse tämä vain, jos palvelua ei voi asentaa tälle laitteelle. Jos asennat sen myöhemmin, voit vaihtaa salaussivulla — se maksaa yhden uloskirjautumisen ja palautusavaimesi.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic näyttää tämän tilan edelleen kohdassa Salaus.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -585,72 +608,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Ei vielä mahdollista: palvelimella ei ole avainten varmuuskopiota. Uloskirjautuminen nyt tekisi jokaisesta tämän laitteen salatusta viestistä lopullisesti lukukelvottoman. Ota ensin varmuuskopio käyttöön ja palaa sitten tänne.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Tässä Sailfish-versiossa selain ei pysty viemään kirjautumista loppuun. Palaa sisään valinnalla ”Kirjaudu toisella laitteella” — se reitti toimii tässä.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Salaus</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Varmuuskopio</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>käytössä</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>on olemassa, ei avattu</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>ei määritetty</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Palautus</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>määritetty</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>kesken</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>tuntematon</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Ristiinallekirjoitus</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>valmis</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Paikallinen tallennustila</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>salattu</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>ei salattu</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Istunto ja viestitietokanta ovat tällä laitteella salaamattomina. Ne luotiin ennen kuin tämä sovellus osasi salata ne, eikä olemassa olevaa tietokantaa voi salata paikallaan.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Istunto ja viestitietokanta ovat tällä laitteella salaamattomina, koska järjestelmän suojattu säilö ei antanut avainta. Kuka tahansa, joka pääsee laitteen tiedostojärjestelmään, voi lukea ne.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -896,6 +863,14 @@
         <source>Cancel sign-in</source>
         <translation>Peruuta kirjautuminen</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Tämän Sailfish-version selain ei pysty viemään nykyaikaisten kotipalvelinten kirjautumista loppuun — se palaa lomakkeeseen. Käytä valintaa ”Kirjaudu toisella laitteella”: xmatic näyttää osoitteen ja koodin, kirjaudut niillä millä tahansa toisella laitteella, ja tämä laite kirjautuu itsestään.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Kirjaudu selaimella</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -914,6 +889,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Tämän laitteen avaimet poistetaan istunnon mukana. Salatut viestit pysyvät luettavina vain, jos ne ovat avainten varmuuskopiossa, ja laite on varmennettava uudelleen kirjautumisen jälkeen.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Tässä Sailfish-versiossa selain ei pysty viemään kirjautumista loppuun. Palaa sisään valinnalla ”Kirjaudu toisella laitteella” — se reitti toimii tässä.</translation>
     </message>
 </context>
 <context>
@@ -2126,6 +2105,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Varmuuskopio</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Huoneavaimesi on varmuuskopioitu.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Varmuuskopio on palvelimella, mutta sitä ei ole avattu tällä laitteella.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Avainvarmuuskopiota ei ole. Ilman sitä viestit muuttuvat lukukelvottomiksi, kun tämä laite on poissa.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Palautus</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Palautus on määritetty.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Syötä palautusavaimesi avataksesi varmuuskopion tällä laitteella.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Ristiinallekirjoitus</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Tämä laite on allekirjoitettu sinun laitteeksesi.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Muut näkevät tämän laitteen vahvistamattomana. Palautusavain tai vahvistus toiselta laitteelta ratkaisee asian.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Paikallinen tallennustila</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Istunto ja viestitietokanta on salattu tällä laitteella.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Ne ovat salaamattomina, koska ne luotiin ennen kuin sovellus osasi salata ne. Olemassa olevaa tietokantaa ei voi salata jälkikäteen.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Ne ovat salaamattomina, koska järjestelmän suojattu säilö ei antanut avainta.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Ne ovat salaamattomina, koska järjestelmästä puuttuu palvelu, joka säilyttää salausavaimia.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Palautusavain hyväksytty — viimeistellään. Tämä voi kestää hetken.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Turvallisuus</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Jokin tällä laitteella ei ole vielä kunnossa. Voit hoitaa sen nyt tai myöhemmin.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Syötä palautusavain</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Määritä varmuuskopio nyt</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Salaa tallennus nyt</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Miksi näin</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Myöhemmin</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Kaiken tämän löydät uudelleen kohdasta Tili › Salaus.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2277,6 +2358,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Spacet, joiden jäsen olet, näkyvät täällä. Space kokoaa huoneita yhteen.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Salaus ei ole mahdollista</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS:lle</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Suojattu säilö ei antanut avainta, joten xmatic ei voi luoda salattua tietokantaa.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Järjestelmästä puuttuu palvelu, joka säilyttää salausavaimia, joten xmatic ei voi luoda salattua tietokantaa.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Tämä on käyttöjärjestelmän ominaisuus, ei xmaticin vika. Paketti on olemassa ja se voidaan asentaa; jotkin Sailfish-levykuvat eivät yksinkertaisesti sisällä sitä.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Järjestelmä ilmoitti: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Näin korjaat sen</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Ota Kehittäjätila käyttöön järjestelmäasetuksissa, kohdassa Asetukset › Kehittäjätyökalut.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Avaa Pääte-sovellus ja siirry root-käyttäjäksi komennolla:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Asenna palvelu (kopioi rivi napauttamalla):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Käynnistä laite uudelleen. Palvelu käynnistyy sen jälkeen itsestään.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Tarkista itse, että se on olemassa — tämän on tulostettava tiedosto, ei virhettä:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Käynnistä xmatic uudelleen ja napauta ”Tarkista uudelleen”.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Tarkista uudelleen</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Jos se ei onnistu</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Voit käyttää xmaticia ilman paikallista salausta. Istunto, viestitietokanta ja huoneavaimet ovat silloin luettavina laitteella: kuka tahansa, joka pääsee sen tiedostojärjestelmään, voi lukea mukana, ja kadonnut puhelin luovuttaa kaiken, mitä siinä on.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Viestit pysyvät verkon läpi kulkiessaan joka tapauksessa päästä päähän salattuina. Tässä on kyse vain siitä, mitä laitteella on.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Jatka ilman salausta</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Tarkistettu — palveluun ei edelleenkään saada yhteyttä. Menikö asennus läpi ja käynnistettiinkö laite uudelleen?</translation>
     </message>
 </context>
 <context>

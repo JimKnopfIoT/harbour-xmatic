@@ -85,10 +85,24 @@ int main(int argc, char *argv[])
     const QString cacheDirectory = ensureDirectory(QStandardPaths::CacheLocation);
 
     // The store key from Sailfish Secrets encrypts the SQLite stores and the
-    // session file. Empty when the secrets service is unavailable — the app
-    // then runs as before, with unencrypted stores, and the keeper has said
-    // so in the journal.
-    QString storeKey = obtainStoreKey(dataDirectory);
+    // session file. The result says how the attempt ended, not just whether it
+    // worked: a device whose image ships no secrets daemon is a different
+    // situation from a collection that is locked right now, and until 0.25.2
+    // both arrived here as one empty string. The UI needs the difference —
+    // one is "install this package", the other "try again".
+    // Unconditional: the UI decides between "install this package" and "try
+    // again" on this one bit, and a device test showed how easily it can be
+    // wrong in either direction - once through a name collision, once because
+    // the sandbox hides the very files a filesystem check would read. A value
+    // that steers a user has to be readable in the journal.
+    qInfo("xmatic: secrets daemon reachable: %d", secretsDaemonPresent() ? 1 : 0);
+    StoreKeyResult storeKey = obtainStoreKey(dataDirectory);
+    if (storeKey.state != StoreKeyState::Available) {
+        qWarning("xmatic: no store key (state %d, daemon installed: %d): %s",
+                 static_cast<int>(storeKey.state),
+                 secretsDaemonPresent() ? 1 : 0,
+                 qPrintable(storeKey.errorMessage));
+    }
 
     // Before the bridge: it reads a setting while opening a room and listens
     // for the one that has to rebuild a timeline.
@@ -100,8 +114,8 @@ int main(int argc, char *argv[])
     service.publish();
 
     MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey, &settings);
-    if (!storeKey.isEmpty()) {
-        storeKey.fill(QChar('0'));
+    if (!storeKey.key.isEmpty()) {
+        storeKey.key.fill(QChar('0'));
     }
     qInfo("xmatic: %s", qPrintable(bridge.coreVersion()));
 

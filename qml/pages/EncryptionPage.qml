@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "SecurityStatus.js" as SecurityStatus
+
 // Key backup and recovery.
 //
 // Room keys only ever reach the devices that existed when a message was sent.
@@ -47,6 +49,14 @@ Page {
     /// input method kept.
     function useRecoveryKey(key) {
         matrix.recoverKeys(key)
+        // A key that was pasted in is still sitting in the clipboard, where the
+        // next application to ask for it can read it - and a recovery key opens
+        // the whole backup. Cleared only when it is demonstrably this key: the
+        // clipboard belongs to the user, and wiping something they put there
+        // for another purpose would be taking it from them.
+        if (Clipboard.hasText && Clipboard.text === key) {
+            Clipboard.text = ""
+        }
         recoveryField.text = ""
         recoveryField.focus = false
     }
@@ -72,56 +82,7 @@ Page {
                 title: qsTr("Encryption")
             }
 
-            DetailItem {
-                label: qsTr("Backup")
-                value: matrix.encryptionStatus.backupEnabled
-                       ? qsTr("active")
-                       : (matrix.encryptionStatus.backupOnServer
-                          ? qsTr("exists, not unlocked")
-                          : qsTr("not set up"))
-            }
-
-            DetailItem {
-                label: qsTr("Recovery")
-                value: {
-                    switch (matrix.encryptionStatus.recovery) {
-                    case "enabled": return qsTr("set up")
-                    case "incomplete": return qsTr("incomplete")
-                    case "disabled": return qsTr("not set up")
-                    default: return qsTr("unknown")
-                    }
-                }
-            }
-
-            DetailItem {
-                label: qsTr("Cross-signing")
-                value: matrix.encryptionStatus.crossSigned ? qsTr("complete") : qsTr("incomplete")
-            }
-
-            // What lies on this device, said plainly. The app degrades to
-            // unencrypted storage rather than refusing to start when the
-            // secrets service cannot deliver a key — a deliberate choice after
-            // a missing key was once read as "no session" and cost people their
-            // device — but a silent degrade is a dishonest one. Whoever runs in
-            // that state can see it here.
-            DetailItem {
-                label: qsTr("Local storage")
-                value: matrix.storageStatus.encrypted
-                       ? qsTr("encrypted")
-                       : qsTr("not encrypted")
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeExtraSmall
-                visible: !matrix.storageStatus.encrypted
-                color: Theme.errorColor
-                text: matrix.storageStatus.keyAvailable
-                      ? qsTr("Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.")
-                      : qsTr("Session and message database lie on this device unencrypted, because the system's secure storage did not hand out a key. Anyone with access to the device's filesystem can read them.")
-            }
+            SecurityRows { }
 
             // The only way an existing store changes side: it is created
             // encrypted or not at all. A sign-out clears it, the next sign-in

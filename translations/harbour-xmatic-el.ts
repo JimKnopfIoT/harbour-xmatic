@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Συνέχεια χωρίς κρυπτογράφηση</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Πίσω</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Ό,τι αποθηκεύει το xmatic σε αυτή τη συσκευή παραμένει αναγνώσιμο: η συνεδρία σου, τα μηνύματά σου και τα κλειδιά των δωματίων σου.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Διάλεξε αυτό μόνο αν η υπηρεσία δεν μπορεί να εγκατασταθεί σε αυτή τη συσκευή. Αν την εγκαταστήσεις αργότερα, μπορείς να αλλάξεις από τη σελίδα κρυπτογράφησης — κοστίζει μία αποσύνδεση και το κλειδί ανάκτησής σου.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>Το xmatic θα συνεχίσει να δείχνει αυτή την κατάσταση στην Κρυπτογράφηση.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -585,72 +608,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Δεν γίνεται ακόμη: δεν υπάρχει αντίγραφο κλειδιών στον διακομιστή. Η αποσύνδεση τώρα θα έκανε κάθε κρυπτογραφημένο μήνυμα της συσκευής οριστικά μη αναγνώσιμο. Ρύθμισε πρώτα το αντίγραφο και γύρνα εδώ.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Σε αυτή την έκδοση του Sailfish ο περιηγητής δεν μπορεί να ολοκληρώσει τη σύνδεση. Επίστρεψε με «Σύνδεση σε άλλη συσκευή» — αυτός ο δρόμος λειτουργεί εδώ.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Κρυπτογράφηση</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Αντίγραφο ασφαλείας</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>ενεργό</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>υπάρχει, δεν ξεκλειδώθηκε</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>δεν ρυθμίστηκε</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Ανάκτηση</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>ρυθμίστηκε</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>ημιτελής</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>άγνωστο</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Διασταυρούμενη υπογραφή</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>πλήρης</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Τοπική αποθήκευση</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>κρυπτογραφημένη</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>μη κρυπτογραφημένη</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Η συνεδρία και η βάση μηνυμάτων βρίσκονται χωρίς κρυπτογράφηση σε αυτή τη συσκευή. Δημιουργήθηκαν πριν μπορέσει η εφαρμογή να τις κρυπτογραφήσει, και μια υπάρχουσα βάση δεν κρυπτογραφείται επιτόπου.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Η συνεδρία και η βάση μηνυμάτων βρίσκονται χωρίς κρυπτογράφηση σε αυτή τη συσκευή, επειδή ο ασφαλής χώρος του συστήματος δεν έδωσε κλειδί. Όποιος φτάσει στο σύστημα αρχείων της συσκευής μπορεί να τις διαβάσει.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -896,6 +863,14 @@
         <source>Cancel sign-in</source>
         <translation>Ακύρωση σύνδεσης</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Ο περιηγητής αυτής της έκδοσης του Sailfish δεν μπορεί να ολοκληρώσει τη σύνδεση σε σύγχρονους διακομιστές — επιστρέφει στη φόρμα. Χρησιμοποίησε «Σύνδεση σε άλλη συσκευή»: το xmatic δείχνει μια διεύθυνση και έναν κωδικό, συνδέεσαι με αυτά σε οποιαδήποτε άλλη συσκευή, και αυτή εδώ συνδέεται μόνη της.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Σύνδεση μέσω περιηγητή</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -914,6 +889,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Τα κλειδιά αυτής της συσκευής διαγράφονται μαζί με τη συνεδρία. Τα κρυπτογραφημένα μηνύματα μένουν αναγνώσιμα μόνο αν βρίσκονται σε αντίγραφο κλειδιών, και η συσκευή πρέπει να επαληθευτεί ξανά μετά τη σύνδεση.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Σε αυτή την έκδοση του Sailfish ο περιηγητής δεν μπορεί να ολοκληρώσει τη σύνδεση. Επίστρεψε με «Σύνδεση σε άλλη συσκευή» — αυτός ο δρόμος λειτουργεί εδώ.</translation>
     </message>
 </context>
 <context>
@@ -2126,6 +2105,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Αντίγραφο ασφαλείας</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Τα κλειδιά των δωματίων σου έχουν αντίγραφο ασφαλείας.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Το αντίγραφο βρίσκεται στον διακομιστή αλλά δεν έχει ξεκλειδωθεί σε αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Δεν υπάρχει αντίγραφο κλειδιών. Χωρίς αυτό τα μηνύματα γίνονται μη αναγνώσιμα μόλις χαθεί αυτή η συσκευή.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Ανάκτηση</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Η ανάκτηση έχει ρυθμιστεί.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Δώσε το κλειδί ανάκτησής σου για να ξεκλειδώσεις το αντίγραφο σε αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Διασταυρούμενη υπογραφή</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Αυτή η συσκευή είναι υπογεγραμμένη ως δική σου.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Οι άλλοι βλέπουν αυτή τη συσκευή ως μη επαληθευμένη. Το κλειδί ανάκτησης ή μια επαλήθευση από άλλη συσκευή το τακτοποιεί.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Τοπική αποθήκευση</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Η συνεδρία και η βάση μηνυμάτων είναι κρυπτογραφημένες σε αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Βρίσκονται ακρυπτογράφητες επειδή δημιουργήθηκαν πριν μπορέσει η εφαρμογή να τις κρυπτογραφήσει. Μια υπάρχουσα βάση δεν κρυπτογραφείται εκ των υστέρων.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Βρίσκονται ακρυπτογράφητες επειδή ο ασφαλής χώρος του συστήματος δεν έδωσε κλειδί.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Βρίσκονται ακρυπτογράφητες επειδή από αυτό το σύστημα λείπει η υπηρεσία που φυλάει τα κλειδιά κρυπτογράφησης.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Το κλειδί ανάκτησης έγινε δεκτό — ολοκληρώνεται. Μπορεί να πάρει μια στιγμή.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Ασφάλεια</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Κάτι σε αυτή τη συσκευή δεν είναι ακόμη εντάξει. Μπορείς να το τακτοποιήσεις τώρα ή αργότερα.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Εισαγωγή κλειδιού ανάκτησης</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Ρύθμιση αντιγράφου τώρα</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Κρυπτογράφηση τώρα</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Γιατί συμβαίνει</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Αργότερα</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Όλα αυτά θα τα βρεις ξανά στο Λογαριασμός › Κρυπτογράφηση.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2277,6 +2358,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Οι χώροι στους οποίους είσαι μέλος εμφανίζονται εδώ. Οι χώροι ομαδοποιούν δωμάτια.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Η κρυπτογράφηση δεν είναι δυνατή</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix για Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Ο ασφαλής χώρος δεν έδωσε κλειδί, οπότε το xmatic δεν μπορεί να δημιουργήσει κρυπτογραφημένη βάση.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Από αυτό το σύστημα λείπει η υπηρεσία που φυλάει τα κλειδιά κρυπτογράφησης, οπότε το xmatic δεν μπορεί να δημιουργήσει κρυπτογραφημένη βάση.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Αυτό είναι ιδιότητα του λειτουργικού συστήματος, όχι σφάλμα του xmatic. Το πακέτο υπάρχει και εγκαθίσταται· ορισμένες εικόνες του Sailfish απλώς δεν το περιλαμβάνουν.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Το σύστημα ανέφερε: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Πώς διορθώνεται</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Ενεργοποίησε τη λειτουργία προγραμματιστή στις ρυθμίσεις συστήματος, στο Ρυθμίσεις › Εργαλεία προγραμματιστή.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Άνοιξε την εφαρμογή Τερματικό και γίνε root με:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Εγκατέστησε την υπηρεσία (άγγιξε τη γραμμή για αντιγραφή):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Επανεκκίνησε τη συσκευή. Η υπηρεσία ξεκινά μετά από μόνη της.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Βεβαιώσου και ο ίδιος ότι υπάρχει — αυτό πρέπει να τυπώσει αρχείο, όχι σφάλμα:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Ξεκίνα ξανά το xmatic και άγγιξε «Έλεγχος ξανά».</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Έλεγχος ξανά</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Αν αυτό δεν γίνεται</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Μπορείς να χρησιμοποιείς το xmatic χωρίς τοπική κρυπτογράφηση. Η συνεδρία, η βάση μηνυμάτων και τα κλειδιά δωματίων βρίσκονται τότε αναγνώσιμα στη συσκευή: όποιος φτάσει στο σύστημα αρχείων της διαβάζει μαζί σου, και ένα χαμένο τηλέφωνο παραδίδει ό,τι έχει πάνω του.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Τα μηνύματα παραμένουν έτσι κι αλλιώς κρυπτογραφημένα από άκρο σε άκρο στον δρόμο τους μέσα από το δίκτυο. Εδώ πρόκειται μόνο για ό,τι βρίσκεται στη συσκευή.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Συνέχεια χωρίς κρυπτογράφηση</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Ελέγχθηκε — η υπηρεσία εξακολουθεί να μην είναι προσβάσιμη. Ολοκληρώθηκε η εγκατάσταση και επανεκκινήθηκε η συσκευή;</translation>
     </message>
 </context>
 <context>

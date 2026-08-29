@@ -52,6 +52,21 @@ Dialog {
             text: qsTr("You will need your recovery key afterwards to unlock the backup, and this device has to be verified again. Have the recovery key at hand before you continue.")
         }
 
+        // Said before the sign-out, not discovered after it. On Sailfish 4 the
+        // browser cannot finish an OAuth sign-in, so somebody who signs out
+        // here and reaches for the usual button is stuck outside their own
+        // account - which is exactly what happened during the field test, to
+        // the person who wrote this dialog.
+        Label {
+            x: Theme.horizontalPageMargin
+            width: parent.width - 2 * Theme.horizontalPageMargin
+            wrapMode: Text.Wrap
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.errorColor
+            visible: !matrix.browserLoginReliable
+            text: qsTr("On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.")
+        }
+
         Label {
             x: Theme.horizontalPageMargin
             width: parent.width - 2 * Theme.horizontalPageMargin

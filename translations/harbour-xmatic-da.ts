@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Fortsæt uden kryptering</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Tilbage</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Alt, hvad xmatic gemmer på denne enhed, forbliver læsbart: din session, dine beskeder og dine rumnøgler.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Vælg kun dette, hvis tjenesten ikke kan installeres på enheden. Installerer du den senere, kan du skifte på krypteringssiden — det koster én log ud og din gendannelsesnøgle.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic bliver ved med at vise denne tilstand under Kryptering.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -585,72 +608,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Ikke muligt endnu: der er ingen nøglesikkerhedskopi på serveren. At logge ud nu ville gøre hver krypteret besked på enheden ulæselig for altid. Sæt sikkerhedskopien op først, og kom så tilbage hertil.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>I denne Sailfish-version kan browseren ikke fuldføre login. Kom tilbage med “Log ind på en anden enhed” — den vej virker her.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Kryptering</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Sikkerhedskopi</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>aktiv</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>findes, ikke låst op</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>ikke sat op</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Gendannelse</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>sat op</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>ufuldstændig</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>ukendt</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Krydssignering</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>fuldstændig</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Lokal lagring</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>krypteret</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>ikke krypteret</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Session og beskeddatabase ligger ukrypteret på enheden. De blev oprettet, før appen kunne kryptere dem, og en eksisterende database kan ikke krypteres på stedet.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Session og beskeddatabase ligger ukrypteret på enheden, fordi systemets sikre lager ikke udleverede en nøgle. Enhver med adgang til enhedens filsystem kan læse dem.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -896,6 +863,14 @@
         <source>Cancel sign-in</source>
         <translation>Afbryd login</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Browseren i denne Sailfish-version kan ikke fuldføre login hos moderne hjemmeservere — den vender tilbage til formularen. Brug “Log ind på en anden enhed”: xmatic viser en adresse og en kode, du logger ind med dem på en vilkårlig anden enhed, og denne her logger ind af sig selv.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Log ind via browser</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -914,6 +889,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Enhedens nøgler slettes sammen med sessionen. Krypterede beskeder forbliver kun læsbare, hvis de ligger i en nøglesikkerhedskopi, og enheden skal verificeres igen efter login.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>I denne Sailfish-version kan browseren ikke fuldføre login. Kom tilbage med “Log ind på en anden enhed” — den vej virker her.</translation>
     </message>
 </context>
 <context>
@@ -2126,6 +2105,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Sikkerhedskopi</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Dine rumnøgler er sikkerhedskopieret.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Sikkerhedskopien ligger på serveren, men er ikke låst op på denne enhed.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Der er ingen nøglesikkerhedskopi. Uden den bliver beskeder ulæselige, når denne enhed er væk.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Gendannelse</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Gendannelse er sat op.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Indtast din gendannelsesnøgle for at låse sikkerhedskopien op på denne enhed.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Krydssignering</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Denne enhed er signeret som din.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Andre ser denne enhed som ubekræftet. Gendannelsesnøglen eller en bekræftelse fra en anden enhed klarer det.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Lokal lagring</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Session og beskeddatabase er krypteret på denne enhed.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>De ligger ukrypteret, fordi de blev oprettet, før appen kunne kryptere dem. En eksisterende database kan ikke krypteres bagefter.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>De ligger ukrypteret, fordi systemets sikre lager ikke udleverede en nøgle.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>De ligger ukrypteret, fordi systemet mangler tjenesten, der opbevarer krypteringsnøgler.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Gendannelsesnøglen accepteret — fuldføres. Det kan tage et øjeblik.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Sikkerhed</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Noget på denne enhed er ikke i orden endnu. Du kan ordne det nu eller senere.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Indtast gendannelsesnøgle</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Sæt sikkerhedskopi op nu</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Krypter lageret nu</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Hvorfor det</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Senere</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Alt dette finder du igen under Konto › Kryptering.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2277,6 +2358,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>De spaces, du er medlem af, vises her. En space samler rum.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Kryptering ikke mulig</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix til Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Det sikre lager udleverede ingen nøgle, så xmatic kan ikke oprette en krypteret database.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Systemet mangler tjenesten, der opbevarer krypteringsnøgler, så xmatic kan ikke oprette en krypteret database.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Det er en egenskab ved styresystemet, ikke en fejl i xmatic. Pakken findes og kan installeres; nogle Sailfish-billeder leverer den bare ikke med.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Systemet meldte: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Sådan retter du det</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Slå Udviklertilstand til i systemindstillingerne, under Indstillinger › Udviklerværktøjer.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Åbn Terminal-appen, og bliv root med:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Installer tjenesten (tryk på linjen for at kopiere den):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Genstart enheden. Tjenesten starter derefter af sig selv.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Se selv efter, at den er der — dette skal udskrive en fil, ikke en fejl:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Start xmatic igen, og tryk på “Tjek igen”.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Tjek igen</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Hvis det ikke kan lade sig gøre</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Du kan bruge xmatic uden lokal kryptering. Session, beskeddatabase og rumnøgler ligger så læsbare på enheden: den, der kommer til filsystemet, læser med, og en mistet telefon giver alt på den fra sig.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Beskeder forbliver ende-til-ende-krypterede på vejen gennem nettet under alle omstændigheder. Her handler det kun om det, der ligger på enheden.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Fortsæt uden kryptering</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Tjekket — tjenesten kan stadig ikke nås. Kom installationen igennem, og blev enheden genstartet?</translation>
     </message>
 </context>
 <context>

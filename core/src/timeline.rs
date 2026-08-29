@@ -124,10 +124,7 @@ impl TimelineHandle {
     /// answer.
     pub async fn pinned_info(&self) -> (Vec<String>, String) {
         let room = self.timeline.room();
-        let ids = match room.load_pinned_events().await {
-            Ok(Some(ids)) => ids,
-            _ => room.pinned_event_ids().unwrap_or_default(),
-        };
+        let ids = pinned_ids(room).await;
         let preview = pinned_preview(room, &ids).await;
         (ids.iter().map(|id| id.to_string()).collect(), preview)
     }
@@ -1606,7 +1603,7 @@ pub async fn open(
         let banner_sink = sink.clone();
         let banner_room_id = room_id.to_owned();
         detail_tasks.spawn_tracked(async move {
-            let ids = banner_room.pinned_event_ids().unwrap_or_default();
+            let ids = pinned_ids(&banner_room).await;
             let preview = pinned_preview(&banner_room, &ids).await;
             let (loaded, checked, error) = pinned_load_report(&banner_room, &ids).await;
             let ids: Vec<String> = ids.iter().map(|id| id.to_string()).collect();
@@ -1854,6 +1851,27 @@ pub async fn open_thread(
 /// The pinned view is built by the SDK from exactly these fetches, so when it
 /// stays empty this says whether the events are unreachable or the view is
 /// wired up wrongly. Counts and an error class only — never an identifier.
+/// The room's pinned event ids, asked of the server with the room's own state
+/// as the fallback.
+///
+/// The two must not differ, and they did: opening a room read only
+/// `pinned_event_ids()`, which is the *local* state, while pinning something
+/// read the server. On a store that has just been created — a fresh login, or
+/// the sign-out that encrypts an old store — `m.room.pinned_events` is not in
+/// that state yet. Opening the room fetches it, so the first entry showed no
+/// banner and the second one did, which reads as "the pins keep falling out"
+/// rather than as a missing request. Measured on the device, twice in a row.
+async fn pinned_ids(room: &matrix_sdk::Room) -> Vec<matrix_sdk::ruma::OwnedEventId> {
+    match room.load_pinned_events().await {
+        Ok(Some(ids)) => ids,
+        // `Ok(None)` is "the room has no pinned event state", and an error is a
+        // failed request. Neither may claim there are none: the local state is
+        // the better answer in both cases, and it is empty anyway where it
+        // really is empty.
+        _ => room.pinned_event_ids().unwrap_or_default(),
+    }
+}
+
 async fn pinned_load_report(
     room: &matrix_sdk::Room,
     ids: &[matrix_sdk::ruma::OwnedEventId],

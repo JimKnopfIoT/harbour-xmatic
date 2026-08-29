@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Doorgaan zonder versleuteling</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Alles wat xmatic op dit apparaat opslaat blijft leesbaar: je sessie, je berichten en je kamersleutels.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Kies dit alleen als de dienst niet op dit apparaat te installeren is. Installeer je hem later, dan kun je op de versleutelingspagina overstappen — het kost één keer afmelden en je herstelsleutel.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic blijft deze toestand tonen onder Versleuteling.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -585,72 +608,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Nog niet mogelijk: er is geen sleutelback-up op de server. Nu afmelden zou elk versleuteld bericht op dit apparaat voorgoed onleesbaar maken. Zet eerst de back-up op en kom dan hier terug.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>In deze Sailfish-versie kan de browser het aanmelden niet voltooien. Kom terug met “Aanmelden op een ander apparaat” — die weg werkt hier wel.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Versleuteling</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Back-up</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>actief</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>bestaat, niet ontgrendeld</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>niet ingesteld</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Herstel</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>ingesteld</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>onvolledig</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>onbekend</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Kruislings ondertekenen</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>volledig</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Lokale opslag</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>versleuteld</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>niet versleuteld</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Sessie en berichtendatabase staan onversleuteld op dit apparaat. Ze zijn aangemaakt voordat deze app ze kon versleutelen, en een bestaande database kan niet ter plaatse worden versleuteld.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Sessie en berichtendatabase staan onversleuteld op dit apparaat, omdat de beveiligde opslag van het systeem geen sleutel heeft afgegeven. Wie bij het bestandssysteem van het apparaat kan, kan ze lezen.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -896,6 +863,14 @@
         <source>Cancel sign-in</source>
         <translation>Aanmelden afbreken</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>De browser van deze Sailfish-versie kan het aanmelden bij moderne thuisservers niet voltooien — hij keert terug naar het formulier. Gebruik “Aanmelden op een ander apparaat”: xmatic toont een adres en een code, daarmee meld je je aan op een willekeurig ander apparaat, en dit apparaat meldt zichzelf aan.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Aanmelden via browser</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -914,6 +889,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>De sleutels van dit apparaat worden samen met de sessie verwijderd. Versleutelde berichten blijven alleen leesbaar als ze in een sleutelback-up staan, en dit apparaat moet na het aanmelden opnieuw worden geverifieerd.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>In deze Sailfish-versie kan de browser het aanmelden niet voltooien. Kom terug met “Aanmelden op een ander apparaat” — die weg werkt hier wel.</translation>
     </message>
 </context>
 <context>
@@ -2126,6 +2105,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Back-up</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Je kamersleutels zijn geback-upt.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>De back-up staat op de server maar is op dit apparaat niet ontgrendeld.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Er is geen sleutelback-up. Zonder die worden berichten onleesbaar zodra dit apparaat weg is.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Herstel</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Herstel is ingesteld.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Voer je herstelsleutel in om de back-up op dit apparaat te ontgrendelen.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Kruislings ondertekenen</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Dit apparaat is als het jouwe ondertekend.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Anderen zien dit apparaat als niet geverifieerd. De herstelsleutel of een verificatie vanaf een ander apparaat lost dat op.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Lokale opslag</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Sessie en berichtendatabase zijn op dit apparaat versleuteld.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Ze liggen onversleuteld omdat ze zijn aangemaakt voordat deze app ze kon versleutelen. Een bestaande database kan niet achteraf versleuteld worden.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Ze liggen onversleuteld omdat de beveiligde opslag van het systeem geen sleutel heeft afgegeven.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Ze liggen onversleuteld omdat op dit systeem de dienst ontbreekt die versleutelingssleutels bewaart.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Herstelsleutel geaccepteerd — wordt afgerond. Dat kan even duren.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Beveiliging</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Er is op dit apparaat nog iets niet in orde. Je kunt het nu of later regelen.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Herstelsleutel invoeren</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Back-up nu instellen</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Opslag nu versleutelen</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Waarom is dat</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Later</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Dit alles vind je terug onder Account › Versleuteling.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2277,6 +2358,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Spaces waarvan je lid bent verschijnen hier. Spaces groeperen kamers.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Versleuteling niet mogelijk</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix voor Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>De beveiligde opslag heeft geen sleutel afgegeven, dus xmatic kan geen versleutelde database aanmaken.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Op dit systeem ontbreekt de dienst die versleutelingssleutels bewaart, dus xmatic kan geen versleutelde database aanmaken.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Dat is een eigenschap van het besturingssysteem, geen fout in xmatic. Het pakket bestaat en is te installeren; sommige Sailfish-images leveren het eenvoudigweg niet mee.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Het systeem meldde: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Zo los je het op</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Zet Ontwikkelaarsmodus aan in de systeeminstellingen, onder Instellingen › Ontwikkelaarsgereedschap.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Open de Terminal-app en word root met:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Installeer de dienst (tik op de regel om hem te kopiëren):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Herstart het apparaat. De dienst start daarna vanzelf.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Overtuig jezelf dat hij er is — dit moet een bestand tonen, geen foutmelding:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Start xmatic opnieuw en tik op “Opnieuw controleren”.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Opnieuw controleren</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Als dat niet kan</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Je kunt xmatic zonder lokale versleuteling gebruiken. Sessie, berichtendatabase en kamersleutels liggen dan leesbaar op dit apparaat: wie bij het bestandssysteem komt leest mee, en een verloren telefoon geeft alles prijs wat erop staat.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Berichten blijven op hun weg door het netwerk hoe dan ook eind-tot-eind versleuteld. Het gaat hier alleen om wat op het apparaat ligt.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Doorgaan zonder versleuteling</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Gecontroleerd — de dienst is nog steeds niet bereikbaar. Is de installatie doorgelopen en is het apparaat herstart?</translation>
     </message>
 </context>
 <context>

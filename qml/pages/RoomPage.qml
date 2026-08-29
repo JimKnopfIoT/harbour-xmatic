@@ -102,6 +102,9 @@ Page {
     // empty field, which removes whatever stood there before.
     Component.onDestruction: {
         if (!invited) {
+            // Same reason as in submit(): without this the draft keeps
+            // everything except the word the user stopped in the middle of.
+            Qt.inputMethod.commit()
             matrix.setDraft(roomId,
                             page.editingEventId.length > 0 ? "" : messageField.text)
         }
@@ -176,6 +179,10 @@ Page {
     // where it was not needed and failed where it was.
     property int unreadPagesLeft: 0
     readonly property int unreadPageLimit: 8
+    /// How many rounds the search may wait for the first rows before it starts
+    /// paginating. At the retry timer's 700 ms that is about seven seconds.
+    property int unreadEmptyRounds: 0
+    readonly property int unreadEmptyLimit: 10
 
     // Once per built timeline. The page stays alive while a sub-page is on top,
     // and coming back re-opens the same one - the position must not jump then.
@@ -222,6 +229,7 @@ Page {
             page.unreadHandled = true
             page.unreadFromId = readMarker
             page.unreadPagesLeft = page.unreadPageLimit
+            page.unreadEmptyRounds = page.unreadEmptyLimit
             // The tail is let go of before the search starts, not when it
             // succeeds: a view that follows the newest row marks the room read
             // after eight hundred milliseconds, and that moves the very marker
@@ -296,10 +304,33 @@ Page {
                 // Back in front: whether this counts as reading is decided by
                 // the same test as everywhere else, one timer tick later.
                 readTimer.restart()
-            } else if (page.unreadFromId.length === 0
-                       && (page.followTail || timelineView.atYEnd)) {
-                matrix.markRead()
+            } else {
+                page.markReadIfDue()
             }
+        }
+    }
+
+    // Leaving is the last moment to say the room was read, and it has to be
+    // taken on `Deactivating`.
+    //
+    // This used to hang on `Inactive` alone, which a page reaches when another
+    // one covers it - not when it is popped. Swiping back destroys the page,
+    // and it was gone before that branch ever ran: the receipt was dropped and
+    // the room stood in the list as unread although every message had been on
+    // screen. What hid the fault is the 800 ms debounce, which rescues anybody
+    // who lingers a moment; measured on the device as "wait two or three
+    // seconds and it works". Called from both states, and sending twice costs
+    // nothing - the SDK drops a receipt that is already covered.
+    //
+    // Same guard as the timer: a room left while it is still looking for the
+    // read marker has not been read to the end, whatever the view happens to
+    // be showing.
+    function markReadIfDue() {
+        if (invited || page.unreadFromId.length > 0) {
+            return
+        }
+        if (page.followTail || timelineView.atYEnd) {
+            matrix.markRead()
         }
     }
 
@@ -326,9 +357,14 @@ Page {
             // The marker on the newest row means everything is read: nothing
             // to jump to, and the room belongs at its end.
             if (idx >= matrix.timeline.count - 1) {
+                console.warn("xmatic: read marker is the newest row ("
+                             + idx + " of " + matrix.timeline.count
+                             + "), staying at the end")
                 page.stayAtEnd()
                 return
             }
+            console.warn("xmatic: opening at the read marker, row " + idx
+                         + " of " + matrix.timeline.count)
             timelineView.positionViewAtIndex(idx, ListView.Beginning)
             // What "at the end" means is only known once the view has settled.
             // Two unread messages fit on the screen, so the jump lands at the
@@ -336,6 +372,18 @@ Page {
             // not. Without asking, the room stayed parked: new messages no
             // longer followed, and nothing counted as read either.
             followCheck.restart()
+            return
+        }
+        // Nothing has arrived yet. The core answers `timeline.open` before the
+        // rows are there - they come afterwards through the diff stream - and
+        // this runs a millisecond later, so an empty model here means "not yet",
+        // not "not in it". Asking for older history at that moment searches a
+        // timeline that has not had its first batch, and spends a page of the
+        // budget doing it. Waiting is bounded, because a room that never
+        // delivers a row must not hold the view forever.
+        if (matrix.timeline.count === 0 && page.unreadEmptyRounds > 0) {
+            page.unreadEmptyRounds--
+            unreadRetry.restart()
             return
         }
         if (page.unreadPagesLeft > 0 && !matrix.timelineAtStart) {
@@ -352,6 +400,10 @@ Page {
         }
         // Out of reach: the room opens at its newest message, which is where
         // it stood before this looked.
+        console.warn("xmatic: read marker not found, "
+                     + matrix.timeline.count + " rows, "
+                     + page.unreadPagesLeft + " pages left, at start "
+                     + matrix.timelineAtStart + " - staying at the end")
         page.unreadFromId = ""
         unreadRetry.stop()
         page.stayAtEnd()
@@ -411,19 +463,10 @@ Page {
         // gone, deliberately, so that one names the room last visited.
         if (status === PageStatus.Active) {
             matrix.setVisibleRoom(roomId)
-        } else if (status === PageStatus.Inactive) {
+        } else if (status === PageStatus.Deactivating
+                   || status === PageStatus.Inactive) {
             matrix.setVisibleRoom("")
-            // Leaving is the last moment to say the room was read. The timer
-            // is debounced by nearly a second, and stepping out inside that
-            // second used to drop the receipt - the room then stood in the
-            // list as unread although every message had been on screen.
-            // Same guard as the timer: a room left while it is still looking
-            // for the marker has not been read to the end, whatever the view
-            // happens to be showing.
-            if (!invited && page.unreadFromId.length === 0
-                    && (page.followTail || timelineView.atYEnd)) {
-                matrix.markRead()
-            }
+            page.markReadIfDue()
         }
 
         if (status === PageStatus.Active && !invited) {
@@ -2773,6 +2816,7 @@ Page {
                         visible: settings.voiceMessages
                                  && page.editingEventId.length === 0
                                  && messageField.text.trim().length === 0
+                                 && !messageField.inputMethodComposing
                         icon.source: matrix.recorder.recording
                                      ? "image://theme/icon-m-mic?" + Theme.errorColor
                                      : "image://theme/icon-m-mic"
@@ -2830,7 +2874,11 @@ Page {
                             verticalCenter: parent.verticalCenter
                         }
                         visible: !recordButton.visible
+                        // `inputMethodComposing` is the uncommitted word, and
+                        // it is what Qt 5.6 offers - `preeditText` arrives in
+                        // 5.7 and is out of reach here.
                         enabled: messageField.text.trim().length > 0
+                                 || messageField.inputMethodComposing
                         icon.source: "image://theme/icon-m-send"
                         // The arrow is a flat wide triangle and fills barely
                         // half the height its box has, which next to the clip
@@ -2965,6 +3013,17 @@ Page {
     }
 
     function submit() {
+        // The word being typed is not in `text` yet.
+        //
+        // Sailfish's keyboard keeps the current word in the input method's
+        // preedit buffer and hands it over only when it is committed - a space,
+        // a punctuation mark, a tapped suggestion. Whoever types a message and
+        // reaches straight for send therefore sent everything but the last
+        // word, and a single-word message went out empty. Reported from the
+        // field for both sending and editing. Committing here covers every way
+        // out, the warning dialog included, because they all pass through this
+        // one function.
+        Qt.inputMethod.commit()
         // In an encrypted room, warn once before the message reaches a
         // recipient whose devices were never verified. "Send anyway" (and an
         // optional "remember") is handled in the dialog; it then calls back.
