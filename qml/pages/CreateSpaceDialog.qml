@@ -9,9 +9,17 @@ Dialog {
 
     allowedOrientations: Orientation.All
 
-    canAccept: nameField.text.trim().length > 0
+    // The word being typed is not in `text` yet: Sailfish's keyboard holds it
+    // in the input method's preedit until it is committed. Without this the
+    // accept button stays grey over a name that is plainly on screen, and a
+    // one-word name arrives empty. Committing on acceptance is harmless even
+    // where the toolkit already does it.
+    canAccept: nameField.text.trim().length > 0 || nameField.inputMethodComposing
 
-    onAccepted: matrix.createSpace(nameField.text)
+    onAccepted: {
+        Qt.inputMethod.commit()
+        matrix.createSpace(nameField.text)
+    }
 
     // In landscape the dialog is barely taller than its header, so the
     // field below it has to be reachable by scrolling — on the wide

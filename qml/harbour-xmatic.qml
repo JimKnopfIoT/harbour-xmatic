@@ -6,18 +6,44 @@ import Nemo.KeepAlive 1.2
 import Sailfish.Share 1.0
 
 import "pages"
+import "pages/SecurityStatus.js" as SecurityStatus
 
 ApplicationWindow {
     id: app
 
-    // Which session state the currently shown page was built for, so the page
-    // is only exchanged when the state actually changes.
-    property string shownState: "none"
+    // Which root page is currently up, so it is only exchanged when it really
+    // changes. The session state alone is not enough any more: the storage
+    // gate can replace the login page while the state stays "none".
+    // Deliberately empty here and assigned once from Component.onCompleted.
+    //
+    // Written as an initialiser that mentions `matrix.storageBlocked`, this is
+    // not a starting value but a binding: the moment the gate opens it would
+    // follow along on its own, and `showPageFor` - which exists to notice that
+    // very change - would compare the new root against a value that had
+    // already become the new root and conclude there was nothing to do. The
+    // page then never gets exchanged. Measured on the device: the key was
+    // loaded, the gate was open, and the blocked page simply stayed.
+    property string shownRoot: ""
+
+    // Whether the security page has already been offered in this run. Once per
+    // app start — it leads, it does not nag.
+    property bool securityShown: false
 
     // The room the standing notification is about, or "" if none stands.
     property string notifiedRoomId: ""
 
-    initialPage: Component { LoginPage { } }
+    // Decided here rather than corrected a moment later: on a device that has
+    // to be told what to install, the login page must not flash up first — it
+    // is the page whose whole purpose is to not be reachable yet.
+    //
+    // This one is a binding as well, and here that is harmless: Silica reads
+    // `initialPage` once while building the first page and ignores it
+    // afterwards. Observed on the device during the gate test — the value
+    // changed under a running app and nothing happened. The page swap is
+    // `showPageFor`'s job, not this property's.
+    initialPage: Qt.resolvedUrl(matrix.storageBlocked
+                                ? "pages/StorageBlockedPage.qml"
+                                : "pages/LoginPage.qml")
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
     // Silica's default is Text.AutoText, and every Label inherits it — a
@@ -59,6 +85,13 @@ ApplicationWindow {
     }
 
     function rootFor(state) {
+        // Before anything else, and before any login: nothing lies on this
+        // device, no key can be had, and nobody has said the app may run
+        // without one. Signing in here would create the plaintext store this
+        // gate exists to prevent.
+        if (matrix.storageBlocked) {
+            return Qt.resolvedUrl("pages/StorageBlockedPage.qml")
+        }
         // An encrypted session whose key is not at hand is not "no session":
         // its page retries the unlock, and never leads into a login that
         // would clear the store.
@@ -78,19 +111,44 @@ ApplicationWindow {
     // such property.
     function propsFor(root) {
         return root === Qt.resolvedUrl("pages/LoginPage.qml")
-                || root === Qt.resolvedUrl("pages/SessionLockedPage.qml") ? {} : { isHome: true }
+                || root === Qt.resolvedUrl("pages/SessionLockedPage.qml")
+                || root === Qt.resolvedUrl("pages/StorageBlockedPage.qml") ? {} : { isHome: true }
     }
 
     function showPageFor(state) {
-        if (state === shownState) {
+        var root = rootFor(state)
+        if (root === shownRoot) {
             return
         }
-        shownState = state
+        shownRoot = root
         if (pageStack.busy) {
-            pendingRoot = rootFor(state)
+            pendingRoot = root
         } else {
-            pageStack.replaceAbove(null, rootFor(state), propsFor(rootFor(state)))
+            pageStack.replaceAbove(null, root, propsFor(root))
         }
+    }
+
+    // Offers the security page once per run, and only where there is something
+    // to lead the user to. Never over an unanswered state: right after the
+    // start the encryption status is empty for a moment, and interrupting
+    // somebody over "unknown" is a claim the app cannot back.
+    function maybeShowSecurity() {
+        if (securityShown || matrix.storageBlocked) {
+            return
+        }
+        if (matrix.sessionState !== "signed-in") {
+            return
+        }
+        if (!SecurityStatus.known(matrix) || !SecurityStatus.needsAttention(matrix)) {
+            return
+        }
+        if (pageStack.busy) {
+            // Retried from onBusyChanged; a push during a transition is
+            // dropped silently and the page would never appear.
+            return
+        }
+        securityShown = true
+        pageStack.push(Qt.resolvedUrl("pages/SecurityStatusPage.qml"))
     }
 
     Connections {
@@ -106,6 +164,7 @@ ApplicationWindow {
             }
             if (!pageStack.busy) {
                 app.deliverShare()
+                app.maybeShowSecurity()
             }
         }
     }
@@ -125,7 +184,16 @@ ApplicationWindow {
         }
     }
 
-    Component.onCompleted: matrix.restoreSession()
+    // Not while the gate is up: a restore on an empty device answers "none"
+    // and would take the app to the login page, which is the one place this
+    // state must not lead to.
+    Component.onCompleted: {
+        // An assignment, not a binding - see the note on the property.
+        shownRoot = rootFor(matrix.sessionState)
+        if (!matrix.storageBlocked) {
+            matrix.restoreSession()
+        }
+    }
 
     // The tap on a notification, and the launcher's hand-over, arrive here.
     // Neither carries an argument: which room is meant is this app's own
@@ -355,10 +423,26 @@ ApplicationWindow {
             app.showPageFor(matrix.sessionState)
             if (matrix.sessionState === "signed-in") {
                 matrix.refreshEncryptionStatus()
+                matrix.refreshStorageStatus()
                 // A share that arrived while the session was still being
                 // restored now has a room list to be offered.
                 app.deliverShare()
+            } else {
+                // A sign-out ends the run as far as this is concerned: the
+                // next session is a new device and gets asked again.
+                app.securityShown = false
             }
+        }
+
+        // Both jobs in one handler each: QML refuses a type that binds the
+        // same signal twice, and the page then fails to load.
+        onEncryptionChanged: app.maybeShowSecurity()
+
+        onStorageChanged: {
+            // The gate can open or close under the running app — the retry on
+            // the blocked page asks the secrets storage again.
+            app.showPageFor(matrix.sessionState)
+            app.maybeShowSecurity()
         }
 
         // The login itself happens in the browser; the core is waiting on a

@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Kompli mingħajr kriptaġġ</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Lura</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Kull ma jaħżen xmatic fuq dan l-apparat jibqa&apos; jinqara: is-sessjoni tiegħek, il-messaġġi tiegħek u ċ-ċwievet tal-kmamar tiegħek.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Agħżel dan biss jekk is-servizz ma jistax jiġi installat fuq dan l-apparat. Jekk tinstallah aktar tard, tista&apos; taqleb mill-paġna tal-kriptaġġ — jiswa ħruġ wieħed mis-sessjoni u ċ-ċavetta tal-irkupru tiegħek.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic se jibqa&apos; juri dan l-istat taħt Kriptaġġ.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -589,72 +612,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Mhux possibbli għadu: m&apos;hemmx backup taċ-ċwievet fuq is-server. Li toħroġ issa jagħmel kull messaġġ iċċifrat fuq dan l-apparat illeġibbli għal dejjem. L-ewwel issettja l-backup, imbagħad erġa&apos; ejja hawn.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>F&apos;din il-verżjoni ta&apos; Sailfish il-brawżer ma jistax itemm il-login. Erġa&apos; idħol b&apos;„Idħol fuq apparat ieħor“ — dik it-triq taħdem hawn.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Ċifrar</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Backup</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>attiv</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>jeżisti, mhux miftuħ</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>mhux issettjat</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Irkupru</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>issettjat</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>mhux komplut</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>mhux magħruf</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Firma inkroċjata</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>komplut</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Ħażna lokali</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>iċċifrata</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>mhux iċċifrata</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Is-sessjoni u l-bażi tad-data tal-messaġġi jinsabu fuq dan l-apparat mingħajr ċifrar. Inħolqu qabel ma din l-app setgħet tiċċifrahom, u bażi tad-data eżistenti ma tistax tiġi ċċifrata fejn hi.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Is-sessjoni u l-bażi tad-data tal-messaġġi jinsabu fuq dan l-apparat mingħajr ċifrar, għax il-ħażna sigura tas-sistema ma tatx ċavetta. Kull min jasal għas-sistema tal-fajls tal-apparat jista&apos; jaqrahom.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -900,6 +867,14 @@
         <source>Cancel sign-in</source>
         <translation>Ikkanċella d-dħul</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Il-brawżer ta&apos; din il-verżjoni ta&apos; Sailfish ma jistax itemm il-login ta&apos; servers moderni — jerġa&apos; lura għall-formola. Uża „Idħol fuq apparat ieħor“: xmatic juri indirizz u kodiċi, tidħol bihom fuq kwalunkwe apparat ieħor, u dan jidħol waħdu.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Idħol permezz tal-brawżer</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -918,6 +893,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Iċ-ċwievet ta&apos; dan l-apparat jitħassru flimkien mas-sessjoni. Il-messaġġi ċċifrati jibqgħu jinqraw biss jekk ikunu f&apos;backup taċ-ċwievet, u l-apparat irid jerġa&apos; jiġi vverifikat wara d-dħul.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>F&apos;din il-verżjoni ta&apos; Sailfish il-brawżer ma jistax itemm il-login. Erġa&apos; idħol b&apos;„Idħol fuq apparat ieħor“ — dik it-triq taħdem hawn.</translation>
     </message>
 </context>
 <context>
@@ -2132,6 +2111,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Backup</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Iċ-ċwievet tal-kmamar tiegħek għandhom kopja ta&apos; sigurtà.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Il-kopja tinsab fuq is-server imma mhijiex sbloccata fuq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>M&apos;hemmx kopja ta&apos; sigurtà taċ-ċwievet. Mingħajrha l-messaġġi jsiru illeġibbli hekk kif dan l-apparat jisparixxi.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Irkupru</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>L-irkupru huwa ssettjat.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Daħħal iċ-ċavetta tal-irkupru tiegħek biex tisblokka l-kopja fuq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Firma inkroċjata</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Dan l-apparat huwa ffirmat bħala tiegħek.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Oħrajn jaraw dan l-apparat bħala mhux verifikat. Iċ-ċavetta tal-irkupru jew verifika minn apparat ieħor issolvi dan.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Ħażna lokali</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Is-sessjoni u d-database tal-messaġġi huma kriptati fuq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Huma mhux kriptati għax inħolqu qabel ma din l-applikazzjoni setgħet tikkriptahom. Database eżistenti ma tistax tiġi kriptata wara.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Huma mhux kriptati għax il-ħażna sigura tas-sistema ma tatx ċavetta.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Huma mhux kriptati għax f&apos;din is-sistema jonqos is-servizz li jżomm iċ-ċwievet tal-kriptaġġ.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Iċ-ċavetta tal-irkupru ġiet aċċettata — qed titlesta. Dan jista&apos; jieħu mument.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Sigurtà</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Xi ħaġa fuq dan l-apparat għadha mhux f&apos;ordni. Tista&apos; ssolviha issa jew aktar tard.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Daħħal ċavetta tal-irkupru</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Issettja l-kopja issa</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Ikkripta l-ħażna issa</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Għaliex dan</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Aktar tard</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Dan kollu ssibu mill-ġdid taħt Kont › Kriptaġġ.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2285,6 +2366,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>L-ispazji li int membru tagħhom jidhru hawn. L-ispazji jiġbru kmamar flimkien.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Kriptaġġ mhux possibbli</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix għal Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Il-ħażna sigura ma tatx ċavetta, għalhekk xmatic ma jistax joħloq database kriptata.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>F&apos;din is-sistema jonqos is-servizz li jżomm iċ-ċwievet tal-kriptaġġ, għalhekk xmatic ma jistax joħloq database kriptata.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Din hija karatteristika tas-sistema operattiva, mhux difett f&apos;xmatic. Il-pakkett jeżisti u jista&apos; jiġi installat; xi immaġini ta&apos; Sailfish sempliċement ma jġibuhx magħhom.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Is-sistema rrappurtat: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Kif issewwiha</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Ixgħel il-modalità tal-iżviluppatur fis-settings tas-sistema, taħt Settings › Għodod tal-iżviluppatur.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Iftaħ l-applikazzjoni Terminal u sir root b&apos;dan:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Installa s-servizz (tektek il-linja biex tikkopjaha):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Erġa&apos; ibda l-apparat. Is-servizz imbagħad jibda waħdu.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Ikkonferma int stess li qiegħed hemm — dan irid joħroġ fajl, mhux żball:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Erġa&apos; ibda xmatic u tektek „Iċċekkja mill-ġdid“.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Iċċekkja mill-ġdid</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Jekk dan mhux possibbli</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Tista&apos; tuża xmatic mingħajr kriptaġġ lokali. Is-sessjoni, id-database tal-messaġġi u ċ-ċwievet tal-kmamar imbagħad jinsabu leġibbli fuq l-apparat: min jasal għas-sistema tal-fajls tiegħu jaqra miegħek, u telefon mitluf jagħti kull ma hemm fuqu.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Il-messaġġi jibqgħu kriptati minn tarf sa tarf fi triqthom mis-sistema xorta waħda. Hawn qed nitkellmu biss dwar dak li jinsab fuq l-apparat.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Kompli mingħajr kriptaġġ</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Iċċekkjat — is-servizz għadu ma jintlaħaqx. L-installazzjoni għaddiet kollha, u l-apparat reġa&apos; nbeda?</translation>
     </message>
 </context>
 <context>

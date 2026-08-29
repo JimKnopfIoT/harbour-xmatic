@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Tęsti be šifravimo</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Atgal</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Viskas, ką xmatic saugo šiame įrenginyje, lieka įskaitoma: tavo seansas, tavo žinutės ir tavo kambarių raktai.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Rinkis tai tik tada, jei paslaugos šiame įrenginyje įdiegti neįmanoma. Jei įdiegsi vėliau, galėsi persijungti šifravimo puslapyje — tai kainuos vieną atsijungimą ir tavo atkūrimo raktą.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic ir toliau rodys šią būseną skiltyje Šifravimas.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -587,72 +610,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Kol kas neįmanoma: serveryje nėra raktų atsarginės kopijos. Atsijungus dabar kiekviena šifruota žinutė šiame įrenginyje taptų neįskaitoma visam laikui. Pirma sukurk kopiją, tada grįžk čia.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Šioje Sailfish versijoje naršyklė negali užbaigti prisijungimo. Grįžk per „Prisijungti kitame įrenginyje“ — šis kelias čia veikia.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Šifravimas</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Atsarginė kopija</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>veikia</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>yra, neatrakinta</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>nesukonfigūruota</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Atkūrimas</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>sukonfigūruotas</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>nebaigtas</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>nežinoma</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Kryžminis pasirašymas</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>baigtas</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Vietinė saugykla</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>užšifruota</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>neužšifruota</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Seansas ir žinučių duomenų bazė guli šiame įrenginyje neužšifruoti. Jie sukurti anksčiau, nei programėlė mokėjo juos šifruoti, o esamos duomenų bazės vietoje užšifruoti negalima.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Seansas ir žinučių duomenų bazė guli šiame įrenginyje neužšifruoti, nes sistemos saugi saugykla neišdavė rakto. Kiekvienas, kas prieina prie įrenginio failų sistemos, gali juos perskaityti.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -898,6 +865,14 @@
         <source>Cancel sign-in</source>
         <translation>Atšaukti prisijungimą</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Šios Sailfish versijos naršyklė negali užbaigti prisijungimo prie šiuolaikinių serverių — ji grįžta į formą. Naudok „Prisijungti kitame įrenginyje“: xmatic parodys adresą ir kodą, su jais prisijungsi bet kuriame kitame įrenginyje, o šis prisijungs pats.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Prisijungti per naršyklę</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -916,6 +891,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Šio įrenginio raktai ištrinami kartu su seansu. Šifruotos žinutės lieka įskaitomos tik jei yra raktų atsarginėje kopijoje, o įrenginį po prisijungimo teks patvirtinti iš naujo.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Šioje Sailfish versijoje naršyklė negali užbaigti prisijungimo. Grįžk per „Prisijungti kitame įrenginyje“ — šis kelias čia veikia.</translation>
     </message>
 </context>
 <context>
@@ -2129,6 +2108,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Atsarginė kopija</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Tavo kambarių raktai yra atsarginėje kopijoje.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Atsarginė kopija yra serveryje, bet šiame įrenginyje neatrakinta.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Raktų atsarginės kopijos nėra. Be jos žinutės taps neįskaitomos, vos tik šis įrenginys dings.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Atkūrimas</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Atkūrimas sukonfigūruotas.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Įvesk savo atkūrimo raktą, kad atrakintum atsarginę kopiją šiame įrenginyje.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Kryžminis pasirašymas</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Šis įrenginys pasirašytas kaip tavo.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Kiti mato šį įrenginį kaip nepatvirtintą. Tai išsprendžia atkūrimo raktas arba patvirtinimas iš kito įrenginio.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Vietinė saugykla</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Seansas ir žinučių duomenų bazė šiame įrenginyje yra šifruoti.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Jie guli nešifruoti, nes buvo sukurti anksčiau, nei ši programa mokėjo juos šifruoti. Esamos duomenų bazės vėliau užšifruoti negalima.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Jie guli nešifruoti, nes sistemos saugioji saugykla neišdavė rakto.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Jie guli nešifruoti, nes šioje sistemoje trūksta paslaugos, saugančios šifravimo raktus.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Atkūrimo raktas priimtas — baigiama. Tai gali užtrukti akimirką.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Saugumas</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Kažkas šiame įrenginyje dar netvarkoje. Gali tai sutvarkyti dabar arba vėliau.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Įvesti atkūrimo raktą</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Sukurti kopiją dabar</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Šifruoti saugyklą dabar</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Kodėl taip yra</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Vėliau</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Visa tai vėl rasi skiltyje Paskyra › Šifravimas.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2281,6 +2362,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Erdvės, kurių narys esi, atsiranda čia. Erdvės sugrupuoja kambarius.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Šifravimas neįmanomas</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix skirta Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Saugioji saugykla neišdavė rakto, todėl xmatic negali sukurti šifruotos duomenų bazės.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Šioje sistemoje trūksta paslaugos, saugančios šifravimo raktus, todėl xmatic negali sukurti šifruotos duomenų bazės.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Tai operacinės sistemos savybė, o ne xmatic klaida. Paketas egzistuoja ir jį galima įdiegti; kai kurie Sailfish atvaizdai jo tiesiog neteikia.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Sistema pranešė: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Kaip tai sutvarkyti</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Sistemos nustatymuose įjunk kūrėjo režimą, skiltyje Nustatymai › Kūrėjo įrankiai.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Atverk Terminalo programą ir tapk root komanda:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Įdiek paslaugą (bakstelėk eilutę, kad ją nukopijuotum):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Paleisk įrenginį iš naujo. Paslauga po to pasileidžia pati.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Pats įsitikink, kad ji yra — tai turi išvesti failą, o ne klaidą:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Paleisk xmatic iš naujo ir bakstelėk „Tikrinti dar kartą“.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Tikrinti dar kartą</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Jei tai neįmanoma</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>xmatic gali naudoti ir be vietinio šifravimo. Seansas, žinučių duomenų bazė ir kambarių raktai tada guli įrenginyje įskaitomi: kas prieina prie jo failų sistemos, skaito kartu, o pamestas telefonas atiduoda viską, kas jame yra.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Žinutės kelyje per tinklą bet kuriuo atveju lieka šifruotos nuo galo iki galo. Čia kalbama tik apie tai, kas guli įrenginyje.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Tęsti be šifravimo</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Patikrinta — paslauga vis dar nepasiekiama. Ar diegimas baigėsi ir ar įrenginys buvo paleistas iš naujo?</translation>
     </message>
 </context>
 <context>

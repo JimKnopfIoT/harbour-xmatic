@@ -45,11 +45,20 @@ QString jsonToCompactString(const QJsonObject &object)
 
 MatrixBridge::MatrixBridge(const QString &dataDirectory,
                            const QString &cacheDirectory,
-                           const QString &storeKey,
+                           const StoreKeyResult &storeKey,
                            AppSettings *settings,
                            QObject *parent)
     : QObject(parent)
     , m_dataDirectory(dataDirectory)
+    , m_storeKeyState(storeKey.state)
+    , m_storeKeyReason(storeKey.errorMessage)
+    // `::` and not by accident: the class has a getter of the same name, and
+    // unqualified lookup inside a member initialiser finds that member first -
+    // so this read itself instead of the filesystem, and the page told a
+    // factory-fresh device that its secure storage had refused a key when in
+    // truth the service was not installed at all. Neither the compiler nor the
+    // build said a word; the device did.
+    , m_secretsDaemonPresent(::secretsDaemonPresent())
     , m_cacheDirectory(cacheDirectory)
     , m_settings(settings)
 {
@@ -85,6 +94,19 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
         }
     });
 
+    // A "still finishing" that never ends is a lie of its own. Generous, since
+    // the case it exists for is a slow device against a rate-limiting server,
+    // but bounded.
+    m_recoverySettleTimeout.setSingleShot(true);
+    m_recoverySettleTimeout.setInterval(90000);
+    connect(&m_recoverySettleTimeout, &QTimer::timeout, this, [this]() {
+        if (m_recoverySettling) {
+            m_recoverySettling = false;
+            qWarning("xmatic: recovery did not settle within 90 s");
+            emit encryptionChanged();
+        }
+    });
+
     // Started before anything can be sent: every pending command is stamped
     // against this clock, and reading an unstarted QElapsedTimer is undefined.
     m_uptime.start();
@@ -94,8 +116,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     QJsonObject config;
     config.insert(QStringLiteral("dataDir"), dataDirectory);
     config.insert(QStringLiteral("cacheDir"), cacheDirectory);
-    if (!storeKey.isEmpty()) {
-        config.insert(QStringLiteral("storeKey"), storeKey);
+    if (!storeKey.key.isEmpty()) {
+        config.insert(QStringLiteral("storeKey"), storeKey.key);
     }
     // Not const: the buffer holds the store key and is wiped once the core
     // has taken its copy. Same rule as the password command's payload.
@@ -390,10 +412,81 @@ void MatrixBridge::restoreSession()
     send(QStringLiteral("session.restore"));
 }
 
+/// Whether the device's own browser can finish an OAuth sign-in.
+///
+/// Not a guess about the browser but a fact about the release: Sailfish 4 ships
+/// a Gecko that cannot render the MAS sign-in pages, and the button there loops
+/// back to the form — measured on a 4.6 device, twice, and the reason the
+/// device-code grant was built at all. The failure direction is "assume it
+/// works": where the release cannot be read, the page keeps its usual order and
+/// nothing is hidden.
+bool MatrixBridge::browserLoginReliable() const
+{
+    QFile release(QStringLiteral("/etc/sailfish-release"));
+    if (!release.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return true;
+    }
+    while (!release.atEnd()) {
+        const QByteArray line = release.readLine().trimmed();
+        if (!line.startsWith("VERSION_ID=")) {
+            continue;
+        }
+        const QString value = QString::fromLatin1(line.mid(11)).remove(QChar('"'));
+        bool ok = false;
+        const int major = value.section(QChar('.'), 0, 0).toInt(&ok);
+        return !ok || major >= 5;
+    }
+    return true;
+}
+
+/// True while a store must not be created. See the property's documentation.
+bool MatrixBridge::storageBlocked() const
+{
+    if (m_storeKeyState == StoreKeyState::Available) {
+        return false;
+    }
+    // Deliberately not `encryptedDataPresent`: an install that predates the
+    // store key has plaintext data and no key, and blocking it would lock out
+    // exactly the people the migration page exists to guide. Only where
+    // nothing lies on this device is a store still about to be created.
+    if (localDataPresent(m_dataDirectory)) {
+        return false;
+    }
+    return !m_settings || !m_settings->unencryptedStorageAccepted();
+}
+
+void MatrixBridge::retryStoreKey()
+{
+    StoreKeyResult result = obtainStoreKey(m_dataDirectory);
+    m_storeKeyState = result.state;
+    m_storeKeyReason = result.errorMessage;
+    m_secretsDaemonPresent = ::secretsDaemonPresent();
+    if (result.state == StoreKeyState::Available) {
+        QJsonObject arguments;
+        arguments.insert(QStringLiteral("storeKey"), result.key);
+        result.key.fill(QChar('0'));
+        // No new command for this: `session.restore` already installs a key
+        // handed to it before it looks for a session (`runtime.rs`, around the
+        // `SessionRestore` arm). On a device with nothing on it the restore
+        // answers "none" and the login page follows — which is exactly where
+        // the gate should let go — while the key stays in the core, so the
+        // login that follows creates the store encrypted.
+        send(QStringLiteral("session.restore"), arguments, true);
+    }
+    emit storageChanged();
+    emit storeKeyChecked(result.state == StoreKeyState::Available);
+    refreshStorageStatus();
+}
+
 void MatrixBridge::retryUnlock()
 {
     setLastError(QString());
-    QString key = obtainStoreKey(m_dataDirectory);
+    StoreKeyResult result = obtainStoreKey(m_dataDirectory);
+    m_storeKeyState = result.state;
+    m_storeKeyReason = result.errorMessage;
+    m_secretsDaemonPresent = ::secretsDaemonPresent();
+    emit storageChanged();
+    QString key = result.key;
     QJsonObject arguments;
     if (!key.isEmpty()) {
         arguments.insert(QStringLiteral("storeKey"), key);
@@ -2239,10 +2332,16 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
         // end - which is how "it does not mark as read on its own" was
         // reported. Only where the core says it marked something: a room whose
         // newest event this device never saw has nothing to point a marker at.
-        if (data.value(QStringLiteral("read")).toBool()) {
+        const bool read = data.value(QStringLiteral("read")).toBool();
+        if (read) {
             const QString roomId = data.value(QStringLiteral("roomId")).toString();
             m_rooms.clearUnread(roomId);
             m_spaceRooms.clearUnread(roomId);
+        } else {
+            // The core had nothing to point a marker at. Said out loud, because
+            // from the outside this is indistinguishable from the badge simply
+            // not clearing, and the two are repaired in different places.
+            qWarning("xmatic: nothing to mark read - the timeline has no newest event");
         }
         return true;
     }
@@ -2298,8 +2397,19 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
         // permalink - shows a different slice of the room, and the room's
         // read marker means nothing in it.
         if (m_timelineFocus.isEmpty()) {
-            emit timelineOpened(data.value(QStringLiteral("readMarker")).toString(),
-                                data.value(QStringLiteral("rebuilt")).toBool());
+            const QString marker = data.value(QStringLiteral("readMarker")).toString();
+            const bool rebuilt = data.value(QStringLiteral("rebuilt")).toBool();
+            // Whether a marker came at all, never which one - an event id is
+            // an identifier like any other. Without this line "the room opened
+            // at its newest message" cannot be told apart into "nothing said
+            // where reading stopped" and "it was said and not found", and
+            // those two want opposite fixes. Reported repeatedly, and until
+            // now guessed at.
+            qInfo("xmatic: room opened, read marker %s, rebuilt %d, %d rows",
+                  marker.isEmpty() ? "none" : "present",
+                  rebuilt ? 1 : 0,
+                  m_timeline.count());
+            emit timelineOpened(marker, rebuilt);
         }
         return true;
     }
@@ -2326,6 +2436,21 @@ bool MatrixBridge::replyEncryption(const QString &command, const QJsonObject &da
     if (command == QLatin1String("encryption.status")
             || command == QLatin1String("encryption.recover")) {
         m_encryptionStatus = data.toVariantMap();
+        // The key was taken and the import is done - but the recovery state
+        // rides the SDK's own stream and lags behind it. Until that stream
+        // says "enabled", the app says it is still finishing rather than
+        // leaving a line that looks untouched.
+        if (command == QLatin1String("encryption.recover")) {
+            const bool settled =
+                m_encryptionStatus.value(QStringLiteral("recovery")).toString()
+                == QLatin1String("enabled");
+            m_recoverySettling = !settled;
+            if (m_recoverySettling) {
+                m_recoverySettleTimeout.start();
+            } else {
+                m_recoverySettleTimeout.stop();
+            }
+        }
         emit encryptionChanged();
         return true;
     }
@@ -2461,6 +2586,12 @@ bool MatrixBridge::eventVerification(const QString &name, const QJsonObject &dat
         emit verificationChanged();
     } else if (name == QLatin1String("encryption.changed")) {
         m_encryptionStatus = data.toVariantMap();
+        if (m_recoverySettling
+            && m_encryptionStatus.value(QStringLiteral("recovery")).toString()
+                   == QLatin1String("enabled")) {
+            m_recoverySettling = false;
+            m_recoverySettleTimeout.stop();
+        }
         qInfo("xmatic: encryption: recovery=%s backup=%s enabled=%d",
               qPrintable(m_encryptionStatus.value(QStringLiteral("recovery")).toString()),
               qPrintable(m_encryptionStatus.value(QStringLiteral("backup")).toString()),

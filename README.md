@@ -15,8 +15,15 @@ repository.
 * Sign-in through the homeserver's own page (OAuth 2.0 / MAS), by device code
   on another machine, or by password where the server offers no OAuth; the
   session survives restarts
-* Session and local stores encrypted with a key from Sailfish Secrets; the
-  encryption page names which of the two states the device is in
+* Session and local stores encrypted with a key from Sailfish Secrets. A
+  device whose system does not provide that key service creates no store at
+  all: it says what is missing, how to install it and how to check the result,
+  and running without encryption is an explicit choice rather than a silent
+  fallback
+* Four coloured lines say how safe the device is — backup, recovery,
+  cross-signing, local storage. Green is in order, orange is a fault you can
+  clear, red is missing. Where something is not green they come up once after
+  starting, with the action that fits and "later" always available
 * Room list over Simplified Sliding Sync: search, unread counts, favourites,
   low priority, mute
 * Timeline in encrypted rooms: send, reply, edit, delete, paginate. A message

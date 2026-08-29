@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "SecurityStatus.js" as SecurityStatus
+
 // The room list. Ordering, filtering and unread counts all come from the sync
 // service in the core; this view only renders what the model was told.
 Page {
@@ -117,6 +119,25 @@ Page {
                     }
                     return matrix.syncState === "offline"
                             ? qsTr("Offline — waiting for the network") : ""
+                }
+
+                // The device's overall security, where the user actually is
+                // rather than only on a page somebody has to go looking for.
+                // Gone entirely while everything is green: an indicator that
+                // is always lit says nothing.
+                MouseArea {
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.horizontalPageMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: Theme.itemSizeExtraSmall
+                    height: width
+                    visible: SecurityStatus.needsAttention(matrix)
+                    onClicked: pageStack.push(Qt.resolvedUrl("SecurityStatusPage.qml"))
+
+                    SecurityLamp {
+                        anchors.centerIn: parent
+                        overall: true
+                    }
                 }
             }
 

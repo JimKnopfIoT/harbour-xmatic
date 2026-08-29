@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Nadaljuj brez šifriranja</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Nazaj</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Vse, kar xmatic shrani na tej napravi, ostane berljivo: tvoja seja, tvoja sporočila in tvoji ključi sob.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Izberi to samo, če storitve na tej napravi ni mogoče namestiti. Če jo namestiš pozneje, lahko preklopiš na strani za šifriranje — stane te eno odjavo in tvoj obnovitveni ključ.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic bo to stanje še naprej prikazoval pod Šifriranje.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -589,72 +612,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Še ni mogoče: na strežniku ni varnostne kopije ključev. Odjava zdaj bi vsako šifrirano sporočilo na tej napravi za vedno naredila neberljivo. Najprej nastavi kopijo, potem se vrni sem.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>V tej različici Sailfisha brskalnik ne more dokončati prijave. Vrni se prek »Prijava na drugi napravi« — ta pot tu deluje.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Šifriranje</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Varnostna kopija</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>dejavna</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>obstaja, ni odklenjena</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>ni nastavljena</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Obnovitev</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>nastavljena</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>nepopolna</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>neznano</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Navzkrižno podpisovanje</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>popolno</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Krajevna shramba</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>šifrirana</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>ni šifrirana</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Seja in zbirka sporočil ležita na tej napravi nešifrirani. Nastali sta, preden ju je aplikacija znala šifrirati, obstoječe zbirke pa ni mogoče šifrirati na mestu.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Seja in zbirka sporočil ležita na tej napravi nešifrirani, ker varna shramba sistema ni izdala ključa. Kdor pride do datotečnega sistema naprave, ju lahko prebere.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -900,6 +867,14 @@
         <source>Cancel sign-in</source>
         <translation>Prekliči prijavo</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Brskalnik te različice Sailfisha ne more dokončati prijave na sodobne domače strežnike — vrne se na obrazec. Uporabi »Prijava na drugi napravi«: xmatic pokaže naslov in kodo, s tema se prijaviš na katerikoli drugi napravi, ta pa se prijavi sama.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Prijava prek brskalnika</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -918,6 +893,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Ključi te naprave se izbrišejo skupaj s sejo. Šifrirana sporočila ostanejo berljiva samo, če so v varnostni kopiji ključev, napravo pa je treba po prijavi znova preveriti.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>V tej različici Sailfisha brskalnik ne more dokončati prijave. Vrni se prek »Prijava na drugi napravi« — ta pot tu deluje.</translation>
     </message>
 </context>
 <context>
@@ -2132,6 +2111,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Varnostna kopija</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Tvoji ključi sob so varnostno kopirani.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Varnostna kopija je na strežniku, a na tej napravi ni odklenjena.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Varnostne kopije ključev ni. Brez nje postanejo sporočila neberljiva, takoj ko te naprave ne bo več.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Obnovitev</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Obnovitev je nastavljena.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Vnesi svoj obnovitveni ključ, da na tej napravi odkleneš varnostno kopijo.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Navzkrižno podpisovanje</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Ta naprava je podpisana kot tvoja.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Drugi vidijo to napravo kot nepreverjeno. Obnovitveni ključ ali preverjanje z druge naprave to uredi.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Krajevna shramba</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Seja in zbirka sporočil sta na tej napravi šifrirani.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Ležita nešifrirani, ker sta nastali, preden ju je ta aplikacija znala šifrirati. Obstoječe zbirke ni mogoče šifrirati naknadno.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Ležita nešifrirani, ker varna shramba sistema ni izdala ključa.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Ležita nešifrirani, ker v tem sistemu manjka storitev, ki hrani šifrirne ključe.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Obnovitveni ključ sprejet — zaključuje se. To lahko traja trenutek.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Varnost</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Nekaj na tej napravi še ni v redu. Lahko to urediš zdaj ali pozneje.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Vnesi obnovitveni ključ</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Nastavi varnostno kopijo</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Šifriraj shrambo zdaj</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Zakaj je tako</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Pozneje</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Vse to najdeš znova pod Račun › Šifriranje.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2285,6 +2366,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Prostori, katerih član si, se pojavijo tukaj. Prostori združujejo sobe.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Šifriranje ni mogoče</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix za Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Varna shramba ni izdala ključa, zato xmatic ne more ustvariti šifrirane zbirke.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>V tem sistemu manjka storitev, ki hrani šifrirne ključe, zato xmatic ne more ustvariti šifrirane zbirke.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>To je lastnost operacijskega sistema, ne napaka xmatica. Paket obstaja in ga je mogoče namestiti; nekatere slike Sailfisha ga preprosto ne prinesejo s seboj.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Sistem je sporočil: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Kako to popraviti</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. V sistemskih nastavitvah vklopi razvijalski način, pod Nastavitve › Razvijalska orodja.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Odpri aplikacijo Terminal in postani root z:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Namesti storitev (tapni vrstico, da jo kopiraš):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Znova zaženi napravo. Storitev se nato zažene sama.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Sam se prepričaj, da je tam — to mora izpisati datoteko, ne napake:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Znova zaženi xmatic in tapni »Preveri znova«.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Preveri znova</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Če to ni mogoče</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>xmatic lahko uporabljaš tudi brez krajevnega šifriranja. Seja, zbirka sporočil in ključi sob potem ležijo na napravi berljivi: kdor pride do njenega datotečnega sistema, bere zraven, izgubljen telefon pa izda vse, kar je na njem.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Sporočila ostanejo na poti skozi omrežje tako ali tako šifrirana od konca do konca. Tu gre samo za to, kar leži na napravi.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Nadaljuj brez šifriranja</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Preverjeno — storitev še vedno ni dosegljiva. Ali je namestitev stekla do konca in ali je bila naprava znova zagnana?</translation>
     </message>
 </context>
 <context>

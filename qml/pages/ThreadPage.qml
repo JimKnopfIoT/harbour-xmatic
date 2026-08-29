@@ -91,6 +91,9 @@ Page {
     }
 
     function submit() {
+        // The uncommitted word, same as in RoomPage.submit() - the reason is
+        // written out there.
+        Qt.inputMethod.commit()
         var pending = pendingUnverified()
         if (pending.length > 0) {
             var dialog = pageStack.push(Qt.resolvedUrl("UnverifiedRecipientsDialog.qml"),
@@ -412,6 +415,7 @@ Page {
             width: Theme.itemSizeSmall
             icon.source: "image://theme/icon-m-send"
             enabled: threadInput.text.trim().length > 0
+                     || threadInput.inputMethodComposing
             onClicked: page.submit()
         }
     }

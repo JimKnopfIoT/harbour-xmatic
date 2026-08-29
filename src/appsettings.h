@@ -47,6 +47,8 @@ class AppSettings : public QObject
     Q_PROPERTY(bool sendReadReceipts READ sendReadReceipts WRITE setSendReadReceipts
                NOTIFY sendReadReceiptsChanged)
     Q_PROPERTY(QString mediaWipe READ mediaWipe WRITE setMediaWipe NOTIFY mediaWipeChanged)
+    Q_PROPERTY(bool unencryptedStorageAccepted READ unencryptedStorageAccepted
+               NOTIFY unencryptedStorageAcceptedChanged)
     Q_PROPERTY(QStringList emojiFavourites READ emojiFavourites WRITE setEmojiFavourites
                NOTIFY emojiFavouritesChanged)
 
@@ -100,6 +102,16 @@ public:
     /// which is what it always did; off keeps the reading to itself.
     bool sendReadReceipts() const;
     void setSendReadReceipts(bool enabled);
+
+    /// Whether the user has explicitly said this device may run without
+    /// encrypted local storage.
+    ///
+    /// Only ever true because somebody was shown what it costs and tapped the
+    /// second button. The failure direction is deliberate: a value that cannot
+    /// be read counts as "not accepted", because asking again is harmless
+    /// while assuming consent is not.
+    bool unencryptedStorageAccepted() const;
+    Q_INVOKABLE void acceptUnencryptedStorage();
 
     /// When the downloaded media go: "never", "logout" (the default), "exit"
     /// or "background". "never" means never, sign-out included.
@@ -168,6 +180,7 @@ signals:
     void callPolicyChanged();
     void sendReadReceiptsChanged();
     void mediaWipeChanged();
+    void unencryptedStorageAcceptedChanged();
     void emojiFavouritesChanged();
 };
 

@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Pokračovat bez šifrování</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Vše, co si xmatic ukládá na tomto zařízení, zůstane čitelné: tvoje relace, tvoje zprávy a tvoje klíče místností.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Zvol to jen tehdy, pokud službu na tomto zařízení nelze nainstalovat. Když ji nainstaluješ později, můžeš přepnout na stránce šifrování — stojí to jedno odhlášení a tvůj obnovovací klíč.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic bude tento stav dál zobrazovat v části Šifrování.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -587,72 +610,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Zatím nemožné: na serveru není záloha klíčů. Odhlášení teď by natrvalo znečitelnilo každou šifrovanou zprávu v tomto zařízení. Nejdřív nastav zálohu a pak se sem vrať.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>V této verzi Sailfishu prohlížeč nedokáže přihlášení dokončit. Vrať se přes „Přihlásit se na jiném zařízení“ — tahle cesta tu funguje.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Šifrování</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Záloha</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>aktivní</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>existuje, neodemčená</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>nenastavená</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Obnovení</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>nastaveno</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>neúplné</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>neznámé</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Křížové podepisování</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>úplné</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Místní úložiště</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>zašifrováno</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>nezašifrováno</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>Relace a databáze zpráv leží v tomto zařízení nezašifrované. Vznikly dřív, než je aplikace uměla zašifrovat, a existující databázi nelze zašifrovat na místě.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>Relace a databáze zpráv leží v tomto zařízení nezašifrované, protože bezpečné úložiště systému nevydalo klíč. Kdokoli se dostane k souborovému systému zařízení, může je přečíst.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -898,6 +865,14 @@
         <source>Cancel sign-in</source>
         <translation>Zrušit přihlášení</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Prohlížeč této verze Sailfishu nedokáže dokončit přihlášení k moderním domovským serverům — vrací se na formulář. Použij „Přihlásit se na jiném zařízení“: xmatic ukáže adresu a kód, přihlásíš se s nimi na libovolném jiném zařízení a tohle se přihlásí samo.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Přihlásit se přes prohlížeč</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -916,6 +891,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Klíče tohoto zařízení se smažou spolu s relací. Šifrované zprávy zůstanou čitelné jen tehdy, jsou-li v záloze klíčů, a zařízení bude po přihlášení nutné znovu ověřit.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>V této verzi Sailfishu prohlížeč nedokáže přihlášení dokončit. Vrať se přes „Přihlásit se na jiném zařízení“ — tahle cesta tu funguje.</translation>
     </message>
 </context>
 <context>
@@ -2129,6 +2108,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Záloha</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Tvoje klíče místností jsou zálohované.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>Záloha je na serveru, ale na tomto zařízení není odemčená.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Záloha klíčů neexistuje. Bez ní se zprávy stanou nečitelnými, jakmile toto zařízení zmizí.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Obnovení</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>Obnovení je nastavené.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Zadej svůj obnovovací klíč, abys na tomto zařízení odemkl zálohu.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Křížové podepisování</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Toto zařízení je podepsané jako tvoje.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Ostatní vidí toto zařízení jako neověřené. Vyřeší to obnovovací klíč nebo ověření z jiného zařízení.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Místní úložiště</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>Relace i databáze zpráv jsou na tomto zařízení šifrované.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Leží nešifrované, protože vznikly dřív, než je tato aplikace uměla šifrovat. Existující databázi nelze zašifrovat dodatečně.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Leží nešifrované, protože zabezpečené úložiště systému nevydalo žádný klíč.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Leží nešifrované, protože v tomto systému chybí služba, která uchovává šifrovací klíče.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Obnovovací klíč přijat — dokončuje se. Může to chvíli trvat.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Zabezpečení</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Něco na tomto zařízení ještě není v pořádku. Můžeš to vyřešit teď nebo později.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Zadat obnovovací klíč</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Nastavit zálohu nyní</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Zašifrovat úložiště</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Proč to tak je</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Později</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Všechno tohle najdeš znovu v Účet › Šifrování.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2281,6 +2362,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Prostory, jejichž jsi členem, se objeví tady. Prostory seskupují místnosti.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Šifrování není možné</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pro Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>Zabezpečené úložiště nevydalo žádný klíč, takže xmatic nemůže vytvořit šifrovanou databázi.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>V tomto systému chybí služba, která uchovává šifrovací klíče, takže xmatic nemůže vytvořit šifrovanou databázi.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Je to vlastnost operačního systému, ne chyba xmaticu. Balíček existuje a lze ho nainstalovat; některé obrazy Sailfishu ho prostě nedodávají.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>Systém hlásil: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Jak to napravit</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Zapni v systémovém nastavení vývojářský režim, v Nastavení › Vývojářské nástroje.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Otevři aplikaci Terminál a staň se rootem příkazem:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Nainstaluj službu (klepnutím na řádek jej zkopíruješ):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Restartuj zařízení. Služba se pak spustí sama.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Přesvědč se sám, že tam je — tohle musí vypsat soubor, ne chybu:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Spusť xmatic znovu a klepni na „Zkontrolovat znovu“.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Zkontrolovat znovu</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Pokud to nejde</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>xmatic můžeš používat i bez místního šifrování. Relace, databáze zpráv a klíče místností pak leží na zařízení čitelné: kdo se dostane k jeho souborovému systému, čte s tebou, a ztracený telefon vydá všechno, co na něm je.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Zprávy zůstávají na cestě sítí tak jako tak šifrované od konce ke konci. Tady jde jen o to, co leží na zařízení.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Pokračovat bez šifrování</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Zkontrolováno — služba je stále nedostupná. Proběhla instalace až do konce a bylo zařízení restartováno?</translation>
     </message>
 </context>
 <context>

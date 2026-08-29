@@ -10,6 +10,11 @@
 
 #include "secretskeeper.h"
 
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDBusMessage>
+#include <QDBusReply>
+#include <QDir>
 #include <QFile>
 
 #include <Sailfish/Secrets/createcollectionrequest.h>
@@ -98,7 +103,89 @@ bool encryptedDataPresent(const QString &dataDirectory)
     return envelope;
 }
 
-QString obtainStoreKey(const QString &dataDirectory)
+bool localDataPresent(const QString &dataDirectory)
+{
+    if (QFile::exists(dataDirectory + QStringLiteral("/session.json"))
+        || QFile::exists(dataDirectory + QStringLiteral("/private.json"))) {
+        return true;
+    }
+    QDir store(dataDirectory + QStringLiteral("/store"));
+    if (!store.exists()) {
+        return false;
+    }
+    // The core's `prepare()` creates this directory before anything is written
+    // into it, so "exists and is empty" is the normal shape of a fresh install
+    // and not a suspicious one. Hidden entries count: the `.encrypted` marker
+    // is one.
+    return !store.entryList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden)
+                .isEmpty();
+}
+
+bool secretsDaemonPresent()
+{
+    // Asked of the bus, not of the filesystem.
+    //
+    // The obvious test - does /usr/bin/sailfishsecretsd exist - is the wrong
+    // one from inside Sailjail: the app runs with `--private-bin=harbour-xmatic`
+    // and `/usr/share` whitelisted down to its own directory, so it cannot see
+    // either the binary or the service file even where both are installed. A
+    // check like that answers "not installed" on a perfectly healthy device.
+    //
+    // The session bus knows instead, and it is the same bus the key request
+    // itself travels on: an activatable name means a service file exists, a
+    // registered name means the daemon is up right now. Either answers the
+    // question the UI asks - can this system do it at all.
+    const QDBusConnection bus = QDBusConnection::sessionBus();
+    if (bus.isConnected()) {
+        if (QDBusConnectionInterface *iface = bus.interface()) {
+            const QString name =
+                QStringLiteral("org.sailfishos.secrets.daemon.discovery");
+            if (iface->isServiceRegistered(name).value()) {
+                return true;
+            }
+            // `ListActivatableNames` by hand: Qt 5.6's
+            // QDBusConnectionInterface has no accessor for it, and 5.6 is the
+            // ceiling here. Bounded, because this runs before the window is up
+            // and a bus that does not answer must not hold the app.
+            QDBusMessage call = QDBusMessage::createMethodCall(
+                QStringLiteral("org.freedesktop.DBus"),
+                QStringLiteral("/org/freedesktop/DBus"),
+                QStringLiteral("org.freedesktop.DBus"),
+                QStringLiteral("ListActivatableNames"));
+            const QDBusMessage reply = bus.call(call, QDBus::Block, 2000);
+            if (reply.type() == QDBusMessage::ReplyMessage) {
+                return reply.arguments().value(0).toStringList().contains(name);
+            }
+            // The bus is there but would not answer. Fall through to the files
+            // rather than claim anything.
+        }
+    }
+    // No bus to ask - fall back to the files. Outside the sandbox they are
+    // visible, and the failure direction is "assume it is there": claiming a
+    // missing service sends the user off to install what they already have.
+    return QFile::exists(QStringLiteral("/usr/bin/sailfishsecretsd"))
+           || QFile::exists(QStringLiteral(
+                  "/usr/share/dbus-1/services/"
+                  "org.sailfishos.secrets.daemon.discovery.service"));
+}
+
+namespace {
+
+/// Fills in the reason from a request result, for the journal and the UI.
+StoreKeyResult failure(StoreKeyState state, const Result &result)
+{
+    StoreKeyResult outcome;
+    outcome.state = state;
+    outcome.errorCode = static_cast<int>(result.errorCode());
+    // secretsd's own text. It names collections and plugins, never key
+    // material — the same string this app has logged since 0.18.1.
+    outcome.errorMessage = result.errorMessage();
+    return outcome;
+}
+
+} // namespace
+
+StoreKeyResult obtainStoreKey(const QString &dataDirectory)
 {
     SecretManager manager;
 
@@ -125,7 +212,10 @@ QString obtainStoreKey(const QString &dataDirectory)
                 wipe(encoded64);
                 wipe(data);
                 qInfo("xmatic: store key loaded from the device's secrets storage");
-                return encoded;
+                StoreKeyResult outcome;
+                outcome.state = StoreKeyState::Available;
+                outcome.key = encoded;
+                return outcome;
             }
             // A key of the wrong size cannot have encrypted anything: it is
             // not the key any store was written under, so replacing it loses
@@ -140,7 +230,11 @@ QString obtainStoreKey(const QString &dataDirectory)
             qWarning("xmatic: store key not available (%d: %s); encrypted data waits for it",
                      static_cast<int>(result.errorCode()),
                      qPrintable(result.errorMessage()));
-            return QString();
+            // Locked even where the daemon is missing entirely: this state is
+            // what forbids minting a new key, and that rule may not depend on
+            // why the read failed. Whether the user has to install a package
+            // is a separate question, answered by `secretsDaemonPresent`.
+            return failure(StoreKeyState::Locked, result);
         } else {
             qInfo("xmatic: no store key yet (%d: %s), creating one",
                   static_cast<int>(result.errorCode()),
@@ -174,7 +268,10 @@ QString obtainStoreKey(const QString &dataDirectory)
     QByteArray key = randomKey();
     if (key.isEmpty()) {
         qWarning("xmatic: no randomness source; stores stay unencrypted");
-        return QString();
+        StoreKeyResult outcome;
+        outcome.state = StoreKeyState::Unavailable;
+        outcome.errorMessage = QStringLiteral("no randomness source");
+        return outcome;
     }
 
     Secret secret(keyIdentifier());
@@ -190,11 +287,14 @@ QString obtainStoreKey(const QString &dataDirectory)
 
     if (store.result().code() != Result::Succeeded) {
         // The error string comes from secretsd and carries no secret material.
-        qWarning("xmatic: secrets storage unavailable (%d: %s); stores stay unencrypted",
+        const bool daemon = secretsDaemonPresent();
+        qWarning("xmatic: secrets storage unavailable (%d: %s); daemon installed: %d",
                  static_cast<int>(store.result().errorCode()),
-                 qPrintable(store.result().errorMessage()));
+                 qPrintable(store.result().errorMessage()),
+                 daemon ? 1 : 0);
         wipe(key);
-        return QString();
+        return failure(daemon ? StoreKeyState::Unavailable : StoreKeyState::NoDaemon,
+                       store.result());
     }
 
     QByteArray encoded64 = key.toBase64();
@@ -202,5 +302,8 @@ QString obtainStoreKey(const QString &dataDirectory)
     wipe(encoded64);
     wipe(key);
     qInfo("xmatic: store key created in the device's secrets storage");
-    return encoded;
+    StoreKeyResult outcome;
+    outcome.state = StoreKeyState::Available;
+    outcome.key = encoded;
+    return outcome;
 }

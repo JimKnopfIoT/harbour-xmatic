@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.25.2
+Version:    0.26.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -37,6 +37,17 @@ Requires:   %{_libdir}/gstreamer-1.0/libgstnice.so
 # Depend on the QML module by path: requiring the library package by name is
 # what rpmlint objects to, and the module is what the app actually imports.
 Requires:   %{_libdir}/qt5/qml/Nemo/KeepAlive/qmldir
+# The store key lives in a Sailfish Secrets collection, and the 5.2 image
+# ships only the client library — measured on a factory-fresh device, where
+# the app then created an unencrypted store because the daemon it talks to
+# was not there. Both files are in the jolla repo on aarch64/5.2 and
+# armv7hl/4.6, so this resolves rather than blocking an install.
+# By path for two reasons: the daemon binary is what has to answer on D-Bus,
+# and the collection is opened with DefaultEncryptedStoragePluginName, which
+# is org.sailfishos.secrets.plugin.encryptedstorage.sqlcipher — carried by
+# secretsplugin-common, not by the package whose name reads "default".
+Requires:   /usr/bin/sailfishsecretsd
+Requires:   %{_libdir}/Sailfish/Secrets/libsailfishsecrets-sqlcipher.so
 BuildRequires: pkgconfig(sailfishapp)
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Qml)
@@ -93,6 +104,37 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Aug 29 2026 harbour-xmatic contributors 0.26.0-1
+- A device that cannot encrypt its local storage says so before it stores
+  anything. Until now the app asked the system for a key, and where none came
+  back it created an unencrypted database and wrote one line into the journal -
+  which is not a place anybody looks. That was not a rare fault: a
+  factory-fresh phone showed it, because its system image carries only the
+  client library of the key service and not the service itself. The first
+  start on such a device now creates nothing at all. It names what is missing,
+  gives the commands to install it, and gives a command to check the result
+  with, because a user should not have to take our word for it. The package is
+  also declared as a dependency, so on most devices it is simply installed
+  along with the app and none of this is ever seen.
+- Whoever really cannot install it can still say "continue without" - once,
+  deliberately, with what it costs written out. Devices that already hold data
+  are never locked out: they keep working and are led, not blocked.
+- The state of this device is now four coloured lines instead of a sentence
+  somebody has to go looking for: backup, recovery, cross-signing and local
+  storage. Green is in order, orange is a fault you can clear, red is missing.
+  The same four lines appear on the encryption page and on a page that comes up
+  once after starting when something is not green - with the action that fits
+  what is actually wrong, and "later" always available. When everything is
+  green nothing appears at all, and the indicator in the header is gone too.
+- Signing out to encrypt an old database leaves the device unverified and the
+  backup locked until the recovery key is entered again. The dialog warned
+  about that beforehand; nothing led there afterwards. Now something does.
+- Pinned messages appear on first entering a room. They were read from the
+  room's own state on opening, and from the server after pinning something -
+  two paths that had drifted apart. On a database that was just created the
+  state does not carry them yet, so the first visit showed nothing and the
+  second one showed everything, which read as pins that keep falling out. Both
+  paths now ask the same way.
 * Fri Aug 28 2026 harbour-xmatic contributors 0.25.2-1
 - Pictures show themselves again. 0.25.0 asked an attachment to declare its
   size before a preview was drawn for it, and one that declared none stayed a

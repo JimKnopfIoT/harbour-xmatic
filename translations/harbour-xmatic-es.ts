@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Continuar sin cifrado</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Atrás</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Todo lo que xmatic guarda en este dispositivo sigue siendo legible: tu sesión, tus mensajes y tus claves de sala.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Elige esto solo si el servicio no se puede instalar en este dispositivo. Si lo instalas más tarde, puedes cambiar en la página de cifrado: cuesta un cierre de sesión y tu clave de recuperación.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>xmatic seguirá mostrando este estado en Cifrado.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -585,72 +608,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Todavía no es posible: no hay copia de seguridad de claves en el servidor. Cerrar sesión ahora dejaría ilegible para siempre cada mensaje cifrado de este dispositivo. Configura primero la copia de seguridad y vuelve aquí.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>En esta versión de Sailfish el navegador no puede completar el inicio de sesión. Vuelve con «Iniciar sesión en otro dispositivo»: esa vía sí funciona aquí.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Cifrado</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Copia de seguridad</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>activa</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>existe, sin desbloquear</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>sin configurar</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Recuperación</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>configurada</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>incompleta</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>desconocido</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Firma cruzada</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>completa</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Almacenamiento local</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>cifrado</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>sin cifrar</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>La sesión y la base de datos de mensajes están sin cifrar en este dispositivo. Se crearon antes de que esta aplicación pudiera cifrarlas, y una base de datos existente no se puede cifrar en su sitio.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>La sesión y la base de datos de mensajes están sin cifrar en este dispositivo porque el almacén seguro del sistema no entregó ninguna clave. Cualquiera con acceso al sistema de archivos del dispositivo puede leerlas.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -896,6 +863,14 @@
         <source>Cancel sign-in</source>
         <translation>Cancelar inicio de sesión</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>El navegador de esta versión de Sailfish no puede completar el inicio de sesión de los servidores modernos: vuelve al formulario. Usa «Iniciar sesión en otro dispositivo»: xmatic muestra una dirección y un código, inicias sesión con ellos en cualquier otro dispositivo, y este se conecta solo.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Iniciar sesión con el navegador</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -914,6 +889,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Las claves de este dispositivo se borran junto con la sesión. Los mensajes cifrados solo siguen legibles si están en una copia de seguridad de claves, y este dispositivo tendrá que verificarse de nuevo tras iniciar sesión.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>En esta versión de Sailfish el navegador no puede completar el inicio de sesión. Vuelve con «Iniciar sesión en otro dispositivo»: esa vía sí funciona aquí.</translation>
     </message>
 </context>
 <context>
@@ -2126,6 +2105,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Copia de seguridad</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>Tus claves de sala están respaldadas.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>La copia está en el servidor pero no está desbloqueada en este dispositivo.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>No hay copia de claves. Sin ella, los mensajes quedan ilegibles en cuanto este dispositivo desaparezca.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Recuperación</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>La recuperación está configurada.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Introduce tu clave de recuperación para desbloquear la copia en este dispositivo.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Firma cruzada</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Este dispositivo está firmado como tuyo.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Los demás ven este dispositivo como no verificado. La clave de recuperación o una verificación desde otro dispositivo lo resuelve.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Almacenamiento local</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>La sesión y la base de mensajes están cifradas en este dispositivo.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Están sin cifrar porque se crearon antes de que esta aplicación pudiera cifrarlas. Una base existente no se puede cifrar a posteriori.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Están sin cifrar porque el almacenamiento seguro del sistema no entregó ninguna clave.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Están sin cifrar porque a este sistema le falta el servicio que guarda las claves de cifrado.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Clave de recuperación aceptada: finalizando. Puede tardar un momento.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Seguridad</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Algo en este dispositivo todavía no está en orden. Puedes resolverlo ahora o más tarde.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Introducir clave de recuperación</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Configurar copia ahora</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Cifrar el almacenamiento</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Por qué es así</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Más tarde</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Todo esto lo vuelves a encontrar en Cuenta › Cifrado.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2277,6 +2358,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Aquí aparecen los espacios de los que eres miembro. Los espacios agrupan salas.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>Cifrado no posible</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix para Sailfish OS</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>El almacenamiento seguro no entregó ninguna clave, así que xmatic no puede crear una base cifrada.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>A este sistema le falta el servicio que guarda las claves de cifrado, así que xmatic no puede crear una base cifrada.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Es una propiedad del sistema operativo, no un fallo de xmatic. El paquete existe y se puede instalar; algunas imágenes de Sailfish simplemente no lo incluyen.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>El sistema informó: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Cómo arreglarlo</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Activa el modo de desarrollador en los ajustes del sistema, en Ajustes › Herramientas de desarrollo.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Abre la aplicación Terminal y hazte root con:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Instala el servicio (toca la línea para copiarla):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Reinicia el dispositivo. El servicio arranca después por sí solo.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Compruébalo tú mismo — esto tiene que mostrar un archivo, no un error:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Vuelve a iniciar xmatic y toca «Comprobar de nuevo».</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Comprobar de nuevo</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Si eso no es posible</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Puedes usar xmatic sin cifrado local. La sesión, la base de mensajes y las claves de sala quedan entonces legibles en este dispositivo: quien llegue a su sistema de archivos puede leer, y un teléfono perdido entrega todo lo que contiene.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Los mensajes siguen cifrados de extremo a extremo en su camino por la red en cualquier caso. Aquí solo se trata de lo que hay en el dispositivo.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Continuar sin cifrado</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Comprobado: el servicio sigue sin estar accesible. ¿Terminó la instalación y se reinició el dispositivo?</translation>
     </message>
 </context>
 <context>

@@ -25,6 +25,29 @@
     </message>
 </context>
 <context>
+    <name>AcceptUnencryptedDialog</name>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Folytatás titkosítás nélkül</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Vissza</translation>
+    </message>
+    <message>
+        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
+        <translation>Minden, amit az xmatic ezen az eszközön tárol, olvasható marad: a munkameneted, az üzeneteid és a szobakulcsaid.</translation>
+    </message>
+    <message>
+        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
+        <translation>Csak akkor válaszd ezt, ha a szolgáltatás nem telepíthető erre az eszközre. Ha később telepíted, a titkosítási oldalon átválthatsz — egy kijelentkezésbe és a helyreállítási kulcsodba kerül.</translation>
+    </message>
+    <message>
+        <source>xmatic will keep showing this state under Encryption.</source>
+        <translation>Az xmatic továbbra is mutatja ezt az állapotot a Titkosítás alatt.</translation>
+    </message>
+</context>
+<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -583,72 +606,16 @@
         <source>Not possible yet: there is no key backup on the server. Signing out now would make every encrypted message on this device unreadable for good. Set up the backup first, then come back here.</source>
         <translation>Még nem lehetséges: nincs kulcsmentés a kiszolgálón. Ha most kijelentkezel, az eszközön lévő minden titkosított üzenet végleg olvashatatlan lesz. Előbb állítsd be a mentést, aztán gyere vissza ide.</translation>
     </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Ebben a Sailfish-változatban a böngésző nem tudja befejezni a bejelentkezést. Gyere vissza a „Bejelentkezés másik eszközön” úton — az itt működik.</translation>
+    </message>
 </context>
 <context>
     <name>EncryptionPage</name>
     <message>
         <source>Encryption</source>
         <translation>Titkosítás</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation>Biztonsági mentés</translation>
-    </message>
-    <message>
-        <source>active</source>
-        <translation>aktív</translation>
-    </message>
-    <message>
-        <source>exists, not unlocked</source>
-        <translation>létezik, nincs feloldva</translation>
-    </message>
-    <message>
-        <source>not set up</source>
-        <translation>nincs beállítva</translation>
-    </message>
-    <message>
-        <source>Recovery</source>
-        <translation>Helyreállítás</translation>
-    </message>
-    <message>
-        <source>set up</source>
-        <translation>beállítva</translation>
-    </message>
-    <message>
-        <source>incomplete</source>
-        <translation>hiányos</translation>
-    </message>
-    <message>
-        <source>unknown</source>
-        <translation>ismeretlen</translation>
-    </message>
-    <message>
-        <source>Cross-signing</source>
-        <translation>Keresztaláírás</translation>
-    </message>
-    <message>
-        <source>complete</source>
-        <translation>teljes</translation>
-    </message>
-    <message>
-        <source>Local storage</source>
-        <translation>Helyi tárolás</translation>
-    </message>
-    <message>
-        <source>encrypted</source>
-        <translation>titkosítva</translation>
-    </message>
-    <message>
-        <source>not encrypted</source>
-        <translation>nincs titkosítva</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted. They were created before this app could encrypt them, and an existing database cannot be encrypted in place.</source>
-        <translation>A munkamenet és az üzenet-adatbázis titkosítatlanul van ezen az eszközön. Még azelőtt jöttek létre, hogy az alkalmazás titkosítani tudta volna őket, és meglévő adatbázist nem lehet a helyén titkosítani.</translation>
-    </message>
-    <message>
-        <source>Session and message database lie on this device unencrypted, because the system&apos;s secure storage did not hand out a key. Anyone with access to the device&apos;s filesystem can read them.</source>
-        <translation>A munkamenet és az üzenet-adatbázis titkosítatlanul van ezen az eszközön, mert a rendszer biztonságos tárolója nem adott ki kulcsot. Bárki, aki hozzáfér az eszköz fájlrendszeréhez, el tudja olvasni őket.</translation>
     </message>
     <message>
         <source>Encrypt local storage</source>
@@ -894,6 +861,14 @@
         <source>Cancel sign-in</source>
         <translation>Bejelentkezés megszakítása</translation>
     </message>
+    <message>
+        <source>This Sailfish version&apos;s browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.</source>
+        <translation>Ennek a Sailfish-változatnak a böngészője nem tudja befejezni a korszerű kiszolgálók bejelentkezését — visszaugrik az űrlapra. Használd a „Bejelentkezés másik eszközön” lehetőséget: az xmatic mutat egy címet és egy kódot, azokkal bármely másik eszközön bejelentkezel, ez pedig magától belép.</translation>
+    </message>
+    <message>
+        <source>Sign in via browser</source>
+        <translation>Bejelentkezés böngészőn át</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDialog</name>
@@ -912,6 +887,10 @@
     <message>
         <source>This device&apos;s keys are deleted along with the session. Encrypted messages stay readable only if they are in a key backup, and this device has to be verified again after signing in.</source>
         <translation>Az eszköz kulcsai a munkamenettel együtt törlődnek. A titkosított üzenetek csak akkor maradnak olvashatók, ha kulcsmentésben vannak, és az eszközt bejelentkezés után újra ellenőrizni kell.</translation>
+    </message>
+    <message>
+        <source>On this Sailfish version the browser cannot complete the sign-in. Come back in with “Sign in on another device” — that route works here.</source>
+        <translation>Ebben a Sailfish-változatban a böngésző nem tudja befejezni a bejelentkezést. Gyere vissza a „Bejelentkezés másik eszközön” úton — az itt működik.</translation>
     </message>
 </context>
 <context>
@@ -2123,6 +2102,108 @@
     </message>
 </context>
 <context>
+    <name>SecurityRows</name>
+    <message>
+        <source>Backup</source>
+        <translation>Biztonsági mentés</translation>
+    </message>
+    <message>
+        <source>Your room keys are backed up.</source>
+        <translation>A szobakulcsaidról van biztonsági mentés.</translation>
+    </message>
+    <message>
+        <source>The backup is on the server but not unlocked on this device.</source>
+        <translation>A mentés a kiszolgálón van, de ezen az eszközön nincs feloldva.</translation>
+    </message>
+    <message>
+        <source>There is no key backup. Without one, messages become unreadable when this device is gone.</source>
+        <translation>Nincs kulcsmentés. Nélküle az üzenetek olvashatatlanná válnak, amint ez az eszköz eltűnik.</translation>
+    </message>
+    <message>
+        <source>Recovery</source>
+        <translation>Helyreállítás</translation>
+    </message>
+    <message>
+        <source>Recovery is set up.</source>
+        <translation>A helyreállítás be van állítva.</translation>
+    </message>
+    <message>
+        <source>Enter your recovery key to unlock the backup on this device.</source>
+        <translation>Add meg a helyreállítási kulcsodat, hogy feloldd a mentést ezen az eszközön.</translation>
+    </message>
+    <message>
+        <source>Cross-signing</source>
+        <translation>Keresztaláírás</translation>
+    </message>
+    <message>
+        <source>This device is signed as yours.</source>
+        <translation>Ez az eszköz a tiédként van aláírva.</translation>
+    </message>
+    <message>
+        <source>Others see this device as unverified. The recovery key or a verification from another device settles it.</source>
+        <translation>Mások ellenőrizetlennek látják ezt az eszközt. A helyreállítási kulcs vagy egy másik eszközről végzett ellenőrzés megoldja.</translation>
+    </message>
+    <message>
+        <source>Local storage</source>
+        <translation>Helyi tárolás</translation>
+    </message>
+    <message>
+        <source>Session and message database are encrypted on this device.</source>
+        <translation>A munkamenet és az üzenet-adatbázis titkosítva van ezen az eszközön.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because they were created before this app could encrypt them. An existing database cannot be encrypted in place.</source>
+        <translation>Titkosítatlanul állnak, mert még azelőtt jöttek létre, hogy az alkalmazás titkosítani tudta volna őket. Meglévő adatbázis utólag nem titkosítható.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because the system&apos;s secure storage did not hand out a key.</source>
+        <translation>Titkosítatlanul állnak, mert a rendszer biztonságos tárolója nem adott ki kulcsot.</translation>
+    </message>
+    <message>
+        <source>They lie unencrypted because this system is missing the service that keeps encryption keys.</source>
+        <translation>Titkosítatlanul állnak, mert ebből a rendszerből hiányzik a titkosítási kulcsokat őrző szolgáltatás.</translation>
+    </message>
+    <message>
+        <source>Recovery key accepted — finishing. This can take a moment.</source>
+        <translation>Helyreállítási kulcs elfogadva — befejezés folyamatban. Ez eltarthat egy pillanatig.</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityStatusPage</name>
+    <message>
+        <source>Security</source>
+        <translation>Biztonság</translation>
+    </message>
+    <message>
+        <source>Something on this device is not in order yet. You can settle it now or later.</source>
+        <translation>Valami ezen az eszközön még nincs rendben. Most vagy később is elintézheted.</translation>
+    </message>
+    <message>
+        <source>Enter recovery key</source>
+        <translation>Helyreállítási kulcs megadása</translation>
+    </message>
+    <message>
+        <source>Set up backup now</source>
+        <translation>Mentés beállítása most</translation>
+    </message>
+    <message>
+        <source>Encrypt storage now</source>
+        <translation>Tároló titkosítása most</translation>
+    </message>
+    <message>
+        <source>Why is that</source>
+        <translation>Miért van ez</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Később</translation>
+    </message>
+    <message>
+        <source>You will find all of this again under Account › Encryption.</source>
+        <translation>Mindezt megtalálod újra a Fiók › Titkosítás alatt.</translation>
+    </message>
+</context>
+<context>
     <name>SendMediaPage</name>
     <message>
         <source>Reply</source>
@@ -2273,6 +2354,85 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Azok a terek jelennek meg itt, amelyeknek tagja vagy. A terek szobákat fognak össze.</translation>
+    </message>
+</context>
+<context>
+    <name>StorageBlockedPage</name>
+    <message>
+        <source>Encryption not possible</source>
+        <translation>A titkosítás nem lehetséges</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS-re</translation>
+    </message>
+    <message>
+        <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
+        <translation>A biztonságos tároló nem adott ki kulcsot, így az xmatic nem tud titkosított adatbázist létrehozni.</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
+        <translation>Ebből a rendszerből hiányzik a titkosítási kulcsokat őrző szolgáltatás, így az xmatic nem tud titkosított adatbázist létrehozni.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Ez az operációs rendszer tulajdonsága, nem az xmatic hibája. A csomag létezik és telepíthető; néhány Sailfish lemezkép egyszerűen nem szállítja.</translation>
+    </message>
+    <message>
+        <source>The system reported: %1</source>
+        <translation>A rendszer jelentése: %1</translation>
+    </message>
+    <message>
+        <source>How to fix it</source>
+        <translation>Így hozhatod rendbe</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Kapcsold be a fejlesztői módot a rendszerbeállításokban, a Beállítások › Fejlesztői eszközök alatt.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and become root with:</source>
+        <translation>2. Nyisd meg a Terminál alkalmazást, és válj rootttá ezzel:</translation>
+    </message>
+    <message>
+        <source>3. Install the service (tap the line to copy it):</source>
+        <translation>3. Telepítsd a szolgáltatást (koppints a sorra a másoláshoz):</translation>
+    </message>
+    <message>
+        <source>4. Restart the device. The service then starts on its own.</source>
+        <translation>4. Indítsd újra az eszközt. A szolgáltatás ezután magától elindul.</translation>
+    </message>
+    <message>
+        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
+        <translation>5. Győződj meg magad róla, hogy megvan — ennek fájlt kell kiírnia, nem hibát:</translation>
+    </message>
+    <message>
+        <source>6. Start xmatic again and tap “Check again”.</source>
+        <translation>6. Indítsd újra az xmaticot, és koppints az „Ellenőrzés újra” gombra.</translation>
+    </message>
+    <message>
+        <source>Check again</source>
+        <translation>Ellenőrzés újra</translation>
+    </message>
+    <message>
+        <source>If that is not possible</source>
+        <translation>Ha ez nem lehetséges</translation>
+    </message>
+    <message>
+        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
+        <translation>Az xmaticot helyi titkosítás nélkül is használhatod. A munkamenet, az üzenet-adatbázis és a szobakulcsok ekkor olvashatóan hevernek az eszközön: aki hozzáfér a fájlrendszeréhez, együtt olvas, egy elveszett telefon pedig mindent kiad, ami rajta van.</translation>
+    </message>
+    <message>
+        <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
+        <translation>Az üzenetek a hálózaton át vezető úton mindenképp végponttól végpontig titkosítva maradnak. Itt csak arról van szó, ami az eszközön hever.</translation>
+    </message>
+    <message>
+        <source>Continue without encryption</source>
+        <translation>Folytatás titkosítás nélkül</translation>
+    </message>
+    <message>
+        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
+        <translation>Ellenőrizve — a szolgáltatás továbbra sem érhető el. Végigfutott a telepítés, és újraindult az eszköz?</translation>
     </message>
 </context>
 <context>
