@@ -69,6 +69,18 @@ repository.
 * Twenty-nine interface languages, picked in the app rather than only by the
   phone's setting
 
+## What it looks like
+
+| | | |
+|---|---|---|
+| ![A conversation](screenshots/conversation.jpg) | ![Colours](screenshots/appearance.jpg) | ![Encryption](screenshots/encryption.jpg) |
+| A conversation: replies, reactions, pinned message, pictures | Every bubble, name and text colour is yours to set | What is safe on this device, in four lines |
+| ![Privacy](screenshots/privacy.jpg) | ![Languages](screenshots/languages.jpg) | ![Room directory](screenshots/directory.jpg) |
+| What others learn, and what stays here | Twenty-nine languages, switchable in the app | Public rooms, from your server or another |
+
+Taken on a phone with a camera cutout, on two different ambiences — the app
+takes its colours from the one you use.
+
 ## What does not
 
 * **Homeservers that sign in through their own web page (SSO).** OAuth 2.0 /
