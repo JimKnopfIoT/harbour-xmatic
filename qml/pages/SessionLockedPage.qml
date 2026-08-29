@@ -52,9 +52,9 @@ Page {
                 text: qsTr("The key lives in the device's secrets storage. Try again and confirm the system's request; the approval lasts until the next restart of the device.")
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Try again")
+                label: qsTr("Try again")
                 enabled: !matrix.busy
                 onClicked: matrix.retryUnlock()
             }

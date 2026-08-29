@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.26.0
+Version:    0.26.1
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -104,6 +104,21 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Aug 29 2026 harbour-xmatic contributors 0.26.1-1
+- A picture with a caption could go missing. Sending one while an earlier
+  message was still on its way, on a slow connection, ended with the send button
+  pressed and nothing happening at all - the picture and the text under it were
+  gone. The attachment page does not send by itself; it hands the job back to
+  the conversation and closes, and the conversation was putting a question on
+  screen while that page was still closing, which the system drops without a
+  word. The attachment now waits until the screen is still, and is never let go
+  of on the way.
+- Button labels no longer run off the page or come back cut in the middle of a
+  word. Buttons here were a single line that grew with the text, which is fine
+  in English and not in languages that build longer words - reported in
+  Norwegian and in Russian. A label too long for one line now uses two, in the
+  same size and the same shape as before. This changes no wording in any
+  language; it only stops the words being cut.
 * Sat Aug 29 2026 harbour-xmatic contributors 0.26.0-1
 - A device that cannot encrypt its local storage says so before it stores
   anything. Until now the app asked the system for a key, and where none came

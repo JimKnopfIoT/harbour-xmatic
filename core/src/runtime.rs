@@ -2542,6 +2542,14 @@ fn watch_session(
         loop {
             match changes.recv().await {
                 Ok(SessionChange::TokensRefreshed) => {
+                    // Said out loud, because a refresh is invisible and a
+                    // request that was in flight across one comes back as
+                    // "token is not active" - which reads as an ended session
+                    // while the sync alongside it carries on. Without this the
+                    // two cannot be told apart afterwards. Through the sink,
+                    // because the core has no log of its own; the bridge writes
+                    // the line.
+                    state.sink.emit(event("session.refreshed", json!({})));
                     persist(&state, &client, homeserver.clone()).await;
                 }
                 Ok(SessionChange::UnknownToken(_)) => {

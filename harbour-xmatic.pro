@@ -224,6 +224,7 @@ DISTFILES += \
     qml/pages/EncryptionPage.qml \
     qml/pages/LogoutDialog.qml \
     qml/pages/EncryptStorageDialog.qml \
+    qml/pages/WrapButton.qml \
     qml/pages/SecurityStatus.js \
     qml/pages/SecurityStatusPage.qml \
     qml/pages/SecurityLamp.qml \

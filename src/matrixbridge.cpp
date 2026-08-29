@@ -439,6 +439,23 @@ bool MatrixBridge::browserLoginReliable() const
     return true;
 }
 
+/// Whether an encryption or verification command is waiting for an answer.
+///
+/// Only this app's own encryption half counts. Anything else in flight - a
+/// picture being fetched, a room list growing - has nothing to do with whether
+/// a verification may be started, and gating on it made the buttons dead for as
+/// long as an unrelated download took to fail.
+bool MatrixBridge::encryptionBusy() const
+{
+    for (auto it = m_pending.constBegin(); it != m_pending.constEnd(); ++it) {
+        if (it.value().command.startsWith(QLatin1String("encryption."))
+            || it.value().command.startsWith(QLatin1String("verification."))) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /// True while a store must not be created. See the property's documentation.
 bool MatrixBridge::storageBlocked() const
 {
@@ -2779,6 +2796,15 @@ bool MatrixBridge::eventLists(const QString &name, const QJsonObject &data)
 /// Events about the session, sync and profile.
 bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
 {
+    if (name == QLatin1String("session.refreshed")) {
+        // Nothing to do, everything to record: a request that was in flight
+        // across a refresh comes back as "token is not active", which looks
+        // like an ended session while the sync beside it carries on. Only the
+        // timestamps tell those apart.
+        qInfo("xmatic: session tokens refreshed");
+        return true;
+    }
+
     if (name == QLatin1String("session.expired")) {
         // Emitted by the core and, until now, understood by nobody: the room
         // list then sat there empty and quietly not syncing.

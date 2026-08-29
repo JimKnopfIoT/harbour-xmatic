@@ -94,10 +94,10 @@ Page {
                 EnterKey.onClicked: page.signInWithPassword()
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: page.passwordLogin
-                text: qsTr("Sign in")
+                label: qsTr("Sign in")
                 enabled: !matrix.busy && userField.text.trim().length > 0
                          && passwordField.text.length > 0
                 onClicked: page.signInWithPassword()
@@ -120,12 +120,12 @@ Page {
                 text: qsTr("This Sailfish version's browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.")
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 // Offered on every release: it is the way in without this
                 // device's browser, wherever that browser is in the way.
                 visible: !page.passwordLogin
-                text: qsTr("Sign in on another device")
+                label: qsTr("Sign in on another device")
                 enabled: !matrix.busy && homeserverField.text.trim().length > 0
                 onClicked: {
                     homeserverField.focus = false
@@ -136,22 +136,22 @@ Page {
             // On a release whose browser cannot finish the sign-in, this is
             // still offered - a server may not need the browser at all - but it
             // stops being the obvious first choice.
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: !page.passwordLogin
-                text: matrix.browserLoginReliable ? qsTr("Sign in")
+                label: matrix.browserLoginReliable ? qsTr("Sign in")
                                                   : qsTr("Sign in via browser")
                 enabled: !matrix.busy && homeserverField.text.trim().length > 0
                 onClicked: page.signIn()
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 // Classic servers have no registration page the core could
                 // point at, and no device-code grant either — both entries
                 // only make sense while the server has not said "password".
                 visible: !page.passwordLogin
-                text: qsTr("Create account")
+                label: qsTr("Create account")
                 enabled: !matrix.busy && homeserverField.text.trim().length > 0
                 onClicked: matrix.requestRegistrationUrl(homeserverField.text)
             }

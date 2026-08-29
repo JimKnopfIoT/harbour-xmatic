@@ -101,35 +101,35 @@ Page {
             // at a time: a page with four buttons teaches nobody where to
             // start, and the recovery key settles three of the four lines at
             // once.
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: SecurityStatus.backupLevel(matrix) !== SecurityStatus.GREEN
                          || SecurityStatus.recoveryLevel(matrix) !== SecurityStatus.GREEN
                          || SecurityStatus.crossSigningLevel(matrix) !== SecurityStatus.GREEN
-                text: matrix.encryptionStatus.backupOnServer
+                label: matrix.encryptionStatus.backupOnServer
                       ? qsTr("Enter recovery key")
                       : qsTr("Set up backup now")
                 onClicked: pageStack.push(Qt.resolvedUrl("EncryptionPage.qml"))
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: SecurityStatus.storageLevel(matrix) === SecurityStatus.ORANGE
-                text: qsTr("Encrypt storage now")
-                enabled: !matrix.busy
+                label: qsTr("Encrypt storage now")
+                enabled: !matrix.encryptionBusy
                 onClicked: pageStack.push(Qt.resolvedUrl("EncryptStorageDialog.qml"))
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: SecurityStatus.storageLevel(matrix) === SecurityStatus.RED
-                text: qsTr("Why is that")
+                label: qsTr("Why is that")
                 onClicked: pageStack.push(Qt.resolvedUrl("EncryptionPage.qml"))
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Later")
+                label: qsTr("Later")
                 onClicked: pageStack.pop()
             }
 

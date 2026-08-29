@@ -56,6 +56,15 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QString deviceId READ deviceId NOTIFY sessionChanged)
     Q_PROPERTY(bool ready READ ready CONSTANT)
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
+    /// Whether a command of this app's encryption half is in flight.
+    ///
+    /// Deliberately separate from `busy`, and for the reason `paginating` is:
+    /// `busy` means "some command, any command", and a media download that ran
+    /// into a 404 and then sat in the retry budget for a minute greyed out
+    /// "Verify my other devices" and "Verify this user" for that whole minute.
+    /// Reported from the field as "verification does not work"; it worked, and
+    /// an unrelated picture was holding the button down.
+    Q_PROPERTY(bool encryptionBusy READ encryptionBusy NOTIFY busyChanged)
     Q_PROPERTY(bool paginating READ paginating NOTIFY paginatingChanged)
     Q_PROPERTY(QString lastError READ lastError NOTIFY lastErrorChanged)
     Q_PROPERTY(QObject *rooms READ rooms CONSTANT)
@@ -169,6 +178,7 @@ public:
     QString deviceId() const { return m_deviceId; }
     bool ready() const { return m_core != nullptr; }
     bool busy() const { return !m_pending.isEmpty() || m_loginRunning; }
+    bool encryptionBusy() const;
 
     /// Whether a request for older messages is in flight.
     ///
