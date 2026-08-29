@@ -119,40 +119,46 @@ Page {
         // and the one that answers the call as it was offered belongs on top.
         // The habitual first tap must not be the one that leaves the camera off.
         Column {
-            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
             spacing: Theme.paddingMedium
 
-            readonly property real buttonWidth: Math.max(withCamera.implicitWidth,
-                                                         plainAccept.implicitWidth,
-                                                         endCall.implicitWidth)
+            // The width is given, not measured off the buttons. It used to be
+            // the widest of the three, which a wrapping button cannot answer -
+            // it carries no label of its own, so its implicit width is the
+            // platform minimum and all three would collapse to it. And the
+            // three must stay the same width whatever the language does to
+            // "Accept without camera".
+            readonly property real buttonWidth: Math.min(
+                    Theme.buttonWidthLarge,
+                    width - 2 * Theme.horizontalPageMargin)
 
-            Button {
+            WrapButton {
                 id: withCamera
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.buttonWidth
-                text: qsTr("Accept with camera")
+                label: qsTr("Accept with camera")
                 visible: matrix.calls.state === "ringing" && matrix.calls.videoOffered
                 onClicked: matrix.calls.acceptCall(true)
             }
 
-            Button {
+            WrapButton {
                 id: plainAccept
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.buttonWidth
-                text: matrix.calls.videoOffered ? qsTr("Accept without camera")
+                label: matrix.calls.videoOffered ? qsTr("Accept without camera")
                                                 : qsTr("Accept")
                 visible: matrix.calls.state === "ringing"
                 onClicked: matrix.calls.acceptCall(false)
             }
 
-            Button {
+            WrapButton {
                 id: endCall
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.buttonWidth
-                text: matrix.calls.state === "ringing" ? qsTr("Decline") : qsTr("Hang up")
+                label: matrix.calls.state === "ringing" ? qsTr("Decline") : qsTr("Hang up")
                 onClicked: matrix.calls.hangUp()
             }
         }

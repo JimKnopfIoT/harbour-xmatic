@@ -88,11 +88,11 @@ Page {
             // encrypted or not at all. A sign-out clears it, the next sign-in
             // creates a fresh one under the key. Offered only where it can
             // actually work, and behind a dialog that says what it costs.
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: matrix.storageStatus.canEncrypt
-                text: qsTr("Encrypt local storage")
-                enabled: !matrix.busy
+                label: qsTr("Encrypt local storage")
+                enabled: !matrix.encryptionBusy
                 onClicked: pageStack.push(Qt.resolvedUrl("EncryptStorageDialog.qml"))
             }
 
@@ -109,10 +109,10 @@ Page {
                 text: qsTr("Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.")
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Verify my other devices")
-                enabled: !matrix.busy
+                label: qsTr("Verify my other devices")
+                enabled: !matrix.encryptionBusy
                 onClicked: {
                     matrix.requestVerification("")
                     pageStack.push(Qt.resolvedUrl("VerificationPage.qml"))
@@ -130,10 +130,10 @@ Page {
                 EnterKey.onClicked: page.verifyUser()
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Verify this user")
-                enabled: !matrix.busy && userField.text.trim().length > 0
+                label: qsTr("Verify this user")
+                enabled: !matrix.encryptionBusy && userField.text.trim().length > 0
                 onClicked: page.verifyUser()
             }
 
@@ -165,10 +165,10 @@ Page {
                 EnterKey.onClicked: page.useRecoveryKey(text)
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Unlock")
-                enabled: !matrix.busy && recoveryField.text.trim().length > 0
+                label: qsTr("Unlock")
+                enabled: !matrix.encryptionBusy && recoveryField.text.trim().length > 0
                 onClicked: page.useRecoveryKey(recoveryField.text)
             }
 
@@ -187,11 +187,11 @@ Page {
                 text: qsTr("Creates a backup of your room keys on the server, encrypted with a recovery key that only you hold. Without it, reinstalling loses every encrypted message.")
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: !matrix.encryptionStatus.backupOnServer
-                text: qsTr("Set up backup")
-                enabled: !matrix.busy
+                label: qsTr("Set up backup")
+                enabled: !matrix.encryptionBusy
                 onClicked: matrix.enableKeyBackup()
             }
 
@@ -225,9 +225,9 @@ Page {
                     text: qsTr("Write this down now. It is shown only once and is not stored on this device.")
                 }
 
-                Button {
+                WrapButton {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("Copy")
+                    label: qsTr("Copy")
                     onClicked: Clipboard.text = page.generatedKey
                 }
             }

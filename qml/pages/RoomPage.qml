@@ -3073,14 +3073,55 @@ Page {
     /// warning, the reply this attachment was an answer to is still there, and
     /// the conversation has not been scrolled anywhere.
     function submitMedia(action) {
+        // Not while the stack is still moving. This runs as the attachment
+        // page pops, and Silica drops a push issued during a transition without
+        // a word - the warning would never appear, and with `pendingAction`
+        // already cleared the picture and its caption were simply gone.
+        // Reported from the field as "pressed send and nothing happened, photo
+        // with caption lost", and likelier on a slow connection because the
+        // recipient check has not settled yet. Same deferral the root page uses
+        // for the same reason.
+        if (pageStack.busy) {
+            page.deferredMedia = action
+            return
+        }
         var pending = pendingUnverified()
         if (pending.length > 0) {
             var dialog = pageStack.push(Qt.resolvedUrl("UnverifiedRecipientsDialog.qml"),
                                         { users: pending })
+            // A push that was refused after all hands the attachment back
+            // rather than dropping it.
+            if (!dialog) {
+                page.deferredMedia = action
+                return
+            }
             dialog.accepted.connect(function() { page.sendMediaNow(action) })
+            dialog.rejected.connect(function() { page.mediaDeclined() })
             return
         }
         page.sendMediaNow(action)
+    }
+
+    /// An attachment waiting for the page stack to stand still. Never dropped:
+    /// it is the only copy of what the user chose.
+    property var deferredMedia: null
+
+    /// The user said no to the warning. Nothing is sent, and the attachment is
+    /// let go of - it was their decision, not a lost message.
+    function mediaDeclined() {
+        page.deferredMedia = null
+    }
+
+    Connections {
+        target: pageStack
+        onBusyChanged: {
+            if (!pageStack.busy && page.deferredMedia
+                    && page.status === PageStatus.Active) {
+                var action = page.deferredMedia
+                page.deferredMedia = null
+                page.submitMedia(action)
+            }
+        }
     }
 
     function sendMediaNow(action) {

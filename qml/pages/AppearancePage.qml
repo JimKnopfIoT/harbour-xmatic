@@ -94,12 +94,15 @@ Page {
         Column {
             id: content
 
-            // One width for the buttons on this page - see AccountPage.
+            // One direction only, and now it is the other one: a wrapping
+            // button takes its width as given and lays the label out inside it,
+            // so deriving that width from the children's implicitWidth is not
+            // just forbidden but meaningless - a WrapButton carries no text of
+            // its own, so its implicit width is the platform minimum and every
+            // button on the page collapsed to it.
             readonly property real buttonWidth: Math.min(
-                    width - 2 * Theme.horizontalPageMargin,
-                    Math.max(resetColoursButton.implicitWidth,
-                             choosePicturesButton.implicitWidth,
-                             removePicturesButton.implicitWidth))
+                    Theme.buttonWidthLarge,
+                    width - 2 * Theme.horizontalPageMargin)
 
             width: parent.width
             spacing: Theme.paddingSmall
@@ -232,12 +235,12 @@ Page {
             // The way back, in plain sight: every colour to the ambience, both
             // opacities to their defaults. The pull-down carries the same
             // entry, but a reset that has to be found is not a safety net.
-            Button {
+            WrapButton {
                 id: resetColoursButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: content.buttonWidth
-                text: qsTr("Reset colours to defaults")
+                label: qsTr("Reset colours to defaults")
                 onClicked: page.resetAll()
             }
 
@@ -264,13 +267,13 @@ Page {
             // points, only small ones, each one decoded once here and written
             // out again as PNG, each one with a checksum that is verified
             // every time the picture is used afterwards.
-            Button {
+            WrapButton {
                 id: choosePicturesButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: content.buttonWidth
                 enabled: !emojiSet.busy
-                text: qsTr("Choose emoji pictures")
+                label: qsTr("Choose emoji pictures")
                 onClicked: pageStack.push(folderPicker)
             }
 
@@ -305,13 +308,13 @@ Page {
                 text: qsTr("The pictures have changed since they were read in and are not shown.")
             }
 
-            Button {
+            WrapButton {
                 id: removePicturesButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: content.buttonWidth
                 visible: emojiSet.verified && !emojiSet.busy
-                text: qsTr("Remove emoji pictures")
+                label: qsTr("Remove emoji pictures")
                 onClicked: emojiSet.removeAll()
             }
 

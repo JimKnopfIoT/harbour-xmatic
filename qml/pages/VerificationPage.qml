@@ -160,10 +160,10 @@ Page {
                          || (matrix.verificationState === "requested"
                              && !matrix.verificationWeStarted)
 
-                Button {
+                WrapButton {
                     // Refusing still works while waiting — that is the way out
                     // if the other side never answers.
-                    text: matrix.verificationState === "comparing"
+                    label: matrix.verificationState === "comparing"
                           ? qsTr("They do not match")
                           : qsTr("Decline")
                     onClicked: {
@@ -180,9 +180,9 @@ Page {
                     }
                 }
 
-                Button {
+                WrapButton {
                     enabled: !page.answered
-                    text: matrix.verificationState === "comparing"
+                    label: matrix.verificationState === "comparing"
                           ? qsTr("They match")
                           : qsTr("Accept")
                     onClicked: {
@@ -197,22 +197,22 @@ Page {
                 }
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: matrix.verificationState === "requested"
                          && matrix.verificationWeStarted
-                text: qsTr("Cancel")
+                label: qsTr("Cancel")
                 onClicked: {
                     matrix.cancelVerification()
                     pageStack.pop()
                 }
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: matrix.verificationState === "done"
                          || matrix.verificationState === "cancelled"
-                text: qsTr("Close")
+                label: qsTr("Close")
                 onClicked: {
                     matrix.clearVerification()
                     pageStack.pop()

@@ -28,10 +28,15 @@ Page {
             width: parent.width
             spacing: Theme.paddingMedium
 
-            // One width for the buttons on this page - see AccountPage.
+            // One direction only, and now it is the other one: a wrapping
+            // button takes its width as given and lays the label out inside it,
+            // so deriving that width from the children's implicitWidth is not
+            // just forbidden but meaningless - a WrapButton carries no text of
+            // its own, so its implicit width is the platform minimum and every
+            // button on the page collapsed to it.
             readonly property real buttonWidth: Math.min(
-                    width - 2 * Theme.horizontalPageMargin,
-                    Math.max(clearMediaButton.implicitWidth, allowButton.implicitWidth))
+                    Theme.buttonWidthLarge,
+                    width - 2 * Theme.horizontalPageMargin)
 
             PageHeader {
                 title: qsTr("Privacy")
@@ -213,12 +218,12 @@ Page {
                 }
             }
 
-            Button {
+            WrapButton {
                 id: clearMediaButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: content.buttonWidth
-                text: qsTr("Delete media now")
+                label: qsTr("Delete media now")
                 onClicked: matrix.clearMediaCache()
             }
 
@@ -246,12 +251,12 @@ Page {
                 EnterKey.onClicked: page.add()
             }
 
-            Button {
+            WrapButton {
                 id: allowButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: content.buttonWidth
-                text: qsTr("Allow calls")
+                label: qsTr("Allow calls")
                 enabled: addressField.text.trim().length > 0
                 onClicked: page.add()
             }

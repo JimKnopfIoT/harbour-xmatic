@@ -40,15 +40,15 @@ Page {
                 value: matrix.coreVersion
             }
 
-            // Buttons stacked on one page look like a list, and a list with
-            // ragged edges reads as an accident. The widest label decides for
-            // all of them; the parent reads the children's implicit widths,
-            // the children read the parent's - never both ways in one item.
+            // One direction only, and now it is the other one: a wrapping
+            // button takes its width as given and lays the label out inside it,
+            // so deriving that width from the children's implicitWidth is not
+            // just forbidden but meaningless - a WrapButton carries no text of
+            // its own, so its implicit width is the platform minimum and every
+            // button on the page collapsed to it.
             readonly property real buttonWidth: Math.min(
-                    width - 2 * Theme.horizontalPageMargin,
-                    Math.max(saveNameButton.implicitWidth, avatarButton.implicitWidth,
-                             appearanceButton.implicitWidth, privacyButton.implicitWidth,
-                             ignoredButton.implicitWidth, resetWarningsButton.implicitWidth))
+                    Theme.buttonWidthLarge,
+                    width - 2 * Theme.horizontalPageMargin)
 
             SectionHeader {
                 text: qsTr("Profile")
@@ -68,12 +68,12 @@ Page {
                 }
             }
 
-            Button {
+            WrapButton {
                 id: saveNameButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: column.buttonWidth
-                text: qsTr("Save name")
+                label: qsTr("Save name")
                 enabled: nameField.text !== matrix.profileName
                 onClicked: {
                     matrix.setDisplayName(nameField.text)
@@ -81,12 +81,12 @@ Page {
                 }
             }
 
-            Button {
+            WrapButton {
                 id: avatarButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: column.buttonWidth
-                text: matrix.profileAvatar.length > 0
+                label: matrix.profileAvatar.length > 0
                       ? qsTr("Change avatar")
                       : qsTr("Set avatar")
                 onClicked: pageStack.push(avatarPicker)
@@ -106,30 +106,30 @@ Page {
                 text: qsTr("This app")
             }
 
-            Button {
+            WrapButton {
                 id: appearanceButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: column.buttonWidth
-                text: qsTr("Appearance")
+                label: qsTr("Appearance")
                 onClicked: pageStack.push(Qt.resolvedUrl("AppearancePage.qml"))
             }
 
-            Button {
+            WrapButton {
                 id: privacyButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: column.buttonWidth
-                text: qsTr("Privacy")
+                label: qsTr("Privacy")
                 onClicked: pageStack.push(Qt.resolvedUrl("PrivacyPage.qml"))
             }
 
-            Button {
+            WrapButton {
                 id: ignoredButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: column.buttonWidth
-                text: qsTr("Ignored users")
+                label: qsTr("Ignored users")
                 onClicked: pageStack.push(Qt.resolvedUrl("IgnoredUsersPage.qml"))
             }
 
@@ -138,12 +138,12 @@ Page {
             // this is that reset. Kept as one button rather than a list: the
             // entries are addresses, and the list would be a second place
             // where they are on screen for no gain.
-            Button {
+            WrapButton {
                 id: resetWarningsButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: column.buttonWidth
-                text: qsTr("Reset send warnings")
+                label: qsTr("Reset send warnings")
                 onClicked: {
                     var count = matrix.resetRecipientWarnings()
                     resetWarningsHint.text = count > 0

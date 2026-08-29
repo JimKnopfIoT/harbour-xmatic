@@ -81,9 +81,9 @@ Page {
                 text: qsTr("License: Apache 2.0")
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Source code")
+                label: qsTr("Source code")
                 onClicked: Qt.openUrlExternally("https://github.com/JimKnopfIoT/harbour-xmatic")
             }
         }

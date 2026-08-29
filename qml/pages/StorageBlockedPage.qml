@@ -189,9 +189,9 @@ Page {
                 text: qsTr("6. Start xmatic again and tap “Check again”.")
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Check again")
+                label: qsTr("Check again")
                 enabled: !matrix.busy
                 onClicked: matrix.retryStoreKey()
             }
@@ -239,9 +239,9 @@ Page {
                 text: qsTr("Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.")
             }
 
-            Button {
+            WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Continue without encryption")
+                label: qsTr("Continue without encryption")
                 onClicked: pageStack.push(Qt.resolvedUrl("AcceptUnencryptedDialog.qml"))
             }
         }

@@ -410,13 +410,13 @@ Page {
             ButtonLayout {
                 visible: page.loaded && !profile.isSelf
 
-                Button {
-                    text: qsTr("Send direct message")
+                WrapButton {
+                    label: qsTr("Send direct message")
                     onClicked: matrix.startDirectChat(page.userId)
                 }
 
-                Button {
-                    text: qsTr("Verify")
+                WrapButton {
+                    label: qsTr("Verify")
                     visible: page.loaded
                              && (profile.verification === "unverified"
                                  || profile.verification === "violation")
@@ -426,16 +426,16 @@ Page {
                     }
                 }
 
-                Button {
-                    text: qsTr("Withdraw verification")
+                WrapButton {
+                    label: qsTr("Withdraw verification")
                     visible: page.loaded && profile.verification === "violation"
                     onClicked: matrix.withdrawMemberVerification(page.userId)
                 }
 
-                Button {
+                WrapButton {
                     // The allow list from the privacy page. Kept on this
                     // device, unlike ignoring, which is the account's.
-                    text: matrix.callerAllowed(page.userId)
+                    label: matrix.callerAllowed(page.userId)
                           ? qsTr("Forbid calls") : qsTr("Allow calls")
                     visible: page.loaded && !profile.isSelf
                     onClicked: {
@@ -447,9 +447,9 @@ Page {
                     }
                 }
 
-                Button {
+                WrapButton {
                     // Ignoring is account-wide.
-                    text: page.loaded && profile.ignored
+                    label: page.loaded && profile.ignored
                           ? qsTr("Stop ignoring") : qsTr("Ignore")
                     onClicked: {
                         if (profile.ignored) {
