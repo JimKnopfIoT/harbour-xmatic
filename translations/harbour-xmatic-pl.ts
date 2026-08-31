@@ -279,6 +279,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Włączone: klawiatura zamyka się, gdy wiadomość zostanie wysłana, i znów widać całą rozmowę. Wyłączone: zostaje otwarta na kolejną wiadomość.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Otwieraj pokój tam, gdzie skończyłeś czytać</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Włączone: po wejściu trafiasz na ostatnią przeczytaną wiadomość, nowe są pod nią. Wyłączone: pokój otwiera się na najnowszej wiadomości, a kreskę oznaczającą miejsce, w którym skończyłeś, znajdziesz przewijając w górę.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1766,6 +1774,10 @@
         <source>Mark as read</source>
         <translation>Oznacz jako przeczytane</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 z %2 pokoi</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2106,6 +2118,37 @@
         <source>Picture</source>
         <translation>Obraz</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Szukaj w wiadomościach</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Co oznaczają te znaki?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Szukaj w wiadomościach</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Szukaj w tej rozmowie</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Wyszukiwanie nie powiodło się</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Nic nie znaleziono</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Tylko całe słowa: „test” nie znajduje „test9”. Obrazy, pliki i wiadomości botów nie są przeszukiwane. I tylko to, co urządzenie już pobrało — wczytaj starsze wiadomości, aby dodać więcej.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2268,6 +2311,65 @@
     <message>
         <source>No rooms</source>
         <translation>Brak pokoi</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Znaki przy wiadomościach</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Wysłane bez szyfrowania</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Wiadomość wyszła bez szyfrowania, choć pokój go używa. Każdy, kto może odczytać kopię na serwerze, może odczytać wiadomość.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nie wysłało tego wskazane konto</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Wiadomość zaszyfrowało urządzenie, które nie należy do konta, z którego rzekomo pochodzi — ktoś wysyła pod cudzym imieniem. Niektóre mosty tak działają i robią to nieszkodliwie; wszędzie indziej jest to jedyny znak prawdziwego podszycia, jaki ta aplikacja ma.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Klucze nadawcy się zmieniły</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Tożsamość kryptograficzna tej osoby nie jest już tą, którą zweryfikowano. Albo skonfigurowała konto od nowa, albo używa go ktoś inny.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Z niezweryfikowanego urządzenia</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Urządzenie, które to wysłało, nie zostało potwierdzone przez konto, do którego należy. Dla świeżo używanego urządzenia to normalne.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Od niezweryfikowanej osoby</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Tożsamość tej osoby nigdy nie została zweryfikowana, więc nie ma z czym porównać wiadomości.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autentyczność niepotwierdzona</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Wiadomości w ogóle nie dało się sprawdzić. Niekoniecznie jest fałszywa — po prostu niepotwierdzona.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Znak obok wiadomości oznacza, że jej autentyczności nie dało się w pełni potwierdzić. Czerwony trójkąt mówi, że wiadomość nie jest tym, za co się podaje. Pomarańczowa kropka mówi, że czegoś nie dało się sprawdzić. Dotknij znaku w rozmowie, aby zobaczyć, o który z poniższych przypadków chodzi.</translation>
     </message>
 </context>
 <context>

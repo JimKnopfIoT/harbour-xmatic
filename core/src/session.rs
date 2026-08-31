@@ -8,6 +8,7 @@
 use std::path::{Path, PathBuf};
 
 use base64::Engine;
+use matrix_sdk::search_index::SearchIndexStoreKind;
 use matrix_sdk::{
     authentication::matrix::MatrixSession,
     authentication::oauth::{ClientId, OAuthSession, UserSession},
@@ -52,6 +53,11 @@ pub struct Paths {
     pub voice_cache: PathBuf,
     /// Encrypted lists that name people (see private.rs).
     pub private_file: PathBuf,
+    /// The message search index, one Tantivy directory per room underneath.
+    /// Beside the store rather than in the cache: it is expensive to rebuild
+    /// (the history has to be fetched again) and it holds message text, so it
+    /// belongs where the store's own protection applies.
+    pub search_index: PathBuf,
 }
 
 impl Paths {
@@ -62,11 +68,13 @@ impl Paths {
             media_cache: cache_dir.join("media"),
             voice_cache: cache_dir.join("voice"),
             private_file: data_dir.join("private.json"),
+            search_index: data_dir.join("search"),
         }
     }
 
     pub fn prepare(&self) -> Result<(), std::io::Error> {
         std::fs::create_dir_all(&self.store)?;
+        std::fs::create_dir_all(&self.search_index)?;
         std::fs::create_dir_all(&self.media_cache)
     }
 }
@@ -251,7 +259,21 @@ pub async fn build_client(
     let store_config =
         SqliteStoreConfig::new(&paths.store).key(store_key.map(|key| &**key));
 
+    // The search index follows the store's own decision, so the two are never
+    // in different states. Its password is the store key in base64 - not a
+    // second secret derived from the first, because deriving one would buy
+    // nothing: both files sit in the same directory under the same key, and
+    // whoever has that key has both regardless.
+    let search_store = match store_key {
+        Some(key) => SearchIndexStoreKind::EncryptedDirectory(
+            paths.search_index.clone(),
+            base64::Engine::encode(&base64::engine::general_purpose::STANDARD, &**key),
+        ),
+        None => SearchIndexStoreKind::UnencryptedDirectory(paths.search_index.clone()),
+    };
+
     let client = Client::builder()
+        .search_index_store(search_store)
         .server_name_or_homeserver_url(server)
         // The homeserver stays what discovery decided, whatever the login
         // response would like it to be. The SDK otherwise takes the `well_known`
@@ -529,6 +551,13 @@ pub fn forget(path: &Path) {
 pub fn reset_store(paths: &Paths) -> Result<(), std::io::Error> {
     if paths.store.exists() {
         std::fs::remove_dir_all(&paths.store)?;
+    }
+    // The search index goes with them. It is built from what the store held,
+    // so leaving it behind would let the next account search the previous
+    // one's messages - and it is the one place in this app that keeps message
+    // text outside the store.
+    if paths.search_index.exists() {
+        std::fs::remove_dir_all(&paths.search_index)?;
     }
     paths.prepare()
 }

@@ -35,7 +35,7 @@ use matrix_sdk_ui::{
             new_filter_all, new_filter_fuzzy_match_room_name, new_filter_identifiers,
             new_filter_non_left, new_filter_not, new_filter_space, BoxedFilterFn,
         },
-        RoomList, RoomListItem, RoomListService,
+        RoomList, RoomListItem, RoomListLoadingState, RoomListService,
     },
     sync_service::{State as SyncState, SyncService},
 };
@@ -86,6 +86,7 @@ pub struct RoomListHandle {
     task: tokio::task::JoinHandle<()>,
     states: tokio::task::JoinHandle<()>,
     queue: tokio::task::JoinHandle<()>,
+    loading: tokio::task::JoinHandle<()>,
 }
 
 impl RoomListHandle {
@@ -109,6 +110,7 @@ impl RoomListHandle {
         self.task.abort();
         self.states.abort();
         self.queue.abort();
+        self.loading.abort();
         // The two loose ones as well: the room-name lookup holds a `Room` and
         // the sliding-sync probe a `Client`, and both outlived every handle
         // this struct knows about.
@@ -360,7 +362,14 @@ fn summarize(item: &RoomListItem) -> Value {
     json!({
         "id": item.room_id().as_str(),
         "name": display_name(item),
-        "unread": item.num_unread_messages(),
+        // A floor under the count, not a repair: what actually makes this
+        // right is the sync window above. Both counters are computed here from
+        // the transported events and agree once enough of them arrive -
+        // measured on a device, 16 and 16. The larger is kept because it can
+        // only ever help, and because the badge is meant to count every
+        // message: taking the notification counter alone would follow the push
+        // rules and go quiet in a room set to mentions-only.
+        "unread": item.num_unread_messages().max(item.num_unread_notifications()),
         // Counted client-side against the account's push rules: only events
         // whose rules say "notify". This is the number a banner may follow —
         // `unread` counts everything and would ignore a room set to
@@ -484,6 +493,35 @@ fn spawn_support_check(client: Client, sink: Arc<Sink>) {
     track_side_task(handle.abort_handle());
 }
 
+/// Forwards how many rooms the *server* counts for this account, so the list
+/// can say "20 of 412" instead of leaving a short list unexplained.
+///
+/// The sliding sync list starts on a range of twenty rooms and only switches to
+/// growing batches once the room list service reaches `Running`; a service that
+/// keeps falling back to `Recovering` therefore never offers more than those
+/// twenty, and nothing on screen distinguishes that from an account that simply
+/// has twenty rooms. `RoomList::loading_state` carries the list's own maximum,
+/// which is exactly the number needed to tell the two apart — and it is the
+/// server's number, not ours, so it also says when the server is the one
+/// holding rooms back.
+fn spawn_loading_state(room_list: &RoomList, sink: Arc<Sink>) -> JoinHandle<()> {
+    let mut states = room_list.loading_state();
+    tokio::spawn(async move {
+        while let Some(state) = states.next().await {
+            // `NotLoaded` means no sync has answered yet; the count is unknown
+            // rather than zero, and the front end must be able to tell those
+            // apart or it would report "0 of 0" for a list that is merely young.
+            let total = match state {
+                RoomListLoadingState::NotLoaded => None,
+                RoomListLoadingState::Loaded {
+                    maximum_number_of_rooms,
+                } => maximum_number_of_rooms,
+            };
+            sink.emit(event("roomlist.total", json!({ "total": total })));
+        }
+    })
+}
+
 pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, String> {
     // Asked once per start, next to the sync service rather than before it:
     // the answer is a diagnosis, not a gate.
@@ -495,6 +533,38 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
     // own once the network is back.
     let sync = SyncService::builder(client.clone())
         .with_offline_mode()
+        // How many events a sync carries per room. The SDK's default for the
+        // room list is *one* - enough to show the latest line, and the reason
+        // the unread count was wrong after every cold start: the count is
+        // computed here from the events actually transported, so a room that
+        // received sixteen while the app was closed reported one. Measured on
+        // a device, with all three counters side by side:
+        // `badge=1 messages=1 notifications=1 server=0`.
+        //
+        // The server's own count would have made this moot - it is what
+        // Fractal shows - but this homeserver does not send it: `server=0` in
+        // every room, including the ones with unread messages.
+        //
+        // Two hundred, because counting here is not a workaround but the only
+        // way there is. Synapse hardcodes the server-side counters to zero in
+        // this sync path - read in its own source on the homeserver:
+        //
+        //     # TODO: These are just dummy values. We could potentially just
+        //     # remove these since notifications can only really be done
+        //     # correctly on the client anyway (encrypted rooms).
+        //     notification_count=0,
+        //     highlight_count=0,
+        //
+        // So no configuration opens that door, for any client speaking sliding
+        // sync, and the width of this window *is* the accuracy of the badge.
+        //
+        // It is a ceiling, not a fetch order: where ten events are waiting,
+        // ten arrive, and an incremental sync carries only what is new. The
+        // one place it is paid in full is a fresh login, where the server
+        // sends the most recent N per room and an old room has the supply -
+        // twenty rooms would be four thousand events once. Everything after
+        // that resumes from a stored position and costs nothing.
+        .with_room_list_timeline_limit(200)
         .build()
         .await
         .map_err(|error| format!("sync service could not be built: {error}"))?;
@@ -509,6 +579,10 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
         .all_rooms()
         .await
         .map_err(|error| format!("room list unavailable: {error}"))?;
+
+    // Subscribed before the list is moved into the task below; the subscriber
+    // keeps receiving as long as that task holds the list alive.
+    let loading = spawn_loading_state(&room_list, sink.clone());
 
     let (filters, mut filter_updates) = mpsc::unbounded_channel::<String>();
     // The list does not hold every room the account has: the dynamic adapter
@@ -554,6 +628,7 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
         task,
         states,
         queue,
+        loading,
     })
 }
 

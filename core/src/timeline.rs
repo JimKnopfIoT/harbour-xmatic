@@ -1389,25 +1389,47 @@ fn id_prefix(room_id: &str, focus: &str) -> String {
 /// Read from the room's account data and its stored receipts, not from the
 /// timeline: that keeps the jump working with receipt tracking switched off,
 /// which is the default.
-pub async fn own_read_marker(client: &Client, room_id: &str) -> Option<String> {
+/// Both are returned, not one: the marker can name an event the room has no
+/// row for. Measured on a device - a room whose whole history was loaded, 345
+/// rows, and the marker among none of them, so the view had nothing to jump to
+/// and nothing to draw a line under. A marker pointing at a membership change,
+/// a reaction, an edit or a redacted event does that. The receipt is written
+/// on a message the user actually saw, so it is the better second guess, and
+/// the caller falls back to it once the first has proven absent.
+pub async fn own_read_marker(client: &Client, room_id: &str) -> (Option<String>, Option<String>) {
     use matrix_sdk::ruma::events::fully_read::FullyReadEventContent;
 
-    let parsed = RoomId::parse(room_id).ok()?;
-    let room = client.get_room(&parsed)?;
+    let Ok(parsed) = RoomId::parse(room_id) else {
+        return (None, None);
+    };
+    let Some(room) = client.get_room(&parsed) else {
+        return (None, None);
+    };
 
+    let mut marker = None;
     if let Ok(Some(raw)) = room.account_data_static::<FullyReadEventContent>().await {
-        if let Ok(marker) = raw.deserialize() {
-            return Some(marker.content.event_id.to_string());
+        if let Ok(content) = raw.deserialize() {
+            marker = Some(content.content.event_id.to_string());
         }
     }
 
-    let user = client.user_id()?;
-    let (event_id, _) = room
-        .load_user_receipt(StoredReceiptType::Read, ReceiptThread::Unthreaded, user)
-        .await
-        .ok()
-        .flatten()?;
-    Some(event_id.to_string())
+    let mut receipt = None;
+    if let Some(user) = client.user_id() {
+        if let Ok(Some((event_id, _))) = room
+            .load_user_receipt(StoredReceiptType::Read, ReceiptThread::Unthreaded, user)
+            .await
+        {
+            receipt = Some(event_id.to_string());
+        }
+    }
+
+    // Where only one of the two exists it is the marker, so a caller that
+    // knows nothing of the distinction still gets the one usable answer.
+    match (marker, receipt) {
+        (None, second) => (second, None),
+        (first, second) if first == second => (first, None),
+        (first, second) => (first, second),
+    }
 }
 
 /// Opens the timeline of `room_id` and starts streaming updates.

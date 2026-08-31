@@ -4,6 +4,7 @@ import Sailfish.Pickers 1.0
 import QtMultimedia 5.6
 import "Formatting.js" as Formatting
 import "MatrixLinks.js" as MatrixLinks
+import "SecurityStatus.js" as SecurityStatus
 
 // A single room: history above, composer below.
 //
@@ -171,6 +172,23 @@ Page {
     // Where reading stopped last time, until the row it names is on screen.
     property string unreadFromId: ""
 
+    // The same event, kept for as long as the page lives: it is what the line
+    // in the timeline is drawn from. Deliberately not the SDK's own marker
+    // row, which exists only while receipt tracking is on and moves the
+    // moment this visit's receipt goes out - a line that follows the marker
+    // ends up under the newest message, saying nothing. Frozen at entry, it
+    // stays where reading actually stopped.
+    property string markerEventId: ""
+
+    // The second guess. A marker can name an event this room has no row for -
+    // a membership change, a reaction, an edit, something redacted - and then
+    // the search walks the whole history and finds nothing, which is what a
+    // device showed: 345 rows, the beginning reached, no match. The read
+    // receipt sits on a message that was really seen, so it is tried once
+    // after the first has proven absent. Cleared as it is used, so this can
+    // never become a loop.
+    property string unreadFallbackId: ""
+
     // How many pages of history the search for that row may still ask for.
     // It is hunted for after all: the first batch a room hands over is the
     // newest slice of the event cache, and the more there is unread the surer
@@ -203,12 +221,17 @@ Page {
         }
 
         // What the room says about itself, as against what whoever pushed this
-        // page believed. Only the encryption is taken: everything else on this
-        // page comes from the timeline.
+        // page believed. The encryption, and the name where the caller had
+        // none: a notification tap, a direct chat and a followed upgrade all
+        // arrive with the room id alone, and the header stayed empty.
+        // Everything else on this page comes from the timeline.
         onRoomInfoReady: {
             if (info.roomId === page.roomId) {
                 page.encrypted = info.encrypted === true
                 page.encryptionKnown = true
+                if (page.roomName.length === 0 && info.name.length > 0) {
+                    page.roomName = info.name
+                }
             }
         }
 
@@ -227,6 +250,14 @@ Page {
                 return
             }
             page.unreadHandled = true
+            page.markerEventId = readMarker
+            page.unreadFallbackId = readReceipt
+            // The line is drawn either way; only the opening position is a
+            // choice. Off, the room stays at its newest message and the line
+            // is met by scrolling up - no search, no pagination.
+            if (!settings.jumpToReadMarker) {
+                return
+            }
             page.unreadFromId = readMarker
             page.unreadPagesLeft = page.unreadPageLimit
             page.unreadEmptyRounds = page.unreadEmptyLimit
@@ -395,6 +426,21 @@ Page {
                 page.unreadPagesLeft--
                 matrix.loadOlder()
             }
+            unreadRetry.restart()
+            return
+        }
+        // Not out of reach but not in this room: the beginning is loaded and
+        // the row is still missing, so the marker names something that is not
+        // a row here. The receipt is the other source and sits on a message
+        // somebody actually saw. Tried once, with whatever pagination budget
+        // is left rather than a fresh one - a second search must not cost a
+        // second history.
+        if (page.unreadFallbackId.length > 0 && page.unreadFallbackId !== marker) {
+            console.warn("xmatic: read marker is not a row in this room, "
+                         + "falling back to the read receipt")
+            page.unreadFromId = page.unreadFallbackId
+            page.markerEventId = page.unreadFallbackId
+            page.unreadFallbackId = ""
             unreadRetry.restart()
             return
         }
@@ -901,6 +947,20 @@ Page {
                                           })
             }
 
+            // Kept in this menu rather than moved to the room's info page,
+            // against the rule that emptied that page's neighbours into it:
+            // searching is about the running conversation, which is what this
+            // menu is for. Above the entry below, so the shortest tug still
+            // lands where it always did.
+            MenuItem {
+                text: qsTr("Search messages")
+                visible: !page.invited
+                onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {
+                                              roomId: page.roomId,
+                                              roomName: page.roomName
+                                          })
+            }
+
             // Last, so the shortest tug reaches it: reading further back is
             // what one reaches for while in the conversation, and the entries
             // above are all about leaving it.
@@ -1221,21 +1281,19 @@ Page {
                 readonly property bool isBubble: model.kind === "message"
                                                  || model.kind === "undecryptable"
                                                  || model.kind === "redacted"
-                // Where reading stopped. The SDK only produces this row while
-                // receipt tracking is on, so it appears with the setting.
-                readonly property bool isMarker: model.kind === "marker"
-                // Everything read puts the marker at the very end, where a line
-                // under the last message says nothing. It belongs between what
-                // was read and what was not, or nowhere.
-                // Not while the conversation is being followed live. Every
-                // arriving message is unread for the moment before the receipt
-                // goes out, so the marker slips in above it and the line
-                // flickered under every single message in an open room. It is
-                // there to say "this is where you stopped", which only means
-                // something to someone who is not at the end anyway.
-                readonly property bool showMarker: isMarker
+                // The last message read before this visit carries the line
+                // under it. Everything read puts that on the newest row, where
+                // a line says nothing - hence the test against the last index.
+                //
+                // The SDK's own `marker` row is not used: it needs receipt
+                // tracking, which is a separate setting about other people,
+                // and it moves. The page freezes the event id instead, so the
+                // line holds still while the room is read. That is also why
+                // the old `!followTail` guard is gone - it existed because a
+                // moving marker flickered under every arriving message.
+                readonly property bool showMarker: rowEventId.length > 0
+                                                   && rowEventId === page.markerEventId
                                                    && index < timelineView.count - 1
-                                                   && !page.followTail
                 // The text an attachment was sent with. Empty for one sent
                 // without, where `body` holds the file name instead.
                 readonly property string rowEventId: model.eventId || ""
@@ -1382,15 +1440,19 @@ Page {
                                                        || (isVideo && !!model.media.thumbnailSource))
 
                 width: timelineView.width
-                contentHeight: isBubble
-                               ? Math.max(bubble.height,
-                                          row.isOwn ? 0 : page.avatarSize)
-                                 + Theme.paddingMedium
-                               : (model.kind === "date"
-                                  ? dayLabel.height + Theme.paddingLarge
-                                  : (isSystem
-                                     ? systemLabel.height + Theme.paddingLarge
-                                     : (showMarker ? Theme.paddingLarge : 0)))
+                contentHeight: (isBubble
+                                ? Math.max(bubble.height,
+                                           row.isOwn ? 0 : page.avatarSize)
+                                  + Theme.paddingMedium
+                                : (model.kind === "date"
+                                   ? dayLabel.height + Theme.paddingLarge
+                                   : (isSystem
+                                      ? systemLabel.height + Theme.paddingLarge
+                                      : 0)))
+                               // The gap the line sits in. Any row can carry
+                               // it now, so it is added to the row's own
+                               // height rather than being a row of its own.
+                               + (showMarker ? Theme.paddingLarge : 0)
 
                 // Only real messages react; dividers are not something to press.
                 enabled: model.kind === "message"
@@ -2103,11 +2165,33 @@ Page {
                             anchors.right: bubbleColumn.holdRight ? parent.right : undefined
                             width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
                             visible: row.isBubble && !!model.shield
+                                     && page.shieldEventId === model.eventId
                             font.pixelSize: Theme.fontSizeExtraSmall
                             color: model.shield && model.shield.level === "red"
-                                   ? Theme.errorColor : Theme.secondaryColor
+                                   ? page.shieldRedColor : page.shieldGreyColor
                             textFormat: Text.PlainText
                             text: page.shieldText(model.shield)
+                        }
+
+                        // The way from one sentence to all of them. Shown with
+                        // the sentence, not permanently: a mark that is never
+                        // tapped needs no glossary either.
+                        Label {
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+                            visible: row.isBubble && !!model.shield
+                                     && page.shieldEventId === model.eventId
+                            width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            color: Theme.highlightColor
+                            textFormat: Text.PlainText
+                            text: qsTr("What do these marks mean?")
+
+                            MouseArea {
+                                anchors.fill: parent
+                                anchors.margins: -Theme.paddingSmall
+                                onClicked: pageStack.push(
+                                               Qt.resolvedUrl("ShieldGlossaryPage.qml"))
+                            }
                         }
 
                         // Thread marker: the root shows the reply count, a
@@ -2304,6 +2388,58 @@ Page {
                                 anchors.right: parent.right
                                 spacing: Theme.paddingSmall
 
+                                // What the SDK will not vouch for, as a mark
+                                // rather than a sentence. A line of text under
+                                // every affected message is the same statement
+                                // twenty times over, and the report that led
+                                // here was about the repetition, not about the
+                                // statement being wrong.
+                                //
+                                // Shape carries the level, so it survives where
+                                // colour does not: a triangle is the warning
+                                // form and stands for "this is not what it
+                                // claims to be", a dot is the neutral mark and
+                                // stands for "this could not be checked". Two
+                                // forms, not one per reason - six shapes would
+                                // be a legend nobody learns.
+                                //
+                                // Tapping shows the sentence for that one
+                                // message, the same way a read count opens its
+                                // names.
+                                Item {
+                                    id: shieldMark
+
+                                    visible: row.isBubble && !!model.shield
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    width: visible ? shieldGlyph.width : 0
+                                    height: shieldGlyph.height
+
+                                    Label {
+                                        id: shieldGlyph
+
+                                        text: model.shield
+                                              && model.shield.level === "red" ? "\u25B2" : "\u25CF"
+                                        // A step larger than the time beside
+                                        // it, the way the read-by eye stands
+                                        // over its digit: a mark at the size
+                                        // of the text is read as text.
+                                        font.pixelSize: Theme.fontSizeExtraSmall
+                                        color: model.shield
+                                               && model.shield.level === "red"
+                                               ? page.shieldRedColor
+                                               : page.shieldGreyColor
+                                    }
+
+                                    MouseArea {
+                                        // Larger than the glyph: a triangle at
+                                        // tiny size is not a touch target.
+                                        anchors.centerIn: parent
+                                        width: Theme.itemSizeExtraSmall
+                                        height: Theme.itemSizeExtraSmall
+                                        onClicked: page.showShield(model.eventId)
+                                    }
+                                }
+
                                 Label {
                                     id: metaLabel
 
@@ -2445,7 +2581,9 @@ Page {
                         right: parent.right
                         leftMargin: Theme.horizontalPageMargin
                         rightMargin: Theme.horizontalPageMargin
-                        verticalCenter: parent.verticalCenter
+                        top: parent.top
+                        topMargin: row.contentHeight
+                                   - Math.round(Theme.paddingLarge / 2)
                     }
                     height: 1
                     color: Theme.rgba(Theme.highlightColor, 0.6)
@@ -3238,6 +3376,23 @@ Page {
     // for both - a second line would mean a second label in every row of the
     // conversation, and the rows are what this page pays for.
     property string namesEventId: ""
+
+    // Which message currently shows its authenticity sentence. The mark itself
+    // stands on every affected message - leaving it off the ones below the
+    // first would say "those are fine", which is not true - but the sentence
+    // is one at a time, on request.
+    property string shieldEventId: ""
+
+    // The two levels, in the colours the security page already uses. Grey is
+    // what the SDK calls this level and what Element paints it - but Element
+    // draws a filled shield, and grey at the size of a mark beside the time is
+    // indistinguishable from the text around it. Measured on a device. The
+    // orange is the project's own, and it carries on a light ambience as well
+    // as a dark one.
+    readonly property color shieldRedColor: Theme.errorColor
+    readonly property color shieldGreyColor:
+        SecurityStatus.color(SecurityStatus.ORANGE, Theme,
+                             Theme.colorScheme === Theme.LightOnDark)
     /// Which reaction the names belong to; empty when they are the readers.
     property string namesKey: ""
     /// What stands in front of them - the reaction itself, so the line says
@@ -3254,6 +3409,11 @@ Page {
 
     /// Tap on the "read by" mark. Asks the core for the names - the rows carry
     /// only the count - and folds them away again on a second tap.
+    // Toggle: a second tap on the same mark puts the sentence away again.
+    function showShield(eventId) {
+        page.shieldEventId = page.shieldEventId === eventId ? "" : eventId
+    }
+
     function showReaders(eventId) {
         if (page.namesEventId === eventId && page.namesKey.length === 0) {
             page.clearNames()

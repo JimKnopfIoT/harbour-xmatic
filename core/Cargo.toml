@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.26.2"
+version = "0.27.0"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -23,6 +23,13 @@ crate-type = ["staticlib"]
 # libssl. SQLite is compiled from bundled sources instead of linking the
 # device's library, which keeps the cross build self-contained.
 matrix-sdk = { version = "=0.18.0", default-features = false, features = [
+    # The message search: a Tantivy index per room, filled by the event cache
+    # as events arrive and encrypted on disk under the store key. Experimental
+    # in the SDK's own naming, and the only local full-text search there is -
+    # the server cannot search an encrypted room, so a server-side one would
+    # work in exactly the rooms this app does not have. Costs ~1.5 MiB in the
+    # package, measured.
+    "experimental-search",
     "local-server",
     "e2e-encryption",
     "sqlite",

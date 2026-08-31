@@ -18,6 +18,7 @@
 #include "roomsortmodel.h"
 #include "directorymodel.h"
 #include "membermodel.h"
+#include "searchmodel.h"
 #include "callengine.h"
 #include "voicerecorder.h"
 #include "timelinemodel.h"
@@ -52,6 +53,12 @@ class MatrixBridge : public QObject
     /// built on. Then "offline" means "cannot work with this server", not
     /// "no network", and the UI has to say so instead of flashing a banner.
     Q_PROPERTY(bool serverSupported READ serverSupported NOTIFY serverSupportedChanged)
+    /// How many rooms the *server* counts for this account, or -1 while no
+    /// sync has answered yet. The list on screen holds one page at a time and
+    /// the sliding sync window starts at twenty rooms, so "fewer rooms than I
+    /// have" has two very different causes; this is the number that tells them
+    /// apart in a field report.
+    Q_PROPERTY(int roomTotal READ roomTotal NOTIFY roomTotalChanged)
     Q_PROPERTY(QString userId READ userId NOTIFY sessionChanged)
     Q_PROPERTY(QString deviceId READ deviceId NOTIFY sessionChanged)
     Q_PROPERTY(bool ready READ ready CONSTANT)
@@ -66,6 +73,15 @@ class MatrixBridge : public QObject
     /// an unrelated picture was holding the button down.
     Q_PROPERTY(bool encryptionBusy READ encryptionBusy NOTIFY busyChanged)
     Q_PROPERTY(bool paginating READ paginating NOTIFY paginatingChanged)
+    Q_PROPERTY(QObject *searchResults READ searchResults CONSTANT)
+    /// A search of its own, for the reason `paginating` is one: gating it on
+    /// the global `busy` would grey out the search box whenever anything else
+    /// was waiting on a slow homeserver.
+    Q_PROPERTY(bool searching READ searching NOTIFY searchingChanged)
+    /// Whether the last page came back full, so there may be another one.
+    Q_PROPERTY(bool searchHasMore READ searchHasMore NOTIFY searchHasMoreChanged)
+    /// True while the room's stored messages are being folded into the index.
+    Q_PROPERTY(bool indexing READ indexing NOTIFY indexingChanged)
     Q_PROPERTY(QString lastError READ lastError NOTIFY lastErrorChanged)
     Q_PROPERTY(QObject *rooms READ rooms CONSTANT)
     // Forwarded from the room list so the cover, which only sees the bridge,
@@ -174,6 +190,7 @@ public:
     /// means the core noticed the network is gone and reconnects on its own.
     QString syncState() const { return m_syncState; }
     bool serverSupported() const { return m_serverSupported; }
+    int roomTotal() const { return m_roomTotal; }
     QString userId() const { return m_userId; }
     QString deviceId() const { return m_deviceId; }
     bool ready() const { return m_core != nullptr; }
@@ -187,6 +204,10 @@ public:
     /// hanging the timeline's controls off that made them dead whenever the
     /// homeserver was slow with something entirely unrelated.
     bool paginating() const { return m_paginateId != 0; }
+    QObject *searchResults() { return &m_searchResults; }
+    bool searching() const { return m_searchRequest != 0; }
+    bool searchHasMore() const { return m_searchHasMore; }
+    bool indexing() const { return m_indexRequest != 0; }
     QString lastError() const { return m_lastError; }
     // The UI sees the grouped view (favourites up, low priority down); the
     // core still drives the flat source underneath.
@@ -419,6 +440,22 @@ public:
 
     /// Drops the directory search and empties the model.
     Q_INVOKABLE void stopDirectory();
+
+    /// Folds everything already stored for a room into its search index.
+    /// The SDK indexes an event when it saves it, so history that was on the
+    /// device before the index existed is invisible until this has run.
+    Q_INVOKABLE void indexRoom(const QString &roomId);
+
+    /// Searches one room's messages. Replaces whatever `searchResults` held;
+    /// an empty query only clears it. Nothing leaves the device.
+    Q_INVOKABLE void searchRoom(const QString &roomId, const QString &query);
+
+    /// Appends the next page of the running search. Does nothing while one
+    /// page is still in flight or when the last one was already short.
+    Q_INVOKABLE void searchMore();
+
+    /// Drops the results and forgets the query, for a page that is closing.
+    Q_INVOKABLE void clearSearch();
 
     /// Loads a room's members into `members`. The list arrives as one reset.
     Q_INVOKABLE void loadMembers(const QString &roomId);
@@ -682,8 +719,18 @@ signals:
     void sessionChanged();
     void syncStateChanged();
     void serverSupportedChanged();
+    void roomTotalChanged();
     void busyChanged();
     void paginatingChanged();
+    void searchingChanged();
+    void searchHasMoreChanged();
+    void indexingChanged();
+    /// The room's stored messages are in the index; `count` is how many were
+    /// handed over. A search started before this is worth running again.
+    void indexReady(int count);
+    /// The search could not be run. The page says so instead of showing an
+    /// empty result, which would read as "nothing found".
+    void searchFailed(const QString &error);
     void lastErrorChanged();
     void openRoomChanged();
     void pinnedChanged();
@@ -724,7 +771,13 @@ signals:
     /// The open timeline is ready, and where this device's reading had stopped
     /// - empty when nothing was ever read here. The view uses it to open at the
     /// first unread message instead of at the newest one.
-    void timelineOpened(const QString &readMarker, bool rebuilt);
+    /// `readReceipt` is the second guess: the marker can name an event this
+    /// room has no row for, and the receipt sits on a message that was really
+    /// seen. Empty where there is no second source or both name the same
+    /// event.
+    void timelineOpened(const QString &readMarker,
+                        const QString &readReceipt,
+                        bool rebuilt);
 
     /// A room address resolved: the room, and whether we are a member.
     void roomResolved(const QString &address, const QString &roomId, bool joined);
@@ -840,6 +893,8 @@ private slots:
     bool replyAccount(const QString &command, const QJsonObject &data);
     bool replyRoom(quint64 id, const QString &command, const QJsonObject &data);
     bool replyMember(quint64 id, const QString &command, const QJsonObject &data);
+    bool replySearch(quint64 id, const QString &command, const QJsonObject &data);
+    void sendSearchPage();
     bool replyTimeline(quint64 id, const QString &command, const QJsonObject &data);
     bool replyEncryption(const QString &command, const QJsonObject &data);
     bool replyCall(const QString &command, const QJsonObject &data);
@@ -912,6 +967,7 @@ private:
     QString m_sessionState = QStringLiteral("none");
     QString m_syncState = QStringLiteral("idle");
     bool m_serverSupported = true;
+    int m_roomTotal = -1;
     QString m_userId;
     QString m_deviceId;
     QString m_lastError;
@@ -1010,6 +1066,18 @@ private:
     DirectoryModel m_directory;
     bool m_directoryAtEnd = true;
     MemberModel m_members;
+    SearchModel m_searchResults;
+    /// One screen of hits, asked for again when the list reaches its end.
+    static const int SearchPageSize = 20;
+    /// The room and query the results belong to, so the next page asks the
+    /// same question, and the id of the page in flight - a reply carrying a
+    /// different one belongs to a search the user has already moved on from.
+    QString m_searchRoomId;
+    QString m_searchQuery;
+    int m_searchOffset = 0;
+    bool m_searchHasMore = false;
+    quint64 m_searchRequest = 0;
+    quint64 m_indexRequest = 0;
     /// Which user a pending `member.remove` request is for.
     QHash<quint64, QString> m_removeRequests;
     /// Lets go of everything a finished, failed or abandoned command was

@@ -244,6 +244,17 @@ Page {
                 onClicked: page.resetAll()
             }
 
+            // The line itself is not a setting: it costs nothing, and it
+            // only appears where something is unread. What differs between
+            // people is where the room opens.
+            TextSwitch {
+                text: qsTr("Open a room where you stopped reading")
+                description: qsTr("On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.")
+                checked: settings.jumpToReadMarker
+                automaticCheck: false
+                onClicked: settings.jumpToReadMarker = !settings.jumpToReadMarker
+            }
+
             TextSwitch {
                 text: qsTr("Hide the keyboard after sending")
                 description: qsTr("On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.")

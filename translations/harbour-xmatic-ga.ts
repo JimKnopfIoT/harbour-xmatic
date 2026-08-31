@@ -279,6 +279,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Ann, dúnann an méarchlár chomh luath is a imíonn an teachtaireacht agus feictear an comhrá ina iomláine arís. As, fanann sé oscailte don chéad cheann eile.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Oscail seomra san áit ar stad tú de bheith ag léamh</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ar siúl: agus tú ag dul isteach, tagann tú chuig an teachtaireacht dheireanach a léigh tú, agus bíonn na cinn nua faoina bun. As: osclaítear an seomra ag an teachtaireacht is nuaí, agus gheobhaidh tú an líne a mharcálann an áit ar stad tú trí scrollú suas.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1766,6 +1774,10 @@
         <source>Mark as read</source>
         <translation>Marcáil mar léite</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 as %2 seomra</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2106,6 +2118,37 @@
         <source>Picture</source>
         <translation>Pictiúr</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Cuardaigh teachtaireachtaí</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Cad is brí leis na marcanna seo?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Cuardaigh teachtaireachtaí</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Cuardaigh an comhrá seo</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Theip ar an gcuardach</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Níor aimsíodh aon rud</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Focail iomlána amháin: ní aimsíonn &quot;test&quot; an focal &quot;test9&quot;. Ní chuardaítear pictiúir, comhaid ná teachtaireachtaí ó róbait. Agus ní chuardaítear ach a bhfuil íoslódáilte ag an ngléas seo cheana — luchtaigh teachtaireachtaí níos sine chun tuilleadh a chur leis.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2268,6 +2311,65 @@
     <message>
         <source>No rooms</source>
         <translation>Níl aon seomra ann</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Marcanna ar theachtaireachtaí</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Seoladh gan chriptiú</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Chuaigh an teachtaireacht amach gan chriptiú cé go n-úsáideann an seomra é. Is féidir le duine ar bith atá in ann an chóip ar an bhfreastalaí a léamh an teachtaireacht a léamh.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Níorbh é an cuntas atá luaite a sheol é</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Rinne gléas an teachtaireacht a chriptiú nach mbaineann leis an gcuntas óna maíonn sí a teacht — tá duine ag seoladh faoi ainm duine eile. Oibríonn roinnt droichead mar sin agus is neamhdhíobhálach é; áit ar bith eile is é an t-aon chomhartha ar phearsanú fíor atá ag an bhfeidhmchlár seo.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Athraigh eochracha an tseoltóra</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Ní hí céannacht chripteagrafach an duine seo an ceann a fíoraíodh a thuilleadh. Nó chuir sé an cuntas ar bun arís, nó tá duine eile á úsáid.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Ó ghléas neamhfhíoraithe</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Níor dhearbhaigh an cuntas lena mbaineann sé an gléas a sheol é seo. Le gléas atá díreach curtha in úsáid tá sé sin gnách.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Ó dhuine neamhfhíoraithe</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Níor fíoraíodh céannacht an duine seo riamh, mar sin níl aon rud ann chun an teachtaireacht a mheas ina choinne.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Barántúlacht gan deimhniú</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Níorbh fhéidir an teachtaireacht a sheiceáil ar chor ar bith. Ní gá gur bréagach í — níl sí cruthaithe, sin an méid.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Ciallaíonn marc in aice le teachtaireacht nárbh fhéidir a barántúlacht a dhearbhú go hiomlán. Deir triantán dearg nach í an teachtaireacht an rud a mhaíonn sí. Deir ponc flannbhuí nárbh fhéidir rud éigin a sheiceáil. Tapáil marc sa chomhrá le feiceáil cé acu de na cásanna thíos atá i gceist.</translation>
     </message>
 </context>
 <context>

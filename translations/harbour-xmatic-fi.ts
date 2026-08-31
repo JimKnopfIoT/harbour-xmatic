@@ -278,6 +278,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Päällä näppäimistö sulkeutuu heti kun viesti on lähtenyt ja keskustelu näkyy taas kokonaan. Pois päältä se jää auki seuraavaa viestiä varten.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Avaa huone siitä, mihin jäit lukemassa</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Päällä: huoneeseen tullessasi päädyt viimeksi lukemaasi viestiin, uudet ovat sen alla. Pois: huone avautuu uusimpaan viestiin, ja viivan siitä mihin jäit löydät vierittämällä ylöspäin.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1764,6 +1772,10 @@
         <source>Mark as read</source>
         <translation>Merkitse luetuksi</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 / %2 huonetta</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2103,6 +2115,37 @@
         <source>Picture</source>
         <translation>Kuva</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Etsi viesteistä</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Mitä nämä merkit tarkoittavat?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Etsi viesteistä</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Etsi tästä keskustelusta</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Haku epäonnistui</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Ei löytynyt mitään</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Vain kokonaiset sanat: ”test” ei löydä sanaa ”test9”. Kuvia, tiedostoja tai bottien viestejä ei haeta. Ja vain se, minkä laite on jo ladannut — lataa vanhempia viestejä lisätäksesi enemmän.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2265,6 +2308,65 @@
     <message>
         <source>No rooms</source>
         <translation>Ei huoneita</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Viestien merkit</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Lähetetty salaamattomana</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Viesti lähti salaamattomana, vaikka huone käyttää salausta. Kuka tahansa, joka pääsee lukemaan palvelimen kopiota, voi lukea viestin.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ei lähettänyt mainittu tili</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Viestin salasi laite, joka ei kuulu tilille, jolta se väittää tulevansa — joku lähettää toisen nimissä. Osa silloista toimii näin ja tuottaa sen vaarattomasti; muualla se on ainoa merkki todellisesta väärentämisestä, joka tällä sovelluksella on.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Lähettäjän avaimet muuttuivat</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Tämän henkilön salausidentiteetti ei ole enää se, joka varmennettiin. Joko hän on ottanut tilinsä uudelleen käyttöön, tai joku muu käyttää sitä.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Vahvistamattomalta laitteelta</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Tätä lähettänyttä laitetta ei ole vahvistanut tili, jolle se kuuluu. Vasta käyttöön otetulla laitteella se on tavallista.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Vahvistamattomalta henkilöltä</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Tämän henkilön henkilöllisyyttä ei ole koskaan varmennettu, joten viestiä ei ole mihin verrata.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Aitoutta ei vahvistettu</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Viestiä ei voitu tarkistaa lainkaan. Se ei ole välttämättä väärä — vain todistamaton.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Viestin vieressä oleva merkki tarkoittaa, ettei sen aitoutta voitu täysin varmistaa. Punainen kolmio kertoo, ettei viesti ole sitä miksi se väittää itseään. Oranssi piste kertoo, ettei jotakin siinä voitu tarkistaa. Napauta merkkiä keskustelussa nähdäksesi, mistä alla olevista tapauksista on kyse.</translation>
     </message>
 </context>
 <context>

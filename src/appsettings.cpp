@@ -123,6 +123,26 @@ void AppSettings::setShowReadStatus(bool enabled)
     emit showReadStatusChanged();
 }
 
+bool AppSettings::jumpToReadMarker() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("ui/jumpToReadMarker"), true).toBool();
+}
+
+void AppSettings::setJumpToReadMarker(bool enabled)
+{
+    if (enabled == jumpToReadMarker()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("ui/jumpToReadMarker"), enabled,
+          "the read-marker jump setting");
+    if (settings.status() == QSettings::NoError) {
+        qInfo("xmatic: jump to read marker %s", enabled ? "on" : "off");
+    }
+    emit jumpToReadMarkerChanged();
+}
+
 bool AppSettings::clickableLinks() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

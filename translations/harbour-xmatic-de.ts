@@ -278,6 +278,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>An: Die Tastatur schließt sich, sobald die Nachricht raus ist, und du siehst wieder das ganze Gespräch. Aus: Sie bleibt für die nächste Nachricht offen.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Raum dort öffnen, wo du aufgehört hast zu lesen</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>An: Beim Betreten landest du bei deiner zuletzt gelesenen Nachricht, die neuen stehen darunter. Aus: Der Raum öffnet bei der neuesten Nachricht, und die Linie, die deinen Lesestand markiert, findest du beim Hochscrollen.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1764,6 +1772,10 @@
         <source>Mark as read</source>
         <translation>Als gelesen markieren</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 von %2 Räumen</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2103,6 +2115,37 @@
         <source>Picture</source>
         <translation>Bild</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Nachrichten durchsuchen</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Was bedeuten diese Zeichen?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Nachrichten durchsuchen</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>In dieser Unterhaltung suchen</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Suche fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Nichts gefunden</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Nur ganze Wörter: „test“ findet „test9“ nicht. Bilder, Dateien und Nachrichten von Bots werden nicht durchsucht. Und nur, was dieses Gerät schon geladen hat — lade ältere Nachrichten, um mehr hinzuzunehmen.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2265,6 +2308,65 @@
     <message>
         <source>No rooms</source>
         <translation>Keine Räume</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Zeichen an Nachrichten</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Unverschlüsselt gesendet</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Die Nachricht ging unverschlüsselt hinaus, obwohl der Raum Verschlüsselung benutzt. Wer die Kopie auf dem Server lesen kann, kann die Nachricht lesen.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nicht von dem genannten Konto gesendet</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Die Nachricht wurde von einem Gerät verschlüsselt, das nicht zu dem Konto gehört, von dem sie zu stammen behauptet — jemand sendet unter fremdem Namen. Manche Brücken arbeiten so und erzeugen es harmlos; überall sonst ist es das einzige Anzeichen einer echten Fälschung, das diese App hat.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Die Schlüssel des Absenders haben sich geändert</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Die kryptografische Identität dieser Person ist nicht mehr die, die verifiziert wurde. Entweder hat sie ihr Konto neu eingerichtet, oder jemand anderes benutzt es.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Von einem unverifizierten Gerät</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Das Gerät, das dies gesendet hat, wurde von dem Konto, zu dem es gehört, nicht bestätigt. Bei einem frisch in Gebrauch genommenen Gerät ist das normal.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Von einer unverifizierten Person</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Die Identität dieser Person wurde nie verifiziert, es gibt also nichts, woran sich die Nachricht prüfen ließe.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Echtheit nicht bestätigt</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Die Nachricht ließ sich überhaupt nicht prüfen. Sie ist nicht zwangsläufig falsch — nur unbelegt.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Ein Zeichen neben einer Nachricht heißt, dass ihre Echtheit nicht vollständig bestätigt werden konnte. Ein rotes Dreieck sagt, die Nachricht ist nicht, was sie zu sein behauptet. Ein oranger Punkt sagt, etwas an ihr ließ sich nicht prüfen. Tippe ein Zeichen in der Unterhaltung an, um zu sehen, welcher der Fälle unten es ist.</translation>
     </message>
 </context>
 <context>

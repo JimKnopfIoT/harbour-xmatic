@@ -154,6 +154,13 @@ Page {
 
                 width: parent.width
                 placeholderText: qsTr("Search the room directory")
+                // The keyboard's word list is a store outside this app's
+                // sandbox, unreadable and unclearable from here, and it
+                // suggests what it learned in every other app. Same hints
+                // as the password line.
+                inputMethodHints: Qt.ImhNoPredictiveText
+                                  | Qt.ImhSensitiveData
+                                  | Qt.ImhNoAutoUppercase
                 onTextChanged: {
                     page.searchPattern = text
                     searchDelay.restart()

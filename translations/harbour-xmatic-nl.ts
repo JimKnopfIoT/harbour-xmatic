@@ -278,6 +278,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Aan sluit het toetsenbord zodra het bericht weg is en zie je het gesprek weer helemaal. Uit blijft het open voor het volgende bericht.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Een kamer openen waar je gestopt bent met lezen</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Aan: bij het binnengaan kom je uit bij je laatst gelezen bericht, de nieuwe staan eronder. Uit: de kamer opent bij het nieuwste bericht, en de lijn die aangeeft waar je gebleven bent vind je door omhoog te scrollen.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1764,6 +1772,10 @@
         <source>Mark as read</source>
         <translation>Als gelezen markeren</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 van %2 kamers</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2103,6 +2115,37 @@
         <source>Picture</source>
         <translation>Afbeelding</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Berichten doorzoeken</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Wat betekenen deze tekens?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Berichten doorzoeken</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>In dit gesprek zoeken</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Zoeken mislukt</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Niets gevonden</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Alleen hele woorden: „test” vindt „test9” niet. Afbeeldingen, bestanden en berichten van bots worden niet doorzocht. En alleen wat dit apparaat al heeft opgehaald — laad oudere berichten om meer toe te voegen.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2265,6 +2308,65 @@
     <message>
         <source>No rooms</source>
         <translation>Geen kamers</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Tekens bij berichten</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Onversleuteld verzonden</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Het bericht ging onversleuteld de deur uit hoewel de kamer versleuteling gebruikt. Wie de kopie op de server kan lezen, kan het bericht lezen.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Niet verzonden door het genoemde account</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Het bericht is versleuteld door een apparaat dat niet bij het account hoort waarvan het zegt te komen — iemand verstuurt onder andermans naam. Sommige bruggen werken zo en veroorzaken het onschuldig; overal elders is het het enige teken van een echte identiteitsvervalsing dat deze app heeft.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>De sleutels van de afzender zijn veranderd</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>De cryptografische identiteit van deze persoon is niet meer die welke geverifieerd werd. Of ze hebben hun account opnieuw ingesteld, of iemand anders gebruikt het.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Van een niet-geverifieerd apparaat</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Het apparaat dat dit verstuurde is niet bevestigd door het account waar het bij hoort. Bij een pas in gebruik genomen apparaat is dat normaal.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Van een niet-geverifieerd persoon</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>De identiteit van deze persoon is nooit geverifieerd, dus er is niets om het bericht aan te toetsen.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Echtheid niet bevestigd</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Het bericht kon helemaal niet gecontroleerd worden. Het is niet per se onjuist — alleen onbewezen.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Een teken naast een bericht betekent dat de echtheid ervan niet volledig bevestigd kon worden. Een rode driehoek zegt dat het bericht niet is wat het beweert te zijn. Een oranje stip zegt dat er iets niet gecontroleerd kon worden. Tik in het gesprek op een teken om te zien welk van de gevallen hieronder het is.</translation>
     </message>
 </context>
 <context>

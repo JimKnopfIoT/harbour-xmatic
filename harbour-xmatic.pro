@@ -54,6 +54,7 @@ SOURCES += \
     src/roomsortmodel.cpp \
     src/directorymodel.cpp \
     src/membermodel.cpp \
+    src/searchmodel.cpp \
     src/timelinemodel.cpp \
     src/callengine.cpp \
     src/camerasource.cpp \
@@ -78,6 +79,7 @@ HEADERS += \
     src/roomsortmodel.h \
     src/directorymodel.h \
     src/membermodel.h \
+    src/searchmodel.h \
     src/timelinemodel.h \
     src/callengine.h \
     src/camerasource.h \
@@ -217,6 +219,8 @@ DISTFILES += \
     qml/pages/MoveToSpacePage.qml \
     qml/pages/RoomPage.qml \
     qml/pages/RoomInfoPage.qml \
+    qml/pages/SearchPage.qml \
+    qml/pages/ShieldGlossaryPage.qml \
     qml/pages/AppearancePage.qml \
     qml/pages/PrivacyPage.qml \
     qml/pages/ColorField.qml \
