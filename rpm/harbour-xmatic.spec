@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.26.2
+Version:    0.27.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -104,6 +104,42 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Aug 31 2026 harbour-xmatic contributors 0.27.0-1
+- Messages can be searched, one conversation at a time, from the room's
+  pull-down menu. The index lives on the device and is encrypted with the same
+  key as the rest of the local storage; the query never leaves the phone. There
+  is no server-side search and no fallback to one - a homeserver cannot read an
+  encrypted room, so it could only ever search the rooms this app does not
+  have. Opening the search page hands it whatever history is already on the
+  device, so a room that has been scrolled back is searchable to that point.
+  What it cannot do is written on the page itself: whole words only, so "test"
+  does not find "test9", and only plain text - captions, file names and
+  anything a bot sends are not in it.
+- The line marking where reading stopped is drawn for everybody now. It existed
+  before but hung off a setting about *other* people's read status, which is
+  off by default, so almost nobody ever saw it. It is independent of that
+  setting, and it holds still while the room is read instead of sliding to the
+  newest message. Where the room opens is a setting of its own (Display, on by
+  default): at the last read message, or at the newest one with the line found
+  by scrolling up.
+- A message whose authenticity could not be confirmed carries a mark instead of
+  a sentence. A line of text under every affected message said the same thing
+  twenty times over; a red triangle or an orange dot says it once, in the line
+  that already holds the time. Nothing is hidden - every affected message keeps
+  its mark, because leaving it off the ones below the first would claim they
+  are fine. Tapping a mark shows what it means for that message, and leads to a
+  page listing all six cases.
+- The unread count was wrong after every start. Messages that arrived while the
+  app was closed were counted as one, however many there were, while the
+  notification for the same room named the right number. The counters are
+  computed on the device from the messages a sync has actually carried, and a
+  sync carried exactly one per room. It carries what is needed now.
+- A room opened from a notification, from a direct chat or by following an
+  upgrade shows its name in the header. Only the chat list passed one, so those
+  three arrived with an identifier and left the header empty.
+- The chat list says how many rooms the server counts next to the number it
+  holds, so "20 of 412" tells a missing room apart from a list that has not
+  finished growing.
 * Sat Aug 29 2026 harbour-xmatic contributors 0.26.2-1
 - The page that says what is not yet in order was itself not in order. Its
   frame ran along the very top edge of the display and so passed under a camera

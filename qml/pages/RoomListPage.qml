@@ -117,8 +117,25 @@ Page {
                     if (!matrix.serverSupported) {
                         return qsTr("This homeserver is not supported")
                     }
-                    return matrix.syncState === "offline"
-                            ? qsTr("Offline — waiting for the network") : ""
+                    // Two numbers side by side: the rows this list holds and
+                    // the rooms the server counts for the account. A list that
+                    // is shorter than the account has two causes that look
+                    // identical on screen — the sync window never grew past its
+                    // first twenty rooms, or only one page has been asked for —
+                    // and a field report without both numbers cannot tell them
+                    // apart. Not while searching: the count is the filtered one
+                    // then and would compare two different things.
+                    var counted = searchField.text.length > 0
+                            ? ""
+                            : qsTr("%1 of %2 rooms").arg(roomList.count)
+                                    .arg(matrix.roomTotal >= 0
+                                         ? matrix.roomTotal : "?")
+                    if (matrix.syncState === "offline") {
+                        var offline = qsTr("Offline — waiting for the network")
+                        return counted.length > 0 ? offline + " · " + counted
+                                                  : offline
+                    }
+                    return counted
                 }
 
                 // The device's overall security, where the user actually is
@@ -158,6 +175,13 @@ Page {
 
                 width: parent.width
                 placeholderText: qsTr("Search rooms")
+                // The keyboard's word list is a store outside this app's
+                // sandbox, unreadable and unclearable from here, and it
+                // suggests what it learned in every other app. Same hints
+                // as the password line.
+                inputMethodHints: Qt.ImhNoPredictiveText
+                                  | Qt.ImhSensitiveData
+                                  | Qt.ImhNoAutoUppercase
                 onTextChanged: matrix.setRoomFilter(text)
             }
         }

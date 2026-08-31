@@ -23,6 +23,7 @@ mod markup;
 mod recovery;
 mod roomlist;
 mod runtime;
+mod search;
 mod session;
 mod text;
 mod timeline;

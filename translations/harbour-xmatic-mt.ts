@@ -280,6 +280,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Mixgħul, it-tastiera tingħalaq malli l-messaġġ jitlaq u l-konversazzjoni terġa&apos; tidher kollha. Mitfi, tibqa&apos; miftuħa għall-messaġġ li jmiss.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Iftaħ il-kamra fejn waqaft taqra</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Mixgħul: meta tidħol tasal fl-aħħar messaġġ li qrajt, u l-ġodda jkunu taħtu. Mitfi: il-kamra tinfetaħ fl-aktar messaġġ riċenti, u l-linja li timmarka fejn waqaft issibha billi tiskrollja &apos;l fuq.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1768,6 +1776,10 @@
         <source>Mark as read</source>
         <translation>Immarka bħala moqri</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 minn %2 kmamar</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2109,6 +2121,37 @@
         <source>Picture</source>
         <translation>Ritratt</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Fittex fil-messaġġi</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Xi jfissru dawn il-marki?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Fittex fil-messaġġi</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Fittex f&apos;din il-konverżazzjoni</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>It-tfittxija falliet</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Ma nstab xejn</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Kliem sħiħ biss: &quot;test&quot; ma jsibx &quot;test9&quot;. Ritratti, fajls u messaġġi minn bots ma jitfittxewx. U biss dak li dan l-apparat diġà niżżel — illowdja messaġġi eqdem biex iżżid aktar.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2271,6 +2314,65 @@
     <message>
         <source>No rooms</source>
         <translation>Ebda kamra</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Marki fuq il-messaġġi</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Mibgħut mhux kriptat</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Il-messaġġ ħareġ mingħajr kriptaġġ għalkemm il-kamra tużah. Kull min jista&apos; jaqra l-kopja fuq is-server jista&apos; jaqra l-messaġġ.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ma ntbagħatx mill-kont imsemmi</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Il-messaġġ ġie kriptat minn apparat li ma jappartjenix għall-kont li jgħid li ġej minnu — xi ħadd qed jibgħat taħt isem ħaddieħor. Xi pontijiet jaħdmu hekk u dan huwa bla ħsara; kullimkien ieħor huwa l-uniku sinjal ta&apos; impersonazzjoni vera li għandha din l-applikazzjoni.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Iċ-ċwievet ta&apos; min bagħat inbidlu</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>L-identità kriptografika ta&apos; din il-persuna m&apos;għadhiex dik li ġiet verifikata. Jew reġgħet waqqfet il-kont, jew xi ħadd ieħor qed jużah.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Minn apparat mhux verifikat</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>L-apparat li bagħat dan ma ġiex ikkonfermat mill-kont li jappartjeni għalih. Għal apparat li għadu kemm beda jintuża dan huwa normali.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Minn persuna mhux verifikata</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>L-identità ta&apos; din il-persuna qatt ma ġiet verifikata, għalhekk m&apos;hemm xejn ma&apos; xiex tqabbel il-messaġġ.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>L-awtentiċità mhix ikkonfermata</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Il-messaġġ ma setax jiġi vverifikat xejn. Mhuwiex neċessarjament falz — sempliċiment mhux ippruvat.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Marka ħdejn messaġġ tfisser li l-awtentiċità tiegħu ma setgħetx tiġi kkonfermata għalkollox. Trijangolu aħmar jgħid li l-messaġġ mhuwiex dak li jgħid li hu. Tikka oranġjo tgħid li xi ħaġa ma setgħetx tiġi verifikata. Mess marka fil-konverżazzjoni biex tara liema mill-każijiet hawn taħt hu.</translation>
     </message>
 </context>
 <context>

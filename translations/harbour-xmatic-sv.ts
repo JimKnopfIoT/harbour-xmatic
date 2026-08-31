@@ -278,6 +278,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>På stängs tangentbordet så snart meddelandet är skickat och samtalet syns helt igen. Av stannar det kvar till nästa meddelande.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Öppna rummet där du slutade läsa</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>På: när du går in hamnar du vid det senaste meddelandet du läste, de nya står under. Av: rummet öppnas vid det nyaste meddelandet, och linjen som visar var du slutade hittar du genom att rulla uppåt.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1764,6 +1772,10 @@
         <source>Mark as read</source>
         <translation>Markera som läst</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 av %2 rum</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2103,6 +2115,37 @@
         <source>Picture</source>
         <translation>Bild</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Sök i meddelanden</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Vad betyder de här tecknen?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Sök i meddelanden</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Sök i den här konversationen</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Sökningen misslyckades</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Hittade inget</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Bara hela ord: ”test” hittar inte ”test9”. Bilder, filer och meddelanden från bottar genomsöks inte. Och bara det enheten redan hämtat — hämta äldre meddelanden för att lägga till mer.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2265,6 +2308,65 @@
     <message>
         <source>No rooms</source>
         <translation>Inga rum</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Tecken vid meddelanden</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Skickat okrypterat</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Meddelandet gick ut okrypterat trots att rummet använder kryptering. Den som kan läsa kopian på servern kan läsa meddelandet.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Skickades inte av kontot som anges</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Meddelandet krypterades av en enhet som inte tillhör kontot det påstår sig komma från — någon skickar under annat namn. Vissa bryggor fungerar så och orsakar det harmlöst; överallt annars är det det enda tecknet på en verklig förfalskning som appen har.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Avsändarens nycklar har ändrats</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Den här personens kryptografiska identitet är inte längre den som verifierades. Antingen har de satt upp kontot på nytt, eller så använder någon annan det.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Från en overifierad enhet</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Enheten som skickade detta har inte bekräftats av kontot den tillhör. För en enhet någon just börjat använda är det normalt.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Från en overifierad person</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Den här personens identitet har aldrig verifierats, så det finns inget att pröva meddelandet mot.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Äktheten är inte bekräftad</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Meddelandet gick inte att kontrollera alls. Det är inte nödvändigtvis fel — bara obevisat.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Ett tecken bredvid ett meddelande betyder att dess äkthet inte kunde bekräftas helt. En röd triangel säger att meddelandet inte är vad det utger sig för. En orange punkt säger att något med det inte gick att kontrollera. Tryck på ett tecken i konversationen för att se vilket av fallen nedan det är.</translation>
     </message>
 </context>
 <context>

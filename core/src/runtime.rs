@@ -31,11 +31,18 @@ use crate::members;
 use crate::recovery;
 use crate::roomlist::{self, RoomListHandle};
 use crate::session::{self, Paths, StoredSession};
+use crate::search;
 use crate::timeline::{self, TimelineHandle};
 use crate::verification;
 
 /// Signature of the function the front end registers to receive messages.
 pub type XmCallback = extern "C" fn(*mut c_void, *const c_char);
+
+/// The most search results one command may ask for. A page is meant to fill a
+/// screen and be asked for again, not to be the whole answer: every row costs
+/// an event load, and a hundred of those before the first row is drawn is a
+/// search that looks broken.
+const SEARCH_PAGE_MAX: usize = 50;
 
 struct CallbackSlot {
     func: Option<XmCallback>,
@@ -661,6 +668,10 @@ async fn handle(state: Arc<State>, command: Command) {
         }
         Command::DirectoryLoadMore { .. } => directory_more(&state, id).await,
         Command::DirectoryStop { .. } => directory_stop(&state, id).await,
+        Command::SearchIndex { room_id, .. } => search_index(&state, id, room_id).await,
+        Command::SearchRoom { room_id, query, offset, limit, .. } => {
+            search_room(&state, id, room_id, query, offset, limit).await
+        }
         Command::MembersLoad { room_id, .. } => members_load(&state, id, room_id).await,
         Command::RoomCheckRecipients { room_id, .. } => {
             room_check_recipients(&state, id, room_id).await
@@ -899,6 +910,55 @@ async fn room_check_recipients(state: &Arc<State>, id: u64, room_id: String) {
         Ok(users) => state
             .sink
             .emit(reply_ok(id, json!({ "roomId": room_id, "users": users }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// Folds the room's stored events into its index before anybody searches it.
+async fn search_index(state: &Arc<State>, id: u64, room_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match search::index_room(&client, &room_id).await {
+        // The count goes back in the reply; the journal line is the bridge's,
+        // like every other one in this app.
+        Ok(count) => state.sink.emit(reply_ok(id, json!({ "count": count }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// One page of search results. The rows go back in the reply rather than as
+/// an event: a search is an answer to a question somebody asked, not a stream
+/// the app has to keep up with, and tying them to the command means a late
+/// answer to an abandoned search cannot overwrite a newer one.
+async fn search_room(
+    state: &Arc<State>,
+    id: u64,
+    room_id: String,
+    query: String,
+    offset: usize,
+    limit: usize,
+) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    // A limit of zero is the front end not saying; a limit of a thousand is
+    // the front end saying something unhelpful.
+    let limit = limit.clamp(1, SEARCH_PAGE_MAX);
+    match search::room(&client, &room_id, &query, limit, offset).await {
+        Ok(rows) => {
+            // "Fewer than asked for" is how the caller knows to stop. Said
+            // here rather than left to be worked out, because the row count
+            // alone cannot distinguish a short page from a page whose events
+            // could not be loaded.
+            let more = rows.len() >= limit;
+            state.sink.emit(reply_ok(
+                id,
+                json!({ "rows": rows, "offset": offset, "more": more }),
+            ));
+        }
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
@@ -1226,7 +1286,7 @@ async fn open_timeline(
     // it is a store read, and this project already froze every room switch once
     // by awaiting inside that lock. It also has to be the state *before* this
     // visit marks anything read.
-    let marker = timeline::own_read_marker(&client, &room_id).await;
+    let (marker, fallback_marker) = timeline::own_read_marker(&client, &room_id).await;
     // What this account may do in this room, for the menus that would
     // otherwise offer an action the server refuses. Read here for the same
     // reason as the marker: it is a store read, and it must not happen under
@@ -1255,6 +1315,8 @@ async fn open_timeline(
                     json!({
                         "open": true,
                         "readMarker": marker,
+                    "readReceipt": fallback_marker,
+                        "readReceipt": fallback_marker,
                         "rebuilt": false,
                         "can": permissions,
                     }),

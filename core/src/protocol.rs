@@ -689,6 +689,31 @@ pub enum Command {
     #[serde(rename = "directory.stop")]
     DirectoryStop { id: u64 },
 
+    /// Fold everything this device already holds for a room into its search
+    /// index. Local, no network; the index otherwise only ever learns of
+    /// events as they arrive.
+    #[serde(rename = "search.index")]
+    SearchIndex {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
+    /// Search one room's message index. One page per command: `offset` is
+    /// where to continue, and a short answer means the end. The query never
+    /// leaves the device.
+    #[serde(rename = "search.room")]
+    SearchRoom {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        query: String,
+        #[serde(default)]
+        offset: usize,
+        #[serde(default)]
+        limit: usize,
+    },
+
     /// Load a room's active members (joined and invited). Results arrive as a
     /// single `members.diff` reset.
     #[serde(rename = "members.load")]
@@ -927,6 +952,8 @@ impl Command {
             | Command::ThreadClose { id, .. }
             | Command::ThreadSend { id, .. }
             | Command::ThreadPaginate { id } => *id,
+            Command::SearchRoom { id, .. } => *id,
+            Command::SearchIndex { id, .. } => *id,
         }
     }
 }

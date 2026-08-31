@@ -278,6 +278,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Til lukker tastaturet, så snart beskeden er sendt, og samtalen fylder igen. Fra bliver det stående til den næste besked.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Åbn rummet, hvor du holdt op med at læse</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Til: når du går ind, lander du ved din sidst læste besked, og de nye står under den. Fra: rummet åbner ved den nyeste besked, og linjen, der viser hvor du slap, finder du ved at rulle op.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1764,6 +1772,10 @@
         <source>Mark as read</source>
         <translation>Markér som læst</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 af %2 rum</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2103,6 +2115,37 @@
         <source>Picture</source>
         <translation>Billede</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Søg i beskeder</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Hvad betyder disse mærker?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Søg i beskeder</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Søg i denne samtale</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Søgningen mislykkedes</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Intet fundet</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Kun hele ord: &quot;test&quot; finder ikke &quot;test9&quot;. Billeder, filer og beskeder fra bots gennemsøges ikke. Og kun det, enheden allerede har hentet — hent ældre beskeder for at få mere med.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2265,6 +2308,65 @@
     <message>
         <source>No rooms</source>
         <translation>Ingen rum</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Mærker ved beskeder</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Sendt ukrypteret</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Beskeden gik ud ukrypteret, selvom rummet bruger kryptering. Enhver, der kan læse kopien på serveren, kan læse beskeden.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ikke sendt af den konto der nævnes</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Beskeden blev krypteret af en enhed, der ikke tilhører den konto, den påstår at komme fra — nogen sender under et andet navn. Nogle broer arbejder sådan og gør det harmløst; alle andre steder er det det eneste tegn på en reel efterligning, denne app har.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Afsenderens nøgler er ændret</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Denne persons kryptografiske identitet er ikke længere den, der blev verificeret. Enten har de sat kontoen op igen, eller også bruger en anden den.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Fra en ikke-verificeret enhed</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Enheden, der sendte dette, er ikke bekræftet af den konto, den tilhører. For en enhed, nogen lige er begyndt at bruge, er det normalt.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Fra en ikke-verificeret person</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Denne persons identitet er aldrig blevet verificeret, så der er intet at holde beskeden op imod.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Ægthed ikke bekræftet</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Beskeden kunne slet ikke kontrolleres. Den er ikke nødvendigvis forkert — bare ubevist.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Et mærke ved en besked betyder, at dens ægthed ikke kunne bekræftes fuldt ud. En rød trekant siger, at beskeden ikke er det, den giver sig ud for. En orange prik siger, at noget ved den ikke kunne kontrolleres. Tryk på et mærke i samtalen for at se, hvilket af tilfældene nedenfor det er.</translation>
     </message>
 </context>
 <context>

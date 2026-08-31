@@ -279,6 +279,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Zapnuto: klávesnice se zavře, jakmile zpráva odejde, a konverzace je zase celá vidět. Vypnuto: zůstane otevřená pro další zprávu.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Otevřít místnost tam, kde jsi přestal číst</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Zapnuto: po vstupu se ocitneš u poslední přečtené zprávy, nové jsou pod ní. Vypnuto: místnost se otevře u nejnovější zprávy a čáru, která značí, kde jsi skončil, najdeš posunutím nahoru.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1766,6 +1774,10 @@
         <source>Mark as read</source>
         <translation>Označit jako přečtené</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 z %2 místností</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2106,6 +2118,37 @@
         <source>Picture</source>
         <translation>Obrázek</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Hledat ve zprávách</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Co znamenají tyto značky?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Hledat ve zprávách</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Hledat v této konverzaci</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Hledání selhalo</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Nic nenalezeno</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Jen celá slova: „test“ nenajde „test9“. Obrázky, soubory a zprávy od botů se neprohledávají. A jen to, co si zařízení už stáhlo — načti starší zprávy, aby se přidalo více.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2268,6 +2311,65 @@
     <message>
         <source>No rooms</source>
         <translation>Žádné místnosti</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Značky u zpráv</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Odesláno nešifrovaně</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Zpráva odešla nešifrovaně, přestože místnost šifrování používá. Kdokoli, kdo si může přečíst kopii na serveru, si může přečíst zprávu.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Neodeslal to účet, který je uveden</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Zprávu zašifrovalo zařízení, které nepatří k účtu, ze kterého údajně pochází — někdo posílá pod cizím jménem. Některé mosty tak fungují a působí to neškodně; kdekoli jinde je to jediná známka skutečného podvržení, kterou tato aplikace má.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Klíče odesílatele se změnily</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Kryptografická identita této osoby už není ta, která byla ověřena. Buď si účet nastavila znovu, nebo ho používá někdo jiný.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Z neověřeného zařízení</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Zařízení, které to odeslalo, nebylo potvrzeno účtem, ke kterému patří. U čerstvě používaného zařízení je to běžné.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Od neověřené osoby</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Identita této osoby nebyla nikdy ověřena, takže není s čím zprávu porovnat.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Pravost nepotvrzena</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Zprávu nebylo možné ověřit vůbec. Nemusí být nutně nepravá — jen nedoložená.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Značka u zprávy znamená, že se její pravost nepodařilo plně potvrdit. Červený trojúhelník říká, že zpráva není tím, za co se vydává. Oranžová tečka říká, že něco nebylo možné ověřit. Klepni na značku v konverzaci a uvidíš, o který z případů níže jde.</translation>
     </message>
 </context>
 <context>

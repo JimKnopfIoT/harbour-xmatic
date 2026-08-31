@@ -29,6 +29,8 @@ class AppSettings : public QObject
                NOTIFY notificationPreviewChanged)
     Q_PROPERTY(bool showReadStatus READ showReadStatus WRITE setShowReadStatus
                NOTIFY showReadStatusChanged)
+    Q_PROPERTY(bool jumpToReadMarker READ jumpToReadMarker WRITE setJumpToReadMarker
+               NOTIFY jumpToReadMarkerChanged)
     Q_PROPERTY(bool clickableLinks READ clickableLinks WRITE setClickableLinks
                NOTIFY clickableLinksChanged)
     Q_PROPERTY(bool voiceMessages READ voiceMessages WRITE setVoiceMessages
@@ -68,6 +70,12 @@ public:
     /// default: each receipt that moves rewrites a timeline row.
     bool showReadStatus() const;
     void setShowReadStatus(bool enabled);
+
+    /// Whether entering a room opens where reading stopped. On by default.
+    /// Off, the room opens at its newest message; the line marking where
+    /// reading stopped is drawn either way.
+    bool jumpToReadMarker() const;
+    void setJumpToReadMarker(bool enabled);
 
     /// Who may make this phone ring: "all", "direct" (anybody this account has
     /// a direct chat with) or "list" (only allowedCallers). "direct" by
@@ -171,6 +179,7 @@ signals:
     void startPageChanged();
     void notificationPreviewChanged();
     void showReadStatusChanged();
+    void jumpToReadMarkerChanged();
     void clickableLinksChanged();
     void voiceMessagesChanged();
     void hideKeyboardOnSendChanged();

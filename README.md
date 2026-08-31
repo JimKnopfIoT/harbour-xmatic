@@ -28,6 +28,12 @@ repository.
   low priority, mute
 * Timeline in encrypted rooms: send, reply, edit, delete, paginate. A message
   that could not be sent can be sent again or discarded
+* Message search inside a conversation, over an index that lives on the device
+  and is encrypted with the same key as the rest of the local storage. The
+  query never leaves the phone: a homeserver cannot read an encrypted room, so
+  a server-side search could only ever cover the rooms this app does not have
+* A line marks where reading stopped, and the room can open there or at its
+  newest message
 * Reactions, sent and shown, grouped by character with a count; the picker's
   first tab is yours to fill - press and hold any emoji to keep it there - and
   the keyboard covers what the set does not
@@ -95,6 +101,10 @@ its colours from the one you use.
 * **Clients that only speak MatrixRTC.** They dropped the classic 1:1 call
   flow (MSC2746); where a client still offers the legacy button, that one
   interoperates.
+* **Search finds whole words in plain text only.** "test" does not find
+  "test9", and pictures, file names and messages a bot sends as a notice are
+  not in the index. Both limits are in the search library the app builds on,
+  and both are stated on the search page rather than left to be discovered
 * Received video is converted frame by frame on the CPU — functional, but not
   as smooth as the outgoing direction. No GStreamer sink on this device draws
   into a QML scene.

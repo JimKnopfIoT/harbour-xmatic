@@ -278,6 +278,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Kveikt: lyklaborðið lokast um leið og skilaboðin fara og samtalið sést aftur í heild. Slökkt: það helst opið fyrir næstu skilaboð.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Opna herbergið þar sem þú hættir að lesa</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Kveikt: þegar þú ferð inn lendirðu á síðustu lesnu skilaboðunum þínum og þau nýju eru fyrir neðan. Slökkt: herbergið opnast á nýjustu skilaboðunum og línuna sem markar hvar þú hættir finnurðu með því að fletta upp.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1764,6 +1772,10 @@
         <source>Mark as read</source>
         <translation>Merkja sem lesið</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 af %2 herbergjum</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2103,6 +2115,37 @@
         <source>Picture</source>
         <translation>Mynd</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Leita í skilaboðum</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Hvað þýða þessi merki?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Leita í skilaboðum</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Leita í þessu samtali</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Leitin mistókst</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Ekkert fannst</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Aðeins heil orð: „test“ finnur ekki „test9“. Myndir, skrár og skilaboð frá vélmennum eru ekki leituð. Og aðeins það sem tækið hefur þegar sótt — sæktu eldri skilaboð til að bæta við.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2265,6 +2308,65 @@
     <message>
         <source>No rooms</source>
         <translation>Engin herbergi</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Merki við skilaboð</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Sent ódulkóðað</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Skilaboðin fóru ódulkóðuð þótt herbergið noti dulkóðun. Hver sem getur lesið afritið á þjóninum getur lesið skilaboðin.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Ekki sent af reikningnum sem er nefndur</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Skilaboðin voru dulkóðuð af tæki sem tilheyrir ekki reikningnum sem þau segjast koma frá — einhver sendir undir annars nafni. Sumar brýr vinna þannig og valda því meinlaust; annars staðar er þetta eina merkið um raunverulega fölsun sem þetta forrit hefur.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Lyklar sendanda breyttust</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Dulritunarauðkenni þessarar manneskju er ekki lengur það sem var staðfest. Annaðhvort setti hún reikninginn upp á nýtt, eða einhver annar notar hann.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Úr óstaðfestu tæki</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Tækið sem sendi þetta hefur ekki verið staðfest af reikningnum sem það tilheyrir. Hjá tæki sem nýlega var tekið í notkun er það eðlilegt.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Frá óstaðfestum aðila</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Auðkenni þessarar manneskju hefur aldrei verið staðfest, svo það er ekkert til að bera skilaboðin saman við.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Áreiðanleiki óstaðfestur</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Alls ekki var hægt að athuga skilaboðin. Þau eru ekki endilega röng — bara ósannreynd.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Merki við skilaboð þýðir að ekki tókst að staðfesta áreiðanleika þeirra að fullu. Rauður þríhyrningur segir að skilaboðin séu ekki það sem þau segjast vera. Appelsínugulur punktur segir að eitthvað hafi ekki verið hægt að athuga. Snertu merki í samtalinu til að sjá hvert tilvikanna hér að neðan á við.</translation>
     </message>
 </context>
 <context>

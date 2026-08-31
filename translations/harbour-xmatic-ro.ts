@@ -279,6 +279,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Activat, tastatura se închide de îndată ce mesajul a plecat și conversația se vede din nou întreagă. Dezactivat, rămâne deschisă pentru următorul mesaj.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Deschide camera acolo unde ai rămas cu cititul</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Pornit: la intrare ajungi la ultimul mesaj citit, cele noi sunt sub el. Oprit: camera se deschide la cel mai recent mesaj, iar linia care marchează unde ai rămas o găsești derulând în sus.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1766,6 +1774,10 @@
         <source>Mark as read</source>
         <translation>Marchează ca citit</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 din %2 camere</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2106,6 +2118,37 @@
         <source>Picture</source>
         <translation>Imagine</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Caută în mesaje</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Ce înseamnă aceste semne?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Caută în mesaje</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Caută în această conversație</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Căutarea a eșuat</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Nu s-a găsit nimic</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Doar cuvinte întregi: „test” nu găsește „test9”. Imaginile, fișierele și mesajele de la roboți nu se caută. Și doar ce a descărcat deja acest dispozitiv — încarcă mesaje mai vechi ca să adaugi mai multe.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2268,6 +2311,65 @@
     <message>
         <source>No rooms</source>
         <translation>Nicio cameră</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Semne la mesaje</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Trimis necriptat</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Mesajul a plecat necriptat deși camera folosește criptare. Oricine poate citi copia de pe server poate citi mesajul.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Nu a fost trimis de contul indicat</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Mesajul a fost criptat de un dispozitiv care nu aparține contului din care pretinde că vine — cineva trimite sub alt nume. Unele punți funcționează așa și o fac inofensiv; oriunde altundeva este singurul semn de uzurpare reală pe care îl are această aplicație.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Cheile expeditorului s-au schimbat</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Identitatea criptografică a acestei persoane nu mai este cea verificată. Ori și-a configurat contul din nou, ori îl folosește altcineva.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>De pe un dispozitiv neverificat</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Dispozitivul care a trimis asta nu a fost confirmat de contul căruia îi aparține. La un dispozitiv abia pus în folosință este normal.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>De la o persoană neverificată</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Identitatea acestei persoane nu a fost niciodată verificată, așa că nu există cu ce să compari mesajul.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autenticitate neconfirmată</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Mesajul nu a putut fi verificat deloc. Nu este neapărat fals — doar nedovedit.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Un semn lângă un mesaj înseamnă că autenticitatea lui nu a putut fi confirmată pe deplin. Un triunghi roșu spune că mesajul nu este ceea ce pretinde. Un punct portocaliu spune că ceva nu a putut fi verificat. Atinge un semn în conversație ca să vezi despre care dintre cazurile de mai jos este vorba.</translation>
     </message>
 </context>
 <context>

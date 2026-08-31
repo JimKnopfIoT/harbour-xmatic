@@ -279,6 +279,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Įjungta: klaviatūra užsiveria vos žinutei išėjus ir pokalbis vėl matomas visas. Išjungta: ji lieka atverta kitai žinutei.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Atverti kambarį ten, kur baigei skaityti</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Įjungta: įėjęs atsiduri ties paskutine perskaityta žinute, naujosios lieka po ja. Išjungta: kambarys atveriamas ties naujausia žinute, o brūkšnį, žymintį kur sustojai, rasi slinkdamas aukštyn.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1766,6 +1774,10 @@
         <source>Mark as read</source>
         <translation>Žymėti kaip skaitytą</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 iš %2 kambarių</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2106,6 +2118,37 @@
         <source>Picture</source>
         <translation>Paveikslėlis</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Ieškoti žinutėse</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Ką reiškia šie ženklai?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Ieškoti žinutėse</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Ieškoti šiame pokalbyje</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Paieška nepavyko</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Nieko nerasta</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Tik ištisi žodžiai: „test“ neranda „test9“. Paveikslėliai, failai ir botų žinutės neieškomi. Ir tik tai, ką įrenginys jau atsisiuntė — įkelk senesnių žinučių, kad pridėtum daugiau.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2268,6 +2311,65 @@
     <message>
         <source>No rooms</source>
         <translation>Kambarių nėra</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Ženklai prie žinučių</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Išsiųsta neužšifruota</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Žinutė išėjo nešifruota, nors kambarys naudoja šifravimą. Kiekvienas, galintis perskaityti kopiją serveryje, gali perskaityti žinutę.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Išsiuntė ne nurodyta paskyra</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Žinutę užšifravo įrenginys, nepriklausantis paskyrai, iš kurios ji neva atėjo — kažkas siunčia svetimu vardu. Kai kurie tiltai taip veikia ir daro tai nekaltai; visur kitur tai vienintelis tikro apsimetinėjimo ženklas, kurį ši programa turi.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Siuntėjo raktai pasikeitė</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Šio žmogaus kriptografinė tapatybė nebėra ta, kuri buvo patvirtinta. Arba jis iš naujo susikūrė paskyrą, arba ja naudojasi kas nors kitas.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Iš nepatvirtinto įrenginio</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Įrenginio, kuris tai išsiuntė, nepatvirtino paskyra, kuriai jis priklauso. Ką tik pradėtam naudoti įrenginiui tai įprasta.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Iš nepatvirtinto asmens</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Šio žmogaus tapatybė niekada nebuvo patvirtinta, tad nėra su kuo palyginti žinutės.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Autentiškumas nepatvirtintas</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Žinutės išvis nepavyko patikrinti. Ji nebūtinai klaidinga — tik neįrodyta.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Ženklas prie žinutės reiškia, kad jos tikrumo nepavyko visiškai patvirtinti. Raudonas trikampis sako, kad žinutė nėra tai, kuo dedasi. Oranžinis taškas sako, kad kažko nepavyko patikrinti. Bakstelėk ženklą pokalbyje ir pamatysi, kuris iš žemiau esančių atvejų tai yra.</translation>
     </message>
 </context>
 <context>

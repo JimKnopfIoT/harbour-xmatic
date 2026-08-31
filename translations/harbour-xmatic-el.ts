@@ -278,6 +278,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Ενεργό: το πληκτρολόγιο κλείνει μόλις φύγει το μήνυμα και η συνομιλία φαίνεται πάλι ολόκληρη. Ανενεργό: μένει ανοιχτό για το επόμενο μήνυμα.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Άνοιγμα του δωματίου εκεί που σταμάτησες να διαβάζεις</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ενεργό: μπαίνοντας βρίσκεσαι στο τελευταίο μήνυμα που διάβασες, τα νέα είναι από κάτω. Ανενεργό: το δωμάτιο ανοίγει στο νεότερο μήνυμα και τη γραμμή που δείχνει πού σταμάτησες τη βρίσκεις κάνοντας κύλιση προς τα πάνω.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1764,6 +1772,10 @@
         <source>Mark as read</source>
         <translation>Σήμανση ως αναγνωσμένο</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 από %2 δωμάτια</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2103,6 +2115,37 @@
         <source>Picture</source>
         <translation>Εικόνα</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Αναζήτηση μηνυμάτων</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Τι σημαίνουν αυτά τα σημάδια;</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Αναζήτηση μηνυμάτων</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Αναζήτηση σε αυτή τη συνομιλία</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Η αναζήτηση απέτυχε</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Δεν βρέθηκε τίποτα</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Μόνο ολόκληρες λέξεις: το «test» δεν βρίσκει το «test9». Εικόνες, αρχεία και μηνύματα από bot δεν αναζητούνται. Και μόνο ό,τι έχει ήδη κατεβάσει η συσκευή — φόρτωσε παλαιότερα μηνύματα για να προσθέσεις κι άλλα.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2265,6 +2308,65 @@
     <message>
         <source>No rooms</source>
         <translation>Κανένα δωμάτιο</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Σημάδια στα μηνύματα</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Στάλθηκε χωρίς κρυπτογράφηση</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Το μήνυμα έφυγε χωρίς κρυπτογράφηση αν και το δωμάτιο τη χρησιμοποιεί. Όποιος μπορεί να διαβάσει το αντίγραφο στον διακομιστή μπορεί να διαβάσει το μήνυμα.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Δεν στάλθηκε από τον λογαριασμό που αναφέρεται</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Το μήνυμα κρυπτογραφήθηκε από συσκευή που δεν ανήκει στον λογαριασμό από τον οποίο ισχυρίζεται ότι προέρχεται — κάποιος στέλνει με ξένο όνομα. Ορισμένες γέφυρες λειτουργούν έτσι και το προκαλούν αβλαβώς· οπουδήποτε αλλού είναι η μοναδική ένδειξη πραγματικής πλαστοπροσωπίας που διαθέτει αυτή η εφαρμογή.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Τα κλειδιά του αποστολέα άλλαξαν</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Η κρυπτογραφική ταυτότητα αυτού του ατόμου δεν είναι πια εκείνη που επαληθεύτηκε. Είτε ρύθμισε ξανά τον λογαριασμό του, είτε τον χρησιμοποιεί κάποιος άλλος.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>Από μη επαληθευμένη συσκευή</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Η συσκευή που το έστειλε δεν έχει επιβεβαιωθεί από τον λογαριασμό στον οποίο ανήκει. Για μια συσκευή που μόλις τέθηκε σε χρήση αυτό είναι φυσιολογικό.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>Από μη επαληθευμένο άτομο</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Η ταυτότητα αυτού του ατόμου δεν επαληθεύτηκε ποτέ, οπότε δεν υπάρχει τίποτα με το οποίο να ελεγχθεί το μήνυμα.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Η γνησιότητα δεν επιβεβαιώθηκε</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Το μήνυμα δεν μπόρεσε να ελεγχθεί καθόλου. Δεν είναι απαραίτητα ψεύτικο — απλώς ανεπιβεβαίωτο.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Ένα σημάδι δίπλα σε ένα μήνυμα σημαίνει ότι η γνησιότητά του δεν επιβεβαιώθηκε πλήρως. Ένα κόκκινο τρίγωνο λέει ότι το μήνυμα δεν είναι αυτό που ισχυρίζεται. Μια πορτοκαλί κουκκίδα λέει ότι κάτι δεν μπόρεσε να ελεγχθεί. Άγγιξε ένα σημάδι στη συνομιλία για να δεις ποια από τις παρακάτω περιπτώσεις είναι.</translation>
     </message>
 </context>
 <context>

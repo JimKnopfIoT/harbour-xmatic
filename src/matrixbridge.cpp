@@ -1126,6 +1126,79 @@ void MatrixBridge::stopDirectory()
     }
 }
 
+void MatrixBridge::indexRoom(const QString &roomId)
+{
+    if (m_indexRequest != 0) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    m_indexRequest = send(QStringLiteral("search.index"), arguments);
+    emit indexingChanged();
+}
+
+void MatrixBridge::searchRoom(const QString &roomId, const QString &query)
+{
+    setLastError(QString());
+    m_searchRoomId = roomId;
+    m_searchQuery = query.trimmed();
+    m_searchOffset = 0;
+    m_searchResults.clear();
+    if (m_searchHasMore) {
+        m_searchHasMore = false;
+        emit searchHasMoreChanged();
+    }
+    // An emptied box is not a search that found nothing. Clearing without
+    // asking also keeps the core out of a query the user is in the middle of
+    // deleting.
+    if (m_searchQuery.isEmpty()) {
+        if (m_searchRequest != 0) {
+            m_searchRequest = 0;
+            emit searchingChanged();
+        }
+        return;
+    }
+    sendSearchPage();
+}
+
+void MatrixBridge::searchMore()
+{
+    if (m_searchRequest != 0 || !m_searchHasMore || m_searchQuery.isEmpty()) {
+        return;
+    }
+    sendSearchPage();
+}
+
+void MatrixBridge::clearSearch()
+{
+    m_searchResults.clear();
+    m_searchRoomId.clear();
+    m_searchQuery.clear();
+    m_searchOffset = 0;
+    if (m_searchHasMore) {
+        m_searchHasMore = false;
+        emit searchHasMoreChanged();
+    }
+    if (m_searchRequest != 0) {
+        m_searchRequest = 0;
+        emit searchingChanged();
+    }
+}
+
+/// Asks for the page at the current offset and remembers which request it is.
+/// Only that one request's answer may touch the model: a reply from the search
+/// before it would otherwise append rows for a query nobody is looking at.
+void MatrixBridge::sendSearchPage()
+{
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), m_searchRoomId);
+    arguments.insert(QStringLiteral("query"), m_searchQuery);
+    arguments.insert(QStringLiteral("offset"), m_searchOffset);
+    arguments.insert(QStringLiteral("limit"), SearchPageSize);
+    m_searchRequest = send(QStringLiteral("search.room"), arguments);
+    emit searchingChanged();
+}
+
 void MatrixBridge::loadMembers(const QString &roomId)
 {
     // A stale error from elsewhere would show up on the freshly opened page.
@@ -1982,6 +2055,17 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (command == QLatin1String("member.profile")) {
             emit memberProfileFailed(error);
         }
+        if (id == m_indexRequest && m_indexRequest != 0) {
+            m_indexRequest = 0;
+            emit indexingChanged();
+            // Not fatal: the search still works on whatever the index has.
+            qWarning("xmatic: folding stored messages into the search index failed");
+        }
+        if (id == m_searchRequest && m_searchRequest != 0) {
+            m_searchRequest = 0;
+            emit searchingChanged();
+            emit searchFailed(error);
+        }
         if (command == QLatin1String("thread.open")
             || command == QLatin1String("thread.paginate")
             || command == QLatin1String("thread.send")) {
@@ -2025,6 +2109,9 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         return;
     }
     if (replyMember(id, command, data)) {
+        return;
+    }
+    if (replySearch(id, command, data)) {
         return;
     }
     if (replyTimeline(id, command, data)) {
@@ -2211,6 +2298,53 @@ bool MatrixBridge::replyRoom(quint64 id, const QString &command, const QJsonObje
         return true;
     }
     return false;
+}
+
+/// The answer to one page of a search.
+bool MatrixBridge::replySearch(quint64 id, const QString &command, const QJsonObject &data)
+{
+    if (command == QLatin1String("search.index")) {
+        const int count = data.value(QStringLiteral("count")).toInt();
+        // The number, not the room: when a search comes back thinner than
+        // expected, how much of the room is on the device is the first thing
+        // worth knowing.
+        qInfo("xmatic: search index holds %d stored events", count);
+        m_indexRequest = 0;
+        emit indexingChanged();
+        emit indexReady(count);
+        return true;
+    }
+    if (command != QLatin1String("search.room")) {
+        return false;
+    }
+    // Not ours any more: the user typed on, and a newer request is in flight
+    // or the box was cleared. Dropping it is the whole point of remembering
+    // the id.
+    if (id != m_searchRequest) {
+        return true;
+    }
+    m_searchRequest = 0;
+
+    const QJsonArray rows = data.value(QStringLiteral("rows")).toArray();
+    const bool more = data.value(QStringLiteral("more")).toBool();
+    const bool first = data.value(QStringLiteral("offset")).toInt() == 0;
+
+    QJsonObject operation;
+    operation.insert(QStringLiteral("op"),
+                     first ? QStringLiteral("reset") : QStringLiteral("append"));
+    operation.insert(QStringLiteral("values"), rows);
+    m_searchResults.applyOperations(QJsonArray{ operation });
+
+    // The offset counts what was asked for, not what came back. A row whose
+    // event could no longer be loaded is dropped on the way, and counting the
+    // survivors would ask for the same page again.
+    m_searchOffset += SearchPageSize;
+    if (more != m_searchHasMore) {
+        m_searchHasMore = more;
+        emit searchHasMoreChanged();
+    }
+    emit searchingChanged();
+    return true;
 }
 
 /// Replies about members and moderation.
@@ -2415,6 +2549,7 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
         // read marker means nothing in it.
         if (m_timelineFocus.isEmpty()) {
             const QString marker = data.value(QStringLiteral("readMarker")).toString();
+            const QString receipt = data.value(QStringLiteral("readReceipt")).toString();
             const bool rebuilt = data.value(QStringLiteral("rebuilt")).toBool();
             // Whether a marker came at all, never which one - an event id is
             // an identifier like any other. Without this line "the room opened
@@ -2426,7 +2561,7 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
                   marker.isEmpty() ? "none" : "present",
                   rebuilt ? 1 : 0,
                   m_timeline.count());
-            emit timelineOpened(marker, rebuilt);
+            emit timelineOpened(marker, receipt, rebuilt);
         }
         return true;
     }
@@ -2846,10 +2981,27 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
             m_syncState = state;
             emit syncStateChanged();
         }
+    } else if (name == QLatin1String("roomlist.total")) {
+        // The server's own count of this account's rooms, next to the rows the
+        // list holds. A short list has two causes that look alike - the sliding
+        // sync window never grew past its first twenty, or this app has only
+        // asked for one page - and only these two numbers side by side say
+        // which one it is.
+        const QJsonValue total = data.value(QStringLiteral("total"));
+        const int count = total.isDouble() ? total.toInt() : -1;
+        if (count != m_roomTotal) {
+            qInfo("xmatic: server counts %d rooms", count);
+            m_roomTotal = count;
+            emit roomTotalChanged();
+        }
     } else if (name == QLatin1String("session.changed")) {
         setLoginRunning(false);
         if (data.value(QStringLiteral("state")).toString() != QLatin1String("signed-in")) {
             m_rooms.clear();
+            if (m_roomTotal != -1) {
+                m_roomTotal = -1;
+                emit roomTotalChanged();
+            }
             m_spaces.clear();
             m_spaceRooms.clear();
             m_unread.clear();

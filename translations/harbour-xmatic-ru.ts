@@ -279,6 +279,14 @@
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>Включено: клавиатура закрывается, как только сообщение ушло, и разговор снова виден целиком. Выключено: она остаётся открытой для следующего сообщения.</translation>
     </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Открывать комнату там, где ты остановился</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Включено: при входе ты попадаешь на последнее прочитанное сообщение, новые — под ним. Выключено: комната открывается на самом новом сообщении, а черту, отмечающую, где ты остановился, найдёшь, прокрутив вверх.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1766,6 +1774,10 @@
         <source>Mark as read</source>
         <translation>Отметить прочитанным</translation>
     </message>
+    <message>
+        <source>%1 of %2 rooms</source>
+        <translation>%1 из %2 комнат</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -2106,6 +2118,37 @@
         <source>Picture</source>
         <translation>Изображение</translation>
     </message>
+    <message>
+        <source>Search messages</source>
+        <translation>Искать в сообщениях</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Что означают эти знаки?</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search messages</source>
+        <translation>Искать в сообщениях</translation>
+    </message>
+    <message>
+        <source>Search this conversation</source>
+        <translation>Искать в этом разговоре</translation>
+    </message>
+    <message>
+        <source>Search failed</source>
+        <translation>Поиск не удался</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Ничего не найдено</translation>
+    </message>
+    <message>
+        <source>Whole words only: &quot;test&quot; does not find &quot;test9&quot;. Pictures, files and messages from bots are not searched. And only what this device has already downloaded - load older messages in the conversation to add more.</source>
+        <translation>Только целые слова: «test» не находит «test9». Картинки, файлы и сообщения ботов не ищутся. И только то, что устройство уже загрузило — загрузи более старые сообщения, чтобы добавить ещё.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
@@ -2268,6 +2311,65 @@
     <message>
         <source>No rooms</source>
         <translation>Нет комнат</translation>
+    </message>
+</context>
+<context>
+    <name>ShieldGlossaryPage</name>
+    <message>
+        <source>Message marks</source>
+        <translation>Знаки у сообщений</translation>
+    </message>
+    <message>
+        <source>Sent unencrypted</source>
+        <translation>Отправлено без шифрования</translation>
+    </message>
+    <message>
+        <source>The message went out without encryption although the room uses it. Anybody who can read the server&apos;s copy can read the message.</source>
+        <translation>Сообщение ушло без шифрования, хотя комната его использует. Любой, кто может прочитать копию на сервере, может прочитать сообщение.</translation>
+    </message>
+    <message>
+        <source>Not sent by the account it names</source>
+        <translation>Отправлено не тем аккаунтом, который указан</translation>
+    </message>
+    <message>
+        <source>The message was encrypted by a device that does not belong to the account it claims to come from - somebody is sending under another name. Some bridges work this way and produce it harmlessly; anywhere else it is the one sign of an actual impersonation this app has.</source>
+        <translation>Сообщение зашифровало устройство, которое не принадлежит учётной записи, от имени которой оно якобы пришло — кто-то отправляет под чужим именем. Некоторые мосты работают так и делают это безобидно; в любом другом случае это единственный признак настоящей подмены, который есть у этого приложения.</translation>
+    </message>
+    <message>
+        <source>The sender&apos;s keys changed</source>
+        <translation>Ключи отправителя изменились</translation>
+    </message>
+    <message>
+        <source>This person&apos;s cryptographic identity is no longer the one that was verified. Either they set up their account again, or somebody else is using it.</source>
+        <translation>Криптографическая личность этого человека больше не та, что была подтверждена. Либо он заново настроил учётную запись, либо ею пользуется кто-то другой.</translation>
+    </message>
+    <message>
+        <source>From an unverified device</source>
+        <translation>С непроверенного устройства</translation>
+    </message>
+    <message>
+        <source>The device that sent this has not been confirmed by the account it belongs to. That is normal for a device somebody has just started using.</source>
+        <translation>Устройство, отправившее это, не подтверждено учётной записью, которой оно принадлежит. Для только что начатого использования устройства это нормально.</translation>
+    </message>
+    <message>
+        <source>From an unverified person</source>
+        <translation>От непроверённого человека</translation>
+    </message>
+    <message>
+        <source>This person&apos;s identity has never been verified, so there is nothing to check the message against.</source>
+        <translation>Личность этого человека никогда не подтверждалась, поэтому сообщение не с чем сверить.</translation>
+    </message>
+    <message>
+        <source>Authenticity not confirmed</source>
+        <translation>Подлинность не подтверждена</translation>
+    </message>
+    <message>
+        <source>The message could not be checked at all. It is not necessarily wrong - only unproven.</source>
+        <translation>Сообщение вообще не удалось проверить. Оно не обязательно ложное — просто недоказанное.</translation>
+    </message>
+    <message>
+        <source>A mark beside a message means its authenticity could not be fully confirmed. A red triangle says the message is not what it claims to be. An orange dot says something about it could not be checked. Tap a mark in the conversation to see which of the cases below it is.</source>
+        <translation>Знак рядом с сообщением означает, что его подлинность не удалось подтвердить полностью. Красный треугольник говорит, что сообщение не то, чем себя выдаёт. Оранжевая точка говорит, что что-то не удалось проверить. Коснись знака в разговоре, чтобы увидеть, о каком из случаев ниже идёт речь.</translation>
     </message>
 </context>
 <context>
