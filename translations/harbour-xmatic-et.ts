@@ -136,6 +136,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Sessioon ja sõnumite andmebaas on selles seadmes krüptimata. Puuduta, et need krüptida.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Vigade logi</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push-teavitused</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -417,6 +425,10 @@
         <source>not signed in</source>
         <translation>pole sisse logitud</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Võrguühenduseta — ootan võrku</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -636,26 +648,6 @@
         <translation>Kinnita</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Kinnitamine võrdleb seitset emotikoni teise poolega. Sinu enda seadmete vahel avab see ka ühised toavõtmed.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Kinnita mu teised seadmed</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Kasutaja ID</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Kinnita see kasutaja</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Ava varukoopia</translation>
     </message>
@@ -690,6 +682,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopeeri</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Kinnita see seade</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Võrdleb seitset emotikoni sinu teise seadmega. Vajad seda seadet enda ees; kui mõlemad on kinnitanud, saab see seade lugeda ühiseid toavõtmeid.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Tühjenda</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Kopeeri kõik</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Vigade logi</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>Selles käivituses ei ebaõnnestunud miski.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Uusimad ees ja ainult see käivitus — kettale ei salvestata midagi. Identifikaatorid on juba eemaldatud, nii et selle võib nii edasi anda.</translation>
     </message>
 </context>
 <context>
@@ -944,6 +967,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Sinu sessioon on lõppenud. Logi uuesti sisse.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Sisesta esmalt push-lüüs.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Uus sõnum</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Pilt</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Häälsõnum</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fail</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Asukoht</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Krüptitud sõnum</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Kutse</translation>
     </message>
 </context>
 <context>
@@ -1428,6 +1487,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push-teavitused</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmaticil pole taustateenust, seega sõnumid saabuvad ainult siis, kui see töötab. Push-jaotur on eraldi rakendus, mis hoiab ühte ühendust kõigi seadme rakenduste jaoks ja äratab need, kui midagi saabub.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Võta push-teavitusi vastu</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Jaotur</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Ühtegi push-jaoturit pole paigaldatud. Ilma selleta ei hoia ühendust miski ja see jääb välja lülitatuks.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Registreerimine</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Sellel seadmel on aadress, kust ta on kättesaadav.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Ootan jaoturit.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Registreerimata.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Lüüs</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Matrixi koduserver ei saa push-jaoturiga otse rääkida, seega saadab lüüsile, mis edastab. Vaikeväärtust pole: see on ainus asi, mida keegi sinu eest ära arvata ei saa.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-lüüs</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Mis sellest seadmest lahkub</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Sinu serverile öeldakse aadress push-teenuses ja ta saadab lüüsile iga teavituse kohta toa ja sõnumi tunnuse. Sõnumi teksti mitte: push kannab ainult tunnuseid ja sõnumi hangib ning dekrüpteerib see seade ise. See aadress on saladus — kellel see on, võib sellele telefonile teavituse saata.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Uus sõnum</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1776,6 +1901,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 tuba %2-st</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Kinnita kasutaja</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1960,38 +2089,6 @@
         <translation>%1 muutis oma profiili</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopeeri</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Vasta</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Salvesta</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Edasta</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Muuda</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Kinnita üles</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Kustuta</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Rohkem…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Tsiteeritud sõnumit ei saa laadida: seda pole enam olemas või sul pole lubatud seda näha.</translation>
     </message>
@@ -2052,22 +2149,6 @@
         <translation>Seda sõnumit pole laaditud ajaloos</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Loobu</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Saada uuesti</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reageeri</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Vasta lõimes</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopeeri ruumi link</translation>
     </message>
@@ -2122,6 +2203,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Mida need märgid tähendavad?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Kinnita kontakt</translation>
     </message>
 </context>
 <context>
@@ -2217,6 +2302,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Sellel kontol ei ole veel taastet. Seadista võtmete varukoopia, et see tekiks.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Serverilt ei õnnestunud küsida, kas varukoopia on olemas.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2251,6 +2340,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Kõik selle leiad uuesti Konto › Krüptimine alt.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Selles seadmes on kõik korras.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Sulge</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Kinnita see seade</translation>
     </message>
 </context>
 <context>
@@ -2727,6 +2828,41 @@
     <message>
         <source>Close</source>
         <translation>Sulge</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Kinnita kasutaja</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Seejärel võrdlevad mõlemad pooled seitset emotikoni. Just see ütleb, et keegi ei istu vahel — ja see kehtib igas toas, mida selle inimesega jagad.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Kasutaja ID</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Näiteks @anna:example.org või @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Kinnita</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Sinu enda seade</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Võrdleb seitset emotikoni sinu teise seadmega. Vajad seda seadet enda ees; kui mõlemad on kinnitanud, saab see seade lugeda ühiseid toavõtmeid.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Kinnita see seade</translation>
     </message>
 </context>
 <context>

@@ -53,6 +53,11 @@ pub struct Paths {
     pub voice_cache: PathBuf,
     /// Encrypted lists that name people (see private.rs).
     pub private_file: PathBuf,
+    /// The UnifiedPush registration: the token, the subscription keys and the
+    /// chosen distributor. Beside the session rather than in the cache — a
+    /// registration that is lost has to be made again, and the endpoint the
+    /// homeserver holds then points nowhere.
+    pub push_file: PathBuf,
     /// The message search index, one Tantivy directory per room underneath.
     /// Beside the store rather than in the cache: it is expensive to rebuild
     /// (the history has to be fetched again) and it holds message text, so it
@@ -68,6 +73,7 @@ impl Paths {
             media_cache: cache_dir.join("media"),
             voice_cache: cache_dir.join("voice"),
             private_file: data_dir.join("private.json"),
+            push_file: data_dir.join("push.json"),
             search_index: data_dir.join("search"),
         }
     }
@@ -558,6 +564,15 @@ pub fn reset_store(paths: &Paths) -> Result<(), std::io::Error> {
     // text outside the store.
     if paths.search_index.exists() {
         std::fs::remove_dir_all(&paths.search_index)?;
+    }
+    // And the push registration. It names a device that is about to stop
+    // existing, and the endpoint in it is a secret: anyone holding one can
+    // push to this phone, so it must not outlive the session it was made for.
+    // The registration on the distributor's side is given back before this
+    // runs; deleting the file here is what stops a stale one being reused if
+    // that failed.
+    if paths.push_file.exists() {
+        std::fs::remove_file(&paths.push_file)?;
     }
     paths.prepare()
 }

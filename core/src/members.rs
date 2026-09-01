@@ -541,3 +541,54 @@ pub async fn withdraw_verification(client: &Client, user_id: &str) -> Result<(),
         .await
         .map_err(|error| format!("could not withdraw the verification: {}", scrub_ids(&error.to_string())))
 }
+
+/// The other person in a two-party encrypted direct room, or `None`.
+///
+/// What it is for: verifying someone is an action on a *person*, and the one
+/// place a user has that person in front of them is the conversation with
+/// them. Everywhere else they would have to type a Matrix address they have
+/// never seen.
+///
+/// Three conditions, all of them necessary. Unencrypted rooms have nothing to
+/// verify — the comparison secures the keys, and there are none. More than two
+/// people means "the other side" is not one address. And a room that is not a
+/// direct chat may well hold exactly two members today and a third tomorrow,
+/// which would take the action away again.
+///
+/// The membership rows decide, not `direct_targets`: that list keeps people
+/// who have long left, by the SDK's own note on it. It is only consulted where
+/// the rows do not name anybody, which is what a room whose members were never
+/// fetched looks like.
+pub async fn direct_peer(client: &Client, room: &Room) -> Option<String> {
+    if !room.encryption_state().is_encrypted() || !room.is_direct().await.unwrap_or(false) {
+        return None;
+    }
+    let own = client.user_id()?;
+
+    let members = room
+        .members_no_sync(RoomMemberships::ACTIVE)
+        .await
+        .unwrap_or_default();
+    if members.len() == 2 {
+        return members
+            .iter()
+            .map(|member| member.user_id())
+            .find(|id| *id != own)
+            .map(|id| id.to_string());
+    }
+    if !members.is_empty() {
+        return None;
+    }
+
+    // No rows at all: the account data still says who this chat was opened
+    // with. One entry only — two targets are not a two-party room.
+    let targets = room.direct_targets();
+    if targets.len() != 1 {
+        return None;
+    }
+    targets
+        .iter()
+        .filter_map(|target| target.as_user_id())
+        .find(|id| *id != own)
+        .map(|id| id.to_string())
+}

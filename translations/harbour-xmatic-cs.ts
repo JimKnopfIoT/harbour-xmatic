@@ -137,6 +137,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Relace a databáze zpráv leží na tomto zařízení nezašifrované. Klepnutím je zašifruješ.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Protokol chyb</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push oznámení</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -418,6 +426,10 @@
         <source>not signed in</source>
         <translation>nepřihlášeno</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — čekám na síť</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -638,26 +650,6 @@
         <translation>Ověřit</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Ověření porovná sedm emodži s druhou stranou. Mezi tvými vlastními zařízeními navíc odemkne sdílené klíče místností.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Ověřit má další zařízení</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>ID uživatele</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Ověřit tohoto uživatele</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Odemknout zálohu</translation>
     </message>
@@ -692,6 +684,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopírovat</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Ověřit toto zařízení</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Porovná sedm emodži s tvým druhým zařízením. Musíš ho mít před sebou; jakmile obě potvrdí, může toto zařízení číst sdílené klíče místností.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Vymazat</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Kopírovat vše</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Protokol chyb</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>V tomto běhu nic neselhalo.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Nejnovější nahoře, a jen tento běh — nic se neukládá na disk. Identifikátory jsou už odstraněné, takže to lze předat tak, jak je.</translation>
     </message>
 </context>
 <context>
@@ -946,6 +969,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Tvoje relace skončila. Přihlas se znovu.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Nejdřív zadej push bránu.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nová zpráva</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Obrázek</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Hlasová zpráva</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Soubor</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Poloha</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Šifrovaná zpráva</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Pozvání</translation>
     </message>
 </context>
 <context>
@@ -1430,6 +1489,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push oznámení</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic nemá službu na pozadí, takže zprávy dorazí jen když běží. Distributor push je samostatná aplikace, která drží jedno spojení pro všechny aplikace v zařízení a budí je, když něco přijde.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Přijímat push oznámení</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Distributor</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Není nainstalován žádný distributor push. Bez něj není nic, co by drželo spojení, a tohle zůstane vypnuté.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Registrace</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Toto zařízení má adresu, na které je dosažitelné.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Čekání na distributora.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Neregistrováno.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Brána</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Matrix server nemůže mluvit s distributorem push přímo, posílá tedy na bránu, která to předá dál. Výchozí hodnota neexistuje: to je jediná věc, kterou za tebe nikdo neuhodne.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push brána</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Co opouští toto zařízení</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tvůj server se dozví adresu u služby push a ke každému oznámení pošle bráně identifikátor místnosti a zprávy. Žádný text: push nese jen identifikátory a zprávu si toto zařízení stáhne a rozšifruje samo. Ta adresa je tajemství — kdo ji má, může tomuto telefonu poslat oznámení.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Nová zpráva</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1778,6 +1903,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 z %2 místností</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Ověřit uživatele</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1963,38 +2092,6 @@
         <translation>%1 změnil svůj profil</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopírovat</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Odpovědět</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Uložit</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Přeposlat</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Upravit</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Připnout</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Smazat</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Více…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Citovanou zprávu nelze načíst: už neexistuje, nebo ji nesmíš vidět.</translation>
     </message>
@@ -2055,22 +2152,6 @@
         <translation>Tato zpráva není v načtené historii</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Zahodit</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Odeslat znovu</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagovat</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Odpovědět ve vlákně</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopírovat odkaz na místnost</translation>
     </message>
@@ -2125,6 +2206,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Co znamenají tyto značky?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Ověřit kontakt</translation>
     </message>
 </context>
 <context>
@@ -2220,6 +2305,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Pro tento účet zatím není obnovení. Nastav zálohu klíčů, aby vzniklo.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Server se nepodařilo zeptat, zda záloha existuje.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2254,6 +2343,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Všechno tohle najdeš znovu v Účet › Šifrování.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Na tomto zařízení je vše v pořádku.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zavřít</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Ověřit toto zařízení</translation>
     </message>
 </context>
 <context>
@@ -2732,6 +2833,41 @@
     <message>
         <source>Close</source>
         <translation>Zavřít</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Ověřit uživatele</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Obě strany pak porovnají sedm emodži. Právě to říká, že mezi vámi nikdo nesedí — a platí to pro každou místnost, kterou s touto osobou sdílíš.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>ID uživatele</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Například @anna:example.org nebo @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Ověřit</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Tvoje vlastní zařízení</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Porovná sedm emodži s tvým druhým zařízením. Musíš ho mít před sebou; jakmile obě potvrdí, může toto zařízení číst sdílené klíče místností.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Ověřit toto zařízení</translation>
     </message>
 </context>
 <context>

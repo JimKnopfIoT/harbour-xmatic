@@ -39,11 +39,6 @@ Page {
         onRecoveryKeyReady: page.generatedKey = key
     }
 
-    function verifyUser() {
-        matrix.requestVerification(userField.text)
-        pageStack.push(Qt.resolvedUrl("VerificationPage.qml"))
-    }
-
     /// Sends the key and wipes the field. A recovery key on screen is a
     /// recovery key in a screenshot, in the task switcher and in whatever the
     /// input method kept.
@@ -100,41 +95,35 @@ Page {
                 text: qsTr("Verify")
             }
 
+            // Only this device's own kin is verified from here. Verifying
+            // another *person* used to sit right below, as a Matrix address to
+            // type in — which asked the user for something they have never
+            // seen written down, next to a button that means something else
+            // entirely. It lives where the person does now: in the chat with
+            // them, and in the chat list's menu for the rest.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor
-                text: qsTr("Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.")
+                text: qsTr("Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.")
             }
 
+            // Named for what it does in the case that matters. Reported by a
+            // new user: on a fresh device the other devices are already
+            // verified, so "verify my other devices" reads as a no-op - and
+            // this is the button that makes *this* one trusted. It still
+            // serves the other direction, where an already verified device
+            // starts the comparison; that reading is not lost by the name.
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                label: qsTr("Verify my other devices")
+                label: qsTr("Verify this device")
                 enabled: !matrix.encryptionBusy
                 onClicked: {
                     matrix.requestVerification("")
                     pageStack.push(Qt.resolvedUrl("VerificationPage.qml"))
                 }
-            }
-
-            TextField {
-                id: userField
-
-                width: parent.width
-                label: qsTr("User ID")
-                placeholderText: qsTr("@name:server")
-                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-                EnterKey.onClicked: page.verifyUser()
-            }
-
-            WrapButton {
-                anchors.horizontalCenter: parent.horizontalCenter
-                label: qsTr("Verify this user")
-                enabled: !matrix.encryptionBusy && userField.text.trim().length > 0
-                onClicked: page.verifyUser()
             }
 
             // Only where there is something to unlock. An account with no

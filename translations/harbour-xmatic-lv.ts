@@ -137,6 +137,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Sesija un ziņu datubāze šajā ierīcē ir nešifrētas. Pieskaries, lai tās šifrētu.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Kļūdu žurnāls</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push paziņojumi</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -418,6 +426,10 @@
         <source>not signed in</source>
         <translation>nav pieteicies</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Bezsaistē — gaida tīklu</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -638,26 +650,6 @@
         <translation>Apstiprināt</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Apstiprināšana salīdzina septiņas emocijzīmes ar otru pusi. Starp tavām paša ierīcēm tā atbloķē arī kopīgās istabu atslēgas.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Apstiprināt manas citas ierīces</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Lietotāja ID</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Apstiprināt šo lietotāju</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Atbloķēt dublējumu</translation>
     </message>
@@ -692,6 +684,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopēt</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Apstiprināt šo ierīci</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Salīdzina septiņas emocijzīmes ar tavu otru ierīci. Tai ierīcei jābūt tev priekšā; kad abas ir apstiprinājušas, šī var lasīt kopīgās istabu atslēgas.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Iztīrīt</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Kopēt visu</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Kļūdu žurnāls</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>Šajā palaišanā nekas nav neizdevies.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Jaunākie pirmie, un tikai šī palaišana — diskā nekas netiek saglabāts. Identifikatori jau ir noņemti, tāpēc to var nodot tālāk tādu, kāds tas ir.</translation>
     </message>
 </context>
 <context>
@@ -946,6 +969,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Tava sesija ir beigusies. Piesakies vēlreiz.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Vispirms ievadi push vārteju.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Jauna ziņa</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Attēls</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Balss ziņa</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fails</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Atrašanās vieta</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Šifrēta ziņa</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Ielūgums</translation>
     </message>
 </context>
 <context>
@@ -1430,6 +1489,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push paziņojumi</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic nav fona pakalpojuma, tāpēc ziņas pienāk tikai tad, kad tas darbojas. Push izplatītājs ir atsevišķa lietotne, kas uztur vienu savienojumu visām ierīces lietotnēm un pamodina tās, kad kaut kas pienāk.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Saņemt push paziņojumus</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Izplatītājs</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Nav uzstādīts neviens push izplatītājs. Bez tā nekas neuztur savienojumu, un šis paliek izslēgts.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Reģistrācija</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Šai ierīcei ir adrese, kurā tā ir sasniedzama.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Gaida izplatītāju.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Nav reģistrēts.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Vārteja</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Matrix serveris nevar runāt ar push izplatītāju tieši, tāpēc sūta vārtejai, kas pārsūta tālāk. Noklusējuma vērtības nav: tā ir vienīgā lieta, ko neviens tavā vietā nevar uzminēt.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push vārteja</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Kas atstāj šo ierīci</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tavam serverim tiek paziņota adrese push pakalpojumā, un tas katram paziņojumam sūta vārtejai istabas un ziņas identifikatoru. Bez teksta: push nes tikai identifikatorus, bet ziņu šī ierīce iegūst un atšifrē pati. Šī adrese ir noslēpums — kam tā ir, var sūtīt šim tālrunim paziņojumu.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Jauna ziņa</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1778,6 +1903,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 no %2 istabām</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Apstiprināt lietotāju</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1963,38 +2092,6 @@
         <translation>%1 mainīja savu profilu</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopēt</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Atbildēt</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Saglabāt</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Pārsūtīt</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Rediģēt</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Piespraust</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Dzēst</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Vairāk…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Citēto ziņu nevar ielādēt: tās vairs nav vai tev nav atļauts to redzēt.</translation>
     </message>
@@ -2055,22 +2152,6 @@
         <translation>Šī ziņa nav ielādētajā vēsturē</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Atmest</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Sūtīt vēlreiz</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reaģēt</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Atbildēt pavedienā</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopēt istabas saiti</translation>
     </message>
@@ -2125,6 +2206,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Ko nozīmē šīs zīmes?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Apstiprināt kontaktu</translation>
     </message>
 </context>
 <context>
@@ -2220,6 +2305,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Šim kontam vēl nav atkopšanas. Iestati atslēgu dublējumu, lai to izveidotu.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Neizdevās serverim pajautāt, vai dublējums pastāv.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2254,6 +2343,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Visu šo atradīsi atkal sadaļā Konts › Šifrēšana.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Šajā ierīcē viss ir kārtībā.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Aizvērt</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Apstiprināt šo ierīci</translation>
     </message>
 </context>
 <context>
@@ -2732,6 +2833,41 @@
     <message>
         <source>Close</source>
         <translation>Aizvērt</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Apstiprināt lietotāju</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Tad abas puses salīdzina septiņas emocijzīmes. Tieši tas pasaka, ka pa vidu neviena nav — un tas attiecas uz katru istabu, ko dali ar šo cilvēku.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Lietotāja ID</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Piemēram @anna:example.org vai @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Apstiprināt</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Tava paša ierīce</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Salīdzina septiņas emocijzīmes ar tavu otru ierīci. Tai ierīcei jābūt tev priekšā; kad abas ir apstiprinājušas, šī var lasīt kopīgās istabu atslēgas.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Apstiprināt šo ierīci</translation>
     </message>
 </context>
 <context>

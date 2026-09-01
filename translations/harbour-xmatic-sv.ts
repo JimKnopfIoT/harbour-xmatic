@@ -136,6 +136,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Sessionen och meddelandedatabasen ligger okrypterade på den här enheten. Tryck för att kryptera dem.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Fellogg</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push-aviseringar</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -417,6 +425,10 @@
         <source>not signed in</source>
         <translation>inte inloggad</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — väntar på nätverket</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -636,26 +648,6 @@
         <translation>Verifiera</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Verifieringen jämför sju emojier med motparten. Mellan dina egna enheter låser den även upp delade rumsnycklar.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Verifiera mina andra enheter</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Användar-ID</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Verifiera den här användaren</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Lås upp säkerhetskopian</translation>
     </message>
@@ -690,6 +682,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopiera</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Verifiera den här enheten</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Jämför sju emojier med din andra enhet. Du behöver den enheten framför dig; när båda har bekräftat kan den här läsa de delade rumsnycklarna.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Töm</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Kopiera allt</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Fellogg</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>Inget har misslyckats i den här körningen.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Nyaste först, och bara den här körningen — inget sparas på disken. Identifierare är redan borttagna, så det här kan lämnas vidare som det är.</translation>
     </message>
 </context>
 <context>
@@ -944,6 +967,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Din session har avslutats. Logga in igen.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Ange först en push-gateway.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nytt meddelande</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Bild</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Röstmeddelande</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fil</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Plats</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Krypterat meddelande</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Inbjudan</translation>
     </message>
 </context>
 <context>
@@ -1428,6 +1487,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push-aviseringar</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic har ingen bakgrundstjänst, så meddelanden kommer bara in medan det körs. En push-distributör är en egen app som håller en anslutning åt alla appar på enheten och väcker dem när något kommer in.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Ta emot push-aviseringar</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Distributör</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Ingen push-distributör är installerad. Utan en finns det inget som håller anslutningen, och det här förblir avstängt.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Registrering</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Den här enheten har en adress där den kan nås.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Väntar på distributören.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Inte registrerad.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Gateway</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>En Matrix-hemserver kan inte tala direkt med en push-distributör, så den skickar till en gateway som vidarebefordrar. Det finns inget standardvärde: det är det enda som ingen kan gissa åt dig.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-gateway</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Vad som lämnar den här enheten</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Din hemserver får en adress hos push-tjänsten och skickar för varje avisering ett rums- och meddelande-id till gatewayen. Ingen meddelandetext: pushen bär bara identifierare och den här enheten hämtar och dekrypterar meddelandet själv. Den adressen är en hemlighet — den som har den kan skicka en avisering till den här telefonen.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Nytt meddelande</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1776,6 +1901,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 av %2 rum</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Verifiera användare</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1960,38 +2089,6 @@
         <translation>%1 ändrade sin profil</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopiera</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Svara</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Spara</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Vidarebefordra</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Redigera</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Fäst</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Radera</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Mer…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Det citerade meddelandet kan inte laddas: det finns inte längre eller så får du inte se det.</translation>
     </message>
@@ -2052,22 +2149,6 @@
         <translation>Det meddelandet finns inte i den laddade historiken</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Kasta</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Skicka igen</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagera</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Svara i tråden</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopiera rumslänk</translation>
     </message>
@@ -2122,6 +2203,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Vad betyder de här tecknen?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Verifiera kontakt</translation>
     </message>
 </context>
 <context>
@@ -2217,6 +2302,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Det finns ännu ingen återställning för det här kontot. Konfigurera en nyckelsäkerhetskopia för att skapa en.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Servern kunde inte tillfrågas om det finns en säkerhetskopia.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2251,6 +2340,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Allt detta hittar du igen under Konto › Kryptering.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Allt på den här enheten är i ordning.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Stäng</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Verifiera den här enheten</translation>
     </message>
 </context>
 <context>
@@ -2727,6 +2828,41 @@
     <message>
         <source>Close</source>
         <translation>Stäng</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Verifiera användare</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Båda sidor jämför sedan sju emojier. Det är det som säger att ingen sitter emellan — och det gäller varje rum du delar med den här personen.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Användar-ID</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Till exempel @anna:example.org eller @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Verifiera</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Din egen enhet</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Jämför sju emojier med din andra enhet. Du behöver den enheten framför dig; när båda har bekräftat kan den här läsa de delade rumsnycklarna.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Verifiera den här enheten</translation>
     </message>
 </context>
 <context>

@@ -355,10 +355,28 @@ fn display_name(item: &RoomListItem) -> String {
     String::new()
 }
 
+/// How many events a sync carries per room in the list — and therefore how far
+/// the unread count can see. Read in two places, which is why it is a name and
+/// not two numbers: the sync builder sets it, and the badge says "20+" at
+/// exactly this value because past it the count is a floor, not a total.
+///
+/// The cost of raising it is not this number but this number times the rooms
+/// in the request, and the room list grows that range to a hundred at a time.
+/// See the sync builder below before touching it.
+pub const LIST_TIMELINE_LIMIT: u32 = 20;
+
 /// One room as the UI needs it. Deliberately flat and small — this crosses the
 /// FFI on every change.
 fn summarize(item: &RoomListItem) -> Value {
     let (preview_kind, preview_text, preview_sender) = latest_preview(item);
+    // Held to what the window can actually show. At the ceiling the count says
+    // "at least this many", and a badge that prints a bare 20 for that claims
+    // to have counted something it did not see; the UI adds the "+" from the
+    // flag below. Above it the number would be arbitrary anyway - a room whose
+    // history was paginated has more events in the cache than a sync brought.
+    let cap = u64::from(LIST_TIMELINE_LIMIT);
+    let unread = item.num_unread_messages().max(item.num_unread_notifications());
+    let mentions = item.num_unread_mentions();
     json!({
         "id": item.room_id().as_str(),
         "name": display_name(item),
@@ -369,13 +387,15 @@ fn summarize(item: &RoomListItem) -> Value {
         // only ever help, and because the badge is meant to count every
         // message: taking the notification counter alone would follow the push
         // rules and go quiet in a room set to mentions-only.
-        "unread": item.num_unread_messages().max(item.num_unread_notifications()),
+        "unread": unread.min(cap),
+        // Whether that number is the whole truth or the edge of the window.
+        "unreadCapped": unread >= cap || mentions >= cap,
         // Counted client-side against the account's push rules: only events
         // whose rules say "notify". This is the number a banner may follow —
         // `unread` counts everything and would ignore a room set to
         // mentions-only.
         "notifications": item.num_unread_notifications(),
-        "mentions": item.num_unread_mentions(),
+        "mentions": mentions.min(cap),
         "encrypted": item.encryption_state().is_encrypted(),
         "space": item.is_space(),
         // Tags the user set (m.favourite / m.lowpriority). The list groups on
@@ -542,12 +562,9 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
         // `badge=1 messages=1 notifications=1 server=0`.
         //
         // The server's own count would have made this moot - it is what
-        // Fractal shows - but this homeserver does not send it: `server=0` in
-        // every room, including the ones with unread messages.
-        //
-        // Two hundred, because counting here is not a workaround but the only
-        // way there is. Synapse hardcodes the server-side counters to zero in
-        // this sync path - read in its own source on the homeserver:
+        // Fractal shows - and it is not an option: Synapse hardcodes the
+        // server-side counters to zero in this sync path - read in its own
+        // source on the homeserver:
         //
         //     # TODO: These are just dummy values. We could potentially just
         //     # remove these since notifications can only really be done
@@ -555,16 +572,36 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
         //     notification_count=0,
         //     highlight_count=0,
         //
-        // So no configuration opens that door, for any client speaking sliding
-        // sync, and the width of this window *is* the accuracy of the badge.
+        // No configuration opens that door, for any client speaking sliding
+        // sync. So the width of this window *is* the accuracy of the badge,
+        // and the only question is what it costs.
         //
-        // It is a ceiling, not a fetch order: where ten events are waiting,
-        // ten arrive, and an incremental sync carries only what is new. The
-        // one place it is paid in full is a fresh login, where the server
-        // sends the most recent N per room and an old room has the supply -
-        // twenty rooms would be four thousand events once. Everything after
-        // that resumes from a stored position and costs nothing.
-        .with_room_list_timeline_limit(200)
+        // **What it costs is not one room's worth.** This number multiplies
+        // the number of rooms in the request, and that number is not the
+        // twenty of the first sync: the room list switches to `Growing` with a
+        // batch size of a hundred two syncs in
+        // (`room_list_service/state.rs`, `ALL_ROOMS_DEFAULT_GROWING_BATCH_SIZE`),
+        // and a growing range always starts at zero. On an account with two
+        // hundred rooms the third request therefore asks for all two hundred
+        // at once.
+        //
+        // 0.27.0 shipped this at two hundred, which is forty thousand events
+        // in one response there. It times out, the sync service turns that
+        // into `Offline` and restarts, `Recovering` drops back to the first
+        // twenty rooms, that succeeds, growing tries again - so the twenty
+        // most recent rooms kept updating and everything behind them stopped,
+        // for good. Reported from the field within a day. The value had been
+        // reasoned about per room and measured on an eighteen-room account,
+        // where the multiplier does not exist.
+        //
+        // Twenty, and the badge says so: it counts up to twenty and shows
+        // "20+" from there, so the number on screen is never a total the app
+        // did not see. Four thousand events in the worst request a
+        // two-hundred-room account can produce. The SDK's own default here is
+        // one, and anything above it is this app's own risk - so the number to
+        // check when a large account reports rooms that stop updating is this
+        // one, and the way to answer such a report is to lower it.
+        .with_room_list_timeline_limit(LIST_TIMELINE_LIMIT)
         .build()
         .await
         .map_err(|error| format!("sync service could not be built: {error}"))?;
@@ -730,6 +767,10 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
         let mut states = sync.state();
         let mut current = states.get();
         let mut restart_in = FIRST_RESTART;
+        // Whether the connection has been down since the last time it was up.
+        // Not set before the first `Running`, so a normal start does not ask
+        // the server one extra time for nothing.
+        let mut was_down = false;
 
         loop {
             sink.emit(event("sync.state", json!({ "state": name(&current) })));
@@ -738,6 +779,28 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
                 SyncState::Running => {
                     restart_in = FIRST_RESTART;
                     client.send_queue().set_enabled(true).await;
+
+                    // Whether a key backup exists is a question over the
+                    // network, and while the connection was down it had no
+                    // answer - `recovery::status` now says so rather than
+                    // saying "no". Something has to ask again once there is a
+                    // connection, or the security lines stay grey for the rest
+                    // of the run and the user is told nothing at all.
+                    //
+                    // Spawned: it is a round trip, and this loop must stay
+                    // free to forward the next state change.
+                    if was_down {
+                        was_down = false;
+                        let client = client.clone();
+                        let sink = sink.clone();
+                        let handle = tokio::spawn(async move {
+                            sink.emit(event(
+                                "encryption.changed",
+                                crate::recovery::status(&client).await,
+                            ));
+                        });
+                        track_side_task(handle.abort_handle());
+                    }
                 }
 
                 // The offline mode does not cover these. Its recovery sits
@@ -753,6 +816,7 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
                 // `start()` is safe to call repeatedly: it only does anything
                 // when the service is stopped or offline.
                 SyncState::Idle | SyncState::Terminated | SyncState::Error(_) => {
+                    was_down = true;
                     sleep(restart_in).await;
                     restart_in = (restart_in * 2).min(MAX_RESTART);
                     sync.start().await;
@@ -760,7 +824,7 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
 
                 // Recovers on its own; the state is forwarded only so the UI
                 // can say that reconnecting is in progress.
-                SyncState::Offline => {}
+                SyncState::Offline => was_down = true,
             }
 
             match states.next().await {

@@ -137,6 +137,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Seansas ir žinučių duomenų bazė šiame įrenginyje yra neužšifruoti. Bakstelėk, kad juos užšifruotum.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Klaidų žurnalas</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push pranešimai</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -418,6 +426,10 @@
         <source>not signed in</source>
         <translation>neprisijungta</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Neprisijungta — laukiama tinklo</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -638,26 +650,6 @@
         <translation>Patvirtinti</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Patvirtinimas palygina septynis jaustukus su kita puse. Tarp tavo paties įrenginių jis atrakina ir bendrus kambarių raktus.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Patvirtinti kitus mano įrenginius</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Naudotojo ID</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Patvirtinti šį naudotoją</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Atrakinti kopiją</translation>
     </message>
@@ -692,6 +684,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopijuoti</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Patvirtinti šį įrenginį</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Palygina septynis jaustukus su kitu tavo įrenginiu. Tas įrenginys turi būti prieš tave; kai abu patvirtina, šis gali skaityti bendrus kambarių raktus.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Išvalyti</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Kopijuoti viską</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Klaidų žurnalas</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>Šiame paleidime niekas nesuklydo.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Naujausi viršuje, ir tik šis paleidimas — diske nieko neišsaugoma. Identifikatoriai jau pašalinti, tad tai galima perduoti tokį, koks yra.</translation>
     </message>
 </context>
 <context>
@@ -946,6 +969,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Tavo seansas baigėsi. Prisijunk iš naujo.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Pirma nurodyk push sietuvą.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nauja žinutė</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Paveikslėlis</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Vaizdo įrašas</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Balso žinutė</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Failas</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Vieta</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Šifruota žinutė</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Pakvietimas</translation>
     </message>
 </context>
 <context>
@@ -1430,6 +1489,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push pranešimai</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic neturi foninės tarnybos, tad žinutės ateina tik jam veikiant. Push platintojas yra atskira programa, kuri palaiko vieną ryšį visoms įrenginio programoms ir jas pažadina, kai kas nors ateina.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Gauti push pranešimus</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Platintojas</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Nėra įdiegto push platintojo. Be jo niekas nepalaiko ryšio, ir tai lieka išjungta.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Registracija</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Šis įrenginys turi adresą, kuriuo pasiekiamas.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Laukiama platintojo.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Neužregistruota.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Tinklų sietuvas</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Matrix serveris negali kalbėti su push platintoju tiesiogiai, tad siunčia sietuvui, kuris persiunčia toliau. Numatytosios reikšmės nėra: tai vienintelis dalykas, kurio niekas už tave neatspės.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push sietuvas</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Kas išeina iš šio įrenginio</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tavo serveriui pranešamas adresas push tarnyboje, ir jis kiekvienam pranešimui siunčia sietuvui kambario ir žinutės identifikatorių. Jokio teksto: push neša tik identifikatorius, o žinutę šis įrenginys parsisiunčia ir iššifruoja pats. Tas adresas yra paslaptis — kas jį turi, gali šiam telefonui siųsti pranešimą.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Nauja žinutė</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1778,6 +1903,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 iš %2 kambarių</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Patvirtinti naudotoją</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1963,38 +2092,6 @@
         <translation>%1 pakeitė savo profilį</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopijuoti</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Atsakyti</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Įrašyti</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Persiųsti</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Redaguoti</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Prisegti</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Ištrinti</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Daugiau…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Cituojamos žinutės įkelti negalima: jos nebėra arba tau neleidžiama jos matyti.</translation>
     </message>
@@ -2055,22 +2152,6 @@
         <translation>Šios žinutės nėra įkeltoje istorijoje</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Atmesti</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Siųsti dar kartą</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reaguoti</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Atsakyti gijoje</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopijuoti kambario nuorodą</translation>
     </message>
@@ -2125,6 +2206,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Ką reiškia šie ženklai?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Patvirtinti adresatą</translation>
     </message>
 </context>
 <context>
@@ -2220,6 +2305,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Šiai paskyrai atkūrimo dar nėra. Sukurk raktų atsarginę kopiją, kad jis atsirastų.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Nepavyko serverio paklausti, ar yra atsarginė kopija.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2254,6 +2343,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Visa tai vėl rasi skiltyje Paskyra › Šifravimas.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Šiame įrenginyje viskas tvarkoje.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Užverti</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Patvirtinti šį įrenginį</translation>
     </message>
 </context>
 <context>
@@ -2732,6 +2833,41 @@
     <message>
         <source>Close</source>
         <translation>Užverti</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Patvirtinti naudotoją</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Tada abi pusės palygina septynis jaustukus. Būtent tai sako, kad tarp jūsų niekas nesėdi — ir tai galioja kiekvienam kambariui, kurį dalijiesi su šiuo žmogumi.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Naudotojo ID</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Pavyzdžiui @anna:example.org arba @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Patvirtinti</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Tavo paties įrenginys</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Palygina septynis jaustukus su kitu tavo įrenginiu. Tas įrenginys turi būti prieš tave; kai abu patvirtina, šis gali skaityti bendrus kambarių raktus.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Patvirtinti šį įrenginį</translation>
     </message>
 </context>
 <context>

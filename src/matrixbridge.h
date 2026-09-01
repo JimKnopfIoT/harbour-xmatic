@@ -83,11 +83,35 @@ class MatrixBridge : public QObject
     /// True while the room's stored messages are being folded into the index.
     Q_PROPERTY(bool indexing READ indexing NOTIFY indexingChanged)
     Q_PROPERTY(QString lastError READ lastError NOTIFY lastErrorChanged)
+    /// Everything that has failed in this run, newest first: `time`, `command`
+    /// and `message` per entry.
+    ///
+    /// `lastError` is one string and the next failure overwrites it, so a fault
+    /// that only shows up as a red line somewhere is gone the moment anything
+    /// else goes wrong - and a field report then rests on whether the user had
+    /// the right page open at the right second. This keeps them. The core
+    /// scrubs identifiers out of its messages before they leave it
+    /// (`core/src/text.rs`), so the list can be read out and handed over.
+    Q_PROPERTY(QVariantList errorLog READ errorLog NOTIFY errorLogChanged)
+    /// What UnifiedPush looks like on this device: `state`, `distributors`,
+    /// `distributor`, `acknowledged`, and `error` where there is one.
+    ///
+    /// `state` is one of `unavailable` (no distributor could be talked to),
+    /// `no-distributor` (none installed), `idle` (one is there, nothing
+    /// registered), `registering`, `on`, `off`, `error`. Empty until asked —
+    /// the connector claims a D-Bus name on the first question and must not do
+    /// that on a device whose owner never turned this on.
+    Q_PROPERTY(QVariantMap pushStatus READ pushStatus NOTIFY pushStatusChanged)
+    /// The endpoint this device is reachable at, once a distributor has
+    /// answered. A secret: anyone holding it can push to this phone, so it is
+    /// never shown and never logged, only handed to the homeserver.
+    Q_PROPERTY(bool pushEndpointReady READ pushEndpointReady NOTIFY pushStatusChanged)
     Q_PROPERTY(QObject *rooms READ rooms CONSTANT)
     // Forwarded from the room list so the cover, which only sees the bridge,
     // can show "rooms with news / messages" without touching a model.
     Q_PROPERTY(int unreadRooms READ unreadRooms NOTIFY unreadTotalsChanged)
     Q_PROPERTY(int unreadMessages READ unreadMessages NOTIFY unreadTotalsChanged)
+    Q_PROPERTY(bool unreadCapped READ unreadCapped NOTIFY unreadTotalsChanged)
     Q_PROPERTY(QObject *spaces READ spaces CONSTANT)
     Q_PROPERTY(QObject *spaceRooms READ spaceRooms CONSTANT)
     /// Whether a notification may carry the message itself, not just a count.
@@ -154,6 +178,11 @@ class MatrixBridge : public QObject
     /// then show rather than hide, so a slow answer never takes an action away
     /// from somebody who has it.
     Q_PROPERTY(QVariantMap roomPermissions READ roomPermissions NOTIFY roomPermissionsChanged)
+    /// The other person in the open room, when that room is an encrypted
+    /// two-party chat; empty otherwise. Verifying somebody is an action on a
+    /// person, and this is the one place in the app where the person is
+    /// already on screen — everywhere else their address has to be typed.
+    Q_PROPERTY(QString roomDirectPeer READ roomDirectPeer NOTIFY roomPermissionsChanged)
     Q_PROPERTY(QString profileName READ profileName NOTIFY profileChanged)
     Q_PROPERTY(QString profileAvatar READ profileAvatar NOTIFY profileChanged)
     Q_PROPERTY(QObject *directory READ directory CONSTANT)
@@ -209,11 +238,32 @@ public:
     bool searchHasMore() const { return m_searchHasMore; }
     bool indexing() const { return m_indexRequest != 0; }
     QString lastError() const { return m_lastError; }
+    QVariantList errorLog() const { return m_errorLog; }
+    QVariantMap pushStatus() const { return m_pushStatus; }
+    /// Whether a push has arrived in this process at all. The woken process
+    /// gives up on its wait by this, not by a timer alone.
+    bool pushMessageSeen() const { return m_pushMessageSeen; }
+    bool pushEndpointReady() const { return !m_pushEndpoint.isEmpty(); }
+
+    /// Asks the device what distributors it has. Changes nothing.
+    Q_INVOKABLE void refreshPushStatus();
+
+    /// Registers with a distributor and, once it answers, hands the endpoint
+    /// to the homeserver with `gateway` as the push gateway.
+    Q_INVOKABLE void enablePush(const QString &gateway);
+
+    /// Gives the registration back and removes the pusher.
+    Q_INVOKABLE void disablePush();
+
+    /// Empties the log. The entries are this run's only copy; nothing is
+    /// written to disk.
+    Q_INVOKABLE void clearErrorLog();
     // The UI sees the grouped view (favourites up, low priority down); the
     // core still drives the flat source underneath.
     QObject *rooms() { return &m_roomsSorted; }
     int unreadRooms() const { return m_rooms.unreadRooms(); }
     int unreadMessages() const { return m_rooms.unreadMessages(); }
+    bool unreadCapped() const { return m_rooms.unreadCapped(); }
     QObject *spaces() { return &m_spaces; }
     QObject *spaceRooms() { return &m_spaceRooms; }
     int spaceCounts() const { return m_spaceCountsRevision; }
@@ -261,6 +311,7 @@ public:
     QVariantMap encryptionStatus() const { return m_encryptionStatus; }
     QVariantMap storageStatus() const { return m_storageStatus; }
     QVariantMap roomPermissions() const { return m_roomPermissions; }
+    QString roomDirectPeer() const { return m_roomDirectPeer; }
 
     QString profileName() const { return m_profileName; }
     QString profileAvatar() const { return m_profileAvatar; }
@@ -732,6 +783,15 @@ signals:
     /// empty result, which would read as "nothing found".
     void searchFailed(const QString &error);
     void lastErrorChanged();
+    void errorLogChanged();
+    void pushStatusChanged();
+
+    /// A push was turned into something a banner can show: `roomName`, `body`,
+    /// `noisy`. Used by the woken process, which has no QML to raise it from.
+    void pushNotificationReady(const QVariantMap &notification);
+    /// And why it could not be. `filtered out` and `redacted` are answers,
+    /// not failures — the push rules said this one is not to be shown.
+    void pushNotificationFailed(const QString &reason);
     void openRoomChanged();
     void pinnedChanged();
     void tombstoneChanged();
@@ -931,6 +991,17 @@ private:
                      const QString &path,
                      const QString &suggestedName);
     void setLastError(const QString &message);
+
+    /// Appends to `errorLog`, oldest dropped past `ErrorLogSize`. Separate from
+    /// `setLastError` because the two answer different questions: one is what
+    /// to put in front of the user now, the other is what happened at all.
+    void noteError(const QString &command, const QString &message);
+
+    /// One line for a banner from a preview's kind and text — the same
+    /// wording `harbour-xmatic.qml` produces for an ordinary arrival, so a
+    /// push does not read differently from a message that came in over the
+    /// sync. Here as well because the woken process has no QML.
+    QString previewLine(const QString &kind, const QString &text) const;
     void setLoginRunning(bool running);
     void setTimelineAtStart(bool atStart);
     void setTimelineReady(bool ready);
@@ -971,6 +1042,22 @@ private:
     QString m_userId;
     QString m_deviceId;
     QString m_lastError;
+    QVariantList m_errorLog;
+    QVariantMap m_pushStatus;
+    /// Held only to hand to the homeserver and to delete the pusher by. Never
+    /// shown, never logged.
+    QString m_pushEndpoint;
+    QString m_pushP256dh;
+    QString m_pushAuth;
+    /// The gateway the user configured, kept for the moment the endpoint
+    /// arrives — the two halves are minutes apart when a distributor is slow.
+    QString m_pushGateway;
+    bool m_pushMessageSeen = false;
+    /// The `push.notify` in flight, so its answer can be told from any other.
+    quint64 m_pushNotifyRequest = 0;
+    /// Enough for a session's worth of trouble, small enough to stay in memory
+    /// without a thought.
+    static const int ErrorLogSize = 100;
     bool m_loginRunning = false;
 
     RoomListModel m_rooms;
@@ -1017,6 +1104,7 @@ private:
     QVariantMap m_encryptionStatus;
     QVariantMap m_storageStatus;
     QVariantMap m_roomPermissions;
+    QString m_roomDirectPeer;
 
     /// Downloaded attachments by request key, and the requests in flight.
     QHash<QString, QString> m_media;

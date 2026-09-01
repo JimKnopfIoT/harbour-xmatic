@@ -108,6 +108,10 @@ struct State {
     /// A device-code login polling for approval, kept so it can be cancelled.
     pending_device: Mutex<Option<tokio::task::JoinHandle<()>>>,
     rooms: Mutex<Option<RoomListHandle>>,
+    /// The UnifiedPush connector, started on the first push command and never
+    /// before: it claims a D-Bus name and would otherwise do so on every start,
+    /// on every device, for a feature nobody turned on.
+    push: Mutex<Option<crate::push::PushHandle>>,
     spaces: Mutex<Option<tokio::task::JoinHandle<()>>>,
     open_space: Mutex<Option<tokio::task::JoinHandle<()>>>,
     /// Behind an `Arc` so a command can clone the handle out and release the
@@ -294,6 +298,7 @@ pub fn spawn(
         pending: Mutex::new(None),
         pending_device: Mutex::new(None),
         rooms: Mutex::new(None),
+        push: Mutex::new(None),
         spaces: Mutex::new(None),
         open_space: Mutex::new(None),
         timeline: Mutex::new(None),
@@ -643,6 +648,19 @@ async fn handle(state: Arc<State>, command: Command) {
         }
         Command::EncryptionStatus { .. } => encryption_status(&state, id).await,
         Command::StorageStatus { .. } => storage_status(&state, id),
+        Command::PushStatus { .. } => push_status(&state, id).await,
+        Command::PushEnable { gateway, .. } => push_enable(&state, id, gateway).await,
+        Command::PushDisable { endpoint, .. } => push_disable(&state, id, endpoint).await,
+        Command::PushNotify {
+            room_id, event_id, ..
+        } => push_notify(&state, id, room_id, event_id).await,
+        Command::PushPusher {
+            endpoint,
+            p256dh,
+            auth,
+            gateway,
+            ..
+        } => push_pusher(&state, id, endpoint, p256dh, auth, gateway).await,
         Command::EncryptionRecover { key, .. } => encryption_recover(&state, id, key).await,
         Command::EncryptionEnableBackup { .. } => encryption_enable_backup(&state, id).await,
         Command::EncryptionFetchKeys { room_id, .. } => fetch_room_keys(&state, id, room_id).await,
@@ -1106,6 +1124,114 @@ async fn encryption_status(state: &Arc<State>, id: u64) {
 /// Synchronous and client-free on purpose: the answer is about files, and the
 /// UI needs it while signed out too — an install that runs unencrypted should
 /// say so before the first login, not only after it.
+/// The connector, started on demand. One per process; the handle stays.
+async fn push_handle(state: &Arc<State>) -> ()
+{
+    let mut slot = state.push.lock().await;
+    if slot.is_none() {
+        *slot = Some(crate::push::start(
+            state.paths.push_file.clone(),
+            state.sink.clone(),
+        ));
+    }
+}
+
+/// What UnifiedPush looks like on this device. The answer arrives as a
+/// `push.state` event rather than in the reply: the connector lives on its own
+/// thread and the question crosses two channels to reach it.
+async fn push_status(state: &Arc<State>, id: u64) {
+    push_handle(state).await;
+    if let Some(handle) = state.push.lock().await.as_ref() {
+        handle.status();
+    }
+    state.sink.emit(reply_ok(id, json!({ "asked": true })));
+}
+
+/// Registers with a distributor. The endpoint follows as `push.endpoint`, and
+/// the front end hands it back with the gateway so the pusher can be set — the
+/// gateway is not the core's to remember, it is a setting.
+async fn push_enable(state: &Arc<State>, id: u64, gateway: String) {
+    if gateway.trim().is_empty() {
+        state
+            .sink
+            .emit(reply_error(id, "no push gateway configured"));
+        return;
+    }
+    push_handle(state).await;
+    if let Some(handle) = state.push.lock().await.as_ref() {
+        handle.enable();
+    }
+    state.sink.emit(reply_ok(id, json!({ "enabled": true })));
+}
+
+/// Gives the registration back, and deletes the pusher with it. Both halves:
+/// a pusher left on the server keeps pointing at an endpoint that no longer
+/// exists, and the server keeps trying it.
+async fn push_disable(state: &Arc<State>, id: u64, endpoint: String) {
+    // The server first, while the endpoint is still known: once the
+    // registration is given back it is gone from the storage, and the pusher
+    // would stay behind with nothing left to delete it by.
+    if !endpoint.is_empty() {
+        if let Some(client) = state.client().await {
+            if let Err(error) = crate::push::clear_pusher(&client, &endpoint).await {
+                // Said, not fatal: the registration goes either way, and a
+                // pusher that outlives it only wastes the server's attempts.
+                state.sink.emit(event(
+                    "push.state",
+                    json!({ "state": "off", "error": error }),
+                ));
+            }
+        }
+    }
+    push_handle(state).await;
+    if let Some(handle) = state.push.lock().await.as_ref() {
+        handle.disable();
+    }
+    state.sink.emit(reply_ok(id, json!({ "enabled": false })));
+}
+
+/// Turns a push into a banner. Answers with an error where the push rules say
+/// this one is not to be shown — silence is the right outcome then, and the
+/// caller must not make a notification out of it anyway.
+async fn push_notify(state: &Arc<State>, id: u64, room_id: String, event_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match crate::push::notification_for(&client, &room_id, &event_id).await {
+        Ok(data) => state.sink.emit(reply_ok(id, data)),
+        Err(error) => state.sink.emit(reply_error(id, error)),
+    }
+}
+
+/// The second half of turning it on: the endpoint goes to the homeserver.
+async fn push_pusher(
+    state: &Arc<State>,
+    id: u64,
+    endpoint: String,
+    p256dh: String,
+    auth: String,
+    gateway: String,
+) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match crate::push::set_pusher(&client, &endpoint, &p256dh, &auth, &gateway).await {
+        Ok(()) => {
+            state.sink.emit(event("push.state", json!({ "state": "on" })));
+            state.sink.emit(reply_ok(id, json!({ "registered": true })));
+        }
+        Err(error) => {
+            state.sink.emit(event(
+                "push.state",
+                json!({ "state": "error", "error": error.clone() }),
+            ));
+            state.sink.emit(reply_error(id, error));
+        }
+    }
+}
+
 fn storage_status(state: &Arc<State>, id: u64) {
     let key = state.store_key();
     let storage = session::storage_state(&state.paths, key.as_ref());
@@ -1291,12 +1417,19 @@ async fn open_timeline(
     // otherwise offer an action the server refuses. Read here for the same
     // reason as the marker: it is a store read, and it must not happen under
     // the timeline lock.
-    let permissions = match matrix_sdk::ruma::RoomId::parse(&room_id)
+    //
+    // The other person in a two-party encrypted chat travels with it: the
+    // room's menu offers verifying them, and it is the only place in the app
+    // where that address is already known.
+    let (permissions, direct_peer) = match matrix_sdk::ruma::RoomId::parse(&room_id)
         .ok()
         .and_then(|parsed| client.get_room(&parsed))
     {
-        Some(room) => members::room_permissions(&client, &room).await,
-        None => json!({}),
+        Some(room) => (
+            members::room_permissions(&client, &room).await,
+            members::direct_peer(&client, &room).await,
+        ),
+        None => (json!({}), None),
     };
 
     {
@@ -1315,10 +1448,10 @@ async fn open_timeline(
                     json!({
                         "open": true,
                         "readMarker": marker,
-                    "readReceipt": fallback_marker,
                         "readReceipt": fallback_marker,
                         "rebuilt": false,
                         "can": permissions,
+                        "directWith": direct_peer,
                     }),
                 ));
                 return;
@@ -1354,8 +1487,14 @@ async fn open_timeline(
                 json!({
                     "open": true,
                     "readMarker": marker,
+                    // Was missing here since the fallback was added, and this
+                    // is the branch that matters: a room opened for the first
+                    // time rebuilds, and only a re-entered one took the branch
+                    // above that carried it.
+                    "readReceipt": fallback_marker,
                     "rebuilt": true,
                     "can": permissions,
+                    "directWith": direct_peer,
                 }),
             ));
         }

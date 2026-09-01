@@ -137,6 +137,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Sesiunea și baza de date cu mesaje sunt necriptate pe acest dispozitiv. Atinge ca să le criptezi.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Jurnal de erori</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Notificări push</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -418,6 +426,10 @@
         <source>not signed in</source>
         <translation>neautentificat</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Deconectat — se așteaptă rețeaua</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -638,26 +650,6 @@
         <translation>Verifică</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Verificarea compară șapte emoji cu cealaltă parte. Între propriile tale dispozitive deblochează și cheile comune ale camerelor.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Verifică celelalte dispozitive ale mele</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>ID utilizator</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Verifică acest utilizator</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Deblochează copia de rezervă</translation>
     </message>
@@ -692,6 +684,37 @@
     <message>
         <source>Copy</source>
         <translation>Copiază</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Verifică acest dispozitiv</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Compară șapte emoji cu celălalt dispozitiv al tău. Ai nevoie de acel dispozitiv în față; după ce amândouă au confirmat, acesta poate citi cheile comune ale camerelor.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Golește</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Copiază tot</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Jurnal de erori</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>În această rulare nu a eșuat nimic.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Cele mai noi primele, și doar această rulare — nimic nu se păstrează pe disc. Identificatorii sunt deja eliminați, deci asta poate fi transmisă așa cum e.</translation>
     </message>
 </context>
 <context>
@@ -946,6 +969,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Sesiunea ta s-a încheiat. Conectează-te din nou.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Introdu mai întâi o poartă push.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Mesaj nou</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Imagine</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Mesaj vocal</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fișier</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Locație</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Mesaj criptat</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Invitație</translation>
     </message>
 </context>
 <context>
@@ -1430,6 +1489,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Notificări push</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic nu are serviciu în fundal, așa că mesajele ajung doar cât timp rulează. Un distribuitor push este o aplicație separată care ține o conexiune pentru toate aplicațiile de pe dispozitiv și le trezește când sosește ceva.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Primește notificări push</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Distribuitor</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Nu este instalat niciun distribuitor push. Fără el nu există nimic care să țină conexiunea, iar asta rămâne dezactivat.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Înregistrare</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Acest dispozitiv are o adresă la care poate fi contactat.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Se așteaptă distribuitorul.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Neînregistrat.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Poartă</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Un server Matrix nu poate vorbi direct cu un distribuitor push, deci trimite către o poartă care redirecționează. Nu există o valoare implicită: este singurul lucru pe care nimeni nu îl poate ghici în locul tău.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Poartă push</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Ce părăsește acest dispozitiv</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Serverul tău află o adresă la serviciul push și trimite porții un identificator de cameră și de mesaj pentru fiecare notificare. Fără text: push-ul poartă doar identificatori, iar mesajul este preluat și decriptat de acest dispozitiv. Adresa este un secret — cine o are poate trimite o notificare acestui telefon.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Mesaj nou</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1778,6 +1903,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 din %2 camere</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Verifică utilizator</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1963,38 +2092,6 @@
         <translation>%1 și-a modificat profilul</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Copiază</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Răspunde</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Salvează</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Redirecționează</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Editează</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Fixează</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Șterge</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Mai mult…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Mesajul citat nu poate fi încărcat: nu mai există sau nu ai voie să-l vezi.</translation>
     </message>
@@ -2055,22 +2152,6 @@
         <translation>Acel mesaj nu se află în istoricul încărcat</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Renunță</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Trimite din nou</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reacționează</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Răspunde în fir</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Copiază linkul camerei</translation>
     </message>
@@ -2125,6 +2206,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Ce înseamnă aceste semne?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Verifică contactul</translation>
     </message>
 </context>
 <context>
@@ -2220,6 +2305,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Pentru acest cont încă nu există recuperare. Configurează o copie a cheilor pentru a crea una.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Serverul nu a putut fi întrebat dacă există o copie de rezervă.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2254,6 +2343,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Găsești toate acestea din nou la Cont › Criptare.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Pe acest dispozitiv totul este în regulă.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Închide</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Verifică acest dispozitiv</translation>
     </message>
 </context>
 <context>
@@ -2732,6 +2833,41 @@
     <message>
         <source>Close</source>
         <translation>Închide</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Verifică utilizator</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Apoi ambele părți compară șapte emoji. Tocmai asta spune că nimeni nu stă la mijloc — și este valabil pentru fiecare cameră pe care o împarți cu această persoană.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>ID utilizator</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>De exemplu @anna:example.org sau @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Verifică</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Propriul tău dispozitiv</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Compară șapte emoji cu celălalt dispozitiv al tău. Ai nevoie de acel dispozitiv în față; după ce amândouă au confirmat, acesta poate citi cheile comune ale camerelor.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Verifică acest dispozitiv</translation>
     </message>
 </context>
 <context>

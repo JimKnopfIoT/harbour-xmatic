@@ -94,11 +94,24 @@ pub async fn status(client: &Client) -> Value {
     // this page offering "Set up backup" for the rest of the session — and the
     // button then fails, because enabling checks the uncached answer and
     // refuses with "backup exists on server".
-    let exists_on_server = encryption
-        .backups()
-        .fetch_exists_on_server()
-        .await
-        .unwrap_or(false);
+    //
+    // But this is a request over the network, and a request that fails is not
+    // an answer. It used to end in `unwrap_or(false)`, which turns "the server
+    // could not be asked" into "there is no backup" — the loudest of the three
+    // possible readings, and the one that raises an alarm about a backup that
+    // is sitting on the server perfectly well. Reported: while a sync fault
+    // made the app believe it was offline, the security page came up for the
+    // first time ever, and everything went green the moment the connection
+    // did. Every predicate has a failure direction, and this one pointed at
+    // the wrong answer.
+    //
+    // Three steps, most accurate first: ask; failing that take the cached
+    // answer, which is right whenever this session ever got one; failing that
+    // say nothing, and the UI paints and interrupts nobody over it.
+    let exists_on_server = match encryption.backups().fetch_exists_on_server().await {
+        Ok(exists) => Some(exists),
+        Err(_) => encryption.backups().exists_on_server().await.ok(),
+    };
 
     json!({
         "recovery": recovery_state_name(encryption.recovery().state()),

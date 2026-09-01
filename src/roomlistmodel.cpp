@@ -21,6 +21,7 @@ void RoomListModel::recountUnread()
 {
     int roomsWithNews = 0;
     int messages = 0;
+    bool capped = false;
     for (const QJsonObject &row : rows()) {
         if (row.value(QStringLiteral("space")).toBool()
                 || row.value(QStringLiteral("muted")).toBool()
@@ -34,12 +35,15 @@ void RoomListModel::recountUnread()
         }
         ++roomsWithNews;
         messages += unread;
+        capped = capped || row.value(QStringLiteral("unreadCapped")).toBool();
     }
-    if (roomsWithNews == m_unreadRooms && messages == m_unreadMessages) {
+    if (roomsWithNews == m_unreadRooms && messages == m_unreadMessages
+            && capped == m_unreadCapped) {
         return;
     }
     m_unreadRooms = roomsWithNews;
     m_unreadMessages = messages;
+    m_unreadCapped = capped;
     emit unreadTotalsChanged();
 }
 
@@ -49,6 +53,7 @@ QHash<int, QByteArray> RoomListModel::roleNames() const
     names.insert(IdRole, "id");
     names.insert(NameRole, "name");
     names.insert(UnreadRole, "unread");
+    names.insert(UnreadCappedRole, "unreadCapped");
     names.insert(MentionsRole, "mentions");
     names.insert(EncryptedRole, "encrypted");
     names.insert(SpaceRole, "space");

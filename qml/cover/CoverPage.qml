@@ -55,6 +55,29 @@ CoverBackground {
             text: matrix.busy ? qsTr("signing in…") : qsTr("not signed in")
         }
 
+        // What the cover could not say until now: that nothing is arriving.
+        //
+        // Reported from the field - "if no net and waiting for connection,
+        // xmatic shows it only under the room's name, but not in cover; need
+        // in cover, first of all". Rightly first of all: the room list and the
+        // room say it to somebody who is already looking at the app, and this
+        // app has no background service, so the cover *is* how it is watched.
+        // A tile that shows a count and nothing else claims that count is
+        // current, and while the sync is down it is not.
+        //
+        // The same state and, word for word, the same sentence as the two
+        // pages: one connection must not be described in two ways by an app
+        // whose tile and whose list are read minutes apart by one person.
+        Label {
+            width: parent.width
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryColor
+            wrapMode: Text.Wrap
+            visible: matrix.sessionState === "signed-in"
+                     && matrix.syncState === "offline"
+            text: qsTr("Offline — waiting for the network")
+        }
+
         Label {
             // Rooms with news over the messages they hold, 2/7 say — the
             // compact notation the daemonless messengers on this platform
@@ -64,7 +87,11 @@ CoverBackground {
             font.pixelSize: Theme.fontSizeHuge
             color: Theme.highlightColor
             visible: matrix.sessionState === "signed-in" && matrix.unreadRooms > 0
+            // The same "+" the row badge carries, for the same reason: the
+            // total is a sum of counts that stop at the sync window, so where
+            // one of them stopped there the sum is a floor.
             text: matrix.unreadRooms + "/" + matrix.unreadMessages
+                  + (matrix.unreadCapped ? "+" : "")
         }
     }
 }

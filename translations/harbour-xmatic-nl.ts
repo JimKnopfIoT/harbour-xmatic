@@ -136,6 +136,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>De sessie en de berichtendatabase staan onversleuteld op dit apparaat. Tik om ze te versleutelen.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Foutenlogboek</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Pushmeldingen</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -417,6 +425,10 @@
         <source>not signed in</source>
         <translation>niet aangemeld</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — wachten op het netwerk</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -636,26 +648,6 @@
         <translation>Verifiëren</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Verifiëren vergelijkt zeven emoji met de andere kant. Tussen je eigen apparaten ontgrendelt het ook gedeelde kamersleutels.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Mijn andere apparaten verifiëren</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Gebruikers-ID</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Deze gebruiker verifiëren</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Back-up ontgrendelen</translation>
     </message>
@@ -690,6 +682,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopiëren</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Dit apparaat verifiëren</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Vergelijkt zeven emoji met je andere apparaat. Je hebt dat apparaat voor je nodig; zodra beide bevestigd hebben, kan dit apparaat de gedeelde kamersleutels lezen.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Wissen</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Alles kopiëren</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Foutenlogboek</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>In deze sessie is niets mislukt.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Nieuwste eerst, en alleen deze sessie — er wordt niets op schijf bewaard. Identificatiegegevens zijn al verwijderd, dus dit kan zo doorgegeven worden.</translation>
     </message>
 </context>
 <context>
@@ -944,6 +967,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Je sessie is beëindigd. Log opnieuw in.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Vul eerst een push-gateway in.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nieuw bericht</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Afbeelding</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Spraakbericht</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Bestand</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Locatie</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Versleuteld bericht</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Uitnodiging</translation>
     </message>
 </context>
 <context>
@@ -1428,6 +1487,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Pushmeldingen</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic heeft geen achtergronddienst, dus berichten komen alleen binnen zolang het draait. Een pushdistributeur is een aparte app die één verbinding voor alle apps op het apparaat openhoudt en ze wekt zodra er iets binnenkomt.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Pushmeldingen ontvangen</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Distributeur</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Er is geen pushdistributeur geïnstalleerd. Zonder een is er niets dat de verbinding openhoudt, en dit blijft uit.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Registratie</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Dit apparaat heeft een adres waarop het bereikbaar is.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Wachten op de distributeur.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Niet geregistreerd.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Gateway</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Een Matrix-thuisserver kan niet rechtstreeks met een pushdistributeur praten, dus stuurt hij naar een gateway die doorstuurt. Er is geen standaardwaarde: dat is het enige dat niemand voor je kan raden.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-gateway</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Wat dit apparaat verlaat</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Je thuisserver krijgt een adres bij de pushdienst te horen en stuurt de gateway voor elke melding een kamer- en berichtidentificatie. Geen berichttekst: de push draagt alleen identificaties en dit apparaat haalt en ontsleutelt het bericht zelf. Dat adres is een geheim — wie het heeft, kan deze telefoon een melding sturen.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Nieuw bericht</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1776,6 +1901,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 van %2 kamers</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Gebruiker verifiëren</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1960,38 +2089,6 @@
         <translation>%1 wijzigde zijn profiel</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopiëren</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Beantwoorden</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Opslaan</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Doorsturen</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Bewerken</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Vastmaken</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Verwijderen</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Meer…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Het geciteerde bericht kan niet worden geladen: het bestaat niet meer of je mag het niet zien.</translation>
     </message>
@@ -2052,22 +2149,6 @@
         <translation>Dat bericht staat niet in de geladen geschiedenis</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Weggooien</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Opnieuw versturen</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reageren</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>In draad antwoorden</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kamerlink kopiëren</translation>
     </message>
@@ -2122,6 +2203,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Wat betekenen deze tekens?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Contact verifiëren</translation>
     </message>
 </context>
 <context>
@@ -2217,6 +2302,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Voor dit account bestaat nog geen herstel. Stel een sleutelback-up in om er een te maken.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>De server kon niet gevraagd worden of er een back-up bestaat.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2251,6 +2340,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Dit alles vind je terug onder Account › Versleuteling.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Op dit apparaat is alles in orde.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Dit apparaat verifiëren</translation>
     </message>
 </context>
 <context>
@@ -2727,6 +2828,41 @@
     <message>
         <source>Close</source>
         <translation>Sluiten</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Gebruiker verifiëren</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Beide kanten vergelijken dan zeven emoji. Juist dat zegt dat er niemand tussen zit — en het geldt voor elke kamer die je met deze persoon deelt.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Gebruikers-ID</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Bijvoorbeeld @anna:example.org of @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Verifiëren</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Je eigen apparaat</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Vergelijkt zeven emoji met je andere apparaat. Je hebt dat apparaat voor je nodig; zodra beide bevestigd hebben, kan dit apparaat de gedeelde kamersleutels lezen.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Dit apparaat verifiëren</translation>
     </message>
 </context>
 <context>

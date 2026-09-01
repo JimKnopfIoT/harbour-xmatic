@@ -118,15 +118,33 @@ Page {
                 }
             }
 
+            // Text and attachments both, and each as itself.
+            //
+            // This entry used to be hidden for a picture and shown for every
+            // other attachment - where `body` is the file name, so it forwarded
+            // "holiday.pdf" as a sentence. A picture could only be forwarded
+            // from the full-screen view, which is not where anybody looks for
+            // it. Reported as "there is no Forward".
             ListItem {
                 contentHeight: Theme.itemSizeSmall
-                visible: page.body.length > 0 && !page.isImage
-                // Replaces rather than pushes: forwarding pops one page when it
-                // is done, and that has to land back in the conversation, not
-                // on this list.
-                onClicked: pageStack.replace(Qt.resolvedUrl("ForwardPage.qml"), {
-                                                 body: page.body
-                                             })
+                visible: page.canSave || page.body.length > 0
+                onClicked: {
+                    if (page.canSave) {
+                        // Pushed, not replaced: the file may still have to be
+                        // fetched, and the room page opens the picker when it
+                        // lands. This list goes with the pop below it.
+                        var item = page.item
+                        pageStack.pop()
+                        page.roomPage.forwardAttachment(item)
+                        return
+                    }
+                    // Replaces rather than pushes: forwarding pops one page
+                    // when it is done, and that has to land back in the
+                    // conversation, not on this list.
+                    pageStack.replace(Qt.resolvedUrl("ForwardPage.qml"), {
+                                          body: page.body
+                                      })
+                }
                 Label {
                     anchors {
                         left: parent.left

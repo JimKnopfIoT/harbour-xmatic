@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.27.0
+Version:    0.28.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -101,9 +101,72 @@ strip %{buildroot}%{_bindir}/%{name}
 # to carry it. sailfish-share's own file trigger picks the new share method out
 # of the desktop file, so nothing has to be run here.
 %{_datadir}/dbus-1/services/org.xmatic.xmatic.service
+%{_datadir}/dbus-1/services/org.unifiedpush.Connector.xmatic.service
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Sep 01 2026 harbour-xmatic contributors 0.28.0-1
+- Rooms stopped receiving on accounts with many rooms. 0.27.0 widened the sync
+  window per room so the unread badge could count, and that number is
+  multiplied by the rooms in one request - which the room list grows to a
+  hundred at a time. On an account with two hundred rooms the request asked for
+  forty thousand events, timed out, and everything but the twenty most recent
+  rooms stopped updating, silently and for good. The window is back where it
+  was, and the badge now says where it stopped looking: it counts to twenty and
+  shows "20+" beyond, in the list and on the cover.
+- The emoji comparison had no buttons. Verifying could not be finished from
+  that page at all in 0.26.2 and 0.27.0 - neither a device of one's own nor
+  another person - because the two answers were laid out in a way that gave
+  them a width of zero. They are back.
+- Verifying another person moved out of the encryption page, where it sat as a
+  Matrix address to type in directly under the button that verifies one's own
+  second device. In a two-party encrypted chat the room's own menu now offers
+  it without asking for an address; for everybody else there is one entry in
+  the chat list's pull-down.
+- The security page that comes up after signing in no longer stays on screen
+  once everything is green. Entering the recovery key settles it from the page
+  above, and coming back landed on the alarm that had just been cleared.
+- A failed request stopped claiming there is no key backup. Asking the server
+  is a question over the network, and while a sync fault made the app believe
+  it was offline, the answer "could not ask" was read as "there is none" - so
+  the security page raised an alarm about a backup that was on the server all
+  along. It says the server could not be asked, and asks again once the
+  connection is back.
+- The cover says when nothing is arriving. Being cut off was written under the
+  room's name and in the chat list, but not on the tile - and this app has no
+  background service, so the tile is how it is watched.
+- Account has an error log now, at the top of its pull-down menu. Whatever
+  fails is kept there for the run, newest first, instead of flashing as a red
+  line on one page and being overwritten by the next failure. Identifiers are
+  already stripped by the core, so the list can be copied and passed on as it
+  stands. Nothing is written to disk.
+- "Token is not active" no longer appears as an error. The sign-in token is
+  rotated in the background, and a download that was in flight across the
+  rotation came back with that message - which reads as an ended session while
+  the session is perfectly alive. It goes to the log; a session that really has
+  ended still signs out and says so.
+- Everything a message can be done to is on a page now instead of a context
+  menu. That menu shares its machinery with the room's pull-down: opened on a
+  message near the top of the view it took the pull-down's place, and with that
+  on screen there was no way to leave the room, call, search it or open its
+  page at all.
+- Forwarding works on attachments. A picture could only be forwarded from the
+  full-screen view, and every other attachment offered "Forward" and then sent
+  the file name as a sentence.
+- Push notifications, asked for by users and off by default. They have their
+  own setting and do nothing until switched on by hand: Account › Push
+  notifications. A UnifiedPush distributor has to be installed separately - it
+  is the app that holds the connection, this client still has no background
+  service of its own - and a push gateway has to be chosen, because a
+  homeserver cannot talk to a distributor directly and nobody can guess whose
+  gateway you trust. Notifications carry no message text; the message is
+  fetched and decrypted on the device. What it does disclose, and to whom, is
+  written out in docs/PUSH.md - read that before turning it on. Leaving it off
+  changes nothing.
+- A picture in a reply quote is shown whole and in a frame of its own. It was
+  cropped to a square out of the middle, which is where a photograph says the
+  least, and it lay against the reply's text with no edge to separate it.
+
 * Sun Aug 31 2026 harbour-xmatic contributors 0.27.0-1
 - Messages can be searched, one conversation at a time, from the room's
   pull-down menu. The index lives on the device and is encrypted with the same

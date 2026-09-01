@@ -34,6 +34,10 @@ repository.
   a server-side search could only ever cover the rooms this app does not have
 * A line marks where reading stopped, and the room can open there or at its
   newest message
+* Everything a message can be done to — copy, reply, forward, edit, pin, react,
+  delete — on its own page, reached by a long press
+* An error log under Account: whatever failed in this run, newest first, with
+  identifiers already removed so it can be copied and passed on
 * Reactions, sent and shown, grouped by character with a count; the picker's
   first tab is yours to fill - press and hold any emoji to keep it there - and
   the keyboard covers what the set does not
@@ -111,6 +115,15 @@ its colours from the one you use.
 * The app has to stay open; its cover on the home screen is the running
   process. There is no background daemon, the same way other messengers on
   this platform work.
+
+  Push notifications are the one way around that, and they are **off by
+  default, have their own setting, and do nothing until switched on by hand**.
+  The feature exists because users asked for it. It needs a UnifiedPush
+  distributor installed separately and a Matrix push gateway you choose
+  yourself, and it discloses metadata — which rooms, at what times — to two
+  parties that otherwise know nothing about you. Read
+  [docs/PUSH.md](docs/PUSH.md) before turning it on. Leaving it off changes
+  nothing: no address is created and your homeserver is told nothing.
 * Spoilers are marked rather than hidden: the text renderer available here
   cannot hide a run of text.
 * **Most translations are unreviewed.** German is the project language,

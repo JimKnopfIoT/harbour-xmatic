@@ -24,6 +24,7 @@
 #include "emojiset.h"
 #include "emojistore.h"
 #include "instancelock.h"
+#include "pushwake.h"
 #include "languagesettings.h"
 #include "matrixbridge.h"
 #include "secretskeeper.h"
@@ -60,6 +61,16 @@ int main(int argc, char *argv[])
     // same user; only root can still look inside. The price is that a crash
     // leaves no core dump for debugging — the journal is the diagnostic tool
     // on the device anyway.
+    // Before anything else, and before Qt: this process may have been started
+    // by D-Bus because a push arrived while the app was closed, and that path
+    // must never put a window on screen. The mode is in the environment
+    // because SailJail matches argv against the desktop file's templates
+    // exactly and would refuse an extra word - it does not look at the
+    // environment at all. See src/pushwake.cpp.
+    if (qEnvironmentVariableIsSet(XMATIC_PUSH_WAKE_ENV)) {
+        return runPushWake(argc, argv);
+    }
+
     prctl(PR_SET_DUMPABLE, 0);
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));

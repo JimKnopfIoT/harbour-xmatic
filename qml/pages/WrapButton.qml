@@ -31,6 +31,14 @@ Button {
 
     // Left to the caller, as with any Silica button on a page — but never
     // wider than the page it stands on.
+    //
+    // The parent must therefore have a width of its own. Inside a `Row`, or a
+    // `Column` that was given no width, the parent's width comes from its
+    // children instead: that is a binding loop, Qt breaks it by making
+    // something zero, and the button then does not exist on screen. The
+    // verification page's two answers were invisible for exactly this reason
+    // in 0.26.2 and 0.27.0, which is every release this component has shipped
+    // in — and nothing in the build says a word about it.
     width: Math.min(Theme.buttonWidthLarge,
                     parent.width - 2 * Theme.horizontalPageMargin)
 

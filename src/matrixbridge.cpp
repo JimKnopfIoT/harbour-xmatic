@@ -17,6 +17,7 @@
 #include <QLoggingCategory>
 #include <QMetaObject>
 #include <QMimeDatabase>
+#include <QTime>
 #include <QMimeType>
 #include <QSettings>
 #include <QStandardPaths>
@@ -1679,6 +1680,41 @@ void MatrixBridge::refreshStorageStatus()
     send(QStringLiteral("storage.status"));
 }
 
+void MatrixBridge::refreshPushStatus()
+{
+    send(QStringLiteral("push.status"));
+}
+
+void MatrixBridge::enablePush(const QString &gateway)
+{
+    if (gateway.trimmed().isEmpty()) {
+        setLastError(tr("Enter a push gateway first."));
+        return;
+    }
+    // Kept for the second half. The distributor answers with the endpoint in
+    // its own time — usually at once, but it is a network round trip on the
+    // distributor's side, and by then the field the user typed into may be
+    // gone with its page.
+    m_pushGateway = gateway.trimmed();
+    setLastError(QString());
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("gateway"), m_pushGateway);
+    send(QStringLiteral("push.enable"), arguments);
+}
+
+void MatrixBridge::disablePush()
+{
+    QJsonObject arguments;
+    // Sent along so the pusher can be deleted while the endpoint is still
+    // known: giving the registration back drops it.
+    arguments.insert(QStringLiteral("endpoint"), m_pushEndpoint);
+    send(QStringLiteral("push.disable"), arguments);
+    m_pushEndpoint.clear();
+    m_pushP256dh.clear();
+    m_pushAuth.clear();
+    emit pushStatusChanged();
+}
+
 void MatrixBridge::recoverKeys(const QString &key)
 {
     if (key.trimmed().isEmpty()) {
@@ -2074,7 +2110,8 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         // A failed media fetch has to say so, or the row keeps a spinner
         // turning over a download that will never arrive - including the ones
         // this app refuses on purpose, like an oversized attachment.
-        if (m_mediaRequests.contains(id)) {
+        const bool wasMedia = m_mediaRequests.contains(id);
+        if (wasMedia) {
             emit mediaFailed(m_mediaRequests.value(id));
         }
         forgetRequest(id);
@@ -2091,6 +2128,32 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (error.startsWith(QLatin1String("command not understood"))) {
             qWarning("xmatic: %s rejected by the core: %s",
                      qPrintable(command), qPrintable(error.left(120)));
+            return;
+        }
+        // Everything that failed goes in the log, whether or not it is worth
+        // interrupting somebody with.
+        noteError(command, error);
+
+        // A token that rotated under a request in flight comes back as
+        // "token is not active", and that is not an ended session - a real one
+        // arrives as `session.expired` and signs out. Shown as a red line it
+        // reads as the opposite of what it is, and it was: reported from a
+        // device whose session was perfectly alive. The log keeps it; the page
+        // does not shout it.
+        //
+        // A failed media fetch is left out for a different reason: it already
+        // has `mediaFailed`, which the row it belongs to acts on. Painting it
+        // across whatever page happens to show `lastError` puts a download's
+        // problem in front of somebody who is doing something else.
+        if (id == m_pushNotifyRequest) {
+            m_pushNotifyRequest = 0;
+            emit pushNotificationFailed(error);
+            return;
+        }
+        const bool tokenRotated = error.contains(QLatin1String("M_UNKNOWN_TOKEN"));
+        if (tokenRotated || wasMedia) {
+            qWarning("xmatic: %s failed: %s", qPrintable(command),
+                     qPrintable(error.left(160)));
             return;
         }
         setLastError(error);
@@ -2115,6 +2178,27 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         return;
     }
     if (replyTimeline(id, command, data)) {
+        return;
+    }
+    if (command == QLatin1String("push.notify")) {
+        if (id == m_pushNotifyRequest) {
+            m_pushNotifyRequest = 0;
+            QVariantMap notification = data.toVariantMap();
+            // The banner's two lines, built the way the app builds them from a
+            // room-list preview - so a push and an ordinary arrival read the
+            // same. The text only where the user allowed it: the banner shows
+            // on the lock screen.
+            const QString kind = data.value(QStringLiteral("previewKind")).toString();
+            const QString text = data.value(QStringLiteral("previewText")).toString();
+            notification.insert(QStringLiteral("body"),
+                                m_settings && m_settings->notificationPreview()
+                                    ? previewLine(kind, text)
+                                    : tr("New message"));
+            if (!(m_settings && m_settings->notificationPreview())) {
+                notification.insert(QStringLiteral("roomName"), QString());
+            }
+            emit pushNotificationReady(notification);
+        }
         return;
     }
     if (replyEncryption(command, data)) {
@@ -2540,8 +2624,12 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
             m_timeline.setThreadRoots(QHash<QString, int>());
         }
         const QVariantMap can = data.value(QStringLiteral("can")).toObject().toVariantMap();
-        if (can != m_roomPermissions) {
+        // Absent for every room that is not an encrypted two-party chat, which
+        // is what takes the entry away again on the next room.
+        const QString peer = data.value(QStringLiteral("directWith")).toString();
+        if (can != m_roomPermissions || peer != m_roomDirectPeer) {
             m_roomPermissions = can;
+            m_roomDirectPeer = peer;
             emit roomPermissionsChanged();
         }
         // Only for the live view. A focused open - the pinned overview, a
@@ -2736,6 +2824,56 @@ bool MatrixBridge::eventVerification(const QString &name, const QJsonObject &dat
               data.value(QStringLiteral("inRoom")).toBool() ? 1 : 0,
               data.value(QStringLiteral("weStarted")).toBool() ? 1 : 0);
         emit verificationChanged();
+    } else if (name == QLatin1String("push.state")) {
+        m_pushStatus = data.toVariantMap();
+        const QString state = m_pushStatus.value(QStringLiteral("state")).toString();
+        // The distributor's bus names, not the endpoint: one is what is
+        // installed on the device, the other is a secret.
+        qInfo("xmatic: push state -> %s (%d distributor(s))", qPrintable(state),
+              m_pushStatus.value(QStringLiteral("distributors")).toList().count());
+        const QString error = m_pushStatus.value(QStringLiteral("error")).toString();
+        if (!error.isEmpty()) {
+            noteError(QStringLiteral("push"), error);
+        }
+        emit pushStatusChanged();
+    } else if (name == QLatin1String("push.endpoint")) {
+        // The second half of turning it on. Kept here rather than in the core
+        // because the gateway is a setting, and handed straight on: an
+        // endpoint nobody was told about is a secret this device holds for
+        // nothing.
+        m_pushEndpoint = data.value(QStringLiteral("endpoint")).toString();
+        m_pushP256dh = data.value(QStringLiteral("p256dh")).toString();
+        m_pushAuth = data.value(QStringLiteral("auth")).toString();
+        // Never the endpoint itself: it is the one string here that lets a
+        // stranger push to this phone.
+        qInfo("xmatic: push endpoint received (%d bytes)", m_pushEndpoint.size());
+        emit pushStatusChanged();
+        if (!m_pushGateway.isEmpty()) {
+            QJsonObject arguments;
+            arguments.insert(QStringLiteral("endpoint"), m_pushEndpoint);
+            arguments.insert(QStringLiteral("p256dh"), m_pushP256dh);
+            arguments.insert(QStringLiteral("auth"), m_pushAuth);
+            arguments.insert(QStringLiteral("gateway"), m_pushGateway);
+            send(QStringLiteral("push.pusher"), arguments);
+        }
+    } else if (name == QLatin1String("push.message")) {
+        m_pushMessageSeen = true;
+        const QString roomId = data.value(QStringLiteral("roomId")).toString();
+        const QString eventId = data.value(QStringLiteral("eventId")).toString();
+        // Never the identifiers themselves.
+        qInfo("xmatic: push received (decrypted=%d, matrix=%d)",
+              data.value(QStringLiteral("decrypted")).toBool() ? 1 : 0,
+              roomId.isEmpty() ? 0 : 1);
+        if (roomId.isEmpty() || eventId.isEmpty()) {
+            // Another app's push, a gateway that reshaped the body, or the
+            // distributor's own test. Not ours to show.
+            emit pushNotificationFailed(QStringLiteral("not a matrix notification"));
+        } else {
+            QJsonObject arguments;
+            arguments.insert(QStringLiteral("roomId"), roomId);
+            arguments.insert(QStringLiteral("eventId"), eventId);
+            m_pushNotifyRequest = send(QStringLiteral("push.notify"), arguments);
+        }
     } else if (name == QLatin1String("encryption.changed")) {
         m_encryptionStatus = data.toVariantMap();
         if (m_recoverySettling
@@ -3268,6 +3406,68 @@ void MatrixBridge::applySession(const QJsonObject &data)
     refreshStorageStatus();
 
     emit sessionChanged();
+}
+
+QString MatrixBridge::previewLine(const QString &kind, const QString &text) const
+{
+    if (kind == QLatin1String("text")) {
+        return text;
+    }
+    if (kind == QLatin1String("emote")) {
+        return text;
+    }
+    if (kind == QLatin1String("image")) {
+        return tr("Picture");
+    }
+    if (kind == QLatin1String("video")) {
+        return tr("Video");
+    }
+    if (kind == QLatin1String("audio")) {
+        return tr("Voice message");
+    }
+    if (kind == QLatin1String("file")) {
+        return tr("File");
+    }
+    if (kind == QLatin1String("location")) {
+        return tr("Location");
+    }
+    if (kind == QLatin1String("encrypted")) {
+        return tr("Encrypted message");
+    }
+    if (kind == QLatin1String("invite")) {
+        return tr("Invitation");
+    }
+    return text;
+}
+
+void MatrixBridge::clearErrorLog()
+{
+    if (m_errorLog.isEmpty()) {
+        return;
+    }
+    m_errorLog.clear();
+    emit errorLogChanged();
+}
+
+void MatrixBridge::noteError(const QString &command, const QString &message)
+{
+    if (message.isEmpty()) {
+        return;
+    }
+    QVariantMap entry;
+    // The time of day only. A date would be one more thing to read on a
+    // narrow row, and everything here happened in this run of the app.
+    entry.insert(QStringLiteral("time"),
+                 QTime::currentTime().toString(QStringLiteral("HH:mm:ss")));
+    entry.insert(QStringLiteral("command"), command);
+    entry.insert(QStringLiteral("message"), message);
+    // Newest first: a log is read from the top, and the interesting entry is
+    // the one that just happened.
+    m_errorLog.prepend(entry);
+    while (m_errorLog.size() > ErrorLogSize) {
+        m_errorLog.removeLast();
+    }
+    emit errorLogChanged();
 }
 
 void MatrixBridge::setLastError(const QString &message)

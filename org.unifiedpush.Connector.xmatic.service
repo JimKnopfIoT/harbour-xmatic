@@ -1,0 +1,18 @@
+# D-Bus activation for a push that arrives while xmatic is not running.
+#
+# A second activation entry beside org.xmatic.xmatic, and it has to be: SailJail
+# grants an application exactly one name, that one is already spent on the share
+# activation, and claiming a child of it comes back as ServiceUnknown. The
+# org.unifiedpush.Connector.* namespace exists for this and is granted by the
+# UnifiedPush permission.
+#
+# The mode travels in the environment, not in argv. SailJail matches the command
+# line it is handed against the desktop file's Exec and ExecDBus templates
+# exactly — one extra word is refused with "Command line does not match
+# templates" — and it does not inspect the environment. `env` runs outside the
+# sandbox and the variable is inherited through it; what sailjail sees after the
+# `--` is a bare /usr/bin/harbour-xmatic, which matches the template the icon
+# uses. So one desktop file serves the icon, the share and the push alike.
+[D-BUS Service]
+Name=org.unifiedpush.Connector.xmatic
+Exec=/usr/bin/env XMATIC_PUSH_WAKE=1 /usr/bin/sailjail -p harbour-xmatic.desktop -- /usr/bin/harbour-xmatic
