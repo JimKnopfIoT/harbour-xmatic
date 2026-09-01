@@ -34,6 +34,15 @@ function backupLevel(matrix) {
     if (s.backupEnabled) {
         return GREEN
     }
+    // Whether a backup is on the server is a question over the network, and
+    // the core answers null where it could not be asked. Null is not "no": a
+    // failed request used to read as "there is no key backup", which is the
+    // red line and the one that interrupts the start. Nobody may be alarmed
+    // over an unanswered question, for the same reason nobody may be
+    // reassured by one.
+    if (s.backupOnServer === undefined || s.backupOnServer === null) {
+        return UNKNOWN
+    }
     // On the server but not unlocked here: the keys exist, this device just
     // cannot reach them. That is a fault, not an absence.
     return s.backupOnServer ? ORANGE : RED

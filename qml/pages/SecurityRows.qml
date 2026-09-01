@@ -22,6 +22,12 @@ Column {
             if (s.backupEnabled) {
                 return qsTr("Your room keys are backed up.")
             }
+            // Null, not false: the core could not reach the server. Saying
+            // "there is no backup" there is a claim about the account made
+            // from a failed request.
+            if (s.backupOnServer === undefined || s.backupOnServer === null) {
+                return qsTr("The server could not be asked whether a backup exists.")
+            }
             return s.backupOnServer
                     ? qsTr("The backup is on the server but not unlocked on this device.")
                     : qsTr("There is no key backup. Without one, messages become unreadable when this device is gone.")

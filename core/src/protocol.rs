@@ -427,6 +427,54 @@ pub enum Command {
     #[serde(rename = "storage.status")]
     StorageStatus { id: u64 },
 
+    /// What UnifiedPush looks like on this device: which distributors are
+    /// installed, which one is in use, and whether it has ever answered.
+    ///
+    /// Needs no client, and changes nothing. The setup page asks on every
+    /// visit, because a distributor can be installed or removed while this app
+    /// runs and a page that answers from a cache would be wrong exactly then.
+    #[serde(rename = "push.status")]
+    PushStatus { id: u64 },
+
+    /// Register with a distributor and hand the endpoint to the homeserver.
+    ///
+    /// `gateway` is the Matrix push gateway the homeserver will post to; the
+    /// endpoint travels as the pushkey. Nothing here can be guessed, which is
+    /// why it is a parameter and not a constant: the endpoint belongs to the
+    /// distributor and the gateway to whoever runs one.
+    #[serde(rename = "push.enable")]
+    PushEnable { id: u64, gateway: String },
+
+    /// Give the registration back and delete the pusher. Both halves, because
+    /// a pusher left behind keeps a dead endpoint on the server.
+    #[serde(rename = "push.disable")]
+    PushDisable { id: u64, endpoint: String },
+
+    /// Fetches the message a push named and answers with what a banner needs.
+    ///
+    /// The push itself carries a room and an event id only, so the text is
+    /// fetched and decrypted here — nothing on the way saw it.
+    #[serde(rename = "push.notify")]
+    PushNotify {
+        id: u64,
+        room_id: String,
+        event_id: String,
+    },
+
+    /// Hands the endpoint the distributor answered with to the homeserver.
+    ///
+    /// Sent by the front end when `push.endpoint` arrives, rather than done
+    /// here on the spot: the gateway is a setting and lives on that side, and
+    /// the two halves are worth seeing separately when one of them fails.
+    #[serde(rename = "push.pusher")]
+    PushPusher {
+        id: u64,
+        endpoint: String,
+        p256dh: String,
+        auth: String,
+        gateway: String,
+    },
+
     /// Unlock the key backup with a recovery key or passphrase.
     #[serde(rename = "encryption.recover")]
     EncryptionRecover { id: u64, key: Secret },
@@ -874,6 +922,11 @@ impl Command {
             | Command::Logout { id }
             | Command::RoomListStart { id }
             | Command::RoomListFilter { id, .. }
+            | Command::PushStatus { id }
+            | Command::PushEnable { id, .. }
+            | Command::PushDisable { id, .. }
+            | Command::PushPusher { id, .. }
+            | Command::PushNotify { id, .. }
             | Command::RoomListMore { id }
             | Command::RoomListStop { id }
             | Command::SpacesStart { id }

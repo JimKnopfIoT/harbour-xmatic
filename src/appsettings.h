@@ -33,6 +33,15 @@ class AppSettings : public QObject
                NOTIFY jumpToReadMarkerChanged)
     Q_PROPERTY(bool clickableLinks READ clickableLinks WRITE setClickableLinks
                NOTIFY clickableLinksChanged)
+    /// Whether push notifications were turned on. Off by default and stored
+    /// rather than derived: a registration survives a restart, and the app has
+    /// to know on the next start whether it made one.
+    Q_PROPERTY(bool pushEnabled READ pushEnabled WRITE setPushEnabled
+               NOTIFY pushChanged)
+    /// The Matrix push gateway the homeserver posts to. No default: nothing
+    /// can guess it, and a wrong one fails silently on the server's side.
+    Q_PROPERTY(QString pushGateway READ pushGateway WRITE setPushGateway
+               NOTIFY pushChanged)
     Q_PROPERTY(bool voiceMessages READ voiceMessages WRITE setVoiceMessages
                NOTIFY voiceMessagesChanged)
     Q_PROPERTY(bool hideKeyboardOnSend READ hideKeyboardOnSend WRITE setHideKeyboardOnSend
@@ -128,6 +137,10 @@ public:
 
     /// Whether a link in a message can be tapped.
     bool clickableLinks() const;
+    bool pushEnabled() const;
+    void setPushEnabled(bool enabled);
+    QString pushGateway() const;
+    void setPushGateway(const QString &gateway);
     void setClickableLinks(bool enabled);
 
     /// Whether the microphone sits next to the message field. On by default -
@@ -181,6 +194,7 @@ signals:
     void showReadStatusChanged();
     void jumpToReadMarkerChanged();
     void clickableLinksChanged();
+    void pushChanged();
     void voiceMessagesChanged();
     void hideKeyboardOnSendChanged();
     void emojiImagesChanged();

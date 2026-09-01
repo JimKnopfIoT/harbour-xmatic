@@ -136,6 +136,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Setan og skilaboðagagnagrunnurinn liggja ódulkóðuð í þessu tæki. Ýttu til að dulkóða þau.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Villuannáll</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Ýtitilkynningar</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -417,6 +425,10 @@
         <source>not signed in</source>
         <translation>ekki innskráð</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Ótengt — bíð eftir netinu</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -636,26 +648,6 @@
         <translation>Staðfesta</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Staðfestingin ber saman sjö tjákn við hinn aðilann. Milli þinna eigin tækja opnar hún einnig sameiginlega herbergjalykla.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Staðfesta hin tækin mín</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Auðkenni notanda</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Staðfesta þennan notanda</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Opna afritið</translation>
     </message>
@@ -690,6 +682,37 @@
     <message>
         <source>Copy</source>
         <translation>Afrita</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Staðfesta þetta tæki</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Ber saman sjö tjákn við hitt tækið þitt. Þú þarft það tæki fyrir framan þig; þegar bæði hafa staðfest getur þetta tæki lesið sameiginlega herbergjalykla.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Tæma</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Afrita allt</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Villuannáll</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>Ekkert brást í þessari keyrslu.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Nýjast fyrst, og aðeins þessi keyrsla — ekkert er geymt á disknum. Auðkenni eru þegar fjarlægð, svo þetta má senda áfram eins og það er.</translation>
     </message>
 </context>
 <context>
@@ -944,6 +967,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Setunni þinni er lokið. Skráðu þig inn aftur.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Sláðu fyrst inn ýtigátt.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Ný skilaboð</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Mynd</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Myndskeið</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Raddskilaboð</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Skrá</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Staðsetning</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Dulkóðuð skilaboð</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Boð</translation>
     </message>
 </context>
 <context>
@@ -1428,6 +1487,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Ýtitilkynningar</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic hefur enga bakgrunnsþjónustu, svo skilaboð berast aðeins meðan það keyrir. Ýtidreifir er sérstakt forrit sem heldur einni tengingu fyrir öll forrit í tækinu og vekur þau þegar eitthvað berst.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Taka við ýtitilkynningum</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Dreifir</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Enginn ýtidreifir er uppsettur. Án hans heldur ekkert tengingunni og þetta helst slökkt.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Skráning</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Þetta tæki hefur vistfang þar sem hægt er að ná í það.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Bíð eftir dreifinum.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Ekki skráð.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Gátt</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Matrix-heimaþjónn getur ekki talað beint við ýtidreifi, svo hann sendir á gátt sem áframsendir. Það er ekkert sjálfgefið gildi: það er það eina sem enginn getur giskað á fyrir þig.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Ýtigátt</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Hvað fer frá þessu tæki</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Heimaþjónninum þínum er sagt vistfang hjá ýtiþjónustunni og hann sendir gáttinni auðkenni herbergis og skilaboða fyrir hverja tilkynningu. Engan texta: ýtingin ber aðeins auðkenni og þetta tæki sækir og afkóðar skilaboðin sjálft. Það vistfang er leyndarmál — sá sem hefur það getur sent þessum síma tilkynningu.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Ný skilaboð</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1776,6 +1901,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 af %2 herbergjum</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Staðfesta notanda</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1960,38 +2089,6 @@
         <translation>%1 breytti aðgangssniði sínu</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Afrita</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Svara</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Vista</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Áframsenda</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Breyta</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Festa</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Eyða</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Meira…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Ekki er hægt að hlaða tilvitnuðu skilaboðunum: þau eru ekki lengur til eða þú mátt ekki sjá þau.</translation>
     </message>
@@ -2052,22 +2149,6 @@
         <translation>Þessi skilaboð eru ekki í hlaðnu sögunni</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Henda</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Senda aftur</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Bregðast við</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Svara í þræðinum</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Afrita hlekk spjallrásar</translation>
     </message>
@@ -2122,6 +2203,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Hvað þýða þessi merki?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Staðfesta tengilið</translation>
     </message>
 </context>
 <context>
@@ -2217,6 +2302,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Það er engin endurheimt fyrir þennan reikning enn. Settu upp lyklaafrit til að búa til eina.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Ekki tókst að spyrja netþjóninn hvort afrit sé til.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2251,6 +2340,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Allt þetta finnurðu aftur undir Reikningur › Dulkóðun.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Allt á þessu tæki er í lagi.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Loka</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Staðfesta þetta tæki</translation>
     </message>
 </context>
 <context>
@@ -2727,6 +2828,41 @@
     <message>
         <source>Close</source>
         <translation>Loka</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Staðfesta notanda</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Báðir aðilar bera svo saman sjö tjákn. Það er einmitt það sem segir að enginn sitji á milli — og það gildir um hvert herbergi sem þú deilir með þessari manneskju.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Auðkenni notanda</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Til dæmis @anna:example.org eða @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Staðfesta</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Þitt eigið tæki</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Ber saman sjö tjákn við hitt tækið þitt. Þú þarft það tæki fyrir framan þig; þegar bæði hafa staðfest getur þetta tæki lesið sameiginlega herbergjalykla.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Staðfesta þetta tæki</translation>
     </message>
 </context>
 <context>

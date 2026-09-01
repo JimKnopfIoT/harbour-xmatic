@@ -135,6 +135,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>A munkamenet és az üzenet-adatbázis titkosítatlanul van ezen az eszközön. Koppints a titkosításhoz.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Hibanapló</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push értesítések</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -416,6 +424,10 @@
         <source>not signed in</source>
         <translation>nincs bejelentkezve</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Kapcsolat nélkül — várakozás a hálózatra</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -634,26 +646,6 @@
         <translation>Ellenőrzés</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Az ellenőrzés hét emodzsit hasonlít össze a másik féllel. A saját eszközeid között a megosztott szobakulcsokat is feloldja.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>A többi eszközöm ellenőrzése</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Felhasználóazonosító</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Felhasználó ellenőrzése</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Mentés feloldása</translation>
     </message>
@@ -688,6 +680,37 @@
     <message>
         <source>Copy</source>
         <translation>Másolás</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Az eszköz igazolása</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Hét emodzsit hasonlít össze a másik eszközöddel. Szükséged van arra az eszközre magad előtt; ha mindkettő megerősítette, ez az eszköz olvashatja a megosztott szobakulcsokat.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Ürítés</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Összes másolása</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Hibanapló</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>Ebben a futásban semmi sem hiúsult meg.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>A legújabb elöl, és csak ez a futás — semmi sem marad a lemezen. Az azonosítók már el vannak távolítva, így ez így adható tovább.</translation>
     </message>
 </context>
 <context>
@@ -942,6 +965,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>A munkameneted véget ért. Jelentkezz be újra.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Adj meg előbb egy push átjárót.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Új üzenet</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Kép</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Videó</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Hangüzenet</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fájl</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Helyzet</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Titkosított üzenet</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Meghívó</translation>
     </message>
 </context>
 <context>
@@ -1426,6 +1485,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push értesítések</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>Az xmaticnak nincs háttérszolgáltatása, így üzenetek csak futás közben érkeznek. A push elosztó egy külön alkalmazás, amely egyetlen kapcsolatot tart fenn az eszköz összes alkalmazása helyett, és felébreszti őket, ha valami érkezik.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Push értesítések fogadása</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Elosztó</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Nincs telepítve push elosztó. Nélküle semmi sem tartja a kapcsolatot, és ez kikapcsolva marad.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Regisztráció</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Ennek az eszköznek van címe, amelyen elérhető.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Várakozás az elosztóra.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Nincs regisztrálva.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Átjáró</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Egy Matrix kiszolgáló nem tud közvetlenül a push elosztóval beszélni, ezért egy átjárónak küld, amely továbbítja. Nincs alapérték: ez az egyetlen dolog, amit senki nem tud kitalálni helyetted.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push átjáró</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Mi hagyja el ezt az eszközt</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>A kiszolgálód megkapja a push szolgáltatásnál lévő címet, és minden értesítéshez elküldi az átjárónak a szoba- és üzenetazonosítót. Üzenetszöveget nem: a push csak azonosítókat visz, az üzenetet ez az eszköz tölti le és fejti vissza. Ez a cím titok — akinél megvan, értesítést küldhet erre a telefonra.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Új üzenet</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1774,6 +1899,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 / %2 szoba</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Felhasználó ellenőrzése</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1957,38 +2086,6 @@
         <translation>%1 módosította a profilját</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Másolás</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Válasz</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Mentés</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Továbbítás</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Szerkesztés</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Kitűzés</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Törlés</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Több…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Az idézett üzenet nem tölthető be: már nem létezik, vagy nincs jogod látni.</translation>
     </message>
@@ -2049,22 +2146,6 @@
         <translation>Ez az üzenet nincs a betöltött előzményekben</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Elvetés</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Küldés újra</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagálás</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Válasz a szálban</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Szobahivatkozás másolása</translation>
     </message>
@@ -2119,6 +2200,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Mit jelentenek ezek a jelek?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Partner ellenőrzése</translation>
     </message>
 </context>
 <context>
@@ -2214,6 +2299,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Ehhez a fiókhoz még nincs helyreállítás. Állíts be kulcsmentést, hogy létrejöjjön.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Nem sikerült megkérdezni a kiszolgálót, hogy van-e biztonsági mentés.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2248,6 +2337,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Mindezt megtalálod újra a Fiók › Titkosítás alatt.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Ezen az eszközön minden rendben van.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Bezárás</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Az eszköz igazolása</translation>
     </message>
 </context>
 <context>
@@ -2722,6 +2823,41 @@
     <message>
         <source>Close</source>
         <translation>Bezárás</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Felhasználó ellenőrzése</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Ezután mindkét fél összehasonlít hét emodzsit. Éppen ez mondja meg, hogy senki nem ül közétek — és minden szobára érvényes, amelyet ezzel a személlyel megosztasz.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Felhasználóazonosító</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Például @anna:example.org vagy @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Ellenőrzés</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>A saját eszközöd</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Hét emodzsit hasonlít össze a másik eszközöddel. Szükséged van arra az eszközre magad előtt; ha mindkettő megerősítette, ez az eszköz olvashatja a megosztott szobakulcsokat.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Az eszköz igazolása</translation>
     </message>
 </context>
 <context>

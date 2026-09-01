@@ -137,6 +137,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Сессия и база сообщений лежат на этом устройстве незашифрованными. Нажми, чтобы зашифровать их.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Журнал ошибок</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push-уведомления</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -418,6 +426,10 @@
         <source>not signed in</source>
         <translation>вход не выполнен</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Нет сети — ожидание подключения</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -638,26 +650,6 @@
         <translation>Подтвердить</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Подтверждение сравнивает семь эмодзи с другой стороной. Между твоими устройствами оно ещё и разблокирует общие ключи комнат.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Подтвердить мои другие устройства</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Идентификатор пользователя</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Подтвердить этого пользователя</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Разблокировать копию</translation>
     </message>
@@ -692,6 +684,37 @@
     <message>
         <source>Copy</source>
         <translation>Копировать</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Подтвердить это устройство</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Сравнивает семь эмодзи с другим твоим устройством. Оно должно быть перед тобой; как только оба подтвердят, это устройство сможет читать общие ключи комнат.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Очистить</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Копировать всё</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Журнал ошибок</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>В этом запуске ничего не отказало.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Новые сверху, и только этот запуск — на диске ничего не остаётся. Идентификаторы уже удалены, так что это можно передать как есть.</translation>
     </message>
 </context>
 <context>
@@ -946,6 +969,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Твоя сессия завершена. Войди снова.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Сначала укажи push-шлюз.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Новое сообщение</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Изображение</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Видео</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Голосовое сообщение</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Файл</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Местоположение</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Зашифрованное сообщение</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Приглашение</translation>
     </message>
 </context>
 <context>
@@ -1430,6 +1489,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push-уведомления</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>У xmatic нет фоновой службы, поэтому сообщения приходят только пока оно работает. Распространитель push — отдельное приложение, которое держит одно соединение для всех приложений на устройстве и будит их, когда что-то приходит.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Получать push-уведомления</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Распространитель</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Распространитель push не установлен. Без него нечему держать соединение, и это останется выключенным.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Регистрация</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>У этого устройства есть адрес, по которому его можно достать.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Ожидание распространителя.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Не зарегистрировано.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Шлюз</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Matrix-сервер не может обращаться к распространителю push напрямую, поэтому он отправляет на шлюз, который пересылает дальше. Значения по умолчанию нет: это единственное, что никто не может угадать за тебя.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-шлюз</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Что покидает это устройство</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Твоему серверу сообщается адрес в службе push, и он отправляет шлюзу идентификатор комнаты и сообщения для каждого уведомления. Без текста сообщения: push несёт только идентификаторы, а само сообщение это устройство получает и расшифровывает само. Этот адрес — секрет: кто им владеет, может послать этому телефону уведомление.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Новое сообщение</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1778,6 +1903,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 из %2 комнат</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Подтвердить пользователя</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1963,38 +2092,6 @@
         <translation>%1 изменил профиль</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Копировать</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Ответить</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Сохранить</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Переслать</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Изменить</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Закрепить</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Удалить</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Ещё…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Цитируемое сообщение не удалось загрузить: его больше нет или у тебя нет прав его видеть.</translation>
     </message>
@@ -2055,22 +2152,6 @@
         <translation>Этого сообщения нет в загруженной истории</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Отменить</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Отправить снова</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Отреагировать</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Ответить в теме</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Копировать ссылку на комнату</translation>
     </message>
@@ -2125,6 +2206,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Что означают эти знаки?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Подтвердить собеседника</translation>
     </message>
 </context>
 <context>
@@ -2220,6 +2305,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Для этой учётной записи восстановления пока нет. Настрой резервную копию ключей, чтобы оно появилось.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Не удалось спросить сервер, есть ли резервная копия.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2254,6 +2343,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Всё это ты снова найдёшь в Учётная запись › Шифрование.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>На этом устройстве всё в порядке.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Подтвердить это устройство</translation>
     </message>
 </context>
 <context>
@@ -2732,6 +2833,41 @@
     <message>
         <source>Close</source>
         <translation>Закрыть</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Подтвердить пользователя</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Затем обе стороны сравнивают семь эмодзи. Именно это говорит, что посередине никого нет — и это действует для каждой комнаты, которую ты делишь с этим человеком.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Идентификатор пользователя</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Например @anna:example.org или @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Подтвердить</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Твоё собственное устройство</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Сравнивает семь эмодзи с другим твоим устройством. Оно должно быть перед тобой; как только оба подтвердят, это устройство сможет читать общие ключи комнат.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Подтвердить это устройство</translation>
     </message>
 </context>
 <context>

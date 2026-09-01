@@ -64,6 +64,12 @@ Page {
 
     // A save that is waiting for its download to finish.
     property string pendingSaveKey: ""
+    /// The same waiting game for forwarding an attachment: the target room
+    /// encrypts under its own keys, so the file has to be on this device
+    /// before it can be sent on. A picture that was only ever shown as a
+    /// thumbnail has not been fetched in full.
+    property string pendingForwardKey: ""
+    property string pendingForwardMime: ""
 
     // The audio item currently loaded into the player, and one waiting for its
     // download.
@@ -813,6 +819,14 @@ Page {
                 audioPlayer.play()
                 return
             }
+            if (key === page.pendingForwardKey) {
+                page.pendingForwardKey = ""
+                pageStack.push(Qt.resolvedUrl("ForwardPage.qml"), {
+                                   path: "file://" + path,
+                                   mimeType: page.pendingForwardMime
+                               })
+                return
+            }
             if (key !== page.pendingSaveKey) {
                 return
             }
@@ -931,6 +945,20 @@ Page {
                 text: qsTr("Copy room link")
                 visible: !page.invited
                 onClicked: matrix.loadRoomLink(page.roomId)
+            }
+
+            // Only in a two-party encrypted chat, and only there: the core
+            // answers with the other person's address when the open room is
+            // one, so no address has to be typed and the entry disappears by
+            // itself in every group room. Verifying is about a person, and
+            // this is the one place where the person is already on screen.
+            MenuItem {
+                text: qsTr("Verify contact")
+                visible: !page.invited && matrix.roomDirectPeer.length > 0
+                onClicked: {
+                    matrix.requestVerification(matrix.roomDirectPeer)
+                    pageStack.push(Qt.resolvedUrl("VerificationPage.qml"))
+                }
             }
 
             // Everything about the room rather than about the running
@@ -1458,134 +1486,53 @@ Page {
                 enabled: model.kind === "message"
                 _showPress: false
 
-                menu: ContextMenu {
-                    MenuItem {
-                        text: qsTr("Copy")
-                        visible: (model.body || "").length > 0
-                        onClicked: Clipboard.text = model.body
+                // Everything a message can be done to lives on a page, not
+                // in a context menu.
+                //
+                // Silica's context menu shares the page's own menu machinery
+                // with the pull-down. Opened on a row near the top of the view
+                // it lands in the pull-down's place, and from then on a tug
+                // brings up the message's actions instead of the room's - so
+                // leaving, calling, searching and the room's own page have no
+                // way in at all while it stands there. Reported from the field
+                // with both screenshots, and seen once here without being
+                // reproducible. Every state needs a visible action, and this
+                // one took the only ones there were.
+                //
+                // The page was already there for landscape, where six entries
+                // do not fit in the four rows a menu gets on a 600 px
+                // conversation. Using it everywhere also ends the split where
+                // portrait had the entries and landscape had "More…" - one
+                // action, one place, one order, in both orientations.
+                //
+                // It costs a tap on Copy and Reply. A pull-down that cannot be
+                // reached costs the room.
+                function openActions() {
+                    if (model.kind !== "message") {
+                        return
                     }
-
-                    MenuItem {
-                        text: qsTr("Reply")
-                        visible: model.kind === "message"
-                        onClicked: page.beginReply(model.eventId, model.senderName, model.body)
-                    }
-
-                    // The entries below carry `!page.isLandscape` because in
-                    // landscape the screen is 1080 px high and the
-                    // conversation keeps under 600 of them — four menu rows,
-                    // where a message's own menu needs six. A context menu
-                    // cannot scroll (Silica's is a plain column, and flicking
-                    // closes it), so the last entries were simply out of
-                    // reach. There they move to a page instead, reached
-                    // through "More…" below.
-                    MenuItem {
-                        // Starting one, not only answering in one that exists:
-                        // the marker on a message opens a thread that is
-                        // already there, and until now nothing opened one.
-                        text: qsTr("Reply in thread")
-                        visible: model.kind === "message"
-                                 && (model.eventId || "").length > 0
-                                 && !page.isLandscape
-                        onClicked: pageStack.push(Qt.resolvedUrl("ThreadPage.qml"), {
-                                                      roomId: page.roomId,
-                                                      roomName: page.roomName,
-                                                      rootEventId: model.threadRoot
-                                                                   && model.threadRoot.length > 0
-                                                                   ? model.threadRoot
-                                                                   : model.eventId,
-                                                      encrypted: page.encrypted
-                                                  })
-                    }
-
-                    MenuItem {
-                        text: qsTr("Save")
-                        visible: (row.isFile || row.isImage) && !page.isLandscape
-                        onClicked: page.saveAttachment(model)
-                    }
-
-                    MenuItem {
-                        text: qsTr("Forward")
-                        visible: (model.body || "").length > 0 && !row.isImage
-                                 && !page.isLandscape
-                        onClicked: pageStack.push(Qt.resolvedUrl("ForwardPage.qml"), {
-                                                      body: model.body
-                                                  })
-                    }
-
-                    MenuItem {
-                        text: qsTr("Edit")
-                        visible: row.isOwn && model.editable === true && !page.isLandscape
-                        onClicked: page.beginEdit(model.eventId, model.body)
-                    }
-
-                    MenuItem {
-                        text: qsTr("Pin")
-                        // Only where this account may write the room's pinned
-                        // list. `!== false` and not a plain test: until the
-                        // room's answer is in, the map has no entry, and a
-                        // slow answer must not take an action away from
-                        // somebody who has it.
-                        visible: model.kind === "message" && (model.eventId || "").length > 0
-                                 && !page.isLandscape
-                                 && matrix.roomPermissions.pin !== false
-                        onClicked: matrix.pinMessage(model.eventId, true)
-                    }
-
-                    MenuItem {
-                        text: qsTr("React")
-                        visible: model.kind === "message"
-                                 && (model.eventId || "").length > 0
-                                 && !page.isLandscape
-                        onClicked: page.pickReaction(model.eventId)
-                    }
-
-                    MenuItem {
-                        // The queue gave up on this one; this puts it back in
-                        // line. Nothing else in the app could move it.
-                        text: qsTr("Send again")
-                        visible: model.sendState === "failed" && !page.isLandscape
-                        onClicked: matrix.retryMessage(model.txnId || "")
-                    }
-
-                    MenuItem {
-                        // Also the only way out for a message whose send
-                        // failed for good: it has no event id, and without
-                        // this entry it would sit in the room for ever.
-                        text: model.sendState === "failed"
-                              ? qsTr("Discard") : qsTr("Delete")
-                        visible: row.isOwn && !page.isLandscape
-                        onClicked: page.confirmDelete(model.eventId || "",
-                                                      model.txnId || "",
-                                                      model.sendState === "failed")
-                    }
-
-                    MenuItem {
-                        text: qsTr("More…")
-                        visible: page.isLandscape
-                        onClicked: pageStack.push(Qt.resolvedUrl("MessageActionsPage.qml"), {
-                                                      roomPage: page,
-                                                      eventId: model.eventId || "",
-                                                      txnId: model.txnId || "",
-                                                      unsent: model.sendState === "failed",
-                                                      body: model.body || "",
-                                                      senderName: model.senderName || "",
-                                                      isOwn: row.isOwn,
-                                                      editable: model.editable === true,
-                                                      isImage: row.isImage,
-                                                      canSave: row.isFile || row.isImage,
-                                                      // Copied out, not handed
-                                                      // over: the model row is
-                                                      // gone once it leaves the
-                                                      // cache.
-                                                      item: {
-                                                          "id": model.id,
-                                                          "msgtype": model.msgtype,
-                                                          "media": model.media
-                                                      }
-                                                  })
-                    }
+                    pageStack.push(Qt.resolvedUrl("MessageActionsPage.qml"), {
+                                       roomPage: page,
+                                       eventId: model.eventId || "",
+                                       txnId: model.txnId || "",
+                                       unsent: model.sendState === "failed",
+                                       body: model.body || "",
+                                       senderName: model.senderName || "",
+                                       isOwn: row.isOwn,
+                                       editable: model.editable === true,
+                                       isImage: row.isImage,
+                                       canSave: row.isFile || row.isImage,
+                                       // Copied out, not handed over: the model
+                                       // row is gone once it leaves the cache.
+                                       item: {
+                                           "id": model.id,
+                                           "msgtype": model.msgtype,
+                                           "media": model.media
+                                       }
+                                   })
                 }
+
+                onPressAndHold: row.openActions()
 
                 // The sender's picture, left of their bubble. Only for other
                 // people: on one's own messages it would say nothing, and the
@@ -1620,7 +1567,7 @@ Page {
                         onClicked: pageStack.push(
                                        Qt.resolvedUrl("MemberProfilePage.qml"),
                                        { roomId: page.roomId, userId: model.sender })
-                        onPressAndHold: row.openMenu()
+                        onPressAndHold: row.openActions()
                     }
                 }
 
@@ -1767,10 +1714,19 @@ Page {
 
                                 Rectangle {
                                     width: Theme.paddingSmall / 2
-                                    // The texts' height, not the parent's —
-                                    // reading the parent back would close the
-                                    // loop again.
-                                    height: quoteTexts.height
+                                    // The taller of the two children, never the
+                                    // parent's height — reading the parent back
+                                    // would close the loop again. Both of these
+                                    // size themselves from their own content,
+                                    // so the direction stays one-way.
+                                    //
+                                    // It used to be the texts alone, and a
+                                    // quoted picture is three times their
+                                    // height: the bar then marked the top third
+                                    // of the quote and the rest of it had no
+                                    // left edge at all.
+                                    height: Math.max(quoteTexts.height,
+                                                     quoteThumbFrame.height)
                                     radius: width / 2
                                     color: Theme.rgba(Theme.highlightColor, 0.6)
                                 }
@@ -1779,8 +1735,18 @@ Page {
                                 // the file name, which says nothing about what
                                 // was answered - one had to open the original
                                 // to know.
-                                Image {
-                                    id: quoteThumb
+                                //
+                                // In a frame of its own, because without one it
+                                // was a rectangle of somebody else's photograph
+                                // sitting directly against the sender's name
+                                // and the reply's text, with nothing to say
+                                // where it began or ended. Reported from the
+                                // field in those words. The frame is also what
+                                // a picture that has not arrived yet stands in:
+                                // an empty outline reads as "a picture is
+                                // coming", where nothing at all read as a hole.
+                                Rectangle {
+                                    id: quoteThumbFrame
 
                                     readonly property var quotedMedia: model.replyTo
                                                                        ? model.replyTo.media : null
@@ -1790,49 +1756,115 @@ Page {
                                     visible: !!quotedMedia
                                              && (model.replyTo.msgtype === "m.image"
                                                  || model.replyTo.msgtype === "m.video")
-                                    width: visible ? Theme.itemSizeSmall : 0
-                                    height: width
-                                    fillMode: Image.PreserveAspectCrop
-                                    clip: true
-                                    asynchronous: true
-                                    // A fixed decode size: the quote is a
-                                    // thumbnail, and a picture from outside
-                                    // must not be able to ask for arbitrary
-                                    // memory.
-                                    sourceSize.width: Theme.itemSizeSmall * 2
-                                    sourceSize.height: Theme.itemSizeSmall * 2
 
-                                    // Also on a change of key, not only once:
-                                    // the delegate is recycled while scrolling
-                                    // and would otherwise keep the picture of
-                                    // the row it was last used for.
-                                    Component.onCompleted: load()
-                                    onMediaKeyChanged: {
-                                        source = ""
-                                        load()
-                                    }
+                                    // Sized to the picture, not the picture to
+                                    // a size. The frame takes whatever shape
+                                    // the whole image has once it is scaled
+                                    // into the box below, so a wide photograph
+                                    // makes a wide frame and there is never a
+                                    // strip of empty mat beside it.
+                                    //
+                                    // One direction only: the frame reads its
+                                    // child's size, the child reads nothing of
+                                    // the frame but the border it sits inside,
+                                    // which is a constant.
+                                    width: visible ? quoteThumb.width + 2 * border.width : 0
+                                    height: visible ? quoteThumb.height + 2 * border.width : 0
+                                    radius: Theme.paddingSmall / 2
+                                    // Ambience colours, at the strengths Silica
+                                    // uses for a resting surface and its edge -
+                                    // a fixed grey would be invisible on one
+                                    // ambience and a bar on the next.
+                                    color: Theme.rgba(Theme.primaryColor, 0.1)
+                                    border.width: Math.max(1, Math.round(Theme.paddingSmall / 6))
+                                    border.color: Theme.rgba(Theme.primaryColor, 0.4)
 
-                                    function load() {
-                                        if (!visible || mediaKey.length === 0) {
-                                            return
+                                    Image {
+                                        id: quoteThumb
+
+                                        x: quoteThumbFrame.border.width
+                                        y: quoteThumbFrame.border.width
+
+                                        readonly property var quotedMedia: quoteThumbFrame.quotedMedia
+                                        readonly property string mediaKey: quoteThumbFrame.mediaKey
+
+                                        /// The longest side the quote's picture may
+                                        /// take. Medium rather than small: at the
+                                        /// old size a photograph reduced to a
+                                        /// hundred pixels of its middle showed
+                                        /// nothing anybody could recognise.
+                                        readonly property real box: Theme.itemSizeMedium
+
+                                        /// What the decoded picture must be
+                                        /// multiplied by to put its longest side on
+                                        /// the box. Falls back to a square while
+                                        /// nothing is loaded, so the frame has a
+                                        /// shape to hold before the picture is
+                                        /// there.
+                                        readonly property real fit:
+                                            (implicitWidth > 0 && implicitHeight > 0)
+                                            ? box / Math.max(implicitWidth, implicitHeight)
+                                            : 0
+
+                                        width: fit > 0 ? Math.round(implicitWidth * fit) : box
+                                        height: fit > 0 ? Math.round(implicitHeight * fit) : box
+
+                                        // The whole picture, not its middle.
+                                        // `PreserveAspectCrop` fills a fixed square
+                                        // by cutting away everything that does not
+                                        // fit, and what it cuts is exactly the part
+                                        // a quote is meant to identify - reported
+                                        // as "the preview shows only a section from
+                                        // the middle". Here nothing is cut: the
+                                        // frame took the picture's own proportions
+                                        // above, so fitting and filling are the
+                                        // same thing and no bars appear either.
+                                        fillMode: Image.PreserveAspectFit
+                                        asynchronous: true
+                                        // A fixed decode ceiling: the quote is a
+                                        // thumbnail, and a picture from outside
+                                        // must not be able to ask for arbitrary
+                                        // memory. Both dimensions set means "scale
+                                        // to fit inside this", which keeps the
+                                        // proportions the sizing above reads back.
+                                        sourceSize.width: Theme.itemSizeMedium * 2
+                                        sourceSize.height: Theme.itemSizeMedium * 2
+
+                                        // Also on a change of key, not only once:
+                                        // the delegate is recycled while scrolling
+                                        // and would otherwise keep the picture of
+                                        // the row it was last used for.
+                                        Component.onCompleted: load()
+                                        onMediaKeyChanged: {
+                                            source = ""
+                                            load()
                                         }
-                                        var known = matrix.mediaPath(mediaKey)
-                                        if (known.length > 0) {
-                                            source = "file://" + known
-                                        } else if (quotedMedia.thumbnailSource) {
-                                            matrix.requestMedia(mediaKey, quotedMedia.thumbnailSource, false,
-                                                                quotedMedia.size || 0)
-                                        } else {
-                                            matrix.requestMedia(mediaKey, quotedMedia.source, true,
-                                                                quotedMedia.size || 0)
-                                        }
-                                    }
 
-                                    Connections {
-                                        target: matrix
-                                        onMediaReady: {
-                                            if (key === quoteThumb.mediaKey) {
-                                                quoteThumb.source = "file://" + path
+                                        function load() {
+                                            // The frame carries the condition; this
+                                            // one is inside it and always visible.
+                                            if (!quoteThumbFrame.visible
+                                                    || mediaKey.length === 0) {
+                                                return
+                                            }
+                                            var known = matrix.mediaPath(mediaKey)
+                                            if (known.length > 0) {
+                                                source = "file://" + known
+                                            } else if (quotedMedia.thumbnailSource) {
+                                                matrix.requestMedia(mediaKey, quotedMedia.thumbnailSource, false,
+                                                                    quotedMedia.size || 0)
+                                            } else {
+                                                matrix.requestMedia(mediaKey, quotedMedia.source, true,
+                                                                    quotedMedia.size || 0)
+                                            }
+                                        }
+
+                                        Connections {
+                                            target: matrix
+                                            onMediaReady: {
+                                                if (key === quoteThumb.mediaKey) {
+                                                    quoteThumb.source = "file://" + path
+                                                }
                                             }
                                         }
                                     }
@@ -1841,12 +1873,20 @@ Page {
                                 Column {
                                     id: quoteTexts
 
+                                    // Beside the picture rather than above its
+                                    // top edge. A `Row` positions on x only, so
+                                    // a vertical anchor is allowed here and is
+                                    // not a loop: the column's height comes
+                                    // from its own labels and only its y comes
+                                    // from the row.
+                                    anchors.verticalCenter: parent.verticalCenter
+
                                     // What the labels may use once the bar, the
                                     // picture and the spacing took their share.
                                     readonly property real maxWidth: bubbleColumn.maxTextWidth
                                                                      - Theme.paddingSmall * 1.5
-                                                                     - (quoteThumb.visible
-                                                                        ? quoteThumb.width + Theme.paddingSmall
+                                                                     - (quoteThumbFrame.visible
+                                                                        ? quoteThumbFrame.width + Theme.paddingSmall
                                                                         : 0)
 
                                     Label {
@@ -1912,7 +1952,7 @@ Page {
                                             var body = model.replyTo.body || ""
                                             // Next to the picture the file name
                                             // is noise; a caption is not.
-                                            if (quoteThumb.visible && model.replyTo.media
+                                            if (quoteThumbFrame.visible && model.replyTo.media
                                                     && body === model.replyTo.media.filename) {
                                                 return ""
                                             }
@@ -1931,7 +1971,7 @@ Page {
                                 onClicked: page.jumpToEvent(model.replyTo.eventId)
                                 // The long press still belongs to the message, not to the
                                 // quote — otherwise this corner of the bubble has no menu.
-                                onPressAndHold: row.openMenu()
+                                onPressAndHold: row.openActions()
                             }
                         }
 
@@ -2020,7 +2060,7 @@ Page {
                                            ? page.openVideo(model.id, model.media)
                                            : page.openImage(model.id, model.media)
                                 // The delegate's own menu still has to be reachable.
-                                onPressAndHold: row.openMenu()
+                                onPressAndHold: row.openActions()
                             }
 
                         }
@@ -2130,7 +2170,7 @@ Page {
                                     }
                                     page.openImage(model.id, model.media)
                                 }
-                                onPressAndHold: row.openMenu()
+                                onPressAndHold: row.openActions()
                             }
 
                             text: {
@@ -2228,7 +2268,7 @@ Page {
                                                                 : model.threadRoot,
                                                    encrypted: page.encrypted
                                                })
-                                onPressAndHold: row.openMenu()
+                                onPressAndHold: row.openActions()
                             }
                         }
 
@@ -3329,6 +3369,36 @@ Page {
 
     // Saving needs the original, not the thumbnail, so it is fetched first and
     // written once it arrives.
+    // Forwarding an attachment, as against forwarding a message's text. The
+    // actions page offered neither for a picture: its entry carried only the
+    // body, and a body on an attachment is the file name — so forwarding one
+    // would have sent "holiday.jpg" as a sentence. Reported as "there is no
+    // Forward", and on an attachment there was not.
+    //
+    // The file first, because forwarding re-sends rather than referencing:
+    // the target room encrypts under its own keys, so the picture is uploaded
+    // again from the copy this device has. Where it has none yet - a picture
+    // seen only as a thumbnail - it is fetched, and the page opens when it
+    // lands.
+    function forwardAttachment(item) {
+        if (!item || !item.media) {
+            return
+        }
+        var key = item.id + "/full"
+        var mime = item.media.mimetype || ""
+        var known = matrix.mediaPath(key)
+        if (known.length > 0) {
+            pageStack.push(Qt.resolvedUrl("ForwardPage.qml"), {
+                               path: "file://" + known,
+                               mimeType: mime
+                           })
+            return
+        }
+        page.pendingForwardKey = key
+        page.pendingForwardMime = mime
+        matrix.requestMedia(key, item.media.source, false, item.media.size || 0)
+    }
+
     function saveAttachment(item) {
         var key = item.id + "/full"
         var known = matrix.mediaPath(key)

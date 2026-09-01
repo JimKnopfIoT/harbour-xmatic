@@ -137,6 +137,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Sesja i baza wiadomości leżą na tym urządzeniu bez szyfrowania. Dotknij, aby je zaszyfrować.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Dziennik błędów</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Powiadomienia push</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -418,6 +426,10 @@
         <source>not signed in</source>
         <translation>niezalogowany</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — czekanie na sieć</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -638,26 +650,6 @@
         <translation>Zweryfikuj</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Weryfikacja porównuje siedem emoji z drugą stroną. Między twoimi własnymi urządzeniami odblokowuje też wspólne klucze pokoju.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Zweryfikuj moje inne urządzenia</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Identyfikator użytkownika</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Zweryfikuj tego użytkownika</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Odblokuj kopię zapasową</translation>
     </message>
@@ -692,6 +684,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopiuj</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Zweryfikuj to urządzenie</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Porównuje siedem emoji z twoim drugim urządzeniem. Potrzebujesz tego urządzenia przed sobą; gdy oba potwierdzą, to urządzenie może czytać wspólne klucze pokoi.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Kopiuj wszystko</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Dziennik błędów</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>W tym uruchomieniu nic nie zawiodło.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Najnowsze na górze, i tylko to uruchomienie — nic nie jest zapisywane na dysku. Identyfikatory są już usunięte, więc można to przekazać w tej postaci.</translation>
     </message>
 </context>
 <context>
@@ -946,6 +969,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Twoja sesja się zakończyła. Zaloguj się ponownie.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Najpierw podaj bramę push.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nowa wiadomość</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Obraz</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Wideo</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Wiadomość głosowa</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Plik</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Lokalizacja</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Zaszyfrowana wiadomość</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Zaproszenie</translation>
     </message>
 </context>
 <context>
@@ -1430,6 +1489,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Powiadomienia push</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic nie ma usługi w tle, więc wiadomości docierają tylko wtedy, gdy działa. Dystrybutor push to osobna aplikacja, która utrzymuje jedno połączenie dla wszystkich aplikacji na urządzeniu i budzi je, gdy coś przyjdzie.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Odbieraj powiadomienia push</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Dystrybutor</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Nie zainstalowano żadnego dystrybutora push. Bez niego nic nie utrzymuje połączenia i to pozostanie wyłączone.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Rejestracja</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>To urządzenie ma adres, pod którym jest osiągalne.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Czekanie na dystrybutora.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Niezarejestrowane.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Brama</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Serwer Matrix nie może rozmawiać z dystrybutorem push bezpośrednio, więc wysyła do bramy, która przekazuje dalej. Nie ma wartości domyślnej: to jedyna rzecz, której nikt za ciebie nie zgadnie.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Brama push</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Co opuszcza to urządzenie</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Twój serwer dostaje adres w usłudze push i przy każdym powiadomieniu wysyła do bramy identyfikator pokoju i wiadomości. Bez treści: push niesie tylko identyfikatory, a wiadomość to urządzenie pobiera i odszyfrowuje samo. Ten adres to sekret — kto go ma, może wysłać temu telefonowi powiadomienie.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Nowa wiadomość</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1778,6 +1903,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 z %2 pokoi</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Zweryfikuj użytkownika</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1963,38 +2092,6 @@
         <translation>%1 zmienił swój profil</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopiuj</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Odpowiedz</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Zapisz</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Przekaż</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Edytuj</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Przypnij</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Usuń</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Więcej…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Cytowanej wiadomości nie da się wczytać: już nie istnieje albo nie masz prawa jej zobaczyć.</translation>
     </message>
@@ -2055,22 +2152,6 @@
         <translation>Tej wiadomości nie ma we wczytanej historii</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Odrzuć</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Wyślij ponownie</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Zareaguj</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Odpowiedz w wątku</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopiuj link do pokoju</translation>
     </message>
@@ -2125,6 +2206,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Co oznaczają te znaki?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Zweryfikuj kontakt</translation>
     </message>
 </context>
 <context>
@@ -2220,6 +2305,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Dla tego konta nie ma jeszcze odzyskiwania. Skonfiguruj kopię kluczy, aby je utworzyć.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Nie udało się zapytać serwera, czy istnieje kopia zapasowa.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2254,6 +2343,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Wszystko to znajdziesz ponownie w Konto › Szyfrowanie.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Na tym urządzeniu wszystko jest w porządku.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Zweryfikuj to urządzenie</translation>
     </message>
 </context>
 <context>
@@ -2732,6 +2833,41 @@
     <message>
         <source>Close</source>
         <translation>Zamknij</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Zweryfikuj użytkownika</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Obie strony porównują potem siedem emoji. Właśnie to mówi, że nikt nie siedzi pomiędzy — i dotyczy każdego pokoju, który dzielisz z tą osobą.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Identyfikator użytkownika</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Na przykład @anna:example.org albo @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Zweryfikuj</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Twoje własne urządzenie</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Porównuje siedem emoji z twoim drugim urządzeniem. Potrzebujesz tego urządzenia przed sobą; gdy oba potwierdzą, to urządzenie może czytać wspólne klucze pokoi.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Zweryfikuj to urządzenie</translation>
     </message>
 </context>
 <context>

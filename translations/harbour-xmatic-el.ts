@@ -136,6 +136,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Η συνεδρία και η βάση μηνυμάτων βρίσκονται μη κρυπτογραφημένες σε αυτή τη συσκευή. Πάτα για να τις κρυπτογραφήσεις.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Αρχείο σφαλμάτων</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Ειδοποιήσεις push</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -417,6 +425,10 @@
         <source>not signed in</source>
         <translation>μη συνδεδεμένος</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Εκτός σύνδεσης — αναμονή για δίκτυο</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -636,26 +648,6 @@
         <translation>Επαλήθευση</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Η επαλήθευση συγκρίνει επτά emoji με την άλλη πλευρά. Ανάμεσα στις δικές σου συσκευές ξεκλειδώνει και κοινά κλειδιά δωματίων.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Επαλήθευση των άλλων συσκευών μου</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>Αναγνωριστικό χρήστη</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Επαλήθευση αυτού του χρήστη</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Ξεκλείδωμα αντιγράφου</translation>
     </message>
@@ -690,6 +682,37 @@
     <message>
         <source>Copy</source>
         <translation>Αντιγραφή</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Επαλήθευση αυτής της συσκευής</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Συγκρίνει επτά emoji με την άλλη σου συσκευή. Χρειάζεσαι εκείνη τη συσκευή μπροστά σου· μόλις επιβεβαιώσουν και οι δύο, αυτή εδώ μπορεί να διαβάσει τα κοινά κλειδιά δωματίων.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Καθαρισμός</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Αντιγραφή όλων</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Αρχείο σφαλμάτων</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>Σε αυτή την εκτέλεση δεν απέτυχε τίποτα.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Τα νεότερα πρώτα, και μόνο αυτή η εκτέλεση — τίποτα δεν κρατιέται στον δίσκο. Τα αναγνωριστικά έχουν ήδη αφαιρεθεί, οπότε αυτό μπορεί να δοθεί όπως είναι.</translation>
     </message>
 </context>
 <context>
@@ -944,6 +967,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Η συνεδρία σου τελείωσε. Συνδέσου ξανά.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Δώσε πρώτα μια πύλη push.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Νέο μήνυμα</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Εικόνα</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Βίντεο</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Φωνητικό μήνυμα</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Αρχείο</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Τοποθεσία</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Κρυπτογραφημένο μήνυμα</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Πρόσκληση</translation>
     </message>
 </context>
 <context>
@@ -1428,6 +1487,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Ειδοποιήσεις push</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>Το xmatic δεν έχει υπηρεσία παρασκηνίου, οπότε τα μηνύματα φτάνουν μόνο όσο τρέχει. Ένας διανομέας push είναι ξεχωριστή εφαρμογή που κρατά μία σύνδεση για όλες τις εφαρμογές της συσκευής και τις ξυπνά όταν έρθει κάτι.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Λήψη ειδοποιήσεων push</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Διανομέας</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Δεν υπάρχει εγκατεστημένος διανομέας push. Χωρίς αυτόν τίποτα δεν κρατά τη σύνδεση, και αυτό παραμένει ανενεργό.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Εγγραφή</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Αυτή η συσκευή έχει διεύθυνση στην οποία μπορεί να προσεγγιστεί.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Αναμονή για τον διανομέα.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Χωρίς εγγραφή.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Πύλη</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Ένας διακομιστής Matrix δεν μπορεί να μιλήσει απευθείας σε διανομέα push, γι&apos; αυτό στέλνει σε μια πύλη που προωθεί. Δεν υπάρχει προεπιλογή: είναι το μόνο που κανείς δεν μπορεί να μαντέψει για σένα.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Πύλη push</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Τι φεύγει από αυτή τη συσκευή</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Ο διακομιστής σου μαθαίνει μια διεύθυνση στην υπηρεσία push και στέλνει στην πύλη ένα αναγνωριστικό δωματίου και μηνύματος για κάθε ειδοποίηση. Κανένα κείμενο: το push μεταφέρει μόνο αναγνωριστικά και αυτή η συσκευή φέρνει και αποκρυπτογραφεί το μήνυμα μόνη της. Αυτή η διεύθυνση είναι μυστικό — όποιος την έχει μπορεί να στείλει ειδοποίηση σε αυτό το τηλέφωνο.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Νέο μήνυμα</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1776,6 +1901,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 από %2 δωμάτια</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Επαλήθευση χρήστη</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1960,38 +2089,6 @@
         <translation>Ο/Η %1 άλλαξε το προφίλ του</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Αντιγραφή</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Απάντηση</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Αποθήκευση</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Προώθηση</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Επεξεργασία</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Καρφίτσωμα</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Διαγραφή</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Περισσότερα…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Το μήνυμα που παρατίθεται δεν φορτώνεται: δεν υπάρχει πια ή δεν επιτρέπεται να το δεις.</translation>
     </message>
@@ -2052,22 +2149,6 @@
         <translation>Αυτό το μήνυμα δεν είναι στο φορτωμένο ιστορικό</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Απόρριψη</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Αποστολή ξανά</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Αντίδραση</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Απάντηση στο νήμα</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Αντιγραφή συνδέσμου δωματίου</translation>
     </message>
@@ -2122,6 +2203,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Τι σημαίνουν αυτά τα σημάδια;</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Επαλήθευση επαφής</translation>
     </message>
 </context>
 <context>
@@ -2217,6 +2302,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Για αυτόν τον λογαριασμό δεν υπάρχει ακόμη ανάκτηση. Ρύθμισε ένα αντίγραφο κλειδιών για να δημιουργηθεί.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Δεν ήταν δυνατό να ερωτηθεί ο διακομιστής αν υπάρχει αντίγραφο ασφαλείας.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2251,6 +2340,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Όλα αυτά θα τα βρεις ξανά στο Λογαριασμός › Κρυπτογράφηση.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Όλα σε αυτή τη συσκευή είναι εντάξει.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Κλείσιμο</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Επαλήθευση αυτής της συσκευής</translation>
     </message>
 </context>
 <context>
@@ -2727,6 +2828,41 @@
     <message>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Επαλήθευση χρήστη</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Και οι δύο πλευρές συγκρίνουν μετά επτά emoji. Αυτό ακριβώς δείχνει ότι δεν κάθεται κανείς ενδιάμεσα — και ισχύει για κάθε δωμάτιο που μοιράζεσαι με αυτό το άτομο.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>Αναγνωριστικό χρήστη</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Για παράδειγμα @anna:example.org ή @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Επαλήθευση</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Η δική σου συσκευή</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Συγκρίνει επτά emoji με την άλλη σου συσκευή. Χρειάζεσαι εκείνη τη συσκευή μπροστά σου· μόλις επιβεβαιώσουν και οι δύο, αυτή εδώ μπορεί να διαβάσει τα κοινά κλειδιά δωματίων.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Επαλήθευση αυτής της συσκευής</translation>
     </message>
 </context>
 <context>

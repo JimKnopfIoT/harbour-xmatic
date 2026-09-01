@@ -191,7 +191,15 @@ ListItem {
             font.pixelSize: Theme.fontSizeSmall
             font.bold: true
             color: Theme.primaryColor
-            text: model.mentions > 0 ? model.mentions : model.unread
+            // "20+" where the count has reached the edge of what a sync
+            // carries per room: past that the core knows only "at least this
+            // many", and a bare number would claim a total nobody counted.
+            // The ceiling is the core's `LIST_TIMELINE_LIMIT`, which is why
+            // the number is not repeated here.
+            text: {
+                var count = model.mentions > 0 ? model.mentions : model.unread
+                return model.unreadCapped ? count + "+" : count
+            }
         }
     }
 }

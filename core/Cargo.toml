@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.27.0"
+version = "0.28.0"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -56,6 +56,23 @@ matrix-sdk = { version = "=0.18.0", default-features = false, features = [
     "automatic-room-key-forwarding",
 ] }
 matrix-sdk-ui = "=0.18.0"
+# UnifiedPush, the connector half. The reference client rather than a
+# hand-rolled protocol; the distributor is a separate app on the device, so
+# this brings no daemon of its own into a client that deliberately has none.
+#
+# `zbus` is named directly because its connection has to be driven by
+# `zbus::block_on` on a thread of its own. The crate's D-Bus handlers call
+# `Handle::block_on`, which is legal only on zbus's async-io executor - polled
+# from a tokio worker they panic with "Cannot start a runtime from within a
+# runtime", the same message this project already met on the Gemini for a
+# different reason. And **`zbus/tokio` must never be enabled anywhere in this
+# crate's dependency graph**: Cargo unifies features, so one such dependency
+# would move the executor and break it from a distance.
+unifiedpush = "0.1"
+unifiedpush_storage = "0.1"
+zbus = "5"
+# The UnifiedPush traits are async and not yet `dyn`-compatible without it.
+async-trait = "0.1"
 # Only for `UtdCause`: the timeline hands the reason a message could not be
 # decrypted over as this type, and neither matrix-sdk nor matrix-sdk-ui
 # re-exports it. The crate is already in the tree as a dependency of both, and

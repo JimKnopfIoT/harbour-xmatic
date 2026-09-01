@@ -250,6 +250,15 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
 
+            // Above the room entries, not below them: "Make start page" is
+            // hidden whenever this list already is the start page, so anything
+            // under it slides up against "Rooms" and reads as one of the ways
+            // into a room. Verifying is about a person.
+            MenuItem {
+                text: qsTr("Verify user")
+                onClicked: pageStack.push(Qt.resolvedUrl("VerifyUserPage.qml"))
+            }
+
             // The four ways into a room are one entry: a menu on a phone holds
             // about five before the last of them is out of reach, and these
             // four are all "start something", not everyday actions.

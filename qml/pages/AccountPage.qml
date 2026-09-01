@@ -125,6 +125,15 @@ Page {
             }
 
             WrapButton {
+                id: pushButton
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: column.buttonWidth
+                label: qsTr("Push notifications")
+                onClicked: pageStack.push(Qt.resolvedUrl("PushPage.qml"))
+            }
+
+            WrapButton {
                 id: ignoredButton
 
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -231,6 +240,14 @@ Page {
         }
 
         PullDownMenu {
+            // Topmost, which is the entry a full pull reaches: it is looked for
+            // once, after something went wrong, and never in passing. Signing
+            // out keeps its distance from the short tug either way.
+            MenuItem {
+                text: qsTr("Error log")
+                onClicked: pageStack.push(Qt.resolvedUrl("ErrorLogPage.qml"))
+            }
+
             MenuItem {
                 text: qsTr("Sign out")
                 onClicked: pageStack.push(Qt.resolvedUrl("LogoutDialog.qml"))

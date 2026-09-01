@@ -137,6 +137,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Relácia a databáza správ ležia na tomto zariadení nezašifrované. Ťuknutím ich zašifruješ.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Protokol chýb</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push oznámenia</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -418,6 +426,10 @@
         <source>not signed in</source>
         <translation>neprihlásené</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — čakám na sieť</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -638,26 +650,6 @@
         <translation>Overiť</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Overenie porovná sedem emodži s druhou stranou. Medzi tvojimi vlastnými zariadeniami navyše odomkne zdieľané kľúče miestností.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Overiť moje ďalšie zariadenia</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>ID používateľa</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Overiť tohto používateľa</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Odomknúť zálohu</translation>
     </message>
@@ -692,6 +684,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopírovať</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Overiť toto zariadenie</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Porovná sedem emodži s tvojím druhým zariadením. Potrebuješ ho pred sebou; keď obe potvrdia, toto zariadenie môže čítať zdieľané kľúče miestností.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Vyprázdniť</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Kopírovať všetko</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Protokol chýb</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>V tomto behu nič nezlyhalo.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Najnovšie hore, a len tento beh — na disku sa nič neuchováva. Identifikátory sú už odstránené, takže sa to dá odovzdať tak, ako je.</translation>
     </message>
 </context>
 <context>
@@ -946,6 +969,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Tvoja relácia sa skončila. Prihlás sa znova.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Najprv zadaj push bránu.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Nová správa</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Obrázok</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Hlasová správa</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Súbor</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Poloha</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Šifrovaná správa</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Pozvanie</translation>
     </message>
 </context>
 <context>
@@ -1430,6 +1489,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Push oznámenia</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic nemá službu na pozadí, takže správy prídu len keď beží. Distribútor push je samostatná aplikácia, ktorá drží jedno spojenie pre všetky aplikácie v zariadení a budí ich, keď niečo príde.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Prijímať push oznámenia</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Distribútor</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Nie je nainštalovaný žiadny distribútor push. Bez neho nie je nič, čo by držalo spojenie, a toto zostane vypnuté.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Registrácia</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Toto zariadenie má adresu, na ktorej je dosiahnuteľné.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Čaká sa na distribútora.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Neregistrované.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Brána</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Matrix server nemôže hovoriť s distribútorom push priamo, posiela teda na bránu, ktorá to posunie ďalej. Predvolená hodnota neexistuje: to je jediná vec, ktorú za teba nikto neuhádne.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push brána</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Čo opúšťa toto zariadenie</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tvoj server sa dozvie adresu v službe push a ku každému oznámeniu pošle bráne identifikátor miestnosti a správy. Žiadny text: push nesie len identifikátory a správu si toto zariadenie stiahne a rozšifruje samo. Tá adresa je tajomstvo — kto ju má, môže tomuto telefónu poslať oznámenie.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Nová správa</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1778,6 +1903,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 z %2 miestností</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Overiť používateľa</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1963,38 +2092,6 @@
         <translation>%1 zmenil svoj profil</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopírovať</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Odpovedať</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Uložiť</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Preposlať</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Upraviť</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Pripnúť</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Zmazať</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Viac…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Citovanú správu nemožno načítať: už neexistuje, alebo ju nesmieš vidieť.</translation>
     </message>
@@ -2055,22 +2152,6 @@
         <translation>Táto správa nie je v načítanej histórii</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Zahodiť</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Odoslať znova</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagovať</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Odpovedať vo vlákne</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopírovať odkaz na miestnosť</translation>
     </message>
@@ -2125,6 +2206,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Čo znamenajú tieto značky?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Overiť kontakt</translation>
     </message>
 </context>
 <context>
@@ -2220,6 +2305,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Pre tento účet zatiaľ nie je obnovenie. Nastav zálohu kľúčov, aby vzniklo.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Server sa nepodarilo opýtať, či záloha existuje.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2254,6 +2343,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Všetko toto nájdeš znova v Účet › Šifrovanie.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Na tomto zariadení je všetko v poriadku.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zavrieť</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Overiť toto zariadenie</translation>
     </message>
 </context>
 <context>
@@ -2732,6 +2833,41 @@
     <message>
         <source>Close</source>
         <translation>Zavrieť</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Overiť používateľa</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Obe strany potom porovnajú sedem emodži. Práve to hovorí, že medzi vami nikto nesedí — a platí to pre každú miestnosť, ktorú s touto osobou zdieľaš.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>ID používateľa</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Napríklad @anna:example.org alebo @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Overiť</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Tvoje vlastné zariadenie</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Porovná sedem emodži s tvojím druhým zariadením. Potrebuješ ho pred sebou; keď obe potvrdia, toto zariadenie môže čítať zdieľané kľúče miestností.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Overiť toto zariadenie</translation>
     </message>
 </context>
 <context>

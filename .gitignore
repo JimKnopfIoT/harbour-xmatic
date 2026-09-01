@@ -32,7 +32,12 @@ CLAUDE.md
 HANDOFF.md
 STATUS.md
 PUBLISH.md
-docs/
+# `docs/*` and not `docs/`: git cannot re-include a file whose parent directory
+# is excluded, and one file in there has to ship. The push notification page
+# and the OpenRepos description both point at it, so it must exist where they
+# point; it is written for users, not for developers.
+docs/*
+!docs/PUSH.md
 research/
 .claude/
 *.local.sh

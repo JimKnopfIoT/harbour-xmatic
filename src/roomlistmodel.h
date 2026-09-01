@@ -14,12 +14,18 @@ class RoomListModel : public DiffListModel
     /// — a muted room asked not to be advertised.
     Q_PROPERTY(int unreadRooms READ unreadRooms NOTIFY unreadTotalsChanged)
     Q_PROPERTY(int unreadMessages READ unreadMessages NOTIFY unreadTotalsChanged)
+    /// Whether at least one of the counted rooms sat at the edge of what a
+    /// sync carries, so `unreadMessages` is a floor rather than a total. The
+    /// cover marks it the same way the row's badge does; the two must not
+    /// disagree about the same number.
+    Q_PROPERTY(bool unreadCapped READ unreadCapped NOTIFY unreadTotalsChanged)
 
 public:
     enum Role {
         IdRole = Qt::UserRole + 1,
         NameRole,
         UnreadRole,
+        UnreadCappedRole,
         MentionsRole,
         EncryptedRole,
         SpaceRole,
@@ -52,6 +58,7 @@ public:
 
     int unreadRooms() const { return m_unreadRooms; }
     int unreadMessages() const { return m_unreadMessages; }
+    bool unreadCapped() const { return m_unreadCapped; }
 
 signals:
     void unreadTotalsChanged();
@@ -64,6 +71,7 @@ private:
 
     int m_unreadRooms = 0;
     int m_unreadMessages = 0;
+    bool m_unreadCapped = false;
 };
 
 #endif // ROOMLISTMODEL_H

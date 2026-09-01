@@ -138,6 +138,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Is-sessjoni u d-database tal-messaġġi jinsabu mhux ikkriptati fuq dan l-apparat. Agħfas biex tikkriptahom.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Reġistru tal-iżbalji</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Notifiki push</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -419,6 +427,10 @@
         <source>not signed in</source>
         <translation>mhux illoggjat</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Offline — qed jistenna n-netwerk</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -640,26 +652,6 @@
         <translation>Ivverifika</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Il-verifika tqabbel seba&apos; emoji man-naħa l-oħra. Bejn l-apparati tiegħek stess tiftaħ ukoll iċ-ċwievet komuni tal-kmamar.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Ivverifika l-apparati l-oħra tiegħi</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>ID tal-utent</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Ivverifika dan l-utent</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Iftaħ il-backup</translation>
     </message>
@@ -694,6 +686,37 @@
     <message>
         <source>Copy</source>
         <translation>Ikkopja</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Ivverifika dan l-apparat</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Iqabbel seba&apos; emoji mal-apparat l-ieħor tiegħek. Għandek bżonn dak l-apparat quddiemek; ladarba t-tnejn ikkonfermaw, dan jista&apos; jaqra ċ-ċwievet komuni tal-kmamar.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Battal</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Ikkopja kollox</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Reġistru tal-iżbalji</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>F&apos;din il-ħidma ma fallielu xejn.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>L-aktar ġodda l-ewwel, u din il-ħidma biss — xejn ma jinżamm fuq id-diska. L-identifikaturi diġà tneħħew, allura dan jista&apos; jingħadda kif inhu.</translation>
     </message>
 </context>
 <context>
@@ -948,6 +971,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Is-sessjoni tiegħek intemmet. Idħol mill-ġdid.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>L-ewwel daħħal gateway push.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Messaġġ ġdid</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Ritratt</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Messaġġ bil-vuċi</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fajl</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Post</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Messaġġ iċċifrat</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Stedina</translation>
     </message>
 </context>
 <context>
@@ -1432,6 +1491,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Notifiki push</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic m&apos;għandux servizz fl-isfond, allura l-messaġġi jaslu biss waqt li jkun qed jaħdem. Distributur push huwa applikazzjoni separata li żżomm konnessjoni waħda għall-applikazzjonijiet kollha fuq l-apparat u tqajjimhom meta jasal xi ħaġa.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Irċievi notifiki push</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Distributur</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>M&apos;hemm ebda distributur push installat. Mingħajru m&apos;hemm xejn li jżomm il-konnessjoni, u dan jibqa&apos; mitfi.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Reġistrazzjoni</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Dan l-apparat għandu indirizz fejn jista&apos; jintlaħaq.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Qed jistenna d-distributur.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Mhux irreġistrat.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Gateway</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Server Matrix ma jistax ikellem distributur push direttament, allura jibgħat lil gateway li jgħaddi. M&apos;hemmx valur awtomatiku: hija l-unika ħaġa li ħadd ma jista&apos; jaqta&apos; għalik.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Gateway push</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>X&apos;jitlaq minn dan l-apparat</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Is-server tiegħek jingħata indirizz mas-servizz push, u għal kull notifika jibgħat lill-gateway identifikatur tal-kamra u tal-messaġġ. Ebda test: il-push iġorr identifikaturi biss u dan l-apparat iġib u jiddeċifra l-messaġġ waħdu. Dak l-indirizz huwa sigriet — min għandu jista&apos; jibgħat notifika lil dan it-telefon.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Messaġġ ġdid</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1780,6 +1905,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 minn %2 kmamar</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Ivverifika utent</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1966,38 +2095,6 @@
         <translation>%1 biddel il-profil tiegħu</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Ikkopja</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Wieġeb</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Issejvja</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Għaddi</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Editja</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Waħħal</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Ħassar</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Aktar…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Il-messaġġ ikkwotat ma jistax jitniżżel: m&apos;għadux jeżisti jew m&apos;għandekx permess tarah.</translation>
     </message>
@@ -2058,22 +2155,6 @@
         <translation>Dak il-messaġġ mhux fl-istorja mniżżla</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Warrab</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Ibgħat mill-ġdid</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Irreaġixxi</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Wieġeb fil-fjul</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Ikkopja l-link tal-kamra</translation>
     </message>
@@ -2128,6 +2209,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Xi jfissru dawn il-marki?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Ivverifika kuntatt</translation>
     </message>
 </context>
 <context>
@@ -2223,6 +2308,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Għal dan il-kont għadu m&apos;hemmx irkupru. Issettja kopja taċ-ċwievet biex toħloq wieħed.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Ma setax jiġi mistoqsi s-server jekk hemmx backup.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2257,6 +2346,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Dan kollu ssibu mill-ġdid taħt Kont › Kriptaġġ.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Kollox fuq dan l-apparat huwa f&apos;ordni.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Agħlaq</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Ivverifika dan l-apparat</translation>
     </message>
 </context>
 <context>
@@ -2737,6 +2838,41 @@
     <message>
         <source>Close</source>
         <translation>Agħlaq</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Ivverifika utent</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Imbagħad iż-żewġ naħat iqabblu seba&apos; emoji. Dak hu li jgħid li ħadd mhu bilqiegħda fin-nofs — u jgħodd għal kull kamra li taqsam ma&apos; din il-persuna.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>ID tal-utent</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Pereżempju @anna:example.org jew @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Ivverifika</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>L-apparat tiegħek stess</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Iqabbel seba&apos; emoji mal-apparat l-ieħor tiegħek. Għandek bżonn dak l-apparat quddiemek; ladarba t-tnejn ikkonfermaw, dan jista&apos; jaqra ċ-ċwievet komuni tal-kmamar.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Ivverifika dan l-apparat</translation>
     </message>
 </context>
 <context>

@@ -52,8 +52,16 @@ Page {
     }
 
     SilicaFlickable {
+        id: flickable
+
         anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge
+
+        // Reported by a new user as "there are no They match / They do not
+        // match buttons": they were below the edge of the screen, and nothing
+        // said the page continued. Seven emoji with their descriptions push
+        // the answer off a short screen, and in landscape they always would.
+        VerticalScrollDecorator { flickable: flickable }
 
         Column {
             id: column
@@ -153,14 +161,25 @@ Page {
 
             // Accept/decline belongs to the receiving side; the requester
             // only waits and gets its own cancel button below.
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: Theme.paddingLarge
+            //
+            // Stacked, not side by side. A `Row` takes its width from its
+            // children and a `WrapButton` takes its width from its parent, so
+            // the two together are a binding loop — Qt breaks it by giving the
+            // row a width of zero, and the buttons are simply not there. That
+            // is what a new user reported as "there is no They match button"
+            // on the emoji screen, and it was true. The two answers were
+            // ordinary Silica buttons until 0.26.2 swapped in the wrapping
+            // one; this is the only place in the app that puts two of them in
+            // a row, so it is the only page that lost them.
+            Column {
+                width: parent.width
+                spacing: Theme.paddingMedium
                 visible: matrix.verificationState === "comparing"
                          || (matrix.verificationState === "requested"
                              && !matrix.verificationWeStarted)
 
                 WrapButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
                     // Refusing still works while waiting — that is the way out
                     // if the other side never answers.
                     label: matrix.verificationState === "comparing"
@@ -181,6 +200,7 @@ Page {
                 }
 
                 WrapButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
                     enabled: !page.answered
                     label: matrix.verificationState === "comparing"
                           ? qsTr("They match")

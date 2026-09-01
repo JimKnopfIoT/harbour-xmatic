@@ -44,6 +44,7 @@ SOURCES += \
     src/appservice.cpp \
     src/appsettings.cpp \
     src/instancelock.cpp \
+    src/pushwake.cpp \
     src/languagesettings.cpp \
     src/difflistmodel.cpp \
     src/emojiset.cpp \
@@ -72,6 +73,7 @@ HEADERS += \
     src/emojistore.h \
     src/emojiimageprovider.h \
     src/instancelock.h \
+    src/pushwake.h \
     src/languagesettings.h \
     src/matrixbridge.h \
     src/secretskeeper.h \
@@ -150,6 +152,13 @@ dbusservice.files = org.xmatic.xmatic.service
 dbusservice.path = /usr/share/dbus-1/services
 INSTALLS += dbusservice
 
+# The second activation entry: a push arriving while the app is closed. Same
+# directory, different name — see the file itself for why it cannot be a child
+# of the app's own name.
+pushservice.files = org.unifiedpush.Connector.xmatic.service
+pushservice.path = /usr/share/dbus-1/services
+INSTALLS += pushservice
+
 # English is the source language; the files below carry the translations.
 # libsailfishapp loads the .qm matching the device locale and falls back to the
 # source strings where there is none.
@@ -223,9 +232,12 @@ DISTFILES += \
     qml/pages/ShieldGlossaryPage.qml \
     qml/pages/AppearancePage.qml \
     qml/pages/PrivacyPage.qml \
+    qml/pages/PushPage.qml \
     qml/pages/ColorField.qml \
     qml/pages/VerificationPage.qml \
+    qml/pages/VerifyUserPage.qml \
     qml/pages/EncryptionPage.qml \
+    qml/pages/ErrorLogPage.qml \
     qml/pages/LogoutDialog.qml \
     qml/pages/EncryptStorageDialog.qml \
     qml/pages/WrapButton.qml \

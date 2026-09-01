@@ -138,6 +138,14 @@
         <source>Session and message database lie on this device unencrypted. Tap to encrypt them.</source>
         <translation>Seja in zbirka sporočil sta na tej napravi nešifrirani. Dotakni se, da ju šifriraš.</translation>
     </message>
+    <message>
+        <source>Error log</source>
+        <translation>Dnevnik napak</translation>
+    </message>
+    <message>
+        <source>Push notifications</source>
+        <translation>Potisna obvestila</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -419,6 +427,10 @@
         <source>not signed in</source>
         <translation>ni prijavljen</translation>
     </message>
+    <message>
+        <source>Offline — waiting for the network</source>
+        <translation>Brez povezave — čakanje na omrežje</translation>
+    </message>
 </context>
 <context>
     <name>CreateRoomDialog</name>
@@ -640,26 +652,6 @@
         <translation>Preveri</translation>
     </message>
     <message>
-        <source>Verifying compares seven emoji with the other side. Between your own devices it also unlocks shared room keys.</source>
-        <translation>Preverjanje primerja sedem emojijev z drugo stranjo. Med tvojimi lastnimi napravami odklene tudi deljene ključe sob.</translation>
-    </message>
-    <message>
-        <source>Verify my other devices</source>
-        <translation>Preveri moje druge naprave</translation>
-    </message>
-    <message>
-        <source>User ID</source>
-        <translation>ID uporabnika</translation>
-    </message>
-    <message>
-        <source>@name:server</source>
-        <translation>@name:server</translation>
-    </message>
-    <message>
-        <source>Verify this user</source>
-        <translation>Preveri tega uporabnika</translation>
-    </message>
-    <message>
         <source>Unlock backup</source>
         <translation>Odkleni kopijo</translation>
     </message>
@@ -694,6 +686,37 @@
     <message>
         <source>Copy</source>
         <translation>Kopiraj</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Preveri to napravo</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Primerja sedem emojijev s tvojo drugo napravo. To napravo potrebuješ pred seboj; ko obe potrdita, lahko ta bere deljene ključe sob.</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogPage</name>
+    <message>
+        <source>Clear</source>
+        <translation>Izprazni</translation>
+    </message>
+    <message>
+        <source>Copy all</source>
+        <translation>Kopiraj vse</translation>
+    </message>
+    <message>
+        <source>Error log</source>
+        <translation>Dnevnik napak</translation>
+    </message>
+    <message>
+        <source>Nothing has failed in this run.</source>
+        <translation>V tem zagonu ni nič spodletelo.</translation>
+    </message>
+    <message>
+        <source>Newest first, and only this run — nothing is kept on disk. Identifiers are already removed, so this can be passed on as it stands.</source>
+        <translation>Najnovejše zgoraj, in samo ta zagon — na disku se ne hrani nič. Identifikatorji so že odstranjeni, zato se to lahko preda takšno, kot je.</translation>
     </message>
 </context>
 <context>
@@ -948,6 +971,42 @@
     <message>
         <source>Your session has ended. Please sign in again.</source>
         <translation>Tvoja seja se je končala. Prijavi se znova.</translation>
+    </message>
+    <message>
+        <source>Enter a push gateway first.</source>
+        <translation>Najprej vnesi potisni prehod.</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation>Novo sporočilo</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Slika</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Glasovno sporočilo</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Datoteka</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Lokacija</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Šifrirano sporočilo</translation>
+    </message>
+    <message>
+        <source>Invitation</source>
+        <translation>Povabilo</translation>
     </message>
 </context>
 <context>
@@ -1432,6 +1491,72 @@
     </message>
 </context>
 <context>
+    <name>PushPage</name>
+    <message>
+        <source>Push notifications</source>
+        <translation>Potisna obvestila</translation>
+    </message>
+    <message>
+        <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
+        <translation>xmatic nima storitve v ozadju, zato sporočila prihajajo le, dokler teče. Razpečevalnik potisnih obvestil je ločena aplikacija, ki drži eno povezavo za vse aplikacije na napravi in jih zbudi, ko kaj prispe.</translation>
+    </message>
+    <message>
+        <source>Receive push notifications</source>
+        <translation>Prejemaj potisna obvestila</translation>
+    </message>
+    <message>
+        <source>Distributor</source>
+        <translation>Razpečevalnik</translation>
+    </message>
+    <message>
+        <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
+        <translation>Nameščenega ni nobenega razpečevalnika. Brez njega povezave ne drži nič in to ostane izklopljeno.</translation>
+    </message>
+    <message>
+        <source>Registration</source>
+        <translation>Registracija</translation>
+    </message>
+    <message>
+        <source>This device has an address to be reached at.</source>
+        <translation>Ta naprava ima naslov, na katerem je dosegljiva.</translation>
+    </message>
+    <message>
+        <source>Waiting for the distributor.</source>
+        <translation>Čakanje na razpečevalnika.</translation>
+    </message>
+    <message>
+        <source>Not registered.</source>
+        <translation>Ni registrirano.</translation>
+    </message>
+    <message>
+        <source>Gateway</source>
+        <translation>Prehod</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
+        <translation>Strežnik Matrix ne more govoriti neposredno z razpečevalnikom, zato pošlje prehodu, ki posreduje naprej. Privzete vrednosti ni: to je edino, česar nihče ne more uganiti namesto tebe.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Potisni prehod</translation>
+    </message>
+    <message>
+        <source>What leaves this device</source>
+        <translation>Kaj zapusti to napravo</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tvoj strežnik izve naslov pri potisni storitvi in za vsako obvestilo prehodu pošlje določilnik sobe in sporočila. Brez besedila: potisk nosi le določilnike, sporočilo pa ta naprava pridobi in odšifrira sama. Ta naslov je skrivnost — kdor ga ima, lahko temu telefonu pošlje obvestilo.</translation>
+    </message>
+</context>
+<context>
+    <name>PushWake</name>
+    <message>
+        <source>New message</source>
+        <translation>Novo sporočilo</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>no session description</source>
@@ -1780,6 +1905,10 @@
         <source>%1 of %2 rooms</source>
         <translation>%1 od %2 sob</translation>
     </message>
+    <message>
+        <source>Verify user</source>
+        <translation>Preveri uporabnika</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -1966,38 +2095,6 @@
         <translation>%1 je spremenil svoj profil</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Kopiraj</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Odgovori</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Shrani</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Posreduj</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Uredi</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Pripni</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Izbriši</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Več…</translation>
-    </message>
-    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Citiranega sporočila ni mogoče naložiti: ne obstaja več ali ga ne smeš videti.</translation>
     </message>
@@ -2058,22 +2155,6 @@
         <translation>Tega sporočila ni v naloženi zgodovini</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Zavrzi</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Pošlji znova</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Odzovi se</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Odgovori v niti</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopiraj povezavo sobe</translation>
     </message>
@@ -2128,6 +2209,10 @@
     <message>
         <source>What do these marks mean?</source>
         <translation>Kaj pomenijo ti znaki?</translation>
+    </message>
+    <message>
+        <source>Verify contact</source>
+        <translation>Preveri stik</translation>
     </message>
 </context>
 <context>
@@ -2223,6 +2308,10 @@
         <source>There is no recovery for this account yet. Set up a key backup to create one.</source>
         <translation>Za ta račun še ni obnovitve. Nastavi varnostno kopijo ključev, da jo ustvariš.</translation>
     </message>
+    <message>
+        <source>The server could not be asked whether a backup exists.</source>
+        <translation>Strežnika ni bilo mogoče vprašati, ali varnostna kopija obstaja.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityStatusPage</name>
@@ -2257,6 +2346,18 @@
     <message>
         <source>You will find all of this again under Account › Encryption.</source>
         <translation>Vse to najdeš znova pod Račun › Šifriranje.</translation>
+    </message>
+    <message>
+        <source>Everything on this device is in order.</source>
+        <translation>Na tej napravi je vse v redu.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zapri</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Preveri to napravo</translation>
     </message>
 </context>
 <context>
@@ -2737,6 +2838,41 @@
     <message>
         <source>Close</source>
         <translation>Zapri</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyUserPage</name>
+    <message>
+        <source>Verify user</source>
+        <translation>Preveri uporabnika</translation>
+    </message>
+    <message>
+        <source>Both sides then compare seven emoji. That is what says nobody is sitting in between — and it holds for every room you share with this person.</source>
+        <translation>Obe strani nato primerjata sedem emojijev. Prav to pove, da nihče ne sedi vmes — in velja za vsako sobo, ki jo deliš s to osebo.</translation>
+    </message>
+    <message>
+        <source>User ID</source>
+        <translation>ID uporabnika</translation>
+    </message>
+    <message>
+        <source>For example @anna:example.org or @tom:example.net</source>
+        <translation>Na primer @anna:example.org ali @tom:example.net</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Preveri</translation>
+    </message>
+    <message>
+        <source>Your own device</source>
+        <translation>Tvoja lastna naprava</translation>
+    </message>
+    <message>
+        <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
+        <translation>Primerja sedem emojijev s tvojo drugo napravo. To napravo potrebuješ pred seboj; ko obe potrdita, lahko ta bere deljene ključe sob.</translation>
+    </message>
+    <message>
+        <source>Verify this device</source>
+        <translation>Preveri to napravo</translation>
     </message>
 </context>
 <context>
