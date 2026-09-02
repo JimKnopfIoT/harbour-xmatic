@@ -40,12 +40,8 @@ Page {
                 value: matrix.coreVersion
             }
 
-            // One direction only, and now it is the other one: a wrapping
-            // button takes its width as given and lays the label out inside it,
-            // so deriving that width from the children's implicitWidth is not
-            // just forbidden but meaningless - a WrapButton carries no text of
-            // its own, so its implicit width is the platform minimum and every
-            // button on the page collapsed to it.
+            // One direction, and here the other one: a wrapping button takes its width as
+            // given, so deriving it from the children collapses every button on the page.
             readonly property real buttonWidth: Math.min(
                     Theme.buttonWidthLarge,
                     width - 2 * Theme.horizontalPageMargin)
@@ -142,11 +138,8 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("IgnoredUsersPage.qml"))
             }
 
-            // The send warning offers "do not warn me about this user again",
-            // and its own subtitle promises it holds "until you reset it" —
-            // this is that reset. Kept as one button rather than a list: the
-            // entries are addresses, and the list would be a second place
-            // where they are on screen for no gain.
+            // The reset the send warning's subtitle promises. One button rather than a
+            // list: the entries are addresses, and a list is a second place they stand.
             WrapButton {
                 id: resetWarningsButton
 
@@ -201,13 +194,8 @@ Page {
                 height: Theme.paddingLarge
             }
 
-            // Said where somebody comes past it, not only where somebody goes
-            // looking for it. The encryption page has stated this since the
-            // stores could be encrypted at all, but a state one has to seek
-            // out is a state nobody knows about - which is exactly what an
-            // outside reader of this app pointed at. Only where a key could be
-            // had: without secretsd there is nothing to act on, and a line
-            // that offers nothing is a nag.
+            // Said where somebody comes past it, not only where somebody goes looking.
+            // Only where a key could be had - a line that offers nothing is a nag.
             BackgroundItem {
                 width: parent.width
                 height: unencryptedWarning.height + 2 * Theme.paddingMedium
@@ -240,9 +228,8 @@ Page {
         }
 
         PullDownMenu {
-            // Topmost, which is the entry a full pull reaches: it is looked for
-            // once, after something went wrong, and never in passing. Signing
-            // out keeps its distance from the short tug either way.
+            // Topmost, which is what a full pull reaches: signing out is looked for once,
+            // after something went wrong, and never in passing.
             MenuItem {
                 text: qsTr("Error log")
                 onClicked: pageStack.push(Qt.resolvedUrl("ErrorLogPage.qml"))

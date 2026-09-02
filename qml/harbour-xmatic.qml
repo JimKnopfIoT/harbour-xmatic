@@ -11,18 +11,8 @@ import "pages/SecurityStatus.js" as SecurityStatus
 ApplicationWindow {
     id: app
 
-    // Which root page is currently up, so it is only exchanged when it really
-    // changes. The session state alone is not enough any more: the storage
-    // gate can replace the login page while the state stays "none".
-    // Deliberately empty here and assigned once from Component.onCompleted.
-    //
-    // Written as an initialiser that mentions `matrix.storageBlocked`, this is
-    // not a starting value but a binding: the moment the gate opens it would
-    // follow along on its own, and `showPageFor` - which exists to notice that
-    // very change - would compare the new root against a value that had
-    // already become the new root and conclude there was nothing to do. The
-    // page then never gets exchanged. Measured on the device: the key was
-    // loaded, the gate was open, and the blocked page simply stayed.
+    // Which root page is up, so it is only exchanged when it really changes.
+    // Assigned once, never bound: a binding would beat `showPageFor` to the change.
     property string shownRoot: ""
 
     // Whether the security page has already been offered in this run. Once per
@@ -32,47 +22,26 @@ ApplicationWindow {
     // The room the standing notification is about, or "" if none stands.
     property string notifiedRoomId: ""
 
-    // Decided here rather than corrected a moment later: on a device that has
-    // to be told what to install, the login page must not flash up first — it
-    // is the page whose whole purpose is to not be reachable yet.
-    //
-    // This one is a binding as well, and here that is harmless: Silica reads
-    // `initialPage` once while building the first page and ignores it
-    // afterwards. Observed on the device during the gate test — the value
-    // changed under a running app and nothing happened. The page swap is
-    // `showPageFor`'s job, not this property's.
+    // Decided here rather than corrected a moment later: the login page must not
+    // flash up on a device that has to be told what to install.
     initialPage: Qt.resolvedUrl(matrix.storageBlocked
                                 ? "pages/StorageBlockedPage.qml"
                                 : "pages/LoginPage.qml")
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
-    // Silica's default is Text.AutoText, and every Label inherits it — a
-    // PageHeader title, a DetailItem, an error line. Display names, room
-    // names and server error texts all pass through those, so a name of
-    // `<img src=http://…>` fetched a remote picture on sight. Only the
-    // message body opts back out, explicitly, after escaping (RoomPage's
-    // linkifyBody); an explicit binding beats this default.
+    // Silica's default is AutoText, which every Label inherits - a display name of
+    // `<img src=http://…>` fetched a remote picture on sight.
     _defaultLabelFormat: Text.PlainText
-    // Do not try to widen this through `defaultAllowedOrientations` — that one
-    // is read-only in Silica, and assigning it makes the whole window fail to
-    // load (a white screen, with nothing but a warning in the journal). Pages
-    // this app does not own, such as the attachment picker, set their own
-    // orientation at the call site instead.
+    // Never assign `defaultAllowedOrientations`: it is read-only in Silica and
+    // assigning it makes the whole window fail to load, white screen.
     allowedOrientations: defaultAllowedOrientations
 
-    // The root page a replaceAbove is still owed, or "" if none is pending.
-    // Signing out fires while the sign-out dialog is still animating, and Silica
-    // silently drops a page push issued during a transition ("cannot push while
-    // transition is in progress") — the login page then never appears and the
-    // app is a dead end until it is restarted. So the switch is deferred until
-    // the stack is idle.
+    // The root a `replaceAbove` is still owed. Silica drops a push issued during a
+    // transition, and the login page then never appears at all.
     property string pendingRoot: ""
 
-    // What another application shared with xmatic, until there is somewhere to
-    // put it: { body, path, mimeType }, or null. A share can arrive before the
-    // session is restored — sharing may be what started the app in the first
-    // place — and pushing a page while the stack is still animating is dropped
-    // silently, so the item waits here and every state change tries again.
+    // What another app shared, until there is somewhere to put it. A share can
+    // arrive before the session is restored, and a push mid-transition is dropped.
     property var pendingShare: null
 
     function deliverShare() {
@@ -85,16 +54,13 @@ ApplicationWindow {
     }
 
     function rootFor(state) {
-        // Before anything else, and before any login: nothing lies on this
-        // device, no key can be had, and nobody has said the app may run
-        // without one. Signing in here would create the plaintext store this
-        // gate exists to prevent.
+        // Before anything else and before any login: nothing on the device and no key
+        // to be had. Signing in here would create the plaintext store.
         if (matrix.storageBlocked) {
             return Qt.resolvedUrl("pages/StorageBlockedPage.qml")
         }
-        // An encrypted session whose key is not at hand is not "no session":
-        // its page retries the unlock, and never leads into a login that
-        // would clear the store.
+        // An encrypted session whose key is not at hand is not "no session": its page
+        // retries, and never leads into a login that would clear the store.
         if (state === "locked") {
             return Qt.resolvedUrl("pages/SessionLockedPage.qml")
         }
@@ -128,10 +94,8 @@ ApplicationWindow {
         }
     }
 
-    // Offers the security page once per run, and only where there is something
-    // to lead the user to. Never over an unanswered state: right after the
-    // start the encryption status is empty for a moment, and interrupting
-    // somebody over "unknown" is a claim the app cannot back.
+    // Offers the security page once per run, and never over an unanswered state:
+    // interrupting somebody over "unknown" is a claim the app cannot back.
     function maybeShowSecurity() {
         if (securityShown || matrix.storageBlocked) {
             return
@@ -153,9 +117,8 @@ ApplicationWindow {
 
     Connections {
         target: pageStack
-        // One handler, both jobs: QML refuses a type that binds the same signal
-        // twice, and the page then fails to load with nothing but "could not
-        // load page" to go on.
+        // One handler, both jobs: QML refuses a type that binds the same signal twice
+        // and the page then fails to load.
         onBusyChanged: {
             if (!pageStack.busy && app.pendingRoot !== "") {
                 var root = app.pendingRoot
@@ -184,9 +147,8 @@ ApplicationWindow {
         }
     }
 
-    // Not while the gate is up: a restore on an empty device answers "none"
-    // and would take the app to the login page, which is the one place this
-    // state must not lead to.
+    // Not while the gate is up: a restore on an empty device answers "none" and
+    // would take the app to the login page.
     Component.onCompleted: {
         // An assignment, not a binding - see the note on the property.
         shownRoot = rootFor(matrix.sessionState)
@@ -195,9 +157,8 @@ ApplicationWindow {
         }
     }
 
-    // The tap on a notification, and the launcher's hand-over, arrive here.
-    // Neither carries an argument: which room is meant is this app's own
-    // knowledge (`notifiedRoomId`), never the caller's claim.
+    // The notification tap and the launcher's hand-over. Neither carries an
+    // argument: which room is meant is this app's knowledge, not the caller's.
     Connections {
         target: activation
 
@@ -209,10 +170,8 @@ ApplicationWindow {
         }
     }
 
-    // Opens the room the standing notification is about, once. Nothing stands
-    // -> nothing happens, so a repeated call cannot walk the user through
-    // rooms. Not while the session is still being restored either: the room
-    // list is not there yet, and the login page is what belongs on screen.
+    // Opens the room the standing notification is about, once - a repeated call
+    // cannot walk the user through rooms. Not while the session is restoring.
     function openNotifiedRoom() {
         var roomId = app.notifiedRoomId
         if (roomId.length === 0 || matrix.sessionState !== "signed-in") {
@@ -230,9 +189,8 @@ ApplicationWindow {
         if (current && current.objectName === "roomPage" && current.roomId === roomId) {
             return
         }
-        // Coming from another room, the new one takes its place instead of
-        // stacking on it: swiping back belongs in the chat list, not in the
-        // room the notification pulled the user out of.
+        // Coming from another room, the new one takes its place: swiping back belongs
+        // in the chat list, not in the room the notification pulled the user out of.
         if (current && current.objectName === "roomPage") {
             pageStack.replace(Qt.resolvedUrl("pages/RoomPage.qml"),
                               { roomId: roomId, roomName: "" })
@@ -246,22 +204,15 @@ ApplicationWindow {
         id: notification
 
         appName: "xmatic"
-        // Without a category a notification is silent: the sound, the vibration
-        // and the LED pattern all hang off the category, not off the
-        // notification itself. This one is the system's instant-messaging
-        // category — its `chat_exists` feedback plays the IM tone the user set,
-        // buzzes once and lights the communication LED, and it turns the
-        // display on, which is what every other messenger on the device does.
+        // Without a category a notification is silent - tone, vibration and LED all
+        // hang off it. This one plays the IM tone and turns the display on.
         category: "x-nemo.messaging.im"
-        // The category brings its own icon (the system's message glyph), so
-        // the app's own has to be named or the banner would not say who is
-        // talking.
+        // The category brings its own icon, so the app's has to be named or the
+        // banner would not say who is talking.
         appIcon: "/usr/share/icons/hicolor/86x86/apps/harbour-xmatic.png"
         isTransient: false
-        // Tapping opens the room this banner is about. The method takes no
-        // argument - see src/appservice.h for why - so nothing about the room
-        // travels through the notification, and nothing of it stays behind in
-        // the system's notification store.
+        // Tapping opens the room this banner is about. The method takes no argument,
+        // so nothing about the room stays in the system's notification store.
         remoteActions: [{
             "name": "default",
             "service": "org.xmatic.xmatic",
@@ -271,16 +222,12 @@ ApplicationWindow {
         }]
     }
 
-    // Incoming shares from other applications — a link from the browser, a
-    // picture from the gallery. The share dialog finds xmatic through the
-    // X-Share Method block in the desktop file and calls this object over
-    // D-Bus; the name it registers is the one Sailjail assigns the app.
+    // Incoming shares from other apps. The dialog finds xmatic through the
+    // X-Share Method block and calls this object over D-Bus.
     ShareProvider {
         method: "room"
-        // The application owns its D-Bus name itself; without this the object
-        // is registered but the name is not, and the share dialog's call
-        // starts a second copy of the app through the service file instead of
-        // reaching the running one.
+        // The app owns its D-Bus name itself: without this the object is registered
+        // and the name is not, and the dialog starts a second copy.
         registerName: true
         capabilities: ["text/x-url", "text/plain",
                        "image/*", "video/*", "audio/*", "application/*"]
@@ -295,9 +242,8 @@ ApplicationWindow {
             var resource = resources[0]
             var share = { "body": "", "path": "", "mimeType": "" }
             if (resource.type === ShareResource.FilePathType) {
-                // Whatever asked for the share names the file; a path
-                // inside this app's own directories is refused, because the
-                // session token and the crypto store live there.
+                // Whatever asked for the share names the file, and a path inside this app's
+                // own directories is refused - token and crypto store live there.
                 share.path = matrix.shareableFile(resource.filePath)
                              ? resource.filePath : ""
                 share.mimeType = matrix.mimeTypeForPath(resource.filePath)
@@ -318,9 +264,8 @@ ApplicationWindow {
         }
     }
 
-    // Sailfish suspends idle devices. Without a scheduled wake-up the sync
-    // connection is dropped while the screen is off and messages only arrive
-    // when the phone is picked up again.
+    // Sailfish suspends idle devices: without a scheduled wake-up the sync
+    // connection drops while the screen is off.
     BackgroundJob {
         id: backgroundSync
 
@@ -350,10 +295,8 @@ ApplicationWindow {
         }
     }
 
-    // A ringing call is not a message: it rings until it is answered or the
-    // caller gives up. The system has no category for that, so the app rings
-    // itself - the notification's own tone plays four times and stops, which
-    // is exactly what was missed.
+    // A ringing call is not a message and the system has no category for it, so
+    // the app rings itself - four tones and stop.
     Audio {
         id: ringer
 
@@ -449,15 +392,8 @@ ApplicationWindow {
         // loopback listener for the redirect.
         onLoginUrlReady: Qt.openUrlExternally(url)
 
-        // New messages in a room that is not on screen become a system
-        // notification. The room list already carries the unread counts, so
-        // this needs no extra request.
-        // A room read on another device clears the counter here too, and the
-        // banner has to go with it — the LED, the event feed entry and the
-        // banner are one published notification, so closing it takes all
-        // three down. Only when it is this room's: the notification object is
-        // a single one, and the room it last announced is the only one it
-        // could be showing.
+        // A room read elsewhere clears the counter here too, and the banner goes with
+        // it. Only for this room: the notification object is a single one.
         onRoomRead: {
             if (roomId === app.notifiedRoomId) {
                 notification.close()
@@ -468,36 +404,27 @@ ApplicationWindow {
         onRoomActivity: {
             notification.close()
             app.notifiedRoomId = roomId
-            // The room's name is content: in a direct chat it is the other
-            // person. Behind the same switch as the message text, because the
-            // banner shows on the lock screen.
+            // The room's name is content - in a direct chat it is the other person. Same
+            // switch as the text, because the banner shows on the lock screen.
             notification.summary = settings.notificationPreview
                                    ? roomName : qsTr("New message")
-            // The count is the default; the message itself only when the user
-            // switched that on (Account → This app), because the banner also
-            // shows on the lock screen. Non-text events are named by kind, so
-            // a picture says "picture" in the UI's language, and an event this
-            // device could not decrypt says so instead of pretending to be a
-            // count.
+            // The count is the default, the message only where the user allowed it.
+            // Non-text events are named by kind, and an undecryptable one says so.
             var preview = settings.notificationPreview ? app.previewLine(previewKind, previewText) : ""
             notification.body = preview.length > 0 ? preview
                     : mentions > 0
                       ? qsTr("%n mention(s)", "", mentions)
                       : qsTr("%n new message(s)", "", unread)
-            // summary and body alone only fill the event feed. The banner that
-            // slides in over whatever is on screen is the preview pair, and it
-            // is also what makes the arrival noticeable at all when the phone
-            // is in hand.
+            // summary and body alone fill only the event feed; the banner that slides in
+            // is the preview pair.
             notification.previewSummary = notification.summary
             notification.previewBody = notification.body
             notification.itemCount = unread
             notification.publish()
         }
 
-        // A direct chat can be requested from several places — the new-chat
-        // dialog and the member list — so the navigation lives here, where it
-        // works no matter which pages happen to exist. (On the room list page
-        // it was dead whenever the user came in through the spaces.)
+        // A direct chat is requested from several places, so the navigation lives
+        // here - on the room list page it was dead when the user came via spaces.
         onDirectChatReady: {
             if (roomId.length > 0) {
                 pageStack.push(Qt.resolvedUrl("pages/RoomPage.qml"),
@@ -505,9 +432,8 @@ ApplicationWindow {
             }
         }
 
-        // Following a room upgrade lands here for the same reason: the old room
-        // may have been reached from the chat list, a space or a search, and
-        // the new one has to open from any of them.
+        // A followed upgrade for the same reason: the old room may have been reached
+        // from the chat list, a space or a search.
         onSuccessorReady: {
             if (roomId.length > 0) {
                 pageStack.push(Qt.resolvedUrl("pages/RoomPage.qml"),
@@ -515,10 +441,8 @@ ApplicationWindow {
             }
         }
 
-        // A freshly created room opens right away — creating one is the start
-        // of writing in it. Its name comes back with the reply, so the header
-        // is right before the first sync diff arrives. Encryption was decided
-        // in the dialog and is already in place.
+        // A freshly created room opens right away. Its name comes back with the reply,
+        // so the header is right before the first diff arrives.
         onRoomCreated: {
             if (roomId.length > 0) {
                 pageStack.push(Qt.resolvedUrl("pages/RoomPage.qml"),

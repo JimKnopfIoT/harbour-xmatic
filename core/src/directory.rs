@@ -1,9 +1,5 @@
-//! Search of the public room directory.
-//!
-//! `RoomDirectorySearch` must not run `search` and `next_page` concurrently,
-//! so one task owns it and takes orders over a channel. Results stream out as
-//! `directory.diff` operations — the same shape the room list uses, applied by
-//! its own small model on the Qt side.
+//! Public directory search. `RoomDirectorySearch` must not run `search` and
+//! `next_page` at once, so one task owns it; results stream as `directory.diff`.
 
 use std::sync::Arc;
 
@@ -47,29 +43,7 @@ fn summarize(room: &RoomDescription) -> Value {
 }
 
 fn encode(diff: &VectorDiff<RoomDescription>) -> Value {
-    match diff {
-        VectorDiff::Append { values } => {
-            json!({ "op": "append", "values": values.iter().map(summarize).collect::<Vec<_>>() })
-        }
-        VectorDiff::Clear => json!({ "op": "clear" }),
-        VectorDiff::PushFront { value } => {
-            json!({ "op": "insert", "index": 0, "value": summarize(value) })
-        }
-        VectorDiff::PushBack { value } => json!({ "op": "append", "values": [summarize(value)] }),
-        VectorDiff::PopFront => json!({ "op": "remove", "index": 0 }),
-        VectorDiff::PopBack => json!({ "op": "popBack" }),
-        VectorDiff::Insert { index, value } => {
-            json!({ "op": "insert", "index": index, "value": summarize(value) })
-        }
-        VectorDiff::Set { index, value } => {
-            json!({ "op": "set", "index": index, "value": summarize(value) })
-        }
-        VectorDiff::Remove { index } => json!({ "op": "remove", "index": index }),
-        VectorDiff::Truncate { length } => json!({ "op": "truncate", "length": length }),
-        VectorDiff::Reset { values } => {
-            json!({ "op": "reset", "values": values.iter().map(summarize).collect::<Vec<_>>() })
-        }
-    }
+    crate::protocol::encode_diff(diff, summarize)
 }
 
 /// Starts the directory task. Orders go in through the returned sender; the
@@ -111,13 +85,8 @@ pub fn start(client: Client, sink: Arc<Sink>) -> (JoinHandle<()>, mpsc::Unbounde
                         }
                         Order::More => search.next_page().await,
                     };
-                    // `atEnd` says whether there is more to fetch, never whether
-                    // this attempt worked. A failed page leaves the search
-                    // state untouched — the SDK still holds the `since` token
-                    // and only advances it after a good response — so the very
-                    // same request can be tried again. Reporting a dropped
-                    // request as the end of the list ended the directory for
-                    // good and made the user redo the whole search.
+                    // `atEnd` says whether there is more, never whether this attempt worked: the
+                    // SDK keeps its `since` token, and calling a failure the end killed the search.
                     let error = outcome.err().map(|error| crate::text::scrub_ids(&format!("{error}")));
                     sink.emit(event(
                         "directory.state",

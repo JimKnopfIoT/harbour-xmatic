@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Continuar sem cifragem</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Voltar</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Tudo o que o xmatic guarda neste dispositivo continua legível: a tua sessão, as tuas mensagens e as tuas chaves de sala.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Escolhe isto apenas se o serviço não puder ser instalado neste dispositivo. Se o instalares mais tarde, podes mudar na página de cifragem — custa uma saída da sessão e a tua chave de recuperação.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>O xmatic continuará a mostrar este estado em Cifragem.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>ligado</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>não foi possível continuar a chamada</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Dispositivos</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Cifragem</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identidade verificada</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>A identidade mudou desde que foi verificada. Verifica de novo, ou retira a verificação.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identidade não verificada</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Enviar mensagem direta</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Salas em comum</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Sem outras salas em comum</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Proibir chamadas</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Permitir chamadas</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identidade</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>verificada</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>mudou desde que foi verificada — verifica novamente ou retira a verificação</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>não verificada</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>nenhuma</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>A lista está cifrada e a sua chave não está disponível. Volta a poder ler-se depois de desbloquear o aparelho e reiniciar a aplicação.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Carregar imagens automaticamente</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Ligado: a imagem ou o vídeo carrega assim que a mensagem aparece. Desligado: carrega ao tocar — passar por ela é um pedido ao servidor de quem enviou.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>%1 alterou o seu perfil</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Copiar</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Responder</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Guardar</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Reencaminhar</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editar</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Fixar</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Apagar</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Mais…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>A mensagem citada não pode ser carregada: já não existe ou não tens permissão para a ver.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>Essa mensagem não está no histórico carregado</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Descartar</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Enviar de novo</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagir</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Responder no tópico</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Copiar ligação da sala</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Verificar contacto</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Não foi possível carregar a conversa</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Abrir este endereço?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Abrir</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Verificar de novo</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Se não for possível</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Podes usar o xmatic sem cifragem local. A sessão, a base de mensagens e as chaves de sala ficam então legíveis neste dispositivo: quem chegar ao seu sistema de ficheiros lê tudo, e um telemóvel perdido entrega tudo o que tem.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>As mensagens continuam cifradas ponta a ponta no seu percurso pela rede em qualquer caso. Aqui trata-se apenas do que está no dispositivo.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Continuar sem cifragem</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2708,6 +2745,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Autenticidade não confirmada</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Abrir este endereço?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Abrir</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2740,7 +2785,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>não verificado</translation>
+        <translation>não verificada</translation>
     </message>
     <message>
         <source>This device is not verified</source>

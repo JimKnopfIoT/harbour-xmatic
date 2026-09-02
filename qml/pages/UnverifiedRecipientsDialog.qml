@@ -1,13 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Shown before a message goes into an encrypted room where something about the
-// recipients was never checked. Accepting sends anyway; the switch remembers
-// that per user, and for the own-device case under the own address.
-//
-// `reason` decides the words. While this device itself is unverified nothing
-// can be said about anyone else's: the core answers with a single ownDevice
-// entry then, and the dialog says that instead of listing people.
+// Shown before a message goes into an encrypted room with unchecked recipients.
+// While this device is unverified nothing can be said about anyone else's.
 Dialog {
     id: dialog
 

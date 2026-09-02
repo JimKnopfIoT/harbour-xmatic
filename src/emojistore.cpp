@@ -10,20 +10,24 @@
 #include <QMutexLocker>
 
 namespace {
-/// The same ceiling the unchecked path uses: a picture for a character in a
-/// chat line has no business being larger, and it bounds what the decoder is
+/// The same ceiling the unchecked path uses, and it bounds what the decoder is
 /// ever handed.
 const qint64 MaximumPictureBytes = 64 * 1024;
 }
 
-QCryptographicHash::Algorithm EmojiStore::algorithmFor(const QString &name)
+bool EmojiStore::algorithmFor(const QString &name, QCryptographicHash::Algorithm *out)
 {
-    // Anything but the one name means the manifest predates the change, and
-    // those checksums are MD5. Not a fallback for an unknown future name: a
-    // manifest this build cannot read fails its check, which is the safe way
-    // round.
-    return name == QLatin1String("sha256") ? QCryptographicHash::Sha256
-                                           : QCryptographicHash::Md5;
+    // Empty means the manifest predates the change and its sums are MD5. An
+    // unknown name is refused rather than guessed at.
+    if (name.isEmpty()) {
+        *out = QCryptographicHash::Md5;
+        return true;
+    }
+    if (name == QLatin1String("sha256")) {
+        *out = QCryptographicHash::Sha256;
+        return true;
+    }
+    return false;
 }
 
 EmojiStore::EmojiStore(const QString &directory, QObject *parent)
@@ -44,7 +48,12 @@ void EmojiStore::reload()
     // out-of-memory at launch. One entry is about sixty bytes.
     if (file.open(QIODevice::ReadOnly) && file.size() <= 4 * 1024 * 1024) {
         const QJsonObject root = QJsonDocument::fromJson(file.readAll()).object();
-        algorithm = algorithmFor(root.value(QStringLiteral("algorithm")).toString());
+        if (!algorithmFor(root.value(QStringLiteral("algorithm")).toString(), &algorithm)) {
+            qWarning("xmatic: the emoji manifest names a digest this build does not know");
+            m_checksums.clear();
+            emit contentChanged();
+            return;
+        }
         const QJsonObject files = root.value(QStringLiteral("files")).toObject();
         for (auto it = files.constBegin(); it != files.constEnd(); ++it) {
             const QString name = it.key();
@@ -138,10 +147,8 @@ void EmojiStore::adopt(const QHash<QString, QByteArray> &checksums)
     root.insert(QStringLiteral("algorithm"), QStringLiteral("sha256"));
     root.insert(QStringLiteral("files"), files);
 
-    // Whole or not at all. A manifest cut short by a crash or a full disk
-    // parses as no manifest, and no manifest means the pictures are drawn the
-    // way a hand-copied set is: unchecked. Losing the checks by accident is
-    // the one outcome this file must not have.
+    // Whole or not at all: a manifest cut short parses as none, and no manifest
+    // means the pictures are drawn unchecked.
     QSaveFile file(m_manifestPath);
     if (file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         file.write(QJsonDocument(root).toJson(QJsonDocument::Compact));

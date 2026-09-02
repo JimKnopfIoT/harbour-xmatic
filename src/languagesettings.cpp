@@ -20,8 +20,7 @@ QString storedCode()
 }
 
 // Endonyms: a language is named in itself, so the list stays readable to
-// someone who cannot read the current UI language — which is the situation
-// this page exists for.
+// somebody who cannot read the current UI language.
 const char *const kLanguages[][2] = {
     { "bg", "Български" }, { "cs", "Čeština" },   { "da", "Dansk" },
     { "de", "Deutsch" },   { "el", "Ελληνικά" },  { "en", "English" },
@@ -59,9 +58,8 @@ void LanguageSettings::setCode(const QString &code)
                  static_cast<int>(settings.status()));
     }
 
-    // Not applied here: Qt 5.6 has no way to retranslate a loaded QML tree
-    // (QQmlEngine::retranslate arrived in 5.10), so the choice takes effect at
-    // the next start. The page says so.
+    // Not applied here: Qt 5.6 cannot retranslate a loaded QML tree, so the choice
+    // takes effect at the next start. The page says so.
     emit changed();
 }
 

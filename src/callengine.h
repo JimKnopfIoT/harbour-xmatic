@@ -17,16 +17,8 @@ typedef struct _GstElement GstElement;
 typedef struct _GstPromise GstPromise;
 typedef struct _GstPad GstPad;
 
-/// The media half of a call.
-///
-/// Matrix carries only the negotiation — who rings, who answers, and the
-/// session descriptions and candidates. The audio itself travels directly
-/// between the two devices over WebRTC, which matrix-rust-sdk does not
-/// implement, so this drives GStreamer's `webrtcbin` with libnice, DTLS-SRTP
-/// and Opus.
-///
-/// This object owns no signalling: it emits what has to be sent and is fed
-/// what arrives. The bridge connects both ends to the core.
+/// The media half of a call: Matrix carries only the negotiation, the audio
+/// goes directly over WebRTC. This object owns no signalling.
 class CallEngine : public QObject
 {
     Q_OBJECT
@@ -69,15 +61,12 @@ public:
     /// camera stream as well.
     Q_INVOKABLE void placeCall(const QString &roomId, bool withVideo = false);
 
-    /// Answers the call that is currently ringing.
-    /// Answers the ringing call. `withVideo` opens the camera - never the
-    /// caller's choice, always the user's, and only where the offer had video
-    /// at all.
+    /// Answers the ringing call. `withVideo` opens the camera - never the caller's
+    /// choice, always the user's, and only where the offer had video.
     Q_INVOKABLE void acceptCall(bool withVideo = false);
 
-    /// Who may answer the call this device just placed. Set from the reply to
-    /// the invitation, before any answer can arrive: without it the first
-    /// answer from anybody in the room would take the microphone.
+    /// Who may answer the call this device placed, set from the reply before any
+    /// answer can arrive: otherwise the first answer from anybody takes it.
     void setExpectedPeer(const QString &peer);
 
     /// Ends or declines the current call.
@@ -144,6 +133,8 @@ private slots:
     void pushCameraFrame(const QByteArray &data, int width, int height, const QString &format);
     void deliverCandidate(const QString &candidate, int mediaLineIndex);
     void reportFailure(const QString &message);
+    /// A pipeline error, handed over from the GStreamer bus thread.
+    Q_INVOKABLE void reportPipelineFailure(const QString &reason);
     void markConnected();
     void markDisconnected();
 
@@ -203,9 +194,11 @@ private:
     int m_orientation = 1;
     QString m_cameraFormat;
 
-    /// Frames the camera has delivered in this call; zero means it never ran.
-    // Written on the camera's streaming thread, read on the Qt one: the
-    // watchdog that reads a stale zero tears a working video call down.
+    /// The bus watch's source id, so it can be taken off the main context
+    /// again. Zero when none is attached.
+    unsigned int m_busWatch = 0;
+    /// Frames the camera delivered; zero means it never ran. Written on the
+    /// camera's thread, read on the Qt one - a stale zero tears a call down.
     QAtomicInt m_cameraFrames;
 };
 

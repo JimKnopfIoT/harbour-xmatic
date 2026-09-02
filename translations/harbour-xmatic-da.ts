@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Fortsæt uden kryptering</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Tilbage</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Alt, hvad xmatic gemmer på denne enhed, forbliver læsbart: din session, dine beskeder og dine rumnøgler.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Vælg kun dette, hvis tjenesten ikke kan installeres på enheden. Installerer du den senere, kan du skifte på krypteringssiden — det koster én log ud og din gendannelsesnøgle.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic bliver ved med at vise denne tilstand under Kryptering.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>forbundet</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>opkaldet kunne ikke fortsætte</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Enheder</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Kryptering</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identitet verificeret</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Identiteten har ændret sig, siden den blev verificeret. Verificer igen, eller træk verificeringen tilbage.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identitet ikke verificeret</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Send direkte besked</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Fælles rum</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Ingen andre fælles rum</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Forbyd opkald</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Tillad opkald</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identitet</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>verificeret</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>ændret siden verificeringen — verificér igen eller træk den tilbage</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>ikke verificeret</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>ingen</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Listen er krypteret, og nøglen er ikke tilgængelig. Den kan læses igen, når enheden er låst op og appen genstartet.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Indlæs billeder automatisk</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Til: et billede eller en video indlæses, så snart beskeden vises. Fra: det indlæses, når du trykker — at rulle forbi er en forespørgsel til afsenderens server.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>%1 ændrede sin profil</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopier</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Svar</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Gem</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Videresend</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Rediger</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Fastgør</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Slet</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Mere…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Den citerede besked kan ikke indlæses: den findes ikke længere, eller du må ikke se den.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>Den besked er ikke i den indlæste historik</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Kassér</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Send igen</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagér</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svar i tråden</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Kopiér rumlink</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Verificer kontakt</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Samtalen kunne ikke indlæses</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Åbn denne adresse?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Åbn</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Tjek igen</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Hvis det ikke kan lade sig gøre</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Du kan bruge xmatic uden lokal kryptering. Session, beskeddatabase og rumnøgler ligger så læsbare på enheden: den, der kommer til filsystemet, læser med, og en mistet telefon giver alt på den fra sig.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Beskeder forbliver ende-til-ende-krypterede på vejen gennem nettet under alle omstændigheder. Her handler det kun om det, der ligger på enheden.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Fortsæt uden kryptering</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2707,6 +2744,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Ægthed ikke bekræftet</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Åbn denne adresse?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Åbn</translation>
     </message>
 </context>
 <context>

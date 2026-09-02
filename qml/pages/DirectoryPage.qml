@@ -1,19 +1,13 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// A public room directory. The server to ask is a choice: the own homeserver,
-// one of the big public directories, or a server the user added — the choice
-// is persisted. Topic and member count are the preview; joining is a direct
-// action with a remorse timer. Paging, ordering and deduplication come from
-// the core's search task.
+// A public room directory; which server to ask is a persisted choice. Paging,
+// ordering and deduplication come from the core's search task.
 Page {
     id: page
 
-    // Leaving the foreground aborts a running countdown at once, instead of only
-    // suppressing it when it expires. Suppressing at expiry was not enough:
-    // minimising the app and coming back inside the four seconds left the
-    // countdown running, and it fired on return. The remorse object has to be
-    // kept for that - Remorse.popupAction() hands it back.
+    // Leaving the foreground aborts a running countdown at once: suppressing it
+    // at expiry left it firing on return from a minimised app.
     property var activeRemorse: null
     readonly property bool appForeground: Qt.application.active
     onAppForegroundChanged: {
@@ -41,9 +35,8 @@ Page {
     }
     // Holds the re-search back until the persisted choice is restored.
     property bool serverRestored: false
-    // Choice and pattern, mirrored out of the header items: the header and
-    // its children are created late and in order, so anything outside them —
-    // including a sibling created earlier — must not reach in.
+    // Choice and pattern, mirrored out of the header items: the header and its
+    // children are created late, so nothing outside may reach in.
     property string selectedServer: ""
     property string searchPattern: ""
     // The combo box registers itself here — ids inside the header component
@@ -68,9 +61,8 @@ Page {
     SilicaListView {
         id: resultList
 
-        // Same field-in-header layout as the room list, same model reset when
-        // results arrive: without an explicitly cleared index the view would
-        // hand focus to row 0 on every reset and close the keyboard mid-typing.
+        // Same field-in-header layout as the room list: without a cleared index the
+        // view hands focus to row 0 on every reset and closes the keyboard.
         currentIndex: -1
 
         anchors.fill: parent
@@ -154,10 +146,8 @@ Page {
 
                 width: parent.width
                 placeholderText: qsTr("Search the room directory")
-                // The keyboard's word list is a store outside this app's
-                // sandbox, unreadable and unclearable from here, and it
-                // suggests what it learned in every other app. Same hints
-                // as the password line.
+                // The keyboard's word list is a store outside this sandbox and suggests what
+                // it learned elsewhere. Same hints as the password line.
                 inputMethodHints: Qt.ImhNoPredictiveText
                                   | Qt.ImhSensitiveData
                                   | Qt.ImhNoAutoUppercase
@@ -227,9 +217,8 @@ Page {
                     onClicked: {
                         var target = model.alias.length > 0 ? model.alias : model.id
                         page.activeRemorse = resultItem.remorseAction(qsTr("Joining"), function() {
-                            // Leaving the page has to abort the countdown.
-                            // Silica's default is the opposite: it executes
-                            // the action on PageStatus.Deactivating.
+                            // Leaving the page has to abort the countdown; Silica's default is the
+                            // opposite - it executes on `Deactivating`.
                             if (page.status !== PageStatus.Active || !Qt.application.active) {
                                 return
                             }

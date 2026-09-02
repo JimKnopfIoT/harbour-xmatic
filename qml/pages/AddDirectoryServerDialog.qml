@@ -25,9 +25,8 @@ Dialog {
         return name
     }
 
-    // In landscape the dialog is barely taller than its header, so the
-    // field below it has to be reachable by scrolling — on the wide
-    // device it would otherwise sit behind the keyboard.
+    // In landscape the dialog is barely taller than its header, so the field has
+    // to be reachable by scrolling.
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height

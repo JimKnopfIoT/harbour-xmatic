@@ -8,23 +8,8 @@
 #include <QObject>
 #include <QString>
 
-/// The checked set of emoji pictures, shared between the importer and the
-/// image provider.
-///
-/// The importer writes the pictures and a list of their checksums; the
-/// provider verifies a picture against that list every time it hands one to
-/// the decoder. What this buys and what it does not:
-///
-/// * It catches a picture that changed after it was read in - by accident, by
-///   another process, by a hand at a shell. The set is then refused as a whole
-///   and the conversation falls back to drawing the characters.
-/// * It does not stop somebody who can already write this app's data
-///   directory: they can rewrite the list along with the pictures. The lasting
-///   protection is that the importer rasterises everything to PNG, so the SVG
-///   parser never runs again at display time.
-///
-/// Every method is callable from any thread; the provider runs on Qt's image
-/// thread.
+/// The checked set of emoji pictures. It catches a picture that changed after
+/// it was read in; it does not stop somebody who can write this directory.
 class EmojiStore : public QObject
 {
     Q_OBJECT
@@ -46,9 +31,8 @@ public:
     bool verified() const;
     /// How many pictures the list holds.
     int count() const;
-    /// Whether a picture failed its check since the app started. Latching:
-    /// once something did not match, the set stays refused until it is read in
-    /// again.
+    /// Whether a picture failed its check. Latching: the set stays refused until it
+    /// is read in again.
     bool tampered() const;
 
     /// Whether the checked set holds this picture (file name without path).
@@ -69,12 +53,9 @@ signals:
     void contentChanged();
 
 public:
-    /// The digest a manifest's checksums were taken with. Written into the
-    /// manifest since the set is checked with SHA-256; a manifest from before
-    /// that names none and is read with MD5, so a set already on the device
-    /// keeps working instead of failing its check as a whole on the first
-    /// start after an update.
-    static QCryptographicHash::Algorithm algorithmFor(const QString &name);
+    /// The digest the manifest names, or false where this build does not know
+    /// it - the set is then refused rather than checked with a guess.
+    static bool algorithmFor(const QString &name, QCryptographicHash::Algorithm *out);
 
 private:
     QString m_directory;

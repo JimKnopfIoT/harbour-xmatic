@@ -1,10 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Start a conversation with someone by their Matrix ID.
-//
-// If a private room with exactly that person already exists it is reused —
-// two direct rooms with the same contact would split the conversation.
+// Start a conversation by Matrix ID. An existing private room with exactly
+// that person is reused - two would split the conversation.
 Dialog {
     id: dialog
 
@@ -17,9 +15,8 @@ Dialog {
 
     onAccepted: matrix.startDirectChat(userField.text)
 
-    // In landscape the dialog is barely taller than its header, so the
-    // field below it has to be reachable by scrolling — on the wide
-    // device it would otherwise sit behind the keyboard.
+    // In landscape the dialog is barely taller than its header, so the field has
+    // to be reachable by scrolling.
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height

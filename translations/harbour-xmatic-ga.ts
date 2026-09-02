@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Lean ar aghaidh gan chriptiú</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Ar ais</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Fanann gach rud a stórálann xmatic ar an ngléas seo inléite: do sheisiún, do theachtaireachtaí agus eochracha do sheomraí.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Ná roghnaigh é seo ach mura féidir an tseirbhís a shuiteáil ar an ngléas seo. Má shuiteálann tú níos déanaí í, is féidir leat athrú ar an leathanach criptithe — cosnaíonn sé logáil amach amháin agus d&apos;eochair athshlánaithe.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>Leanfaidh xmatic ag taispeáint na staide seo faoi Criptiú.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -349,6 +326,10 @@
     <message>
         <source>connected</source>
         <translation>ceangailte</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>níorbh fhéidir leanúint leis an nglao</translation>
     </message>
 </context>
 <context>
@@ -1141,22 +1122,6 @@
         <translation>Gléasanna</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Criptiú</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Céannacht fíoraithe</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Tá an chéannacht athraithe ó fíoraíodh í. Fíoraigh arís, nó tarraing an fíorú siar.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Céannacht gan fíorú</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Seol teachtaireacht dhíreach</translation>
     </message>
@@ -1185,16 +1150,32 @@
         <translation>Seomraí comhroinnte</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Níl aon seomra comhroinnte eile ann</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Cuir cosc ar ghlaonna</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Ceadaigh glaonna</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Aitheantas</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>fíoraithe</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>athraithe ó fíoraíodh é — fíoraigh arís nó tarraing siar é</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>gan fíorú</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>ceann ar bith</translation>
     </message>
 </context>
 <context>
@@ -1486,6 +1467,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Tá an liosta criptithe agus níl a eochair ar fáil. Beidh sé inléite arís tar éis an gléas a dhíghlasáil agus an feidhmchlár a atosú.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Lódáil pictiúir go huathoibríoch</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Air: lódáiltear pictiúr nó físeán chomh luath is a thagann an teachtaireacht. As: lódáiltear é nuair a bhuailtear air — is iarratas chuig freastalaí an tseoltóra é scrollú thairis.</translation>
     </message>
 </context>
 <context>
@@ -2092,6 +2081,38 @@
         <translation>D&apos;athraigh %1 a phróifíl</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Cóipeáil</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Freagair</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Sábháil</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Cuir ar aghaidh</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Cuir in eagar</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Pionnáil</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Scrios</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Tuilleadh…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Ní féidir an teachtaireacht luaite a luchtú: níl sí ann a thuilleadh nó níl cead agat í a fheiceáil.</translation>
     </message>
@@ -2152,6 +2173,22 @@
         <translation>Níl an teachtaireacht sin sa stair luchtaithe</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Caith uait</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Seol arís</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Freagair</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Freagair sa snáithe</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Cóipeáil nasc an tseomra</translation>
     </message>
@@ -2210,6 +2247,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Fíoraigh teagmhálaí</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Níorbh fhéidir an comhrá a lódáil</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>An oscail an seoladh seo?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Oscail</translation>
     </message>
 </context>
 <context>
@@ -2630,20 +2679,8 @@
         <translation>Seiceáil arís</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Mura féidir sin</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Is féidir leat xmatic a úsáid gan chriptiú áitiúil. Bíonn an seisiún, bunachar na dteachtaireachtaí agus eochracha na seomraí inléite ar an ngléas ansin: léann duine ar bith a shroicheann a chóras comhad leat, agus tugann fón caillte uaidh gach rud atá air.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Fanann teachtaireachtaí criptithe ó cheann go ceann ar a mbealach tríd an líonra ar aon nós. Níl anseo ach an méid atá ar an ngléas.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Lean ar aghaidh gan chriptiú</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2711,6 +2748,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Barántúlacht gan deimhniú</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>An oscail an seoladh seo?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Oscail</translation>
     </message>
 </context>
 <context>

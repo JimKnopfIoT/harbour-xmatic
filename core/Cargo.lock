@@ -5843,11 +5843,12 @@ dependencies = [
 
 [[package]]
 name = "xmatic-core"
-version = "0.28.0"
+version = "0.28.1"
 dependencies = [
  "async-trait",
  "base64",
  "futures-util",
+ "hex",
  "matrix-sdk",
  "matrix-sdk-base",
  "matrix-sdk-store-encryption",
@@ -5859,6 +5860,7 @@ dependencies = [
  "ruma-html",
  "serde",
  "serde_json",
+ "sha2",
  "tokio",
  "unifiedpush",
  "unifiedpush_storage",

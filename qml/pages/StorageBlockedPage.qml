@@ -1,15 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Nothing lies on this device yet, and no key can be had — so no store is
-// created. This is the one moment at which an unencrypted store would come
-// into existence, and until 0.25.2 it did, silently, on any device whose image
-// ships no secrets daemon. Measured on a factory-fresh phone, not imagined.
-//
-// It is a gate, not a wall: the way past it exists, it just has to be chosen
-// and it says what it costs. An install that already has data never sees this
-// page — those users are led by SecurityStatusPage instead, because locking
-// them out would strand their keys.
+// Nothing on this device yet and no key to be had, so no store is created -
+// the one moment at which an unencrypted one would come into existence.
 Page {
     id: page
 
@@ -25,11 +18,16 @@ Page {
     /// to say - before that the page has not made a claim.
     property bool checked: false
 
+    /// A check of this page's own is under way. `obtainStoreKey` blocks, so this
+    /// is short - but the button must not hang on anything else in the app.
+    property bool checking: false
+
     Connections {
         target: matrix
         onStoreKeyChecked: {
             // A check that succeeded takes this page away with it; there is
             // nothing to report on a page that is about to disappear.
+            page.checking = false
             page.checked = !available
         }
     }
@@ -192,14 +190,17 @@ Page {
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 label: qsTr("Check again")
-                enabled: !matrix.busy
-                onClicked: matrix.retryStoreKey()
+                // Never on the global `busy`: this page has exactly one action,
+                // and any unrelated command in flight used to disable it.
+                enabled: !page.checking
+                onClicked: {
+                    page.checking = true
+                    matrix.retryStoreKey()
+                }
             }
 
-            // A check that finds nothing leaves this page exactly as it was,
-            // and a button that visibly does nothing is read as a broken
-            // button - this project has had that complaint before, about
-            // muting. So the check says that it ran.
+            // A check that finds nothing leaves the page as it was, and a button that
+            // visibly does nothing reads as broken. So the check says that it ran.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -214,22 +215,11 @@ Page {
             BusyIndicator {
                 anchors.horizontalCenter: parent.horizontalCenter
                 size: BusyIndicatorSize.Medium
-                running: matrix.busy
+                running: page.checking
             }
 
-            SectionHeader {
-                text: qsTr("If that is not possible")
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.errorColor
-                text: qsTr("You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.")
-            }
-
+            // No "continue without encryption": where the service is genuinely absent the
+            // package does not install, so the button only downgraded capable devices.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -237,12 +227,6 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor
                 text: qsTr("Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.")
-            }
-
-            WrapButton {
-                anchors.horizontalCenter: parent.horizontalCenter
-                label: qsTr("Continue without encryption")
-                onClicked: pageStack.push(Qt.resolvedUrl("AcceptUnencryptedDialog.qml"))
             }
         }
 

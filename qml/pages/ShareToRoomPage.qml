@@ -1,13 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Where something shared from another application lands: pick the room it goes
-// to.
-//
-// Unlike forwarding, which returns to the conversation it came from, this ends
-// in the room that was picked. The user arrives from outside the app and would
-// otherwise be left looking at a list, with no sign of whether anything was
-// sent.
+// Where something shared from another app lands. Unlike forwarding this ends in
+// the room that was picked: the user came from outside and needs to see it sent.
 Page {
     id: page
 

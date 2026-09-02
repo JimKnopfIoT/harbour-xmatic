@@ -3,9 +3,8 @@ import Sailfish.Silica 1.0
 
 import "SecurityStatus.js" as SecurityStatus
 
-// One line of the security status: lamp, name, and one sentence saying what
-// the colour means. The sentence is the point — a coloured dot on its own
-// tells somebody that something is wrong, not what to do about it.
+// One line of the security status: lamp, name, and the sentence that says what
+// the colour means - a dot alone says something is wrong, not what to do.
 Column {
     id: row
 

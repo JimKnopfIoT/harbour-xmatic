@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Invite someone into a room by their Matrix ID. The invitation lands in their
-// client; nothing changes here until they accept, and the member list shows
-// them as invited in the meantime.
+// Invite by Matrix ID. Nothing changes here until they accept; the member list
+// shows them as invited meanwhile.
 Dialog {
     id: dialog
 
@@ -16,9 +15,8 @@ Dialog {
 
     onAccepted: matrix.inviteToRoom(roomId, userField.text)
 
-    // In landscape the dialog is barely taller than its header, so the
-    // field below it has to be reachable by scrolling — on the wide
-    // device it would otherwise sit behind the keyboard.
+    // In landscape the dialog is barely taller than its header, so the field has
+    // to be reachable by scrolling.
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height

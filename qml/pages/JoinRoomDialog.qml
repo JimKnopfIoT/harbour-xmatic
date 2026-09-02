@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Join a room by its address. Public rooms are advertised as "#name:server",
-// and the server part is what lets the homeserver find a room it has never
-// seen before.
+// Join a room by address. The server part is what lets the homeserver find a
+// room it has never seen.
 Dialog {
     id: dialog
 
@@ -16,9 +15,8 @@ Dialog {
 
     onAccepted: matrix.joinRoomByAlias(aliasField.text)
 
-    // In landscape the dialog is barely taller than its header, so the
-    // field below it has to be reachable by scrolling — on the wide
-    // device it would otherwise sit behind the keyboard.
+    // In landscape the dialog is barely taller than its header, so the field has
+    // to be reachable by scrolling.
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height

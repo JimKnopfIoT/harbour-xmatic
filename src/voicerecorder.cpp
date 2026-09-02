@@ -14,9 +14,8 @@ VoiceRecorder::VoiceRecorder(const QString &cacheDirectory, QObject *parent)
     chooseFormat();
 
     connect(m_recorder, &QAudioRecorder::durationChanged, this, &VoiceRecorder::durationChanged);
-    // The container is written out after recording stops: the state is already
-    // Stopped while the status is still Finalizing, and the file is empty
-    // until that finishes. Waiting for the state alone loses every recording.
+    // The container is written after recording stops: the state is Stopped while
+    // the status is still Finalizing, and waiting for the state loses the file.
     connect(m_recorder,
             &QAudioRecorder::statusChanged,
             this,
@@ -44,9 +43,8 @@ VoiceRecorder::VoiceRecorder(const QString &cacheDirectory, QObject *parent)
                 const qint64 size = QFile::exists(path) ? QFile(path).size() : -1;
                 qInfo("xmatic: recording finished, %lld bytes", size);
 
-                // Nothing recorded usually means the microphone was never
-                // granted; sending the empty file would produce an unplayable
-                // message.
+                // Nothing recorded usually means the microphone was never granted; the empty
+                // file would be an unplayable message.
                 if (size <= 0) {
                     emit failed(tr("Nothing was recorded."));
                     return;

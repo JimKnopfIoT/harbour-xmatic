@@ -1,11 +1,7 @@
 .pragma library
 
-// One reading of "how safe is this device", shared by every page that shows it.
-//
-// The point of putting it here is that the encryption page, the lamps in the
-// headers and the page that interrupts the start must never disagree. Two
-// copies of this logic is how the pinned banner broke: one path asked the
-// server, the other only the local state, and they drifted apart unnoticed.
+// One reading of "how safe is this device", shared by every page that shows
+// it: the pages must never disagree, which is how the pinned banner broke.
 
 // Green: in order. Orange: a fault the user can clear. Red: missing, and not
 // reachable without acting.
@@ -16,9 +12,8 @@ var RED = "red"
 // must not interrupt anybody over it.
 var UNKNOWN = "unknown"
 
-// Whether the encryption state has arrived at all. Right after the start the
-// map is empty, and "backup unknown" for half a second must not put a page in
-// front of the user.
+// Whether the state has arrived at all: right after the start the map is empty,
+// and "unknown" for half a second must not put a page in front of the user.
 function known(matrix) {
     return matrix.encryptionStatus
             && matrix.encryptionStatus.recovery !== undefined
@@ -34,12 +29,8 @@ function backupLevel(matrix) {
     if (s.backupEnabled) {
         return GREEN
     }
-    // Whether a backup is on the server is a question over the network, and
-    // the core answers null where it could not be asked. Null is not "no": a
-    // failed request used to read as "there is no key backup", which is the
-    // red line and the one that interrupts the start. Nobody may be alarmed
-    // over an unanswered question, for the same reason nobody may be
-    // reassured by one.
+    // Null is not "no": a failed request used to read as "there is no key backup",
+    // the red line that interrupts the start.
     if (s.backupOnServer === undefined || s.backupOnServer === null) {
         return UNKNOWN
     }
@@ -56,9 +47,8 @@ function recoveryLevel(matrix) {
     switch (s.recovery) {
     case "enabled": return GREEN
     case "disabled": return RED
-    // "incomplete" and anything unforeseen land here. An answer nobody
-    // recognises may not be painted green: a statement without knowledge must
-    // not reassure.
+    // "incomplete" and anything unforeseen land here. An answer nobody recognises
+    // may not be painted green.
     default: return ORANGE
     }
 }
@@ -68,11 +58,8 @@ function crossSigningLevel(matrix) {
     if (!s || s.recovery === undefined) {
         return UNKNOWN
     }
-    // Orange rather than red, and deliberately so: the core answers a plain
-    // yes/no, so "an identity exists and this device is not signed into it"
-    // cannot be told apart from "there is no identity at all". The first is a
-    // fault, the second an absence, and without the distinction the milder
-    // reading is the honest one.
+    // Orange, not red: the core answers yes/no, so "not signed into an identity"
+    // cannot be told from "there is no identity", and the milder reading is honest.
     return s.crossSigned ? GREEN : ORANGE
 }
 
@@ -84,15 +71,13 @@ function storageLevel(matrix) {
     if (s.encrypted) {
         return GREEN
     }
-    // A key is at hand and the data is merely older than it: one sign-out
-    // fixes that, so it is the user's decision, not the system's failure.
+    // A key at hand and older data is one sign-out away - the user's decision.
     // Without a key the system is not delivering what it takes.
     return s.keyAvailable ? ORANGE : RED
 }
 
-// The worst of the four. The same rule the storage line has followed since
-// 0.21.0: showing the better half would claim a protection that covers half of
-// it.
+// The worst of the four: showing the better half would claim a protection that
+// covers half of it.
 function overall(matrix) {
     var levels = [backupLevel(matrix), recoveryLevel(matrix),
                   crossSigningLevel(matrix), storageLevel(matrix)]
@@ -118,14 +103,8 @@ function needsAttention(matrix) {
     return level === ORANGE || level === RED
 }
 
-// `theme` is Silica's Theme and `lightOnDark` its colour scheme, both handed in
-// because a `.pragma library` can import neither — and the enum constant that
-// names the scheme lives on the type, not on the object, so the caller resolves
-// it: `SecurityStatus.color(level, Theme, Theme.colorScheme === Theme.LightOnDark)`.
-//
-// Red comes from the ambience itself. Silica has no green and no orange, so
-// those are fixed values, one pair per scheme — a light ambience needs the
-// darker tone to stay legible on a bright background.
+// `theme` and `lightOnDark` are handed in because a `.pragma library` can
+// import neither. Silica has no green or orange, so those are fixed per scheme.
 function color(level, theme, lightOnDark) {
     switch (level) {
     case GREEN:

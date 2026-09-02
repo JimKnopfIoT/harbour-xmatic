@@ -10,21 +10,11 @@ function safeDecode(text) {
     }
 }
 
-// What a link in a message points at, and how the app deals with it.
-//
-// Matrix carries its own addresses: `#room:server`, `@user:server`, and the
-// permalinks of matrix.to and the `matrix:` URI scheme. Handing those to the
-// browser is what happened before, and the browser can do nothing with them -
-// the room stays out of reach. They are recognised here and handled inside the
-// app instead.
-//
-// Nothing here acts by itself. A tapped link may open a room this account is
-// already in; anything else ends in a dialog the user confirms. A message must
-// not be able to put its reader anywhere.
+// Matrix addresses and permalinks are recognised here and handled in the app -
+// a browser can do nothing with them. Nothing here acts by itself.
 
-// A Matrix address inside plain text: sigil, a name, a colon, a server. The
-// server may carry a port. Deliberately narrow - an e-mail address has no
-// leading sigil and no colon, so it cannot match.
+// A Matrix address in plain text: sigil, name, colon, server, optional port.
+// Narrow on purpose - an e-mail address cannot match.
 var ADDRESS = /([#@!][A-Za-z0-9._=\-\/+]+:[A-Za-z0-9.\-]+(?::[0-9]+)?)/
 
 // Anything this app writes as a link for its own use.
@@ -52,9 +42,8 @@ function parse(link) {
         }
         target = sigils[parts[0]] + safeDecode(parts[1])
     } else {
-        // The host has to *be* matrix.to, not merely contain it:
-    // https://tracker.example/px?u=matrix.to/#/x was classed as internal and
-    // stayed tappable with web links switched off.
+        // The host has to *be* matrix.to, not contain it: a tracker URL with it in a
+        // query was classed as internal and stayed tappable.
     var marker = /^https?:\/\/(www\.)?matrix\.to\/#\//i.test(link)
                  ? link.indexOf("matrix.to/#/") : -1
         if (marker < 0) {

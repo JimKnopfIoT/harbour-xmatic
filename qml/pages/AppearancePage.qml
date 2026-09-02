@@ -2,12 +2,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
 
-// The conversation's colours, chosen by the user. One spectrum serves every
-// element: the selector underneath decides what the fingertip is colouring,
-// the preview at the top uses the very expressions the conversation uses, so
-// a choice shows its effect before it ever hits a chat — and the pull-down's
-// reset is the way back out of an unreadable palette. Every element defaults
-// to "follow the ambience", which reproduces the built-in look.
+// The conversation's colours. The preview uses the very expressions the
+// conversation uses, and the reset is the way out of an unreadable palette.
 Page {
     id: page
 
@@ -18,9 +14,8 @@ Page {
                                         "otherText", "ownText"]
     property string element: "otherBubble"
 
-    // The stored value of the selected element, "" for "follow the
-    // ambience". A ternary chain rather than a lookup so it stays reactive
-    // to the settings object.
+    // The stored value of the selected element, "" for "follow the ambience". A
+    // ternary chain rather than a lookup, so it stays reactive.
     readonly property string storedValue:
         element === "otherBubble" ? appearance.otherBubbleColor
         : element === "ownBubble" ? appearance.ownBubbleColor
@@ -53,9 +48,8 @@ Page {
     function syncField() {
         colorField.setColor(storedValue !== "" ? storedValue
                                                : String(ambienceFor(element)))
-        // The slider stops following its binding once it has been dragged, so
-        // both a change of element and a reset have to place it by hand, or
-        // it keeps showing a position the bubble no longer has.
+        // The slider stops following its binding once dragged, so a change of element
+        // and a reset have to place it by hand.
         if (opacitySlider) {
             opacitySlider.value = element === "ownBubble" ? appearance.ownBubbleOpacity
                                                           : appearance.otherBubbleOpacity
@@ -94,12 +88,8 @@ Page {
         Column {
             id: content
 
-            // One direction only, and now it is the other one: a wrapping
-            // button takes its width as given and lays the label out inside it,
-            // so deriving that width from the children's implicitWidth is not
-            // just forbidden but meaningless - a WrapButton carries no text of
-            // its own, so its implicit width is the platform minimum and every
-            // button on the page collapsed to it.
+            // One direction, and here the other one: a wrapping button takes its width as
+            // given, so deriving it from the children collapses every button on the page.
             readonly property real buttonWidth: Math.min(
                     Theme.buttonWidthLarge,
                     width - 2 * Theme.horizontalPageMargin)
@@ -232,9 +222,8 @@ Page {
                 height: Theme.paddingLarge
             }
 
-            // The way back, in plain sight: every colour to the ambience, both
-            // opacities to their defaults. The pull-down carries the same
-            // entry, but a reset that has to be found is not a safety net.
+            // The way back, in plain sight: every colour to the ambience. The pull-down
+            // has the same entry, but a reset that has to be found is not a safety net.
             WrapButton {
                 id: resetColoursButton
 
@@ -244,9 +233,8 @@ Page {
                 onClicked: page.resetAll()
             }
 
-            // The line itself is not a setting: it costs nothing, and it
-            // only appears where something is unread. What differs between
-            // people is where the room opens.
+            // The line itself is not a setting - it costs nothing and appears only where
+            // something is unread. What differs is where the room opens.
             TextSwitch {
                 text: qsTr("Open a room where you stopped reading")
                 description: qsTr("On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.")
@@ -273,11 +261,8 @@ Page {
                 onClicked: settings.emojiImages = !settings.emojiImages
             }
 
-            // Reading a set in, rather than copying files onto the device by
-            // hand. What it buys is the checking: only files named like code
-            // points, only small ones, each one decoded once here and written
-            // out again as PNG, each one with a checksum that is verified
-            // every time the picture is used afterwards.
+            // Reading a set in rather than copying files by hand: what it buys is the
+            // checking - name, size, one decode here, and a checksum verified afterwards.
             WrapButton {
                 id: choosePicturesButton
 

@@ -1,13 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// The session and the stores are on disk, encrypted, and the key that opens
-// them was not available when the app started — the device's secrets storage
-// is bound to the device lock and hands the key out only after its own
-// authentication. This page is deliberately not the login page: signing in
-// here would create a new device and clear the store the key still protects.
-// Every state needs a visible action, so the retry is a button and the way
-// out for a key that is really gone is in the pull-down, behind a dialog.
+// Encrypted data on disk whose key was not available at start. Deliberately not
+// the login page - signing in would clear the store the key still protects.
 Page {
     id: page
 

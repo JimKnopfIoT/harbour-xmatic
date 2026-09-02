@@ -1,7 +1,5 @@
-// The emoji a reaction can be picked from: the Unicode set, in Unicode's own
-// order, split into the groups Unicode itself defines. Characters, not file
-// names - a reaction is a string, and the picture is looked up from it.
-// Generated data; the first group is the common handful.
+// The emoji a reaction can be picked from: the Unicode set in Unicode's own
+// order and groups. Characters, not file names - the picture is looked up.
 .pragma library
 
 var groups = [

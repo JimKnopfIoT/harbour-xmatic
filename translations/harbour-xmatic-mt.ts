@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Kompli mingħajr kriptaġġ</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Lura</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Kull ma jaħżen xmatic fuq dan l-apparat jibqa&apos; jinqara: is-sessjoni tiegħek, il-messaġġi tiegħek u ċ-ċwievet tal-kmamar tiegħek.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Agħżel dan biss jekk is-servizz ma jistax jiġi installat fuq dan l-apparat. Jekk tinstallah aktar tard, tista&apos; taqleb mill-paġna tal-kriptaġġ — jiswa ħruġ wieħed mis-sessjoni u ċ-ċavetta tal-irkupru tiegħek.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic se jibqa&apos; juri dan l-istat taħt Kriptaġġ.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -350,6 +327,10 @@
     <message>
         <source>connected</source>
         <translation>konness</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>is-sejħa ma setgħetx titkompla</translation>
     </message>
 </context>
 <context>
@@ -1143,22 +1124,6 @@
         <translation>Apparati</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Ċifrar</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identità vverifikata</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>L-identità nbidlet minn meta ġiet ivverifikata. Erġa&apos; vverifika, jew irtira l-verifika.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identità mhux ivverifikata</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Ibgħat messaġġ dirett</translation>
     </message>
@@ -1187,16 +1152,32 @@
         <translation>Kmamar komuni</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Ebda kamra komuni oħra</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Ipprojbixxi ċ-ċemplijiet</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Ippermetti ċ-ċemplijiet</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identità</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>verifikata</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>inbidlet minn meta ġiet verifikata — erġa&apos; vverifikaha jew irtiraha</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>mhux verifikata</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>xejn</translation>
     </message>
 </context>
 <context>
@@ -1488,6 +1469,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Il-lista hija kkriptata u ċ-ċavetta tagħha mhijiex disponibbli. Terġa&apos; tkun tista&apos; tinqara wara li l-apparat jinfetaħ u l-app terġa&apos; tinbeda.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Agħbba r-ritratti awtomatikament</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Mixgħul: ritratt jew vidjo jitgħabba hekk kif tidher il-messaġġ. Mitfi: jitgħabba meta tmissu — li tiskrollja ħdejh hija talba lis-server ta’ min bagħat.</translation>
     </message>
 </context>
 <context>
@@ -2095,6 +2084,38 @@
         <translation>%1 biddel il-profil tiegħu</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Ikkopja</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Wieġeb</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Issejvja</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Għaddi</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editja</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Waħħal</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ħassar</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Aktar…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Il-messaġġ ikkwotat ma jistax jitniżżel: m&apos;għadux jeżisti jew m&apos;għandekx permess tarah.</translation>
     </message>
@@ -2155,6 +2176,22 @@
         <translation>Dak il-messaġġ mhux fl-istorja mniżżla</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Warrab</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Ibgħat mill-ġdid</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Irreaġixxi</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Wieġeb fil-fjul</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Ikkopja l-link tal-kamra</translation>
     </message>
@@ -2213,6 +2250,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Ivverifika kuntatt</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Ma setgħetx titgħabba l-konverżazzjoni</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Tiftaħ dan l-indirizz?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Iftaħ</translation>
     </message>
 </context>
 <context>
@@ -2634,20 +2683,8 @@
         <translation>Iċċekkja mill-ġdid</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Jekk dan mhux possibbli</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Tista&apos; tuża xmatic mingħajr kriptaġġ lokali. Is-sessjoni, id-database tal-messaġġi u ċ-ċwievet tal-kmamar imbagħad jinsabu leġibbli fuq l-apparat: min jasal għas-sistema tal-fajls tiegħu jaqra miegħek, u telefon mitluf jagħti kull ma hemm fuqu.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Il-messaġġi jibqgħu kriptati minn tarf sa tarf fi triqthom mis-sistema xorta waħda. Hawn qed nitkellmu biss dwar dak li jinsab fuq l-apparat.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Kompli mingħajr kriptaġġ</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2716,6 +2753,14 @@
         <source>Authenticity not confirmed</source>
         <translation>L-awtentiċità mhix ikkonfermata</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Tiftaħ dan l-indirizz?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Iftaħ</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2750,7 +2795,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>mhux ivverifikat</translation>
+        <translation>mhux verifikata</translation>
     </message>
     <message>
         <source>This device is not verified</source>

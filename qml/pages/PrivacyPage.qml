@@ -2,8 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 // What other people may do to this device. The call rules are enforced in the
-// core, before an invitation reaches the screen: a refused call rings nothing
-// and is answered in no way the caller can observe.
+// core: a refused call rings nothing and is answered in no observable way.
 Page {
     id: page
 
@@ -28,12 +27,8 @@ Page {
             width: parent.width
             spacing: Theme.paddingMedium
 
-            // One direction only, and now it is the other one: a wrapping
-            // button takes its width as given and lays the label out inside it,
-            // so deriving that width from the children's implicitWidth is not
-            // just forbidden but meaningless - a WrapButton carries no text of
-            // its own, so its implicit width is the platform minimum and every
-            // button on the page collapsed to it.
+            // One direction, and here the other one: a wrapping button takes its width as
+            // given, so deriving it from the children collapses every button on the page.
             readonly property real buttonWidth: Math.min(
                     Theme.buttonWidthLarge,
                     width - 2 * Theme.horizontalPageMargin)
@@ -42,15 +37,8 @@ Page {
                 title: qsTr("Privacy")
             }
 
-            // What went wrong, where it went wrong. Writing the lists that name
-            // people is refused while the store key is unavailable - after a
-            // reboot, until the device is unlocked once - and this page had
-            // nowhere to say so: an address was entered, nothing appeared, and
-            // with "only these may call" that means nobody gets through while
-            // the user believes the opposite.
-            //
-            // The field is the app's only one, so it is emptied when this page
-            // opens (below): what stands here afterwards was caused here.
+            // Writing the lists that name people is refused while the store key is away,
+            // and this page had nowhere to say so - with "only these may call" that matters.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -99,12 +87,8 @@ Page {
 
             TextSwitch {
                 text: qsTr("Video calls")
-                // Says what the switch does and stops there. It shuts this
-                // phone's camera and shows no picture; it does not stop the
-                // other side from sending one, and their stream is still
-                // decoded before it is thrown away. Refusing the video line in
-                // the SDP answer is the fix for that, and it belongs with the
-                // other call work.
+                // Says what the switch does and stops there: it shuts this phone's camera. The
+                // other side's stream is still decoded before it is thrown away.
                 description: qsTr("Off, an offer with video is answered as a voice call: your camera stays shut and no picture is shown. The other side may still send one, which this phone discards.")
                 checked: settings.videoCalls
                 automaticCheck: false
@@ -125,10 +109,8 @@ Page {
 
             TextSwitch {
                 text: qsTr("Send read receipts")
-                // Says the one direction this switch actually governs. The
-                // other one - whether *their* reading is shown here - is the
-                // switch below, and claiming both made this one look broken to
-                // anybody who left that one on.
+                // Says the one direction this switch governs. The other is the switch below,
+                // and claiming both made this one look broken.
                 description: qsTr("Off, nobody is told how far you have read. What others read is the setting below.")
                 checked: settings.sendReadReceipts
                 automaticCheck: false
@@ -141,6 +123,14 @@ Page {
                 checked: settings.showReadStatus
                 automaticCheck: false
                 onClicked: settings.showReadStatus = !settings.showReadStatus
+            }
+
+            TextSwitch {
+                text: qsTr("Load pictures automatically")
+                description: qsTr("On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender's server.")
+                checked: settings.autoLoadMedia
+                automaticCheck: false
+                onClicked: settings.autoLoadMedia = !settings.autoLoadMedia
             }
 
             TextSwitch {
@@ -169,16 +159,11 @@ Page {
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor
-                // Both halves are this app's own text, so the markup is ours;
-                // the second one is bold because it is the one that costs
-                // something when it is overlooked.
+                // Both halves are this app's own text, so the markup is ours; the second is
+                // bold because it is the one that costs something when overlooked.
                 textFormat: Text.StyledText
-                // Asked, not claimed. The local storage is encrypted where a
-                // key could be minted and unencrypted where it could not, and
-                // this page used to state the good case unconditionally - on a
-                // device without secrets storage the privacy page said the
-                // opposite of the truth, in the very paragraph that is otherwise
-                // scrupulous about what is *not* protected.
+                // Asked, not claimed: on a device without secrets storage this page used to
+                // state the good case unconditionally, in its most scrupulous paragraph.
                 text: (matrix.storageStatus.encrypted
                        ? qsTr("Messages and keys are stored encrypted.")
                        : qsTr("Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it."))
@@ -269,10 +254,8 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: matrix.privateListsReadable ? Theme.secondaryHighlightColor
                                                    : Theme.errorColor
-                // An empty list and a list that could not be read look the same
-                // from here, and they are opposites: with "only these may call"
-                // the second means everybody is refused while the page claims
-                // there is nobody to refuse.
+                // An empty list and one that could not be read look the same and are
+                // opposites: with "only these may call" the second refuses everybody.
                 text: matrix.privateListsReadable
                       ? qsTr("Nobody yet.")
                       : qsTr("The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.")

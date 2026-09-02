@@ -1,17 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Verifying another person by their Matrix address.
-//
-// The way in for everyone this account has no two-party encrypted chat with —
-// a group room, or somebody not written to yet. Where such a chat does exist,
-// the room's own menu offers the same thing without asking for an address,
-// because that is the case where the app already knows it.
-//
-// This used to be a field on the encryption page, directly under the button
-// that verifies one's *own* second device. The two read as variants of each
-// other there, and a new user took the wrong one; here the question is only
-// ever about a person.
+// Verifying a person by address - the way in where no two-party encrypted chat
+// exists. Where one does, the room's own menu asks for no address.
 Page {
     id: page
 
@@ -65,10 +56,8 @@ Page {
                 EnterKey.onClicked: page.verify()
             }
 
-            // Two examples rather than one: the shape is "@name:server", and a
-            // single line of it reads as the one address that works. The
-            // domains are the ones reserved for documentation, so neither can
-            // be somebody's real account.
+            // Two examples rather than one: a single line reads as the one address that
+            // works. The domains are the ones reserved for documentation.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -85,13 +74,8 @@ Page {
                 onClicked: page.verify()
             }
 
-            // The other kind, in the same place and in the same order it has
-            // on the encryption page: a person first, then a device of one's
-            // own. Both were once side by side under one heading, which is how
-            // a new user came to press the device one meaning to verify
-            // somebody else. Apart, each says what it is - and whoever comes
-            // here for verification finds both rather than one and a hint
-            // that the other lives somewhere else.
+            // A person first, then a device of one's own, in the same order as the
+            // encryption page: side by side under one heading, a new user took the wrong one.
             SectionHeader {
                 text: qsTr("Your own device")
             }

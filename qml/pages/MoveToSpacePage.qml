@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Pick the space a room moves to. Tapping a target adds the room there and
-// removes it from the current space; the current space itself is hidden from
-// the list, since moving a room onto itself means nothing.
+// Pick the space a room moves to: it is added there and removed here. The
+// current space is hidden - moving a room onto itself means nothing.
 Page {
     id: page
 

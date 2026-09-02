@@ -93,7 +93,7 @@ writes it to the log.
   app, takes the same single-process lock on the message store, and has no
   access the app does not.
 - Your notification setting. If message text is switched off in Account ›
-  Display, a push shows "New message" and nothing more, exactly as an ordinary
+  Privacy, a push shows "New message" and nothing more, exactly as an ordinary
   arrival does.
 - Your push rules. A room you muted stays quiet: the account's own rules decide
   whether a notification is shown, and xmatic does not overrule them.

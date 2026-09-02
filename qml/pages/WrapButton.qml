@@ -1,25 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// A Silica button whose label may take more than one line.
-//
-// Silica's own Button cannot: its height is `Theme.itemSizeExtraSmall`, its
-// label is a single line with `truncationMode: Fade`, and without a width it
-// grows with the text until it leaves the page. In one language that made the
-// security page's action run off both edges; in another the same action came
-// back faded in the middle of a word. Measured across all 49 button labels in
-// the app against all 30 languages: nearly every language has several past
-// what fits, and most of them are older than the page that made it visible.
-//
-// A rule saying "keep labels short" would be a paragraph where a mechanism is
-// needed — and some of these actions cannot be said in twenty-six characters
-// in Finnish or Hungarian, whatever the rule says.
-//
-// Nothing of the platform's appearance is reproduced here. `Button`'s
-// background is anchored to fill the button minus `(height - implicitHeight)/2`
-// top and bottom, so raising `implicitHeight` from outside makes that margin
-// zero and the platform's own rectangle grows with the button. Only the label
-// is ours, and it takes the colour and the size Silica gives its own.
+// A Silica button whose label may take more than one line: the platform's own
+// is single-line and grows off the page. Only the label is ours.
 Button {
     id: button
 
@@ -29,16 +12,8 @@ Button {
 
     text: ""
 
-    // Left to the caller, as with any Silica button on a page — but never
-    // wider than the page it stands on.
-    //
-    // The parent must therefore have a width of its own. Inside a `Row`, or a
-    // `Column` that was given no width, the parent's width comes from its
-    // children instead: that is a binding loop, Qt breaks it by making
-    // something zero, and the button then does not exist on screen. The
-    // verification page's two answers were invisible for exactly this reason
-    // in 0.26.2 and 0.27.0, which is every release this component has shipped
-    // in — and nothing in the build says a word about it.
+    // Never wider than the page. The parent must have a width of its own - inside
+    // a Row it comes from the children, and that loop leaves no button on screen.
     width: Math.min(Theme.buttonWidthLarge,
                     parent.width - 2 * Theme.horizontalPageMargin)
 
@@ -50,10 +25,8 @@ Button {
     Label {
         id: buttonLabel
 
-        // Anchored to the top rather than centred: a label that is centred in a
-        // height derived from its own height is the kind of two-way binding
-        // this project has broken itself on three times. The height above
-        // already keeps it in the middle.
+        // Anchored to the top, not centred: centring in a height derived from the own
+        // height is the two-way binding this project has broken itself on.
         anchors {
             top: parent.top
             topMargin: (button.height - height) / 2

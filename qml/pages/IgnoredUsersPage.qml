@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// The account's ignored users (`m.ignored_user_list`). The list lives on the
-// homeserver, not on this device, so it holds in every client. Tapping a row
-// stops ignoring, behind a remorse.
+// The account's ignored users. The list lives on the homeserver, so it holds in
+// every client; tapping a row stops ignoring, behind a remorse.
 Page {
     id: page
 

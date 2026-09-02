@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Продължи без шифроване</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Назад</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Всичко, което xmatic съхранява на това устройство, остава четимо: сесията ти, съобщенията ти и ключовете ти за стаи.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Избери това само ако услугата не може да бъде инсталирана на устройството. Ако я инсталираш по-късно, можеш да превключиш от страницата за шифроване — струва едно излизане от профила и ключа ти за възстановяване.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic ще продължи да показва това състояние под Шифроване.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>свързано</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>разговорът не можа да продължи</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Устройства</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Шифроване</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Самоличността е потвърдена</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Самоличността се е променила след потвърждаването. Потвърди отново или оттегли потвърждението.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Самоличността не е потвърдена</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Изпрати лично съобщение</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Общи стаи</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Няма други общи стаи</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Забрана на обажданията</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Разрешаване на обаждания</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Идентичност</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>потвърдена</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>променена след потвърждаването — потвърди отново или оттегли</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>непотвърдена</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>няма</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Списъкът е шифриран и ключът му не е достъпен. Ще може да се прочете отново, след като устройството бъде отключено и приложението — рестартирано.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Автоматично зареждане на снимки</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Включено: снимка или видео се зарежда веднага щом съобщението се появи. Изключено: зарежда се при докосване — прелистването покрай нея е заявка към сървъра на подателя.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>%1 промени профила си</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Копирай</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Отговори</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Запази</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Препрати</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Редактирай</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Закачи</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Изтрий</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Още…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Цитираното съобщение не може да се зареди: вече не съществува или нямаш право да го видиш.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>Това съобщение не е в заредената история</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Отхвърли</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Изпрати отново</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Реагирай</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Отговори в темата</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Копиране на връзката към стаята</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Потвърди контакта</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Разговорът не можа да бъде зареден</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Да се отвори ли този адрес?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Отвори</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Провери отново</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Ако това не е възможно</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Можеш да използваш xmatic без местно шифроване. Сесията, базата със съобщения и ключовете за стаи тогава лежат четими на устройството: който стигне до файловата му система, чете заедно с теб, а изгубен телефон издава всичко, което е на него.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Съобщенията така или иначе остават шифровани от край до край по пътя си през мрежата. Тук става дума само за това, което лежи на устройството.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Продължи без шифроване</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2708,6 +2745,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Автентичността не е потвърдена</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Да се отвори ли този адрес?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Отвори</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2740,7 +2785,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>непотвърден</translation>
+        <translation>непотвърдена</translation>
     </message>
     <message>
         <source>This device is not verified</source>

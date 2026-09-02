@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// One emoji, drawn the way the conversation draws it: a picture the user put
-// into the app's data directory, otherwise the character itself. A picture
-// that fails to decode falls back to the character too.
+// One emoji, drawn as the conversation draws it: the user's picture where there
+// is one, otherwise the character - and on a failed decode the character.
 Item {
     id: item
 

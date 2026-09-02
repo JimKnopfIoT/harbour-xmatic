@@ -1,11 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// One row of a room list, shared by the chat list, the space overview and a
-// single space's rooms. The width flows one way only — from the list, down
-// through this delegate to its children — because mixing the two directions in
-// one subtree is a binding loop that Qt breaks by zeroing a height, leaving a
-// list that looks empty while the model is full. Keep it that way.
+// One row of a room list, shared by three views. The width flows one way only
+// - from the list down - or Qt breaks the loop by zeroing a height.
 ListItem {
     id: roomItem
 
@@ -13,11 +10,8 @@ ListItem {
     // ordinary rooms.
     property string trailingText: ""
 
-    // When the room was last active. Silica's relative timepoint gives the
-    // time, the weekday or a day and month - and no year, which is right for
-    // this week and wrong for a conversation that stopped in 2025: it reads as
-    // if it had happened this year. Anything outside the current year is
-    // therefore written out in full.
+    // Silica's relative timepoint gives no year, which reads as "this year" for a
+    // conversation that stopped in 2025. Anything older is written out.
     readonly property string activityText: {
         if (!(model.timestamp > 0)) {
             return ""
@@ -59,10 +53,8 @@ ListItem {
             spacing: Theme.paddingSmall
 
             Label {
-                // Status icons follow the name in a fixed order — encrypted,
-                // favourite, muted, low priority — so the reader always finds
-                // each one in the same place instead of it moving as others
-                // appear.
+                // Status icons follow the name in a fixed order - encrypted, favourite, muted,
+                // low priority - so each is always found in the same place.
                 width: Math.min(implicitWidth,
                                 parent.width
                                 - (lock.visible ? lock.width + Theme.paddingSmall : 0)
@@ -99,11 +91,8 @@ ListItem {
             Image {
                 id: mutedIcon
 
-                // Muted and low priority are two different things — one silences
-                // the room, the other sorts it to the bottom — and a room can be
-                // either, or both, so each gets its own marker. The theme has no
-                // icon-s- variant of the silent glyph, so the medium one is drawn
-                // at the size the other markers in this row have.
+                // Muted and low priority are different things and a room can be both, so each
+                // gets its own marker. The theme has no small silent glyph.
                 anchors.verticalCenter: parent.verticalCenter
                 visible: model.muted === true
                 width: Theme.iconSizeExtraSmall
@@ -142,10 +131,8 @@ ListItem {
             font.pixelSize: Theme.fontSizeExtraSmall
             color: roomItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
             truncationMode: TruncationMode.Fade
-            // A room that was upgraded away takes no new messages, so its time
-            // of last activity says the least of anything that could stand
-            // here — and it is the one state the row cannot show otherwise: a
-            // dead room looks exactly like a quiet one.
+            // An upgraded room takes no new messages, so its last activity says the least
+            // of anything that could stand here - and a dead room looks like a quiet one.
             text: model.membership === "invited"
                   ? qsTr("Invitation")
                   : (model.tombstoned === true
@@ -167,19 +154,13 @@ ListItem {
             verticalCenter: parent.verticalCenter
         }
         visible: model.unread > 0 || model.mentions > 0
-        // Sized from the number so pill and digits grow together; the
-        // fixed-height form kept the count near the smallest font size
-        // and it read as a speck on the device.
+        // Sized from the number so pill and digits grow together: the fixed-height
+        // form kept the count near the smallest font and read as a speck.
         width: Math.max(height, badgeLabel.implicitWidth + Theme.paddingMedium)
         height: badgeLabel.implicitHeight + Theme.paddingSmall
         radius: height / 2
-        // highlightBackgroundColor at the pressed-item opacity is the one
-        // highlight fill the ambience guarantees to sit under primary text —
-        // Silica paints pressed list items exactly this way. Only at that
-        // opacity: the full-strength fill looked fine on a dark ambience and
-        // swallowed the number on a light one, the same trap as every other
-        // strong fill before it. A mention therefore marks itself with a
-        // ring, not a stronger fill.
+        // The one highlight fill the ambience guarantees under primary text, and only
+        // at the pressed opacity - full strength swallowed the number on a light one.
         color: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
         border.color: Theme.highlightColor
         border.width: model.mentions > 0 ? Math.max(2, Theme.paddingSmall / 3) : 0
@@ -191,11 +172,8 @@ ListItem {
             font.pixelSize: Theme.fontSizeSmall
             font.bold: true
             color: Theme.primaryColor
-            // "20+" where the count has reached the edge of what a sync
-            // carries per room: past that the core knows only "at least this
-            // many", and a bare number would claim a total nobody counted.
-            // The ceiling is the core's `LIST_TIMELINE_LIMIT`, which is why
-            // the number is not repeated here.
+            // "20+" where the count reached the edge of what a sync carries: past that the
+            // core knows only "at least". The ceiling lives in `LIST_TIMELINE_LIMIT`.
             text: {
                 var count = model.mentions > 0 ? model.mentions : model.unread
                 return model.unreadCapped ? count + "+" : count

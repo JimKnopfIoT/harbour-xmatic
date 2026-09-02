@@ -1,9 +1,5 @@
-//! Building the Matrix client and persisting the session across restarts.
-//!
-//! Two things have to survive an app restart: the OAuth client registration
-//! plus tokens (a small JSON file) and the state and crypto stores (SQLite,
-//! managed by the SDK). Both live below the application data directory, which
-//! Sailjail confines to this app.
+//! Building the client and keeping the session across restarts.
+//! Session file and SQLite stores, both under the app data directory.
 
 use std::path::{Path, PathBuf};
 
@@ -20,15 +16,12 @@ use matrix_sdk_store_encryption::StoreCipher;
 use serde::{Deserialize, Serialize};
 use zeroize::{Zeroize, Zeroizing};
 
-/// The 32-byte store key the front end fetched from Sailfish Secrets.
-/// Wiped on drop. When it is absent — no secrets daemon, denied permission —
-/// everything below degrades to the unencrypted behaviour instead of
-/// blocking, and says so once.
+/// The 32-byte store key the front end read from Sailfish Secrets.
+/// Wiped on drop.
 pub type StoreKey = Zeroizing<[u8; 32]>;
 
-/// Decodes the base64 key from the front end. `None` for anything that is
-/// not exactly 32 bytes — a truncated key must not silently become a
-/// different key.
+/// Base64 in, 32 bytes out. Any other length is `None` - a truncated
+/// key must not silently become a different key.
 pub fn decode_key(encoded: &str) -> Option<StoreKey> {
     let mut bytes = base64::engine::general_purpose::STANDARD
         .decode(encoded.trim())
@@ -47,21 +40,16 @@ pub struct Paths {
     /// Downloaded attachments. Separate from the store because it is
     /// disposable — every file in it can be fetched again.
     pub media_cache: PathBuf,
-    /// Voice messages recorded on this device. Written by the Qt side, which
-    /// derives the same path; cleared here because a sign-out has to reach
-    /// everything readable.
+    /// Recorded voice messages. Written and cleared by the Qt side, which owns
+    /// the wipe setting - the core never touches them.
     pub voice_cache: PathBuf,
     /// Encrypted lists that name people (see private.rs).
     pub private_file: PathBuf,
-    /// The UnifiedPush registration: the token, the subscription keys and the
-    /// chosen distributor. Beside the session rather than in the cache — a
-    /// registration that is lost has to be made again, and the endpoint the
-    /// homeserver holds then points nowhere.
+    /// UnifiedPush token, subscription keys, distributor. Beside the
+    /// session - a lost one leaves the server's endpoint pointing nowhere.
     pub push_file: PathBuf,
-    /// The message search index, one Tantivy directory per room underneath.
-    /// Beside the store rather than in the cache: it is expensive to rebuild
-    /// (the history has to be fetched again) and it holds message text, so it
-    /// belongs where the store's own protection applies.
+    /// Tantivy index per room. Beside the store rather than in the cache:
+    /// expensive to rebuild, and it holds message text.
     pub search_index: PathBuf,
 }
 
@@ -85,15 +73,8 @@ impl Paths {
     }
 }
 
-/// The persisted form of a session, in one of two shapes: OAuth (browser and
-/// device-code logins) or classic (`m.login.password`).
-///
-/// `untagged`, and the OAuth variant first, because every `session.json`
-/// written before the password login existed is OAuth-shaped and has to keep
-/// parsing — a tag would invalidate all of them. The variants cannot be
-/// confused: OAuth carries `client_id` + `user`, the classic shape carries
-/// `matrix`. `OAuthSession` itself is not serialisable, so its two halves are
-/// stored explicitly; the SDK's `MatrixSession` is.
+/// OAuth or classic (`m.login.password`), `untagged` so every session
+/// file written before the password login keeps parsing.
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum StoredSession {
@@ -147,29 +128,14 @@ impl StoredSession {
     }
 }
 
-/// Whether the SQLite stores were created under the store key.
-///
-/// The marker matters because a store created *without* encryption has no
-/// cipher row at all: opening it with a key would silently mint a fresh
-/// cipher and turn every existing value into garbage. So the key is only
-/// applied to stores born encrypted — a fresh (empty) store directory with a
-/// key available gets the marker and starts encrypted, an existing store
-/// without the marker keeps opening unencrypted until a sign-out clears it.
+/// Whether the stores were created under the key. Opening a plaintext
+/// store with one mints a fresh cipher and turns it into garbage.
 pub fn store_marked_encrypted(paths: &Paths) -> bool {
     paths.store.join(".encrypted").exists()
 }
 
-/// What the app's own files on disk amount to.
-///
-/// The two halves are reported separately because they are separate facts and
-/// can genuinely disagree. The SQLite stores carry the `.encrypted` marker from
-/// the moment they were created and can never change side afterwards
-/// (`store_key_applies` explains why), while the session file is rewritten on
-/// every successful restore and follows whatever key exists at that moment. A
-/// device whose stores predate the store key therefore has an encrypted session
-/// next to plaintext stores — collapsing that into one word would claim a
-/// protection that only covers half of it, which is precisely what the UI is
-/// meant to stop doing.
+/// Stores and session file are separate facts: the marker never changes
+/// side, the session file follows whatever key exists at each write.
 pub struct StorageState {
     /// The SQLite stores (state, crypto, event cache) are encrypted.
     pub store_encrypted: bool,
@@ -183,9 +149,8 @@ pub struct StorageState {
 }
 
 impl StorageState {
-    /// True when everything that exists on disk is encrypted. An install with
-    /// no session file yet counts as encrypted if the stores are: there is
-    /// nothing else to protect.
+    /// Everything on disk encrypted. No session file yet counts as
+    /// encrypted - there is nothing else to protect.
     pub fn fully_encrypted(&self) -> bool {
         self.store_encrypted && (!self.session_present || self.session_encrypted)
     }
@@ -201,11 +166,8 @@ pub fn storage_state(paths: &Paths, key: Option<&StoreKey>) -> StorageState {
             bytes.zeroize();
             (true, encrypted)
         }
-        // Not there is one thing; could not be read is another. Answering the
-        // second with "no session file" makes `fully_encrypted()` report the
-        // good case, and the privacy page states it as fact. A statement about
-        // encryption may not rest on a failed look: an unreadable file counts
-        // as present and not known to be encrypted.
+        // "Could not read" is not "not there": an unreadable file counts as
+        // present and not known to be encrypted.
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => (false, false),
         Err(_) => (true, false),
     };
@@ -218,58 +180,48 @@ pub fn storage_state(paths: &Paths, key: Option<&StoreKey>) -> StorageState {
     }
 }
 
-fn store_key_applies(paths: &Paths, key: Option<&StoreKey>) -> bool {
-    if key.is_none() {
-        return false;
-    }
+/// Open under the key, open an existing plaintext store, or refuse.
+/// Every doubtful case takes the answer that changes nothing on disk.
+fn store_plan<'a>(paths: &Paths, key: Option<&'a StoreKey>) -> Result<Option<&'a StoreKey>, String> {
     if store_marked_encrypted(paths) {
-        return true;
+        // The SDK does *not* refuse a missing key: with `None` it opens
+        // cipherless and writes plaintext beside the ciphertext. So this does.
+        let key = key.ok_or("the local store is encrypted and its key is not available")?;
+        return Ok(Some(key));
     }
-    // "Could not look" is not "empty". Answering it with `true` writes the
-    // marker and hands the key to a store that may already hold unencrypted
-    // data - which the SDK then re-ciphers, and that is the total loss this
-    // whole function exists to avoid. The failure direction of a test whose
-    // wrong answer destroys data is the one that changes nothing.
-    //
-    // A directory that is not there yet is the exception, and it is spelled
-    // out rather than left to a caller: today every `build_client` runs after
-    // a `prepare()` that creates it, so `ENOENT` cannot happen - but that is
-    // another function's guarantee, and one that a later caller can forget.
-    // Not there and nothing in it are the same thing to this question.
+
     let fresh = match std::fs::read_dir(&paths.store) {
         Ok(mut entries) => entries.next().is_none(),
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => true,
         Err(_) => false,
     };
-    if fresh {
-        // Losing the marker while keeping the store would flip the store
-        // back to "open without key" and shred it — so it is written before
-        // the store exists, and a failed write means staying unencrypted.
-        std::fs::write(paths.store.join(".encrypted"), b"xmatic store key v1\n").is_ok()
-    } else {
-        false
+    if !fresh {
+        return Ok(None);
     }
+
+    let key = key.ok_or("no store key: the local store is not created unencrypted")?;
+    // Marker before the store exists: losing it flips the store back to "open
+    // without key". The directory may not be there yet.
+    std::fs::create_dir_all(&paths.store)
+        .map_err(|error| format!("the store directory could not be created: {error}"))?;
+    std::fs::write(paths.store.join(".encrypted"), b"xmatic store key v1\n")
+        .map_err(|error| format!("the store could not be marked as encrypted: {error}"))?;
+    Ok(Some(key))
 }
 
-/// Builds a client for `server`, which may be a server name such as
-/// `matrix.org` or a full homeserver URL.
-///
-/// `key` encrypts the SQLite stores — applied under the rules of
-/// `store_key_applies`, so existing unencrypted stores keep working.
+/// Builds a client for `server` - server name or full URL. `store_plan`
+/// decides the store; a new one is never created without a key.
 pub async fn build_client(
     server: &str,
     paths: &Paths,
     key: Option<&StoreKey>,
-) -> Result<Client, matrix_sdk::ClientBuildError> {
-    let store_key = if store_key_applies(paths, key) { key } else { None };
+) -> Result<Client, String> {
+    let store_key = store_plan(paths, key)?;
     let store_config =
         SqliteStoreConfig::new(&paths.store).key(store_key.map(|key| &**key));
 
-    // The search index follows the store's own decision, so the two are never
-    // in different states. Its password is the store key in base64 - not a
-    // second secret derived from the first, because deriving one would buy
-    // nothing: both files sit in the same directory under the same key, and
-    // whoever has that key has both regardless.
+    // Search index follows the store's decision, password is the key in
+    // base64: same directory, same key, so deriving one buys nothing.
     let search_store = match store_key {
         Some(key) => SearchIndexStoreKind::EncryptedDirectory(
             paths.search_index.clone(),
@@ -281,78 +233,31 @@ pub async fn build_client(
     let client = Client::builder()
         .search_index_store(search_store)
         .server_name_or_homeserver_url(server)
-        // The homeserver stays what discovery decided, whatever the login
-        // response would like it to be. The SDK otherwise takes the `well_known`
-        // out of a successful password login and calls `set_homeserver` with it,
-        // unchecked - so a server could answer the sign-in with an http address
-        // and every request after it, access token included, would go in the
-        // clear past the https rule the login paths enforce.
+        // The homeserver stays what discovery decided. The SDK would otherwise
+        // take `well_known` from the login answer, unchecked, http included.
         .respect_login_well_known(false)
         .sqlite_store_with_config_and_cache_path(store_config, None::<&Path>)
         .handle_refresh_tokens()
-        // SingleProcess, deliberately. The multi-process lock guards against a
-        // second process on the same store (single-use OAuth refresh tokens),
-        // and `src/instancelock.cpp` is what makes sure there is none: an flock
-        // taken before the store opens. That guard is the justification for this
-        // line. The launcher covers only the icon tap, not the D-Bus activation
-        // the share service and notifications use.
-        // The lock is not free either - its lease is re-written into
-        // the crypto store every 50 ms (EXTEND_LEASE_EVERY_MS), which kept
-        // ~50 fsyncs/s and a 60 Hz tokio tick running while the app was idle:
-        // measured 3.4% CPU against 0.9% for a comparable client. The builder
-        // default is MultiProcess("main"), so this must stay explicit.
+        // SingleProcess, and `src/instancelock.cpp` is what makes it true.
+        // The multi-process lease costs ~50 fsyncs/s while the app idles.
         .cross_process_store_config(CrossProcessLockConfig::SingleProcess)
-        // Without this the SDK never touches the key backup on its own: the
-        // default strategy is Manual.
-        //
-        // `AfterDecryptionFailure` rather than `OneShot`, which this used to
-        // be. `OneShot` downloads the whole backup once, the moment the key
-        // arrives, and nothing else ever: its failure is only logged and the
-        // backup still reports itself as enabled (`encryption/backups/mod.rs`),
-        // so one bad moment on mobile data leaves the history permanently
-        // unreadable while the UI claims all is well. The SDK says of that call
-        // itself that it "is not paginated" and "doesn't work for any sizeable
-        // account". Only `AfterDecryptionFailure` registers the per-event
-        // handler that fetches a missing key when a message actually cannot be
-        // read — the two are an exact equality check in the SDK
-        // (`encryption/mod.rs`), not a fallback chain, which is what the
-        // comment here used to claim.
-        // Threading has to be switched on here or a thread is an empty page.
-        // Measured on the device: a thread opened from a message showed its
-        // root and nothing else, an own reply appeared as a local echo and was
-        // gone again on the next visit, and a reply written in another client
-        // never arrived - while the same reply stood in the room's own
-        // timeline, so it was neither a delivery nor a decryption problem.
-        //
-        // The reason is one condition in the event cache: every piece of
-        // thread bookkeeping - sorting a synced event into its thread's linked
-        // chunk, and updating the thread at all - sits behind
-        // `if self.state.enabled_thread_support`
-        // (`event_cache/caches/room/state.rs`), and that flag is this one.
-        // With it off, a `TimelineFocus::Thread` timeline has nothing to be
-        // fed from and nothing to load.
-        //
-        // It is not free. With threading on, a reply inside a thread no longer
-        // raises the room's unread and notification counts
-        // (`event_cache/caches/read_receipts.rs` returns early for any event
-        // carrying a thread root), because a client with threads is expected
-        // to count them per thread, which this app does not do yet. That is
-        // the trade: thread replies still appear in the room's timeline, they
-        // just no longer make the badge rise on their own. A thread that works
-        // is worth more than a count that includes it.
-        //
-        // `with_subscriptions: false`: the other half of the flag is thread
-        // subscriptions (MSC4306/4308), which needs a server that advertises
-        // the feature and changes what the room list requests. Not needed to
-        // read a thread.
+        // Threading on, or a thread is an empty page: the event cache keeps a
+        // thread's events only behind this flag.
         .with_threading_support(ThreadingSupport::Enabled { with_subscriptions: false })
+        // `AfterDecryptionFailure`, never `OneShot`: that one downloads once,
+        // logs its failure and still reports the backup as enabled.
         .with_encryption_settings(EncryptionSettings {
             auto_enable_cross_signing: false,
             backup_download_strategy: BackupDownloadStrategy::AfterDecryptionFailure,
             auto_enable_backups: false,
         })
         .build()
-        .await;
+        .await
+        // Phrased here, not at five call sites - and the refusal above needs a
+        // message no caller can prefix into a wrong claim.
+        .map_err(|error| {
+            format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))
+        });
 
     // The SDK creates its databases with the process umask. They hold the
     // device identity and the room keys.
@@ -362,9 +267,8 @@ pub async fn build_client(
     client
 }
 
-/// The encrypted shape of `session.json`: a fresh `StoreCipher` per write,
-/// exported under the store key, next to the data it encrypted. The same
-/// cipher the SDK's SQLite stores use — no second cryptography to audit.
+/// Encrypted `session.json`: a fresh `StoreCipher` per write, exported
+/// under the store key. The same cipher the SDK's stores use.
 #[derive(Serialize, Deserialize)]
 struct EncryptedSession {
     cipher: String,
@@ -407,10 +311,8 @@ pub fn store(
         serde_json::to_vec_pretty(session).map_err(|error| invalid(error.to_string()))?
     };
 
-    // Temp file, restricted before a byte goes in, then renamed over the old
-    // one. `write` truncates in place: an interruption leaves a short file,
-    // and a short session file reads as `Locked` - the state whose only exit
-    // deletes the crypto store.
+    // Temp file, restricted, then renamed. `write` truncates in place, and
+    // a short session file reads as `Locked`.
     let temporary = path.with_extension("json.new");
     {
         use std::io::Write;
@@ -454,9 +356,8 @@ fn create_private(path: &Path) -> Result<std::fs::File, std::io::Error> {
     std::fs::File::create(path)
 }
 
-/// 0600 on every file the store directory holds. matrix-sdk-sqlite creates its
-/// databases with the process umask, so the keys would otherwise be readable
-/// by anything running as this user outside the sandbox.
+/// 0600 on everything in the store directory: matrix-sdk-sqlite creates
+/// its databases with the process umask.
 pub fn restrict_store(paths: &Paths) {
     let Ok(entries) = std::fs::read_dir(&paths.store) else {
         return;
@@ -470,23 +371,8 @@ pub fn restrict_store(paths: &Paths) {
 }
 
 
-/// Reads a previously stored session, or `None` if there is none or it can no
-/// longer be read — a stale file must never block the user from logging in
-/// again.
-///
-/// Both shapes are accepted regardless of the key: a plaintext file from
-/// before the store key existed still loads (and is rewritten encrypted after
-/// the next successful restore), and an encrypted file without a key is
-/// simply gone — the user signs in again, which is the honest outcome when
-/// the secrets store lost the key.
-/// What the session file on disk amounts to.
-///
-/// `Locked` is the case that must never be mistaken for `None`: the file is
-/// there and is an encryption envelope, but the store key is missing or does
-/// not open it. Treating that as "no session" put the login page on screen
-/// and let the next login reset the store — a transient failure of the
-/// secrets service (a locked collection after a reboot) became a lost device
-/// and a recovery-key re-login for every affected user.
+/// What the session file amounts to. `Locked` may never be mistaken for
+/// `None` - `None` is the one outcome a fresh login resets the store on.
 pub enum LoadOutcome {
     /// No session file.
     None,
@@ -496,17 +382,13 @@ pub enum LoadOutcome {
     Locked,
 }
 
+/// Reads the stored session. Both shapes load whatever key is at hand; a
+/// plaintext file is rewritten encrypted after the next successful restore.
 pub fn load(path: &Path, key: Option<&StoreKey>) -> LoadOutcome {
     let bytes = match std::fs::read(path) {
         Ok(bytes) => bytes,
-        // Only "there is no file" means there is no session. Every other
-        // reason - a busy device out of file descriptors, a sandbox that
-        // refused for a moment, an I/O error - means "I could not look", and
-        // that must never be answered with "nothing is here": `None` is the
-        // one outcome a fresh login resets the store on, so a moment's bad
-        // luck would take the crypto store and the device identity with it.
-        // Reported as locked instead: the same wall an unavailable key gets,
-        // with the same way out.
+        // Only "no file" is "no session". Every other read error is a failed
+        // look, and answering that with `None` costs the crypto store.
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
             return LoadOutcome::None;
         }
@@ -517,9 +399,8 @@ pub fn load(path: &Path, key: Option<&StoreKey>) -> LoadOutcome {
     }
 
     let Ok(envelope) = serde_json::from_slice::<EncryptedEnvelope>(&bytes) else {
-        // Neither shape: not a session this build can read. Reported as
-        // locked rather than absent for the same reason — nothing here may
-        // lead to a reset the user did not ask for.
+        // Neither shape: locked rather than absent. Nothing here may lead to a
+        // reset the user did not ask for.
         return LoadOutcome::Locked;
     };
     let Some(key) = key else {
@@ -548,29 +429,19 @@ pub fn forget(path: &Path) {
     let _ = std::fs::remove_file(path);
 }
 
-/// Throws away the state and crypto stores.
-///
-/// They belong to one device: the crypto store holds that device's identity
-/// and keys. Keeping it across a logout makes the next login fail, because the
-/// fresh device ID does not match what the store already contains. The keys
-/// are worthless without the session anyway.
+/// Throws away state and crypto stores. They belong to one device: kept
+/// across a logout, the next login fails on the device ID.
 pub fn reset_store(paths: &Paths) -> Result<(), std::io::Error> {
     if paths.store.exists() {
         std::fs::remove_dir_all(&paths.store)?;
     }
-    // The search index goes with them. It is built from what the store held,
-    // so leaving it behind would let the next account search the previous
-    // one's messages - and it is the one place in this app that keeps message
-    // text outside the store.
+    // The search index goes with them: built from what the store held, and
+    // the one place message text lives outside it.
     if paths.search_index.exists() {
         std::fs::remove_dir_all(&paths.search_index)?;
     }
-    // And the push registration. It names a device that is about to stop
-    // existing, and the endpoint in it is a secret: anyone holding one can
-    // push to this phone, so it must not outlive the session it was made for.
-    // The registration on the distributor's side is given back before this
-    // runs; deleting the file here is what stops a stale one being reused if
-    // that failed.
+    // And the push registration - it names a device about to stop existing
+    // and its endpoint is a secret anyone holding it can push with.
     if paths.push_file.exists() {
         std::fs::remove_file(&paths.push_file)?;
     }
@@ -586,4 +457,95 @@ fn restrict_permissions(path: &Path) -> Result<(), std::io::Error> {
 #[cfg(not(unix))]
 fn restrict_permissions(_path: &Path) -> Result<(), std::io::Error> {
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A directory of its own per test, removed at the end.
+    struct Sandbox(PathBuf);
+
+    impl Sandbox {
+        fn new(name: &str) -> Self {
+            let mut path = std::env::temp_dir();
+            path.push(format!(
+                "xmatic-test-{name}-{}",
+                std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .map(|d| d.as_nanos())
+                    .unwrap_or(0)
+            ));
+            let _ = std::fs::remove_dir_all(&path);
+            std::fs::create_dir_all(&path).expect("sandbox");
+            Sandbox(path)
+        }
+
+        fn paths(&self) -> Paths {
+            Paths::new(&self.0, &self.0)
+        }
+    }
+
+    impl Drop for Sandbox {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+
+    fn a_key() -> StoreKey {
+        Zeroizing::new([7u8; 32])
+    }
+
+    #[test]
+    fn a_new_store_is_never_created_without_a_key() {
+        let sandbox = Sandbox::new("fresh");
+        let paths = sandbox.paths();
+        assert!(store_plan(&paths, None).is_err());
+        assert!(!paths.store.join(".encrypted").exists());
+    }
+
+    #[test]
+    fn a_new_store_is_marked_before_it_exists() {
+        let sandbox = Sandbox::new("marked");
+        let paths = sandbox.paths();
+        let key = a_key();
+        assert!(store_plan(&paths, Some(&key)).expect("plan").is_some());
+        assert!(paths.store.join(".encrypted").exists());
+    }
+
+    #[test]
+    fn an_existing_plaintext_store_keeps_opening_in_the_clear() {
+        let sandbox = Sandbox::new("legacy");
+        let paths = sandbox.paths();
+        std::fs::create_dir_all(&paths.store).expect("store");
+        std::fs::write(paths.store.join("matrix-sdk-state.sqlite3"), b"x").expect("db");
+        let key = a_key();
+        // Neither with a key nor without it may the marker appear over data
+        // that was written without one.
+        assert!(store_plan(&paths, Some(&key)).expect("plan").is_none());
+        assert!(store_plan(&paths, None).expect("plan").is_none());
+        assert!(!paths.store.join(".encrypted").exists());
+    }
+
+    #[test]
+    fn a_marked_store_without_its_key_is_refused() {
+        let sandbox = Sandbox::new("locked");
+        let paths = sandbox.paths();
+        std::fs::create_dir_all(&paths.store).expect("store");
+        std::fs::write(paths.store.join(".encrypted"), b"x").expect("marker");
+        assert!(store_plan(&paths, None).is_err());
+        let key = a_key();
+        assert!(store_plan(&paths, Some(&key)).expect("plan").is_some());
+    }
+
+    #[test]
+    fn a_missing_session_file_is_none_and_an_unreadable_one_is_locked() {
+        let sandbox = Sandbox::new("load");
+        let paths = sandbox.paths();
+        assert!(matches!(load(&paths.session_file, None), LoadOutcome::None));
+        // A directory where a file is expected: readable metadata, unreadable
+        // content - the shape a failed look has.
+        std::fs::create_dir_all(&paths.session_file).expect("dir");
+        assert!(matches!(load(&paths.session_file, None), LoadOutcome::Locked));
+    }
 }

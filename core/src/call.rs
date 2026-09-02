@@ -1,12 +1,5 @@
-//! Call signalling.
-//!
-//! Matrix carries only the negotiation — who rings, who answers, and the
-//! session descriptions and ICE candidates the two sides exchange. The media
-//! itself never touches the homeserver; it travels directly over WebRTC, which
-//! the Qt side drives with GStreamer.
-//!
-//! Everything here is therefore ordinary room events: nothing in this module
-//! knows what an audio stream is.
+//! Call signalling: Matrix carries the negotiation only. The media travels
+//! over WebRTC, which the Qt side drives with GStreamer.
 
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
@@ -55,10 +48,8 @@ pub async fn invite(
 ) -> Result<Option<String>, String> {
     let room = room_of(client, room_id)?;
 
-    // The same rule as for an incoming call, and for the same reason: in a
-    // room with more than two people the call id is public to every member,
-    // and whoever answers first gets the microphone. Placing one there is a
-    // deliberate choice, not a default.
+    // Same rule as for an incoming call: in a room with more than two people the
+    // call id is public and whoever answers first gets the microphone.
     if !policy().groups && room.active_members_count() > 2 {
         return Err("calls in group rooms are switched off".to_owned());
     }
@@ -75,10 +66,8 @@ pub async fn invite(
         .await
         .map_err(|error| format!("could not place the call: {}", crate::text::scrub_ids(&error.to_string())))?;
 
-    // Who is allowed to answer. In a two-person room that is the one other
-    // member, and binding it here closes the window in which any member of the
-    // room could answer first and take the microphone. Anything else answers
-    // to nobody, and the engine keeps its own "first answer wins" rule.
+    // Who is allowed to answer. Binding it here closes the window in which any
+    // member could answer first; the engine keeps its "first answer wins" rule.
     let own = room.own_user_id().to_owned();
     let expected = room
         .members_no_sync(RoomMemberships::JOIN)
@@ -122,10 +111,8 @@ pub async fn answer(
         .map_err(|error| format!("could not answer: {error}"))
 }
 
-/// Forwards locally gathered ICE candidates.
-///
-/// An empty candidate string signals that gathering has finished, which is how
-/// version 1 of the specification says the list ends.
+/// Forwards gathered ICE candidates. An empty candidate string ends the list,
+/// as version 1 of the specification has it.
 pub async fn candidates(
     client: &Client,
     room_id: &str,
@@ -185,10 +172,8 @@ pub async fn hangup(
         .map_err(|error| format!("could not hang up: {error}"))
 }
 
-/// Credentials for the homeserver's TURN server.
-///
-/// Without a relay, two devices behind NAT negotiate happily and then hear
-/// nothing at all — the call looks connected and stays silent.
+/// Credentials for the homeserver's TURN server: without a relay two devices
+/// behind NAT negotiate happily and then hear nothing.
 pub async fn turn_servers(client: &Client) -> Result<Value, String> {
     let response = client
         .send(get_turn_server_info::v3::Request::new())
@@ -203,15 +188,8 @@ pub async fn turn_servers(client: &Client) -> Result<Value, String> {
     }))
 }
 
-/// Registers handlers for the four call events.
-///
-/// Who may make this phone ring.
-///
-/// Set from the app's privacy page and enforced *here*, before anything is
-/// emitted: a call that is not allowed raises no banner, opens no page, wakes
-/// nothing - and, deliberately, answers nothing either. A hangup back to the
-/// caller would confirm that the account exists and is online, and it is a
-/// request this device can be made to send at a stranger's rate.
+/// Who may make this phone ring, enforced here before anything is emitted -
+/// and answered in no way: a hangup would confirm the account is online.
 #[derive(Clone)]
 pub struct CallPolicy {
     /// "all", "direct" or "list".
@@ -239,10 +217,8 @@ impl Default for CallPolicy {
 }
 
 static POLICY: Mutex<Option<CallPolicy>> = Mutex::new(None);
-/// When each caller last made the phone ring, and for which call. A caller who
-/// is allowed can still not ring in a loop - but a second, genuine attempt
-/// after a missed call must get through, which a plain minute-long silence
-/// swallowed.
+/// When each caller last rang, and for which call. A second genuine attempt
+/// after a missed call must get through, which a flat minute swallowed.
 static LAST_RING: Mutex<Option<HashMap<String, (Instant, String)>>> = Mutex::new(None);
 const RING_INTERVAL: Duration = Duration::from_secs(10);
 
@@ -271,12 +247,8 @@ fn policy() -> CallPolicy {
         .unwrap_or_default()
 }
 
-/// Whether this caller is due a ring, and remembers that they got one.
-///
-/// A repeat of the *same* call never rings twice - that is the invitation
-/// arriving again, not a new attempt. A different call from the same person
-/// has to wait out a short floor, which stops a flood without swallowing the
-/// second try after a missed call.
+/// Whether this caller is due a ring. The same call never rings twice - that is
+/// the invitation arriving again - a different one waits out a short floor.
 fn ring_is_due(sender: &str, call_id: &str, brake: bool) -> bool {
     let Ok(mut guard) = LAST_RING.lock() else {
         return true;
@@ -297,22 +269,13 @@ fn ring_is_due(sender: &str, call_id: &str, brake: bool) -> bool {
     true
 }
 
-/// The policy, applied to one invitation.
-///
-/// Nothing in here awaits. The SDK runs an event handler inline while it
-/// processes a sync response and waits for it, so every await on this path
-/// delays the ring itself - measured as "the call was only on screen for a
-/// couple of seconds before the other side gave up". `direct_targets` and
-/// `active_members_count` read the room's own info in memory; the async
-/// `is_direct` differs only for rooms this account has not joined, and a call
-/// from a room one has not joined is refused anyway.
+/// Nothing here awaits: the SDK runs handlers inline while processing a sync,
+/// so every await delays the ring itself.
 fn may_ring(sender: &str, room: &Room) -> bool {
     let policy = policy();
 
-    // A room with more people than the two on the call is where a call id is
-    // public to everybody in it - which is what makes a call there worth
-    // hijacking. The allow list does not override this: it says who may call,
-    // not where from.
+    // A room with more people is where the call id is public, which is what makes
+    // a call there worth hijacking. The allow list says who may call, not where from.
     if !policy.groups && room.active_members_count() > 2 {
         return false;
     }
@@ -324,12 +287,9 @@ fn may_ring(sender: &str, room: &Room) -> bool {
     match policy.who.as_str() {
         "all" => true,
         "list" => false,
-        // Somebody this account already has a direct chat with. m.direct is
-        // per account, so a two-person room can be flagged for one side and
-        // not for the other - and a rule that refuses the call on one side
-        // only reads as "she cannot answer". A room with exactly the two of
-        // us counts as well.
-        _ => !room.direct_targets().is_empty() || room.active_members_count() == 2,
+        // A direct chat, not merely a room with two people in it - which is any
+        // room a stranger shares. `m.direct` is per account, by the server.
+        _ => !room.direct_targets().is_empty(),
     }
 }
 
@@ -347,22 +307,8 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                 if Some(&*ev.sender) == client.user_id() {
                     return;
                 }
-                // A call event replayed from history — a sync backfill, or the
-                // back-pagination that fills a freshly opened room — must not
-                // make the phone ring for a call that ended long ago. The
-                // invite's own `lifetime` is exactly that window; once the event
-                // is older than that, the other side has stopped ringing too, so
-                // drop it instead of surfacing a phantom incoming call.
-                // The two clocks are not the same clock: `now` is this device's,
-                // `sent` is the server's. A phone whose clock runs a couple of
-                // minutes fast would find every invite older than its lifetime
-                // - typically sixty seconds - and drop the lot, silently, with
-                // no log and nothing on screen. That is a phone that never
-                // rings and cannot say why. The tolerance is deliberately much
-                // larger than the lifetime it guards: a stale invite that gets
-                // through rings once against a caller who has already given up,
-                // which is a nuisance; a fast clock that eats every call is a
-                // broken feature.
+                // A replayed invite must not ring for a call that ended: its own `lifetime` is
+                // the window. The skew is far larger - a fast clock would eat every call.
                 const CLOCK_SKEW_MS: u64 = 5 * 60 * 1000;
                 let now = u64::from(MilliSecondsSinceUnixEpoch::now().get());
                 let sent = u64::from(ev.origin_server_ts.get());
@@ -370,11 +316,8 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                     return;
                 }
 
-                // Who may make this phone ring, and how often. Decided here
-                // rather than in the UI: a refused call must not reach the
-                // screen, and must be answered in no way the caller can see.
-                // The reason goes out so a silent phone can be told from a
-                // phone nobody called.
+                // Decided here, not in the UI: a refused call must not reach the screen. The
+                // reason goes out so a silent phone can be told from one nobody called.
                 if !may_ring(ev.sender.as_str(), &room) {
                     sink.emit(event(
                         "call.blocked",
@@ -394,11 +337,8 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                     return;
                 }
 
-                // Whether the offer carries video at all. The UI needs it to
-                // say what is being offered and to open the camera only when
-                // the user chose to - never because the caller asked.
-                // `m=video 0 ...` is a *declined* media line: port zero means
-                // the sender is offering nothing there.
+                // Whether the offer carries video, so the UI can say what is offered and open
+                // the camera only on the user's choice. `m=video 0` is a declined line.
                 let offers_video = ev.content.offer.sdp.lines().any(|line| {
                     line.starts_with("m=video")
                         && line

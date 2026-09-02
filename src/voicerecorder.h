@@ -5,12 +5,8 @@
 #include <QObject>
 #include <QString>
 
-/// Records a voice message into the cache directory.
-///
-/// Qt 5.6 has no QML recorder element, so this wraps QAudioRecorder. The codec
-/// is chosen from what the device actually offers rather than assumed: Opus in
-/// Ogg is what other Matrix clients expect, but a device that cannot encode it
-/// still has to be able to record something.
+/// Records a voice message into the cache. Qt 5.6 has no QML recorder, and the
+/// codec is chosen from what the device offers rather than assumed.
 class VoiceRecorder : public QObject
 {
     Q_OBJECT
@@ -39,10 +35,8 @@ signals:
     void recordingChanged();
     void durationChanged();
 
-    /// A recording is complete and ready to be sent. The length goes with it:
-    /// a voice message without one is a plain audio attachment to every other
-    /// client, and the bridges that turn one into a native voice note refuse
-    /// it.
+    /// A recording is ready, with its length: without one it is a plain audio
+    /// attachment to every other client, and the bridges refuse it.
     void finished(const QString &path, const QString &mimeType, qint64 duration);
 
     void failed(const QString &message);

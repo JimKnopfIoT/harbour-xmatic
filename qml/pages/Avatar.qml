@@ -2,20 +2,8 @@ import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import Sailfish.Silica 1.0
 
-// One profile picture, used by the chat list, the member list and the
-// conversation.
-//
-// Three things matter here, and all three are about how the app feels rather
-// than about the picture:
-//
-// * The initials are drawn first and stay until the picture is there. Without
-//   them the row would be empty and then jump — which reads as slow even when
-//   nothing is slow.
-// * The image is asked for as a thumbnail and decoded at display size
-//   (`sourceSize`). People upload avatars at full camera resolution, and
-//   decoding several megapixels per row is what actually makes a list stutter.
-// * The request is keyed by the address, so one download serves every message
-//   of a sender and every row that shows the same person.
+// One profile picture. Initials first so no row jumps, decoded at display size
+// because people upload full camera resolution, keyed by address so one download serves all.
 Item {
     id: avatar
 
@@ -75,12 +63,8 @@ Item {
         }
     }
 
-    // Genuinely round. `clip` on an Image clips to its rectangle, never to a
-    // radius, so the earlier "rounded frame over the picture" left every
-    // picture square with a highlight-coloured ring drawn across it — on the
-    // stock ambience a light-blue circle on each room icon. The mask costs a
-    // small offscreen layer per visible picture, which is nothing next to the
-    // decode; the placeholder needs none.
+    // Genuinely round: `clip` clips to a rectangle, never to a radius, and the
+    // frame-over-picture form left a ring drawn across every square picture.
     Image {
         id: picture
 

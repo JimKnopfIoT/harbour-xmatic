@@ -1,11 +1,5 @@
-//! Message search inside one room.
-//!
-//! The index is the SDK's own (`matrix-sdk-search`, Tantivy): it is filled by
-//! the event cache as events arrive, lives encrypted beside the store under
-//! the same key, and never leaves the device. There is deliberately no
-//! server-side fallback for unencrypted rooms - a search that sometimes asks
-//! the homeserver would send the query out of the process for reasons the
-//! user cannot see.
+//! Message search in one room, on the SDK's own encrypted index. No
+//! server-side fallback: a search that sometimes asks the homeserver is worse.
 
 use matrix_sdk::Client;
 use serde_json::{Value, json};
@@ -15,16 +9,8 @@ use crate::text::scrub_ids;
 /// How much of a matching message a result row carries.
 const SNIPPET_CHARS: usize = 160;
 
-/// Turns what somebody typed into a query the index understands.
-///
-/// Tantivy's parser has a syntax - `+ - " * ? : ( ) [ ] { } ^ ~ \ /` and the
-/// words AND, OR, NOT all mean something in it. A search box on a phone is
-/// not the place for that: a stray quote would change the meaning of the
-/// search silently, and an unbalanced one would fail it outright. So the
-/// input is reduced to its words and each is required, which is what somebody
-/// typing two words into a search box means. Without the `+` the parser
-/// defaults to "any of these", and a second word would then widen the search
-/// instead of narrowing it.
+/// Reduces what was typed to its words and requires each: Tantivy's syntax
+/// would change the meaning silently, and "any of these" widens instead of narrows.
 fn build_query(input: &str) -> String {
     let mut query = String::new();
     for word in input.split(|c: char| !c.is_alphanumeric() && c != '\'') {
@@ -40,9 +26,8 @@ fn build_query(input: &str) -> String {
     query
 }
 
-/// One line of a matching message: enough to recognise it, not the whole
-/// thing. Whitespace collapses, because a message with newlines would
-/// otherwise paint itself down the results page.
+/// One line of a match: whitespace collapses, or a message with newlines paints
+/// itself down the results page.
 fn snippet(body: &str) -> String {
     let mut text = String::new();
     for word in body.split_whitespace() {
@@ -58,15 +43,8 @@ fn snippet(body: &str) -> String {
     text
 }
 
-/// Feeds what this device already holds for a room into its index.
-///
-/// The SDK's indexer hangs off the event cache's *store writes*: an event is
-/// indexed when the cache saves it, and events that were already saved before
-/// the index existed are only ever read back, never written again. So a room
-/// full of history known to this device is invisible to the search until
-/// somebody hands it over - which is what this does. Local, no network, and
-/// re-running it costs nothing: the index is keyed by event id, so an event it
-/// already holds is replaced rather than duplicated.
+/// Feeds what this device already holds into the index: the SDK indexes on
+/// store writes only. Local, and re-running costs nothing - keyed by event id.
 pub async fn index_room(client: &Client, room_id: &str) -> Result<usize, String> {
     let parsed = matrix_sdk::ruma::RoomId::parse(room_id)
         .map_err(|_| "not a room identifier".to_owned())?;
@@ -78,10 +56,17 @@ pub async fn index_room(client: &Client, room_id: &str) -> Result<usize, String>
         .event_cache()
         .await
         .map_err(|error| format!("event cache unavailable: {}", scrub_ids(&error.to_string())))?;
-    let events = cache
+    let mut events = cache
         .events()
         .await
         .map_err(|error| format!("stored events unreadable: {}", scrub_ids(&error.to_string())))?;
+    // Bounded: this loads every stored event at once and holds the index lock
+    // while it writes them. The newest are what a search wants anyway.
+    const MOST: usize = 20_000;
+    if events.len() > MOST {
+        let drop_to = events.len() - MOST;
+        events.drain(..drop_to);
+    }
     let count = events.len();
     if count == 0 {
         return Ok(0);
@@ -96,12 +81,8 @@ pub async fn index_room(client: &Client, room_id: &str) -> Result<usize, String>
     Ok(count)
 }
 
-/// Searches `room_id` for `query` and returns one page of rows.
-///
-/// Stateless: the offset comes in and the caller asks for the next page with
-/// a larger one. The SDK offers an iterator that holds the offset, but holding
-/// it across commands would mean a search that a second command can invalidate
-/// without the first noticing.
+/// Searches one room, one page per call. Stateless: holding the SDK's iterator
+/// across commands means a search a second command can invalidate unnoticed.
 pub async fn room(
     client: &Client,
     room_id: &str,
@@ -127,9 +108,8 @@ pub async fn room(
 
     let mut rows = Vec::with_capacity(ids.len());
     for id in ids {
-        // From the cache where the cache has it. The index only ever names
-        // events that passed through this device, so the fetch is the
-        // exception rather than the rule.
+        // From the cache where it has it: the index only names events that passed
+        // through this device, so the fetch is the exception.
         let Ok(fetched) = room.load_or_fetch_event(&id, None).await else {
             continue;
         };
@@ -142,9 +122,8 @@ pub async fn room(
             .and_then(|content| content.get("body"))
             .and_then(|body| body.as_str())
             .unwrap_or_default();
-        // A hit whose body cannot be read any more - redacted after it was
-        // indexed - is not a row. The index is cleaned up on redaction, but
-        // this runs against whatever the store holds now.
+        // A hit whose body cannot be read any more - redacted after indexing - is not
+        // a row.
         if body.is_empty() {
             continue;
         }

@@ -5,21 +5,12 @@
 #include <QString>
 #include <QStringList>
 
-/// Where every persisted setting of this app lives.
-///
-/// Sailjail only lets the app write inside its own config directory
-/// (AppConfigLocation → ~/.config/org.xmatic/xmatic). QSettings' UserScope path
-/// sits one level above that and the sandbox blocks it silently, so the file is
-/// named explicitly. Shared, so the appearance and language settings write into
-/// the same file instead of each deriving the path again.
+/// Where every persisted setting lives. Sailjail only allows writes inside the
+/// app's own config directory, and QSettings' default path sits above it.
 QString appSettingsPath();
 
-/// The user's preferences, exposed to QML as `settings`.
-///
-/// Split out of MatrixBridge: none of this talks to the core, and keeping it
-/// next to the protocol made one class own both the session and the colour of
-/// a switch. What stays in the bridge is anything a setting *causes* - the read
-/// status has to rebuild the open timeline, and only the bridge can do that.
+/// The user's preferences, as `settings` in QML. Nothing here talks to the
+/// core; what a setting *causes* stays in the bridge.
 class AppSettings : public QObject
 {
     Q_OBJECT
@@ -29,13 +20,14 @@ class AppSettings : public QObject
                NOTIFY notificationPreviewChanged)
     Q_PROPERTY(bool showReadStatus READ showReadStatus WRITE setShowReadStatus
                NOTIFY showReadStatusChanged)
+    Q_PROPERTY(bool autoLoadMedia READ autoLoadMedia WRITE setAutoLoadMedia
+               NOTIFY autoLoadMediaChanged)
     Q_PROPERTY(bool jumpToReadMarker READ jumpToReadMarker WRITE setJumpToReadMarker
                NOTIFY jumpToReadMarkerChanged)
     Q_PROPERTY(bool clickableLinks READ clickableLinks WRITE setClickableLinks
                NOTIFY clickableLinksChanged)
-    /// Whether push notifications were turned on. Off by default and stored
-    /// rather than derived: a registration survives a restart, and the app has
-    /// to know on the next start whether it made one.
+    /// Whether push was turned on. Stored rather than derived: a registration
+    /// survives a restart, and the next start has to know one was made.
     Q_PROPERTY(bool pushEnabled READ pushEnabled WRITE setPushEnabled
                NOTIFY pushChanged)
     /// The Matrix push gateway the homeserver posts to. No default: nothing
@@ -58,8 +50,6 @@ class AppSettings : public QObject
     Q_PROPERTY(bool sendReadReceipts READ sendReadReceipts WRITE setSendReadReceipts
                NOTIFY sendReadReceiptsChanged)
     Q_PROPERTY(QString mediaWipe READ mediaWipe WRITE setMediaWipe NOTIFY mediaWipeChanged)
-    Q_PROPERTY(bool unencryptedStorageAccepted READ unencryptedStorageAccepted
-               NOTIFY unencryptedStorageAcceptedChanged)
     Q_PROPERTY(QStringList emojiFavourites READ emojiFavourites WRITE setEmojiFavourites
                NOTIFY emojiFavouritesChanged)
 
@@ -80,22 +70,23 @@ public:
     bool showReadStatus() const;
     void setShowReadStatus(bool enabled);
 
-    /// Whether entering a room opens where reading stopped. On by default.
-    /// Off, the room opens at its newest message; the line marking where
-    /// reading stopped is drawn either way.
+    /// Whether a picture loads by itself when its row appears. Off, nothing is
+    /// fetched until it is tapped - scrolling past is a request to a server.
+    bool autoLoadMedia() const;
+    void setAutoLoadMedia(bool enabled);
+
+    /// Whether entering a room opens where reading stopped. On by default; the
+    /// line is drawn either way.
     bool jumpToReadMarker() const;
     void setJumpToReadMarker(bool enabled);
 
-    /// Who may make this phone ring: "all", "direct" (anybody this account has
-    /// a direct chat with) or "list" (only allowedCallers). "direct" by
-    /// default - a stranger in a shared room could otherwise ring at will,
-    /// and a call rings past every mute.
+    /// Who may ring: "all", "direct" or "list". "direct" by default - a stranger
+    /// in a shared room could otherwise ring at will, past every mute.
     QString callPolicy() const;
     void setCallPolicy(const QString &policy);
 
-    /// Whether a call arriving in a room with more than two people is allowed
-    /// at all. Off: in such a room every member sees the call id, which is
-    /// what makes a call there worth hijacking.
+    /// Whether a call in a room with more than two people is allowed. Off: every
+    /// member sees the call id there.
     bool groupCalls() const;
     void setGroupCalls(bool enabled);
 
@@ -120,15 +111,8 @@ public:
     bool sendReadReceipts() const;
     void setSendReadReceipts(bool enabled);
 
-    /// Whether the user has explicitly said this device may run without
-    /// encrypted local storage.
-    ///
-    /// Only ever true because somebody was shown what it costs and tapped the
-    /// second button. The failure direction is deliberate: a value that cannot
-    /// be read counts as "not accepted", because asking again is harmless
-    /// while assuming consent is not.
-    bool unencryptedStorageAccepted() const;
-    Q_INVOKABLE void acceptUnencryptedStorage();
+    /// Removes settings this build no longer reads. Called once at start.
+    void dropRetiredKeys();
 
     /// When the downloaded media go: "never", "logout" (the default), "exit"
     /// or "background". "never" means never, sign-out included.
@@ -143,24 +127,18 @@ public:
     void setPushGateway(const QString &gateway);
     void setClickableLinks(bool enabled);
 
-    /// Whether the microphone sits next to the message field. On by default -
-    /// it is what the feature has always been - but it is one hold away from a
-    /// recording, and not everybody wants that within reach.
+    /// Whether the microphone sits next to the message field. On, but it is one
+    /// hold away from a recording and not everybody wants that in reach.
     bool voiceMessages() const;
     void setVoiceMessages(bool enabled);
 
-    /// Whether the keyboard goes away once a message is sent, the way the
-    /// big messengers do it. On by default - asked for, and the conversation
-    /// is what one wants to see after sending, not the field one has just
-    /// emptied. Off keeps the keyboard up for the next message.
+    /// Whether the keyboard goes away once a message is sent. On: the conversation
+    /// is what one wants to see afterwards.
     bool hideKeyboardOnSend() const;
     void setHideKeyboardOnSend(bool enabled);
 
-    /// Whether reactions are drawn from image files the user put there. Off by
-    /// default, and deliberately so: the characters cost nothing and are always
-    /// right, while an image is a file for a decoder to open - see
-    /// docs/SECURITY.md. Nothing is shipped and nothing is downloaded; the
-    /// files are the user's own doing.
+    /// Whether reactions are drawn from the user's own image files. Off: the
+    /// characters cost nothing, an image is a file for a decoder to open.
     bool emojiImages() const;
     void setEmojiImages(bool enabled);
 
@@ -172,11 +150,8 @@ public:
     Q_INVOKABLE void addDirectoryServer(const QString &server);
     Q_INVOKABLE void removeDirectoryServer(const QString &server);
 
-    /// The emoji the picker offers first. Empty and never written are two
-    /// different states: never written means the built-in handful is shown,
-    /// written and empty means the user has taken them all out. The list the
-    /// picker starts from lives in `qml/pages/Emoji.js`, not here - this only
-    /// keeps what the user made of it.
+    /// The emoji the picker offers first. Never written shows the built-in
+    /// handful; written and empty means the user took them all out.
     QStringList emojiFavourites() const;
     void setEmojiFavourites(const QStringList &keys);
     Q_INVOKABLE bool hasEmojiFavourites() const;
@@ -202,8 +177,8 @@ signals:
     void directoryServersChanged();
     void callPolicyChanged();
     void sendReadReceiptsChanged();
+    void autoLoadMediaChanged();
     void mediaWipeChanged();
-    void unencryptedStorageAcceptedChanged();
     void emojiFavouritesChanged();
 };
 

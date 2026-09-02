@@ -10,6 +10,7 @@
 #include <QVariantMap>
 
 #include <sys/prctl.h>
+#include <sys/stat.h>
 
 #include "appsettings.h"
 #include "instancelock.h"
@@ -22,26 +23,16 @@ namespace {
 /// string handed to it at registration, and this is that string.
 const char *ConnectorName = "org.unifiedpush.Connector.xmatic";
 
-/// How long to wait for the push after claiming the name. The distributor
-/// calls immediately after activating us; this is the ceiling for a device
-/// that is busy, not an expectation.
+/// How long to wait for the push after claiming the name: a ceiling for a busy
+/// device, not an expectation.
 const int MessageWaitMs = 20000;
 
 /// And for the round trip that fetches the message behind it. Longer, because
 /// it is a network request on a phone that may just have woken up.
 const int FetchWaitMs = 30000;
 
-/// Raises the banner without Qt Quick.
-///
-/// Not the `Notification` QML type: this process has no QML engine, and adding
-/// one to show a line of text would mean starting the whole UI stack for a
-/// notification. `org.freedesktop.Notifications` is what that type talks to
-/// anyway, and the hints below are what lipstick reads.
-///
-/// The category is what makes it audible at all. On Sailfish the tone, the
-/// vibration and the LED hang off the category and not off the notification,
-/// so without one the banner is silent — the same lesson the app's own
-/// notifications carry.
+/// Raises the banner without Qt Quick - this process has no QML engine. The
+/// category is what makes it audible; without one the banner is silent.
 void publishBanner(const QString &summary, const QString &body, bool noisy)
 {
     QDBusInterface notifications(QStringLiteral("org.freedesktop.Notifications"),
@@ -54,9 +45,11 @@ void publishBanner(const QString &summary, const QString &body, bool noisy)
     }
 
     QVariantMap hints;
-    hints.insert(QStringLiteral("category"),
-                 noisy ? QStringLiteral("x-nemo.messaging.im")
-                       : QStringLiteral("x-nemo.messaging.im"));
+    // The category carries tone, vibration and LED. Left off where the push
+    // rules call this one quiet - the preview hints still show the banner.
+    if (noisy) {
+        hints.insert(QStringLiteral("category"), QStringLiteral("x-nemo.messaging.im"));
+    }
     // Summary and body alone only fill the event feed. The banner that slides
     // in over whatever is on screen is this pair.
     hints.insert(QStringLiteral("x-nemo-preview-summary"), summary);
@@ -90,6 +83,8 @@ int runPushWake(int argc, char *argv[])
     // The same reasoning as the app's own: this process opens the crypto
     // store and holds an access token.
     prctl(PR_SET_DUMPABLE, 0);
+    // Same as the app: this process opens the same stores.
+    umask(S_IRWXG | S_IRWXO);
 
     QCoreApplication app(argc, argv);
 
@@ -99,11 +94,8 @@ int runPushWake(int argc, char *argv[])
         return 0;
     }
 
-    // The running app owns this name and has the registration; the distributor
-    // will have delivered to it and there is nothing to do here. Checked
-    // rather than attempted: zbus and QtDBus both *queue* for a contended
-    // name rather than failing, so a second connector would register and then
-    // wait for a callback that goes to the first one.
+    // The running app owns this name and got the push. Checked rather than
+    // attempted: both bus libraries queue for a contended name instead of failing.
     if (bus.interface()->isServiceRegistered(QString::fromLatin1(ConnectorName))) {
         qInfo("xmatic: the app is running and holds the connector; nothing to wake");
         return 0;
@@ -115,25 +107,21 @@ int runPushWake(int argc, char *argv[])
         return 0;
     }
 
-    // One process per store, here as everywhere. If the app is running without
-    // owning the connector name — it may not have push turned on — this
-    // process must not open the same SQLite files behind it.
+    // One process per store: if the app runs without owning the connector name,
+    // this process must not open the same SQLite files behind it.
     if (!acquireInstanceLock(dataDirectory)) {
         qInfo("xmatic: another instance owns this store; not waking for a push");
         return 0;
     }
 
     const QString cacheDirectory = ensureDirectory(QStandardPaths::CacheLocation);
+    if (cacheDirectory.isEmpty()) {
+        qWarning("xmatic: push wake-up has no writable cache directory");
+        return 0;
+    }
 
-    // The one that can genuinely fail here. The Secrets collection is
-    // device-lock-bound and secretsd unlocks it only through its own system
-    // dialog — which a background activation cannot answer. So after a reboot,
-    // before the app has been opened by hand once, there is no key and nothing
-    // can be decrypted.
-    //
-    // That is not a reason to say nothing. The push named a room, so a banner
-    // without content is still true and still useful; a silent phone would
-    // leave the user believing nothing arrived.
+    // The Secrets collection is device-lock-bound and a background activation
+    // cannot answer its dialog. A banner without content is still true.
     StoreKeyResult storeKey = obtainStoreKey(dataDirectory);
     const bool locked = storeKey.state != StoreKeyState::Available;
     if (locked) {
@@ -154,9 +142,8 @@ int runPushWake(int argc, char *argv[])
     bool published = false;
     const QString genericSummary = QCoreApplication::translate("PushWake", "New message");
 
-    // The push arrived and named a room and an event. Ask for the message
-    // behind it; where that cannot be had — no key, a filtered event, a server
-    // that no longer has it — the banner still says something arrived.
+    // The push named a room and an event; ask for the message. Where it cannot be
+    // had, the banner still says something arrived.
     QObject::connect(&bridge, &MatrixBridge::pushNotificationReady, &app,
                      [&](const QVariantMap &notification) {
         if (published) {
@@ -176,9 +163,8 @@ int runPushWake(int argc, char *argv[])
         if (published) {
             return;
         }
-        // "Filtered out" is the push rules saying this one is not to be shown.
-        // Anything else is a failure to look, and silence would hide an
-        // arrival the user was told they would hear about.
+        // "Filtered out" is the push rules saying do not show it. Anything else is a
+        // failure to look, and silence would hide an arrival.
         if (reason == QLatin1String("filtered out")
                 || reason == QLatin1String("redacted")) {
             qInfo("xmatic: push not shown (%s)", qPrintable(reason));
@@ -192,10 +178,8 @@ int runPushWake(int argc, char *argv[])
         app.quit();
     });
 
-    // Two ceilings, because two different things can fail to happen: the
-    // distributor may never call, and the fetch may never answer. Without them
-    // this process would sit in memory for ever on a phone whose owner is
-    // asleep.
+    // Two ceilings, because two things can fail to happen: the distributor may
+    // never call, and the fetch may never answer.
     QTimer::singleShot(MessageWaitMs, &app, [&]() {
         if (!bridge.pushMessageSeen()) {
             qInfo("xmatic: no push arrived within the wait; leaving");

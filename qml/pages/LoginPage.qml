@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Sign-in. matrix.org authenticates through its own web UI, so all this page
-// does is take the homeserver and hand the user over to the browser; the core
-// waits for the redirect on a loopback listener and reports back.
+// Sign-in. The server authenticates in its own web UI, so this page takes the
+// homeserver and hands over to the browser; the core waits for the redirect.
 Page {
     id: page
 
@@ -13,15 +12,12 @@ Page {
     property string deviceUrl
     property string deviceCode
 
-    // Set when the server turned out to speak the classic password flow.
-    // Only the core sets this, from its own discovery — never a fallback for
-    // a failed OAuth attempt, so a broken authentication service can not be
-    // used to lure a password into the app.
+    // Set only by the core, from its own discovery - never as a fallback for a
+    // failed OAuth attempt, so a broken auth service cannot lure a password here.
     property bool passwordLogin
 
-    // The password must not outlive its moment: leaving the page or the app
-    // going to the background clears the field. Same spirit as the remorse
-    // guard — what the user no longer sees must not stay armed.
+    // The password must not outlive its moment: leaving the page or going to the
+    // background clears the field.
     onStatusChanged: {
         if (status !== PageStatus.Active) {
             passwordField.text = ""
@@ -51,13 +47,11 @@ Page {
                 placeholderText: qsTr("Homeserver")
                 text: "matrix.org"
                 inputMethodHints: Qt.ImhUrlCharactersOnly | Qt.ImhNoAutoUppercase
-                enabled: !matrix.busy
+                enabled: !matrix.loginRunning
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                 EnterKey.onClicked: page.signIn()
-                // A different server means a fresh discovery; the password
-                // form of the previous one must not stick around. The null
-                // check matters: this fires once for the initial text, while
-                // the fields further down do not exist yet.
+                // A different server means fresh discovery. The null check matters: this
+                // fires for the initial text, while the fields below do not exist yet.
                 onTextChanged: {
                     page.passwordLogin = false
                     if (passwordField) {
@@ -74,7 +68,7 @@ Page {
                 label: qsTr("Username")
                 placeholderText: qsTr("Username")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase | Qt.ImhPreferLowercase
-                enabled: !matrix.busy
+                enabled: !matrix.loginRunning
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
                 EnterKey.onClicked: passwordField.focus = true
             }
@@ -89,7 +83,7 @@ Page {
                 // Out of the keyboard's prediction database in any case;
                 // PasswordField hides the echo, this keeps the storage clean.
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhSensitiveData | Qt.ImhNoAutoUppercase
-                enabled: !matrix.busy
+                enabled: !matrix.loginRunning
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                 EnterKey.onClicked: page.signInWithPassword()
             }
@@ -98,28 +92,24 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: page.passwordLogin
                 label: qsTr("Sign in")
-                enabled: !matrix.busy && userField.text.trim().length > 0
+                enabled: !matrix.loginRunning && userField.text.trim().length > 0
                          && passwordField.text.length > 0
                 onClicked: page.signInWithPassword()
             }
 
-            // The ordinary way in, and therefore the first one. On a release
-            // whose browser cannot finish the sign-in it stays here rather
-            // than being hidden - a server may not need the browser at all -
-            // and the note below points at the alternative.
+            // The ordinary way in, and therefore first. It stays even where the browser
+            // cannot finish - a server may not need it - and the note points elsewhere.
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: !page.passwordLogin
                 label: matrix.browserLoginReliable ? qsTr("Sign in")
                                                   : qsTr("Sign in via browser")
-                enabled: !matrix.busy && homeserverField.text.trim().length > 0
+                enabled: !matrix.loginRunning && homeserverField.text.trim().length > 0
                 onClicked: page.signIn()
             }
 
-            // Directly above the button it names, and only where the browser
-            // is the one that cannot finish - on 4.6, whose Gecko loops back to
-            // the form. The developer of this app walked into that himself
-            // while the knowledge sat in a code comment.
+            // Directly above the button it names, and only where the browser is the one
+            // that cannot finish: 4.6's Gecko loops back to the form.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -127,7 +117,7 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.errorColor
                 visible: !page.passwordLogin && !matrix.browserLoginReliable
-                         && !matrix.busy
+                         && !matrix.loginRunning
                 text: qsTr("This Sailfish version's browser cannot complete the sign-in of modern homeservers — it returns to the form. Use “Sign in on another device”: xmatic shows an address and a code, you sign in with them on any other device, and this one signs in by itself.")
             }
 
@@ -137,7 +127,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: !page.passwordLogin
                 label: qsTr("Sign in on another device")
-                enabled: !matrix.busy && homeserverField.text.trim().length > 0
+                enabled: !matrix.loginRunning && homeserverField.text.trim().length > 0
                 onClicked: {
                     homeserverField.focus = false
                     matrix.startDeviceCodeLogin(homeserverField.text)
@@ -146,12 +136,11 @@ Page {
 
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                // Classic servers have no registration page the core could
-                // point at, and no device-code grant either — both entries
-                // only make sense while the server has not said "password".
+                // Classic servers have no registration page to point at and no device-code
+                // grant: both entries only make sense before the server says "password".
                 visible: !page.passwordLogin
                 label: qsTr("Create account")
-                enabled: !matrix.busy && homeserverField.text.trim().length > 0
+                enabled: !matrix.loginRunning && homeserverField.text.trim().length > 0
                 onClicked: matrix.requestRegistrationUrl(homeserverField.text)
             }
 
@@ -159,7 +148,7 @@ Page {
             BusyIndicator {
                 anchors.horizontalCenter: parent.horizontalCenter
                 size: BusyIndicatorSize.Medium
-                running: matrix.busy
+                running: matrix.loginRunning
             }
 
             Label {
@@ -169,7 +158,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryHighlightColor
-                visible: matrix.busy && page.deviceCode.length === 0 && !page.passwordLogin
+                visible: matrix.loginRunning && page.deviceCode.length === 0 && !page.passwordLogin
                 text: qsTr("Finish signing in in the browser, then come back.")
             }
 
@@ -180,7 +169,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryHighlightColor
-                visible: matrix.busy && page.deviceCode.length > 0
+                visible: matrix.loginRunning && page.deviceCode.length > 0
                 text: qsTr("Open this address on any other device and sign in there:")
             }
 
@@ -190,7 +179,7 @@ Page {
                 wrapMode: Text.WrapAnywhere
                 horizontalAlignment: Text.AlignHCenter
                 color: Theme.highlightColor
-                visible: matrix.busy && page.deviceCode.length > 0
+                visible: matrix.loginRunning && page.deviceCode.length > 0
                 text: page.deviceUrl
             }
 
@@ -202,7 +191,7 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraLarge
                 font.letterSpacing: 2
                 color: Theme.highlightColor
-                visible: matrix.busy && page.deviceCode.length > 0
+                visible: matrix.loginRunning && page.deviceCode.length > 0
                 text: page.deviceCode
             }
 
@@ -213,7 +202,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
-                visible: matrix.busy && page.deviceCode.length > 0
+                visible: matrix.loginRunning && page.deviceCode.length > 0
                 text: qsTr("This page signs in by itself as soon as the login is approved there.")
             }
 
@@ -244,10 +233,8 @@ Page {
                 text: qsTr("This server uses the classic password sign-in. The password is sent only to this server and is never saved on the device.")
             }
 
-            // The failure is named, not just reported: a wrong password, an
-            // unreachable server and a sign-in method this app never
-            // implemented all used to arrive as one red line, and only the
-            // first of the three is worth retyping anything for.
+            // The failure is named: a wrong password, an unreachable server and an
+            // unimplemented method arrived as one red line, and only the first is retypable.
             Column {
                 width: parent.width
                 spacing: Theme.paddingSmall
@@ -302,7 +289,7 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Cancel sign-in")
-                visible: matrix.busy
+                visible: matrix.loginRunning
                 onClicked: {
                     page.deviceUrl = ""
                     page.deviceCode = ""
@@ -316,17 +303,15 @@ Page {
 
     Connections {
         target: matrix
-        // Registration happens on the server's own page: it involves terms, a
-        // captcha and e-mail confirmation, none of which are worth
-        // reimplementing here.
+        // Registration happens on the server's own page - terms, captcha, e-mail
+        // confirmation, none of it worth reimplementing.
         onRegistrationUrlReady: Qt.openUrlExternally(url)
         onDeviceCodeReady: {
             page.deviceUrl = url
             page.deviceCode = code
         }
-        // A failed or aborted login must clear the code, or the stale block
-        // reappears the next time something sets busy. The password form
-        // stays: a wrong password is retyped into the same (empty) form.
+        // A failed login clears the code, or the stale block reappears with the next
+        // busy. The password form stays: a wrong password is retyped into it.
         onLoginFailed: {
             page.deviceUrl = ""
             page.deviceCode = ""
@@ -358,9 +343,8 @@ Page {
         // lives exactly as long as this call.
         var password = passwordField.text
         passwordField.text = ""
-        // Same rule as the recovery key on the encryption page: a pasted
-        // password stays in the clipboard, and only this exact text is taken
-        // out of it.
+        // Same rule as the recovery key: a pasted password stays in the clipboard,
+        // and only this exact text is taken out of it.
         if (Clipboard.hasText && Clipboard.text === password) {
             Clipboard.text = ""
         }

@@ -1,12 +1,5 @@
-// The store key lives in Sailfish Secrets: an encrypted collection unlocked
-// with the device lock, readable only by this app (OwnerOnlyMode). The key
-// itself is 32 random bytes minted once on this device — it is a local
-// encryption key for the stores and session file, not an account credential,
-// so it survives logouts and is shared by consecutive sessions.
-//
-// The request choreography (create collection, store, read, each blocking on
-// waitForFinished) follows the platform's documented pattern and is proven in
-// the wild with these exact plugin and lock semantics on the same OS releases.
+// The store key in a Sailfish Secrets collection: 32 random bytes, device-lock
+// bound, owner-only. A local key for the stores, not an account credential.
 
 #include "secretskeeper.h"
 
@@ -38,13 +31,8 @@ Secret::Identifier keyIdentifier()
                               SecretManager::DefaultEncryptedStoragePluginName);
 }
 
-/// Overwrites a buffer so that the write survives the optimiser.
-///
-/// `QByteArray::fill` is a memset on a buffer that is about to die, and a
-/// compiler may drop a write nobody reads afterwards - which is the definition
-/// of wiping a secret. Writing through a volatile pointer is the portable way
-/// to say that the write itself is the point. `data()` also detaches, so this
-/// is the array's own memory and not a copy somebody else still holds.
+/// Overwrites a buffer so the write survives the optimiser. Only on an unshared
+/// one: `data()` detaches and would wipe a fresh copy instead.
 void wipe(QByteArray &bytes)
 {
     if (bytes.isEmpty()) {
@@ -75,11 +63,8 @@ bool encryptedDataPresent(const QString &dataDirectory)
     if (QFile::exists(dataDirectory + QStringLiteral("/store/.encrypted"))) {
         return true;
     }
-    // The lists that name people are encrypted under the same key and can be
-    // the only thing on disk: somebody who allowed a caller and then signed
-    // out has a `private.json` and neither a store marker nor a session. Minting
-    // a fresh key over it makes it unreadable for good, with no way back in the
-    // interface.
+    // The encrypted lists can be the only thing on disk - allowed a caller, then
+    // signed out. Minting a fresh key over them makes them unreadable for good.
     if (QFile::exists(dataDirectory + QStringLiteral("/private.json"))) {
         return true;
     }
@@ -88,15 +73,12 @@ bool encryptedDataPresent(const QString &dataDirectory)
         return false;
     }
     if (!session.open(QIODevice::ReadOnly)) {
-        // It is there and cannot be read. That is not "nothing is encrypted" -
-        // the answer to this question decides whether a new key is put over the
-        // old one, and a test whose wrong answer destroys data fails towards
-        // doing nothing. Same rule as `session::load` in the core.
+        // There and unreadable is not "nothing is encrypted": this answer decides
+        // whether a new key goes over the old one, so it fails towards doing nothing.
         return true;
     }
-    // The envelope the core writes starts with its one top-level key; a
-    // plaintext session starts with the homeserver. Only the shape is looked
-    // at, the bytes are dropped right away.
+    // The envelope starts with the core's one top-level key, a plaintext session
+    // with the homeserver. Only the shape is looked at.
     QByteArray head = session.read(64);
     const bool envelope = head.contains("\"encrypted\"");
     wipe(head);
@@ -113,28 +95,16 @@ bool localDataPresent(const QString &dataDirectory)
     if (!store.exists()) {
         return false;
     }
-    // The core's `prepare()` creates this directory before anything is written
-    // into it, so "exists and is empty" is the normal shape of a fresh install
-    // and not a suspicious one. Hidden entries count: the `.encrypted` marker
-    // is one.
+    // The core's `prepare()` creates this directory, so "exists and empty" is a
+    // fresh install. Hidden entries count - `.encrypted` is one.
     return !store.entryList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden)
                 .isEmpty();
 }
 
 bool secretsDaemonPresent()
 {
-    // Asked of the bus, not of the filesystem.
-    //
-    // The obvious test - does /usr/bin/sailfishsecretsd exist - is the wrong
-    // one from inside Sailjail: the app runs with `--private-bin=harbour-xmatic`
-    // and `/usr/share` whitelisted down to its own directory, so it cannot see
-    // either the binary or the service file even where both are installed. A
-    // check like that answers "not installed" on a perfectly healthy device.
-    //
-    // The session bus knows instead, and it is the same bus the key request
-    // itself travels on: an activatable name means a service file exists, a
-    // registered name means the daemon is up right now. Either answers the
-    // question the UI asks - can this system do it at all.
+    // Asked of the bus, not the filesystem: inside Sailjail the app sees neither
+    // the binary nor the service file even where both are installed.
     const QDBusConnection bus = QDBusConnection::sessionBus();
     if (bus.isConnected()) {
         if (QDBusConnectionInterface *iface = bus.interface()) {
@@ -143,10 +113,8 @@ bool secretsDaemonPresent()
             if (iface->isServiceRegistered(name).value()) {
                 return true;
             }
-            // `ListActivatableNames` by hand: Qt 5.6's
-            // QDBusConnectionInterface has no accessor for it, and 5.6 is the
-            // ceiling here. Bounded, because this runs before the window is up
-            // and a bus that does not answer must not hold the app.
+            // `ListActivatableNames` by hand - Qt 5.6 has no accessor. Bounded: this runs
+            // before the window is up and a silent bus must not hold the app.
             QDBusMessage call = QDBusMessage::createMethodCall(
                 QStringLiteral("org.freedesktop.DBus"),
                 QStringLiteral("/org/freedesktop/DBus"),
@@ -160,9 +128,8 @@ bool secretsDaemonPresent()
             // rather than claim anything.
         }
     }
-    // No bus to ask - fall back to the files. Outside the sandbox they are
-    // visible, and the failure direction is "assume it is there": claiming a
-    // missing service sends the user off to install what they already have.
+    // No bus to ask, so fall back to the files. The doubtful answer is "it is
+    // there": sending somebody to install what they have is the worse mistake.
     return QFile::exists(QStringLiteral("/usr/bin/sailfishsecretsd"))
            || QFile::exists(QStringLiteral(
                   "/usr/share/dbus-1/services/"
@@ -189,10 +156,8 @@ StoreKeyResult obtainStoreKey(const QString &dataDirectory)
 {
     SecretManager manager;
 
-    // The common case first: the key already exists. System interaction is
-    // allowed so secretsd can run its device-lock authentication (a system
-    // dialog, once per boot); without it a locked collection is a plain
-    // failure.
+    // The common case first. System interaction is allowed so secretsd can run its
+    // device-lock dialog once per boot; without it a locked collection just fails.
     {
         StoredSecretRequest read;
         read.setManager(&manager);
@@ -202,11 +167,13 @@ StoreKeyResult obtainStoreKey(const QString &dataDirectory)
         read.waitForFinished();
         const Result result = read.result();
         if (result.code() == Result::Succeeded) {
+            // Detached before anything else: `secret().data()` shares with the
+            // request's own buffer, and wiping a shared one wipes a copy.
             QByteArray data = read.secret().data();
+            data.detach();
             if (data.size() == 32) {
-                // The base64 is wiped too: `toBase64()` builds a second buffer
-                // holding the same key in another alphabet, and wiping only
-                // the first one left the key in memory anyway.
+                // The base64 is wiped too: `toBase64()` builds a second buffer holding the
+                // same key in another alphabet.
                 QByteArray encoded64 = data.toBase64();
                 const QString encoded = QString::fromLatin1(encoded64);
                 wipe(encoded64);
@@ -217,23 +184,17 @@ StoreKeyResult obtainStoreKey(const QString &dataDirectory)
                 outcome.key = encoded;
                 return outcome;
             }
-            // A key of the wrong size cannot have encrypted anything: it is
-            // not the key any store was written under, so replacing it loses
-            // nothing.
+            // A key of the wrong size cannot have encrypted anything, so replacing it
+            // loses nothing.
             qWarning("xmatic: stored key has the wrong size, creating a new one");
         } else if (encryptedDataPresent(dataDirectory)) {
-            // Something on disk was written under a key, and this read did
-            // not deliver it. Whatever the reason — collection locked, user
-            // dismissed the dialog, daemon down — minting a new key now would
-            // replace the one that data needs. The core reports the session
-            // as locked and the user retries; this line says why.
+            // Something on disk was written under a key and this read did not deliver it.
+            // Minting now would replace the key that data needs; the core answers `locked`.
             qWarning("xmatic: store key not available (%d: %s); encrypted data waits for it",
                      static_cast<int>(result.errorCode()),
                      qPrintable(result.errorMessage()));
-            // Locked even where the daemon is missing entirely: this state is
-            // what forbids minting a new key, and that rule may not depend on
-            // why the read failed. Whether the user has to install a package
-            // is a separate question, answered by `secretsDaemonPresent`.
+            // Locked even where the daemon is missing: this state is what forbids minting
+            // a key, and that rule may not depend on why the read failed.
             return failure(StoreKeyState::Locked, result);
         } else {
             qInfo("xmatic: no store key yet (%d: %s), creating one",
@@ -242,9 +203,8 @@ StoreKeyResult obtainStoreKey(const QString &dataDirectory)
         }
     }
 
-    // First run (or the collection is gone): create the collection, then the
-    // key. Creation failing because the collection already exists is fine —
-    // the store below decides whether the whole path works.
+    // First run, or the collection is gone: create it, then the key. Creation
+    // failing because it exists is fine - the store below decides.
     {
         CreateCollectionRequest create;
         create.setManager(&manager);
@@ -275,7 +235,10 @@ StoreKeyResult obtainStoreKey(const QString &dataDirectory)
     }
 
     Secret secret(keyIdentifier());
+    // The secret takes its own copy; ours is wiped below, the request's is out
+    // of reach - the same residual the password login documents.
     secret.setData(key);
+    key.detach();
 
     StoreSecretRequest store;
     store.setManager(&manager);

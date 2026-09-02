@@ -39,6 +39,14 @@ QVariant DiffListModel::valueFor(const QJsonObject &row, int role) const
     return row.value(QString::fromLatin1(field)).toVariant();
 }
 
+/// An operation whose index the model cannot satisfy: dropped, because applying
+/// it would be worse - but never silently, every later index is then off.
+void DiffListModel::reportDrift(const QString &op, int index) const
+{
+    qWarning("xmatic: diff out of step (%s at %d, %d rows) - the model and the core disagree",
+             qPrintable(op), index, m_rows.count());
+}
+
 void DiffListModel::applyOperations(const QJsonArray &operations)
 {
     const int before = m_rows.count();
@@ -72,6 +80,7 @@ void DiffListModel::applyOperation(const QJsonObject &operation)
 
     if (op == QLatin1String("insert")) {
         if (index < 0 || index > m_rows.count()) {
+            reportDrift(op, index);
             return;
         }
         beginInsertRows(QModelIndex(), index, index);
@@ -82,14 +91,12 @@ void DiffListModel::applyOperation(const QJsonObject &operation)
 
     if (op == QLatin1String("set")) {
         if (index < 0 || index >= m_rows.count()) {
+            reportDrift(op, index);
             return;
         }
         const QJsonObject value = operation.value(QStringLiteral("value")).toObject();
-        // dataChanged without a role list makes the delegate re-evaluate every
-        // binding of that row, so an update that changes nothing visible still
-        // costs a full redraw. The SDK updates an item for things this row does
-        // not carry - a read receipt moving is the frequent one - and those
-        // arrive here as a set identical to what is already stored.
+        // `dataChanged` without roles re-evaluates every binding of the row, and the
+        // SDK sets rows identical to what is stored - a moving receipt does it often.
         if (m_rows.at(index) == value) {
             return;
         }
@@ -101,6 +108,7 @@ void DiffListModel::applyOperation(const QJsonObject &operation)
 
     if (op == QLatin1String("remove")) {
         if (index < 0 || index >= m_rows.count()) {
+            reportDrift(op, index);
             return;
         }
         beginRemoveRows(QModelIndex(), index, index);

@@ -8,10 +8,8 @@
 #include <QStandardPaths>
 #include <QVariant>
 
-// Same reasoning as the bridge's settings: Sailjail only lets the app write
-// inside its own config directory, QSettings' UserScope default sits one
-// level above it and the sandbox blocks the write silently. Same file too —
-// one settings.conf, this class owns the "appearance" group.
+// Same reasoning as the bridge's settings: Sailjail only allows writes inside
+// the app's own config directory. Same file, this class owns "appearance".
 
 // The bubble fills' defaults, kept in one place: 0.35 marks the own side,
 // 0.15 the received one — the soft tints the contrast work settled on.
@@ -39,17 +37,44 @@ void AppearanceSettings::load()
     m_otherTextColor = settings.value(QStringLiteral("otherTextColor")).toString();
 }
 
+/// Collects a change and writes it shortly after the last one: a slider emits
+/// per frame, and each write is an fsync. The value applies at once.
 void AppearanceSettings::store(const QString &key, const QVariant &value)
 {
+    m_unsaved.insert(key, value);
+    if (!m_writeTimer) {
+        m_writeTimer = new QTimer(this);
+        m_writeTimer->setSingleShot(true);
+        m_writeTimer->setInterval(400);
+        connect(m_writeTimer, &QTimer::timeout, this, &AppearanceSettings::flush);
+    }
+    m_writeTimer->start();
+}
+
+/// Writes what has collected. Also called on destruction, so a change made a
+/// moment before the app closes is not the one that is lost.
+void AppearanceSettings::flush()
+{
+    if (m_unsaved.isEmpty()) {
+        return;
+    }
     const QString path = appSettingsPath();
     QDir().mkpath(QFileInfo(path).absolutePath());
     QSettings settings(path, QSettings::IniFormat);
-    settings.setValue(QStringLiteral("appearance/") + key, value);
+    for (auto it = m_unsaved.constBegin(); it != m_unsaved.constEnd(); ++it) {
+        settings.setValue(QStringLiteral("appearance/") + it.key(), it.value());
+    }
+    m_unsaved.clear();
     settings.sync();
     if (settings.status() != QSettings::NoError) {
         qWarning("xmatic: could not save an appearance setting (status %d)",
                  static_cast<int>(settings.status()));
     }
+}
+
+AppearanceSettings::~AppearanceSettings()
+{
+    flush();
 }
 
 void AppearanceSettings::setOwnBubbleColor(const QString &color)

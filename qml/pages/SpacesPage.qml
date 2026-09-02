@@ -3,10 +3,8 @@ import Sailfish.Silica 1.0
 
 import "SecurityStatus.js" as SecurityStatus
 
-// The space overview: the joined spaces, each a folder of rooms. Tapping one
-// opens its rooms on their own page (SpacePage). Order, names and unread
-// counts come from the sync service in the core, exactly like the chat list;
-// this is the same room list under a "spaces only" filter.
+// The space overview: joined spaces, each a folder of rooms. The same room
+// list under a "spaces only" filter, so order and counts come from the core.
 Page {
     id: page
 
@@ -14,11 +12,8 @@ Page {
     // sideways swipe reaches it, instead of going through the menu.
     property bool isHome: false
 
-    // Leaving the foreground aborts a running countdown at once, instead of only
-    // suppressing it when it expires. Suppressing at expiry was not enough:
-    // minimising the app and coming back inside the four seconds left the
-    // countdown running, and it fired on return. The remorse object has to be
-    // kept for that - Remorse.popupAction() hands it back.
+    // Leaving the foreground aborts a running countdown at once: suppressing it
+    // at expiry left it firing on return from a minimised app.
     property var activeRemorse: null
     readonly property bool appForeground: Qt.application.active
     onAppForegroundChanged: {
@@ -35,9 +30,8 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            // Returning here from a space (or a nested space) means no space is
-            // open any more; opening one always replaces it, so this is the one
-            // place that closes it.
+            // Coming back here means no space is open. Opening one always replaces it, so
+            // this is the one place that closes it.
             matrix.closeSpace()
             // Re-attach the room list when this is the home page, so a sideways
             // swipe still reaches it after a space was opened and closed.
@@ -47,12 +41,8 @@ Page {
         }
     }
 
-    // Asks first and names the space, then runs the remorse as the undo. The
-    // remorse hangs on the page rather than on the row — a RemorseItem in a
-    // delegate fires when that delegate is destroyed, and this list re-sorts
-    // on its own — and it only acts while the page is still the active one:
-    // Silica otherwise completes a running countdown on
-    // PageStatus.Deactivating, which turns swiping away into a confirmation.
+    // Asks first, then the remorse as the undo. On the page, not the row - a
+    // delegate destroyed by a re-sort would fire it - and only while the page is up.
     function confirmDelete(spaceId, spaceName) {
         var dialog = pageStack.push(
                     Qt.resolvedUrl("ConfirmDialog.qml"),

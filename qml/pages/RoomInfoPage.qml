@@ -1,21 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Everything about one room on a single page: what it is, who is in it, and
-// the actions that belong to the room rather than to the running conversation.
-//
-// This page exists for two reasons. The room's pull-down had grown to ten
-// entries, which is barely draggable on a small landscape screen — everything
-// that is not about the conversation itself lives here now. And the two lines
-// that tell a user their room is old, the internal id and the room version,
-// had no place at all: the room-upgrade case was reported by someone who
-// worked it out from exactly those two lines in another client.
-//
-// Everything arrives in one `room.info` reply, read from the room's local
-// state, so the page is filled the moment it opens. The states that can be
-// changed here are held in properties of their own rather than read out of the
-// reply: a QML property-change signal cannot be raised by hand, so a switch
-// bound into the reply object would not follow its own tap.
+// Everything about one room on one page - what it is, who is in it, and the
+// actions that belong to the room rather than to the conversation.
 Page {
     id: page
 
@@ -44,11 +31,8 @@ Page {
     property bool lowPriority: false
     property bool encrypted: false
 
-    // Leaving the foreground aborts a running countdown at once, instead of only
-    // suppressing it when it expires. Suppressing at expiry was not enough:
-    // minimising the app and coming back inside the four seconds left the
-    // countdown running, and it fired on return. The remorse object has to be
-    // kept for that - Remorse.popupAction() hands it back.
+    // Leaving the foreground aborts a running countdown at once: suppressing it
+    // at expiry left it firing on return from a minimised app.
     property var activeRemorse: null
     readonly property bool appForeground: Qt.application.active
     onAppForegroundChanged: {
@@ -84,9 +68,8 @@ Page {
 
     function startLeave() {
         page.activeRemorse = Remorse.popupAction(page, qsTr("Leaving room"), function() {
-            // A remorse whose page went away was executed by Silica, not by
-            // the user (RemorsePopup.qml deliberately fires on
-            // PageStatus.Deactivating). Going back means abort.
+            // A remorse whose page went away was executed by Silica, not by the user.
+            // Going back means abort.
             if (page.status !== PageStatus.Active || !Qt.application.active) {
                 return
             }
@@ -167,9 +150,8 @@ Page {
                 text: page.info.topic || ""
             }
 
-            // An upgraded room leads on: the same action the banner in the
-            // conversation carries, in the place where a user goes looking for
-            // what is wrong with the room.
+            // An upgraded room leads on: the banner's action, in the place a user goes
+            // looking for what is wrong with the room.
             BackgroundItem {
                 width: parent.width
                 height: visible ? Theme.itemSizeSmall : 0
@@ -189,9 +171,8 @@ Page {
                 }
             }
 
-            // The way back into the room this one grew out of. Only offered
-            // while that room is still joined; otherwise there is nothing
-            // behind the entry.
+            // The way back into the room this one grew out of, offered only while that
+            // room is still joined.
             BackgroundItem {
                 width: parent.width
                 height: visible ? Theme.itemSizeSmall : 0
@@ -265,10 +246,8 @@ Page {
             BackgroundItem {
                 width: parent.width
                 height: visible ? Theme.itemSizeSmall : 0
-                // Inviting is a power level like any other, and plenty of
-                // rooms keep it above the ordinary member. Offering it there
-                // led to a dialog whose only possible outcome was the server's
-                // refusal.
+                // Inviting is a power level like any other. Offering it regardless led to a
+                // dialog whose only outcome was the server's refusal.
                 visible: !page.invited && matrix.roomPermissions.invite !== false
                 onClicked: pageStack.push(Qt.resolvedUrl("InviteToRoomDialog.qml"), {
                                               roomId: page.roomId,
@@ -290,19 +269,16 @@ Page {
                 text: qsTr("This room for me")
             }
 
-            // Also in the chat list's context menu, where they are a direct
-            // action on the row. Here they additionally show their state — the
-            // list can only show that something is set, not offer the reverse
-            // reading at a glance.
+            // Also in the chat list's context menu as a direct action. Here they show
+            // their state as well, which a list row cannot.
             ComboBox {
                 visible: !page.invited
                 enabled: page.infoLoaded
                 label: qsTr("Notifications")
                 description: qsTr("Stored with the account, so it holds in every client")
 
-                // Index follows the page state, never the other way round: a
-                // binding on currentIndex would fire during load and write
-                // the first entry into every room that was merely opened.
+                // Index follows the page state, never the reverse: a binding on currentIndex
+                // fires during load and writes the first entry into every room opened.
                 currentIndex: ["default", "all", "mentions", "mute"]
                               .indexOf(page.notifyMode)
 
@@ -378,9 +354,8 @@ Page {
                 height: visible ? Theme.itemSizeSmall : 0
                 visible: page.infoLoaded && !page.encrypted
                 onClicked: page.activeRemorse = Remorse.popupAction(page, qsTr("Turning on encryption"), function() {
-                    // Leaving the page aborts; Silica's own behaviour is to
-                    // execute on PageStatus.Deactivating, which for a one-way
-                    // switch is the wrong direction.
+                    // Leaving the page aborts. Silica executes on `Deactivating`, which for a
+                    // one-way switch is the wrong direction.
                     if (page.status !== PageStatus.Active || !Qt.application.active) {
                         return
                     }
@@ -399,14 +374,8 @@ Page {
                 }
             }
 
-            // The remedy when the other side reports that it cannot read what
-            // this device sends: a Megolm key travels to each device over an
-            // Olm session, and once that pairing is out of step the recipient
-            // stays locked out for the rest of the session's life. Discarding
-            // it makes the next message start a fresh session and share its
-            // key again. Only the sending session goes — nothing of the own
-            // history becomes unreadable — and messages already sent stay
-            // unreadable for whoever never received their key.
+            // The remedy when the other side cannot read what this device sends: only the
+            // sending session goes, so nothing of the own history becomes unreadable.
             BackgroundItem {
                 width: parent.width
                 visible: page.encrypted

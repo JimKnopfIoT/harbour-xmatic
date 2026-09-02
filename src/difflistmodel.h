@@ -7,16 +7,8 @@
 #include <QJsonObject>
 #include <QVector>
 
-/// A list model fed by the diff stream the Rust core produces.
-///
-/// The SDK expresses both the room list and a timeline as `VectorDiff`s, whose
-/// vocabulary maps one to one onto the model's insert/remove/change signals.
-/// Everything a subclass has to supply is `roleNames()`; by default each role
-/// reads the JSON member of the same name, which keeps core and UI naming in
-/// step.
-///
-/// Rows are never reordered or filtered here — the core owns the order, and
-/// diverging from it would put the model's indices out of step with the diffs.
+/// A list model fed by the core's `VectorDiff` stream; a subclass supplies only
+/// `roleNames()`. Never reordered or filtered - the core owns the order.
 class DiffListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -51,6 +43,8 @@ protected:
 
 private:
     void applyOperation(const QJsonObject &operation);
+    /// Says that a diff could not be applied. See the definition.
+    void reportDrift(const QString &op, int index) const;
     const QByteArray &fieldFor(int role) const;
 
     QVector<QJsonObject> m_rows;

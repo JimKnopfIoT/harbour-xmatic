@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Continue without encryption</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Back</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic will keep showing this state under Encryption.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>connected</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>the call could not be carried on</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Devices</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Encryption</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identity verified</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>The identity has changed since it was verified. Verify again, or withdraw the verification.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identity not verified</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Send direct message</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Shared rooms</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>No other shared rooms</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Forbid calls</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Allow calls</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identity</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>verified</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>changed since it was verified — verify again or withdraw</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>not verified</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>none</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Load pictures automatically</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>%1 changed their profile</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Reply</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Save</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Forward</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edit</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Pin</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>More…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>That message is not in the loaded history</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Discard</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Send again</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>React</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Reply in thread</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Copy room link</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Verify contact</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>The conversation could not be loaded</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Open this address?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Open</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Check again</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>If that is not possible</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Continue without encryption</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2707,6 +2744,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Authenticity not confirmed</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Open this address?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Open</translation>
     </message>
 </context>
 <context>

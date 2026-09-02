@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Tęsti be šifravimo</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Atgal</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Viskas, ką xmatic saugo šiame įrenginyje, lieka įskaitoma: tavo seansas, tavo žinutės ir tavo kambarių raktai.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Rinkis tai tik tada, jei paslaugos šiame įrenginyje įdiegti neįmanoma. Jei įdiegsi vėliau, galėsi persijungti šifravimo puslapyje — tai kainuos vieną atsijungimą ir tavo atkūrimo raktą.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic ir toliau rodys šią būseną skiltyje Šifravimas.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -349,6 +326,10 @@
     <message>
         <source>connected</source>
         <translation>prisijungta</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>skambučio nepavyko tęsti</translation>
     </message>
 </context>
 <context>
@@ -1141,22 +1122,6 @@
         <translation>Įrenginiai</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Šifravimas</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Tapatybė patvirtinta</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Tapatybė nuo patvirtinimo pasikeitė. Patvirtink iš naujo arba atšauk patvirtinimą.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Tapatybė nepatvirtinta</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Siųsti tiesioginę žinutę</translation>
     </message>
@@ -1185,16 +1150,32 @@
         <translation>Bendri kambariai</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Kitų bendrų kambarių nėra</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Drausti skambučius</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Leisti skambučius</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Tapatybė</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>patvirtinta</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>pasikeitė po patvirtinimo — patvirtink iš naujo arba atšauk</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>nepatvirtinta</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>nėra</translation>
     </message>
 </context>
 <context>
@@ -1486,6 +1467,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Sąrašas užšifruotas, o jo raktas neprieinamas. Jį vėl bus galima perskaityti atrakinus įrenginį ir iš naujo paleidus programą.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Automatiškai įkelti paveikslėlius</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Įjungta: paveikslėlis ar vaizdo įrašas įkeliamas vos pasirodžius žinutei. Išjungta: įkeliamas bakstelėjus — praslinkti pro jį reiškia užklausą siuntėjo serveriui.</translation>
     </message>
 </context>
 <context>
@@ -2092,6 +2081,38 @@
         <translation>%1 pakeitė savo profilį</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopijuoti</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Atsakyti</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Įrašyti</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Persiųsti</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Redaguoti</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Prisegti</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ištrinti</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Daugiau…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Cituojamos žinutės įkelti negalima: jos nebėra arba tau neleidžiama jos matyti.</translation>
     </message>
@@ -2152,6 +2173,22 @@
         <translation>Šios žinutės nėra įkeltoje istorijoje</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Atmesti</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Siųsti dar kartą</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reaguoti</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Atsakyti gijoje</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Kopijuoti kambario nuorodą</translation>
     </message>
@@ -2210,6 +2247,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Patvirtinti adresatą</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Nepavyko įkelti pokalbio</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Atverti šį adresą?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Atverti</translation>
     </message>
 </context>
 <context>
@@ -2630,20 +2679,8 @@
         <translation>Tikrinti dar kartą</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Jei tai neįmanoma</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>xmatic gali naudoti ir be vietinio šifravimo. Seansas, žinučių duomenų bazė ir kambarių raktai tada guli įrenginyje įskaitomi: kas prieina prie jo failų sistemos, skaito kartu, o pamestas telefonas atiduoda viską, kas jame yra.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Žinutės kelyje per tinklą bet kuriuo atveju lieka šifruotos nuo galo iki galo. Čia kalbama tik apie tai, kas guli įrenginyje.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Tęsti be šifravimo</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2711,6 +2748,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Autentiškumas nepatvirtintas</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Atverti šį adresą?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Atverti</translation>
     </message>
 </context>
 <context>

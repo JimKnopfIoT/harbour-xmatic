@@ -25,6 +25,10 @@
 #include <QUrl>
 
 namespace {
+/// What a profile picture may weigh: past any thumbnail, below what one
+/// allocation costs. Weighed before the request and after the bytes arrive.
+const qint64 MaximumAvatarBytes = 10 * 1024 * 1024;
+
 
 /// Takes ownership of a string handed out by the core and releases it again.
 QString takeCoreString(char *owned)
@@ -53,19 +57,14 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     , m_dataDirectory(dataDirectory)
     , m_storeKeyState(storeKey.state)
     , m_storeKeyReason(storeKey.errorMessage)
-    // `::` and not by accident: the class has a getter of the same name, and
-    // unqualified lookup inside a member initialiser finds that member first -
-    // so this read itself instead of the filesystem, and the page told a
-    // factory-fresh device that its secure storage had refused a key when in
-    // truth the service was not installed at all. Neither the compiler nor the
-    // build said a word; the device did.
+    // `::` deliberately: unqualified lookup finds the member of the same name,
+    // so this read itself instead of the filesystem.
     , m_secretsDaemonPresent(::secretsDaemonPresent())
     , m_cacheDirectory(cacheDirectory)
     , m_settings(settings)
 {
-    // The read status can only be chosen when a timeline is built, so the one
-    // already open keeps the old setting until it is built again. Rebuilt here
-    // so the switch acts on the room the user came from, not on the next one.
+    // The read status is fixed when a timeline is built, so the open one is
+    // rebuilt here - the switch acts on the room the user came from.
     if (m_settings) {
         connect(m_settings, &AppSettings::showReadStatusChanged, this, [this]() {
             if (!m_openRoomId.isEmpty()) {
@@ -81,10 +80,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                 &MatrixBridge::pushCallPolicy);
     }
 
-    // A banner that waited in vain for its text goes out as a count. Without
-    // this a room whose latest event never resolves - an event kind the
-    // preview has no words for, a decryption that does not come - would
-    // announce nothing at all.
+    // A banner that waited in vain for its text goes out as a count. Otherwise
+    // an event the preview has no words for announces nothing at all.
     m_bannerTimeout.setSingleShot(true);
     m_bannerTimeout.setInterval(900);
     connect(&m_bannerTimeout, &QTimer::timeout, this, [this]() {
@@ -95,9 +92,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
         }
     });
 
-    // A "still finishing" that never ends is a lie of its own. Generous, since
-    // the case it exists for is a slow device against a rate-limiting server,
-    // but bounded.
+    // A "still finishing" that never ends is a lie of its own. Generous for a
+    // slow device against a rate-limiting server, but bounded.
     m_recoverySettleTimeout.setSingleShot(true);
     m_recoverySettleTimeout.setInterval(90000);
     connect(&m_recoverySettleTimeout, &QTimer::timeout, this, [this]() {
@@ -133,9 +129,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
 
     xm_core_set_callback(m_core, &MatrixBridge::deliver, this);
 
-    // Signing out takes the decrypted media with it, unless the user asked
-    // for "never" - that setting means never. The lists that name people go in
-    // every case: they belong to the account that is leaving.
+    // Signing out takes the decrypted media, unless the setting says never.
+    // The lists that name people go in every case - they belong to the account.
     connect(this, &MatrixBridge::sessionChanged, this, [this]() {
         if (m_sessionState == QLatin1String("signed-in") && !m_privateListsReadable) {
             // A key that arrived late - the collection was locked at start.
@@ -179,9 +174,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     // page refuses, and it has to know the rules from the first event on.
     pushCallPolicy();
 
-    // Asked once at start, before anything else: whether the files on this
-    // device are encrypted is a property of the disk, not of a session, and
-    // the UI must be able to say so while signed out too.
+    // Asked once at start: whether the files are encrypted is a property of the
+    // disk, not of a session, and the UI must say so while signed out.
     refreshStorageStatus();
 
     // Runs only while commands are outstanding, so an idle app does not wake
@@ -305,18 +299,13 @@ quint64 MatrixBridge::send(const QString &command, const QJsonObject &arguments,
     emit busyChanged();
     updateStallWatch();
 
-    // Held in a named variable rather than chained: the pointer belongs to the
-    // temporary QByteArray, which would otherwise live only to the end of the
-    // statement. That is long enough today, because the core copies the string
-    // before returning — but it is a lifetime that depends on a detail of the
-    // callee, and nothing here would notice if that changed.
+    // Named variable, not chained: the pointer belongs to the temporary, whose
+    // lifetime past the statement depends on the callee copying it.
     QByteArray payload = jsonToCompactString(message).toUtf8();
     xm_core_send(m_core, payload.constData());
     if (wipePayload) {
-        // The buffer held a password; the core has taken its copy (and wipes
-        // its own), so this copy must not linger on the heap. The transient
-        // QString and QJsonObject copies above cannot be reached from here —
-        // that residual is documented in docs/PASSWORD-LOGIN.md.
+        // The buffer held a password and the core has its own copy. The transient
+        // QString and QJsonObject residuals: docs/PASSWORD-LOGIN.md.
         payload.fill('\0');
     }
     return id;
@@ -336,9 +325,8 @@ void MatrixBridge::updateStallWatch()
 
 void MatrixBridge::checkStalledCommands()
 {
-    // Ten seconds is well past anything a healthy homeserver takes and well
-    // short of the SDK's retry budget, so a rate-limited request is named while
-    // it is still being retried rather than a quarter of an hour later.
+    // Past anything a healthy homeserver takes, short of the SDK's retry budget:
+    // a rate-limited request is named while it is still being retried.
     static const qint64 threshold = 10000;
 
     const qint64 now = m_uptime.elapsed();
@@ -353,10 +341,8 @@ void MatrixBridge::checkStalledCommands()
                  static_cast<int>(waited / 1000));
     }
 
-    // A command that never came back used to sit in the list for good, and
-    // `busy` sits on that list: one lost answer froze the sign-in page, text
-    // field included, until the app was restarted. Two minutes is far past any
-    // retry budget the SDK has.
+    // A command that never came back used to sit here for good, and `busy` sits
+    // on this list - one lost answer froze the sign-in page until a restart.
     static const qint64 giveUp = 120000;
     QStringList abandoned;
     QStringList lostMedia;
@@ -366,9 +352,8 @@ void MatrixBridge::checkStalledCommands()
             continue;
         }
         abandoned.append(it->command);
-        // The two states that gate a page are not in this list: a lost login
-        // reply left the sign-in page frozen, and a lost pagination reply left
-        // "load older messages" dead for the rest of the session.
+        // The two states that gate a page are not in this list: a lost login reply
+        // froze the sign-in page, a lost pagination killed "load older messages".
         if (it.key() == m_paginateId) {
             m_paginateId = 0;
             emit paginatingChanged();
@@ -376,23 +361,13 @@ void MatrixBridge::checkStalledCommands()
         if (it->command.startsWith(QLatin1String("login."))) {
             setLoginRunning(false);
         }
-        // Everything the answer would have cleared. Without this a lost
-        // `media.fetch` kept its key in `m_mediaRequests` for good, and the
-        // "one request per key at a time" test then refused every further
-        // attempt at that picture for the rest of the session - a permanently
-        // empty frame from one dropped reply.
-        //
-        // Collected, not emitted here: this loop erases from the very hash a
-        // slot could add to through `send()`, and a rehash under the iterator
-        // is how that ends. Said out loud after the loop.
+        // Everything the answer would have cleared - a lost `media.fetch` kept its
+        // key and refused that picture for good. Collected, not emitted: rehash.
         if (m_mediaRequests.contains(it.key())) {
             lostMedia.append(m_mediaRequests.value(it.key()));
         }
-        // The recording stays on disk. Putting the entry back was pointless -
-        // the reply that would have read it looks the command up in `m_pending`,
-        // which this loop has just erased, so the branch that deletes the file
-        // can never run again for this id. It is cleared with the media cache
-        // like everything else in there.
+        // The recording stays on disk: the reply that would have deleted it looks
+        // the command up in `m_pending`, which this loop has just erased.
         forgetRequest(it.key());
         it = m_pending.erase(it);
     }
@@ -413,14 +388,8 @@ void MatrixBridge::restoreSession()
     send(QStringLiteral("session.restore"));
 }
 
-/// Whether the device's own browser can finish an OAuth sign-in.
-///
-/// Not a guess about the browser but a fact about the release: Sailfish 4 ships
-/// a Gecko that cannot render the MAS sign-in pages, and the button there loops
-/// back to the form — measured on a 4.6 device, twice, and the reason the
-/// device-code grant was built at all. The failure direction is "assume it
-/// works": where the release cannot be read, the page keeps its usual order and
-/// nothing is hidden.
+/// Sailfish 4's Gecko cannot render the MAS sign-in pages - measured on 4.6,
+/// and the reason the device-code grant exists. Unreadable release: assume it works.
 bool MatrixBridge::browserLoginReliable() const
 {
     QFile release(QStringLiteral("/etc/sailfish-release"));
@@ -440,12 +409,8 @@ bool MatrixBridge::browserLoginReliable() const
     return true;
 }
 
-/// Whether an encryption or verification command is waiting for an answer.
-///
-/// Only this app's own encryption half counts. Anything else in flight - a
-/// picture being fetched, a room list growing - has nothing to do with whether
-/// a verification may be started, and gating on it made the buttons dead for as
-/// long as an unrelated download took to fail.
+/// Only this app's own encryption half counts. On the global `busy` a picture
+/// stuck in a retry made the verify buttons dead for as long as it took.
 bool MatrixBridge::encryptionBusy() const
 {
     for (auto it = m_pending.constBegin(); it != m_pending.constEnd(); ++it) {
@@ -463,14 +428,14 @@ bool MatrixBridge::storageBlocked() const
     if (m_storeKeyState == StoreKeyState::Available) {
         return false;
     }
-    // Deliberately not `encryptedDataPresent`: an install that predates the
-    // store key has plaintext data and no key, and blocking it would lock out
-    // exactly the people the migration page exists to guide. Only where
-    // nothing lies on this device is a store still about to be created.
+    // Deliberately not `encryptedDataPresent`: an install predating the store key
+    // has plaintext data and no key, and blocking it would strand its keys.
     if (localDataPresent(m_dataDirectory)) {
         return false;
     }
-    return !m_settings || !m_settings->unencryptedStorageAccepted();
+    // No way past this. The "continue without encryption" of 0.26.0 was for the
+    // image without the daemon, which the package's `Requires` already keeps out.
+    return true;
 }
 
 void MatrixBridge::retryStoreKey()
@@ -483,12 +448,8 @@ void MatrixBridge::retryStoreKey()
         QJsonObject arguments;
         arguments.insert(QStringLiteral("storeKey"), result.key);
         result.key.fill(QChar('0'));
-        // No new command for this: `session.restore` already installs a key
-        // handed to it before it looks for a session (`runtime.rs`, around the
-        // `SessionRestore` arm). On a device with nothing on it the restore
-        // answers "none" and the login page follows — which is exactly where
-        // the gate should let go — while the key stays in the core, so the
-        // login that follows creates the store encrypted.
+        // `session.restore` installs a key handed to it before it looks for a
+        // session; on an empty device it answers "none" and the login follows.
         send(QStringLiteral("session.restore"), arguments, true);
     }
     emit storageChanged();
@@ -504,15 +465,15 @@ void MatrixBridge::retryUnlock()
     m_storeKeyReason = result.errorMessage;
     m_secretsDaemonPresent = ::secretsDaemonPresent();
     emit storageChanged();
-    QString key = result.key;
     QJsonObject arguments;
-    if (!key.isEmpty()) {
-        arguments.insert(QStringLiteral("storeKey"), key);
-        key.fill(QChar('0'));
+    if (!result.key.isEmpty()) {
+        arguments.insert(QStringLiteral("storeKey"), result.key);
+        // The original, not a copy of it: `fill()` resizes, which detaches a
+        // shared QString - the copy would be wiped and the key would live on.
+        result.key.fill(QChar('0'));
     }
-    // The payload carries the key; wiped like a password after the core took
-    // its copy. Without a key the plain restore runs and reports "locked"
-    // again, which keeps the page and its retry on screen.
+    // The payload carries the key, wiped like a password. Without one the plain
+    // restore reports "locked" again and the page keeps its retry.
     send(QStringLiteral("session.restore"), arguments, !arguments.isEmpty());
 }
 
@@ -538,9 +499,8 @@ void MatrixBridge::startPasswordLogin(const QString &homeserver,
 {
     const QString trimmedServer = homeserver.trimmed();
     const QString trimmedUser = user.trimmed();
-    // The password is deliberately not trimmed: whitespace in it is the
-    // user's business. It is also deliberately not validated, logged or kept
-    // — it goes into one command and the send buffer is wiped.
+    // The password is not trimmed - whitespace in it is the user's business -
+    // and not validated, logged or kept: one command, then the buffer is wiped.
     if (trimmedServer.isEmpty() || trimmedUser.isEmpty() || password.isEmpty()) {
         setLastError(tr("Enter username and password first."));
         return;
@@ -729,21 +689,16 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
     }
 
     if (roomId == m_openRoomId && focus.isEmpty() && m_timelineFocus.isEmpty()) {
-        // Already subscribed: the rows are still in the model, so re-entering
-        // the room shows them at once. A focused view never takes this path —
-        // it is a different view of the same room.
-        //
-        // Asked anyway, and without clearing anything. The core has this same
-        // case and answers it by keeping the rows and reporting where reading
-        // stopped (`rebuilt: false`); returning here instead meant a freshly
-        // built page never heard that, so opening at the first unread message
-        // worked on the first visit to a room and silently did nothing on every
-        // return to it - "sometimes it works", reported exactly that way.
+        // Already subscribed, rows kept. Asked anyway and without clearing: the core
+        // answers `rebuilt: false` with where reading stopped, which a fresh page needs.
         qInfo("xmatic: room already open, %d rows kept", m_timeline.count());
         QJsonObject kept;
         kept.insert(QStringLiteral("roomId"), roomId);
         kept.insert(QStringLiteral("receipts"),
                     m_settings && m_settings->showReadStatus());
+        // *Not* bumped here: the same view carries on and the core keeps the
+        // stream it has. Raising it silenced every diff until a restart.
+        kept.insert(QStringLiteral("token"), QString::number(m_timelineGeneration));
         send(QStringLiteral("timeline.open"), kept);
         return;
     }
@@ -769,11 +724,8 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
         emit tombstoneChanged();
     }
     if (m_openRoomId != roomId) {
-        // Downloaded attachments are remembered under the timeline row's id,
-        // and those ids are only unique within one timeline. The core now
-        // prefixes them per room, so a stale entry can no longer be mistaken
-        // for this room's — but nothing would ever drop them either, and a
-        // long session would keep every attachment of every room it visited.
+        // Memory hygiene, not correctness: the core prefixes attachment keys per
+        // room, but nothing else would ever drop them over a long session.
         m_media.clear();
     }
     m_openRoomId = roomId;
@@ -788,11 +740,11 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
     }
     arguments.insert(QStringLiteral("receipts"),
                      m_settings && m_settings->showReadStatus());
-    send(QStringLiteral("timeline.open"), arguments);
+    arguments.insert(QStringLiteral("token"), QString::number(++m_timelineGeneration));
+    m_openTimelineId = send(QStringLiteral("timeline.open"), arguments);
 
-    // Pull this room's keys out of the backup as well. Messages that predate
-    // this device can only be read that way, and the timeline retries the
-    // decryption once the keys land.
+    // Pull this room's keys out of the backup too: messages older than this
+    // device can only be read that way, and the timeline retries on arrival.
     if (m_encryptionStatus.value(QStringLiteral("backupEnabled")).toBool()) {
         fetchRoomKeys(roomId);
     }
@@ -803,6 +755,7 @@ void MatrixBridge::closeRoom()
     if (m_openRoomId.isEmpty()) {
         return;
     }
+    const QString closing = m_openRoomId;
     m_openRoomId.clear();
     m_timelineFocus.clear();
     if (!m_pinnedEventIds.isEmpty()) {
@@ -816,14 +769,15 @@ void MatrixBridge::closeRoom()
     // The core closes the thread with the room; only the model remains.
     m_openThreadRoot.clear();
     m_threadTimeline.clear();
-    send(QStringLiteral("timeline.close"));
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), closing);
+    send(QStringLiteral("timeline.close"), arguments);
 }
 
 void MatrixBridge::loadOlder()
 {
-    // One at a time. The core serialises paginations on the open timeline
-    // anyway, and a second request in flight would make the first one's answer
-    // impossible to attribute — which is what the automatic fill needs it for.
+    // One at a time. A second request in flight makes the first answer
+    // impossible to attribute, which is what the automatic fill needs.
     if (m_paginateId != 0) {
         return;
     }
@@ -846,10 +800,8 @@ void MatrixBridge::openThread(const QString &roomId, const QString &rootEventId)
     setLastError(QString());
     m_threadTimeline.clear();
     m_openThreadRoot = rootEventId;
-    // Reopening the same thread has to be told apart from the one before it:
-    // the previous core task is aborted at its next await, so a diff of its
-    // making can still be in the Qt queue when this one's reset has landed.
-    // The root alone does not distinguish those two.
+    // Reopening the same thread has to be told from the one before: the aborted
+    // task's diffs can still be in the Qt queue. The root alone does not.
     ++m_threadGeneration;
     QJsonObject arguments;
     arguments.insert(QStringLiteral("roomId"), roomId);
@@ -863,9 +815,8 @@ void MatrixBridge::closeThread()
     if (m_openThreadRoot.isEmpty()) {
         return;
     }
-    // Named, because commands run as independent tasks: a close and an open
-    // issued back to back can reach the core in either order, and an
-    // unqualified close would shut down the thread just opened.
+    // Named, because commands are independent tasks: a close and an open issued
+    // back to back can arrive in either order.
     QJsonObject arguments;
     arguments.insert(QStringLiteral("rootEventId"), m_openThreadRoot);
     m_openThreadRoot.clear();
@@ -956,10 +907,8 @@ QString MatrixBridge::emojiSource(const QString &key) const
         return *cached;
     }
 
-    // The name is built from the reaction, the way every emoji set names its
-    // files: code points in hex, joined by a dash. A variation selector is
-    // dropped unless the sequence is a joined one, which is the rule the sets
-    // themselves follow.
+    // Name built from the reaction the way emoji sets name their files: code
+    // points in hex, joined by a dash, variation selector dropped unless joined.
     const QVector<uint> points = key.toUcs4();
     const bool joined = points.contains(0x200D);
     QStringList parts;
@@ -975,10 +924,8 @@ QString MatrixBridge::emojiSource(const QString &key) const
         parts.append(hex);
     }
 
-    // The second name is the first with every variation selector gone. Sets
-    // agree on the rule above but not on every sequence: one of them names the
-    // eye in a speech bubble that way, and a name that is merely spelled
-    // differently should not read as "no picture".
+    // Second name: the first without any variation selector. Sets disagree on
+    // some sequences, and a different spelling should not read as "no picture".
     QStringList names;
     names.append(parts.join(QLatin1Char('-')));
     if (bare != parts) {
@@ -986,11 +933,8 @@ QString MatrixBridge::emojiSource(const QString &key) const
     }
 
     QString found;
-    // A set that was read in through the app is served by the provider, which
-    // checks each picture against the checksum taken when it was written. A
-    // set somebody copied into the directory by hand has no checksums to check
-    // against and is opened as a plain file, exactly as before - that path is
-    // unchecked, and the setting's own text says what it costs.
+    // A set read in through the app is served by the provider against its
+    // checksums; a hand-copied one is opened as a plain file, unchecked.
     const bool checked = m_emojiStore && m_emojiStore->verified();
     for (const QString &name : names) {
         if (name.isEmpty()) {
@@ -1004,10 +948,8 @@ QString MatrixBridge::emojiSource(const QString &key) const
             continue;
         }
         const QString base = emojiDirectory() + QLatin1Char('/') + name;
-        // PNG only. A hand-copied set has no checksums, and handing an SVG
-        // from outside to Qt 5.6's parser at display time - once per row, per
-        // redraw - is the one thing this feature must not do. Reading a set in
-        // through Appearance rasterises it and lifts this restriction.
+        // PNG only: a hand-copied set has no checksums, and handing an SVG to Qt
+        // 5.6's parser once per row per redraw is what this must not do.
         for (const QString &extension : { QStringLiteral(".png") }) {
             const QFileInfo file(base + extension);
             if (file.exists() && file.isFile() && file.size() <= 64 * 1024) {
@@ -1032,9 +974,8 @@ void MatrixBridge::clearLastError()
 
 void MatrixBridge::forgetRequest(quint64 id)
 {
-    // The registers that remember what a command was about. Emptied on the
-    // reply, on the error, and - since a dropped answer is neither - when the
-    // watchdog gives the command up.
+    // The registers that remember what a command was about. Emptied on the reply,
+    // on the error, and - a dropped answer being neither - by the watchdog.
     m_mediaRequests.remove(id);
     m_hierarchyRequests.remove(id);
     m_removeRequests.remove(id);
@@ -1047,11 +988,8 @@ void MatrixBridge::markRoomRead(const QString &roomId)
 {
     QJsonObject arguments;
     arguments.insert(QStringLiteral("roomId"), roomId);
-    // The same question the room's own mark-read asks. It used to go without,
-    // and the core then sent the public receipt unconditionally - so the
-    // privacy switch held while reading a room and was ignored by the entry in
-    // the chat list, which is the one that exists precisely so a room need not
-    // be opened. A setting that a second path does not ask is worse than none.
+    // The same question the room's own mark-read asks. Without it the core sent
+    // the receipt regardless, so the privacy switch held in one path only.
     arguments.insert(QStringLiteral("receipt"),
                      !m_settings || m_settings->sendReadReceipts());
     send(QStringLiteral("room.markRead"), arguments);
@@ -1149,9 +1087,8 @@ void MatrixBridge::searchRoom(const QString &roomId, const QString &query)
         m_searchHasMore = false;
         emit searchHasMoreChanged();
     }
-    // An emptied box is not a search that found nothing. Clearing without
-    // asking also keeps the core out of a query the user is in the middle of
-    // deleting.
+    // An emptied box is not a search that found nothing, and it keeps the core
+    // out of a query the user is in the middle of deleting.
     if (m_searchQuery.isEmpty()) {
         if (m_searchRequest != 0) {
             m_searchRequest = 0;
@@ -1187,8 +1124,7 @@ void MatrixBridge::clearSearch()
 }
 
 /// Asks for the page at the current offset and remembers which request it is.
-/// Only that one request's answer may touch the model: a reply from the search
-/// before it would otherwise append rows for a query nobody is looking at.
+/// Only that answer may touch the model.
 void MatrixBridge::sendSearchPage()
 {
     QJsonObject arguments;
@@ -1317,11 +1253,8 @@ void MatrixBridge::sendMessage(const QString &body)
 
 void MatrixBridge::markRead()
 {
-    // Reading without telling anybody is a choice the privacy page offers, and
-    // it governs the receipt others see - not the fully-read marker, which is
-    // private account data. Holding that one back as well hid nothing from
-    // anybody and cost this device the line in the conversation and the
-    // position the room opens at: both follow the marker.
+    // The privacy switch governs the receipt others see, not the fully-read
+    // marker: holding that back hid nothing and cost the position the room opens at.
     QJsonObject arguments;
     arguments.insert(QStringLiteral("receipt"),
                      !m_settings || m_settings->sendReadReceipts());
@@ -1485,9 +1418,8 @@ void MatrixBridge::setEmojiStore(EmojiStore *store)
     if (!m_emojiStore) {
         return;
     }
-    // Reading a set in, or throwing it away, changes what every lookup should
-    // answer - and the answers are cached. Both signals may come from the
-    // image thread, hence queued.
+    // Reading a set in, or dropping it, changes every cached lookup. Both signals
+    // may come from the image thread, hence queued.
     const auto invalidate = [this]() {
         m_emojiSources.clear();
         ++m_emojiRevision;
@@ -1691,10 +1623,8 @@ void MatrixBridge::enablePush(const QString &gateway)
         setLastError(tr("Enter a push gateway first."));
         return;
     }
-    // Kept for the second half. The distributor answers with the endpoint in
-    // its own time — usually at once, but it is a network round trip on the
-    // distributor's side, and by then the field the user typed into may be
-    // gone with its page.
+    // Kept for the second half: the distributor answers in its own time, and by
+    // then the field the user typed into may be gone with its page.
     m_pushGateway = gateway.trimmed();
     setLastError(QString());
     QJsonObject arguments;
@@ -1725,10 +1655,8 @@ void MatrixBridge::recoverKeys(const QString &key)
 
     QJsonObject arguments;
     arguments.insert(QStringLiteral("key"), key.trimmed());
-    // Same treatment as the login password: the recovery key unlocks the whole
-    // key backup, so the serialised payload must not stay on the heap after the
-    // core has taken its copy. What cannot be wiped is documented with the
-    // password's residual in docs/PASSWORD-LOGIN.md.
+    // Like the login password: the recovery key unlocks the whole backup, so the
+    // payload must not stay on the heap. Residuals: docs/PASSWORD-LOGIN.md.
     send(QStringLiteral("encryption.recover"), arguments, true);
 }
 
@@ -1799,17 +1727,8 @@ void MatrixBridge::deleteMessage(const QString &eventId, const QString &txnId)
     send(QStringLiteral("timeline.redact"), arguments);
 }
 
-/// The picture's own measurements, for the event that carries it.
-///
-/// Read from the header, not by decoding: `QImageReader::size()` parses as far
-/// as the dimensions and stops. Anything that is not a picture, or a picture
-/// whose header this Qt cannot read, leaves both at zero and the core then
-/// writes no measurements at all.
-///
-/// This exists because the SDK writes an empty `info` when it is given none,
-/// so every picture this app sent carried neither size nor width nor height -
-/// which other clients need to lay out the row, and which this app's own
-/// preview rule read as "nothing declared".
+/// Measurements from the header, `QImageReader::size()`, no decode. Without
+/// them the SDK writes an empty `info` and every picture goes out undescribed.
 static void insertDimensions(QJsonObject &arguments, const QString &localPath,
                              const QString &mimeType)
 {
@@ -1959,11 +1878,8 @@ void MatrixBridge::requestMedia(const QString &key, const QVariant &source, bool
 
     const QString known = m_media.value(key);
     if (!known.isEmpty()) {
-        // Remembered is not the same as still there: the core sweeps the media
-        // cache back to its budget, oldest first, and a long session in a
-        // picture-heavy room crosses that. Handing out the path anyway left an
-        // empty frame with a spinner over it and no second attempt for the rest
-        // of the visit.
+        // Remembered is not still there: the cache sweep drops oldest first, and
+        // handing out the path anyway left an empty frame with no second attempt.
         if (QFile::exists(known)) {
             emit mediaReady(key, known);
             return;
@@ -2009,9 +1925,8 @@ void MatrixBridge::requestAvatar(const QString &url)
 
     const QString known = m_media.value(url);
     if (!known.isEmpty()) {
-        // The same check the attachment path makes: the cache sweep may have
-        // taken the file, and a picture that is gone must be asked for again
-        // rather than handed out as a path to nothing.
+        // Same check as the attachment path: the sweep may have taken the file, and
+        // a picture that is gone must be asked for again.
         if (QFile::exists(known)) {
             emit mediaReady(url, known);
             return;
@@ -2023,15 +1938,17 @@ void MatrixBridge::requestAvatar(const QString &url)
         return;
     }
 
-    // The SDK's media source is a struct, not a bare address: the unencrypted
-    // variant is `{"url": …}`, the encrypted one carries a `file` object
-    // instead. A profile picture is never encrypted, so the former it is.
+    // The SDK's media source is a struct: `{"url": …}` unencrypted, a `file`
+    // object encrypted. A profile picture is never encrypted.
     QJsonObject source;
     source.insert(QStringLiteral("url"), url);
 
     QJsonObject arguments;
     arguments.insert(QStringLiteral("source"), source);
     arguments.insert(QStringLiteral("thumbnail"), true);
+    // An avatar declares no size in an event, so the pre-download gate had
+    // nothing to weigh. This is what one may cost.
+    arguments.insert(QStringLiteral("size"), double(MaximumAvatarBytes));
 
     const quint64 id = m_nextId;
     m_mediaRequests.insert(id, url);
@@ -2063,9 +1980,8 @@ void MatrixBridge::handleReply(const QJsonObject &message)
     emit busyChanged();
     updateStallWatch();
 
-    // The other half of the stall report: how long it took in the end.
-    // Without it the journal says a command hung and never says whether it
-    // came back, which is the difference between slow and broken.
+    // The other half of the stall report: how long it took in the end. Slow and
+    // broken look the same without it.
     if (entry.reported) {
         qWarning("xmatic: %s answered after %d s",
                  qPrintable(command),
@@ -2107,9 +2023,8 @@ void MatrixBridge::handleReply(const QJsonObject &message)
             || command == QLatin1String("thread.send")) {
             emit threadFailed(error);
         }
-        // A failed media fetch has to say so, or the row keeps a spinner
-        // turning over a download that will never arrive - including the ones
-        // this app refuses on purpose, like an oversized attachment.
+        // A failed media fetch has to say so, or the row keeps a spinner over a
+        // download that will never arrive - refused oversized ones included.
         const bool wasMedia = m_mediaRequests.contains(id);
         if (wasMedia) {
             emit mediaFailed(m_mediaRequests.value(id));
@@ -2120,11 +2035,8 @@ void MatrixBridge::handleReply(const QJsonObject &message)
             // write must not leave the caller looking allowed.
             send(QStringLiteral("private.get"));
         }
-        // The recording stays where it is: the send failed, and it is the only
-        // copy. `forgetRequest` above has already let go of the bookkeeping.
-        // "command not understood" means the two halves of the app do not
-        // match - a stale core against a newer bridge. The list of every
-        // command it does know belongs in the journal, not in a banner.
+        // The recording stays: the send failed and it is the only copy. "command not
+        // understood" means a stale core against a newer bridge - journal, not banner.
         if (error.startsWith(QLatin1String("command not understood"))) {
             qWarning("xmatic: %s rejected by the core: %s",
                      qPrintable(command), qPrintable(error.left(120)));
@@ -2134,17 +2046,8 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         // interrupting somebody with.
         noteError(command, error);
 
-        // A token that rotated under a request in flight comes back as
-        // "token is not active", and that is not an ended session - a real one
-        // arrives as `session.expired` and signs out. Shown as a red line it
-        // reads as the opposite of what it is, and it was: reported from a
-        // device whose session was perfectly alive. The log keeps it; the page
-        // does not shout it.
-        //
-        // A failed media fetch is left out for a different reason: it already
-        // has `mediaFailed`, which the row it belongs to acts on. Painting it
-        // across whatever page happens to show `lastError` puts a download's
-        // problem in front of somebody who is doing something else.
+        // "Token is not active" is a rotation under a request in flight, not an ended
+        // session; the log keeps it, the page does not. Media has `mediaFailed`.
         if (id == m_pushNotifyRequest) {
             m_pushNotifyRequest = 0;
             emit pushNotificationFailed(error);
@@ -2184,10 +2087,8 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (id == m_pushNotifyRequest) {
             m_pushNotifyRequest = 0;
             QVariantMap notification = data.toVariantMap();
-            // The banner's two lines, built the way the app builds them from a
-            // room-list preview - so a push and an ordinary arrival read the
-            // same. The text only where the user allowed it: the banner shows
-            // on the lock screen.
+            // The banner's two lines, built as from a room-list preview, so a push reads
+            // like an ordinary arrival. Text only where allowed - lock screen.
             const QString kind = data.value(QStringLiteral("previewKind")).toString();
             const QString text = data.value(QStringLiteral("previewText")).toString();
             notification.insert(QStringLiteral("body"),
@@ -2226,9 +2127,8 @@ bool MatrixBridge::replyLogin(const QString &command, const QJsonObject &data)
     }
 
     if (command == QLatin1String("login.start")) {
-        // A server without OAuth that offers the classic password flow
-        // answers with a flag instead of a browser URL; the login page
-        // then shows the credentials form. Not busy while the user types.
+        // A server without OAuth that offers the password flow answers with a flag
+        // instead of a URL. Not busy while the user types.
         if (data.value(QStringLiteral("passwordLogin")).toBool()) {
             setLoginRunning(false);
             emit passwordLoginNeeded();
@@ -2327,10 +2227,8 @@ bool MatrixBridge::replyRoom(quint64 id, const QString &command, const QJsonObje
     }
 
     if (command == QLatin1String("room.setNotifyMode")) {
-        // The mode writes a push rule, which the SDK's room list does not
-        // consider a notable change, so no diff follows and the row would
-        // keep the old state until something else touched the room —
-        // entering it, for instance. Write it into the models directly.
+        // A push rule is not a notable change to the SDK's room list, so no diff
+        // follows and the row would keep the old state. Write it into the models.
         const QString roomId = data.value(QStringLiteral("roomId")).toString();
         const QString mode = data.value(QStringLiteral("mode")).toString();
         m_rooms.setNotifyMode(roomId, mode);
@@ -2346,9 +2244,8 @@ bool MatrixBridge::replyRoom(quint64 id, const QString &command, const QJsonObje
     }
 
     if (command == QLatin1String("room.markRead")) {
-        // Same reason as the notify mode above: the receipt may not come back
-        // as a diff, and the badge would stand until something else touched
-        // the room.
+        // Same as the notify mode above: no diff need follow, and the badge would
+        // stand until something else touched the room.
         const QString roomId = data.value(QStringLiteral("roomId")).toString();
         m_rooms.clearUnread(roomId);
         m_spaceRooms.clearUnread(roomId);
@@ -2389,9 +2286,8 @@ bool MatrixBridge::replySearch(quint64 id, const QString &command, const QJsonOb
 {
     if (command == QLatin1String("search.index")) {
         const int count = data.value(QStringLiteral("count")).toInt();
-        // The number, not the room: when a search comes back thinner than
-        // expected, how much of the room is on the device is the first thing
-        // worth knowing.
+        // The number, not the room: when a search comes back thin, how much of the
+        // room is on the device is the first thing worth knowing.
         qInfo("xmatic: search index holds %d stored events", count);
         m_indexRequest = 0;
         emit indexingChanged();
@@ -2401,9 +2297,8 @@ bool MatrixBridge::replySearch(quint64 id, const QString &command, const QJsonOb
     if (command != QLatin1String("search.room")) {
         return false;
     }
-    // Not ours any more: the user typed on, and a newer request is in flight
-    // or the box was cleared. Dropping it is the whole point of remembering
-    // the id.
+    // Not ours any more - the user typed on, or the box was cleared. Dropping it
+    // is the whole point of remembering the id.
     if (id != m_searchRequest) {
         return true;
     }
@@ -2419,9 +2314,8 @@ bool MatrixBridge::replySearch(quint64 id, const QString &command, const QJsonOb
     operation.insert(QStringLiteral("values"), rows);
     m_searchResults.applyOperations(QJsonArray{ operation });
 
-    // The offset counts what was asked for, not what came back. A row whose
-    // event could no longer be loaded is dropped on the way, and counting the
-    // survivors would ask for the same page again.
+    // The offset counts what was asked for. A row whose event could not be loaded
+    // is dropped on the way, and counting survivors asks for the same page again.
     m_searchOffset += SearchPageSize;
     if (more != m_searchHasMore) {
         m_searchHasMore = more;
@@ -2445,10 +2339,8 @@ bool MatrixBridge::replyMember(quint64 id, const QString &command, const QJsonOb
         return true;
     }
 
-    // No diff follows core-made state changes, and the local store only
-    // learns of the state event on a later sync — so the result is
-    // written into the model and handed to the page as data, never as a
-    // hint to re-read.
+    // No diff follows core-made state changes, and the store learns of them on a
+    // later sync - so the result is data for the page, never a hint to re-read.
     if (command == QLatin1String("member.ban")) {
         const QString userId = data.value(QStringLiteral("userId")).toString();
         // Only the model of the room this actually happened in.
@@ -2516,24 +2408,18 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
             m_privateLists.insert(it.key(), values);
         }
 
-        // Whether the file could be read at all. Locked or damaged is not
-        // empty, and nothing may be written over it - the store key is bound
-        // to the device lock and is missing after every reboot until the
-        // system dialog has run.
+        // Whether the file could be read at all. Locked or damaged is not empty, and
+        // the key is missing after every reboot until the system dialog has run.
         m_privateListsReadable = data.value(QStringLiteral("readable")).toBool();
 
-        // Anything the plain settings file still holds moves over once, and is
-        // removed there: a list of names does not belong in a file that any
-        // backup copies in the clear. Only where the encrypted file was
-        // readable - otherwise the move would delete the only copy.
+        // What the plain settings file still holds moves over once and is removed
+        // there - only where the encrypted file was readable, or the copy is gone.
         if (command == QLatin1String("private.get") && m_settings && m_privateListsReadable) {
             const QStringList callers = m_settings->legacyAllowedCallers();
             const QStringList trusted = m_settings->legacyTrustedRecipients();
             if (!callers.isEmpty() || !trusted.isEmpty()) {
-                // Both lists in one write. Two commands would be two
-                // read-modify-writes racing each other, and the second would
-                // overwrite the first - on the very migration that then
-                // deletes the plaintext original.
+                // Both lists in one write: two commands would be two read-modify-writes
+                // racing, on the very migration that then deletes the original.
                 for (const QString &caller : callers) {
                     QStringList merged = m_privateLists.value(QStringLiteral("callers"));
                     if (!merged.contains(caller)) {
@@ -2561,21 +2447,16 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
     }
 
     if (command == QLatin1String("timeline.markRead")) {
-        // The same reason the chat list's own "mark read" writes into the
-        // model: a receipt is not necessarily answered with a room-list diff,
-        // and the badge then stood on a room that had just been read to the
-        // end - which is how "it does not mark as read on its own" was
-        // reported. Only where the core says it marked something: a room whose
-        // newest event this device never saw has nothing to point a marker at.
+        // A receipt is not necessarily answered with a room-list diff, so the badge
+        // stood on a room just read. Only where the core says it marked something.
         const bool read = data.value(QStringLiteral("read")).toBool();
         if (read) {
             const QString roomId = data.value(QStringLiteral("roomId")).toString();
             m_rooms.clearUnread(roomId);
             m_spaceRooms.clearUnread(roomId);
         } else {
-            // The core had nothing to point a marker at. Said out loud, because
-            // from the outside this is indistinguishable from the badge simply
-            // not clearing, and the two are repaired in different places.
+            // Nothing to point a marker at. Said out loud: from outside this looks like
+            // the badge simply not clearing, and the two are repaired elsewhere.
             qWarning("xmatic: nothing to mark read - the timeline has no newest event");
         }
         return true;
@@ -2600,9 +2481,8 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
 
     if (command == QLatin1String("timeline.reactors")) {
         if (m_reactorRequests.remove(id)) {
-            // Both come back from the core rather than being remembered here:
-            // one message can carry several reactions, and the answer has to
-            // say which of them it is about.
+            // Both come from the core rather than being remembered here: one message can
+            // carry several reactions, and the answer says which.
             emit reactorsReady(data.value(QStringLiteral("eventId")).toString(),
                                data.value(QStringLiteral("key")).toString(),
                                data.value(QStringLiteral("reactors")).toArray().toVariantList());
@@ -2611,15 +2491,10 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
     }
 
     if (command == QLatin1String("timeline.open")) {
+        m_openTimelineId = 0;
         setTimelineReady(true);
-        // What this account may do in the room that was just opened. Menus
-        // ask this instead of offering everything and letting the server
-        // refuse - a menu entry that always fails is a dead end, and this app
-        // does not build those.
-        // A rebuilt timeline is a different room (or a fresh view of this
-        // one), and the core asks the server for its thread roots as part of
-        // building it. A kept timeline keeps its roots: the answer would not
-        // come a second time, and clearing them would take the markers away.
+        // Permissions so menus ask instead of offering what the server will refuse.
+        // Thread roots only on a rebuilt timeline - a kept one keeps its own.
         if (data.value(QStringLiteral("rebuilt")).toBool()) {
             m_timeline.setThreadRoots(QHash<QString, int>());
         }
@@ -2632,19 +2507,14 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
             m_roomDirectPeer = peer;
             emit roomPermissionsChanged();
         }
-        // Only for the live view. A focused open - the pinned overview, a
-        // permalink - shows a different slice of the room, and the room's
+        // Live view only: a focused open shows a different slice, and the room's
         // read marker means nothing in it.
         if (m_timelineFocus.isEmpty()) {
             const QString marker = data.value(QStringLiteral("readMarker")).toString();
             const QString receipt = data.value(QStringLiteral("readReceipt")).toString();
             const bool rebuilt = data.value(QStringLiteral("rebuilt")).toBool();
-            // Whether a marker came at all, never which one - an event id is
-            // an identifier like any other. Without this line "the room opened
-            // at its newest message" cannot be told apart into "nothing said
-            // where reading stopped" and "it was said and not found", and
-            // those two want opposite fixes. Reported repeatedly, and until
-            // now guessed at.
+            // Whether a marker came, never which one. Without it "opened at the newest
+            // message" cannot be told from "said and not found", which want opposite fixes.
             qInfo("xmatic: room opened, read marker %s, rebuilt %d, %d rows",
                   marker.isEmpty() ? "none" : "present",
                   rebuilt ? 1 : 0,
@@ -2656,10 +2526,8 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
 
     if (command == QLatin1String("timeline.paginate")) {
         setTimelineAtStart(data.value(QStringLiteral("reachedStart")).toBool());
-        // The count is the model's at this moment, not the page's yield —
-        // the rows of this pagination may still be on their way through the
-        // diff stream. Two of these lines with the same count and no diff
-        // between them is what a fruitless round looks like.
+        // The model's count now, not the page's yield - those rows may still be in
+        // the diff stream. Two equal counts is what a fruitless round looks like.
         qInfo("xmatic: older messages answered, %d rows in the model, at start %d",
               m_timeline.count(), m_timelineAtStart ? 1 : 0);
         emit paginated();
@@ -2676,10 +2544,8 @@ bool MatrixBridge::replyEncryption(const QString &command, const QJsonObject &da
     if (command == QLatin1String("encryption.status")
             || command == QLatin1String("encryption.recover")) {
         m_encryptionStatus = data.toVariantMap();
-        // The key was taken and the import is done - but the recovery state
-        // rides the SDK's own stream and lags behind it. Until that stream
-        // says "enabled", the app says it is still finishing rather than
-        // leaving a line that looks untouched.
+        // The import is done, but the recovery state rides the SDK's stream and lags.
+        // Until it says enabled, the app says "still finishing".
         if (command == QLatin1String("encryption.recover")) {
             const bool settled =
                 m_encryptionStatus.value(QStringLiteral("recovery")).toString()
@@ -2781,15 +2647,12 @@ bool MatrixBridge::eventCall(const QString &name, const QJsonObject &data)
                                     data.value(QStringLiteral("callId")).toString(),
                                     data.value(QStringLiteral("candidates")).toArray().toVariantList());
     } else if (name == QLatin1String("call.blocked")) {
-        // The invitation still raised the server's notification counter, and
-        // the chat list turns that into a banner. Refusing the call and then
-        // beeping about it is the opposite of what the setting promises.
+        // The invitation still raised the server's counter, and the chat list turns
+        // that into a banner. Refusing a call and then beeping about it is the opposite.
         const QString roomId = data.value(QStringLiteral("roomId")).toString();
         if (!roomId.isEmpty()) {
-            // Short, and once per room per minute. Longer or repeatable turns
-            // a refused call into a way of silencing a room's messages: the
-            // caller chooses when to send, and every invitation would extend
-            // the silence.
+            // Short, once per room per minute: longer or repeatable turns a refused call
+            // into a way of silencing a room, and the caller picks the timing.
             const qint64 now = m_uptime.elapsed();
             const qint64 last = m_blockedCallRooms.value(roomId, -60000);
             if (now - last >= 60000) {
@@ -2825,7 +2688,17 @@ bool MatrixBridge::eventVerification(const QString &name, const QJsonObject &dat
               data.value(QStringLiteral("weStarted")).toBool() ? 1 : 0);
         emit verificationChanged();
     } else if (name == QLatin1String("push.state")) {
-        m_pushStatus = data.toVariantMap();
+        // Merged, not replaced: an event carrying only a state must not take the
+        // distributor list with it - the page then said "no distributor".
+        const QVariantMap update = data.toVariantMap();
+        // An error belongs to the state that carried it: a later state without
+        // one clears it.
+        if (!update.contains(QStringLiteral("error"))) {
+            m_pushStatus.remove(QStringLiteral("error"));
+        }
+        for (auto it = update.constBegin(); it != update.constEnd(); ++it) {
+            m_pushStatus.insert(it.key(), it.value());
+        }
         const QString state = m_pushStatus.value(QStringLiteral("state")).toString();
         // The distributor's bus names, not the endpoint: one is what is
         // installed on the device, the other is a secret.
@@ -2837,10 +2710,8 @@ bool MatrixBridge::eventVerification(const QString &name, const QJsonObject &dat
         }
         emit pushStatusChanged();
     } else if (name == QLatin1String("push.endpoint")) {
-        // The second half of turning it on. Kept here rather than in the core
-        // because the gateway is a setting, and handed straight on: an
-        // endpoint nobody was told about is a secret this device holds for
-        // nothing.
+        // The second half of turning it on, here because the gateway is a setting.
+        // An endpoint nobody was told about is a secret held for nothing.
         m_pushEndpoint = data.value(QStringLiteral("endpoint")).toString();
         m_pushP256dh = data.value(QStringLiteral("p256dh")).toString();
         m_pushAuth = data.value(QStringLiteral("auth")).toString();
@@ -2921,14 +2792,27 @@ bool MatrixBridge::eventVerification(const QString &name, const QJsonObject &dat
 bool MatrixBridge::eventTimeline(const QString &name, const QJsonObject &data)
 {
     if (name == QLatin1String("timeline.diff")) {
-        // Late diffs from a room that was closed in the meantime are dropped.
-        if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
+        // Room *and* generation: the pinned view opens the same room under a
+        // different focus, so the diffs of the view being left pass a room test.
+        const QString diffToken = data.value(QStringLiteral("token")).toString();
+        const bool mine = data.value(QStringLiteral("roomId")).toString() == m_openRoomId
+                && diffToken == QString::number(m_timelineGeneration);
+        if (!mine) {
+            // Once per token: a stream whose diffs are all dropped is a room
+            // that stops moving, which reads as a broken sync.
+            if (diffToken != m_lastDroppedToken) {
+                m_lastDroppedToken = diffToken;
+                qWarning("xmatic: dropping timeline diffs of another view (token %s, current %s)",
+                         qPrintable(diffToken),
+                         qPrintable(QString::number(m_timelineGeneration)));
+            }
+        }
+        if (mine) {
             const QJsonArray ops = data.value(QStringLiteral("ops")).toArray();
             m_timeline.applyOperations(ops);
 
-            // Operation names and the resulting row count, no content. A
-            // timeline that empties itself is otherwise indistinguishable from
-            // a rendering fault.
+            // Operation names and the row count, no content: a timeline that empties
+            // itself is otherwise indistinguishable from a rendering fault.
             QStringList names;
             for (const QJsonValue &value : ops) {
                 names.append(value.toObject().value(QStringLiteral("op")).toString());
@@ -2958,10 +2842,8 @@ bool MatrixBridge::eventTimeline(const QString &name, const QJsonObject &data)
               qPrintable(data.value(QStringLiteral("eventId")).toString()),
               qPrintable(data.value(QStringLiteral("error")).toString()));
     } else if (name == QLatin1String("timeline.threads")) {
-        // The server's list of this room's thread roots. It is the way into a
-        // thread whose root the store knows without a summary - the case every
-        // room is in after an update, because every event cached before
-        // threading was switched on lacks one.
+        // The server's thread roots - the way into a thread whose root the store
+        // knows without a summary, which is every event cached before threading.
         if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
             QHash<QString, int> roots;
             const QJsonArray listed = data.value(QStringLiteral("roots")).toArray();
@@ -2984,13 +2866,11 @@ bool MatrixBridge::eventTimeline(const QString &name, const QJsonObject &data)
                 ids.append(value.toString());
             }
             const QString preview = data.value(QStringLiteral("preview")).toString();
-            // Only worth a line when the room names pins that cannot be read:
-            // the pinned view is then empty for a reason outside this app, and
-            // that reason is otherwise invisible.
+            // Only worth a line where the room names pins that cannot be read: the view
+            // is then empty for a reason outside this app.
             const int loaded = data.value(QStringLiteral("loaded")).toInt();
-            // Against what the core actually looked at, not against the room's
-            // whole list: the check is capped, so comparing with the full count
-            // reported a failure in every room with more pins than the cap.
+            // Against what the core looked at, not the room's whole list: the check is
+            // capped, and comparing with the full count reported a failure everywhere.
             const int checked = data.value(QStringLiteral("checked")).toInt();
             if (checked > 0 && loaded < checked) {
                 const QString loadError =
@@ -3070,10 +2950,8 @@ bool MatrixBridge::eventLists(const QString &name, const QJsonObject &data)
 bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
 {
     if (name == QLatin1String("session.refreshed")) {
-        // Nothing to do, everything to record: a request that was in flight
-        // across a refresh comes back as "token is not active", which looks
-        // like an ended session while the sync beside it carries on. Only the
-        // timestamps tell those apart.
+        // Nothing to do, everything to record: a request in flight across a refresh
+        // comes back as "token is not active" while the sync carries on.
         qInfo("xmatic: session tokens refreshed");
         return true;
     }
@@ -3088,10 +2966,8 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
     }
 
     if (name == QLatin1String("sync.support")) {
-        // A server that cannot do this app's sync fails every sync, which the
-        // offline mode turns into "offline" plus a restart loop — a flashing
-        // banner over an empty room list that reads as a network fault. Say
-        // what it is instead.
+        // A server that cannot do this app's sync fails every one, which offline mode
+        // turns into a flashing banner over an empty list. Say what it is.
         const bool supported = data.value(QStringLiteral("supported")).toBool(true);
         const QString error = data.value(QStringLiteral("error")).toString();
         if (!error.isEmpty()) {
@@ -3120,11 +2996,8 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
             emit syncStateChanged();
         }
     } else if (name == QLatin1String("roomlist.total")) {
-        // The server's own count of this account's rooms, next to the rows the
-        // list holds. A short list has two causes that look alike - the sliding
-        // sync window never grew past its first twenty, or this app has only
-        // asked for one page - and only these two numbers side by side say
-        // which one it is.
+        // The server's room count next to the rows the list holds: a short list is
+        // either an ungrown sync window or one page asked for, and only both say which.
         const QJsonValue total = data.value(QStringLiteral("total"));
         const int count = total.isDouble() ? total.toInt() : -1;
         if (count != m_roomTotal) {
@@ -3175,9 +3048,8 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
 }
 void MatrixBridge::reportSendFailures(const QJsonArray &operations)
 {
-    // A message the queue gave up on is the one thing in a diff worth a line
-    // of its own: it stays in the room until the user acts, and "not sent" is
-    // all the screen can say about it. The core scrubbed the reason already.
+    // A message the queue gave up on stays in the room until the user acts, and
+    // "not sent" is all the screen can say. The core scrubbed the reason.
     for (const QJsonValue &value : operations) {
         const QJsonObject op = value.toObject();
         QVector<QJsonObject> rows;
@@ -3230,20 +3102,14 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
         const int unread = room.value(QStringLiteral("unread")).toInt();
         m_unread.insert(id, unread);
 
-        // The banner follows the notifying events, counted client-side
-        // against the account's push rules — `unread` counts everything, so
-        // a room set to "mentions only" (here or in any other client) kept
-        // notifying for every message. The unread badge deliberately keeps
-        // counting everything; only the banner is governed by the rules.
+        // The banner follows the notifying events, counted against the push rules;
+        // `unread` counts everything, so "mentions only" kept notifying.
         const int notifications = room.value(QStringLiteral("notifications")).toInt();
         const int previous = m_notified.value(id, notifications);
         m_notified.insert(id, notifications);
 
-        // Reading the room somewhere else clears the server's counter for
-        // this device too, and the count arrives here as any other change.
-        // Reported before the mute and on-screen tests below: those decide
-        // whether a room may *raise* a banner, not whether a banner that
-        // stands may go.
+        // Reading the room elsewhere clears the counter here too. Before the mute and
+        // on-screen tests: those govern raising a banner, not taking one down.
         if (notifications == 0 && previous > 0) {
             // A banner still waiting for its text is pointless now: the room
             // was read somewhere else, and what it would announce is gone.
@@ -3251,31 +3117,19 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
             emit roomRead(id);
         }
 
-        // Muted and low-priority rooms still count their unread badge but
-        // never raise a banner — that is the whole point of both.
-        //
-        // Muting has to be honoured here and not only on the server: the mute
-        // is a push rule, and push rules govern the notifications the server
-        // pushes out. This app has no push service, it raises its own banners
-        // from the unread counts, so a rule the server never gets to apply
-        // would leave a muted room notifying exactly as before.
+        // Muted and low-priority rooms count their badge but never notify. Honoured
+        // here because this app raises its own banners, so the server's rule never applies.
         if (room.value(QStringLiteral("muted")).toBool()
             || room.value(QStringLiteral("lowPriority")).toBool()) {
             continue;
         }
 
-        // The room on screen is being read right now, so it never notifies —
-        // but only while it really is on screen and the app really is in front.
-        // This used to test the *open* room, which is the room whose timeline
-        // the core still has subscribed: the subscription deliberately outlives
-        // the page, so the last room visited went silent for good. That is
-        // precisely the room someone tests with, which is how it was found.
+        // Only while the room really is on screen and the app in front. This tested
+        // the *open* room, whose subscription outlives the page - so it went silent for good.
         const bool onScreen = !m_visibleRoomId.isEmpty() && id == m_visibleRoomId
                 && QGuiApplication::applicationState() == Qt::ApplicationActive;
-        // The room's latest event, by the timestamp that travels with it. The
-        // preview in this very object belongs to that event, so a timestamp
-        // that moved is the proof that the text is the new message's and not
-        // its predecessor's.
+        // The room's latest event by its own timestamp: the preview belongs to that
+        // event, so a moved timestamp proves the text is the new message's.
         const quint64 timestamp = static_cast<quint64>(
             room.value(QStringLiteral("timestamp")).toDouble());
 
@@ -3286,11 +3140,8 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
             publishBanner(id, ready, room);
         }
 
-        // The count shown is the notifying one too: in a mentions-only room
-        // "50 new messages" over one lone mention would point at the wrong
-        // thing.
-        // A call this device refused a moment ago: its own counter rise is
-        // what would ring here.
+        // The count shown is the notifying one - "50 new" over one mention points at
+        // the wrong thing. A call refused a moment ago: its own rise would ring here.
         const auto blocked = m_blockedCallRooms.constFind(id);
         const bool afterBlockedCall = blocked != m_blockedCallRooms.constEnd()
                 && m_uptime.elapsed() - *blocked < 5000;
@@ -3317,9 +3168,8 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
     }
 }
 
-/// One banner, from what was known when the counts rose plus whatever text the
-/// room carries now. An empty `room` is the timeout's way of saying "no text
-/// arrived" — the count line then stands on its own.
+/// One banner from what was known when the counts rose plus the room's text
+/// now. An empty `room` is the timeout saying no text arrived.
 void MatrixBridge::publishBanner(const QString &roomId, const PendingBanner &pending,
                                  const QJsonObject &room)
 {
@@ -3400,9 +3250,8 @@ void MatrixBridge::applySession(const QJsonObject &data)
         send(QStringLiteral("call.turnServers"));
     }
 
-    // A login creates the stores (and with them the encryption marker), a
-    // sign-out deletes them again. Both change the answer, and neither sends a
-    // diff of its own.
+    // A login creates the stores and their marker, a sign-out deletes them.
+    // Both change the answer and neither sends a diff.
     refreshStorageStatus();
 
     emit sessionChanged();

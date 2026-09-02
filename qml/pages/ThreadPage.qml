@@ -3,24 +3,20 @@ import Sailfish.Silica 1.0
 import "Formatting.js" as Formatting
 import "MatrixLinks.js" as MatrixLinks
 
-// One thread of a room: root first, replies below, own composer. Rows stream
-// into matrix.threadTimeline via `thread.diff`. Text-focused: attachments
-// render as their kind, undecryptable and redacted rows stay visible.
+// One thread of a room: root first, replies below, own composer. Text-focused,
+// attachments render as their kind.
 Page {
     id: page
 
     property string roomId
     property string roomName
     property string rootEventId
-    /// Whether the room this thread belongs to is encrypted. Everything the
-    /// warning below rests on hangs off it, and a thread is exactly as
-    /// encrypted as its room.
+    /// Whether the room this thread belongs to is encrypted - a thread is exactly
+    /// as encrypted as its room.
     property bool encrypted: false
 
-    /// Recipients of that room whose devices are unverified, as the room view
-    /// holds them. A thread reaches the same people as the room does, so it
-    /// asks the same question before sending - it used to reach them without
-    /// asking anything.
+    /// The room's unverified recipients: a thread reaches the same people, so it
+    /// asks the same question before sending.
     property var unverifiedUsers: []
 
     // Page-local: matrix.lastError is global and would show a stray failure
@@ -59,9 +55,8 @@ Page {
         }
     }
 
-    /// The one line a message carries when its authenticity is in doubt. Same
-    /// codes and same wording as the room view: a thread is part of the same
-    /// conversation and must not say less about a message than the room does.
+    /// The line a message carries when its authenticity is in doubt, same wording
+    /// as the room: a thread must not say less about a message.
     function shieldText(shield) {
         if (!shield) {
             return ""
@@ -123,7 +118,14 @@ Page {
             // The same allowlist as the room view: everything the system would
             // otherwise dispatch is a stranger's choice, not the user's.
             if (/^https?:\/\//i.test(link)) {
-                Qt.openUrlExternally(link)
+                // The address before it is opened: what a link says and where it
+                // goes are two strings a stranger writes.
+                var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), {
+                                                question: qsTr("Open this address?"),
+                                                subject: link,
+                                                acceptLabel: qsTr("Open")
+                                            })
+                dialog.accepted.connect(function() { Qt.openUrlExternally(link) })
             }
             return
         }
@@ -179,24 +181,16 @@ Page {
             }
         }
 
-        // Counting rows was not enough, which is what "it does not properly go
-        // to the bottom" was: a row is laid out before its text has wrapped,
-        // the page header settles a moment later, and every one of those grows
-        // the content under a view that already thought it was at the end.
-        // Both belong in this one handler - a second onContentHeightChanged in
-        // the same object is a load error, not an addition.
+        // Counting rows was not enough: a row is laid out before its text wraps, and
+        // each of those grows the content under a view that thought it was at the end.
         onContentHeightChanged: {
             if (page.followTail) {
                 tailTimer.restart()
             }
         }
 
-        // The viewport's own height changes under the list - the keyboard
-        // takes the lower half of the screen, the composer grows with what is
-        // being typed - and Qt keeps the content's top where it is, so what
-        // was being read slides out of sight below. Shrinking, the content is
-        // pushed down by exactly what was lost; growing, whoever was following
-        // the tail goes back to the end. The room does the same.
+        // The viewport loses height at its bottom while Qt keeps the content's top.
+        // Shrinking, push the content down; growing, put a follower back at the end.
         onHeightChanged: {
             var lost = page.lastViewHeight - height
             page.lastViewHeight = height
@@ -208,18 +202,16 @@ Page {
             }
         }
 
-        // A hand on the list decides where it stays - reading further up must
-        // not be undone by the next arriving post, and pulling down for older
-        // posts must not throw the view back to the end.
+        // A hand on the list decides where it stays: reading further up must not be
+        // undone by the next arriving post.
         onMovementEnded: page.followTail = atYEnd
 
         Timer {
             id: tailTimer
             interval: 1
             onTriggered: {
-                // As in the room: a hand on the list outranks the tail, or
-                // the posts fetched by a swipe throw the view to the end
-                // under the finger that asked for them.
+                // As in the room: a hand on the list outranks the tail, or the posts a swipe
+                // fetched throw the view to the end under the finger.
                 if (threadView.moving || threadView.dragging) {
                     return
                 }
@@ -257,9 +249,8 @@ Page {
         delegate: Item {
             id: threadRow
 
-            // "system" covers calls, membership and profile changes; without
-            // a row of its own a thread made only of those would render as an
-            // empty page while the model is full.
+            // "system" covers calls, membership and profile changes: without a row of
+            // their own a thread made of those renders as an empty page.
             readonly property bool isSystem: model.kind === "system"
 
             width: threadView.width
@@ -333,10 +324,8 @@ Page {
                     font.italic: model.kind !== "message"
                     color: model.kind === "message" ? Theme.primaryColor
                                                     : Theme.secondaryColor
-                    // Same rule as in the room: a message whose HTML the core
-                    // turned into markup is drawn as StyledText, everything
-                    // else stays plain. Nothing in that markup came from the
-                    // sender unescaped.
+                    // Same rule as the room: markup the core built is StyledText, everything else
+                    // plain. Nothing in it came from the sender unescaped.
                     readonly property bool hasFormatted: model.kind === "message"
                                                          && !model.media
                                                          && (model.formatted || "").length > 0
@@ -361,9 +350,8 @@ Page {
                     }
                 }
 
-                // What the SDK will not vouch for. Red is a message that is
-                // not what it claims to be, grey one it cannot check; silent
-                // otherwise.
+                // What the SDK will not vouch for: red is not what it claims to be, grey
+                // cannot be checked. Silent otherwise.
                 Label {
                     width: parent.width
                     visible: !!model.shield

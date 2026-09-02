@@ -119,9 +119,8 @@ void RoomListModel::clearUnread(const QString &roomId)
 QVariant RoomListModel::valueFor(const QJsonObject &row, int role) const
 {
     if (role == NameRole) {
-        // A room without a name is shown by its identifier rather than as an
-        // empty row; that happens while the first sync is still filling in
-        // state.
+        // A room without a name is shown by its identifier rather than as an empty row;
+        // that happens while the first sync is still filling state in.
         const QString name = row.value(QStringLiteral("name")).toString();
         return name.isEmpty() ? row.value(QStringLiteral("id")).toString() : name;
     }

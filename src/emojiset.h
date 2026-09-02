@@ -9,17 +9,8 @@
 
 class EmojiStore;
 
-/// Reading a folder of emoji pictures in, once, under supervision.
-///
-/// Nothing is downloaded and nothing is shipped: the user brings a set. What
-/// happens to it here is the whole point of the exercise -
-///
-/// * only files whose name is code points in hex are considered at all,
-/// * each one has to be small enough and has to decode,
-/// * each one is rasterised to PNG, so the SVG parser runs exactly once, in
-///   this controlled moment, and never again while a conversation is drawn,
-/// * each written picture's checksum is recorded, and the image provider
-///   checks it every time the picture is used.
+/// Reading a folder of emoji pictures in, once, under supervision: names of
+/// code points only, each small, each rasterised to PNG, each with a checksum.
 class EmojiSet : public QObject
 {
     Q_OBJECT
@@ -56,9 +47,8 @@ private:
     struct Outcome {
         int imported = 0;
         int rejected = 0;
-        /// The run never got as far as reading. The old set and its checksums
-        /// have to stay: adopting an empty list would silently drop the
-        /// verified set back to the unchecked path.
+        /// The run never got as far as reading. The old set and its checksums stay:
+        /// an empty list would drop the verified set back to the unchecked path.
         bool aborted = false;
         QHash<QString, QByteArray> checksums;
     };

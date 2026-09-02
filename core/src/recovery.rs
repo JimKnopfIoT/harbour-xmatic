@@ -1,13 +1,5 @@
-//! Key backup and recovery.
-//!
-//! Megolm keys are handed out to the devices that exist when a message is
-//! sent. A device that joins later has no way to ask the server for them —
-//! the server only ever saw ciphertext. Key backup closes that gap: the keys
-//! are uploaded encrypted under a recovery key that only the user holds, and
-//! any later device can pull them down again.
-//!
-//! This is therefore both the answer to "my history is unreadable on the new
-//! phone" and the insurance against losing it entirely when a device dies.
+//! Key backup and recovery. Megolm keys reach only the devices that existed
+//! when a message was sent; the backup is what lets a later one read history.
 
 use std::sync::Arc;
 
@@ -44,20 +36,8 @@ fn backup_state_name(state: BackupState) -> &'static str {
     }
 }
 
-/// Forwards every change of the backup and recovery state to the front end.
-///
-/// Neither is a value that can be read once and kept. The backup key normally
-/// arrives *after* a successful verification, as an `m.secret.send` to-device
-/// message, and the SDK acts on it entirely by itself: it resumes the backup
-/// and flips the state (`encryption/backups/mod.rs`,
-/// `encryption/recovery/mod.rs`). Nothing informs the caller, and there is no
-/// reply to hang a refresh off.
-///
-/// Without this the front end kept the snapshot it took while signing in, when
-/// the backup was still off — and then skipped fetching the room keys for every
-/// room opened afterwards, because that is gated on the cached flag. Verifying
-/// a device, whose entire purpose is making the old messages readable, changed
-/// nothing at all until the app was restarted.
+/// Forwards every change of backup and recovery state. The key normally arrives
+/// after a verification and the SDK acts on it alone - nothing informs the caller.
 pub fn watch(client: &Client, sink: Arc<Sink>) -> JoinHandle<()> {
     let client = client.clone();
     tokio::spawn(async move {
@@ -74,9 +54,8 @@ pub fn watch(client: &Client, sink: Arc<Sink>) -> JoinHandle<()> {
                 break;
             }
 
-            // The whole status rather than the one value that changed: the two
-            // states are read together by the page that shows them, and one
-            // extra field costs nothing next to a to-device round trip.
+            // The whole status rather than the one value that changed: the page reads them
+            // together, and a field costs nothing next to a to-device round trip.
             sink.emit(event("encryption.changed", status(&client).await));
         }
     })
@@ -86,28 +65,8 @@ pub fn watch(client: &Client, sink: Arc<Sink>) -> JoinHandle<()> {
 pub async fn status(client: &Client) -> Value {
     let encryption = client.encryption();
 
-    // `fetch_exists_on_server`, not `exists_on_server`: the latter caches its
-    // answer for the lifetime of the process and only forgets it when this
-    // device creates or deletes a backup itself. The SDK's own documentation
-    // says "Do not use this method if you need an accurate answer". Setting
-    // recovery up on another client while xmatic runs would otherwise leave
-    // this page offering "Set up backup" for the rest of the session — and the
-    // button then fails, because enabling checks the uncached answer and
-    // refuses with "backup exists on server".
-    //
-    // But this is a request over the network, and a request that fails is not
-    // an answer. It used to end in `unwrap_or(false)`, which turns "the server
-    // could not be asked" into "there is no backup" — the loudest of the three
-    // possible readings, and the one that raises an alarm about a backup that
-    // is sitting on the server perfectly well. Reported: while a sync fault
-    // made the app believe it was offline, the security page came up for the
-    // first time ever, and everything went green the moment the connection
-    // did. Every predicate has a failure direction, and this one pointed at
-    // the wrong answer.
-    //
-    // Three steps, most accurate first: ask; failing that take the cached
-    // answer, which is right whenever this session ever got one; failing that
-    // say nothing, and the UI paints and interrupts nobody over it.
+    // `fetch_exists_on_server`, because the cached answer is stale for a backup
+    // made elsewhere - and `null` where the request failed: a failure is not a no.
     let exists_on_server = match encryption.backups().fetch_exists_on_server().await {
         Ok(exists) => Some(exists),
         Err(_) => encryption.backups().exists_on_server().await.ok(),
@@ -129,12 +88,8 @@ pub async fn status(client: &Client) -> Value {
 /// Unlocks the backup with the user's recovery key or passphrase and imports
 /// everything stored under it.
 pub async fn recover(client: &Client, key: &str) -> Result<(), String> {
-    // Asked before the key is offered to anything. An account with no secret
-    // storage has nothing a recovery key could open, and the SDK answers that
-    // with "the info about the secret key could not have been found in the
-    // account data of the user" - true, and not a sentence to put in front of
-    // somebody who has just typed out a key. The UI hides the field in this
-    // state; this is the second half of the same guard, for every other caller.
+    // Asked before the key is offered to anything: an account with no secret
+    // storage has nothing a recovery key could open, and the SDK's words are worse.
     if client.encryption().recovery().state() == RecoveryState::Disabled {
         return Err("this account has no key backup to unlock; set one up first".to_owned());
     }

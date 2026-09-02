@@ -1,13 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// A round, smiling face. Silica ships no such icon, so it is drawn instead of
-// shipped: drawing follows every ambience colour on its own and needs no set
-// of zoom levels kept in step with the theme's.
-//
-// Stroke width and opacity are matched to the theme's own line icons next to
-// it - a heavier outline next to the send arrow reads as a different kind of
-// control, not as the same row of buttons.
+// A round, smiling face. Drawn rather than shipped: it follows every ambience
+// colour and needs no zoom levels. Stroke matched to the theme's line icons.
 Item {
     id: face
 
@@ -28,13 +23,8 @@ Item {
 
         anchors.fill: parent
 
-        // Kept as an image, not as a framebuffer, and repainted when the app
-        // comes back to the front. A Canvas hands its framebuffer back when the
-        // window leaves the screen, and what returns is empty until something
-        // asks for a repaint - the mark was there on entering a room, gone
-        // after a trip through the tile view, and back again after leaving the
-        // room and returning, which is when the page rebuilt it. Nothing else
-        // in this row is drawn, which is why nothing else showed it.
+        // Kept as an image, not a framebuffer, and repainted on return: a Canvas hands
+        // its framebuffer back when the window leaves and comes back empty.
         renderTarget: Canvas.Image
 
         Connections {

@@ -1,11 +1,5 @@
-//! Lists that name people, kept encrypted.
-//!
-//! Who may call, and who the send warning is switched off for: both are a
-//! piece of the user's social graph and have no business lying in a plain
-//! settings file. Same envelope as `session.json` - a fresh `StoreCipher` per
-//! write, exported under the device's store key - so there is no second
-//! cryptography to audit. Without a store key the file is refused rather than
-//! written in the clear: a list of names is not worth degrading for.
+//! Lists that name people, kept encrypted - the same envelope as `session.json`.
+//! Without a key the file is refused rather than written in the clear.
 
 use std::collections::BTreeMap;
 use std::path::Path;
@@ -18,10 +12,8 @@ use crate::session::StoreKey;
 
 pub type Lists = BTreeMap<String, Vec<String>>;
 
-/// What the file on disk amounts to. `Unreadable` must never be mistaken for
-/// `Lists::new()`: the store key is device-lock-bound and missing after every
-/// reboot until the system dialog runs, and a write over an unread file
-/// destroys what it could not read.
+/// What the file amounts to. `Unreadable` must never be mistaken for empty: a
+/// write over an unread file destroys what it could not read.
 pub enum Loaded {
     /// There is no file yet.
     Empty,
@@ -44,13 +36,8 @@ fn invalid(error: String) -> std::io::Error {
 pub fn load(path: &Path, key: Option<&StoreKey>) -> Loaded {
     let raw = match std::fs::read(path) {
         Ok(raw) => raw,
-        // Only "there is no file" means nothing was ever written and writing
-        // now is safe. Every other reason - out of file descriptors, an I/O
-        // error, a sandbox that refused for a moment - means "I could not
-        // look", and answering that with `Empty` invites the next write to
-        // replace a file it never read. That is the caller's allow list gone,
-        // silently, in a state where nobody gets through any more. The
-        // doc comment on `Loaded` above says exactly this; the code did not.
+        // Only "there is no file" means writing now is safe. Every other reason is a
+        // failed look, and answering that with `Empty` replaces a file nobody read.
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
             return Loaded::Empty;
         }
@@ -97,4 +84,61 @@ pub fn save(path: &Path, key: Option<&StoreKey>, lists: &Lists) -> Result<(), st
     let json = serde_json::to_vec(&envelope).map_err(|error| invalid(error.to_string()))?;
 
     crate::session::write_private(path, &json)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use zeroize::Zeroizing;
+
+    fn scratch(name: &str) -> std::path::PathBuf {
+        let mut path = std::env::temp_dir();
+        path.push(format!(
+            "xmatic-private-{name}-{}",
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .map(|d| d.as_nanos())
+                .unwrap_or(0)
+        ));
+        path
+    }
+
+    fn a_key() -> StoreKey {
+        Zeroizing::new([3u8; 32])
+    }
+
+    #[test]
+    fn a_missing_file_is_empty_and_a_damaged_one_is_unreadable() {
+        let path = scratch("shapes");
+        assert!(matches!(load(&path, Some(&a_key())), Loaded::Empty));
+
+        std::fs::write(&path, b"not an envelope").expect("write");
+        assert!(matches!(load(&path, Some(&a_key())), Loaded::Unreadable));
+        let _ = std::fs::remove_file(&path);
+    }
+
+    #[test]
+    fn a_written_file_reads_back_and_only_with_its_own_key() {
+        let path = scratch("roundtrip");
+        let mut lists = Lists::new();
+        lists.insert("callers".to_owned(), vec!["@a:example.org".to_owned()]);
+        save(&path, Some(&a_key()), &lists).expect("save");
+
+        match load(&path, Some(&a_key())) {
+            Loaded::Lists(read) => assert_eq!(read, lists),
+            _ => panic!("the file did not read back"),
+        }
+        // No key and a wrong key are both "could not look", never "empty".
+        assert!(matches!(load(&path, None), Loaded::Unreadable));
+        let other: StoreKey = Zeroizing::new([9u8; 32]);
+        assert!(matches!(load(&path, Some(&other)), Loaded::Unreadable));
+        let _ = std::fs::remove_file(&path);
+    }
+
+    #[test]
+    fn nothing_is_written_without_a_key() {
+        let path = scratch("nokey");
+        assert!(save(&path, None, &Lists::new()).is_err());
+        assert!(!path.exists());
+    }
 }

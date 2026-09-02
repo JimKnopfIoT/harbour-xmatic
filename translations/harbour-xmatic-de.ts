@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Ohne Verschlüsselung fortfahren</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Zurück</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Alles, was xmatic auf diesem Gerät ablegt, bleibt lesbar: deine Sitzung, deine Nachrichten und deine Raumschlüssel.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Wähle das nur, wenn sich der Dienst auf diesem Gerät nicht installieren lässt. Installierst du ihn später, kannst du auf der Verschlüsselungsseite umstellen — es kostet eine Abmeldung und deinen Wiederherstellungsschlüssel.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic zeigt diesen Zustand weiterhin unter Verschlüsselung an.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>the camera did not start — continuing without video</source>
         <translation>Die Kamera startete nicht – weiter ohne Video</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>das Gespräch konnte nicht fortgesetzt werden</translation>
     </message>
 </context>
 <context>
@@ -1135,22 +1116,6 @@
         <translation>Geräte</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Verschlüsselung</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identität verifiziert</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Die Identität hat sich seit der Verifizierung geändert. Verifiziere neu oder ziehe die Verifizierung zurück.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identität nicht verifiziert</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Direktnachricht senden</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Gemeinsame Räume</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Keine weiteren gemeinsamen Räume</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Anrufe verbieten</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Anrufe erlauben</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identität</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>verifiziert</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>seit der Verifizierung geändert — erneut verifizieren oder zurückziehen</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>nicht verifiziert</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>keine</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Die Liste ist verschlüsselt und ihr Schlüssel ist nicht verfügbar. Sie ist wieder lesbar, sobald das Gerät entsperrt und die App neu gestartet wurde.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Bilder automatisch laden</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>An: Bild oder Video wird geladen, sobald die Nachricht erscheint. Aus: erst beim Antippen — daran vorbeizuscrollen ist eine Anfrage an den Server des Absenders.</translation>
     </message>
 </context>
 <context>
@@ -1925,6 +1914,10 @@
         <translation>Rauminfo</translation>
     </message>
     <message>
+        <source>More…</source>
+        <translation>Weitere …</translation>
+    </message>
+    <message>
         <source>This room has been replaced</source>
         <translation>Dieser Raum wurde ersetzt</translation>
     </message>
@@ -2005,6 +1998,10 @@
         <translation>nicht gesendet</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopieren</translation>
+    </message>
+    <message>
         <source>Voice message</source>
         <translation>Sprachnachricht</translation>
     </message>
@@ -2013,8 +2010,28 @@
         <translation>Aufnahme … %1 s</translation>
     </message>
     <message>
+        <source>Reply</source>
+        <translation>Antworten</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
         <source>Reply to %1</source>
         <translation>Antwort an %1</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Weiterleiten</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Bearbeiten</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Löschen</translation>
     </message>
     <message>
         <source>Editing message</source>
@@ -2109,6 +2126,10 @@
         <source>%1 changed their profile</source>
         <translation>%1 hat das Profil geändert</translation>
     </message>
+    <message>
+        <source>Pin</source>
+        <translation>Anpinnen</translation>
+    </message>
     <message numerus="yes">
         <source>%n pinned message(s)</source>
         <translation>
@@ -2147,6 +2168,22 @@
     <message>
         <source>That message is not in the loaded history</source>
         <translation>Diese Nachricht liegt nicht im geladenen Verlauf</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Verwerfen</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Erneut senden</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagieren</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Im Thread antworten</translation>
     </message>
     <message>
         <source>Copy room link</source>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Kontakt verifizieren</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Die Unterhaltung konnte nicht geladen werden</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Diese Adresse öffnen?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Öffnen</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Erneut prüfen</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Wenn das nicht geht</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Du kannst xmatic ohne lokale Verschlüsselung benutzen. Sitzung, Nachrichtendatenbank und Raumschlüssel liegen dann lesbar auf diesem Gerät: Wer an sein Dateisystem kommt, liest mit, und ein verlorenes Telefon gibt alles preis, was darauf ist.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Nachrichten bleiben auf ihrem Weg durch das Netz in jedem Fall Ende-zu-Ende-verschlüsselt. Hier geht es nur um das, was auf dem Gerät liegt.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Ohne Verschlüsselung fortfahren</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2707,6 +2744,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Echtheit nicht bestätigt</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Diese Adresse öffnen?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Öffnen</translation>
     </message>
 </context>
 <context>

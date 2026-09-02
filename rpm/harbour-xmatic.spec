@@ -4,9 +4,9 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.28.0
+Version:    0.28.1
 Release:    1
-License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode
+License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
 Source0:    %{name}-%{version}.tar.bz2
 Vendor:     harbour-xmatic contributors
@@ -105,6 +105,51 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Sep 02 2026 harbour-xmatic contributors 0.28.1-1
+- A message's menu is a context menu again; landscape keeps the actions page.
+- Reactions work again, as do "Reply in thread" and forwarding an attachment.
+- The room's pull-down cannot be lost any more.
+- No "continue without encryption": the store is encrypted or not created.
+- A store that is marked encrypted is no longer opened without its key.
+- Cached media is named by a hash, so preview and original cannot collide.
+- The old media cache is cleared once on the first download after the update.
+- Signing out removes the push registration from the homeserver as well.
+- A push gateway has to be an https address.
+- The push registration is stored readable only by this app.
+- A notification the push rules call quiet no longer makes a sound.
+- The recovery key is taken back out of the clipboard.
+- Everything this app writes is created readable only by itself.
+- A room that cannot be opened says so instead of spinning for ever.
+- A lost answer no longer leaves the search, the index or a room stuck.
+- Leaving one room while opening another cannot close the new one.
+- The pinned view's diffs can no longer land in the live conversation.
+- A push no longer starts a second encryption sync beside the running one.
+- Downloads run four at a time instead of one per row on screen.
+- A profile picture is bounded before it is fetched, not only after.
+- A member without devices is asked for once per session, not per room.
+- The sign-in page and the storage page no longer wait on unrelated work.
+- "People you have a direct chat with" now means exactly that.
+- A diff the model cannot apply is reported instead of dropped in silence.
+- A failing command answers instead of taking its reply down with it.
+- A dying call pipeline ends the call instead of leaving it "connecting".
+- A large member list no longer arrives as one block on the drawing thread.
+- Dragging a colour slider no longer writes the settings file per frame.
+- The app stops rather than writing its data beside itself.
+- A web link shows where it leads before it is opened.
+- A link with two query parameters opens the address it displays.
+- A sender's name no longer carries from one room into another.
+- Pictures can be set to load on a tap instead of by themselves.
+- The member profile's actions cannot collapse to nothing.
+- The third-party notices list every crate that is linked, not two thirds.
+- Pictures have a frame in the grey opposite the background they stand on.
+- The frame keeps a margin to the picture, and other people's pictures get one.
+- A reply to a picture no longer draws the quote outside the message.
+- Someone else's message no longer takes the width the avatar stands in.
+- The member page's actions are laid out in one order, with the details.
+- Withdrawing a verification is offered while the identity still holds.
+- Own and older messages appear again in a room that was already open.
+- The push page lists the distributors it found instead of none.
+
 * Tue Sep 01 2026 harbour-xmatic contributors 0.28.0-1
 - Rooms stopped receiving on accounts with many rooms. 0.27.0 widened the sync
   window per room so the unread badge could count, and that number is

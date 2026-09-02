@@ -1,29 +1,16 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// The rooms of one space. A child that is itself a space opens as another
-// SpacePage, so nested spaces just push further onto the stack.
-//
-// Only one space's rooms stream at a time in the core, so the stream is
-// (re)opened whenever this page becomes active — which also covers popping
-// back to it from a nested space or from a room. Closing is deliberately NOT
-// tied to destruction: on a pop the revealed parent's activation must win, and
-// destruction order is not guaranteed. The stream is instead closed by
-// SpacesPage when the overview becomes active again.
-//
-// Below the joined rooms, the space's other linked children from the server's
-// /hierarchy answer are offered as joinable.
+// The rooms of one space; a child space pushes another of these. Only one
+// space streams at a time, and the overview closes it - not this page's destruction.
 Page {
     id: page
 
     property string spaceId
     property string spaceName
 
-    // Leaving the foreground aborts a running countdown at once, instead of only
-    // suppressing it when it expires. Suppressing at expiry was not enough:
-    // minimising the app and coming back inside the four seconds left the
-    // countdown running, and it fired on return. The remorse object has to be
-    // kept for that - Remorse.popupAction() hands it back.
+    // Leaving the foreground aborts a running countdown at once: suppressing it
+    // at expiry left it firing on return from a minimised app.
     property var activeRemorse: null
     readonly property bool appForeground: Qt.application.active
     onAppForegroundChanged: {
@@ -210,9 +197,8 @@ Page {
                             onClicked: {
                                 var roomId = model.id
                                 page.activeRemorse = linkedItem.remorseAction(qsTr("Joining"), function() {
-                                    // Silica completes a running remorse when
-                                    // its page deactivates, so leaving the
-                                    // page would join rather than abort.
+                                    // Silica completes a running remorse when its page deactivates, so leaving
+                                    // would join rather than abort.
                                     if (page.status !== PageStatus.Active || !Qt.application.active) {
                                         return
                                     }

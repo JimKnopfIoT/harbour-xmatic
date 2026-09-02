@@ -1,10 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Profile of one member in one room. Loads via `member.profile`, reloads on
-// `memberChanged` (no diff follows core-made state changes). Actions as
-// buttons, moderation in the pull-down; visibility per entry, never on a
-// container.
+// Profile of one member in one room, reloaded on `memberChanged`: no diff
+// follows core-made state changes. Visibility per entry, never on a container.
 Page {
     id: page
 
@@ -48,9 +46,8 @@ Page {
         })
     }
 
-    // The picture at full size. The list and the row show a thumbnail; this
-    // asks for the original under a key of its own, so both stay cached.
-    // A profile picture is never encrypted, so a bare `url` source is enough.
+    // The picture at full size, under a key of its own so both stay cached. A
+    // profile picture is never encrypted, so a bare `url` source is enough.
     function openAvatar() {
         if (!loaded || !profile.avatar) {
             return
@@ -120,10 +117,8 @@ Page {
 
         onMemberProfileFailed: page.error = message
 
-        // The result is applied from the answer, never by re-reading: the
-        // server has confirmed the change, but the local store only learns of
-        // the state event on a later sync, so a reload would hand back the
-        // values from before the action.
+        // Applied from the answer, never by re-reading: the store learns of the state
+        // event on a later sync and would hand back the values from before.
         onMemberActionDone: {
             if (!page.loaded || result.userId !== page.userId) {
                 return
@@ -151,10 +146,8 @@ Page {
         anchors.fill: parent
         contentHeight: content.height
 
-        // Moderation; flags come with the profile. Removing pops the page.
-        // The reload entry has no condition on purpose: without it the pulley
-        // is empty on one's own profile and in the failed state, and an empty
-        // pulley is a gesture that does nothing.
+        // The reload entry has no condition on purpose: without it the pulley is empty
+        // on one's own profile, and an empty pulley is a gesture that does nothing.
         PullDownMenu {
             MenuItem {
                 text: qsTr("Reload")
@@ -360,25 +353,14 @@ Page {
                 visible: page.loaded && profile.devices > 0
             }
 
-            // Identity states: verified / violation (was verified, keys
-            // changed) / unverified; "unknown" hides the block.
-            SectionHeader {
-                text: qsTr("Encryption")
+            // The same row as the rest: a section of its own for one line, left
+            // where everything else is centred, read as three loose texts.
+            DetailItem {
+                label: qsTr("Identity")
                 visible: page.loaded && !profile.isSelf
                          && profile.verification !== "unknown"
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
-                visible: page.loaded && !profile.isSelf
-                         && profile.verification !== "unknown"
-                color: {
-                    if (!page.loaded) {
-                        return Theme.secondaryColor
-                    }
+                // The value carries the state, so it carries the colour.
+                palette.highlightColor: {
                     if (profile.verification === "violation") {
                         return Theme.errorColor
                     }
@@ -387,18 +369,28 @@ Page {
                     }
                     return Theme.secondaryColor
                 }
-                text: {
+                value: {
                     if (!page.loaded) {
                         return ""
                     }
                     if (profile.verification === "verified") {
-                        return qsTr("Identity verified")
+                        return qsTr("verified")
                     }
                     if (profile.verification === "violation") {
-                        return qsTr("The identity has changed since it was verified. Verify again, or withdraw the verification.")
+                        return qsTr("changed since it was verified — verify again or withdraw")
                     }
-                    return qsTr("Identity not verified")
+                    return qsTr("not verified")
                 }
+            }
+
+            // Rooms this account and that one are both in. Display only,
+            // deliberately not tappable.
+            DetailItem {
+                label: qsTr("Shared rooms")
+                visible: page.loaded && !profile.isSelf
+                value: page.loaded && profile.sharedRooms.length > 0
+                       ? profile.sharedRooms.join(", ")
+                       : qsTr("none")
             }
 
             Item {
@@ -407,15 +399,29 @@ Page {
                 visible: page.loaded && !profile.isSelf
             }
 
-            ButtonLayout {
+            // A Column, not `ButtonLayout`: that one gives every child one
+            // line's height, and a wrapping label then overlaps its neighbour.
+            Column {
+                id: actions
+
+                readonly property real buttonWidth: Math.min(
+                        Theme.buttonWidthLarge,
+                        width - 2 * Theme.horizontalPageMargin)
+
+                width: parent.width
+                spacing: Theme.paddingMedium
                 visible: page.loaded && !profile.isSelf
 
                 WrapButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: actions.buttonWidth
                     label: qsTr("Send direct message")
                     onClicked: matrix.startDirectChat(page.userId)
                 }
 
                 WrapButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: actions.buttonWidth
                     label: qsTr("Verify")
                     visible: page.loaded
                              && (profile.verification === "unverified"
@@ -427,12 +433,19 @@ Page {
                 }
 
                 WrapButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: actions.buttonWidth
                     label: qsTr("Withdraw verification")
-                    visible: page.loaded && profile.verification === "violation"
+                    // Also where the identity still holds: that is the state
+                    // this undoes, and it had no action of its own at all.
+                    visible: page.loaded && (profile.verification === "violation"
+                                             || profile.verification === "verified")
                     onClicked: matrix.withdrawMemberVerification(page.userId)
                 }
 
                 WrapButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: actions.buttonWidth
                     // The allow list from the privacy page. Kept on this
                     // device, unlike ignoring, which is the account's.
                     label: matrix.callerAllowed(page.userId)
@@ -448,6 +461,8 @@ Page {
                 }
 
                 WrapButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: actions.buttonWidth
                     // Ignoring is account-wide.
                     label: page.loaded && profile.ignored
                           ? qsTr("Stop ignoring") : qsTr("Ignore")
@@ -461,36 +476,6 @@ Page {
                         }
                     }
                 }
-            }
-
-            SectionHeader {
-                text: qsTr("Shared rooms")
-                visible: page.loaded && !profile.isSelf
-            }
-
-            // Display only, deliberately not tappable.
-            Repeater {
-                model: page.loaded ? profile.sharedRooms : []
-
-                Label {
-                    x: Theme.horizontalPageMargin
-                    width: content.width - 2 * Theme.horizontalPageMargin
-                    truncationMode: TruncationMode.Fade
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.primaryColor
-                    textFormat: Text.PlainText
-                    text: modelData
-                }
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.secondaryColor
-                visible: page.loaded && !profile.isSelf
-                         && profile.sharedRooms.length === 0
-                text: qsTr("No other shared rooms")
             }
 
             Item {

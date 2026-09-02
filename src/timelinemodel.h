@@ -57,46 +57,22 @@ public:
     /// message that is already loaded.
     Q_INVOKABLE int indexOfEvent(const QString &eventId) const;
 
-    /// The room's thread roots as the server lists them, event id to reply
-    /// count.
-    ///
-    /// The marker that opens a thread hangs on the SDK's thread summary, and a
-    /// root that was cached before threading was switched on carries none - on
-    /// one test device every thread was reachable and on the other none was,
-    /// same version, same room, different store. The server's `/threads`
-    /// answer is laid over the rows so the way in does not depend on what the
-    /// cache happens to hold.
+    /// The server's thread roots, event id to reply count. A root cached before
+    /// threading has no SDK summary, so the way in would depend on the store.
     void setThreadRoots(const QHash<QString, int> &roots);
 
 private slots:
-    /// How many other people have read each own message.
-    ///
-    /// A read receipt marks the newest event someone has read, and that is
-    /// usually not one of our own messages - in a running conversation it sits
-    /// on the other side's own latest message. Reading the receipt off the row
-    /// it hangs on therefore showed nothing under our messages, which is what
-    /// "I don't see that you read my messages" was. Counted instead in one
-    /// pass from the newest row backwards, so every own message says how many
-    /// people got at least that far.
+    /// How many others have read each own message. A receipt sits on the other
+    /// side's own latest message, so reading it off its row showed nothing.
     void updateReadCounts();
 
 private:
-    /// Asks for a recount after the current signal has been delivered.
-    ///
-    /// Never during one: the recount ends in a `dataChanged` of its own, and a
-    /// model that emits one signal while the view is still working through
-    /// another gets that second one dropped. The counts were then right and
-    /// the screen was not - the mark stood on the neighbour's message, one row
-    /// off, after every page of history that arrived at the top.
+    /// Asks for a recount after the current signal: a `dataChanged` emitted while
+    /// the view works through another is dropped, and the mark stood one row off.
     void scheduleReadCounts();
 
-    /// How many have read each own message, by event id.
-    ///
-    /// By id and not by row number: a page of older messages shifts every row
-    /// under the marks, and a number kept per row then belongs to somebody
-    /// else's message. The value never falls while a message is in the model -
-    /// a receipt is taken off its old row before it is put on the new one, and
-    /// for that moment nobody has read anything.
+    /// By event id, not row number: a page of older messages shifts every row. The
+    /// value never falls - for a moment between rows nobody has read anything.
     QHash<QString, int> m_readCounts;
     bool m_updatingReadCounts = false;
     bool m_readCountsQueued = false;

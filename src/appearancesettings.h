@@ -2,18 +2,13 @@
 #define APPEARANCESETTINGS_H
 
 #include <QObject>
+#include <QVariant>
+#include <QTimer>
+#include <QHash>
 #include <QString>
 
-/// The user's colours for the conversation view.
-///
-/// Every colour is stored as a string; the empty string means "follow the
-/// ambience", which is the default and reproduces the built-in look. The
-/// opacities apply to the bubble fills only — text is always opaque, a
-/// half-transparent letter just reads as broken.
-///
-/// One shared change signal instead of one per property: the page rebinds a
-/// handful of cheap colour expressions, and a single signal keeps the
-/// property list readable.
+/// The user's colours: empty string means "follow the ambience". The opacities
+/// apply to the bubble fills only - a half-transparent letter reads as broken.
 class AppearanceSettings : public QObject
 {
     Q_OBJECT
@@ -28,6 +23,7 @@ class AppearanceSettings : public QObject
 
 public:
     explicit AppearanceSettings(QObject *parent = nullptr);
+    ~AppearanceSettings() override;
 
     QString ownBubbleColor() const { return m_ownBubbleColor; }
     qreal ownBubbleOpacity() const { return m_ownBubbleOpacity; }
@@ -55,6 +51,10 @@ signals:
 private:
     void load();
     void store(const QString &key, const QVariant &value);
+    /// Writes what `store` collected; see the definition.
+    void flush();
+    QHash<QString, QVariant> m_unsaved;
+    QTimer *m_writeTimer = nullptr;
 
     QString m_ownBubbleColor;
     qreal m_ownBubbleOpacity = 0.35;

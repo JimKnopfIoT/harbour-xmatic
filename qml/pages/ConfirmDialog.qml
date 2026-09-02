@@ -1,19 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// One confirmation in front of the actions that cannot be taken back, and it
-// says out loud *what* it is about to act on.
-//
-// This exists because of a field report: a short tug at a pull-down menu had
-// picked "Leave room" often enough by accident, and the remorse timer was no
-// help — Silica fires a running remorse the moment its page deactivates
-// (`RemorsePopup.qml`: "if the page is changed then execute immediately"), so
-// going back to the room list *completed* the countdown instead of stopping
-// it. The room was gone, and its name with it: nothing on screen had ever
-// named the room that was being left, so it could not even be rejoined.
-//
-// The name is therefore the largest thing on this page. A remorse still runs
-// after this dialog — that is the undo — but the decision is made here.
+// One confirmation before what cannot be taken back, and it names what it acts
+// on: a room left by accident could not even be rejoined, nothing had named it.
 Dialog {
     id: dialog
 

@@ -25,12 +25,8 @@
 #include "secretskeeper.h"
 #include "xmatic_core.h"
 
-/// The single point of contact between QML and the Rust core.
-///
-/// Commands are JSON objects with a running id; replies and events come back
-/// through one callback that fires on a core worker thread. The trampoline
-/// therefore does nothing but re-post the message into the Qt event loop, so
-/// everything below runs on the UI thread.
+/// The single point of contact between QML and the Rust core. Commands as
+/// JSON with a running id; replies arrive on a worker thread and are re-posted.
 class AppSettings;
 class EmojiStore;
 
@@ -42,69 +38,43 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QString emojiDirectory READ emojiDirectory CONSTANT)
     Q_PROPERTY(int emojiRevision READ emojiRevision NOTIFY emojiRevisionChanged)
     Q_PROPERTY(QStringList allowedCallers READ allowedCallers NOTIFY privateListsChanged)
-    /// Whether the encrypted lists could be read at all. False means the key is
-    /// not available - after a reboot, until the device is unlocked once - and
-    /// an empty list then says nothing about what is in the file. A page that
-    /// prints "nobody yet" has to know the difference.
+    /// Whether the encrypted lists could be read at all. False means no key yet,
+    /// and an empty list then says nothing about what is in the file.
     Q_PROPERTY(bool privateListsReadable READ privateListsReadable NOTIFY privateListsChanged)
     Q_PROPERTY(QString sessionState READ sessionState NOTIFY sessionChanged)
     Q_PROPERTY(QString syncState READ syncState NOTIFY syncStateChanged)
-    /// False when the homeserver does not advertise the sync this app is
-    /// built on. Then "offline" means "cannot work with this server", not
-    /// "no network", and the UI has to say so instead of flashing a banner.
+    /// False when the homeserver does not advertise this app's sync. "Offline"
+    /// then means "cannot work with this server", not "no network".
     Q_PROPERTY(bool serverSupported READ serverSupported NOTIFY serverSupportedChanged)
-    /// How many rooms the *server* counts for this account, or -1 while no
-    /// sync has answered yet. The list on screen holds one page at a time and
-    /// the sliding sync window starts at twenty rooms, so "fewer rooms than I
-    /// have" has two very different causes; this is the number that tells them
-    /// apart in a field report.
+    /// Rooms the *server* counts, -1 until a sync answers. The window starts at
+    /// twenty, so "fewer rooms than I have" has two causes; this tells them apart.
     Q_PROPERTY(int roomTotal READ roomTotal NOTIFY roomTotalChanged)
     Q_PROPERTY(QString userId READ userId NOTIFY sessionChanged)
     Q_PROPERTY(QString deviceId READ deviceId NOTIFY sessionChanged)
     Q_PROPERTY(bool ready READ ready CONSTANT)
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
-    /// Whether a command of this app's encryption half is in flight.
-    ///
-    /// Deliberately separate from `busy`, and for the reason `paginating` is:
-    /// `busy` means "some command, any command", and a media download that ran
-    /// into a 404 and then sat in the retry budget for a minute greyed out
-    /// "Verify my other devices" and "Verify this user" for that whole minute.
-    /// Reported from the field as "verification does not work"; it worked, and
-    /// an unrelated picture was holding the button down.
+    Q_PROPERTY(bool loginRunning READ loginRunning NOTIFY busyChanged)
+    /// A command of this app's encryption half is in flight. Separate from `busy`:
+    /// a picture stuck in a retry greyed out the verify buttons for a minute.
     Q_PROPERTY(bool encryptionBusy READ encryptionBusy NOTIFY busyChanged)
     Q_PROPERTY(bool paginating READ paginating NOTIFY paginatingChanged)
     Q_PROPERTY(QObject *searchResults READ searchResults CONSTANT)
-    /// A search of its own, for the reason `paginating` is one: gating it on
-    /// the global `busy` would grey out the search box whenever anything else
-    /// was waiting on a slow homeserver.
+    /// Its own flag for the reason `paginating` is one: on the global `busy` the
+    /// search box greyed out whenever anything else waited on a slow server.
     Q_PROPERTY(bool searching READ searching NOTIFY searchingChanged)
     /// Whether the last page came back full, so there may be another one.
     Q_PROPERTY(bool searchHasMore READ searchHasMore NOTIFY searchHasMoreChanged)
     /// True while the room's stored messages are being folded into the index.
     Q_PROPERTY(bool indexing READ indexing NOTIFY indexingChanged)
     Q_PROPERTY(QString lastError READ lastError NOTIFY lastErrorChanged)
-    /// Everything that has failed in this run, newest first: `time`, `command`
-    /// and `message` per entry.
-    ///
-    /// `lastError` is one string and the next failure overwrites it, so a fault
-    /// that only shows up as a red line somewhere is gone the moment anything
-    /// else goes wrong - and a field report then rests on whether the user had
-    /// the right page open at the right second. This keeps them. The core
-    /// scrubs identifiers out of its messages before they leave it
-    /// (`core/src/text.rs`), so the list can be read out and handed over.
+    /// Everything that failed in this run, newest first: `time`, `command`,
+    /// `message`. `lastError` is one string and the next failure overwrites it.
     Q_PROPERTY(QVariantList errorLog READ errorLog NOTIFY errorLogChanged)
-    /// What UnifiedPush looks like on this device: `state`, `distributors`,
-    /// `distributor`, `acknowledged`, and `error` where there is one.
-    ///
-    /// `state` is one of `unavailable` (no distributor could be talked to),
-    /// `no-distributor` (none installed), `idle` (one is there, nothing
-    /// registered), `registering`, `on`, `off`, `error`. Empty until asked —
-    /// the connector claims a D-Bus name on the first question and must not do
-    /// that on a device whose owner never turned this on.
+    /// UnifiedPush on this device: `state`, `distributors`, `distributor`,
+    /// `acknowledged`, `error`. Empty until asked - the first question claims a name.
     Q_PROPERTY(QVariantMap pushStatus READ pushStatus NOTIFY pushStatusChanged)
-    /// The endpoint this device is reachable at, once a distributor has
-    /// answered. A secret: anyone holding it can push to this phone, so it is
-    /// never shown and never logged, only handed to the homeserver.
+    /// The endpoint this device is reachable at. A secret: anyone holding it can
+    /// push to this phone, so it is never shown and never logged.
     Q_PROPERTY(bool pushEndpointReady READ pushEndpointReady NOTIFY pushStatusChanged)
     Q_PROPERTY(QObject *rooms READ rooms CONSTANT)
     // Forwarded from the room list so the cover, which only sees the bridge,
@@ -114,11 +84,8 @@ class MatrixBridge : public QObject
     Q_PROPERTY(bool unreadCapped READ unreadCapped NOTIFY unreadTotalsChanged)
     Q_PROPERTY(QObject *spaces READ spaces CONSTANT)
     Q_PROPERTY(QObject *spaceRooms READ spaceRooms CONSTANT)
-    /// Whether a notification may carry the message itself, not just a count.
-    /// Off by default: the banner also lands on the lock screen.
-    /// Whether web links in message bodies are tappable. Off by default: a
-    /// tapped link opens the browser, and that is attack surface the user has
-    /// to opt into.
+    /// Whether a notification may carry the message itself. Off by default: the
+    /// banner also lands on the lock screen.
     Q_PROPERTY(int spaceCounts READ spaceCounts NOTIFY spaceCountsChanged)
     Q_PROPERTY(QObject *timeline READ timeline CONSTANT)
     Q_PROPERTY(QObject *threadTimeline READ threadTimeline CONSTANT)
@@ -138,50 +105,29 @@ class MatrixBridge : public QObject
     Q_PROPERTY(bool verificationWeStarted READ verificationWeStarted NOTIFY verificationChanged)
     Q_PROPERTY(QVariantList verificationEmoji READ verificationEmoji NOTIFY verificationChanged)
     Q_PROPERTY(QVariantMap encryptionStatus READ encryptionStatus NOTIFY encryptionChanged)
-    /// What the app's own files on this device amount to: `encrypted`,
-    /// `storeEncrypted`, `sessionEncrypted`, `keyAvailable`, `canEncrypt`.
-    /// Filled from `storage.status`, which needs no session — the answer is
-    /// available before the first login.
+    /// What the app's files amount to: `encrypted`, `storeEncrypted`,
+    /// `sessionEncrypted`, `keyAvailable`, `canEncrypt`. Needs no session.
     Q_PROPERTY(QVariantMap storageStatus READ storageStatus NOTIFY storageChanged)
-    /// Whether this system has the Sailfish Secrets daemon installed at all.
-    /// False means no retry can help and a package has to be installed — the
-    /// difference between "the system cannot do this" and "not right now".
+    /// Whether this system has the secrets daemon at all. False means no retry
+    /// helps - "the system cannot do this" against "not right now".
     Q_PROPERTY(bool secretsDaemonPresent READ secretsDaemonPresent NOTIFY storageChanged)
-    /// True while a store must not be created: nothing lies on this device
-    /// yet, no key can be had, and the user has not said the app may run
-    /// unencrypted. The UI shows what to install instead of a login — the one
-    /// moment at which a plaintext store would come into existence.
+    /// True while a store must not be created: nothing on the device yet and no
+    /// key to be had. The UI shows what to install, and there is no way past it.
     Q_PROPERTY(bool storageBlocked READ storageBlocked NOTIFY storageChanged)
     /// secretsd's own reason for the last failed attempt, for the page that
     /// explains it. Empty where nothing failed; never carries key material.
     Q_PROPERTY(QString storeKeyReason READ storeKeyReason NOTIFY storageChanged)
-    /// Whether this device's own browser can be expected to finish an OAuth
-    /// sign-in. False on Sailfish 4, whose Gecko cannot render the MAS pages:
-    /// the sign-in button loops back to the form, measured on hardware. The
-    /// login page then leads with the device-code route instead of offering it
-    /// third and unexplained.
+    /// Whether this device's browser can finish an OAuth sign-in. False on
+    /// Sailfish 4, whose Gecko loops back to the MAS form.
     Q_PROPERTY(bool browserLoginReliable READ browserLoginReliable CONSTANT)
-    /// True between a recovery key being accepted and the recovery state
-    /// actually settling.
-    ///
-    /// `encryption.recover` waits for the import and only then answers, but the
-    /// state itself arrives through the SDK's own stream and catches up in
-    /// stages - measured on one device as three steps inside a second, and on a
-    /// slower one against a rate-limiting server as long enough that a tester
-    /// entered the key a second time because the line simply stayed orange.
-    /// Saying "still finishing" is what stops the app from teaching people to
-    /// paste a recovery key twice.
+    /// Between a recovery key being accepted and the state settling. Without it a
+    /// line stays orange long enough that testers paste the key twice.
     Q_PROPERTY(bool recoverySettling READ recoverySettling NOTIFY encryptionChanged)
-    /// What the signed-in user may do in the room that is open: `pin`,
-    /// `invite`, `redactOthers`, `topic`, `name`. Empty until a room has been
-    /// opened, and a missing entry means "not answered yet" - a menu should
-    /// then show rather than hide, so a slow answer never takes an action away
-    /// from somebody who has it.
+    /// What the user may do in the open room: `pin`, `invite`, `redactOthers`,
+    /// `topic`, `name`. A missing entry is "not answered yet", so menus show.
     Q_PROPERTY(QVariantMap roomPermissions READ roomPermissions NOTIFY roomPermissionsChanged)
-    /// The other person in the open room, when that room is an encrypted
-    /// two-party chat; empty otherwise. Verifying somebody is an action on a
-    /// person, and this is the one place in the app where the person is
-    /// already on screen — everywhere else their address has to be typed.
+    /// The other person in the open room where it is an encrypted two-party chat.
+    /// The one place where a person to verify is already on screen.
     Q_PROPERTY(QString roomDirectPeer READ roomDirectPeer NOTIFY roomPermissionsChanged)
     Q_PROPERTY(QString profileName READ profileName NOTIFY profileChanged)
     Q_PROPERTY(QString profileAvatar READ profileAvatar NOTIFY profileChanged)
@@ -190,9 +136,8 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *members READ members CONSTANT)
 
 public:
-    /// `storeKey` carries the base64 store key from Sailfish Secrets and how
-    /// the attempt to get it ended. The key goes into the core's config and
-    /// nowhere else; the state decides what the UI may offer.
+    /// `storeKey` carries the base64 key and how the attempt ended: the key goes
+    /// into the core's config, the state decides what the UI may offer.
     explicit MatrixBridge(const QString &dataDirectory,
                           const QString &cacheDirectory,
                           const StoreKeyResult &storeKey,
@@ -206,12 +151,8 @@ public:
     /// can be found without guessing.
     QString emojiDirectory() const;
 
-    /// The image for a reaction, or empty where there is none. The file name is
-    /// derived from the reaction's own code points and never taken from the
-    /// directory, so nothing in there can name itself into a path; only .svg
-    /// and .png are looked for, and a file past 64 KB is refused - an emoji is
-    /// a few hundred bytes, and the decoder is the app's main untrusted-input
-    /// surface (docs/SECURITY.md).
+    /// The image for a reaction, or empty. Name derived from the code points, not
+    /// from the directory; .svg and .png only, nothing past 64 KB.
     Q_INVOKABLE QString emojiSource(const QString &key) const;
     QString sessionState() const { return m_sessionState; }
 
@@ -224,14 +165,13 @@ public:
     QString deviceId() const { return m_deviceId; }
     bool ready() const { return m_core != nullptr; }
     bool busy() const { return !m_pending.isEmpty() || m_loginRunning; }
+    /// Whether a sign-in is under way. Its own flag, like `paginating`: `busy`
+    /// is any command, and a slow unrelated one greyed the login page out.
+    bool loginRunning() const { return m_loginRunning; }
     bool encryptionBusy() const;
 
-    /// Whether a request for older messages is in flight.
-    ///
-    /// Deliberately separate from `busy`. `busy` means "some command, any
-    /// command, is waiting for an answer" — an avatar thumbnail counts — and
-    /// hanging the timeline's controls off that made them dead whenever the
-    /// homeserver was slow with something entirely unrelated.
+    /// A request for older messages is in flight. Separate from `busy`, which an
+    /// avatar thumbnail also sets - that made the timeline controls dead.
     bool paginating() const { return m_paginateId != 0; }
     QObject *searchResults() { return &m_searchResults; }
     bool searching() const { return m_searchRequest != 0; }
@@ -280,9 +220,8 @@ public:
     /// Body of the newest pinned message; empty when there is nothing usable.
     QString pinnedPreview() const { return m_pinnedPreview; }
 
-    /// Whether the open room was upgraded away — replaced by a newer room that
-    /// carries the conversation on. Such a room keeps its history but takes no
-    /// new messages, which is invisible without saying so.
+    /// Whether the open room was upgraded away. Such a room keeps its history but
+    /// takes no new messages, which is invisible without saying so.
     bool roomReplaced() const { return !m_successorRoomId.isEmpty(); }
 
     /// The reason the tombstone gives, if any. Free text written by whoever
@@ -322,15 +261,12 @@ public:
     /// Looks for a persisted session and signs in with it if there is one.
     Q_INVOKABLE void restoreSession();
 
-    /// The session is stored encrypted but its key was not available at
-    /// start (sessionState "locked"): asks the device's secrets storage for
-    /// the key again — the system may show its unlock dialog — and retries
-    /// the restore with it. Never touches the stored data.
+    /// Asks the secrets storage for the key again - the system may show its unlock
+    /// dialog - and retries the restore. Never touches the stored data.
     Q_INVOKABLE void retryUnlock();
 
-    /// Asks the secrets storage again from the blocked page. Unlike
-    /// `retryUnlock` there is no session to restore yet — this only updates
-    /// what the app knows about the key, so the gate can open.
+    /// Asks the secrets storage again from the blocked page. No session to restore
+    /// yet: this only updates what the app knows, so the gate can open.
     Q_INVOKABLE void retryStoreKey();
 
     bool secretsDaemonPresent() const { return m_secretsDaemonPresent; }
@@ -339,22 +275,18 @@ public:
     bool storageBlocked() const;
     QString storeKeyReason() const { return m_storeKeyReason; }
 
-    /// Begins the browser login against `homeserver`, which may be a server
-    /// name such as "matrix.org" or a full URL. On a server without OAuth
-    /// that offers the classic password sign-in, the answer arrives as
-    /// passwordLoginNeeded() instead of a browser URL.
+    /// Begins the browser login against `homeserver` - server name or URL. Where
+    /// the server offers only a password sign-in, passwordLoginNeeded() answers.
     Q_INVOKABLE void startLogin(const QString &homeserver);
 
-    /// Signs in with username and password, after startLogin() answered
-    /// passwordLoginNeeded(). The password is passed straight through to the
-    /// core and the send buffer is wiped; it is never stored or logged.
+    /// Signs in with username and password after passwordLoginNeeded(). Passed
+    /// straight to the core, buffer wiped; never stored, never logged.
     Q_INVOKABLE void startPasswordLogin(const QString &homeserver,
                                         const QString &user,
                                         const QString &password);
 
-    /// Begins the device-code login against `homeserver`: the answer arrives
-    /// as deviceCodeReady() with a URL and a code to show, and the sign-in
-    /// itself happens in a browser on any other device.
+    /// Begins the device-code login: deviceCodeReady() carries URL and code, and
+    /// the sign-in happens in a browser on another device.
     Q_INVOKABLE void startDeviceCodeLogin(const QString &homeserver);
 
     /// Asks where an account can be created on `homeserver`; the answer
@@ -376,9 +308,8 @@ public:
     /// Narrows the room list; an empty pattern shows everything again.
     Q_INVOKABLE void setRoomFilter(const QString &pattern);
 
-    /// Asks for one more page of rooms. The list holds one page and grows only
-    /// on request, so an account with more rooms than that had no others at
-    /// all. Harmless once everything is loaded.
+    /// Asks for one more page of rooms. The list holds one page and grows only on
+    /// request; harmless once everything is loaded.
     Q_INVOKABLE void loadMoreRooms();
 
     /// Starts streaming the joined spaces into the `spaces` model.
@@ -412,14 +343,12 @@ public:
     /// Removes a room from a space.
     Q_INVOKABLE void removeRoomFromSpace(const QString &spaceId, const QString &roomId);
 
-    /// The badge text for a space in the overview: "(messages)", or
-    /// "(subspaces/messages)" when the space has sub-spaces, or empty when
-    /// there is nothing to show. Recomputed live as unread counts change.
+    /// The badge for a space: "(messages)", "(subspaces/messages)", or empty.
+    /// Recomputed as unread counts change.
     Q_INVOKABLE QString spaceBadge(const QString &spaceId) const;
 
-    /// Opens a room's timeline. Only one is open at a time. `focus` selects
-    /// the view: empty for the live timeline, "pinned" for the room's pinned
-    /// messages, or an event id to show the history around one event.
+    /// Opens a room's timeline, one at a time. `focus`: empty for live, "pinned",
+    /// or an event id to show the history around it.
     Q_INVOKABLE void openRoom(const QString &roomId, const QString &focus = QString());
 
     /// Pins a message of the open room, or unpins it.
@@ -429,11 +358,8 @@ public:
     /// needed, and answers with `successorReady` so the UI can open it.
     Q_INVOKABLE void followSuccessor(const QString &roomId);
 
-    /// What was typed into a room's message field and not sent. Kept for as
-    /// long as the app runs and never written to disk: a draft is message text,
-    /// and the only unencrypted place this app has is its settings file. So it
-    /// survives the way back to the chat list and the trip through another room
-    /// - which is what it was reported for - and not a restart.
+    /// Unsent message text, kept for as long as the app runs and never written to
+    /// disk - a draft is message text and the settings file is unencrypted.
     Q_INVOKABLE void setDraft(const QString &roomId, const QString &text);
     Q_INVOKABLE QString draft(const QString &roomId) const;
 
@@ -462,8 +388,7 @@ public:
     Q_INVOKABLE void markRoomRead(const QString &roomId);
 
     /// Asks which room an address means and whether this account is in it.
-    /// Answers with roomResolved. Resolving only - a tapped link must never
-    /// join anything by itself.
+    /// Resolving only: a tapped link must never join anything.
     Q_INVOKABLE void resolveRoom(const QString &address);
 
     /// Turns on end-to-end encryption in a room; there is no way back, so the
@@ -480,9 +405,8 @@ public:
     /// Uploads a picture and makes it the account's avatar.
     Q_INVOKABLE void setAvatarFile(const QString &path);
 
-    /// Searches a public room directory; results stream into `directory`.
-    /// An empty pattern lists the most popular rooms. An empty server means
-    /// the own homeserver; any other is fetched over federation.
+    /// Searches a public directory, results stream into `directory`. Empty pattern
+    /// lists the popular rooms, empty server means the own homeserver.
     Q_INVOKABLE void searchDirectory(const QString &pattern,
                                      const QString &server = QString());
 
@@ -492,9 +416,8 @@ public:
     /// Drops the directory search and empties the model.
     Q_INVOKABLE void stopDirectory();
 
-    /// Folds everything already stored for a room into its search index.
-    /// The SDK indexes an event when it saves it, so history that was on the
-    /// device before the index existed is invisible until this has run.
+    /// Folds what is already stored for a room into its index. The SDK indexes on
+    /// save, so history older than the index is invisible until this ran.
     Q_INVOKABLE void indexRoom(const QString &roomId);
 
     /// Searches one room's messages. Replaces whatever `searchResults` held;
@@ -537,9 +460,8 @@ public:
     /// `ignoredUsersReady`.
     Q_INVOKABLE void loadIgnoredUsers();
 
-    /// Discards the room's outbound group session: the next message starts a
-    /// fresh one and re-shares its key. The remedy when the other side cannot
-    /// read what this device sends.
+    /// Discards the room's outbound group session: the next message re-shares a
+    /// fresh key. The remedy when the other side cannot read this device.
     Q_INVOKABLE void resetRoomKeys(const QString &roomId);
 
     /// Asks the server for a space's linked children, including rooms the
@@ -549,13 +471,8 @@ public:
     /// Closes the open timeline.
     Q_INVOKABLE void closeRoom();
 
-    /// Which room the user is actually looking at, or empty.
-    ///
-    /// Deliberately not the same as the open room. The core keeps one timeline
-    /// subscription alive after leaving a room so stepping back into it is
-    /// instant, so `openRoomId` names the room last visited — not the one on
-    /// screen. Using it to suppress notifications made the last room visited
-    /// stay silent for good, which is exactly the room someone tests with.
+    /// Which room is actually on screen, or empty. Not the open room: the core
+    /// keeps one timeline alive after leaving, so that one is the last visited.
     Q_INVOKABLE void setVisibleRoom(const QString &roomId) { m_visibleRoomId = roomId; }
 
     /// Loads a page of older messages.
@@ -580,15 +497,12 @@ public:
     /// Sends a read receipt for the open room.
     Q_INVOKABLE void markRead();
 
-    /// The checked picture set, once it exists. Without one the app keeps
-    /// looking pictures up as plain files, which is how a hand-copied set
-    /// works - unchecked, and openly so.
+    /// The checked picture set, once it exists. Without one the app reads plain
+    /// files, which is how a hand-copied set works - unchecked, and openly so.
     void setEmojiStore(EmojiStore *store);
 
-    /// Bumped whenever the picture set changed under the app. QML has to read
-    /// this where it asks for a picture: emojiSource() is a function call, not
-    /// a property, so nothing else would tell a binding to ask again - and a
-    /// set that was just read in would stay invisible until the next start.
+    /// Bumped when the picture set changed. QML has to read it where it asks for a
+    /// picture: `emojiSource` is a call, so nothing else re-triggers a binding.
     int emojiRevision() const { return m_emojiRevision; }
 
     /// The lists that name people. They live encrypted in the core; this is
@@ -604,14 +518,12 @@ public:
     Q_INVOKABLE void trustRecipient(const QString &userId);
     Q_INVOKABLE int resetRecipientWarnings();
 
-    /// Removes the downloaded media and the recordings. On the way out when
-    /// the privacy page asks for it, once at start because a killed process
-    /// never gets to the way out, and on demand from that page.
+    /// Removes downloaded media and recordings: on the way out, once at start
+    /// because a killed process never gets there, and on demand.
     Q_INVOKABLE void clearMediaCache();
 
-    /// Whether a path handed in from outside may be sent. Refuses anything
-    /// inside this app's own directories: the share dialog names a file, not a
-    /// command, and the session token and the crypto store live there.
+    /// Whether a path from outside may be sent. Refuses this app's own
+    /// directories - the session token and the crypto store live there.
     Q_INVOKABLE bool shareableFile(const QString &path) const;
 
     /// Asks for the room's matrix.to link. Answered by roomLinkReady().
@@ -621,14 +533,12 @@ public:
     /// rows carry only the count, names are fetched when they are wanted.
     Q_INVOKABLE void loadReaders(const QString &eventId);
 
-    /// Empties the last error. A page that shows the field wants what happened
-    /// *there*, not what some other command left behind - the field is global,
-    /// and pages that care clear it when they open.
+    /// Empties the last error. The field is global, and a page wants what happened
+    /// there rather than what another command left behind.
     Q_INVOKABLE void clearLastError();
 
-    /// Asks who reacted to this message with this key. Answered by
-    /// reactorsReady(); the rows carry a count and nothing else, so the people
-    /// behind it are fetched only when one reaction is held down.
+    /// Asks who reacted with this key; answered by reactorsReady(). The rows carry
+    /// a count only, so the people are fetched on a long press.
     Q_INVOKABLE void loadReactors(const QString &eventId, const QString &key);
 
     /// Accepts an invitation or joins a known room.
@@ -637,12 +547,8 @@ public:
     /// Joins a room by its address, for example "#room:server".
     Q_INVOKABLE void joinRoomByAlias(const QString &alias);
 
-    /// Creates a room from the options the create page collected. A map and
-    /// not a row of arguments: everything the server accepts only at creation
-    /// belongs in here, the list is expected to grow, and a positional call
-    /// with ten arguments is unreadable from QML. Known keys are `name`,
-    /// `topic`, `alias`, `encrypted`, `public`, `historyVisibility`, `invite`,
-    /// `federate`, `readOnly` and `equalPower`; each one may be left out.
+    /// Creates a room from the options the page collected. A map because
+    /// everything the server accepts only at creation belongs in it.
     Q_INVOKABLE void createRoom(const QVariantMap &options);
 
     /// Leaves a room and forgets it. On an invitation this declines it.
@@ -694,10 +600,8 @@ public:
     /// Replaces the body of a message that was already sent.
     Q_INVOKABLE void editMessage(const QString &eventId, const QString &body);
 
-    /// Deletes a message.
-    /// Deletes a sent message, or discards one that never left - a message
-    /// whose send failed for good has no event id and can only be named by its
-    /// transaction id.
+    /// Deletes a sent message, or discards one that never left: a send that failed
+    /// for good has no event id and can only be named by its transaction id.
     Q_INVOKABLE void deleteMessage(const QString &eventId, const QString &txnId = QString());
 
     /// Puts a message the send queue parked back in line. Only for one that
@@ -708,38 +612,23 @@ public:
     /// there. The key is the reaction itself - usually one emoji character.
     Q_INVOKABLE void toggleReaction(const QString &eventId, const QString &key);
 
-    /// Sends a file from disk as an attachment. `caption` is the text shown
-    /// with it and `replyTo` the event it answers; both may be empty. Neither
-    /// can be added afterwards, which is why the send page asks for them
-    /// before the upload starts.
-    /// A recording of one's own goes out as a voice message rather than as an
-    /// audio file: `voiceDuration` above zero marks it as one, which is what
-    /// other clients draw a waveform for and what the bridges to other
-    /// networks turn into a native voice note.
+    /// Sends a file as an attachment; `caption` and `replyTo` may be empty and
+    /// cannot be added later. `voiceDuration` above zero marks a voice message.
     Q_INVOKABLE void sendMedia(const QString &path, const QString &mimeType,
                                const QString &caption = QString(),
                                const QString &replyTo = QString(),
                                qint64 voiceDuration = 0);
 
-    /// Downloads an attachment. The result arrives as mediaReady(key, path);
-    /// an already downloaded file is reported immediately.
-    /// `declaredSize` is what the event says the file weighs, zero where it
-    /// says nothing. Passed on so the core can refuse an outsized attachment
-    /// before it downloads it - the SDK has no way to stream one, so a file
-    /// that is asked for is a file that is held in memory whole.
+    /// Downloads an attachment, answered by mediaReady(key, path). `declaredSize`
+    /// lets the core refuse an outsized file before it is held in memory whole.
     Q_INVOKABLE void requestMedia(const QString &key, const QVariant &source, bool thumbnail,
                                   qint64 declaredSize = 0);
 
     /// The local path of an attachment that was already downloaded, or empty.
     Q_INVOKABLE QString mediaPath(const QString &key) const { return m_media.value(key); }
 
-    /// Downloads a profile picture, keyed by its own address.
-    ///
-    /// Separate from requestMedia for two reasons: an avatar is a bare MXC
-    /// address rather than the media object an event carries, and it is always
-    /// wanted as a thumbnail — a picture uploaded at full camera resolution
-    /// would otherwise be decoded in every row of a list. Keying by the
-    /// address is what makes one download serve every message of a sender.
+    /// Downloads a profile picture, keyed by its address. Separate from
+    /// requestMedia: a bare MXC address, and always wanted as a thumbnail.
     Q_INVOKABLE void requestAvatar(const QString &url);
 
     /// Sends a copy of a picture or a text to another room.
@@ -748,12 +637,8 @@ public:
                                    const QString &path,
                                    const QString &mimeType);
 
-    /// The type of a file on disk, guessed from its name and content.
-    ///
-    /// A file picked in the app comes with its type from the picker, but one
-    /// handed over by another application through the share dialog does not,
-    /// and an attachment sent without a type is not shown as a picture by the
-    /// receiving client.
+    /// The type of a file on disk, from name and content. A file handed over by
+    /// another app carries none, and an attachment without one is not a picture.
     Q_INVOKABLE QString mimeTypeForPath(const QString &path) const;
 
     /// Copies a downloaded attachment into the user's picture folder.
@@ -806,35 +691,27 @@ signals:
     /// avatar, space and joined.
     void spaceHierarchyReady(const QString &spaceId, const QVariantList &rooms);
 
-    /// The result of a `checkRecipients` call: the joined recipients of the
-    /// room that still have unverified devices, as maps with userId, name and
-    /// devices. Empty when there is nothing to warn about.
+    /// The result of `checkRecipients`: joined recipients with unverified devices,
+    /// as maps of userId, name and devices. Empty where there is nothing to warn.
     void recipientsChecked(const QString &roomId, const QVariantList &users);
 
     /// The freshly created recovery key. Shown once, never stored.
     void recoveryKeyReady(const QString &key);
     void storageChanged();
-    /// A check asked for from the blocked page has finished. `available` says
-    /// whether a key came out of it. Emitted even when nothing changed, which
-    /// is the whole point: a button that runs and reports nothing is a button
-    /// that appears broken.
+    /// A check from the blocked page finished; `available` says whether a key came
+    /// out. Emitted even when nothing changed - a silent button looks broken.
     void storeKeyChecked(bool available);
     void roomPermissionsChanged();
 
-    /// A request for older messages came back. Carries no row count on
-    /// purpose: the rows it fetched reach the model through the diff stream,
-    /// which is a separate path from this reply and regularly arrives after it.
-    /// Whether the timeline grew can only be judged from the model, one round
-    /// later.
+    /// The open failed, so the room has nothing to wait for. Carries the
+    /// scrubbed reason for the line under the placeholder.
+    void timelineFailed(const QString &reason);
+    /// A pagination came back. No row count on purpose: the rows arrive
+    /// through the diff stream, regularly after this reply.
     void paginated();
 
-    /// The open timeline is ready, and where this device's reading had stopped
-    /// - empty when nothing was ever read here. The view uses it to open at the
-    /// first unread message instead of at the newest one.
-    /// `readReceipt` is the second guess: the marker can name an event this
-    /// room has no row for, and the receipt sits on a message that was really
-    /// seen. Empty where there is no second source or both name the same
-    /// event.
+    /// The timeline is ready, with where reading had stopped. `readReceipt` is the
+    /// second guess: a marker can name an event this room has no row for.
     void timelineOpened(const QString &readMarker,
                         const QString &readReceipt,
                         bool rebuilt);
@@ -853,9 +730,8 @@ signals:
     /// The room that replaced an upgraded one is joined and can be opened.
     void successorReady(const QString &roomId);
 
-    /// A room's details, for the room-info page: name, topic, alias, member
-    /// counts, encryption, version, tags, and the predecessor / successor of a
-    /// room upgrade.
+    /// A room's details for the info page: name, topic, alias, member counts,
+    /// encryption, version, tags, predecessor and successor.
     void roomInfoReady(const QVariantMap &info);
 
     /// A member's profile, for the member-profile page.
@@ -880,11 +756,8 @@ signals:
     /// profile page reloads on this.
     void memberChanged(const QString &changedUserId);
 
-    /// The result of one member action, for pages that have to update without
-    /// re-reading: the server has confirmed it, but the local store only
-    /// learns of the state event on a later sync, so a reload would answer
-    /// with the old values. `action` is ban, unban, setPower, setIgnored or
-    /// withdrawVerification.
+    /// The result of one member action, for pages that cannot re-read: the store
+    /// only learns of the state event on a later sync.
     void memberActionDone(const QString &action, const QVariantMap &result);
 
     /// A member profile could not be read; the page needs a state of its own
@@ -902,12 +775,8 @@ signals:
     /// back with it, so the room opens correctly before the first sync diff.
     void roomCreated(const QString &roomId, const QString &name, bool encrypted);
 
-    /// Unread messages arrived in a room that is not on screen. The preview
-    /// describes the room's latest event — `previewKind` is one of text,
-    /// emote, image, video, audio, file, location, encrypted, or empty when
-    /// there is nothing to say; `previewText` is set for text and emote only;
-    /// `previewSender` is the sender's Matrix ID. Whether any of it is shown
-    /// is the UI's decision (see `AppSettings::notificationPreview`).
+    /// Unread messages in a room that is not on screen. `previewKind` names the
+    /// event's kind, `previewText` is set for text and emote only.
     void roomActivity(const QString &roomId,
                       const QString &roomName,
                       int unread,
@@ -916,10 +785,8 @@ signals:
                       const QString &previewText,
                       const QString &previewSender);
 
-    /// A room's notifying events dropped back to zero — it was read, here or
-    /// in another client. Read receipts travel between clients, so the server
-    /// clears the counter for every device; a banner raised for that room has
-    /// nothing left to announce and is taken down.
+    /// A room's notifying events dropped to zero - read here or elsewhere. A
+    /// banner raised for it has nothing left to announce.
     void roomRead(const QString &roomId);
 
     /// The URL that has to be opened in the browser to continue a login.
@@ -944,9 +811,8 @@ private slots:
     void handleMessage(const QString &json);
     /// Says in the journal why a message did not go out, once per message.
     void reportSendFailures(const QJsonArray &operations);
-    /// The two halves of an incoming message, each dispatched to the handler
-    /// for its domain. A domain handler answers whether the message was its
-    /// own, so the chain stops at the first that recognises it.
+    /// The two halves of an incoming message, each to its domain handler. A handler
+    /// says whether the message was its own, so the chain stops at the first.
     void handleReply(const QJsonObject &message);
     void handleEvent(const QJsonObject &message);
     bool replyLogin(const QString &command, const QJsonObject &data);
@@ -964,9 +830,8 @@ private slots:
     bool eventLists(const QString &name, const QJsonObject &data);
     bool eventSession(const QString &name, const QJsonObject &data);
 
-    /// Names commands that have been waiting far too long, once each. The
-    /// point is the journal: a stalled request otherwise leaves no trace at
-    /// all, and "the app does nothing" is not something a tester can report.
+    /// Names commands that have waited far too long, once each. For the journal:
+    /// "the app does nothing" is not something a tester can report.
     void checkStalledCommands();
 
 private:
@@ -993,14 +858,11 @@ private:
     void setLastError(const QString &message);
 
     /// Appends to `errorLog`, oldest dropped past `ErrorLogSize`. Separate from
-    /// `setLastError` because the two answer different questions: one is what
-    /// to put in front of the user now, the other is what happened at all.
+    /// `setLastError`: what to show now against what happened at all.
     void noteError(const QString &command, const QString &message);
 
-    /// One line for a banner from a preview's kind and text — the same
-    /// wording `harbour-xmatic.qml` produces for an ordinary arrival, so a
-    /// push does not read differently from a message that came in over the
-    /// sync. Here as well because the woken process has no QML.
+    /// One banner line from a preview's kind and text, worded as `harbour-xmatic.qml`
+    /// does it. Here as well because the woken process has no QML.
     QString previewLine(const QString &kind, const QString &text) const;
     void setLoginRunning(bool running);
     void setTimelineAtStart(bool atStart);
@@ -1012,14 +874,12 @@ private:
     /// the secrets keeper for the key against it.
     QString m_dataDirectory;
     /// What the last attempt at the store key produced. Re-measured by
-    /// `retryStoreKey`, so the gate reflects the device as it is now and not
-    /// as it was at start.
+    /// `retryStoreKey`, so the gate reflects the device as it is now.
     StoreKeyState m_storeKeyState = StoreKeyState::Unavailable;
     QString m_storeKeyReason;
     bool m_secretsDaemonPresent = false;
-    /// Set when a recovery key was accepted, cleared when the state settles or
-    /// the timer gives up. A claim that something is in progress may not
-    /// outlive the progress, so it is bounded.
+    /// Set when a recovery key was accepted, cleared when the state settles or the
+    /// timer gives up: a claim of progress may not outlive the progress.
     bool m_recoverySettling = false;
     QTimer m_recoverySettleTimeout;
     QString m_cacheDirectory;
@@ -1073,9 +933,18 @@ private:
     QString m_membersRoomId;
     /// Root event of the open thread, to drop late diffs after a switch.
     QString m_openThreadRoot;
+    /// The `timeline.open` that is waiting for its answer. Without it a failed
+    /// or lost open leaves the room on its spinner for good.
+    quint64 m_openTimelineId = 0;
     /// Counts thread opens, so diffs of a previous open of the *same* thread
     /// can be told apart from this one's.
     quint64 m_threadGeneration = 0;
+    /// Which open a `timeline.diff` belongs to. The room id alone cannot say:
+    /// the pinned view is the same room under another focus.
+    quint64 m_timelineGeneration = 0;
+    /// The last token whose diffs were dropped, so the warning is said once
+    /// per view rather than once per diff.
+    QString m_lastDroppedToken;
     /// The user's preferences. Not owned - main() outlives the bridge. Read
     /// where a command needs one, and listened to where a change has to act.
     AppSettings *m_settings = nullptr;
@@ -1113,17 +982,12 @@ private:
     /// Last seen unread count per room, for spotting new activity.
     QHash<QString, int> m_unread;
 
-    /// Last seen notifying-events count per room (counted against the push
-    /// rules). The banner follows this one, not `m_unread` — see
-    /// reportNewMessages.
+    /// Last seen notifying-events count per room. The banner follows this, not
+    /// `m_unread` - see reportNewMessages.
     QHash<QString, int> m_notified;
 
-    /// A banner whose text is not there yet. The SDK fills the room's latest
-    /// event in a second pass, after the one that raises the counts, so the
-    /// diff that says "something arrived" still carries the *previous*
-    /// message — a banner built from it is always one message behind. The
-    /// announcement therefore waits for the pass that moves the room's
-    /// timestamp, and goes out with a count only if that never comes.
+    /// A banner whose text is not there yet: the SDK fills the room's latest event
+    /// in a second pass, so a banner built from the first is one message behind.
     struct PendingBanner {
         QString name;
         int notifications = 0;
@@ -1157,9 +1021,8 @@ private:
     SearchModel m_searchResults;
     /// One screen of hits, asked for again when the list reaches its end.
     static const int SearchPageSize = 20;
-    /// The room and query the results belong to, so the next page asks the
-    /// same question, and the id of the page in flight - a reply carrying a
-    /// different one belongs to a search the user has already moved on from.
+    /// Room and query the results belong to, and the id of the page in flight - a
+    /// reply carrying another one belongs to a search already moved on from.
     QString m_searchRoomId;
     QString m_searchQuery;
     int m_searchOffset = 0;
@@ -1183,10 +1046,8 @@ private:
 
     quint64 m_nextId = 1;
 
-    /// A command waiting for its answer. The timestamp is the diagnostic part:
-    /// a request the homeserver leaves hanging is invisible otherwise — the
-    /// SDK retries a rate-limited request for up to fifteen minutes without
-    /// ever failing, and all the user sees is that the app went quiet.
+    /// A command waiting for its answer. The timestamp is the diagnostic half: a
+    /// rate-limited request is retried for fifteen minutes without ever failing.
     struct PendingCommand {
         QString command;
         qint64 sentAt = 0;

@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Nadaljuj brez šifriranja</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Nazaj</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Vse, kar xmatic shrani na tej napravi, ostane berljivo: tvoja seja, tvoja sporočila in tvoji ključi sob.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Izberi to samo, če storitve na tej napravi ni mogoče namestiti. Če jo namestiš pozneje, lahko preklopiš na strani za šifriranje — stane te eno odjavo in tvoj obnovitveni ključ.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic bo to stanje še naprej prikazoval pod Šifriranje.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -350,6 +327,10 @@
     <message>
         <source>connected</source>
         <translation>povezano</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>klica ni bilo mogoče nadaljevati</translation>
     </message>
 </context>
 <context>
@@ -1143,22 +1124,6 @@
         <translation>Naprave</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Šifriranje</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Istovetnost preverjena</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Istovetnost se je od preverjanja spremenila. Preveri znova ali prekliči preverjanje.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Istovetnost ni preverjena</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Pošlji neposredno sporočilo</translation>
     </message>
@@ -1187,16 +1152,32 @@
         <translation>Skupne sobe</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Ni drugih skupnih sob</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Prepovej klice</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Dovoli klice</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identiteta</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>preverjena</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>spremenila se je po preverjanju — znova preveri ali prekliči</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>ni preverjena</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>brez</translation>
     </message>
 </context>
 <context>
@@ -1488,6 +1469,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Seznam je šifriran in njegov ključ ni na voljo. Znova bo berljiv, ko bo naprava odklenjena in program znova zagnan.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Samodejno naloži slike</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Vklopljeno: slika ali videoposnetek se naloži, takoj ko se sporočilo pojavi. Izklopljeno: naloži se ob dotiku — drsenje mimo je zahteva strežniku pošiljatelja.</translation>
     </message>
 </context>
 <context>
@@ -2095,6 +2084,38 @@
         <translation>%1 je spremenil svoj profil</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopiraj</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Odgovori</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Shrani</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Posreduj</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Uredi</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Pripni</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Izbriši</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Več…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Citiranega sporočila ni mogoče naložiti: ne obstaja več ali ga ne smeš videti.</translation>
     </message>
@@ -2155,6 +2176,22 @@
         <translation>Tega sporočila ni v naloženi zgodovini</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Zavrzi</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Pošlji znova</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Odzovi se</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Odgovori v niti</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Kopiraj povezavo sobe</translation>
     </message>
@@ -2213,6 +2250,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Preveri stik</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Pogovora ni bilo mogoče naložiti</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Odpreti ta naslov?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Odpri</translation>
     </message>
 </context>
 <context>
@@ -2634,20 +2683,8 @@
         <translation>Preveri znova</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Če to ni mogoče</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>xmatic lahko uporabljaš tudi brez krajevnega šifriranja. Seja, zbirka sporočil in ključi sob potem ležijo na napravi berljivi: kdor pride do njenega datotečnega sistema, bere zraven, izgubljen telefon pa izda vse, kar je na njem.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Sporočila ostanejo na poti skozi omrežje tako ali tako šifrirana od konca do konca. Tu gre samo za to, kar leži na napravi.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Nadaljuj brez šifriranja</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2716,6 +2753,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Pristnost ni potrjena</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Odpreti ta naslov?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Odpri</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2750,7 +2795,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>nepreverjeno</translation>
+        <translation>ni preverjena</translation>
     </message>
     <message>
         <source>This device is not verified</source>

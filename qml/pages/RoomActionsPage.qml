@@ -1,12 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// The four ways into a room, on one page.
-//
-// They used to be four entries in the chat list's pull-down menu, which had
-// grown to eight - past what a menu can hold on a phone, and every one of them
-// a way of starting something rather than a thing one does daily. One entry
-// leads here instead.
+// The four ways into a room on one page: as menu entries they pushed the chat
+// list's pulley to eight, past what a phone can hold.
 Page {
     id: page
 

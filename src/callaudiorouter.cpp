@@ -7,9 +7,8 @@
 
 namespace {
 
-// The application name the call's playback stream carries, set on the
-// pulsesink's stream-properties in the call pipeline. Distinct from the app's
-// default name so only the call audio is matched, not a notification sound.
+// The name the call's playback stream carries, distinct from the app's own so
+// only call audio is matched, not a notification sound.
 const char *kCallStreamName = "xmatic call";
 
 void contextStateCb(pa_context *, void *userdata)
@@ -17,10 +16,8 @@ void contextStateCb(pa_context *, void *userdata)
     pa_threaded_mainloop_signal(static_cast<pa_threaded_mainloop *>(userdata), 0);
 }
 
-// Picks the real output sink: the one that carries both a speaker and an
-// earpiece/handset port. That skips sink.null (no ports) and the media-only
-// deep-buffer sink, and the keyword match keeps it device-agnostic (the sink
-// is named differently on the Xperia and the Gemini).
+// The real output sink is the one with both a speaker and an earpiece port:
+// that skips sink.null and the deep-buffer sink, and stays device-agnostic.
 struct SinkScan {
     pa_threaded_mainloop *ml = nullptr;
     QString sink;
@@ -192,9 +189,8 @@ bool CallAudioRouter::routeCallStream()
                 pa_context_set_sink_input_mute(ctx, scan.index, 0, nullptr, nullptr)) {
             pa_operation_unref(o);
         }
-        // Half, not nine tenths: the stream is born muted on Halium and needs
-        // a value, but a call that starts at full volume against an ear is a
-        // fright. Louder is one swipe away, quieter is not once it startled.
+        // Half, not nine tenths: the stream is born muted on Halium and needs a value,
+        // and a call at full volume against an ear is a fright.
         pa_cvolume cv;
         pa_cvolume_set(&cv, scan.channels, PA_VOLUME_NORM / 2);
         if (pa_operation *o =

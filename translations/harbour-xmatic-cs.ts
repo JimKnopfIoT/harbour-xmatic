@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Pokračovat bez šifrování</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Zpět</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Vše, co si xmatic ukládá na tomto zařízení, zůstane čitelné: tvoje relace, tvoje zprávy a tvoje klíče místností.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Zvol to jen tehdy, pokud službu na tomto zařízení nelze nainstalovat. Když ji nainstaluješ později, můžeš přepnout na stránce šifrování — stojí to jedno odhlášení a tvůj obnovovací klíč.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic bude tento stav dál zobrazovat v části Šifrování.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -349,6 +326,10 @@
     <message>
         <source>connected</source>
         <translation>spojeno</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>hovor nemohl pokračovat</translation>
     </message>
 </context>
 <context>
@@ -1141,22 +1122,6 @@
         <translation>Zařízení</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Šifrování</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identita ověřena</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Identita se od ověření změnila. Ověř znovu, nebo ověření odvolej.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identita neověřena</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Poslat přímou zprávu</translation>
     </message>
@@ -1185,16 +1150,32 @@
         <translation>Společné místnosti</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Žádné další společné místnosti</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Zakázat hovory</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Povolit hovory</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identita</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>ověřená</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>od ověření se změnila — ověř znovu nebo ověření zruš</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>neověřená</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>žádné</translation>
     </message>
 </context>
 <context>
@@ -1486,6 +1467,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Seznam je šifrovaný a jeho klíč není k dispozici. Bude znovu čitelný po odemknutí zařízení a restartu aplikace.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Načítat obrázky automaticky</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Zapnuto: obrázek nebo video se načte, jakmile se zpráva objeví. Vypnuto: načte se po klepnutí — projít kolem něj znamená požadavek na server odesílatele.</translation>
     </message>
 </context>
 <context>
@@ -2092,6 +2081,38 @@
         <translation>%1 změnil svůj profil</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopírovat</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Odpovědět</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Uložit</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Přeposlat</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Upravit</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Připnout</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Více…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Citovanou zprávu nelze načíst: už neexistuje, nebo ji nesmíš vidět.</translation>
     </message>
@@ -2152,6 +2173,22 @@
         <translation>Tato zpráva není v načtené historii</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Zahodit</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Odeslat znovu</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagovat</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Odpovědět ve vlákně</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Kopírovat odkaz na místnost</translation>
     </message>
@@ -2210,6 +2247,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Ověřit kontakt</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Konverzaci se nepodařilo načíst</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Otevřít tuto adresu?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Otevřít</translation>
     </message>
 </context>
 <context>
@@ -2630,20 +2679,8 @@
         <translation>Zkontrolovat znovu</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Pokud to nejde</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>xmatic můžeš používat i bez místního šifrování. Relace, databáze zpráv a klíče místností pak leží na zařízení čitelné: kdo se dostane k jeho souborovému systému, čte s tebou, a ztracený telefon vydá všechno, co na něm je.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Zprávy zůstávají na cestě sítí tak jako tak šifrované od konce ke konci. Tady jde jen o to, co leží na zařízení.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Pokračovat bez šifrování</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2712,6 +2749,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Pravost nepotvrzena</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Otevřít tuto adresu?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Otevřít</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2745,7 +2790,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>neověřeno</translation>
+        <translation>neověřená</translation>
     </message>
     <message>
         <source>This device is not verified</source>

@@ -16,21 +16,17 @@
 namespace {
 
 /// What one picture may cost, before and after. The same ceiling the display
-/// path uses; a picture for a character in a chat line has no business being
-/// larger.
+/// path uses.
 const qint64 MaximumSourceBytes = 64 * 1024;
-/// What a picture is rasterised to. Covers the largest icon size any of the
-/// shipped screen densities asks for, and keeps a full set at a size a phone
-/// can spare.
+/// What a picture is rasterised to: covers the largest icon size any shipped
+/// density asks for.
 const int RenderSize = 128;
-/// A source image larger than this is refused before it is decoded: the
-/// decoder allocates width * height * 4 bytes, and that number must not come
-/// from the file.
+/// Refused before it is decoded: the decoder allocates width * height * 4, and
+/// that number must not come from the file.
 const int MaximumSourcePixels = 2048;
 
-/// A picture's name has to be the emoji's code points in hex, joined by
-/// dashes. That is the naming every emoji set uses, and it is also what makes
-/// the name safe to build a path from.
+/// A picture's name is the code points in hex, joined by dashes - what every
+/// emoji set uses, and what makes the name safe to build a path from.
 bool nameIsSound(const QString &base)
 {
     if (base.isEmpty() || base.length() > 64) {
@@ -69,9 +65,8 @@ QByteArray convert(const QFileInfo &source, const QString &targetPath)
     }
 
     if (format == "svg") {
-        // Qt 5.6 has no limit on entity expansion, so a kilobyte of XML can
-        // ask for gigabytes of memory. A picture of an emoji needs neither
-        // entities nor a doctype.
+        // Qt 5.6 has no limit on entity expansion, so a kilobyte of XML can ask for
+        // gigabytes. An emoji needs neither entities nor a doctype.
         QFile raw(source.absoluteFilePath());
         if (!raw.open(QIODevice::ReadOnly)) {
             return QByteArray();
@@ -114,9 +109,8 @@ QByteArray convert(const QFileInfo &source, const QString &targetPath)
                           (RenderSize - fitted.height()) / 2, fitted);
     }
 
-    // Encoded once, in memory, and the checksum is taken from those very
-    // bytes. Hashing the file back off the disk would leave a window in which
-    // somebody else's bytes get recorded as the trusted ones.
+    // Encoded once in memory, and the checksum taken from those bytes: hashing the
+    // file back off disk leaves a window for somebody else's bytes.
     QByteArray bytes;
     {
         QBuffer buffer(&bytes);
@@ -140,9 +134,8 @@ QByteArray convert(const QFileInfo &source, const QString &targetPath)
     }
     target.close();
 
-    // SHA-256, and the manifest says so: a checksum here is what stands
-    // between the decoder and a file that changed after it was checked, and a
-    // digest one can build a collision for weakens exactly that.
+    // SHA-256, and the manifest says so: this is what stands between the decoder
+    // and a file that changed after it was checked.
     return QCryptographicHash::hash(bytes, QCryptographicHash::Sha256).toHex();
 }
 
@@ -199,15 +192,12 @@ void EmojiSet::importFrom(const QString &folderUrl)
     m_watcher.setFuture(QtConcurrent::run([folder, target]() {
         Outcome outcome;
 
-        // Reading the set out of the very directory it is written to is the
-        // obvious thing for somebody who copied it there by hand - and it
-        // would delete the source before reading a single file. The old
-        // directory is therefore moved aside first and read from there.
+        // Reading the set out of the directory it is written to would delete the
+        // source before reading a file, so the old directory is moved aside first.
         QString readFrom = folder;
         QString aside;
-        // Canonical, not absolute: a link pointing at the target directory
-        // compares equal only after it is resolved, and getting that wrong
-        // deletes the source.
+        // Canonical, not absolute: a link to the target compares equal only after it
+        // is resolved, and getting that wrong deletes the source.
         const QFileInfo folderInfo(folder);
         const QFileInfo targetInfo(target);
         const QString folderPath = folderInfo.canonicalFilePath().isEmpty()

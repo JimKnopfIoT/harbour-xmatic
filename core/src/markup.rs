@@ -1,18 +1,5 @@
-//! Rewrites a message's `formatted_body` into markup `Text.StyledText` can draw.
-//!
-//! Not a sanitiser: ruma parses and filters to the Matrix subset, then the tree
-//! is walked and re-emitted, so every `<` in the output is written here and
-//! every sender character goes through the escaper. An unknown tag contributes
-//! its text only.
-//!
-//! Qt's subset is much smaller than the spec's, hence the rewriting: no `<pre>`,
-//! `<code>` or `<blockquote>`, and `<ul>` indents by a fixed pixel margin. Not
-//! carried over at all: colours and sizes (a sender who picks the colour picks
-//! the background's), `<img>` (a URL the sender chose, fetched on display), and
-//! anchors to anything but http(s). `Text.RichText` is unusable for the same
-//! image reason.
-//!
-//! Spoilers are marked, not hidden — StyledText cannot hide a run of text.
+//! Rewrites `formatted_body` into what `Text.StyledText` can draw. Not a
+//! sanitiser: the tree is walked and re-emitted, so every `<` is written here.
 
 use ruma_html::{Html, HtmlSanitizerMode, SanitizerConfig};
 
@@ -26,12 +13,8 @@ const MAX_OUTPUT: usize = 96 * 1024;
 /// message, and counting them costs one pass over the bytes.
 const MAX_TAGS: u32 = 4096;
 
-/// How deeply the raw string nests, counted without building anything.
-///
-/// Cheap and deliberately crude: every `<` that is not a closing tag counts as
-/// one level, every `</` closes one. Self-closing tags cost nothing that
-/// matters here, because the bound is about the parser's recursion, not about
-/// correctness of the count.
+/// How deeply the raw string nests, counted without building anything. Crude
+/// on purpose: the bound is about the parser's recursion, not about the count.
 fn nesting_is_sane(html: &str) -> bool {
     let mut depth: i32 = 0;
     let mut tags: u32 = 0;
@@ -66,23 +49,15 @@ pub fn to_styled_text(html: &str) -> Option<String> {
         return None;
     }
 
-    // Before the parser, not during the walk. `Html::parse` builds the whole
-    // tree first and drops it recursively, and neither step is bounded by
-    // anything below: 20 000 nested tags fit in a message under the byte cap
-    // and overflow the thread's stack, which is an abort, not a panic - no
-    // catch_unwind can hold it, and the event stays in the store, so the room
-    // aborts the app again on every open. MAX_DEPTH is checked in `node()`,
-    // which never runs.
+    // Before the parser: `Html::parse` builds and drops the whole tree, and 20 000
+    // nested tags overflow the stack - an abort no catch_unwind holds.
     if !nesting_is_sane(html) {
         return None;
     }
 
     let parsed = Html::parse(html);
-    // The reply fallback goes: the quote is drawn from the event's relation, so
-    // it would appear twice.
-    //
-    // `remove_elements` because a merely *disallowed* element is replaced by its
-    // children — a `<script>` vanishes while its source stays behind as text.
+    // The reply fallback goes, or the quote appears twice. `remove_elements`
+    // because a merely disallowed element is replaced by its children.
     let config = SanitizerConfig::with_mode(HtmlSanitizerMode::Compat)
         .remove_reply_fallback()
         .remove_elements([
@@ -153,11 +128,8 @@ impl Writer {
         self.push_raw(tag);
     }
 
-    /// Writes sender-provided text, escaped so it can never become markup.
-    ///
-    /// Direction controls are dropped on the way (`text::strip_bidi`): they are
-    /// invisible and reorder what follows, so a formatted message could show
-    /// one thing and say another.
+    /// Writes sender text, escaped so it can never become markup. Direction
+    /// controls are dropped: they are invisible and reorder what follows.
     fn push_text(&mut self, text: &str, context: &Context) {
         for character in text.chars() {
             if crate::text::is_bidi_control(character) {
@@ -425,12 +397,8 @@ impl Writer {
         }
 
         self.push_tag("<a href=\"");
-        // The sender's string, with one deliberate exception: `&` stays
-        // itself. Qt reads an attribute as a raw run to the closing quote and
-        // decodes no entities, so `&amp;` would end up in the opened address -
-        // every link with two query parameters opened the wrong URL. The
-        // characters that could end the attribute are refused by `is_web_url`
-        // before this runs, and are escaped here as a second line anyway.
+        // The sender's string, except that `&` stays itself: Qt decodes no entities in
+        // an attribute, so `&amp;` would end up in the opened address.
         for character in href.chars() {
             match character {
                 '<' => self.push_raw("&lt;"),
@@ -461,12 +429,8 @@ fn attribute(element: &ruma_html::ElementData, name: &str) -> Option<String> {
         .map(|attribute| attribute.value.to_string())
 }
 
-/// Only http(s) with a host. An anchor is a tap that hands the URL to whatever
-/// application claims the scheme, so nothing else keeps its target.
-///
-/// Characters that cannot occur in a URL are rejected rather than escaped: the
-/// parser unescapes the attribute before this sees it, and a target that needs
-/// escaping to stay in its own attribute is not one to hand on.
+/// Only http(s) with a host: an anchor hands the URL to whatever claims the
+/// scheme. Characters that cannot occur in a URL are rejected, not escaped.
 fn is_web_url(href: &str) -> bool {
     if href
         .chars()
@@ -555,10 +519,8 @@ mod tests {
 
     #[test]
     fn a_target_that_would_need_escaping_is_dropped() {
-        // The parser unescapes the attribute before this code sees it, so the
-        // quote is real by then. Escaping it again would keep the anchor inside
-        // its own tag, but the result is a URL nobody wrote on purpose — it is
-        // refused instead, and the link's text stays.
+        // The parser unescapes the attribute before this sees it, so the quote is
+        // real: a URL that needs escaping to stay in its tag is refused instead.
         let rendered =
             to_styled_text("<b>x</b><a href='https://a.invalid/\"><img src=x onerror=y>'>t</a>")
                 .unwrap();

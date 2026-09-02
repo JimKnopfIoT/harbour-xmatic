@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Jätka ilma krüptimiseta</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Tagasi</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Kõik, mida xmatic sellesse seadmesse salvestab, jääb loetavaks: sinu seanss, sinu sõnumid ja sinu ruumivõtmed.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Vali see ainult siis, kui teenust ei saa sellesse seadmesse paigaldada. Kui paigaldad selle hiljem, saad krüptimislehel ümber lülituda — see maksab ühe väljalogimise ja sinu taastevõtme.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic näitab seda olekut edasi Krüptimise all.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>ühendatud</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>kõnet ei saanud jätkata</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Seadmed</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Krüptimine</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Isik kinnitatud</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Isik on pärast kinnitamist muutunud. Kinnita uuesti või võta kinnitus tagasi.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Isik pole kinnitatud</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Saada otsesõnum</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Ühised toad</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Muid ühiseid tube pole</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Keela kõned</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Luba kõned</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identiteet</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>kinnitatud</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>on pärast kinnitamist muutunud — kinnita uuesti või võta kinnitus tagasi</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>kinnitamata</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>puuduvad</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Loend on krüptitud ja selle võti pole saadaval. Seda saab uuesti lugeda, kui seade on lukust avatud ja rakendus taaskäivitatud.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Laadi pildid automaatselt</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Sees: pilt või video laaditakse kohe, kui sõnum ilmub. Väljas: laaditakse puudutamisel — mööda kerimine on päring saatja serverisse.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>%1 muutis oma profiili</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopeeri</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Vasta</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Salvesta</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Edasta</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Muuda</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kinnita üles</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Kustuta</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Rohkem…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Tsiteeritud sõnumit ei saa laadida: seda pole enam olemas või sul pole lubatud seda näha.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>Seda sõnumit pole laaditud ajaloos</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Loobu</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Saada uuesti</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reageeri</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vasta lõimes</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Kopeeri ruumi link</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Kinnita kontakt</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Vestlust ei õnnestunud laadida</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Kas avada see aadress?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Ava</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Kontrolli uuesti</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Kui see ei ole võimalik</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Võid xmaticut kasutada ka ilma kohaliku krüptimiseta. Seanss, sõnumite andmebaas ja ruumivõtmed on siis seadmes loetavad: kes pääseb selle failisüsteemi, loeb kaasa, ja kaotatud telefon annab välja kõik, mis sellel on.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Sõnumid jäävad võrgu kaudu liikudes igal juhul otsast lõpuni krüptituks. Siin on jutt ainult sellest, mis on seadmes.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Jätka ilma krüptimiseta</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2707,6 +2744,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Ehtsus kinnitamata</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Kas avada see aadress?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Ava</translation>
     </message>
 </context>
 <context>

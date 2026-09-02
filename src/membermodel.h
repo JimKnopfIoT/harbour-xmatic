@@ -3,10 +3,8 @@
 
 #include "difflistmodel.h"
 
-/// The members of one room. The core reads them in a single pass and ships the
-/// whole list as a reset; ordering (most powerful first, then by name) comes
-/// from there. `membership` and `power` are carried for the actions a member
-/// row will grow later (verify, direct message, remove).
+/// The members of one room, shipped as one reset. Ordering comes from the core;
+/// `membership` and `power` carry what the row's actions need.
 class MemberModel : public DiffListModel
 {
     Q_OBJECT
@@ -26,9 +24,8 @@ public:
 
     QHash<int, QByteArray> roleNames() const override;
 
-    /// Drops the row of one user after a successful removal. The local store
-    /// only learns of the kick on a later sync, so reloading the list right
-    /// away would still show the member.
+    /// Drops one user's row after a successful removal: the store learns of the
+    /// kick on a later sync, so a reload would still show the member.
     void removeUser(const QString &userId);
 
     /// Rewrites one user's power level after a role change. Order unchanged;
