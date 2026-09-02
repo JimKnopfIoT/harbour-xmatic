@@ -422,6 +422,36 @@ void AppSettings::dropLegacyLists()
     settings.sync();
 }
 
+void AppSettings::dropRetiredKeys()
+{
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    // 0.26.0-0.28.0 remembered "continue without encryption" here. The way past
+    // the gate is gone; a value nothing reads is one a downgrade would read.
+    const QString retired = QStringLiteral("security/unencryptedStorageAccepted");
+    if (!settings.contains(retired)) {
+        return;
+    }
+    settings.remove(retired);
+    settings.sync();
+}
+
+bool AppSettings::autoLoadMedia() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("privacy/autoLoadMedia"), true).toBool();
+}
+
+void AppSettings::setAutoLoadMedia(bool enabled)
+{
+    if (enabled == autoLoadMedia()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/autoLoadMedia"), enabled,
+          "the automatic media setting");
+    emit autoLoadMediaChanged();
+}
+
 bool AppSettings::sendReadReceipts() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);
@@ -437,24 +467,6 @@ void AppSettings::setSendReadReceipts(bool enabled)
     store(settings, QStringLiteral("privacy/sendReadReceipts"), enabled,
           "the read-receipt setting");
     emit sendReadReceiptsChanged();
-}
-
-bool AppSettings::unencryptedStorageAccepted() const
-{
-    QSettings settings(appSettingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("security/unencryptedStorageAccepted"), false)
-        .toBool();
-}
-
-void AppSettings::acceptUnencryptedStorage()
-{
-    if (unencryptedStorageAccepted()) {
-        return;
-    }
-    QSettings settings(writablePath(), QSettings::IniFormat);
-    store(settings, QStringLiteral("security/unencryptedStorageAccepted"), true,
-          "the unencrypted-storage consent");
-    emit unencryptedStorageAcceptedChanged();
 }
 
 QString AppSettings::mediaWipe() const

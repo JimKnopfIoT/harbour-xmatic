@@ -1,21 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Everything that failed in this run of the app.
-//
-// `lastError` is one string and the next failure overwrites it, so a fault
-// that showed up as a red line on some page is gone the moment anything else
-// goes wrong. A field report then rests on whether the user happened to have
-// the right page open at the right second — which is how most of this app's
-// harder bugs were reported: seen once, described from memory, gone by the
-// time anybody could look.
-//
-// The core takes identifiers out of its messages before they leave it
-// (`core/src/text.rs`, `scrub_ids`), keeping the error codes that make a
-// report useful. So this list can be copied and handed over as it stands.
-//
-// Not written to disk. What is on screen is this run, and a log that outlived
-// the run would be a file of failures nobody asked us to keep.
+// Everything that failed in this run. `lastError` is one string the next
+// failure overwrites; the core scrubs identifiers, so this can be handed over.
 Page {
     id: page
 
@@ -59,9 +46,8 @@ Page {
                              ? String(matrix.errorLog.length) : ""
             }
 
-            // In the header rather than a ViewPlaceholder: Silica centres a
-            // placeholder in the viewport and ignores the header, so the two
-            // draw over each other on a short page.
+            // In the header rather than a ViewPlaceholder: Silica centres a placeholder in
+            // the viewport and ignores the header, so the two draw over each other.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -89,9 +75,8 @@ Page {
 
         delegate: Column {
             width: listView.width
-            // No `bottomPadding`: QtQuick 2.0's Column has no such property and
-            // assigning it makes the page refuse to load, with nothing but
-            // "could not load page" to go on. A spacer at the end does the job.
+            // No `bottomPadding`: QtQuick 2.0's Column has no such property and assigning
+            // it makes the page refuse to load. A spacer does the job.
 
             Row {
                 x: Theme.horizontalPageMargin

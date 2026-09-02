@@ -1,10 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Interactive verification: agree to the request, then compare seven emoji
-// with the other screen. Confirming is what tells the crypto layer that no one
-// sits in the middle — and, between one's own devices, what unlocks shared
-// room keys.
+// Interactive verification: agree, then compare seven emoji. Confirming rules
+// out a machine in the middle and unlocks shared room keys.
 Page {
     id: page
 
@@ -12,16 +10,8 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    // Whether this side has already said its piece and is now waiting for the
-    // other one.
-    //
-    // "They match" and "Accept" are the only two buttons here that do not close
-    // the page. They hand the answer to the core and everything stays exactly
-    // as it was — both buttons still live, no text, no indicator — until the
-    // other device replies, which can take as long as it takes someone to pick
-    // up their phone. A Silica button only colours while the finger rests on
-    // it, so after letting go there was nothing left to show the tap had
-    // registered, and pressing again was the obvious thing to try.
+    // Whether this side has answered and is waiting. "They match" and "Accept"
+    // change nothing visible, and a Silica button colours only under the finger.
     property bool answered: false
 
     /// The stage this side answered in, so the waiting ends on real progress.
@@ -29,12 +19,8 @@ Page {
 
     Connections {
         target: matrix
-        // Only a stage the flow has actually moved to ends the waiting — not
-        // any notification at all. The core repeats a stage: two `sas-confirmed`
-        // in a row are in the logs, and clearing on every notification would
-        // let the button flash grey and go live again while the other side has
-        // still not answered, which is the very impression this is meant to
-        // remove.
+        // Only a stage the flow actually moved to ends the waiting: the core repeats a
+        // stage, and clearing on any notification would let the button go live again.
         onVerificationChanged: {
             if (page.answered && matrix.verificationState !== page.answeredIn) {
                 page.answered = false
@@ -57,10 +43,8 @@ Page {
         anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge
 
-        // Reported by a new user as "there are no They match / They do not
-        // match buttons": they were below the edge of the screen, and nothing
-        // said the page continued. Seven emoji with their descriptions push
-        // the answer off a short screen, and in landscape they always would.
+        // Reported as "there are no buttons": they were below the edge and nothing
+        // said the page continued. Seven emoji push the answer off a short screen.
         VerticalScrollDecorator { flickable: flickable }
 
         Column {
@@ -69,10 +53,8 @@ Page {
             width: page.width
             spacing: Theme.paddingLarge
 
-            // No textFormat here: PageHeader has no such property, and
-            // assigning it kills the whole page at load time ("Seite konnte
-            // nicht geladen werden"). The description is a Matrix user id,
-            // whose charset cannot carry markup anyway.
+            // No `textFormat` here: PageHeader has no such property and assigning it kills
+            // the page at load time. A user id cannot carry markup anyway.
             PageHeader {
                 title: qsTr("Verification")
                 description: matrix.verificationIsSelf
@@ -87,10 +69,8 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryHighlightColor
                 text: {
-                    // Said before the state is looked at: the flow stays in the
-                    // same state until the other side moves, so this is the only
-                    // thing that distinguishes "nothing has happened yet" from
-                    // "your answer is in and the wait is on the other end".
+                    // Said before the state is looked at: the flow stays in the same state until
+                    // the other side moves, so only this distinguishes waiting from nothing.
                     if (page.answered) {
                         return qsTr("Your answer is in. Waiting for the other device.")
                     }
@@ -156,21 +136,11 @@ Page {
                 size: BusyIndicatorSize.Medium
                 running: page.answered
                          || (matrix.verificationState === "requested"
-                             && (matrix.verificationWeStarted || matrix.busy))
+                             && (matrix.verificationWeStarted || matrix.encryptionBusy))
             }
 
-            // Accept/decline belongs to the receiving side; the requester
-            // only waits and gets its own cancel button below.
-            //
-            // Stacked, not side by side. A `Row` takes its width from its
-            // children and a `WrapButton` takes its width from its parent, so
-            // the two together are a binding loop — Qt breaks it by giving the
-            // row a width of zero, and the buttons are simply not there. That
-            // is what a new user reported as "there is no They match button"
-            // on the emoji screen, and it was true. The two answers were
-            // ordinary Silica buttons until 0.26.2 swapped in the wrapping
-            // one; this is the only place in the app that puts two of them in
-            // a row, so it is the only page that lost them.
+            // Stacked, not side by side: a `Row` takes its width from its children and a
+            // `WrapButton` from its parent - the loop that left this page with no buttons.
             Column {
                 width: parent.width
                 spacing: Theme.paddingMedium
@@ -186,10 +156,8 @@ Page {
                           ? qsTr("They do not match")
                           : qsTr("Decline")
                     onClicked: {
-                        // Two meanings, two codes on the wire: emoji that do
-                        // not match are the one signal that says somebody may
-                        // be in the middle, and only the other side can act on
-                        // it. Declining a request is an ordinary cancel.
+                        // Two meanings, two codes on the wire: mismatched emoji are the one signal
+                        // that says somebody may be in the middle. Declining is an ordinary cancel.
                         if (matrix.verificationState === "comparing") {
                             matrix.reportVerificationMismatch()
                         } else {

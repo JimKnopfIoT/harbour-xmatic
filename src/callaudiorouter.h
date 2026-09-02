@@ -6,18 +6,8 @@
 
 class QTimer;
 
-/// Makes received call audio audible on Sailfish/Halium.
-///
-/// The playback stream a call creates is born on the media sink and MUTED by
-/// the hardware adaptation — reaching PulseAudio but silent. This connects to
-/// PulseAudio in-process (Sailjail blocks an external `pactl` but allows the
-/// app's own audio access), finds the call's playback stream by application
-/// name, moves it onto the real output sink and unmutes it. It retries until
-/// the stream appears, since that happens a moment after the call connects.
-///
-/// The libpulse calls here are ordinary API use; the approach is the one
-/// other messengers on this platform use, but no code is shared, so this file
-/// stays under the project's own licence.
+/// Received call audio is born on the media sink and muted by the adaptation.
+/// This finds the stream by name, moves it to the real sink and unmutes it.
 class CallAudioRouter : public QObject
 {
     Q_OBJECT

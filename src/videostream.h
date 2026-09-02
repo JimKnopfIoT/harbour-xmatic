@@ -7,13 +7,8 @@
 #include <QSize>
 #include <QVideoFrame>
 
-/// Carries decoded video frames into QML.
-///
-/// The device has no GStreamer sink that can draw into a QML scene — neither
-/// qmlglsink nor qtvideosink is installed — so frames are pulled out of the
-/// pipeline as plain images and handed to a `VideoOutput` through the surface
-/// it provides. That costs a colour conversion per frame, which is why the
-/// call is negotiated at a modest resolution.
+/// Carries decoded frames into QML. The device has no GStreamer sink that draws
+/// into a QML scene, so frames are pulled out as images - one conversion each.
 class VideoStream : public QObject
 {
     Q_OBJECT
@@ -33,9 +28,8 @@ public:
     /// Called from the Qt thread with a decoded frame.
     void present(const QImage &frame);
 
-    /// Same, but with raw I420 planes: the surface renders YUV directly and
-    /// the GPU does the colour conversion, which is what makes receiving
-    /// video affordable on weak devices.
+    /// Same with raw I420 planes: the surface renders YUV and the GPU converts,
+    /// which is what makes receiving video affordable on weak devices.
     void presentYuv(const QByteArray &planes, const QSize &size);
 
     /// Drops the surface's format, for instance when a call ends.

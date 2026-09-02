@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Продолжить без шифрования</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Назад</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Всё, что xmatic хранит на этом устройстве, остаётся читаемым: твоя сессия, твои сообщения и твои ключи комнат.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Выбирай это только если службу нельзя установить на это устройство. Установишь её позже — сможешь переключиться на странице шифрования: это стоит одного выхода из аккаунта и твоего ключа восстановления.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic будет и дальше показывать это состояние в разделе Шифрование.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -349,6 +326,10 @@
     <message>
         <source>connected</source>
         <translation>соединено</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>не удалось продолжить вызов</translation>
     </message>
 </context>
 <context>
@@ -1141,22 +1122,6 @@
         <translation>Устройства</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Шифрование</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Личность подтверждена</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Личность изменилась с момента подтверждения. Подтверди заново или отзови подтверждение.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Личность не подтверждена</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Отправить личное сообщение</translation>
     </message>
@@ -1185,16 +1150,32 @@
         <translation>Общие комнаты</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Других общих комнат нет</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Запретить звонки</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Разрешить звонки</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Личность</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>подтверждена</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>изменилась после подтверждения — подтверди снова или отзови</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>не подтверждена</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>нет</translation>
     </message>
 </context>
 <context>
@@ -1486,6 +1467,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Список зашифрован, и его ключ недоступен. Он снова станет читаемым после разблокировки устройства и перезапуска приложения.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Загружать изображения автоматически</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Включено: изображение или видео загружается, как только появляется сообщение. Выключено: загружается по касанию — прокрутка мимо это запрос к серверу отправителя.</translation>
     </message>
 </context>
 <context>
@@ -2092,6 +2081,38 @@
         <translation>%1 изменил профиль</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Копировать</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Ответить</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Переслать</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Изменить</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Закрепить</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Ещё…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Цитируемое сообщение не удалось загрузить: его больше нет или у тебя нет прав его видеть.</translation>
     </message>
@@ -2152,6 +2173,22 @@
         <translation>Этого сообщения нет в загруженной истории</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Отменить</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Отправить снова</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Отреагировать</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Ответить в теме</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Копировать ссылку на комнату</translation>
     </message>
@@ -2210,6 +2247,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Подтвердить собеседника</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Не удалось загрузить разговор</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Открыть этот адрес?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Открыть</translation>
     </message>
 </context>
 <context>
@@ -2630,20 +2679,8 @@
         <translation>Проверить ещё раз</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Если это невозможно</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Ты можешь пользоваться xmatic и без локального шифрования. Сессия, база сообщений и ключи комнат будут тогда лежать на устройстве в читаемом виде: кто доберётся до его файловой системы, читает вместе с тобой, а потерянный телефон отдаёт всё, что на нём есть.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Сообщения в любом случае остаются зашифрованными от края до края на пути через сеть. Здесь речь только о том, что лежит на устройстве.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Продолжить без шифрования</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2712,6 +2749,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Подлинность не подтверждена</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Открыть этот адрес?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Открыть</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2745,7 +2790,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>не подтверждён</translation>
+        <translation>не подтверждена</translation>
     </message>
     <message>
         <source>This device is not verified</source>

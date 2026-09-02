@@ -12,11 +12,8 @@ Page {
     // sideways swipe reaches it, instead of going through the menu.
     property bool isHome: false
 
-    // Leaving the foreground aborts a running countdown at once, instead of only
-    // suppressing it when it expires. Suppressing at expiry was not enough:
-    // minimising the app and coming back inside the four seconds left the
-    // countdown running, and it fired on return. The remorse object has to be
-    // kept for that - Remorse.popupAction() hands it back.
+    // Leaving the foreground aborts a running countdown at once: suppressing it
+    // at expiry left it firing on return from a minimised app.
     property var activeRemorse: null
     readonly property bool appForeground: Qt.application.active
     onAppForegroundChanged: {
@@ -38,19 +35,8 @@ Page {
         }
     }
 
-    // Leaving asks first and says which room, then runs the remorse as the
-    // undo. Two details are deliberate.
-    //
-    // The remorse hangs on the page, not on the row: a RemorseItem inside a
-    // delegate executes its action when that delegate is destroyed, and this
-    // list re-sorts on every incoming message — an unrelated message in an
-    // unrelated room could therefore have completed the countdown.
-    //
-    // And the callback checks that the page is still the active one. Silica
-    // fires a running remorse on PageStatus.Deactivating by design ("if the
-    // page is changed then execute immediately"), so swiping over to the
-    // spaces or opening another room used to count as confirmation. Here it
-    // counts as the abort the user meant.
+    // The remorse hangs on the page, not the row: a delegate destroyed by a
+    // re-sort would execute it. And leaving the page counts as abort, not confirm.
     function confirmLeave(roomId, roomName, invited) {
         var dialog = pageStack.push(
                     Qt.resolvedUrl("ConfirmDialog.qml"),
@@ -78,26 +64,15 @@ Page {
     SilicaListView {
         id: roomList
 
-        // No current item, ever. Qt Quick auto-selects row 0 as soon as the
-        // model has rows unless the index was cleared explicitly, and on every
-        // model reset it recreates that current item and gives it focus inside
-        // the view's focus scope (QQuickItemViewPrivate::updateCurrent →
-        // setFocus(true)). The search field lives in this view's header, so
-        // each keystroke — the core answers a filter with a full reset — took
-        // the keyboard away from it. Measured on the device: with the index
-        // left at Qt's default the focus fell after every reset; with -1 set
-        // here it never did. (The 0.9.1 hand-back on `modelReset` ran before
-        // the theft and therefore never fired.)
+        // No current item, ever: Qt Quick auto-selects row 0 and refocuses it on
+        // every model reset, which took the keyboard from the search field per keystroke.
         currentIndex: -1
 
         anchors.fill: parent
         model: matrix.rooms
 
-        // The list the core streams holds one page of rooms and grows only
-        // when asked. Reaching the end is the moment to ask - an account past
-        // a page simply had no further rooms, and nothing said they existed.
-        // Asking again once everything is loaded costs nothing, so this needs
-        // no "is there more" of its own.
+        // The list holds one page and grows only when asked, so reaching the end is
+        // the moment. Asking again once everything is loaded costs nothing.
         onAtYEndChanged: {
             if (atYEnd && count > 0) {
                 matrix.loadMoreRooms()
@@ -109,22 +84,14 @@ Page {
 
             PageHeader {
                 title: qsTr("Rooms")
-                // The core reconnects on its own; this only says that it is
-                // doing so instead of leaving a silently stale list. A server
-                // that cannot do this app's sync produces the same "offline",
-                // but waiting will not help there, so it says so instead.
+                // The core reconnects on its own; this only says so. A server that cannot do
+                // this app's sync produces the same "offline", and waiting will not help.
                 description: {
                     if (!matrix.serverSupported) {
                         return qsTr("This homeserver is not supported")
                     }
-                    // Two numbers side by side: the rows this list holds and
-                    // the rooms the server counts for the account. A list that
-                    // is shorter than the account has two causes that look
-                    // identical on screen — the sync window never grew past its
-                    // first twenty rooms, or only one page has been asked for —
-                    // and a field report without both numbers cannot tell them
-                    // apart. Not while searching: the count is the filtered one
-                    // then and would compare two different things.
+                    // Rows held against rooms the server counts: an ungrown sync window and one
+                    // page asked for look identical. Not while searching - filtered count.
                     var counted = searchField.text.length > 0
                             ? ""
                             : qsTr("%1 of %2 rooms").arg(roomList.count)
@@ -138,10 +105,8 @@ Page {
                     return counted
                 }
 
-                // The device's overall security, where the user actually is
-                // rather than only on a page somebody has to go looking for.
-                // Gone entirely while everything is green: an indicator that
-                // is always lit says nothing.
+                // The device's security where the user actually is. Gone while everything is
+                // green: an indicator that is always lit says nothing.
                 MouseArea {
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.horizontalPageMargin
@@ -175,10 +140,8 @@ Page {
 
                 width: parent.width
                 placeholderText: qsTr("Search rooms")
-                // The keyboard's word list is a store outside this app's
-                // sandbox, unreadable and unclearable from here, and it
-                // suggests what it learned in every other app. Same hints
-                // as the password line.
+                // The keyboard's word list is a store outside this sandbox and suggests what
+                // it learned in other apps. Same hints as the password line.
                 inputMethodHints: Qt.ImhNoPredictiveText
                                   | Qt.ImhSensitiveData
                                   | Qt.ImhNoAutoUppercase
@@ -227,9 +190,8 @@ Page {
                 }
 
                 MenuItem {
-                    // On an invitation this declines it, so the entry says so.
-                    // The row is read here, before anything asynchronous
-                    // starts: by then the model may already have moved on.
+                    // On an invitation this declines it, so the entry says so. Read here, before
+                    // anything asynchronous: the model may have moved on by then.
                     text: model.membership === "invited"
                           ? qsTr("Decline invitation") : qsTr("Leave room")
                     onClicked: page.confirmLeave(model.id, model.name,
@@ -250,18 +212,15 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
 
-            // Above the room entries, not below them: "Make start page" is
-            // hidden whenever this list already is the start page, so anything
-            // under it slides up against "Rooms" and reads as one of the ways
-            // into a room. Verifying is about a person.
+            // Above the room entries: "Make start page" hides when this list is the start
+            // page, and anything below it would slide up and read as a way into a room.
             MenuItem {
                 text: qsTr("Verify user")
                 onClicked: pageStack.push(Qt.resolvedUrl("VerifyUserPage.qml"))
             }
 
-            // The four ways into a room are one entry: a menu on a phone holds
-            // about five before the last of them is out of reach, and these
-            // four are all "start something", not everyday actions.
+            // The four ways into a room are one entry: a menu holds about five before the
+            // last is out of reach, and these are all "start something".
             MenuItem {
                 text: qsTr("Rooms")
                 onClicked: pageStack.push(Qt.resolvedUrl("RoomActionsPage.qml"))

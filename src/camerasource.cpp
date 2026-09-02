@@ -7,10 +7,8 @@
 
 namespace {
 
-/// Maps Qt's frame layout to the name GStreamer uses for the same bytes.
-/// Anything not listed is refused rather than guessed at — a wrong format
-/// produces a picture that looks like noise, which is harder to diagnose than
-/// no picture at all.
+/// Maps Qt's frame layout to GStreamer's name for the same bytes. Anything
+/// unlisted is refused: a wrong format looks like noise, which is harder to see.
 QString gstFormatFor(QVideoFrame::PixelFormat format)
 {
     switch (format) {
@@ -108,10 +106,8 @@ bool CameraSource::present(const QVideoFrame &frame)
 
 bool CameraSource::isAvailable()
 {
-    // An empty list does not mean there is no camera: on this platform the
-    // adaptation layer provides a default device without registering it for
-    // enumeration. Only a default camera that refuses to be created counts as
-    // absent.
+    // An empty list is not "no camera": the adaptation layer provides a default
+    // device without registering it. Only a default that refuses counts as absent.
     if (!QCameraInfo::availableCameras().isEmpty()) {
         return true;
     }
@@ -154,14 +150,8 @@ void CameraSource::start()
             this,
             [this](QCamera::Error) { emit failed(m_camera->errorString()); });
 
-    // The sensor offers far more than a call needs — this device hands out
-    // 1920x1440 by default, four megabytes a frame, which no amount of
-    // downstream scaling makes affordable.
-    //
-    // The resolution has to be one the camera actually offers: asking for an
-    // unsupported one fails the whole pipeline with "internal data stream
-    // error", which then looks like a broken call rather than a rejected
-    // setting. Loading the camera first is what makes the list available.
+    // The sensor offers far more than a call needs, and the resolution has to be
+    // one it actually offers - an unsupported one kills the whole pipeline.
     m_camera->load();
 
     const QList<QSize> resolutions = m_camera->supportedViewfinderResolutions();
@@ -194,11 +184,8 @@ void CameraSource::start()
               best.height(),
               resolutions.size());
     } else {
-        // No list offered (some ports enumerate nothing): request plain VGA
-        // rather than swallowing the sensor default — 1680x1248 on the Gemini
-        // PDA, which no 32-bit CPU converts and encodes in real time. Every
-        // Android camera HAL has to support 640x480; should this one still
-        // refuse, the error signal leads to the voice fallback.
+        // No list offered on some ports: ask for plain VGA rather than swallowing the
+        // sensor default, which no 32-bit CPU encodes in real time.
         QCameraViewfinderSettings settings;
         settings.setResolution(QSize(kCaptureWidth, kCaptureHeight));
         m_camera->setViewfinderSettings(settings);
@@ -218,15 +205,13 @@ void CameraSource::stop()
         return;
     }
 
-    // Detach first, so nothing is posted to this surface while it is being
-    // torn down, and do not hand the camera a null viewfinder — that is what
-    // produced "postEvent: Unexpected null receiver".
+    // Detach first, so nothing is posted to a surface being torn down - and never
+    // hand the camera a null viewfinder.
     QCamera *camera = m_camera;
     m_camera = nullptr;
 
-    // Disconnected before it is stopped: the error handler reads m_camera,
-    // which is already null, and a camera that reports an error while stopping
-    // is not unusual. That order was a segfault on hanging up.
+    // Disconnected before it is stopped: the error handler reads `m_camera`, which
+    // is already null. That order was a segfault on hanging up.
     disconnect(camera, nullptr, this, nullptr);
     camera->stop();
     camera->deleteLater();

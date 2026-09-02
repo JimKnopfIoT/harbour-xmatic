@@ -1,33 +1,5 @@
-//! Push notifications over UnifiedPush.
-//!
-//! This app has no background service by decision, so nothing arrives while it
-//! is closed. UnifiedPush does not change that decision: the *distributor* is
-//! the daemon, one per device and shared by every app on it, and this module is
-//! only the connector — the part that asks the distributor for an endpoint,
-//! hands that endpoint to the homeserver as a pusher, and takes delivery.
-//!
-//! Three things about the shape of this, each of which cost somebody a day
-//! before it was written down.
-//!
-//! **The D-Bus connection may not be driven by tokio.** The `unifiedpush`
-//! crate's handlers call `Handle::block_on`, which is legal only because zbus
-//! dispatches them on its async-io executor. Polled from a tokio worker they
-//! panic with "Cannot start a runtime from within a runtime". So the connection
-//! lives on a thread of its own under `zbus::block_on`, and the tokio handle is
-//! only handed over, never used to drive it. Cargo unifies features across the
-//! crate graph, so a single dependency enabling `zbus/tokio` would move the
-//! executor and break this from a distance — checked with
-//! `cargo tree -e features | grep 'zbus feature'`, which must not list `tokio`.
-//!
-//! **Nothing registers until the user asks.** A connector that registers at
-//! startup subscribes people who never turned the feature on, and the endpoint
-//! it gets is a secret that then exists for no reason.
-//!
-//! **The payload is not necessarily encrypted.** Web Push says it is, and the
-//! crate will decrypt where it can — but a Matrix push gateway relays the
-//! homeserver's plain JSON, and the distributor passes what it gets through
-//! untouched. Both cases are handled; assuming ciphertext would drop every
-//! message that actually arrives.
+//! Push over UnifiedPush: the distributor is the daemon, this is only the
+//! connector. Nothing registers until the user asks; see docs/PUSH.md.
 
 use crate::protocol::event;
 use crate::runtime::Sink;
@@ -40,12 +12,8 @@ use unifiedpush::{auth_to_string, pubkey_to_string, EventSink, PushEvent, PushMe
 use unifiedpush::UnifiedPush;
 use unifiedpush_storage::{Distributor, TokenInstance, UnifiedPushStorage};
 
-/// The bus name this connector owns.
-///
-/// Not `org.xmatic.xmatic`: Sailjail grants an application exactly one name,
-/// that one is already spent on the share activation, and claiming a child of
-/// it comes back as `ServiceUnknown`. The `org.unifiedpush.Connector.*`
-/// namespace is granted by the `UnifiedPush` permission for this reason.
+/// Not `org.xmatic.xmatic`: Sailjail grants one name and that one is spent on
+/// the share activation. This namespace comes with the UnifiedPush permission.
 const DBUS_NAME: &str = "org.unifiedpush.Connector.xmatic";
 
 /// One registration per app here. The protocol allows several ("instances");
@@ -83,10 +51,8 @@ impl PushHandle {
     }
 }
 
-/// Starts the connector. Returns `None` where the session bus or the D-Bus
-/// name cannot be had — an ordinary outcome on a device with no distributor
-/// installed, and one the UI has to be able to say out loud rather than look
-/// broken over.
+/// Starts the connector. `None` where the bus or the name cannot be had - the
+/// ordinary outcome on a device with no distributor installed.
 pub fn start(path: PathBuf, sink: Arc<Sink>) -> PushHandle {
     let (commands, mut rx) = unbounded_channel::<Command>();
 
@@ -111,10 +77,8 @@ pub fn start(path: PathBuf, sink: Arc<Sink>) -> PushHandle {
                 match UnifiedPush::new(DBUS_NAME, storage, EventChannel(events_tx), handle).await {
                     Ok(unifiedpush) => unifiedpush,
                     Err(error) => {
-                        // The usual cause is the Sailjail permission being
-                        // absent because no distributor package is installed,
-                        // and D-Bus reports that as `ServiceUnknown` rather
-                        // than as a permission error.
+                        // The usual cause is the Sailjail permission missing because no distributor
+                        // is installed, and D-Bus reports that as `ServiceUnknown`.
                         sink.emit(event(
                             "push.state",
                             json!({
@@ -131,12 +95,8 @@ pub fn start(path: PathBuf, sink: Arc<Sink>) -> PushHandle {
             while let Some(command) = rx.recv().await {
                 match command {
                     Command::Enable => {
-                        // Before every register, not once: unregistering the
-                        // last instance makes the crate forget the distributor,
-                        // and `register` then returns having silently done
-                        // nothing. And `try_use_default_distributor` is not an
-                        // availability check — it is true only for exactly one
-                        // candidate, so two distributors look like none.
+                        // Before every register: unregistering makes the crate forget the
+                        // distributor. And this is no availability check - two distributors look like none.
                         if !unifiedpush.try_use_default_distributor().await {
                             let names = unifiedpush.list_distributors().await;
                             match names.first() {
@@ -150,14 +110,14 @@ pub fn start(path: PathBuf, sink: Arc<Sink>) -> PushHandle {
                                 }
                             }
                         }
-                        sink.emit(event("push.state", json!({ "state": "registering" })));
+                        report_with(&sink, &unifiedpush, Some("registering")).await;
                         unifiedpush
                             .register(INSTANCE, Some("xmatic"), None)
                             .await;
                     }
                     Command::Disable => {
                         unifiedpush.unregister(INSTANCE).await;
-                        sink.emit(event("push.state", json!({ "state": "off" })));
+                        report_with(&sink, &unifiedpush, Some("off")).await;
                     }
                     Command::Status => report(&sink, &unifiedpush).await,
                 }
@@ -168,14 +128,16 @@ pub fn start(path: PathBuf, sink: Arc<Sink>) -> PushHandle {
     PushHandle { commands }
 }
 
-/// What is on the device and what this app holds, as one object.
-async fn report(sink: &Arc<Sink>, unifiedpush: &UnifiedPush) {
+/// What is on the device and what this app holds, as one object. Every
+/// `push.state` goes through here - a partial one blanks the page.
+async fn report_with(sink: &Arc<Sink>, unifiedpush: &UnifiedPush, state: Option<&str>) {
     let distributors = unifiedpush.list_distributors().await;
     let chosen = unifiedpush.get_distributor().await;
+    let derived = if distributors.is_empty() { "no-distributor" } else { "idle" };
     sink.emit(event(
         "push.state",
         json!({
-            "state": if distributors.is_empty() { "no-distributor" } else { "idle" },
+            "state": state.unwrap_or(derived),
             // Bus names, which is all a distributor is identified by. The UI
             // shows the last segment; the whole name is what a report needs.
             "distributors": distributors,
@@ -187,14 +149,17 @@ async fn report(sink: &Arc<Sink>, unifiedpush: &UnifiedPush) {
     ));
 }
 
+/// The whole picture, with the state derived from it.
+async fn report(sink: &Arc<Sink>, unifiedpush: &UnifiedPush) {
+    report_with(sink, unifiedpush, None).await;
+}
+
 /// One event from the distributor, as JSON for the bridge.
 fn forward(sink: &Arc<Sink>, push: PushEvent) {
     match push {
         PushEvent::NewEndpoint { endpoint, .. } => {
-            // All three, because a push server needs the keys as well as the
-            // URL: Web Push wants an encrypted body, and a gateway given only
-            // the URL cannot make one. Whether the gateway uses them is its
-            // business; withholding them would decide that for it.
+            // All three: Web Push wants an encrypted body, and a gateway given only the
+            // URL cannot make one. Whether it uses them is its business.
             sink.emit(event(
                 "push.endpoint",
                 json!({
@@ -205,17 +170,14 @@ fn forward(sink: &Arc<Sink>, push: PushEvent) {
             ));
         }
         PushEvent::Message { message, .. } => {
-            // Both shapes. The distributor relays what it was handed, and a
-            // Matrix gateway hands it the homeserver's plain JSON — so the
-            // undecrypted case is not an error here, it is the normal one.
+            // Both shapes. A Matrix gateway hands the distributor the homeserver's plain
+            // JSON, so the undecrypted case is the normal one, not an error.
             let (body, decrypted) = match message {
                 PushMessage::Decrypted { content } => (content, true),
                 PushMessage::Raw { content } => (content, false),
             };
-            // Parsed here rather than in the bridge: it is a pure function
-            // with tests, and a push that is not a Matrix notification —
-            // another app's, a gateway that reshaped it, the distributor's own
-            // test message — must be told apart from one that is.
+            // Parsed here rather than in the bridge: a pure function with tests, and a
+            // push that is not a Matrix notification has to be told apart from one that is.
             let text = String::from_utf8_lossy(&body).into_owned();
             let target = notification_target(&text);
             sink.emit(event(
@@ -250,15 +212,8 @@ impl EventSink for EventChannel {
     }
 }
 
-/// The registration, the keys and the chosen distributor, in one JSON file.
-///
-/// Persisting matters more than it looks: stubbing the key methods out compiles
-/// and registers cleanly, and then every push fails, because the keys handed to
-/// the push server go stale the moment the process restarts.
-///
-/// Written temp-and-rename, and under the app's own data directory — Sailjail
-/// presents the rest of `~/.local/share` as a tmpfs that firejail discards on
-/// exit, so only the per-app directory survives.
+/// Registration, keys and distributor in one JSON file: the keys go stale the
+/// moment the process restarts. Under the app's own directory - the rest is tmpfs.
 struct FileStorage {
     path: PathBuf,
     state: StoredPush,
@@ -285,14 +240,13 @@ impl FileStorage {
         FileStorage { path, state }
     }
 
+    /// 0600 throughout: the registration is a bearer credential. Not under the
+    /// store key - the woken process has no key after a reboot.
     fn save(&self) {
         let Ok(raw) = serde_json::to_vec_pretty(&self.state) else {
             return;
         };
-        let temporary = self.path.with_extension("tmp");
-        if std::fs::write(&temporary, &raw).is_ok() {
-            let _ = std::fs::rename(&temporary, &self.path);
-        }
+        let _ = crate::session::write_private(&self.path, &raw);
     }
 }
 
@@ -389,12 +343,8 @@ impl UnifiedPushStorage for FileStorage {
     }
 }
 
-/// The notification a Matrix push carries, as far as this app needs it.
-///
-/// `event_id_only` is what the pusher asks for, so the body names the room and
-/// the event and nothing else — the message itself is fetched and decrypted
-/// here. Everything is optional because the gateway between the homeserver and
-/// the device may reshape it, and a missing field must not cost the whole push.
+/// What a Matrix push carries. `event_id_only`, so it names room and event and
+/// nothing else; every field is optional because a gateway may reshape it.
 pub fn notification_target(body: &str) -> Option<(String, String)> {
     let parsed: Value = serde_json::from_str(body).ok()?;
     let notification = parsed.get("notification")?;
@@ -419,9 +369,8 @@ mod tests {
 
     #[test]
     fn anything_else_is_not_ours() {
-        // A push meant for another app, a gateway that reshaped the body, or
-        // the distributor's own test message. None of these may look like a
-        // message to fetch.
+        // A push meant for another app, a reshaped body, or the distributor's test
+        // message. None of these may look like a message to fetch.
         for probe in [
             "",
             "not json at all",
@@ -434,21 +383,15 @@ mod tests {
     }
 }
 
-/// Registers the endpoint with the homeserver as an HTTP pusher, or removes it.
-///
-/// The endpoint is the `pushkey` and the gateway is the URL the homeserver
-/// posts to. That split is not ours: a homeserver requires the pusher URL to
-/// end in `/_matrix/push/v1/notify`, so the endpoint cannot be the URL and has
-/// to travel as the key the gateway forwards to.
-///
-/// `format: event_id_only` on purpose. The push then names the room and the
-/// event and carries no content — which matters twice over here: an encrypted
-/// room's content would be useless to the gateway anyway, and everything on
-/// that path (the gateway, the push service) sees less.
-///
-/// The subscription keys ride along in the pusher's free-form data. Whether a
-/// gateway uses them is its business; a gateway that encrypts cannot work
-/// without them, and leaving them out would decide that question for it.
+/// True for a gateway this app will hand to the homeserver. https only: the
+/// server posts room and event ids to it for every notification.
+pub fn gateway_is_sound(gateway: &str) -> bool {
+    let gateway = gateway.trim();
+    gateway.starts_with("https://") && gateway.len() > "https://".len()
+}
+
+/// Registers the endpoint as an HTTP pusher. The endpoint is the pushkey and
+/// the gateway the URL: a homeserver requires the URL to end in `/notify`.
 pub async fn set_pusher(
     client: &matrix_sdk::Client,
     endpoint: &str,
@@ -458,6 +401,10 @@ pub async fn set_pusher(
 ) -> Result<(), String> {
     use matrix_sdk::ruma::api::client::push::{Pusher, PusherIds, PusherInit, PusherKind};
     use matrix_sdk::ruma::push::{HttpPusherData, PushFormat};
+
+    if !gateway_is_sound(gateway) {
+        return Err("the push gateway has to be an https address".to_owned());
+    }
 
     let mut data = HttpPusherData::new(gateway.to_owned());
     data.format = Some(PushFormat::EventIdOnly);
@@ -473,19 +420,16 @@ pub async fn set_pusher(
         ids: PusherIds::new(endpoint.to_owned(), APP_ID.to_owned()),
         kind: PusherKind::Http(data),
         app_display_name: "xmatic".to_owned(),
-        // Deliberately not the device's own name: it is shown in every other
-        // client's session list, and this app does not put the user's device
-        // name into places they did not ask for.
+        // Deliberately not the device's own name: it shows in every other client's
+        // session list, and this app does not put it where nobody asked.
         device_display_name: "xmatic".to_owned(),
         profile_tag: None,
         lang: "en".to_owned(),
     }
     .into();
 
-    // `append: false`, which tells the server to drop any other pusher with the
-    // same pushkey and app id. There is one endpoint per device here, and a
-    // second registration for the same one would only mean two copies of every
-    // notification.
+    // `append: false` drops any other pusher with the same pushkey - one endpoint
+    // per device, and a second registration means two of every notification.
     client
         .pusher()
         .set(pusher, false)
@@ -506,30 +450,47 @@ pub async fn clear_pusher(client: &matrix_sdk::Client, endpoint: &str) -> Result
         .map_err(|error| crate::text::scrub_ids(&format!("could not remove the pusher: {error}")))
 }
 
-/// The reverse-DNS identifier the homeserver files this pusher under. One per
-/// application, and it has to stay put: changing it leaves the old pusher on
-/// the server pointing at a dead endpoint.
+/// Removes every pusher this app registered. The endpoint is never persisted,
+/// so a registration that outlived it can only be found on the server.
+pub async fn clear_own_pushers(client: &matrix_sdk::Client) -> Result<(), String> {
+    use matrix_sdk::ruma::api::client::push::{get_pushers, PusherIds};
+
+    let response = client
+        .send(get_pushers::v3::Request::new())
+        .await
+        .map_err(|error| {
+            crate::text::scrub_ids(&format!("could not read the pushers: {error}"))
+        })?;
+
+    let mut failure = None;
+    for pusher in response.pushers {
+        if pusher.ids.app_id != APP_ID {
+            continue;
+        }
+        let ids = PusherIds::new(pusher.ids.pushkey, APP_ID.to_owned());
+        if let Err(error) = client.pusher().delete(ids).await {
+            failure = Some(crate::text::scrub_ids(&format!(
+                "could not remove the pusher: {error}"
+            )));
+        }
+    }
+    match failure {
+        Some(message) => Err(message),
+        None => Ok(()),
+    }
+}
+
+/// The identifier the homeserver files this pusher under. It has to stay put:
+/// changing it leaves the old pusher pointing at a dead endpoint.
 const APP_ID: &str = "org.xmatic.xmatic";
 
-/// Fetches the message a push named, and returns what a banner needs.
-///
-/// The push carries a room and an event id and nothing else — that is what
-/// `event_id_only` buys: the gateway and the push service never see a word of
-/// the conversation. The text is fetched and decrypted here, on the device that
-/// holds the keys.
-///
-/// `NotificationClient` is the SDK's own answer to exactly this. It reaches an
-/// event that no sync has brought in yet, applies the account's push rules, and
-/// hands back the room's display name and the sender's along with it.
-///
-/// `MultipleProcesses`, because that is what this is: the app may be running
-/// while a second, woken process asks. The setting decides how the crypto
-/// store's cross-process lock behaves, and claiming a single process here where
-/// there may be two is the way to a corrupted store.
+/// Fetches the message a push named. `NotificationClient` reaches an event no
+/// sync brought in; `MultipleProcesses`, because a woken process may be second.
 pub async fn notification_for(
     client: &matrix_sdk::Client,
     room_id: &str,
     event_id: &str,
+    sync: Option<std::sync::Arc<matrix_sdk_ui::sync_service::SyncService>>,
 ) -> Result<Value, String> {
     use matrix_sdk::ruma::{EventId, RoomId};
     use matrix_sdk_ui::notification_client::{
@@ -539,8 +500,14 @@ pub async fn notification_for(
     let room = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let event = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
 
+    // One process: `MultipleProcesses` mints a dummy permit and starts a second
+    // encryption sync beside the running one, both claiming to-device events.
+    let setup = match sync {
+        Some(sync_service) => NotificationProcessSetup::SingleProcess { sync_service },
+        None => NotificationProcessSetup::MultipleProcesses,
+    };
     let notifications =
-        NotificationClient::new(client.clone(), NotificationProcessSetup::MultipleProcesses)
+        NotificationClient::new(client.clone(), setup)
             .await
             .map_err(|error| {
                 crate::text::scrub_ids(&format!("could not open the notification client: {error}"))
@@ -559,17 +526,14 @@ pub async fn notification_for(
                     .unwrap_or_default(),
                 "previewKind": kind,
                 "previewText": text,
-                // The push rules decided this was worth a sound. Passed on
-                // rather than judged again here: the account's own rules are
-                // the answer, and a second opinion would only disagree.
+                // The push rules decided this was worth a sound. Passed on rather than judged
+                // again: a second opinion would only disagree with the account's own rules.
                 "noisy": item.is_noisy.unwrap_or(false),
                 "mention": item.has_mention.unwrap_or(false),
             }))
         }
-        // Each of these is a real answer, not a failure: the push rules say
-        // this one is not to be shown, the event is gone, or the server never
-        // had it. Silence is the correct outcome and the caller must not turn
-        // it into a banner.
+        // Real answers, not failures: the rules say do not show it, the event is gone,
+        // or the server never had it. Silence is correct.
         Ok(NotificationStatus::EventFilteredOut) => Err("filtered out".to_owned()),
         Ok(NotificationStatus::EventRedacted) => Err("redacted".to_owned()),
         Ok(NotificationStatus::EventNotFound) => Err("event not found".to_owned()),

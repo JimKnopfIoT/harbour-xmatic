@@ -3,12 +3,8 @@
 
 #include "difflistmodel.h"
 
-/// Search hits inside one room.
-///
-/// Unlike the room list and the timeline, nothing streams here: the core
-/// answers one page per command and the bridge turns that answer into a reset
-/// (a fresh search) or an append (the next page). The diff machinery is
-/// borrowed for the row storage alone.
+/// Search hits in one room. Nothing streams: the core answers one page per
+/// command, turned into a reset or an append. Only the row storage is borrowed.
 class SearchModel : public DiffListModel
 {
     Q_OBJECT

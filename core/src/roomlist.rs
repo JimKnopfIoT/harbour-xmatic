@@ -1,10 +1,5 @@
-//! The room list, driven by the SDK's sync service.
-//!
-//! `RoomListService` hands out a stream of `VectorDiff`s over the rooms —
-//! exactly the vocabulary `QAbstractListModel` speaks. Each diff is forwarded
-//! to the front end verbatim, so the Qt model only has to translate insert into
-//! `beginInsertRows` and so on. This is the payoff of putting the protocol in
-//! Rust: nothing here reimplements sync, ordering or unread counting.
+//! The room list, driven by the SDK's sync service: `VectorDiff`s in, the same
+//! diffs out to the Qt model. Nothing here reimplements sync or ordering.
 
 use std::collections::HashSet;
 use std::sync::{Arc, Mutex};
@@ -54,10 +49,8 @@ use crate::text::strip_bidi;
 /// handful; this is generous enough that scrolling rarely has to grow it.
 const PAGE_SIZE: usize = 50;
 
-/// Everything needed to keep the list running and to shut it down again.
-/// Tasks the room list started that hold a client and would otherwise outlive
-/// it. Same reason as `TimelineTasks` in `timeline.rs`: a task holding a client
-/// keeps the SQLite pool open, and a sign-out deletes the directory under it.
+/// Tasks the room list started that hold a client. Same reason as
+/// `TimelineTasks`: a held client keeps the pool open under a `reset_store`.
 static SIDE_TASKS: std::sync::Mutex<Vec<tokio::task::AbortHandle>> =
     std::sync::Mutex::new(Vec::new());
 
@@ -78,7 +71,7 @@ fn stop_side_tasks() {
 }
 
 pub struct RoomListHandle {
-    sync: Arc<SyncService>,
+    pub sync: Arc<SyncService>,
     filters: mpsc::UnboundedSender<String>,
     /// Asks for one more page of rooms. The dynamic list starts at `PAGE_SIZE`
     /// and grows only when told to.
@@ -111,23 +104,15 @@ impl RoomListHandle {
         self.states.abort();
         self.queue.abort();
         self.loading.abort();
-        // The two loose ones as well: the room-name lookup holds a `Room` and
-        // the sliding-sync probe a `Client`, and both outlived every handle
-        // this struct knows about.
+        // The two loose ones as well - the name lookup holds a `Room`, the sync probe
+        // a `Client` - and both outlived every handle this struct knows.
         stop_side_tasks();
         self.sync.stop().await;
     }
 }
 
-/// Where a room's picture comes from.
-///
-/// A room's own avatar if it has one. A one-to-one chat usually has none — the
-/// picture people expect there is the other person's, which the server sends
-/// along as the room's "hero". Without this fallback exactly the rooms that
-/// matter most, the direct chats, would be the ones showing a blank circle.
-///
-/// Only for a single hero: with two or more the room is a group, and picking
-/// one member's face to stand for it would be arbitrary.
+/// The room's own avatar, or the single hero's picture for a direct chat.
+/// With two or more heroes the room is a group and any face would be arbitrary.
 fn room_avatar(item: &RoomListItem) -> Option<String> {
     if let Some(url) = item.avatar_url() {
         return Some(url.to_string());
@@ -139,22 +124,8 @@ fn room_avatar(item: &RoomListItem) -> Option<String> {
     }
 }
 
-/// The room's latest event as one banner line: what kind of thing it is, and
-/// for text the text itself, cut to a length a notification can show. The
-/// kind lets the UI word the non-text cases in its own language ("picture",
-/// "voice message") instead of the core guessing at one.
-///
-/// Only remote events count — a preview exists so a notification can say what
-/// arrived, and what arrived is never the user's own unsent message. Anything
-/// that is not a message (state, reactions, redacted) yields no preview, and
-/// an event this device could not decrypt says so as its kind, so the banner
-/// can still be honest about it.
-/// Resolves a room address - `#alias:server` or `!id:server` - to a room id,
-/// and says whether this account is already in it.
-///
-/// Used by a tapped Matrix link. It answers, it never joins: a link in a
-/// message must not be able to put anybody into a room, so the front end asks
-/// first where the answer says "not a member".
+/// Resolves `#alias:server` or `!id:server` to a room id and says whether this
+/// account is in it. It answers, it never joins.
 pub async fn resolve(client: &Client, address: &str) -> Result<Value, String> {
     let address = address.trim();
     let room_id = if address.starts_with('!') {
@@ -176,13 +147,8 @@ pub async fn resolve(client: &Client, address: &str) -> Result<Value, String> {
     Ok(json!({ "roomId": room_id.as_str(), "joined": joined }))
 }
 
-/// Marks a room read without opening it: a read receipt on its latest event,
-/// plus clearing the manual unread flag. Used by the chat list, where the point
-/// is not having to read the room at all.
-///
-/// A room whose latest event this device has not seen as a remote event - an
-/// empty room, or one that only holds a local echo - has nothing to point a
-/// receipt at, and answers that it did nothing rather than failing.
+/// Marks a room read from the chat list: receipt on the latest event plus the
+/// manual flag. Answers that it did nothing where there is no remote event.
 pub async fn mark_read(client: &Client, room_id: &str, receipt: bool) -> Result<bool, String> {
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let room = client
@@ -197,20 +163,14 @@ pub async fn mark_read(client: &Client, room_id: &str, receipt: bool) -> Result<
     };
     let event_id = parsed_event.event_id().to_owned();
 
-    // The marker always, the public receipt only where the user allows it -
-    // the same rule the room's own "mark read" follows. This path used to send
-    // it unconditionally, so the privacy switch held in the room and was
-    // ignored by the chat list's own entry, which is where it is easiest to
-    // reach. The marker is private account data and is what the room opens at
-    // next time, so it goes either way.
+    // Marker always, public receipt only where allowed - the same rule the room
+    // follows. Sending it unconditionally ignored the privacy switch here.
     let mut receipts = Receipts::new().fully_read_marker(event_id.clone());
     if receipt {
         receipts = receipts.public_read_receipt(event_id);
     } else {
-        // The private receipt for the same reason the room's path sends one:
-        // the counters hang off the receipts, not off the marker, so without
-        // it the badge this entry exists to clear would come back with the
-        // next diff.
+        // The private receipt for the same reason as in the room: the counters hang
+        // off receipts, not off the marker, so the badge would come back.
         receipts = receipts.private_read_receipt(event_id);
     }
     room.send_multiple_receipts(receipts)
@@ -222,9 +182,8 @@ pub async fn mark_read(client: &Client, room_id: &str, receipt: bool) -> Result<
     Ok(true)
 }
 
-/// A matrix.to link to the room. The SDK picks the address where the room has
-/// one and falls back to the id plus a route - the servers through which
-/// somebody who is not a member can find it. An id alone is not joinable.
+/// A matrix.to link: the address where the room has one, else the id plus the
+/// servers it can be found through. An id alone is not joinable.
 pub async fn permalink(client: &Client, room_id: &str) -> Result<String, String> {
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let room = client
@@ -249,11 +208,8 @@ fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>,
     let sender = Some(message_like.sender().to_string());
     match message_like {
         AnySyncMessageLikeEvent::RoomMessage(SyncMessageLikeEvent::Original(message)) => {
-            // An edit carries its readable text in m.new_content; the event's
-            // own body is only the "* …" fallback. For an edited reply that
-            // fallback starts with "* > <@…>", which the quote stripper below
-            // does not recognize — the banner then shows the quoted text, not
-            // the message (reported as "the notification shows my own text").
+            // An edit's readable text is in `m.new_content`; the body is the "* …"
+            // fallback, which for a reply made the banner show the quoted text.
             let msgtype = match &message.content.relates_to {
                 Some(Relation::Replacement(replacement)) => &replacement.new_content.msgtype,
                 _ => &message.content.msgtype,
@@ -283,10 +239,8 @@ fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>,
     }
 }
 
-/// A body reduced to what a banner can hold: the quoted-reply fallback that
-/// older clients still prepend ("> <@…> …" lines and the blank line after
-/// them) dropped, line breaks folded to spaces, and the whole cut to a
-/// length that fits two lines of a notification.
+/// A body reduced to what a banner holds: the quoted-reply fallback dropped,
+/// line breaks folded, cut to two notification lines.
 fn preview_text(body: &str) -> String {
     const PREVIEW_CHARS: usize = 160;
     // The notification banner is drawn from this, and a line that reverses
@@ -314,15 +268,16 @@ fn preview_text(body: &str) -> String {
 /// Rooms whose display name this process has already asked to be computed.
 static NAMES_REQUESTED: Mutex<Option<HashSet<String>>> = Mutex::new(None);
 
-/// The room's name, and a request for one where the SDK has none yet.
-///
-/// `cached_display_name` is filled by a sync and by nothing else, so a room
-/// seen before that first fill has *no* name - not a wrong one, none, and the
-/// list row, the banner and the room header all showed an empty line. The
-/// computation is spawned once per room; it caches, which makes the next diff
-/// carry the name. Meanwhile the row keeps its empty name rather than being
-/// given an invented one - a wrong name in a chat list is worse than a late
-/// one.
+/// Forgets which rooms were asked for a name, or one asked for under the
+/// previous account keeps its empty name until the process restarts.
+pub fn forget_name_requests() {
+    if let Ok(mut guard) = NAMES_REQUESTED.lock() {
+        *guard = None;
+    }
+}
+
+/// The room's name, and a request for one where the SDK has none: the cache is
+/// filled by a sync alone, so an unseen room has no name at all, not a wrong one.
 fn display_name(item: &RoomListItem) -> String {
     if let Some(name) = item.cached_display_name() {
         return strip_bidi(&name.to_string());
@@ -340,9 +295,8 @@ fn display_name(item: &RoomListItem) -> String {
         let room_id = item.room_id().to_string();
         let handle = tokio::spawn(async move {
             if room.display_name().await.is_err() {
-                // Marked before the attempt so two syncs do not both ask; on
-                // failure the mark goes, or one bad moment costs the room its
-                // name for the rest of the process.
+                // Marked before the attempt so two syncs do not both ask; on failure the mark
+                // goes, or one bad moment costs the room its name for the process.
                 if let Ok(mut guard) = NAMES_REQUESTED.lock() {
                     if let Some(rooms) = guard.as_mut() {
                         rooms.remove(&room_id);
@@ -355,57 +309,39 @@ fn display_name(item: &RoomListItem) -> String {
     String::new()
 }
 
-/// How many events a sync carries per room in the list — and therefore how far
-/// the unread count can see. Read in two places, which is why it is a name and
-/// not two numbers: the sync builder sets it, and the badge says "20+" at
-/// exactly this value because past it the count is a floor, not a total.
-///
-/// The cost of raising it is not this number but this number times the rooms
-/// in the request, and the room list grows that range to a hundred at a time.
-/// See the sync builder below before touching it.
+/// Events per room in a sync, and therefore how far the badge can see. Its
+/// cost is this number times the rooms in the request - see the builder below.
 pub const LIST_TIMELINE_LIMIT: u32 = 20;
 
 /// One room as the UI needs it. Deliberately flat and small — this crosses the
 /// FFI on every change.
 fn summarize(item: &RoomListItem) -> Value {
     let (preview_kind, preview_text, preview_sender) = latest_preview(item);
-    // Held to what the window can actually show. At the ceiling the count says
-    // "at least this many", and a badge that prints a bare 20 for that claims
-    // to have counted something it did not see; the UI adds the "+" from the
-    // flag below. Above it the number would be arbitrary anyway - a room whose
-    // history was paginated has more events in the cache than a sync brought.
+    // Held to what the window can show: at the ceiling the count is a floor, and
+    // the UI adds the "+". Above it the number would be arbitrary anyway.
     let cap = u64::from(LIST_TIMELINE_LIMIT);
     let unread = item.num_unread_messages().max(item.num_unread_notifications());
     let mentions = item.num_unread_mentions();
     json!({
         "id": item.room_id().as_str(),
         "name": display_name(item),
-        // A floor under the count, not a repair: what actually makes this
-        // right is the sync window above. Both counters are computed here from
-        // the transported events and agree once enough of them arrive -
-        // measured on a device, 16 and 16. The larger is kept because it can
-        // only ever help, and because the badge is meant to count every
-        // message: taking the notification counter alone would follow the push
-        // rules and go quiet in a room set to mentions-only.
+        // A floor, not a repair - the window above is what makes it right. The larger
+        // of the two counters, because the badge is meant to count every message.
         "unread": unread.min(cap),
         // Whether that number is the whole truth or the edge of the window.
         "unreadCapped": unread >= cap || mentions >= cap,
-        // Counted client-side against the account's push rules: only events
-        // whose rules say "notify". This is the number a banner may follow —
-        // `unread` counts everything and would ignore a room set to
-        // mentions-only.
+        // Counted client-side against the push rules: the number a banner may follow.
+        // `unread` counts everything and would ignore a mentions-only room.
         "notifications": item.num_unread_notifications(),
         "mentions": mentions.min(cap),
         "encrypted": item.encryption_state().is_encrypted(),
         "space": item.is_space(),
-        // Tags the user set (m.favourite / m.lowpriority). The list groups on
-        // these — favourites to the top, low priority to the bottom — and low
-        // priority additionally suppresses notifications.
+        // The user's tags (m.favourite / m.lowpriority): the list groups on them, and
+        // low priority also suppresses notifications.
         "favourite": item.is_favourite(),
         "lowPriority": item.is_low_priority(),
-        // Upgraded away: the room still lists and still opens, but nothing new
-        // arrives in it. The list says so, because a dead room is otherwise
-        // indistinguishable from a quiet one.
+        // Upgraded away: still listed, still opens, nothing new arrives. Said out
+        // loud, because a dead room looks like a quiet one.
         "tombstoned": item.is_tombstoned(),
         "muted": matches!(
             item.cached_user_defined_notification_mode(),
@@ -439,51 +375,11 @@ fn summarize_all<'a>(items: impl IntoIterator<Item = &'a RoomListItem>) -> Vec<V
 
 /// Translates one diff into the JSON the Qt model applies.
 fn encode(diff: &VectorDiff<RoomListItem>) -> Value {
-    match diff {
-        VectorDiff::Append { values } => {
-            json!({ "op": "append", "values": summarize_all(values) })
-        }
-        VectorDiff::Clear => json!({ "op": "clear" }),
-        VectorDiff::PushFront { value } => {
-            json!({ "op": "insert", "index": 0, "value": summarize(value) })
-        }
-        VectorDiff::PushBack { value } => {
-            json!({ "op": "append", "values": [summarize(value)] })
-        }
-        VectorDiff::PopFront => json!({ "op": "remove", "index": 0 }),
-        VectorDiff::PopBack => json!({ "op": "popBack" }),
-        VectorDiff::Insert { index, value } => {
-            json!({ "op": "insert", "index": index, "value": summarize(value) })
-        }
-        VectorDiff::Set { index, value } => {
-            json!({ "op": "set", "index": index, "value": summarize(value) })
-        }
-        VectorDiff::Remove { index } => json!({ "op": "remove", "index": index }),
-        VectorDiff::Truncate { length } => json!({ "op": "truncate", "length": length }),
-        VectorDiff::Reset { values } => {
-            json!({ "op": "reset", "values": summarize_all(values) })
-        }
-    }
+    crate::protocol::encode_diff(diff, summarize)
 }
 
-/// Starts the sync service and the room list stream.
-///
-/// The stream borrows the room list, so both live inside the spawned task;
-/// filter changes are passed in over a channel rather than by handing the
-/// controller out.
-/// Asks the homeserver whether it speaks the sync this app is built on.
-///
-/// Everything here rides on `SyncService`, which is simplified sliding sync
-/// (MSC4186). The client is built with `VersionBuilder::Native`, so it
-/// assumes support rather than discovering it — and where the assumption is
-/// wrong every sync fails, the offline mode turns that into `Offline`, and
-/// the restart loop below makes the banner flash while the room list stays
-/// empty. That looks like a network problem and is not one, which is exactly
-/// what a field report could not tell us.
-///
-/// The flag is the same one the SDK's own discovery reads. Answering `false`
-/// does not stop anything: a server that supports it without advertising
-/// would otherwise be locked out over a missing header.
+/// Asks whether the homeserver speaks simplified sliding sync (MSC4186). The
+/// client assumes it, and where that is wrong every sync fails as "offline".
 async fn sliding_sync_supported(client: &Client) -> Result<bool, String> {
     const FEATURE: &str = "org.matrix.simplified_msc3575";
 
@@ -513,24 +409,14 @@ fn spawn_support_check(client: Client, sink: Arc<Sink>) {
     track_side_task(handle.abort_handle());
 }
 
-/// Forwards how many rooms the *server* counts for this account, so the list
-/// can say "20 of 412" instead of leaving a short list unexplained.
-///
-/// The sliding sync list starts on a range of twenty rooms and only switches to
-/// growing batches once the room list service reaches `Running`; a service that
-/// keeps falling back to `Recovering` therefore never offers more than those
-/// twenty, and nothing on screen distinguishes that from an account that simply
-/// has twenty rooms. `RoomList::loading_state` carries the list's own maximum,
-/// which is exactly the number needed to tell the two apart — and it is the
-/// server's number, not ours, so it also says when the server is the one
-/// holding rooms back.
+/// The server's own room count, so a short list can say "20 of 412". The list
+/// range only grows past twenty once the service reaches `Running`.
 fn spawn_loading_state(room_list: &RoomList, sink: Arc<Sink>) -> JoinHandle<()> {
     let mut states = room_list.loading_state();
     tokio::spawn(async move {
         while let Some(state) = states.next().await {
-            // `NotLoaded` means no sync has answered yet; the count is unknown
-            // rather than zero, and the front end must be able to tell those
-            // apart or it would report "0 of 0" for a list that is merely young.
+            // `NotLoaded` is "no sync has answered", not zero - the front end must be
+            // able to tell those apart or it reports "0 of 0" for a young list.
             let total = match state {
                 RoomListLoadingState::NotLoaded => None,
                 RoomListLoadingState::Loaded {
@@ -547,60 +433,12 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
     // the answer is a diagnosis, not a gate.
     spawn_support_check(client.clone(), sink.clone());
 
-    // Without the offline mode a network loss (flight mode, dead WLAN) ends in
-    // `State::Error` and the service stays down until the app restarts. With
-    // it, the service polls the homeserver and restarts both sync loops on its
-    // own once the network is back.
+    // Without the offline mode one network loss parks the service in `State::Error`
+    // until the app restarts.
     let sync = SyncService::builder(client.clone())
         .with_offline_mode()
-        // How many events a sync carries per room. The SDK's default for the
-        // room list is *one* - enough to show the latest line, and the reason
-        // the unread count was wrong after every cold start: the count is
-        // computed here from the events actually transported, so a room that
-        // received sixteen while the app was closed reported one. Measured on
-        // a device, with all three counters side by side:
-        // `badge=1 messages=1 notifications=1 server=0`.
-        //
-        // The server's own count would have made this moot - it is what
-        // Fractal shows - and it is not an option: Synapse hardcodes the
-        // server-side counters to zero in this sync path - read in its own
-        // source on the homeserver:
-        //
-        //     # TODO: These are just dummy values. We could potentially just
-        //     # remove these since notifications can only really be done
-        //     # correctly on the client anyway (encrypted rooms).
-        //     notification_count=0,
-        //     highlight_count=0,
-        //
-        // No configuration opens that door, for any client speaking sliding
-        // sync. So the width of this window *is* the accuracy of the badge,
-        // and the only question is what it costs.
-        //
-        // **What it costs is not one room's worth.** This number multiplies
-        // the number of rooms in the request, and that number is not the
-        // twenty of the first sync: the room list switches to `Growing` with a
-        // batch size of a hundred two syncs in
-        // (`room_list_service/state.rs`, `ALL_ROOMS_DEFAULT_GROWING_BATCH_SIZE`),
-        // and a growing range always starts at zero. On an account with two
-        // hundred rooms the third request therefore asks for all two hundred
-        // at once.
-        //
-        // 0.27.0 shipped this at two hundred, which is forty thousand events
-        // in one response there. It times out, the sync service turns that
-        // into `Offline` and restarts, `Recovering` drops back to the first
-        // twenty rooms, that succeeds, growing tries again - so the twenty
-        // most recent rooms kept updating and everything behind them stopped,
-        // for good. Reported from the field within a day. The value had been
-        // reasoned about per room and measured on an eighteen-room account,
-        // where the multiplier does not exist.
-        //
-        // Twenty, and the badge says so: it counts up to twenty and shows
-        // "20+" from there, so the number on screen is never a total the app
-        // did not see. Four thousand events in the worst request a
-        // two-hundred-room account can produce. The SDK's own default here is
-        // one, and anything above it is this app's own risk - so the number to
-        // check when a large account reports rooms that stop updating is this
-        // one, and the way to answer such a report is to lower it.
+        // Twenty, and the badge says "20+" from there. This multiplies by the rooms in
+        // one request, and 200 shipped in 0.27.0 stopped large accounts updating.
         .with_room_list_timeline_limit(LIST_TIMELINE_LIMIT)
         .build()
         .await
@@ -622,19 +460,15 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
     let loading = spawn_loading_state(&room_list, sink.clone());
 
     let (filters, mut filter_updates) = mpsc::unbounded_channel::<String>();
-    // The list does not hold every room the account has: the dynamic adapter
-    // starts at one page and grows only when asked. Somebody has to ask, and
-    // the only place that knows the list has been scrolled to its end is the
-    // front end - so it says so through here. Without it an account past
-    // fifty rooms simply had no older rooms, with nothing saying they existed.
+    // The dynamic adapter starts at one page and grows only when asked, and only
+    // the front end knows the list was scrolled to its end.
     let (more, mut more_requests) = mpsc::unbounded_channel::<()>();
 
     let task = tokio::spawn(async move {
         let (stream, controller) = room_list.entries_with_dynamic_adapters(PAGE_SIZE);
 
-        // Nothing is emitted until a filter is set. Spaces are excluded here:
-        // they have no timeline and would open an empty room, so they live on
-        // their own level (see `spawn_spaces`) rather than in the chat list.
+        // Nothing is emitted until a filter is set. Spaces are excluded: they have no
+        // timeline and live on their own level.
         controller.set_filter(main_list_filter(""));
 
         futures_util::pin_mut!(stream);
@@ -669,27 +503,11 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
     })
 }
 
-/// Puts a room's send queue back to work after a failure it can recover from.
-///
-/// The SDK switches a room's queue off after *any* failed send — "Disable the
-/// queue for this room after any kind of error happened", `send_queue/mod.rs` —
-/// and for a recoverable failure it deliberately leaves the message sitting in
-/// the queue. Switching the queue back on is the caller's job, and the SDK
-/// announces the moment through `subscribe_errors`.
-///
-/// Doing it only on a `Running` state of the sync service, which is what this
-/// used to rely on, misses the ordinary case. The queue goes off when a *send*
-/// fails, which has nothing to do with the sync service; the service only
-/// enters `Offline` if one of *its* requests fails, and the state stream yields
-/// on changes alone. A network gap short enough that no sync request failed
-/// therefore produced no state change, no `Running`, and no revival — the queue
-/// stayed off for the rest of the session and every message written afterwards
-/// silently stayed put. Only restarting the app got them out, which is exactly
-/// what a tester reported: two identical messages, both delivered at restart.
+/// Puts a room's send queue back to work: the SDK disables it after any failed
+/// send and leaves recoverable messages sitting. Announced by `subscribe_errors`.
 fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
-    /// How long to wait before the first revival. Long enough that a queue is
-    /// not woken into a network that is still gone, short enough to be over
-    /// before anyone reaches for the app menu.
+    /// Long enough not to wake into a network that is still gone, short enough to
+    /// be over before anyone reaches for the app menu.
     const FIRST_DELAY: Duration = Duration::from_secs(5);
 
     /// Ceiling for the doubling, so a long outage settles at one attempt a
@@ -708,9 +526,8 @@ fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> 
         loop {
             let failure = match errors.recv().await {
                 Ok(failure) => failure,
-                // Lagged means some failures were missed while this task was
-                // busy waiting. That changes nothing about what has to happen
-                // — the queue still needs switching back on.
+                // Lagged means failures were missed while this task waited. Nothing changes -
+                // the queue still needs switching back on.
                 Err(RecvError::Lagged(_)) => continue,
                 Err(RecvError::Closed) => break,
             };
@@ -721,11 +538,8 @@ fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> 
             }
             previous = Some(now);
 
-            // Unrecoverable failures are revived too. The SDK marks the
-            // offending message as wedged and skips it from then on, but it
-            // switches the room's queue off just the same — leaving it off
-            // would strand every *other* message in that room behind one that
-            // will never be sent.
+            // Unrecoverable failures too: the SDK wedges the message but disables the
+            // room's queue just the same, stranding every other message behind it.
             sink.emit(event(
                 "send.queue",
                 json!({
@@ -742,13 +556,8 @@ fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> 
     })
 }
 
-/// Forwards the sync service's state to the UI as `sync.state`. The offline
-/// mode recovers on its own; this stream only lets the user see that it is
-/// happening instead of a silently stale room list.
-///
-/// Reaching `Running` also re-enables the send queue: a failed send disables
-/// the queue for its room, so messages written while offline would otherwise
-/// stay unsent even after the network came back.
+/// Forwards the sync state as `sync.state` so the user sees a recovery happen.
+/// Reaching `Running` also re-enables the send queue.
 fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
     fn name(state: &SyncState) -> &'static str {
         match state {
@@ -767,9 +576,8 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
         let mut states = sync.state();
         let mut current = states.get();
         let mut restart_in = FIRST_RESTART;
-        // Whether the connection has been down since the last time it was up.
-        // Not set before the first `Running`, so a normal start does not ask
-        // the server one extra time for nothing.
+        // Whether the connection has been down since it was last up. Not set before
+        // the first `Running`, so a normal start asks the server nothing extra.
         let mut was_down = false;
 
         loop {
@@ -780,15 +588,8 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
                     restart_in = FIRST_RESTART;
                     client.send_queue().set_enabled(true).await;
 
-                    // Whether a key backup exists is a question over the
-                    // network, and while the connection was down it had no
-                    // answer - `recovery::status` now says so rather than
-                    // saying "no". Something has to ask again once there is a
-                    // connection, or the security lines stay grey for the rest
-                    // of the run and the user is told nothing at all.
-                    //
-                    // Spawned: it is a round trip, and this loop must stay
-                    // free to forward the next state change.
+                    // A key backup is a question over the network and had no answer while the
+                    // connection was down. Spawned: this loop must stay free for state changes.
                     if was_down {
                         was_down = false;
                         let client = client.clone();
@@ -803,18 +604,8 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
                     }
                 }
 
-                // The offline mode does not cover these. Its recovery sits
-                // inside the branch for a termination that carries an error;
-                // a termination *without* one sets `Idle` or `Terminated` and
-                // leaves the supervisor loop for good
-                // (`matrix-sdk-ui`, `sync_service.rs`). The service is then
-                // simply dead, the app quietly stops receiving, and only a
-                // restart of the app brings it back — which is why the SDK
-                // says the caller "MUST" watch this state and call `start()`
-                // again. Nothing here did.
-                //
-                // `start()` is safe to call repeatedly: it only does anything
-                // when the service is stopped or offline.
+                // The offline mode does not cover these: a termination without an error leaves
+                // the supervisor for good. `start()` is safe to call repeatedly.
                 SyncState::Idle | SyncState::Terminated | SyncState::Error(_) => {
                     was_down = true;
                     sleep(restart_in).await;
@@ -848,10 +639,8 @@ fn main_list_filter(pattern: &str) -> BoxedFilterFn {
     Box::new(new_filter_all(filters))
 }
 
-/// Spawns a filtered view over the same rooms and forwards its diffs under
-/// `event_name`. Both the space overview and a single space's rooms are just
-/// the room list under a different filter, so they reuse the whole machinery —
-/// ordering, unread counts and diffing all still come from the SDK.
+/// A filtered view over the same rooms under `event_name`. Spaces and a single
+/// space's rooms are the room list with another filter.
 fn spawn_filtered(
     room_list: RoomList,
     filter: BoxedFilterFn,
@@ -888,13 +677,8 @@ pub async fn spawn_spaces(
     Ok(spawn_filtered(room_list, filter, "spaces.diff", sink))
 }
 
-/// Streams the rooms that belong to one space as `space.diff`.
-///
-/// The children come from the space's own `m.space.child` state — the state
-/// key of each such event is the child's room id (see the spec's
-/// `m.space.child` relationship). Only children this device already knows as
-/// rooms appear; ones the user has not joined are silently left out, because
-/// the room list only carries rooms the client has.
+/// Streams a space's rooms as `space.diff`, from its `m.space.child` state.
+/// Only children this device knows as rooms appear.
 pub async fn spawn_space_children(
     client: &Client,
     space_room_id: &str,
@@ -921,9 +705,8 @@ pub async fn spawn_space_children(
     Ok(spawn_filtered(room_list, filter, "space.diff", sink))
 }
 
-/// Creates a new, empty space (a room with a `room_type` of `m.space`) and
-/// returns its id. It shows up in the space overview through the normal sync,
-/// so nothing else has to be told about it.
+/// Creates an empty space - a room with `room_type` `m.space` - and returns its
+/// id. It reaches the overview through the ordinary sync.
 pub async fn create_space(client: &Client, name: &str) -> Result<String, String> {
     let name = name.trim();
     if name.is_empty() {
@@ -950,13 +733,8 @@ pub async fn create_space(client: &Client, name: &str) -> Result<String, String>
     Ok(room.room_id().as_str().to_owned())
 }
 
-/// Everything a new room can be given at creation. It is a struct and not a
-/// row of booleans because the list grew past what a call site can read, and
-/// because every field here shares one property: the server takes it only now.
-/// Encryption cannot be switched off again, `m.federate` is fixed for the
-/// room's lifetime, and an alias or a power level added later depends on a
-/// right the creator may have lost by then. Asking once beats a settings page
-/// whose writes fail quietly.
+/// Everything a new room can be given at creation, as a struct: every field
+/// here is one the server takes only now.
 pub struct NewRoom {
     pub name: String,
     pub topic: String,
@@ -976,9 +754,8 @@ pub struct NewRoom {
     pub equal_power: bool,
 }
 
-/// Translates the front end's history setting into the state event's value.
-/// An unknown name is refused rather than silently ignored: the difference
-/// between `world_readable` and `joined` is who can read the room forever.
+/// The front end's history setting as the state event's value. An unknown name
+/// is refused: `world_readable` against `joined` is who can read forever.
 fn history_visibility(name: &str) -> Result<Option<HistoryVisibility>, String> {
     Ok(match name.trim() {
         "" => None,
@@ -990,10 +767,8 @@ fn history_visibility(name: &str) -> Result<Option<HistoryVisibility>, String> {
     })
 }
 
-/// The local part the server should publish the room under. The whole address
-/// is accepted too and reduced to its local part — a user who types what they
-/// see elsewhere (`#name:server`) would otherwise have the server escape the
-/// `#` and the `:` into an address nobody can reach.
+/// The local part to publish under. A whole address is reduced to it - the
+/// server would otherwise escape `#` and `:` into an unreachable name.
 fn alias_localpart(input: &str) -> Result<Option<String>, String> {
     let trimmed = input.trim().trim_start_matches('#');
     if trimmed.is_empty() {
@@ -1012,14 +787,8 @@ fn alias_localpart(input: &str) -> Result<Option<String>, String> {
     Ok(Some(localpart.to_owned()))
 }
 
-/// Creates a room and returns its id. A private room is invite-only and
-/// unlisted; a public one is published in the server's room directory, which is
-/// what makes it findable through the directory search.
-///
-/// Encryption has to be asked for at creation time — no preset turns it on, and
-/// switching it on later cannot protect what was already sent. It is offered
-/// for public rooms too, even though that is unusual: everyone who joins later
-/// can still read from their join onwards.
+/// Creates a room and returns its id. Encryption has to be asked for now: no
+/// preset turns it on, and later cannot protect what was already sent.
 pub async fn create_room(client: &Client, room: NewRoom) -> Result<String, String> {
     let name = room.name.trim();
     if name.is_empty() {
@@ -1036,11 +805,8 @@ pub async fn create_room(client: &Client, room: NewRoom) -> Result<String, Strin
 
     request.room_alias_name = alias_localpart(&room.alias)?;
 
-    // The invitees are parsed before anything is created: a typo in the third
-    // address should not leave a half-furnished room behind. The address is
-    // never echoed back — an error message ends up on screen and in
-    // screenshots, and a full Matrix ID does not belong in either, so the
-    // position in the list is what names the offending entry.
+    // Invitees are parsed before anything is created, and never echoed back: an
+    // error ends up on screen and a full Matrix ID does not belong there.
     let mut invites = Vec::new();
     for (position, entry) in room.invite.iter().enumerate() {
         let entry = entry.trim();
@@ -1057,10 +823,8 @@ pub async fn create_room(client: &Client, room: NewRoom) -> Result<String, Strin
         request.visibility = Visibility::Public;
         request.preset = Some(create_room::v3::RoomPreset::PublicChat);
     } else if room.equal_power {
-        // The one preset that hands every invitee the creator's level. It is
-        // offered for private rooms only: in a public room it would promote
-        // whoever the creator happened to invite and nobody else, which reads
-        // as a bug rather than as a decision.
+        // The one preset that hands every invitee the creator's level. Private rooms
+        // only: in a public one it would promote whoever happened to be invited.
         request.preset = Some(create_room::v3::RoomPreset::TrustedPrivateChat);
     } else {
         request.preset = Some(create_room::v3::RoomPreset::PrivateChat);
@@ -1085,9 +849,8 @@ pub async fn create_room(client: &Client, room: NewRoom) -> Result<String, Strin
     }
     request.initial_state = initial;
 
-    // Only sent when it is false: `m.federate` defaults to true, and a request
-    // that spells out the default would still pin the room to this server on a
-    // server that reads the field rather than its absence.
+    // Only sent when false: `m.federate` defaults to true, and spelling out the
+    // default still pins the room on a server that reads the field.
     if !room.federate {
         let mut creation = create_room::v3::CreationContent::new();
         creation.federate = false;
@@ -1114,10 +877,8 @@ pub async fn create_room(client: &Client, room: NewRoom) -> Result<String, Strin
     Ok(room.room_id().as_str().to_owned())
 }
 
-/// The room ids a space names as its children through `m.space.child` state.
-/// A child with an empty `via` is not a valid child (that is how a room is
-/// removed), and a redacted event means the link is gone; both are dropped. A
-/// state-store error yields an empty list rather than failing the caller.
+/// The child ids a space names through `m.space.child`. An empty `via` is how a
+/// child is removed; a store error yields an empty list, not a failure.
 async fn read_child_ids(space: &matrix_sdk::Room) -> Vec<OwnedRoomId> {
     space
         .get_state_events_static::<SpaceChildEventContent>()
@@ -1140,13 +901,8 @@ async fn read_child_ids(space: &matrix_sdk::Room) -> Vec<OwnedRoomId> {
         .unwrap_or_default()
 }
 
-/// A map from each joined space to its child structure: the ids of its member
-/// rooms (excluding sub-spaces) and how many of its children are themselves
-/// spaces. The front end sums the unread counts of the member rooms itself, so
-/// the badge on a space stays live as messages arrive.
-///
-/// Shape: `{ "spaces": { "<spaceId>": { "rooms": ["<id>", ...],
-/// "subspaces": N } } }`.
+/// Each joined space with its member rooms and how many children are spaces.
+/// The front end sums the unread counts, so the badge stays live.
 pub async fn space_children_map(client: &Client) -> Value {
     let mut spaces = serde_json::Map::new();
 
@@ -1176,19 +932,14 @@ pub async fn space_children_map(client: &Client) -> Value {
     json!({ "spaces": Value::Object(spaces) })
 }
 
-/// Removes a space from the account: leave the room, then forget it so it
-/// also vanishes from the store. Matrix has no client-side "delete room" —
-/// leaving is what makes a space disappear from one's own list, and for a
-/// space nobody else has joined that is equivalent to deleting it.
+/// Leave, then forget. Matrix has no "delete room", and for a space nobody
+/// else joined the pair is equivalent to deleting it.
 pub async fn leave_space(client: &Client, space_id: &str) -> Result<(), String> {
     leave_and_forget(client, space_id, "space").await
 }
 
-/// Leaves a room and forgets it. On a room that was only invited this declines
-/// the invitation, which is the same request. Forgetting drops it from the
-/// store as well, so the row goes away instead of lingering as a left room;
-/// rejoining later is unaffected, the server hands out the history the room's
-/// visibility allows.
+/// Leaves and forgets a room; on an invited room the same request declines it.
+/// Forgetting drops the row instead of leaving it as a left room.
 pub async fn leave_room(client: &Client, room_id: &str) -> Result<(), String> {
     leave_and_forget(client, room_id, "room").await
 }
@@ -1226,15 +977,13 @@ async fn space_and_child(
     Ok((space, child_parsed))
 }
 
-/// Adds a room to a space by writing an `m.space.child` state event into the
-/// space, with a `via` list so the child can be joined. The room shows up under
-/// the space once the change syncs back.
+/// Adds a room to a space through `m.space.child`, with a `via` list so the
+/// child can be joined. It appears once the change syncs back.
 pub async fn add_child(client: &Client, space_id: &str, child_id: &str) -> Result<(), String> {
     let (space, child) = space_and_child(client, space_id, child_id).await?;
 
-    // `via` must name at least one server that can be used to join the child.
-    // The child's own server is the natural candidate; the user's homeserver is
-    // the fallback so the link is never empty (which would mean "removed").
+    // `via` must name at least one server that can join the child: its own
+    // server, the user's as fallback - an empty list means "removed".
     let mut via: Vec<OwnedServerName> = Vec::new();
     if let Some(server) = child.server_name() {
         via.push(server.to_owned());
@@ -1266,12 +1015,8 @@ pub async fn remove_child(client: &Client, space_id: &str, child_id: &str) -> Re
     Ok(())
 }
 
-/// Mutes a room's notifications, or lifts the mute so the account default
-/// applies again. The change lands in the account's push rules and syncs to
-/// every client.
-///
-/// A room's per-room notification override in the UI's vocabulary,
-/// `"default"` when the room follows the account.
+/// A room's notification override in the UI's vocabulary, `"default"` where the
+/// room follows the account.
 pub fn notify_mode_string(
     mode: Option<matrix_sdk::notification_settings::RoomNotificationMode>,
 ) -> &'static str {
@@ -1284,19 +1029,8 @@ pub fn notify_mode_string(
     }
 }
 
-/// Sets how a room may notify: `"default"` removes the per-room override and
-/// returns the room to the account default; `"all"`, `"mentions"` and
-/// `"mute"` set an explicit per-room rule.
-///
-/// Leaving "mute" for "default" goes through the SDK's `unmute_room` rather
-/// than just deleting the per-room rules: when the account default is itself
-/// "mute", deleting the override leaves the room muted, and the room has to
-/// be given an explicit "all messages" rule instead.
-///
-/// The room's cached notification mode is written back afterwards. The SDK
-/// keeps that cache — which is what the room list reads — but only refreshes
-/// it while processing a sync response, so without this the list would keep
-/// showing the old state until the next restart.
+/// Sets how a room may notify. Leaving "mute" goes through `unmute_room`: where
+/// the account default is mute, deleting the override changes nothing.
 pub async fn set_notification_mode(
     client: &Client,
     room_id: &str,
@@ -1331,10 +1065,8 @@ pub async fn set_notification_mode(
                 Some(RoomNotificationMode::Mute)
             );
             if was_muted {
-                // From the push rules' point of view a "one to one" room is
-                // one with exactly two members, encrypted and unencrypted
-                // rooms have separate defaults, so both have to be passed to
-                // find the right default.
+                // Push rules call a room with exactly two members "one to one", and encrypted
+                // and unencrypted rooms have separate defaults.
                 settings
                     .unmute_room(
                         &parsed,
@@ -1364,9 +1096,8 @@ pub async fn set_notification_mode(
     Ok(())
 }
 
-/// Marks a room as a favourite, or clears the tag. Favourite and low priority
-/// are mutually exclusive — setting one clears the other, the way every other
-/// client treats them — so a room never sits in two groups at once.
+/// Marks a room favourite or clears the tag. Favourite and low priority are
+/// mutually exclusive, so a room never sits in two groups.
 pub async fn set_favourite(client: &Client, room_id: &str, favourite: bool) -> Result<(), String> {
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let room = client
@@ -1403,9 +1134,8 @@ pub async fn set_low_priority(
         .map_err(|error| format!("could not change the low-priority tag: {error}"))
 }
 
-/// Lists a space's linked children from the server's `/hierarchy` endpoint —
-/// the only way to see rooms that are in the space but not joined yet. The
-/// space itself is part of the server's answer and is dropped here.
+/// A space's linked children from `/hierarchy` - the only way to see rooms in
+/// it that are not joined. The space itself is dropped from the answer.
 pub async fn space_hierarchy(client: &Client, space_id: &str) -> Result<Value, String> {
     use matrix_sdk::ruma::api::client::space::get_hierarchy;
 

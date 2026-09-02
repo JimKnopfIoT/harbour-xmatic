@@ -13,9 +13,8 @@ RoomSortModel::RoomSortModel(QObject *parent)
 
 int RoomSortModel::groupOf(const QModelIndex &sourceIndex) const
 {
-    // Favourite and low priority are mutually exclusive in the core, so the
-    // order of these checks does not matter, but favourite wins if that ever
-    // changes.
+    // The two are mutually exclusive in the core, so the order does not matter -
+    // but favourite wins if that ever changes.
     if (sourceIndex.data(RoomListModel::FavouriteRole).toBool()) {
         return 0;
     }

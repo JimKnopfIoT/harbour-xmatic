@@ -3,18 +3,8 @@ import Sailfish.Silica 1.0
 
 import "SecurityStatus.js" as SecurityStatus
 
-// Push notifications through a UnifiedPush distributor.
-//
-// This app has no background service by decision, so nothing arrives while it
-// is closed. UnifiedPush does not change that decision — the *distributor* is
-// the daemon, one per device, shared by every app on it. This page is where
-// that arrangement is turned on and where it says what it is doing.
-//
-// The switch lives here rather than in the account list on purpose. A switch
-// in a list that flips to on and then does nothing, because no distributor is
-// installed, is a state with no visible action — the shape that has cost this
-// app a dead pull-down twice. Here the switch and its consequence are one
-// screen: flip it, and the line underneath says in red what is missing.
+// Push through a UnifiedPush distributor - the daemon is the distributor, this
+// is where the arrangement is turned on and says what it is doing.
 Page {
     id: page
 
@@ -26,9 +16,8 @@ Page {
 
     Component.onCompleted: matrix.refreshPushStatus()
 
-    // On every visit, not once: a distributor can be installed or removed
-    // while this app runs, and a page answering from a cache would be wrong
-    // exactly then.
+    // On every visit, not once: a distributor can be installed or removed while
+    // this app runs, and a cached answer would be wrong exactly then.
     onStatusChanged: {
         if (status === PageStatus.Active) {
             matrix.refreshPushStatus()
@@ -83,8 +72,7 @@ Page {
                                                     : SecurityStatus.RED
                 detail: page.distributors.length > 0
                         // The bus name's last segment: the whole name is
-                        // `org.unifiedpush.Distributor.<something>` and only
-                        // the tail names the app.
+                        // `org.unifiedpush.Distributor.<something>` and only the tail names the app.
                         ? String(page.distributors[0]).split(".").pop()
                         : qsTr("No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.")
             }

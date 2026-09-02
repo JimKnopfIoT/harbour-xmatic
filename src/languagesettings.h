@@ -7,11 +7,8 @@
 
 class QGuiApplication;
 
-/// The UI language, chosen instead of followed.
-///
-/// Empty code means "follow the device", which is what libsailfishapp does on
-/// its own. Anything else overrides it — English included, which is why there
-/// is an `en` catalogue although English is the source language.
+/// The UI language, chosen instead of followed. Empty means "follow the
+/// device"; anything else overrides, English included - hence an `en` catalogue.
 class LanguageSettings : public QObject
 {
     Q_OBJECT
@@ -27,9 +24,8 @@ public:
     void setCode(const QString &code);
     QVariantList available() const;
 
-    /// Installs the chosen catalogue, or nothing when following the device.
-    /// Call after the view exists: the translator installed last is asked
-    /// first, so this has to come after libsailfishapp's own.
+    /// Installs the chosen catalogue. After the view exists: the translator
+    /// installed last is asked first, so this comes after libsailfishapp's.
     static void applyTo(QGuiApplication *app);
 
 signals:

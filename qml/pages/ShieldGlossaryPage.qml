@@ -2,12 +2,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "SecurityStatus.js" as SecurityStatus
 
-// What the marks next to a message mean.
-//
-// The marks themselves are the SDK's shield states; the wording is ours and is
-// shared with the sentence a tapped mark shows in the conversation. This page
-// exists because a mark without a way to look it up is worse than the sentence
-// it replaced - and one sentence per message was the complaint that led here.
+// What the marks next to a message mean. The wording is shared with the
+// sentence a tapped mark shows: a mark without a way to look it up is worse.
 Page {
     id: page
 
@@ -88,10 +84,8 @@ Page {
                 }
             }
 
-            // Luft unter dem letzten Eintrag. Als eigenes Element, weil
-            // QtQuick 2.0 an einem Positionierer kein Padding kennt - mit
-            // `bottomPadding` laedt die Seite ueberhaupt nicht, und das sagt
-            // erst das Journal des Geraets.
+            // Air under the last entry, as its own item: QtQuick 2.0 knows no padding on a
+            // positioner, and `bottomPadding` keeps the page from loading at all.
             Item {
                 width: 1
                 height: Theme.paddingLarge

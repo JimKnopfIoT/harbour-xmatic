@@ -1,12 +1,5 @@
-//! Interactive device verification (SAS, the seven emoji).
-//!
-//! Two things make this worth having beyond the padlock: verified devices of
-//! the same account share missing Megolm keys with each other, which is what
-//! turns "cannot be decrypted" rows into readable history — and verifying
-//! another person's device is what actually rules out a machine in the middle.
-//!
-//! Only one verification is tracked at a time. A phone shows one dialog, and
-//! the flow is short-lived by design.
+//! Interactive device verification (SAS). Verified devices of one account
+//! share missing Megolm keys; one verification is tracked at a time.
 
 use std::sync::Arc;
 
@@ -64,12 +57,8 @@ impl ActiveVerification {
         }
     }
 
-    /// The emoji did not match on both sides.
-    ///
-    /// A separate code on the wire (`m.mismatched_sas`), not the ordinary
-    /// cancel: it is the one signal in the whole exchange that says somebody
-    /// may be sitting in the middle, and the other side can only warn about it
-    /// if it is sent as that.
+    /// The emoji did not match: `m.mismatched_sas`, not an ordinary cancel. It is
+    /// the one signal that says somebody may be in the middle.
     pub async fn mismatch(&self) -> Result<(), String> {
         let sas = self.sas.lock().await.clone();
         match sas {
@@ -97,16 +86,8 @@ impl ActiveVerification {
     }
 }
 
-/// Cancels whatever verification is being tracked and empties the slot.
-///
-/// This has to happen before a new request goes out. When a second request for
-/// the same user appears while the first is still alive, the SDK cancels *both*
-/// of them — "Received a new verification request whilst another request with
-/// the same user is ongoing. Cancelling both requests", `matrix-sdk-crypto`,
-/// `verification/machine.rs`. So the obvious way out of a verification the
-/// other side never noticed, simply asking again, used to kill the new attempt
-/// together with the stale one: two cancellations arrived and nothing worked
-/// again short of restarting the app.
+/// Cancels whatever is tracked, before a new request goes out: a second request
+/// for the same user makes the SDK cancel both.
 pub async fn cancel_active(slot: &Slot) {
     let active = slot.lock().await.take();
     if let Some(active) = active {
@@ -137,9 +118,8 @@ async fn track(sink: Arc<Sink>, request: VerificationRequest, slot: Slot) {
             "flowId": flow_id,
             "userId": request.other_user_id().as_str(),
             "isSelf": request.is_self_verification(),
-            // Which transport the flow uses decides where its follow-up events
-            // arrive: to-device messages come through the encryption sync,
-            // in-room ones only with the room's timeline.
+            // The transport decides where the follow-up events arrive: to-device through
+            // the encryption sync, in-room only with the room's timeline.
             "inRoom": request.room_id().is_some(),
             "weStarted": request.we_started(),
         }),
@@ -152,11 +132,8 @@ async fn track(sink: Arc<Sink>, request: VerificationRequest, slot: Slot) {
     });
     *slot.lock().await = Some(active.clone());
 
-    // Wait for the flow to turn into a SAS verification. The other side may
-    // start it — then the request reports Transitioned — or it waits for us,
-    // in which case we start once both sides are ready.
-    // Subscribing before the first state read is what makes this race-free:
-    // the stream only yields versions newer than the moment of subscription.
+    // Wait for the flow to become a SAS. Subscribing before the first state read
+    // is what makes it race-free - the stream yields only newer versions.
     let mut changes = request.changes();
     let sas = loop {
         let state = request.state();
@@ -177,9 +154,8 @@ async fn track(sink: Arc<Sink>, request: VerificationRequest, slot: Slot) {
                 }
             }
             VerificationRequestState::Ready { .. } => {
-                // Only the side that asked for the verification starts it. An
-                // incoming m.key.verification.start moves the request to
-                // Transitioned on its own, so the responder simply waits.
+                // Only the side that asked starts it: an incoming start moves the request to
+                // Transitioned on its own, so the responder waits.
                 if request.we_started() {
                     match request.start_sas().await {
                         Ok(Some(sas)) => break sas,
@@ -233,11 +209,8 @@ fn report_state(sink: &Arc<Sink>, flow_id: &str, state: &VerificationRequestStat
     ));
 }
 
-/// Reports the emoji, then the outcome.
-///
-/// The stream of SAS states is the authority here. Polling helper predicates
-/// instead loses the moment the keys are exchanged when it falls between two
-/// checks, which is exactly how this stalled before.
+/// Reports the emoji, then the outcome. The state stream is the authority:
+/// polling predicates loses the moment the keys are exchanged.
 async fn drive_sas(sink: Arc<Sink>, sas: SasVerification, flow_id: String, slot: Slot) {
     // Accepting is what sends `m.key.verification.accept`. If it fails the
     // other side waits forever, so the error must not be swallowed.
@@ -329,10 +302,8 @@ fn report_sas_state(sink: &Arc<Sink>, flow_id: &str, state: &SasState) {
 /// Where the runtime keeps the verification that is currently on screen.
 pub type Slot = Arc<Mutex<Option<Arc<ActiveVerification>>>>;
 
-/// Starts a verification with another user, or with one's own other devices.
-///
-/// Being the requester matters: whoever asks is the side that starts the emoji
-/// flow, so this path drives the SAS itself instead of waiting.
+/// Starts a verification with another user or one's own device. Whoever asks
+/// drives the SAS instead of waiting.
 pub async fn request(
     client: &Client,
     sink: Arc<Sink>,
@@ -341,10 +312,8 @@ pub async fn request(
 ) -> Result<Option<OwnedRoomId>, String> {
     let user_id = UserId::parse(user_id).map_err(|_| "not a user identifier".to_owned())?;
 
-    // Local store first; on a miss ask the homeserver. Without the second
-    // step a user whose keys this device never fetched (fresh contact, or an
-    // identity created moments ago) reads as "has no identity" even though
-    // one exists.
+    // Local store first, then the homeserver: without the second step a user whose
+    // keys were never fetched reads as "has no identity".
     let encryption = client.encryption();
     let identity = match encryption
         .get_user_identity(&user_id)
@@ -368,24 +337,16 @@ pub async fn request(
         .await
         .map_err(|error| format!("could not ask for verification: {error}"))?;
 
-    // The room the flow runs in, handed back so the caller can subscribe the
-    // sliding sync to it. Deliberately taken from the request rather than
-    // looked up afterwards with `get_dm_room`: verifying a new contact makes
-    // the SDK create the direct chat (`identities/users.rs`), and a room only
-    // counts as a direct chat once the `m.direct` account data has come back
-    // through a sync. For exactly the contact whose events matter most, the
-    // lookup would therefore find nothing.
+    // The room the flow runs in, from the request rather than looked up: a room
+    // counts as a direct chat only once `m.direct` has come back through a sync.
     let room_id = request.room_id().map(|room| room.to_owned());
 
     tokio::spawn(track(sink, request, slot));
     Ok(room_id)
 }
 
-/// Logs that a verification message reached this device.
-///
-/// A stalled flow has two very different causes — the other side's message
-/// never arrives, or it arrives and the state machine does not react — and
-/// only an observation at the door tells them apart.
+/// Logs that a verification message reached this device: a stall is either "it
+/// never arrives" or "it arrives and nothing reacts".
 fn note_arrival(sink: &Arc<Sink>, kind: &str) {
     sink.emit(event(
         "verification.stage",
@@ -393,11 +354,8 @@ fn note_arrival(sink: &Arc<Sink>, kind: &str) {
     ));
 }
 
-/// Registers the handlers that pick up incoming verification requests.
-///
-/// Requests arrive either as to-device events or, for in-room verification, as
-/// a message with a dedicated msgtype — the one whose fallback text reads
-/// "your client does not support in-chat key verification".
+/// Registers the handlers for incoming requests: to-device events, or for
+/// in-room verification a message with its own msgtype.
 pub fn install(client: &Client, sink: Arc<Sink>, slot: Slot) {
     client.add_event_handler({
         let sink = sink.clone();
@@ -411,10 +369,8 @@ pub fn install(client: &Client, sink: Arc<Sink>, slot: Slot) {
                     .get_verification_request(&ev.sender, &ev.content.transaction_id)
                     .await
                 {
-                    // matrix-sdk awaits event handlers inline while processing
-                    // the sync response, so anything long-running has to be
-                    // spawned. Awaiting here wedges the encryption sync loop
-                    // and no further to-device event is ever fetched.
+                    // matrix-sdk awaits handlers inline while processing a sync, so anything long
+                    // has to be spawned - awaiting wedges the encryption sync loop.
                     tokio::spawn(track(sink, request, slot));
                 }
             }
@@ -473,12 +429,8 @@ pub fn install(client: &Client, sink: Arc<Sink>, slot: Slot) {
                         note_arrival(&sink, "room-request");
                         tokio::spawn(track(sink, request, slot));
                     }
-                    // The crypto layer ignores an in-room request when the
-                    // sender's device list was never fetched (fresh contact
-                    // on a fresh device) — the SDK documents this. The event
-                    // itself is gone, but fetching the sender's identity now
-                    // makes the next attempt land. Spawned: this handler runs
-                    // inline in sync processing and must not block it.
+                    // The crypto layer ignores an in-room request when the sender's device list
+                    // was never fetched. Fetching the identity now makes the next attempt land.
                     None => {
                         note_arrival(&sink, "room-request-unmatched");
                         let encryption = client.encryption();

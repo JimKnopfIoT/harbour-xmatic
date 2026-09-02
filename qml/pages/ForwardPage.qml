@@ -1,11 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Pick a room to forward to.
-//
-// Forwarding re-sends rather than referencing the original: the target room
-// encrypts under its own keys, so a picture is uploaded again from the copy
-// this device already decrypted.
+// Pick a room to forward to. Forwarding re-sends rather than references: the
+// target room encrypts under its own keys.
 Page {
     id: page
 

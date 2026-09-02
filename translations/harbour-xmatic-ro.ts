@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Continuă fără criptare</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Înapoi</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Tot ce salvează xmatic pe acest dispozitiv rămâne lizibil: sesiunea ta, mesajele tale și cheile tale de cameră.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Alege asta doar dacă serviciul nu poate fi instalat pe acest dispozitiv. Dacă îl instalezi mai târziu, poți comuta din pagina de criptare — costă o deconectare și cheia ta de recuperare.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic va continua să arate această stare la Criptare.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -349,6 +326,10 @@
     <message>
         <source>connected</source>
         <translation>conectat</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>apelul nu a putut continua</translation>
     </message>
 </context>
 <context>
@@ -1141,22 +1122,6 @@
         <translation>Dispozitive</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Criptare</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identitate verificată</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Identitatea s-a schimbat de la verificare. Verifică din nou sau retrage verificarea.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identitate neverificată</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Trimite mesaj direct</translation>
     </message>
@@ -1185,16 +1150,32 @@
         <translation>Camere comune</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Nicio altă cameră comună</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Interzice apelurile</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Permite apelurile</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identitate</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>verificată</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>s-a schimbat de la verificare — verific-o din nou sau retrage verificarea</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>neverificată</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>niciuna</translation>
     </message>
 </context>
 <context>
@@ -1486,6 +1467,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Lista este criptată, iar cheia ei nu este disponibilă. Va putea fi citită din nou după deblocarea dispozitivului și repornirea aplicației.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Încarcă imaginile automat</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Pornit: imaginea sau videoclipul se încarcă imediat ce apare mesajul. Oprit: se încarcă la atingere — a derula pe lângă el este o cerere către serverul expeditorului.</translation>
     </message>
 </context>
 <context>
@@ -2092,6 +2081,38 @@
         <translation>%1 și-a modificat profilul</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Copiază</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Răspunde</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Salvează</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Redirecționează</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editează</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Fixează</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Șterge</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Mai mult…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Mesajul citat nu poate fi încărcat: nu mai există sau nu ai voie să-l vezi.</translation>
     </message>
@@ -2152,6 +2173,22 @@
         <translation>Acel mesaj nu se află în istoricul încărcat</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Renunță</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Trimite din nou</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reacționează</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Răspunde în fir</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Copiază linkul camerei</translation>
     </message>
@@ -2210,6 +2247,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Verifică contactul</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Conversația nu a putut fi încărcată</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Deschideți această adresă?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Deschide</translation>
     </message>
 </context>
 <context>
@@ -2630,20 +2679,8 @@
         <translation>Verifică din nou</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Dacă nu este posibil</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Poți folosi xmatic fără criptare locală. Sesiunea, baza de mesaje și cheile de cameră stau atunci lizibile pe dispozitiv: cine ajunge la sistemul lui de fișiere citește odată cu tine, iar un telefon pierdut dă tot ce are pe el.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Mesajele rămân oricum criptate cap la cap pe drumul lor prin rețea. Aici este vorba doar despre ce se află pe dispozitiv.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Continuă fără criptare</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2712,6 +2749,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Autenticitate neconfirmată</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Deschideți această adresă?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Deschide</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2745,7 +2790,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>neverificat</translation>
+        <translation>neverificată</translation>
     </message>
     <message>
         <source>This device is not verified</source>

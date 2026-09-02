@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Doorgaan zonder versleuteling</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Alles wat xmatic op dit apparaat opslaat blijft leesbaar: je sessie, je berichten en je kamersleutels.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Kies dit alleen als de dienst niet op dit apparaat te installeren is. Installeer je hem later, dan kun je op de versleutelingspagina overstappen — het kost één keer afmelden en je herstelsleutel.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic blijft deze toestand tonen onder Versleuteling.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>verbonden</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>het gesprek kon niet worden voortgezet</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Apparaten</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Versleuteling</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identiteit geverifieerd</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>De identiteit is veranderd sinds ze werd geverifieerd. Verifieer opnieuw, of trek de verificatie in.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identiteit niet geverifieerd</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Direct bericht sturen</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Gedeelde kamers</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Geen andere gedeelde kamers</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Oproepen verbieden</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Oproepen toestaan</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identiteit</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>geverifieerd</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>gewijzigd sinds de verificatie — verifieer opnieuw of trek de verificatie in</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>niet geverifieerd</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>geen</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>De lijst is versleuteld en de sleutel is niet beschikbaar. Hij is weer leesbaar nadat het apparaat is ontgrendeld en de app opnieuw is gestart.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Afbeeldingen automatisch laden</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Aan: een afbeelding of video laadt zodra het bericht verschijnt. Uit: laadt bij aantikken — eraan voorbij scrollen is een verzoek aan de server van de afzender.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>%1 wijzigde zijn profiel</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopiëren</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Beantwoorden</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Opslaan</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Doorsturen</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Bewerken</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Vastmaken</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Meer…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Het geciteerde bericht kan niet worden geladen: het bestaat niet meer of je mag het niet zien.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>Dat bericht staat niet in de geladen geschiedenis</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Weggooien</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Opnieuw versturen</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reageren</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>In draad antwoorden</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Kamerlink kopiëren</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Contact verifiëren</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Het gesprek kon niet worden geladen</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Dit adres openen?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Openen</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Opnieuw controleren</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Als dat niet kan</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Je kunt xmatic zonder lokale versleuteling gebruiken. Sessie, berichtendatabase en kamersleutels liggen dan leesbaar op dit apparaat: wie bij het bestandssysteem komt leest mee, en een verloren telefoon geeft alles prijs wat erop staat.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Berichten blijven op hun weg door het netwerk hoe dan ook eind-tot-eind versleuteld. Het gaat hier alleen om wat op het apparaat ligt.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Doorgaan zonder versleuteling</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2707,6 +2744,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Echtheid niet bevestigd</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Dit adres openen?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Openen</translation>
     </message>
 </context>
 <context>

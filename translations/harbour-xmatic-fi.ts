@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Jatka ilman salausta</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Takaisin</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Kaikki, mitä xmatic tallentaa tälle laitteelle, pysyy luettavana: istuntosi, viestisi ja huoneavaimesi.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Valitse tämä vain, jos palvelua ei voi asentaa tälle laitteelle. Jos asennat sen myöhemmin, voit vaihtaa salaussivulla — se maksaa yhden uloskirjautumisen ja palautusavaimesi.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic näyttää tämän tilan edelleen kohdassa Salaus.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>yhdistetty</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>puhelua ei voitu jatkaa</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Laitteet</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Salaus</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Henkilöllisyys varmennettu</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Henkilöllisyys on muuttunut varmennuksen jälkeen. Varmenna uudelleen tai peru varmennus.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Henkilöllisyyttä ei ole varmennettu</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Lähetä yksityisviesti</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Yhteiset huoneet</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Ei muita yhteisiä huoneita</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Estä puhelut</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Salli puhelut</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identiteetti</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>vahvistettu</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>muuttunut vahvistuksen jälkeen — vahvista uudelleen tai peru vahvistus</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>ei vahvistettu</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>ei mitään</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Luettelo on salattu eikä sen avain ole käytettävissä. Se on jälleen luettavissa, kun laitteen lukitus on avattu ja sovellus käynnistetty uudelleen.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Lataa kuvat automaattisesti</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Päällä: kuva tai video latautuu heti viestin ilmestyessä. Pois: latautuu napautettaessa — ohi vierittäminen on pyyntö lähettäjän palvelimelle.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>%1 muutti profiiliaan</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopioi</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Vastaa</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Välitä</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Muokkaa</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kiinnitä</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Lisää…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Lainattua viestiä ei voi ladata: sitä ei enää ole tai sinulla ei ole lupaa nähdä sitä.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>Kyseinen viesti ei ole ladatussa historiassa</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Hylkää</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Lähetä uudelleen</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagoi</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vastaa ketjussa</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Kopioi huoneen linkki</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Varmenna yhteyshenkilö</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Keskustelua ei voitu ladata</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Avataanko tämä osoite?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Avaa</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Tarkista uudelleen</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Jos se ei onnistu</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Voit käyttää xmaticia ilman paikallista salausta. Istunto, viestitietokanta ja huoneavaimet ovat silloin luettavina laitteella: kuka tahansa, joka pääsee sen tiedostojärjestelmään, voi lukea mukana, ja kadonnut puhelin luovuttaa kaiken, mitä siinä on.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Viestit pysyvät verkon läpi kulkiessaan joka tapauksessa päästä päähän salattuina. Tässä on kyse vain siitä, mitä laitteella on.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Jatka ilman salausta</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2708,6 +2745,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Aitoutta ei vahvistettu</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Avataanko tämä osoite?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Avaa</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2740,7 +2785,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>ei varmennettu</translation>
+        <translation>ei vahvistettu</translation>
     </message>
     <message>
         <source>This device is not verified</source>

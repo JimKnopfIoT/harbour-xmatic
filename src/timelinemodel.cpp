@@ -6,11 +6,8 @@
 TimelineModel::TimelineModel(QObject *parent)
     : DiffListModel(parent)
 {
-    // Whenever the rows move, the read mark may move with them. Recomputed in
-    // one pass rather than in data(): asking per row would make every redraw
-    // quadratic. Queued, never inline - see scheduleReadCounts().
-    // A reset is a different timeline: what the old one had been read to says
-    // nothing about this one.
+    // Whenever the rows move, the read mark may move with them: recomputed in one
+    // pass, queued. A reset is a different timeline and says nothing about this one.
     connect(this, &QAbstractItemModel::modelReset, this, [this] {
         m_readCounts.clear();
         scheduleReadCounts();
@@ -23,18 +20,15 @@ TimelineModel::TimelineModel(QObject *parent)
 QVariant TimelineModel::data(const QModelIndex &index, int role) const
 {
     if (role == ReadMarkRole || role == ReadMarkByRole) {
-        // Looked up by the row's own event id. By row number it was one off
-        // after every page of older messages that arrived at the top, and the
-        // mark then stood on the message below the one it belonged to.
+        // Looked up by the row's own event id: by row number it was one off after
+        // every page of older messages, and the mark stood under the wrong message.
         const QString eventId = DiffListModel::data(index, EventIdRole).toString();
         const int count = eventId.isEmpty() ? 0 : m_readCounts.value(eventId);
         return role == ReadMarkRole ? QVariant(count > 0) : QVariant(count);
     }
     if (role == ThreadCountRole && !m_threadRoots.isEmpty()) {
-        // The row's own number first: it comes from the SDK's summary and is
-        // the live one, kept up to date as replies arrive. The server's list is
-        // the fallback for the roots that summary does not know - it is fetched
-        // once when the room opens and does not grow afterwards.
+        // The row's own number first - the SDK's summary, kept live. The server's list
+        // is the fallback for roots that summary does not know.
         const int own = DiffListModel::data(index, role).toInt();
         if (own > 0) {
             return own;
@@ -75,12 +69,8 @@ void TimelineModel::updateReadCounts()
 {
     m_readCountsQueued = false;
 
-    // One pass from the newest row backwards, carrying everyone met so far.
-    // A receipt marks the newest event a person has read, so whoever appears
-    // at row i has read row i and everything before it - the running set is
-    // therefore exactly "who has read this far" for each row in turn. Their
-    // own messages count as read by them, which is what the SDK's implicit
-    // receipt on a sent event says.
+    // One pass from the newest row backwards, carrying everyone met: a receipt
+    // marks the newest event read, so whoever appears at a row has read it.
     QHash<QString, int> counts;
     QSet<QString> seen;
     for (int i = rows().count() - 1; i >= 0; --i) {
@@ -93,13 +83,8 @@ void TimelineModel::updateReadCounts()
         if (!eventId.isEmpty()
             && row.value(QStringLiteral("own")).toBool()
             && row.value(QStringLiteral("kind")).toString() == QLatin1String("message")) {
-            // Never below what this message has already shown. A receipt is
-            // moved from one timeline item to the next as the conversation
-            // goes on, and the SDK takes it off the old row before it puts it
-            // on the new one: for that moment nobody has read this far, the
-            // mark vanishes and comes back - reported as an eye that is there
-            // sometimes and sometimes not. Being read is not a state that can
-            // be taken back, so it is not tracked as one.
+            // Never below what a message already showed: a receipt is taken off the old
+            // row before it lands on the new one, and the eye vanished for that moment.
             counts.insert(eventId, qMax(seen.count(), m_readCounts.value(eventId)));
         }
     }

@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Συνέχεια χωρίς κρυπτογράφηση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Πίσω</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Ό,τι αποθηκεύει το xmatic σε αυτή τη συσκευή παραμένει αναγνώσιμο: η συνεδρία σου, τα μηνύματά σου και τα κλειδιά των δωματίων σου.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Διάλεξε αυτό μόνο αν η υπηρεσία δεν μπορεί να εγκατασταθεί σε αυτή τη συσκευή. Αν την εγκαταστήσεις αργότερα, μπορείς να αλλάξεις από τη σελίδα κρυπτογράφησης — κοστίζει μία αποσύνδεση και το κλειδί ανάκτησής σου.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>Το xmatic θα συνεχίσει να δείχνει αυτή την κατάσταση στην Κρυπτογράφηση.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>συνδέθηκε</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>η κλήση δεν μπόρεσε να συνεχιστεί</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Συσκευές</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Κρυπτογράφηση</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Ταυτότητα επαληθευμένη</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Η ταυτότητα άλλαξε από την επαλήθευση. Επαλήθευσε ξανά ή ανάκαλεσε την επαλήθευση.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Ταυτότητα μη επαληθευμένη</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Αποστολή προσωπικού μηνύματος</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Κοινά δωμάτια</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Κανένα άλλο κοινό δωμάτιο</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Απαγόρευση κλήσεων</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Να επιτρέπονται οι κλήσεις</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Ταυτότητα</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>επαληθευμένη</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>άλλαξε μετά την επαλήθευση — επαλήθευσε ξανά ή ανάκαλεσε</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>μη επαληθευμένη</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>καμία</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Η λίστα είναι κρυπτογραφημένη και το κλειδί της δεν είναι διαθέσιμο. Θα ξαναδιαβαστεί αφού ξεκλειδώσεις τη συσκευή και επανεκκινήσεις την εφαρμογή.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Αυτόματη φόρτωση εικόνων</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Ενεργό: η εικόνα ή το βίντεο φορτώνεται μόλις εμφανιστεί το μήνυμα. Ανενεργό: φορτώνεται με το άγγιγμα — η κύλιση δίπλα του είναι αίτημα στον διακομιστή του αποστολέα.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>Ο/Η %1 άλλαξε το προφίλ του</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Αντιγραφή</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Απάντηση</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Αποθήκευση</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Προώθηση</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Επεξεργασία</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Καρφίτσωμα</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Διαγραφή</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Περισσότερα…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Το μήνυμα που παρατίθεται δεν φορτώνεται: δεν υπάρχει πια ή δεν επιτρέπεται να το δεις.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>Αυτό το μήνυμα δεν είναι στο φορτωμένο ιστορικό</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Απόρριψη</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Αποστολή ξανά</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Αντίδραση</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Απάντηση στο νήμα</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Αντιγραφή συνδέσμου δωματίου</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Επαλήθευση επαφής</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Δεν ήταν δυνατή η φόρτωση της συνομιλίας</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Άνοιγμα αυτής της διεύθυνσης;</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Άνοιγμα</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Έλεγχος ξανά</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Αν αυτό δεν γίνεται</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Μπορείς να χρησιμοποιείς το xmatic χωρίς τοπική κρυπτογράφηση. Η συνεδρία, η βάση μηνυμάτων και τα κλειδιά δωματίων βρίσκονται τότε αναγνώσιμα στη συσκευή: όποιος φτάσει στο σύστημα αρχείων της διαβάζει μαζί σου, και ένα χαμένο τηλέφωνο παραδίδει ό,τι έχει πάνω του.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Τα μηνύματα παραμένουν έτσι κι αλλιώς κρυπτογραφημένα από άκρο σε άκρο στον δρόμο τους μέσα από το δίκτυο. Εδώ πρόκειται μόνο για ό,τι βρίσκεται στη συσκευή.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Συνέχεια χωρίς κρυπτογράφηση</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2708,6 +2745,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Η γνησιότητα δεν επιβεβαιώθηκε</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Άνοιγμα αυτής της διεύθυνσης;</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Άνοιγμα</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2740,7 +2785,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>μη επαληθευμένο</translation>
+        <translation>μη επαληθευμένη</translation>
     </message>
     <message>
         <source>This device is not verified</source>

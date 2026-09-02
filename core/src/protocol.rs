@@ -1,23 +1,12 @@
-//! The wire format between the Qt front end and this core.
-//!
-//! Commands are JSON objects carrying a caller-chosen `id` and a `cmd`
-//! discriminator. Every command is answered by exactly one `reply` message
-//! with the same `id`; anything the core reports on its own initiative is an
-//! `event`. Keeping this in one place means the C ABI never has to grow a new
-//! symbol when a feature is added.
+//! The wire format: commands carry an `id` and a `cmd`, every one is answered
+//! by exactly one `reply`, anything unsolicited is an `event`.
 
 use serde::Deserialize;
 use serde_json::{json, Value};
 use zeroize::Zeroizing;
 
-/// A secret on its way out of the process — a login password, a recovery key.
-/// Exists so that the two easy leaks are impossible by construction: the heap
-/// copy is wiped on drop (`Zeroizing`), and `{:?}` — `Command` derives `Debug`
-/// — prints a placeholder instead of the value.
-///
-/// The recovery key belongs in here for the same reason the password does: it
-/// unlocks the entire key backup, so it is the same class of secret even
-/// though it travels in the opposite direction on its way back.
+/// A secret on its way out - password, recovery key. `Zeroizing` wipes the
+/// heap copy and `{:?}` prints a placeholder, so neither leak is possible.
 pub struct Secret(Zeroizing<String>);
 
 impl Secret {
@@ -42,11 +31,8 @@ impl<'de> Deserialize<'de> for Secret {
 #[derive(Debug, Deserialize)]
 #[serde(tag = "cmd")]
 pub enum Command {
-    /// Restore a previously persisted session, if there is one.
-    ///
-    /// `storeKey` (base64, optional) hands the core a store key it did not
-    /// have at start — the front end obtains it again when the user retries
-    /// after a locked secrets collection. Absent, the key from start applies.
+    /// Restore a persisted session. `storeKey` hands in a key the core did not
+    /// have at start, after the user retried a locked collection.
     #[serde(rename = "session.restore")]
     SessionRestore {
         id: u64,
@@ -54,29 +40,18 @@ pub enum Command {
         store_key: Option<String>,
     },
 
-    /// Begin the OAuth 2.0 authorization code flow against `homeserver`.
-    ///
-    /// The reply carries the URL to open in the user's browser. Completion is
-    /// reported later as a `session.changed` or `login.failed` event, because
-    /// it depends on the user finishing the flow in the browser.
+    /// Begin the OAuth authorization code flow. The reply carries the browser URL;
+    /// completion follows as `session.changed` or `login.failed`.
     #[serde(rename = "login.start")]
     LoginStart { id: u64, homeserver: String },
 
-    /// Begin the OAuth 2.0 device authorization flow against `homeserver` —
-    /// the sign-in for devices whose own browser cannot handle the
-    /// authentication service's pages.
-    ///
-    /// The reply carries the verification URL and the code to display.
-    /// Completion arrives as `session.changed` or `login.failed`, whenever
-    /// the user has approved the login on another device.
+    /// Begin the device-code flow, for devices whose browser cannot render the
+    /// authentication pages. The reply carries the URL and the code to show.
     #[serde(rename = "login.deviceCode")]
     LoginDeviceCode { id: u64, homeserver: String },
 
-    /// Sign in with username and password (`m.login.password`), for
-    /// homeservers without OAuth. Only sent after `login.start` answered
-    /// `passwordLogin: true`; the core verifies that again before it sends
-    /// the password anywhere. The reply is the complete outcome — there is
-    /// no browser to wait for — and echoes nothing back.
+    /// Sign in with `m.login.password`. Only after `login.start` answered
+    /// `passwordLogin`, and the core verifies that again before sending it.
     #[serde(rename = "login.password")]
     LoginPassword {
         id: u64,
@@ -177,11 +152,8 @@ pub enum Command {
         room_id: String,
     },
 
-    /// Open a room's timeline and stream its updates. Only one timeline is
-    /// open at a time; opening another one replaces it. `focus` selects what
-    /// the timeline shows: absent or empty for live events, `"pinned"` for the
-    /// room's pinned messages, or an event id to open the history around one
-    /// event (a permalink jump).
+    /// Open a room's timeline, one at a time. `focus`: empty for live, `"pinned"`,
+    /// or an event id for a permalink jump.
     #[serde(rename = "timeline.open")]
     TimelineOpen {
         id: u64,
@@ -189,11 +161,14 @@ pub enum Command {
         room_id: String,
         #[serde(default)]
         focus: String,
-        /// Track other people's read receipts. Off by default: every receipt
-        /// that moves updates a timeline item, and each of those redraws a row
-        /// on the Qt side. Only worth it where the status is actually shown.
+        /// Track other people's receipts. Off by default: every receipt that moves
+        /// updates an item and redraws a row.
         #[serde(default)]
         receipts: bool,
+        /// Echoed in every `timeline.diff`, so the front end can drop the diffs
+        /// of the view it has just left. Same device as `thread.open`.
+        #[serde(default)]
+        token: String,
     },
 
     /// Resolve a room address to a room id, and report whether this account
@@ -218,7 +193,13 @@ pub enum Command {
 
     /// Close the open timeline.
     #[serde(rename = "timeline.close")]
-    TimelineClose { id: u64 },
+    TimelineClose {
+        id: u64,
+        /// Which view is meant. A close naming another room than the one now
+        /// open is ignored: commands are independent tasks.
+        #[serde(default, rename = "roomId")]
+        room_id: String,
+    },
 
     /// Load a page of older events.
     #[serde(rename = "timeline.paginate")]
@@ -275,10 +256,8 @@ pub enum Command {
         txn_id: String,
     },
 
-    /// Send a file from disk as an attachment. `caption` is the text shown
-    /// with it and `replyTo` the event it answers — both optional, and both
-    /// only decidable here: an attachment that went out bare cannot be turned
-    /// into a reply afterwards, and its caption would have to be an edit.
+    /// Send a file as an attachment. `caption` and `replyTo` are decidable only
+    /// here - neither can be added to an event that has gone out.
     #[serde(rename = "timeline.sendMedia")]
     TimelineSendMedia {
         id: u64,
@@ -289,20 +268,16 @@ pub enum Command {
         caption: String,
         #[serde(rename = "replyTo", default)]
         reply_to: String,
-        /// A recording of one's own rather than an audio file that was picked.
-        /// It goes out marked as a voice message (MSC3245), which is what
-        /// other clients draw as one and what the bridges to other networks
-        /// need to make a native voice note of it.
+        /// A recording of one's own goes out marked as a voice message (MSC3245),
+        /// which is what other clients draw and what the bridges need.
         #[serde(default)]
         voice: bool,
         /// Its length in milliseconds. Part of the same marking: a voice
         /// message whose length is unknown is treated as a plain audio file.
         #[serde(default)]
         duration: u64,
-        /// The picture's own measurements, read by the bridge before the file
-        /// is handed over; zero where it is not a picture or could not be
-        /// read. They go into the event so the receiving client knows how much
-        /// room to leave before a byte is fetched.
+        /// The picture's measurements, read by the bridge; zero where unknown. They go
+        /// into the event so the receiver knows how much room to leave.
         #[serde(default)]
         width: u64,
         #[serde(default)]
@@ -336,18 +311,14 @@ pub enum Command {
         source: serde_json::Value,
         #[serde(default)]
         thumbnail: bool,
-        /// What the event says the file weighs, zero where it says nothing.
-        /// Refusing on this costs no download at all; the sender writes the
-        /// number, so it is a first gate and not the guarantee - the size of
-        /// what actually arrived is checked as well.
+        /// What the event says the file weighs, zero where it says nothing. A first
+        /// gate that costs no download; what arrives is weighed as well.
         #[serde(default)]
         size: u64,
     },
 
-    /// Mark the open room read: the fully-read marker always, the receipt
-    /// others see only where the user allows it. The marker is private account
-    /// data - holding it back tells nobody anything and only costs this device
-    /// the line in the conversation and the position the room opens at.
+    /// Mark the open room read: the marker always, the receipt only where allowed.
+    /// The marker is private data - holding it back only costs this device.
     #[serde(rename = "timeline.markRead")]
     TimelineMarkRead {
         id: u64,
@@ -405,9 +376,8 @@ pub enum Command {
         event_id: String,
     },
 
-    /// Who reacted to the given event with the given key, with their names.
-    /// Asked only when a reaction is held down, for the same reason the readers
-    /// are: the rows carry a count, never a list of people.
+    /// Who reacted with this key. Asked on a long press, like the readers: the
+    /// rows carry a count, never a list of people.
     #[serde(rename = "timeline.reactors")]
     TimelineReactors {
         id: u64,
@@ -420,28 +390,18 @@ pub enum Command {
     #[serde(rename = "encryption.status")]
     EncryptionStatus { id: u64 },
 
-    /// Report whether the local files on this device are encrypted.
-    ///
-    /// Needs no client: it looks at what is on disk. The front end asks at
-    /// start so the answer is available signed out as well.
+    /// Whether the local files are encrypted. Needs no client - it looks at the
+    /// disk - so the answer exists while signed out.
     #[serde(rename = "storage.status")]
     StorageStatus { id: u64 },
 
-    /// What UnifiedPush looks like on this device: which distributors are
-    /// installed, which one is in use, and whether it has ever answered.
-    ///
-    /// Needs no client, and changes nothing. The setup page asks on every
-    /// visit, because a distributor can be installed or removed while this app
-    /// runs and a page that answers from a cache would be wrong exactly then.
+    /// What UnifiedPush looks like here. Needs no client and changes nothing; the
+    /// page asks on every visit because a distributor can appear at any time.
     #[serde(rename = "push.status")]
     PushStatus { id: u64 },
 
     /// Register with a distributor and hand the endpoint to the homeserver.
-    ///
-    /// `gateway` is the Matrix push gateway the homeserver will post to; the
-    /// endpoint travels as the pushkey. Nothing here can be guessed, which is
-    /// why it is a parameter and not a constant: the endpoint belongs to the
-    /// distributor and the gateway to whoever runs one.
+    /// Nothing here can be guessed: the endpoint is the distributor's, the gateway
     #[serde(rename = "push.enable")]
     PushEnable { id: u64, gateway: String },
 
@@ -450,10 +410,8 @@ pub enum Command {
     #[serde(rename = "push.disable")]
     PushDisable { id: u64, endpoint: String },
 
-    /// Fetches the message a push named and answers with what a banner needs.
-    ///
-    /// The push itself carries a room and an event id only, so the text is
-    /// fetched and decrypted here — nothing on the way saw it.
+    /// Fetches the message a push named and answers with what a banner needs: the
+    /// push carries only a room and an event id.
     #[serde(rename = "push.notify")]
     PushNotify {
         id: u64,
@@ -461,11 +419,8 @@ pub enum Command {
         event_id: String,
     },
 
-    /// Hands the endpoint the distributor answered with to the homeserver.
-    ///
-    /// Sent by the front end when `push.endpoint` arrives, rather than done
-    /// here on the spot: the gateway is a setting and lives on that side, and
-    /// the two halves are worth seeing separately when one of them fails.
+    /// Hands the endpoint to the homeserver, sent by the front end because the
+    /// gateway is a setting - and the two halves are worth seeing separately.
     #[serde(rename = "push.pusher")]
     PushPusher {
         id: u64,
@@ -608,13 +563,8 @@ pub enum Command {
         room_id: String,
     },
 
-    /// Create a room. Everything here is decided once, at creation, because
-    /// that is what the server accepts: encryption cannot be switched off
-    /// again, a room's federation is fixed for its lifetime, and the rest —
-    /// alias, topic, history visibility, power levels — would otherwise have
-    /// to be a settings page whose writes depend on a power level the creator
-    /// happens to have. `public` lists the room in the server's directory
-    /// instead of making it invite-only.
+    /// Create a room. Everything here is decided once, because that is what the
+    /// server accepts: encryption, federation, alias, history, power levels.
     #[serde(rename = "room.create")]
     RoomCreate {
         id: u64,
@@ -678,9 +628,8 @@ pub enum Command {
     #[serde(rename = "account.setAvatar")]
     AccountSetAvatar { id: u64, path: String },
 
-    /// Set how a room may notify: the account default ("default"),
-    /// everything ("all"), mentions and keywords only ("mentions"), or
-    /// nothing ("mute").
+    /// How a room may notify: the account default, everything, mentions and
+    /// keywords, or nothing.
     #[serde(rename = "room.setNotifyMode")]
     RoomSetNotifyMode {
         id: u64,
@@ -717,10 +666,8 @@ pub enum Command {
         pin: bool,
     },
 
-    /// Search a public room directory. An empty pattern lists the most
-    /// popular rooms. Results stream in as `directory.diff`. Without `server`
-    /// the own homeserver's directory is searched; with it, that server's
-    /// directory is fetched over federation.
+    /// Search a public directory; an empty pattern lists the popular rooms.
+    /// Without `server` the own homeserver, with it that one over federation.
     #[serde(rename = "directory.search")]
     DirectorySearch {
         id: u64,
@@ -737,9 +684,8 @@ pub enum Command {
     #[serde(rename = "directory.stop")]
     DirectoryStop { id: u64 },
 
-    /// Fold everything this device already holds for a room into its search
-    /// index. Local, no network; the index otherwise only ever learns of
-    /// events as they arrive.
+    /// Folds what this device already holds into the room's index. Local, no
+    /// network: the index otherwise learns of events only as they arrive.
     #[serde(rename = "search.index")]
     SearchIndex {
         id: u64,
@@ -747,9 +693,8 @@ pub enum Command {
         room_id: String,
     },
 
-    /// Search one room's message index. One page per command: `offset` is
-    /// where to continue, and a short answer means the end. The query never
-    /// leaves the device.
+    /// Searches one room's index, a page per command. `offset` continues, a short
+    /// answer means the end. The query never leaves the device.
     #[serde(rename = "search.room")]
     SearchRoom {
         id: u64,
@@ -771,9 +716,8 @@ pub enum Command {
         room_id: String,
     },
 
-    /// Check which joined recipients of an encrypted room still have unverified
-    /// devices, so the UI can warn before sending. Replies with `{ roomId,
-    /// users: [{ userId, name, devices }] }`.
+    /// Which joined recipients still have unverified devices, so the UI can warn.
+    /// Replies `{ roomId, users: [{ userId, name, devices }] }`.
     #[serde(rename = "room.checkRecipients")]
     RoomCheckRecipients {
         id: u64,
@@ -887,9 +831,8 @@ pub enum Command {
         token: String,
     },
 
-    /// Close the open thread. `rootEventId` names which one: commands run as
-    /// independent tasks, so a close and an open issued together can arrive
-    /// in either order.
+    /// Close the open thread. `rootEventId` names which: commands are independent
+    /// tasks and a close and an open can arrive in either order.
     #[serde(rename = "thread.close")]
     ThreadClose {
         id: u64,
@@ -938,7 +881,7 @@ impl Command {
             | Command::SpaceAddChild { id, .. }
             | Command::SpaceRemoveChild { id, .. }
             | Command::TimelineOpen { id, .. }
-            | Command::TimelineClose { id }
+            | Command::TimelineClose { id, .. }
             | Command::TimelinePaginate { id }
             | Command::TimelineSend { id, .. }
             | Command::TimelineMarkRead { id, .. }
@@ -1025,8 +968,7 @@ pub fn reply_ok(id: u64, data: Value) -> Value {
 /// token, a full user ID or anything else worth keeping out of a screenshot.
 pub fn reply_error(id: u64, message: impl Into<String>) -> Value {
     // The sink, not the source: an SDK error carries the request URL, and that
-    // URL carries the room and the user. Ninety-odd places build such a
-    // message; this is the one they all pass through.
+    // URL carries the room and the user. Ninety-odd places pass through here.
     json!({
         "type": "reply",
         "id": id,
@@ -1035,7 +977,41 @@ pub fn reply_error(id: u64, message: impl Into<String>) -> Value {
     })
 }
 
-/// An unsolicited message from the core.
+/// One `VectorDiff` as the operation the Qt models apply. Here rather than
+/// three times over, or the models drift apart from the core in one of them.
+pub fn encode_diff<T: Clone>(
+    diff: &matrix_sdk_ui::eyeball_im::VectorDiff<T>,
+    encode: impl Fn(&T) -> serde_json::Value,
+) -> serde_json::Value {
+    use matrix_sdk_ui::eyeball_im::VectorDiff;
+    use serde_json::json;
+
+    let all = |values: &matrix_sdk_ui::eyeball_im::Vector<T>| {
+        values.iter().map(&encode).collect::<Vec<_>>()
+    };
+    match diff {
+        VectorDiff::Append { values } => json!({ "op": "append", "values": all(values) }),
+        VectorDiff::Clear => json!({ "op": "clear" }),
+        VectorDiff::PushFront { value } => {
+            json!({ "op": "insert", "index": 0, "value": encode(value) })
+        }
+        VectorDiff::PushBack { value } => {
+            json!({ "op": "append", "values": [encode(value)] })
+        }
+        VectorDiff::PopFront => json!({ "op": "remove", "index": 0 }),
+        VectorDiff::PopBack => json!({ "op": "popBack" }),
+        VectorDiff::Insert { index, value } => {
+            json!({ "op": "insert", "index": index, "value": encode(value) })
+        }
+        VectorDiff::Set { index, value } => {
+            json!({ "op": "set", "index": index, "value": encode(value) })
+        }
+        VectorDiff::Remove { index } => json!({ "op": "remove", "index": index }),
+        VectorDiff::Truncate { length } => json!({ "op": "truncate", "length": length }),
+        VectorDiff::Reset { values } => json!({ "op": "reset", "values": all(values) }),
+    }
+}
+
 pub fn event(name: &str, data: Value) -> Value {
     json!({ "type": "event", "event": name, "data": data })
 }
@@ -1044,10 +1020,8 @@ pub fn event(name: &str, data: Value) -> Value {
 mod tests {
     use super::*;
 
-    /// A message in a script other than Latin has to survive the way in - the
-    /// Qt side writes UTF-8 JSON, the C ABI hands over a NUL-terminated string,
-    /// and serde reads it back. Asked because a Cyrillic message was reported
-    /// as stuck; this end of it is not where it sticks.
+    /// A message in another script has to survive the way in - UTF-8 JSON, a
+    /// NUL-terminated C string, serde. Asked after a Cyrillic message was reported.
     #[test]
     fn a_message_keeps_its_script() {
         for body in [

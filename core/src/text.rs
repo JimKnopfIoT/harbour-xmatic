@@ -1,25 +1,8 @@
-//! Text that came from someone else, made safe to look at.
-//!
-//! Not safe to *parse* - nothing here is a sanitiser for markup; that is
-//! `markup.rs`, which writes its own output. This is about what the eye can be
-//! made to believe.
+//! Text that came from someone else, made safe to look at. Not to *parse* -
+//! that is `markup.rs`. This is about what the eye can be made to believe.
 
-/// Removes the Unicode characters that change the direction text is drawn in.
-///
-/// They are invisible and they reorder what follows them, so a display name, a
-/// room name or a file name can be made to read as something else entirely -
-/// the classic being a file that shows as `holiday.jpg` while it ends in
-/// `.exe`. Every one of them is a formatting instruction, never content: a
-/// message that means to be right-to-left is written in Arabic or Hebrew
-/// letters, and those carry their direction themselves.
-///
-/// Removed rather than replaced: a marker in the middle of a name would be
-/// noise in every legitimate Arabic or Hebrew name, and there are many.
-///
-/// * U+061C  arabic letter mark
-/// * U+200E, U+200F  left-to-right / right-to-left mark
-/// * U+202A…U+202E  embeddings and overrides
-/// * U+2066…U+2069  isolates
+/// Removes the invisible characters that reorder what follows - `holiday.jpg`
+/// that ends in `.exe`. Removed, not replaced: a marker would be noise in a name.
 pub fn strip_bidi(text: &str) -> String {
     if !text.chars().any(is_bidi_control) {
         // The overwhelming case: hand back what came in, without allocating a
@@ -36,18 +19,8 @@ pub fn is_bidi_control(character: char) -> bool {
         | '\u{2066}'..='\u{2069}')
 }
 
-/// A file name that is safe to write into a folder, from a name that came from
-/// somebody else.
-///
-/// The name of an attachment is a **field in the event**, not a name any
-/// filesystem ever accepted: the sending client writes it, so it can hold
-/// slashes, `..`, newlines or nothing at all. Everything up to the last
-/// separator goes, the leftovers that are not a name go with it, and the rest
-/// is trimmed of what should never appear in a directory listing.
-///
-/// The Qt side strips the directory part a second time before writing
-/// (`QFileInfo::fileName`). Two lines of defence on purpose: this one can be
-/// tested, that one is the last word.
+/// A file name safe to write, from a name that came from somebody else: it is
+/// an event field, so it can hold slashes, `..` or nothing. Qt strips it again.
 pub fn safe_file_name(name: &str) -> String {
     let name = strip_bidi(name);
     // Both separators: a name is not necessarily written on this system.
@@ -71,12 +44,8 @@ pub fn safe_file_name(name: &str) -> String {
     base.chars().take(MAX).collect()
 }
 
-/// Blanks anything in a message that could identify somebody or something.
-///
-/// Applied at the sinks - `reply_error` and the events that carry an error -
-/// not at the places that build the text: an SDK error carries the request URL
-/// (`reqwest` appends "for url (…)"), and a Matrix URL carries the room and
-/// the user in its path.
+/// Blanks anything that could identify somebody. Applied at the sinks: an SDK
+/// error carries the request URL, and a Matrix URL carries room and user.
 pub fn scrub_ids(text: &str) -> String {
     text.split_whitespace()
         .map(|word| {
@@ -117,9 +86,8 @@ pub fn scrub_ids(text: &str) -> String {
                     })
                     .unwrap_or(false);
 
-            // `M_LIMIT_EXCEEDED` and its relatives: upper case, underscores,
-            // no identifier in them, and the one token worth keeping when a
-            // user reports a failure.
+            // `M_LIMIT_EXCEEDED` and its relatives: upper case, no identifier in them, and
+            // the one token worth keeping in a report.
             let error_code = trimmed.len() >= 3
                 && trimmed
                     .chars()
@@ -172,9 +140,8 @@ mod tests {
 
     #[test]
     fn the_scrubber_catches_what_the_system_really_says() {
-        // Verbatim shapes from std::io, hyper and reqwest - the previous test
-        // asserted on a string no operating system emits, so it passed while
-        // the homeserver went into the journal.
+        // Verbatim shapes from std::io, hyper and reqwest - the previous test asserted
+        // on a string no operating system emits.
         for probe in [
             "dns error: failed to lookup address information for matrix.example.org: Name or service not known",
             "error trying to connect: tcp connect error: chat.example.org:8448: Connection refused",

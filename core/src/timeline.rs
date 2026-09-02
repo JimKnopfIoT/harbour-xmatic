@@ -1,12 +1,5 @@
-//! The timeline of a single room.
-//!
-//! Like the room list, the SDK hands out `VectorDiff`s over timeline items, so
-//! the Qt model applies them rather than assembling a view of its own. Edits,
-//! reactions and local echoes all arrive as updates to existing items — that
-//! bookkeeping lives upstream, not here.
-//!
-//! Encrypted rooms need no special handling at this level: the crypto machine
-//! sits below the timeline and hands decrypted content out the same way.
+//! The timeline of a single room. The SDK hands out `VectorDiff`s and the Qt
+//! model applies them; encryption sits below and needs nothing here.
 
 use std::collections::hash_map::DefaultHasher;
 use std::collections::HashMap;
@@ -53,32 +46,28 @@ use crate::text::{safe_file_name, scrub_ids, strip_bidi};
 /// How many events one backwards pagination asks for.
 const PAGE_SIZE: u16 = 30;
 
-/// Below this many items a timeline claiming to be complete is not believed —
-/// see `paginate`. One page is the natural threshold: fewer events than a
-/// single request would have returned, yet "that is all there is".
+/// Below this many items, "complete" is not believed - see `paginate`. One
+/// page: fewer events than a single request returns, yet "that is all".
 const SUSPICIOUSLY_SHORT: usize = PAGE_SIZE as usize;
 
 /// An open timeline and the task streaming its updates.
 pub struct TimelineHandle {
-    room_id: String,
+    pub room_id: String,
     live: bool,
     /// The pinned-messages view, which cannot be paginated at all.
     pinned: bool,
     timeline: Arc<matrix_sdk_ui::timeline::Timeline>,
     task: tokio::task::JoinHandle<()>,
-    /// Whether the one permitted cache reset (see `paginate`) was already used.
-    /// Without this the room would be cleared on every single pagination that
-    /// legitimately reports the start of a short room.
+    /// Whether the one permitted cache reset was already used. Without it the room
+    /// is cleared on every pagination that legitimately reports a short room.
     retried_from_end: AtomicBool,
     /// The thread this view is focused on, or empty for a room view.
     thread_root: String,
     /// Whether this timeline was built tracking other people's receipts. Part
     /// of the handle because the setting can only be chosen at build time.
     receipts: bool,
-    /// Everything this timeline started: the lanes its quote fetches queue in
-    /// and a handle on every task. Closed with the timeline, so nothing of this
-    /// room is still holding the client when the next one opens - or when the
-    /// store is cleared.
+    /// Everything this timeline started: the quote-fetch lanes and a handle on
+    /// every task. Closed with it, so nothing still holds the client or the store.
     tasks: TimelineTasks,
 }
 
@@ -119,9 +108,8 @@ impl TimelineHandle {
             .map_err(|error| format!("could not change the pin: {error}"))
     }
 
-    /// The room's pinned event ids and the newest pin's body, fresh from the
-    /// server when possible so a pin made a moment ago is already in the
-    /// answer.
+    /// The room's pinned ids and the newest pin's body, from the server where
+    /// possible so a pin made a moment ago is already in the answer.
     pub async fn pinned_info(&self) -> (Vec<String>, String) {
         let room = self.timeline.room();
         let ids = pinned_ids(room).await;
@@ -129,24 +117,11 @@ impl TimelineHandle {
         (ids.iter().map(|id| id.to_string()).collect(), preview)
     }
 
-    /// Loads older events. Returns whether the start of the room was reached.
-    ///
-    /// It deliberately does not report how many rows this added, although the
-    /// UI would like to know: `paginate_backwards` hands the new items to the
-    /// subscriber stream rather than having them in place when it returns — for
-    /// a lazy pagination it only lowers a skip count and returns at once
-    /// (`matrix-sdk-ui`, `timeline/pagination.rs`). Counting items around the
-    /// call therefore reports zero for a page that did arrive, a moment later,
-    /// through the diff stream. The growth is judged where the diffs have
-    /// landed, which is the model on the Qt side.
+    /// Loads older events, answers whether the room's start was reached. Never how
+    /// many rows: `paginate_backwards` returns before they arrive as diffs.
     pub async fn paginate(&self) -> Result<bool, String> {
-        // The pinned view holds exactly the pinned events and has no history
-        // behind it; the SDK answers any pagination on it with
-        // `PaginationError::NotSupported` unconditionally
-        // (`matrix-sdk-ui`, `timeline/pagination.rs`). Passed on, that became a
-        // user-facing error banner every time the pinned page was opened with
-        // too few pins to fill the screen — an error where the honest answer is
-        // simply "that is all of them".
+        // The pinned view has no history behind it and the SDK answers every
+        // pagination on it with `NotSupported`. That is "all of them", not an error.
         if self.pinned {
             return Ok(true);
         }
@@ -161,19 +136,8 @@ impl TimelineHandle {
             return Ok(reached_start);
         }
 
-        // The SDK reports "start of the timeline" as soon as its event cache
-        // holds any event but knows neither a gap nor an older chunk — it never
-        // asks the server. A room joined while the app was running lands in
-        // exactly that state: sliding sync delivered the join event without a
-        // `prev_batch` token, so there is no gap, and three rows are declared
-        // the whole room. An empty cache, by contrast, makes the SDK paginate
-        // from the end of the room, which is what actually fetches history.
-        //
-        // So for a timeline far too short to be believable, the room's cache is
-        // dropped once and the pagination retried. That restores the only state
-        // in which the SDK asks the server. Discarding the cache costs nothing
-        // here: what is being thrown away is the handful of events that just
-        // proved insufficient.
+        // The SDK reports "start of the timeline" whenever its cache has events but
+        // no gap - a room joined while running. Drop the cache once and retry.
         if self.timeline.items().await.len() >= SUSPICIOUSLY_SHORT
             || self.retried_from_end.swap(true, Ordering::SeqCst)
         {
@@ -221,15 +185,8 @@ impl TimelineHandle {
             .map_err(|error| format!("could not reply: {error}"))
     }
 
-    /// Replaces the body of a message that was already sent.
-    ///
-    /// A picture, video, audio clip or file is edited as a **caption**, not as
-    /// a message. `EditedContent::RoomMessage` replaces the whole content, so
-    /// an `m.image` edited that way becomes an `m.text`: the picture is gone
-    /// from the event, and no further edit can bring it back because there is
-    /// no attachment left to caption. `MediaCaption` keeps the media part and
-    /// swaps only the text (`matrix-sdk/src/room/edit.rs`). An empty caption
-    /// removes it, which is what the SDK does with `None`.
+    /// An attachment is edited as a *caption*: `EditedContent::RoomMessage` would
+    /// turn an `m.image` into an `m.text` and the picture would be gone for good.
     pub async fn edit(&self, event_id: &str, body: String) -> Result<(), String> {
         let id = parse_event_id(event_id)?;
         let content = match self.is_media_event(&id).await {
@@ -274,9 +231,8 @@ impl TimelineHandle {
         }
     }
 
-    /// Adds our reaction to a message, or takes it back if it is already
-    /// there. One command for both: the SDK decides from what it holds, and
-    /// two commands would be two chances to disagree with it.
+    /// Adds our reaction or takes it back. One command: the SDK decides from what
+    /// it holds, and two would be two chances to disagree with it.
     pub async fn toggle_reaction(&self, event_id: &str, key: &str) -> Result<(), String> {
         if key.is_empty() {
             return Err("no reaction given".to_owned());
@@ -289,9 +245,8 @@ impl TimelineHandle {
             .map_err(|error| format!("could not react: {error}"))
     }
 
-    /// Puts a parked message back in the queue. The SDK stops trying after an
-    /// error it cannot recover from; this is the "try again" for that, and it
-    /// only exists for a message that never reached the server.
+    /// Puts a parked message back in the queue - the SDK stops after an error it
+    /// cannot recover from. Only for a message that never reached the server.
     pub async fn retry(&self, txn_id: &str) -> Result<(), String> {
         if txn_id.is_empty() {
             return Err("not a queued message".to_owned());
@@ -312,9 +267,8 @@ impl TimelineHandle {
             .map_err(|error| format!("could not send it again: {}", scrub_ids(&error.to_string())))
     }
 
-    /// Redacts a message, or discards one that never left. For a sent event
-    /// this is a redaction and the row stays as a deleted one; for a local echo
-    /// the SDK aborts the queued send instead and the row disappears.
+    /// Redacts a sent message, or aborts a queued one: the first leaves a deleted
+    /// row, the second makes the row disappear.
     pub async fn redact(&self, event_id: &str, txn_id: &str) -> Result<(), String> {
         let id = if event_id.is_empty() {
             if txn_id.is_empty() {
@@ -330,21 +284,8 @@ impl TimelineHandle {
             .map_err(|error| format!("could not delete: {error}"))
     }
 
-    /// Marks the room as read up to the latest event: the receipt others see,
-    /// and the fully-read marker, which is where *this* account stopped
-    /// reading. Both in one request (`/read_markers`).
-    ///
-    /// The marker is not decoration: it is what the line in the conversation
-    /// follows and what "open where I stopped" reads on the next visit. Sending
-    /// only the receipt left that line standing where it first appeared.
-    ///
-    /// `receipt` is the user's choice about what *others* learn, and it governs
-    /// only the receipt. The marker goes out either way: it is private account
-    /// data, so withholding it hides nothing from anybody and only costs this
-    /// account the line and the position the room opens at.
-    /// Answers whether anything was sent: a room whose newest event this
-    /// device has not seen has nothing to point a marker at, and the caller
-    /// must not take that for "the room is read now".
+    /// Marks the room read: the receipt others see and the fully-read marker, in
+    /// one request. Answers whether anything was sent at all.
     pub async fn mark_read(&self, receipt: bool) -> Result<bool, String> {
         let Some(event_id) = self.timeline.latest_event_id().await else {
             return Ok(false);
@@ -353,13 +294,8 @@ impl TimelineHandle {
         if receipt {
             receipts = receipts.public_read_receipt(event_id);
         } else {
-            // Nobody is told, and the room still counts as read. The unread and
-            // notification counters anchor on `m.read` and `m.read.private`
-            // only - the fully-read marker is not among them - so sending the
-            // marker alone left the badge standing and the banner unretractable
-            // for exactly the user who asked for the quiet setting. The private
-            // receipt is what the SDK offers for this: it resets the counters
-            // and reaches nobody else.
+            // Nobody is told and the room still counts as read: the counters anchor on
+            // the receipts, not on the marker, so the marker alone left the badge standing.
             receipts = receipts.private_read_receipt(event_id);
         }
         self.timeline
@@ -369,13 +305,8 @@ impl TimelineHandle {
         Ok(true)
     }
 
-    /// Everybody who has read up to `event_id` or past it, with the name and
-    /// picture the room knows them under.
-    ///
-    /// Past it, not on it: a receipt marks the newest event a person has read,
-    /// which in a running conversation is one of the later messages. Asking
-    /// only the marked event itself would answer "nobody" for exactly the
-    /// people who read it.
+    /// Everybody who has read up to `event_id` *or past it*: a receipt marks the
+    /// newest event read, so asking only this one answers "nobody".
     pub async fn readers(&self, event_id: &str) -> Result<Vec<Value>, String> {
         let target = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
         let items = self.timeline.items().await;
@@ -429,15 +360,8 @@ impl TimelineHandle {
         Ok(readers)
     }
 
-    /// Who reacted to `event_id` with `key`, with the names the room knows
-    /// them under.
-    ///
-    /// The rows carry a count and never the people behind it - a name in every
-    /// row would be payload nobody reads - so this is asked when one reaction
-    /// is held down, exactly like the readers behind the eye. The key is the
-    /// one the row sends back (`sendKey`), not the filtered one it draws: two
-    /// keys that look alike but differ in a variation selector are two keys to
-    /// the server.
+    /// Who reacted with `key`. Asked on a long press, since rows carry counts only.
+    /// The key is the one the row sends back, variation selectors included.
     pub async fn reactors(&self, event_id: &str, key: &str) -> Result<Vec<Value>, String> {
         let target = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
         let items = self.timeline.items().await;
@@ -485,16 +409,12 @@ impl TimelineHandle {
         Ok(reactors)
     }
 
-    /// Takes `&self` rather than consuming the handle: the runtime keeps it
-    /// behind an `Arc` so a command can work on it without holding the state
-    /// lock, and an `Arc` cannot hand out ownership.
+    /// Takes `&self` rather than consuming: the runtime keeps this behind an `Arc`
+    /// so a command can work on it without the state lock.
     pub async fn close(&self) {
         self.task.abort();
-        // The diff task was never the only one: every quote this timeline asked
-        // for runs in a task of its own, and each holds the timeline, the room
-        // and with it the open store. Aborting only the stream left them to
-        // finish in their own time - under a `reset_store` that must not have a
-        // client on the directory.
+        // Not only the diff stream: every quote fetch holds the timeline, the room and
+        // the open store, and a `reset_store` must have no client on the directory.
         self.tasks.close().await;
     }
 }
@@ -505,11 +425,8 @@ fn parse_event_id(event_id: &str) -> Result<TimelineEventItemId, String> {
         .map_err(|_| "not an event identifier".to_owned())
 }
 
-/// The message's HTML variant, rewritten into the markup Qt can draw, or
-/// `None` where there is nothing to show beyond the plain body.
-///
-/// Only the three textual message types carry one. Everything else — an image,
-/// a file — uses `body` as its file name, where formatting would be nonsense.
+/// The HTML variant rewritten into the markup Qt can draw. Only the textual
+/// types have one - elsewhere `body` is a file name.
 fn formatted_body(message_type: &MessageType) -> Option<String> {
     let formatted: &FormattedBody = match message_type {
         MessageType::Text(content) => content.formatted.as_ref()?,
@@ -525,14 +442,11 @@ fn formatted_body(message_type: &MessageType) -> Option<String> {
     crate::markup::to_styled_text(&formatted.body)
 }
 
-/// Describes an attachment so the front end can show and fetch it.
-///
-/// The media source travels as opaque JSON: in encrypted rooms it carries the
-/// decryption keys, so a bare MXC URI would not be enough.
+/// Describes an attachment for showing and fetching. The source travels as
+/// opaque JSON: in encrypted rooms it carries the decryption keys.
 fn media_info(message_type: &MessageType) -> Option<Value> {
-    // In encrypted rooms the server cannot generate thumbnails — it only ever
-    // sees ciphertext — so the sender ships one as a separate media source.
-    // Using it is the only way to avoid downloading full-size images.
+    // Encrypted rooms have no server-made thumbnails - the sender ships one as a
+    // separate source, and it is the only way to avoid full-size downloads.
     let thumbnail = match message_type {
         MessageType::Image(content) => content
             .info
@@ -548,8 +462,7 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
     };
 
     // `filename()`, never `body`: a captioned attachment carries the caption in
-    // `body` and the real name in `filename` (MSC2530), so reading `body` here
-    // saved a picture under its caption.
+    // `body` (MSC2530), and reading it saved pictures under their caption.
     let (source, mimetype, size, filename) = match message_type {
         MessageType::Image(content) => (
             &content.source,
@@ -595,33 +508,25 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
         "thumbnailSource": thumbnail,
         "mimetype": mimetype,
         "size": size.map(u64::from),
-        // Sanitised here, not where it is saved: a name that came in an event
-        // can hold a path, and the rule for that belongs where it can be
-        // tested (core/src/text.rs).
+        // Sanitised here, not where it is saved: a name out of an event can hold a
+        // path, and the rule belongs where it can be tested (`core/src/text.rs`).
         "filename": safe_file_name(&filename),
-        // Passed through as declared. Nulling an absurd value made the row's
-        // guard read it as "not declared" and let it through - two halves of
-        // one protection, each correct alone.
+        // Passed through as declared. Nulling an absurd value made the row's guard
+        // read it as "not declared" and let it through.
         "width": width.map(u64::from),
         "height": height.map(u64::from),
     }))
 }
 
-/// The event id of `item` if it is a reply whose quoted message still has to
-/// be asked for: `Unavailable` was never requested, `Error` was requested and
-/// failed — a failure is worth another try, not a final answer.
+/// The event id if this is a reply whose quote still has to be asked for:
+/// `Unavailable` was never requested, `Error` failed and is worth one more try.
 fn reply_needing_details(item: &TimelineItem) -> Option<OwnedEventId> {
     let event = item.as_event()?;
     let TimelineItemContent::MsgLike(content) = event.content() else {
         return None;
     };
-    // A row that belongs to a thread carries a quote it did not ask for: the
-    // SDK marks every threaded event as a reply to the previous one in its
-    // thread, for clients that cannot do threads, and it only suppresses that
-    // fallback in a thread-focused timeline (`controller/metadata.rs`, the
-    // `is_falling_back` branch). In the room this would mean one fetch per
-    // thread reply - the largest single consumer of the lanes above - for a
-    // quote no other client displays. The thread view shows the real replies.
+    // The SDK marks every threaded event a reply to the previous one, for clients
+    // without threads. In the room that is one fetch per reply for nothing.
     if content.thread_root.is_some() {
         return None;
     }
@@ -650,60 +555,26 @@ fn replies_needing_details(diff: &VectorDiff<Arc<TimelineItem>>) -> Vec<OwnedEve
     }
 }
 
-/// How often one reply's details are asked for over a timeline's lifetime.
-///
-/// A failed fetch comes back through the stream as a `Set` diff carrying
-/// `Error`, which qualifies for another request — unbounded, that is a
-/// request loop against a homeserver that answers 429, so the second attempt
-/// is also the last.
+/// How often one reply's details are asked for. A failure returns as a `Set`
+/// diff that qualifies again - unbounded, that is a loop against a 429.
 const DETAIL_ATTEMPTS: u8 = 2;
 
-/// How many pinned events the diagnostic count may look at. A room may pin
-/// hundreds; the answer "N pinned, only M readable" does not get truer for
-/// every one of them, and each miss is a request.
+/// How many pinned events the diagnostic may look at. "N pinned, only M
+/// readable" gets no truer past twenty, and each miss is a request.
 const PINNED_REPORT_LIMIT: usize = 20;
 
-/// How many of those may be in flight at once, per timeline.
-///
-/// One `tokio::spawn` per reply row and no limit meant a room whose first
-/// screens hold a hundred quoted messages fired a hundred requests at the
-/// homeserver the moment it opened - and the SDK's retry policy has no attempt
-/// limit and a fifteen-minute budget, so every 429 among them is nursed for
-/// that long. The app sets no `RequestConfig` anywhere, so this is the only
-/// place the number is decided. Four is enough to keep the quotes filling in
-/// while the user reads the newest ones.
-///
-/// Per timeline, not per process: a process-wide queue belongs to whoever
-/// filled it first, so the room the user just left kept the lanes and the room
-/// they are looking at waited behind it. A timeline that closes takes its own
-/// queue with it.
+/// Quote fetches in flight per timeline. Unbounded, a room of quoted messages
+/// fired a hundred requests at once, each 429 nursed for fifteen minutes.
 const DETAIL_LANES: usize = 4;
 
-/// Everything one timeline set running, and the switch that ends it.
-///
-/// Every task spawned for a timeline holds an `Arc` on it, and through it on
-/// the room, the client and the open SQLite pool. `close()` used to abort the
-/// diff stream and nothing else, so a sign-out could delete the store
-/// directory while a quote fetch, a member load, a thread listing or a
-/// pagination was still inside it - the one situation this project has written
-/// down as never to allow. Queueing them behind four lanes made that window
-/// wider still, because a queued task can now wait a quarter of an hour.
-///
-/// So the handle owns them: the lanes for the quote fetches, the flag they
-/// check before spending a permit, and an abort handle for every task the
-/// timeline started - including the ones that have nothing to do with quotes.
-/// A new `tokio::spawn` in this file that is not registered here is the next
-/// instance of the same bug, which is why `spawn_tracked` is the only way it
-/// should be written.
+/// Everything one timeline set running, and the switch that ends it. A
+/// `tokio::spawn` here that is not registered is the next lost task.
 #[derive(Clone)]
 struct TimelineTasks {
     permits: Arc<tokio::sync::Semaphore>,
     open: Arc<AtomicBool>,
-    /// Every fetch this timeline started and that may still be running. Closing
-    /// the queue is not enough: a task that already holds a permit sits inside
-    /// the request, and the SDK will nurse a 429 for a quarter of an hour - so
-    /// up to four of them would still be holding the client, and through it the
-    /// open store, while `reset_store` runs.
+    /// Every fetch that may still be running: closing the queue is not enough, a
+    /// task holding a permit sits inside a request the SDK nurses for minutes.
     running: Arc<tokio::sync::Mutex<Vec<tokio::task::JoinHandle<()>>>>,
 }
 
@@ -716,14 +587,8 @@ impl TimelineTasks {
         }
     }
 
-    /// Spawns a task that belongs to this timeline and dies with it. Pruning
-    /// happens here rather than in the tasks: one that is being aborted is in
-    /// no position to tidy up after itself.
-    ///
-    /// A closed timeline starts nothing. The stream task keeps running until
-    /// its next await point and can ask for one more quote fetch after
-    /// `close()` has already emptied the list - registered too late is the same
-    /// as not registered.
+    /// Spawns a task that dies with this timeline; pruning happens here because a
+    /// task being aborted cannot tidy up. A closed timeline starts nothing.
     async fn spawn_tracked<F>(&self, future: F)
     where
         F: std::future::Future<Output = ()> + Send + 'static,
@@ -737,25 +602,12 @@ impl TimelineTasks {
         running.push(handle);
     }
 
-    /// Ends everything and waits for it to be over.
-    ///
-    /// Waiting is the point: `abort()` only marks a task, and the caller of
-    /// `close()` goes straight on to delete the store directory. What made that
-    /// safe until now was the ten-second logout in between, which is a
-    /// coincidence of ordering rather than a guarantee. Joining afterwards
-    /// turns "probably gone" into "gone".
-    ///
-    /// What this cannot reach: `paginate_backwards` only *waits* on a shared
-    /// future - the pagination itself runs in a task of the SDK's own, which
-    /// holds the event-cache store and keeps itself alive. No abort handle of
-    /// this app touches it. The window is a scheduler pass instead of minutes;
-    /// it is not shut, and pretending otherwise in this comment was the earlier
-    /// version of it.
+    /// Ends everything and waits: `abort()` only marks a task, and the caller
+    /// deletes the store next. The SDK's own pagination task is out of reach.
     async fn close(&self) {
         self.open.store(false, Ordering::SeqCst);
-        // Wakes everything that is waiting; `acquire_owned` then fails and the
-        // task drops its handle instead of holding it for the next quarter of
-        // an hour.
+        // Wakes everything waiting; `acquire_owned` then fails and the task drops its
+        // handle instead of holding it for the next quarter of an hour.
         self.permits.close();
         let handles: Vec<_> = {
             let mut running = self.running.lock().await;
@@ -772,13 +624,11 @@ impl TimelineTasks {
     }
 }
 
-/// Spawns a detail fetch for each reply target that has attempts left.
-/// Failures go out as `timeline.detailError` (truncated id, scrubbed error)
-/// so they land in the journal instead of vanishing.
+/// Spawns a detail fetch per reply target with attempts left. Failures go out
+/// as `timeline.detailError`, truncated and scrubbed.
 async fn request_reply_details(
-    // A vector rather than an iterator: this is an async function now, and a
-    // borrowed iterator in one turns into a lifetime the spawned task cannot
-    // satisfy. The lists are short - the reply rows of one diff.
+    // A vector, not an iterator: this is async, and a borrowed iterator becomes a
+    // lifetime the spawned task cannot satisfy.
     ids: Vec<OwnedEventId>,
     requested: &mut HashMap<OwnedEventId, u8>,
     timeline: &Arc<matrix_sdk_ui::timeline::Timeline>,
@@ -795,11 +645,8 @@ async fn request_reply_details(
         let sink = sink.clone();
         let inner = tasks.clone();
         tasks.spawn_tracked(async move {
-            // Queued, not dropped: every quote still gets its turn, four at a
-            // time. The permit is held for the request and released with it.
-            // A closed timeline fails the acquire, and a task that was already
-            // holding one checks before it spends it - either way what it holds
-            // is dropped instead of kept alive across a sign-out.
+            // Queued, not dropped: every quote gets its turn, four at a time. A closed
+            // timeline fails the acquire and what the task holds is dropped.
             let Ok(_permit) = inner.permits.clone().acquire_owned().await else {
                 return;
             };
@@ -816,9 +663,8 @@ async fn request_reply_details(
                     .map(|(index, _)| index)
                     .unwrap_or(full.len());
                 let short = full[..cut].to_owned();
-                // A class, not the message: the SDK's own error carries the
-                // full id in its `Debug` output (`EventId("$…")`), and the
-                // most common case here is exactly that variant.
+                // A class, not the message: the SDK's error carries the full id in its
+                // `Debug` output, and that is the common case here.
                 let class = match error {
                     matrix_sdk_ui::timeline::Error::EventNotInTimeline(_) => "not-in-timeline",
                     _ => "fetch-failed",
@@ -833,15 +679,8 @@ async fn request_reply_details(
     }
 }
 
-/// Why an event could not be decrypted, as a stable key the front end turns
-/// into a sentence.
-///
-/// The SDK works this out and hands it over; throwing it away is what turns
-/// every report of "he cannot read me" into an afternoon of measuring. The
-/// distinction that matters most in practice is between a key that never
-/// arrived (the sender withheld it, or could not deliver it) and a message
-/// that is simply older than this device — the first is the sender's setting,
-/// the second is nobody's fault and cannot be repaired from here.
+/// Why an event could not be decrypted, as a stable key. Throwing it away
+/// turns every "he cannot read me" into an afternoon of measuring.
 fn utd_cause(event: &EventTimelineItem) -> &'static str {
     let TimelineItemContent::MsgLike(content) = event.content() else {
         return "";
@@ -866,9 +705,8 @@ fn utd_cause(event: &EventTimelineItem) -> &'static str {
     }
 }
 
-/// Describes the message a reply refers to, as far as it is already known.
-/// `state`: "ready", "error" (fetch failed — not there or not permitted),
-/// or "loading".
+/// Describes the quoted message as far as it is known. `state`: "ready",
+/// "error" (not there or not permitted), or "loading".
 fn reply_info(content: &matrix_sdk_ui::timeline::MsgLikeContent) -> Option<Value> {
     let in_reply_to = content.in_reply_to.as_ref()?;
 
@@ -920,20 +758,16 @@ fn reply_info(content: &matrix_sdk_ui::timeline::MsgLikeContent) -> Option<Value
     }))
 }
 
-/// What was last known about a sender, so a profile that is momentarily not
-/// ready does not blank the conversation.
-///
-/// `Timeline::fetch_members` marks *every* profile pending before it asks the
-/// server (`set_sender_profiles_pending`), and the app calls it on each open.
-/// Without a memory every name in the room therefore falls back to a bare
-/// Matrix address for as long as that request takes - and stays there when it
-/// fails, which is what "the nick disappears, reopening brings it back" was.
-///
-/// Keyed by sender alone, not by room: a display name can be set per room, but
-/// this is only the stand-in for the moments the real profile is not readable,
-/// and a name from another room is closer to the truth than an address.
+/// What was last known about a sender. `fetch_members` marks every profile
+/// pending before it asks, so without this every name falls back to an address.
 static KNOWN_SENDERS: Mutex<Option<HashMap<String, (String, Option<String>)>>> =
     Mutex::new(None);
+
+/// The key a sender is remembered under: room and user, because a display
+/// name is a per-room member event.
+fn sender_key(room_id: &str, user: &str) -> String {
+    format!("{room_id}\u{1}{user}")
+}
 
 /// Wipes the remembered names. A sign-out must not carry one account's
 /// contacts into the next.
@@ -943,13 +777,13 @@ pub fn forget_senders() {
     }
 }
 
-fn remember_sender(user: &str, name: Option<&str>, avatar: Option<&str>) {
+fn remember_sender(room_id: &str, user: &str, name: Option<&str>, avatar: Option<&str>) {
     let Ok(mut guard) = KNOWN_SENDERS.lock() else {
         return;
     };
     let known = guard.get_or_insert_with(HashMap::new);
     let entry = known
-        .entry(user.to_owned())
+        .entry(sender_key(room_id, user))
         .or_insert_with(|| (user.to_owned(), None));
     if let Some(name) = name {
         entry.0 = name.to_owned();
@@ -959,9 +793,9 @@ fn remember_sender(user: &str, name: Option<&str>, avatar: Option<&str>) {
     }
 }
 
-fn recall_sender(user: &str) -> Option<(String, Option<String>)> {
+fn recall_sender(room_id: &str, user: &str) -> Option<(String, Option<String>)> {
     let guard = KNOWN_SENDERS.lock().ok()?;
-    guard.as_ref()?.get(user).cloned()
+    guard.as_ref()?.get(&sender_key(room_id, user)).cloned()
 }
 
 /// The authenticity marker for one event: `"red"`, `"grey"` or nothing, with
@@ -998,41 +832,36 @@ fn reaction_key(key: &str) -> String {
 
 /// The sender's display name, falling back to the last one seen and only then
 /// to the bare user ID.
-fn sender_name(item: &EventTimelineItem) -> String {
+fn sender_name(room_id: &str, item: &EventTimelineItem) -> String {
     let user = item.sender().as_str();
     match item.sender_profile() {
         TimelineDetails::Ready(profile) => {
             let name = profile.display_name.as_deref().map(strip_bidi);
             let avatar = profile.avatar_url.as_ref().map(|url| url.to_string());
-            remember_sender(user, name.as_deref(), avatar.as_deref());
+            remember_sender(room_id, user, name.as_deref(), avatar.as_deref());
             name.unwrap_or_else(|| user.to_owned())
         }
-        _ => recall_sender(user)
+        _ => recall_sender(room_id, user)
             .map(|(name, _)| name)
             .unwrap_or_else(|| user.to_owned()),
     }
 }
 
-/// Where the sender's picture lives, if the profile is known.
-///
-/// This is the same URL for every message of one sender, which is what lets
-/// the UI fetch it once per person instead of once per message.
-fn sender_avatar(item: &EventTimelineItem) -> Option<String> {
+/// Where the sender's picture lives. The same URL for every message of one
+/// sender, so the UI fetches it once per person.
+fn sender_avatar(room_id: &str, item: &EventTimelineItem) -> Option<String> {
     match item.sender_profile() {
         TimelineDetails::Ready(profile) => {
             profile.avatar_url.as_ref().map(|url| url.to_string())
         }
         // Same reason as in sender_name: pending is not "has none".
-        _ => recall_sender(item.sender().as_str()).and_then(|(_, avatar)| avatar),
+        _ => recall_sender(room_id, item.sender().as_str()).and_then(|(_, avatar)| avatar),
     }
 }
 
-/// One timeline item as the UI needs it.
-///
-/// Items that are neither messages nor date dividers still appear, with kind
-/// "other" — dropping them here would put the model's indices out of step with
-/// the diffs the SDK sends.
-fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
+/// One timeline item as the UI needs it. Items that are neither messages nor
+/// dividers stay as kind "other": dropping them shifts the indices.
+fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Value {
     let id = item.unique_id().0.clone();
 
     if let Some(virtual_item) = item.as_virtual() {
@@ -1051,15 +880,8 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
         return json!({ "id": id, "kind": "other" });
     };
 
-    // An event that could not be decrypted still gets a row of its own. It
-    // means a key is missing — usually because the message predates this
-    // device — and hiding it would silently swallow part of the conversation.
-    //
-    // Calls and membership changes are not messages, but a room that consists
-    // only of them (a call test room, say) must not look empty: they become a
-    // "system" row. The `system` token is machine-readable so the QML side can
-    // localise it; `name` carries the affected member for membership changes.
-    // Thread membership and summary, for the marker row and the inline tag.
+    // An undecryptable event keeps its row - hiding it swallows part of the
+    // conversation. Calls and membership changes become "system" rows.
     let (thread_root, thread_count) = match event.content() {
         TimelineItemContent::MsgLike(content) => (
             content
@@ -1094,14 +916,8 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
             MsgLikeKind::Redacted => {
                 ("redacted", String::new(), String::new(), false, None, None, "", String::new())
             }
-            // Stickers and polls are ordinary timeline items — the SDK's
-            // default filter admits both — but they used to fall into "other",
-            // which the UI draws with a height of zero. They were therefore
-            // invisible, the same silent hole in the conversation that the
-            // handling of undecryptable and redacted events exists to avoid.
-            // Their own message type is passed on; the UI does not draw either
-            // specially yet and falls back to text, so at least the sticker's
-            // name and the poll's question are there.
+            // Stickers and polls are ordinary items but used to fall into "other", which
+            // the UI draws at zero height - the same silent hole.
             MsgLikeKind::Sticker(sticker) => (
                 "message",
                 strip_bidi(&sticker.content().body),
@@ -1162,23 +978,16 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
         _ => ("other", String::new(), String::new(), false, None, None, "", String::new()),
     };
 
-    // Reactions, grouped the way they are drawn: one entry per key, how many
-    // people used it, and whether we are one of them. Deliberately not the
-    // list of users - the bubble shows a count, and a name would only be
-    // payload nobody reads. Keys stay exactly as they arrived: two that look
-    // alike but differ in a variation selector are two keys to the server, and
-    // merging them here would take a reaction back that was never given.
+    // Reactions grouped as they are drawn: key, count, and whether we are in it.
+    // Keys stay as they arrived - a variation selector makes a different key.
     let reactions = match event.content() {
         TimelineItemContent::MsgLike(content) => content
             .reactions
             .iter()
             .map(|(key, senders)| {
                 json!({
-                    // Filtered like every other string a stranger wrote: a
-                    // reaction is free text, not necessarily an emoji, and it
-                    // is drawn in a chip that cannot hold a paragraph. The
-                    // round trip to the server uses the original key, which
-                    // the row carries in `reactionKeys`.
+                    // Filtered like every string a stranger wrote: a reaction is free text in a
+                    // chip. The round trip uses the original from `reactionKeys`.
                     "key": reaction_key(key),
                     "sendKey": key,
                     "count": senders.len(),
@@ -1189,15 +998,13 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
         _ => Vec::new(),
     };
 
-    // The text an attachment was sent with, where there is one. `body` alone
-    // cannot say: for an attachment without a caption it holds the file name,
-    // and the row would then show the file name as if it were a message.
+    // The caption an attachment was sent with. `body` alone cannot say: without a
+    // caption it holds the file name, which would show as a message.
     let caption = match event.content() {
         TimelineItemContent::MsgLike(content) => match &content.kind {
             MsgLikeKind::Message(message) => match message.msgtype() {
-                // Through the same filter as a message body: a caption is
-                // text a stranger wrote, and a bidi override in it reverses
-                // what the reader sees.
+                // Through the same filter as a message body: a bidi override in a caption
+                // reverses what the reader sees.
                 MessageType::Image(inner) => inner.caption().map(strip_bidi),
                 MessageType::Video(inner) => inner.caption().map(strip_bidi),
                 MessageType::Audio(inner) => inner.caption().map(strip_bidi),
@@ -1222,18 +1029,14 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
     json!({
         "id": id,
         "eventId": event.event_id().map(|id| id.as_str()),
-        // A message still in the send queue has no event id. It has a
-        // transaction id, and that is the only handle by which it can be
-        // discarded - without it a send that failed for good sits in the room
-        // for ever, with nothing that can act on it.
+        // A message in the send queue has no event id. The transaction id is the only
+        // handle by which it can be discarded.
         "txnId": match event.identifier() {
             TimelineEventItemId::TransactionId(id) => Some(id.to_string()),
             TimelineEventItemId::EventId(_) => None,
         },
-        // The SDK calls a local echo editable, and it is - but every edit
-        // path here goes by event id, and a message still in the send queue
-        // has none. Offering the action would answer "not an event
-        // identifier".
+        // The SDK calls a local echo editable, but every edit path here goes by event
+        // id, and a queued message has none.
         "editable": event.is_editable() && event.event_id().is_some(),
         "kind": kind,
         "body": body,
@@ -1245,17 +1048,15 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
         "caption": caption,
         "replyTo": reply,
         "utdCause": utd_cause(event),
-        // Whether the message is what it claims to be. The SDK computes this
-        // and calls it the recommended decoration; without it a message sent
-        // in the clear into an encrypted room, or one from a device that is
-        // not the sender's, is drawn like any other.
+        // Whether the message is what it claims to be - the SDK's recommended
+        // decoration. Without it, a message sent in the clear looks like any other.
         "shield": shield_state(event),
         "edited": edited,
         "system": system,
         "name": name,
         "sender": event.sender().as_str(),
-        "senderName": sender_name(event),
-        "senderAvatar": sender_avatar(event),
+        "senderName": sender_name(room_id, event),
+        "senderAvatar": sender_avatar(room_id, event),
         "own": event.is_own(),
         "timestamp": u64::from(event.timestamp().get()),
         "pending": event.send_state().is_some(),
@@ -1271,10 +1072,8 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
             .keys()
             .filter(|user| Some(user.as_ref()) != own)
             .count(),
-        // Who they are. A receipt sits on exactly one event per person, so the
-        // whole timeline carries at most one entry per reader - the rows do
-        // not grow with the conversation. Names are not in here: they are
-        // fetched when the mark is tapped (`timeline.readers`).
+        // Who read this far. One receipt per person in the whole timeline, so the
+        // rows do not grow; names are fetched when the mark is tapped.
         "readByUsers": event
             .read_receipts()
             .keys()
@@ -1284,21 +1083,8 @@ fn encode_item(item: &TimelineItem, own: Option<&UserId>) -> Value {
     })
 }
 
-/// How far a message of our own has got: "" once the server has it, "sending"
-/// while it waits, "failed" when the attempt did not work.
-///
-/// "failed" is not the exception it sounds like. The SDK reports it for an
-/// ordinary network gap as well — a recoverable failure sets exactly this state
-/// (`timeline/controller/mod.rs`, `RoomSendQueueUpdate::SendError`) — and the
-/// message stays in the queue waiting for another try. Without showing it, a
-/// message that never left looks exactly like one that arrived, which is how a
-/// tester came to send the same text twice.
-/// Why a send failed, scrubbed of identifiers, and whether the SDK considers
-/// it recoverable. A recoverable failure parks the room's queue and clears
-/// itself when the network is back; an unrecoverable one waits for the user to
-/// discard or retry it - and until 0.22.3 there was no way to do either, so the
-/// message simply stayed. Without the reason, "not sent" is all anyone can say
-/// about it, which is what a field report had to work with.
+/// How far a message of ours got: "", "sending", "failed". "failed" covers an
+/// ordinary network gap too - without showing it, a lost message looks sent.
 fn send_error(event: &EventTimelineItem) -> Option<Value> {
     match event.send_state() {
         Some(EventSendState::SendingFailed {
@@ -1321,53 +1107,22 @@ fn send_state(event: &EventTimelineItem) -> &'static str {
 }
 
 fn encode_items<'a>(
+    room_id: &str,
     items: impl IntoIterator<Item = &'a Arc<TimelineItem>>,
     own: Option<&UserId>,
 ) -> Vec<Value> {
     items
         .into_iter()
-        .map(|item| encode_item(item.as_ref(), own))
+        .map(|item| encode_item(room_id, item.as_ref(), own))
         .collect()
 }
 
-fn encode(diff: &VectorDiff<Arc<TimelineItem>>, own: Option<&UserId>) -> Value {
-    match diff {
-        VectorDiff::Append { values } => json!({ "op": "append", "values": encode_items(values, own) }),
-        VectorDiff::Clear => json!({ "op": "clear" }),
-        VectorDiff::PushFront { value } => {
-            json!({ "op": "insert", "index": 0, "value": encode_item(value, own) })
-        }
-        VectorDiff::PushBack { value } => {
-            json!({ "op": "append", "values": [encode_item(value, own)] })
-        }
-        VectorDiff::PopFront => json!({ "op": "remove", "index": 0 }),
-        VectorDiff::PopBack => json!({ "op": "popBack" }),
-        VectorDiff::Insert { index, value } => {
-            json!({ "op": "insert", "index": index, "value": encode_item(value, own) })
-        }
-        VectorDiff::Set { index, value } => {
-            json!({ "op": "set", "index": index, "value": encode_item(value, own) })
-        }
-        VectorDiff::Remove { index } => json!({ "op": "remove", "index": index }),
-        VectorDiff::Truncate { length } => json!({ "op": "truncate", "length": length }),
-        VectorDiff::Reset { values } => json!({ "op": "reset", "values": encode_items(values, own) }),
-    }
+fn encode(room_id: &str, diff: &VectorDiff<Arc<TimelineItem>>, own: Option<&UserId>) -> Value {
+    crate::protocol::encode_diff(diff, |item| encode_item(room_id, item.as_ref(), own))
 }
 
-/// A short, stable stand-in for the room and the view an item belongs to, put
-/// in front of every item id of that timeline.
-///
-/// Without it the SDK numbers items from zero for every timeline it builds —
-/// `internal_id_prefix` defaults to `None` and the id is `"{prefix}{counter}"`
-/// (`matrix-sdk-ui`, `timeline/builder.rs` and `controller/metadata.rs`) — so
-/// the first picture of one room and the first picture of the next both get the
-/// id "0". The front end keys its cache of downloaded attachments on that id,
-/// which made a picture from the room just left show up in the room just
-/// opened, without so much as a request going out. The pinned view of a room
-/// collides with its live view the same way, hence `focus` in the hash.
-///
-/// Hashed rather than spelled out, so no full room identifier travels in a
-/// field that might one day be logged.
+/// A stable stand-in for room and view, in front of every item id. Without it
+/// the SDK numbers from zero per timeline and attachment caches collide.
 fn id_prefix(room_id: &str, focus: &str) -> String {
     let mut hasher = DefaultHasher::new();
     room_id.hash(&mut hasher);
@@ -1375,27 +1130,8 @@ fn id_prefix(room_id: &str, focus: &str) -> String {
     format!("{:x}/", hasher.finish())
 }
 
-/// Where this account stopped reading, so the view can open there instead of at
-/// the newest message.
-///
-/// The fully-read marker first, because that is what the line in the
-/// conversation follows - the position and the line have to name the same
-/// event, or the room opens somewhere the line is not. It is also the only one
-/// of the two that is always written: the receipt others see is a choice, and
-/// with it switched off the receipt stands wherever it stood when it was
-/// switched off. The receipt is the fallback for an account whose marker was
-/// never set, by this client or another.
-///
-/// Read from the room's account data and its stored receipts, not from the
-/// timeline: that keeps the jump working with receipt tracking switched off,
-/// which is the default.
-/// Both are returned, not one: the marker can name an event the room has no
-/// row for. Measured on a device - a room whose whole history was loaded, 345
-/// rows, and the marker among none of them, so the view had nothing to jump to
-/// and nothing to draw a line under. A marker pointing at a membership change,
-/// a reaction, an edit or a redacted event does that. The receipt is written
-/// on a message the user actually saw, so it is the better second guess, and
-/// the caller falls back to it once the first has proven absent.
+/// Where this account stopped reading: the fully-read marker, which the line
+/// follows, plus the receipt as fallback - a marker can name a row-less event.
 pub async fn own_read_marker(client: &Client, room_id: &str) -> (Option<String>, Option<String>) {
     use matrix_sdk::ruma::events::fully_read::FullyReadEventContent;
 
@@ -1432,16 +1168,14 @@ pub async fn own_read_marker(client: &Client, room_id: &str) -> (Option<String>,
     }
 }
 
-/// Opens the timeline of `room_id` and starts streaming updates.
-///
-/// `focus` selects the view: empty for the live timeline, `"pinned"` for the
-/// room's pinned messages, or an event id to show the history around one event
-/// — the permalink jump.
+/// Opens the timeline of `room_id` and streams updates. `focus`: empty for
+/// live, `"pinned"`, or an event id for the permalink jump.
 pub async fn open(
     client: &Client,
     room_id: &str,
     focus: &str,
     receipts: bool,
+    token: &str,
     sink: Arc<Sink>,
 ) -> Result<TimelineHandle, String> {
     use matrix_sdk_ui::timeline::{TimelineEventFocusThreadMode, TimelineFocus};
@@ -1464,26 +1198,8 @@ pub async fn open(
 
     let timeline = if live {
         room.timeline_builder()
-            // A thread's replies stand in the room as well, and yes, that is
-            // twice: once inline and once inside the thread they belong to.
-            // Hiding them is the tidier arrangement, and it was this one
-            // until the price below was measured.
-            //
-            // The price: the SDK counts no threaded event towards a room's
-            // unread, notification and mention counters - it returns before
-            // computing them (`event_cache/caches/read_receipts.rs`, the
-            // thread-root check) - and those counters are the whole of this
-            // app's badge and banner. Hidden *and* uncounted means a mention
-            // written into a thread reaches the user nowhere at all: no badge,
-            // no banner, no sound, and nothing in the room to see either. The
-            // only trace is a number on the root's marker, for whoever thinks
-            // to look.
-            //
-            // Duplication is a blemish. A message that arrives with no sign of
-            // itself is a loss. So they stay visible until the counting the SDK
-            // offers for this - thread subscriptions, per-thread receipts,
-            // `LatestEvents::for_thread` - is actually built; that is a package
-            // of its own, not a flag.
+            // Thread replies stay visible in the room, duplication included: the SDK
+            // counts no threaded event towards the badge, so hiding them hides mentions.
             .with_focus(TimelineFocus::Live {
                 hide_threaded_events: false,
             })
@@ -1516,9 +1232,8 @@ pub async fn open(
             .map_err(|error| format!("timeline unavailable: {error}"))?
     };
     let timeline = Arc::new(timeline);
-    // Everything this timeline spawns is registered here and dies with it -
-    // see `TimelineTasks`. Declared before the first spawn on purpose: a task
-    // started above this line would be one nobody can stop.
+    // Everything spawned here is registered and dies with the timeline. Declared
+    // before the first spawn: a task above this line is one nobody can stop.
     let detail_tasks = TimelineTasks::new();
 
     // Owned: the stream task outlives this call, and every row it encodes
@@ -1527,37 +1242,19 @@ pub async fn open(
 
     let (initial, mut stream) = timeline.subscribe().await;
 
-    // The first batch goes out as a reset so the model starts from a known
-    // state instead of replaying the room's history as insertions.
+    // A reset, so the model starts from a known state - with the token, because
+    // the diffs of the view that is going away are still in the queue.
     sink.emit(event(
         "timeline.diff",
         json!({
             "roomId": room_id,
-            "ops": [{ "op": "reset", "values": encode_items(&initial, own.as_deref()) }],
+            "token": token,
+            "ops": [{ "op": "reset", "values": encode_items(room_id, &initial, own.as_deref()) }],
         }),
     ));
 
-    // Sender profiles — the display name and the picture — are only filled in
-    // once the room's member list is known, and the SDK does not fetch it on
-    // its own: "If the full member list is not known, sender profiles are
-    // currently likely not going to be available" (Timeline::fetch_members).
-    // Without this some senders have a picture and others do not, depending on
-    // what a sync happened to carry along.
-    //
-    // Spawned, not awaited: the conversation appears at once and the profiles
-    // arrive through the diff stream that is already running.
-    //
-    // Only where the SDK says the list is not complete, though. The call marks
-    // every profile pending before it asks (`set_sender_profiles_pending`), so
-    // asking on each open blanks names that were already right, for as long as
-    // the request takes.
-    //
-    // `are_members_synced` is the SDK's own bookkeeping, not a guess of ours:
-    // it is set once the full list has been read and cleared again whenever
-    // the state may have gone incomplete - a gappy sync, a limited timeline.
-    // A member who joined while the room was closed therefore still lands
-    // here, either through the ordinary sync that carries their membership
-    // event or through this fetch when the SDK marks the list as unsynced.
+    // Sender profiles need the member list, which the SDK does not fetch by
+    // itself. Only where it says the list is unsynced - asking blanks live names.
     if !room.are_members_synced() {
         let timeline = timeline.clone();
         detail_tasks.spawn_tracked(async move {
@@ -1566,16 +1263,8 @@ pub async fn open(
         .await;
     }
 
-    // Which events in this room are thread roots, from the server rather than
-    // from what the store happens to hold. The marker on a root is the only way
-    // into a thread now that replies are not shown in the room, and the SDK's
-    // own summary is missing for every root that was cached before threading
-    // was switched on - which is every older thread in every room. The
-    // `/threads` endpoint knows them regardless.
-    //
-    // Spawned, and its failure is silent: a homeserver without the endpoint
-    // leaves the marker where the SDK's summary puts it, which is exactly the
-    // old behaviour.
+    // The room's thread roots from the server: the SDK's summary is missing for
+    // every root cached before threading. Failure is silent, and that is the old state.
     if live {
         let thread_room = room.clone();
         let thread_sink = sink.clone();
@@ -1595,10 +1284,8 @@ pub async fn open(
                     let raw = event.raw().json();
                     let value: Value = serde_json::from_str(raw.get()).ok()?;
                     let id = value.get("event_id")?.as_str()?.to_owned();
-                    // The reply count travels in the bundled aggregation. Where
-                    // the server sends none, one reply is the truthful floor:
-                    // an event the server lists as a thread root has at least
-                    // that.
+                    // The reply count travels in the bundled aggregation. Where the server sends
+                    // none, one is the truthful floor for an event it lists as a root.
                     let count = value
                         .pointer("/unsigned/m.relations/m.thread/count")
                         .and_then(|count| count.as_u64())
@@ -1617,9 +1304,8 @@ pub async fn open(
         .await;
     }
 
-    // The room's pinned messages, so the UI can show a banner and mark the
-    // pinned rows. Spawned: the newest pin's body may have to be fetched from
-    // the server, and opening the room must not wait for that.
+    // The room's pinned messages for banner and markers. Spawned: the newest
+    // pin's body may have to come from the server.
     if live {
         let banner_room = room.clone();
         let banner_sink = sink.clone();
@@ -1636,10 +1322,8 @@ pub async fn open(
                     "eventIds": ids,
                     "preview": preview,
                     "loaded": loaded,
-                    // How many were looked at, which since the cap is not the
-                    // same as how many there are. Comparing `loaded` against the
-                    // full list made every room with more than the cap report a
-                    // failure it never had.
+                    // How many were looked at, which past the cap is not how many there are.
+                    // Comparing against the full list reported a failure in every large room.
                     "checked": checked,
                     "loadError": error,
                 }),
@@ -1648,10 +1332,8 @@ pub async fn open(
         .await;
     }
 
-    // Whether this room was replaced by a newer one. Read from the room's own
-    // state, so it costs nothing and is known before the first message renders.
-    // Always sent for a live view, the negative answer included: it is what
-    // clears the banner of the room visited before this one.
+    // Whether this room was replaced. From local state, so it costs nothing - and
+    // always sent live, the negative included, to clear the previous room's banner.
     if live {
         sink.emit(event(
             "timeline.tombstone",
@@ -1663,6 +1345,7 @@ pub async fn open(
     }
 
     let room_id_owned = room_id.to_owned();
+    let token_owned = token.to_owned();
     let task_tasks = detail_tasks.clone();
     let detail_source = timeline.clone();
     let initial_empty = initial.is_empty();
@@ -1671,11 +1354,8 @@ pub async fn open(
         // rewritten several times does not send the same request again.
         let mut requested: HashMap<OwnedEventId, u8> = HashMap::new();
 
-        // The initial batch went out as a reset before this task started, and
-        // it needs the same treatment as the diffs below: a room reopened
-        // during the session arrives entirely out of the event cache, so its
-        // reply rows never pass through the stream — their quotes stayed
-        // empty for good.
+        // The initial batch arrived as a reset before this task started and needs the
+        // same treatment: a reopened room's reply rows never pass the stream.
         request_reply_details(
             initial.iter().filter_map(|item| reply_needing_details(item)).collect(),
             &mut requested,
@@ -1686,18 +1366,14 @@ pub async fn open(
         .await;
 
         while let Some(diffs) = stream.next().await {
-            let ops: Vec<Value> = diffs.iter().map(|diff| encode(diff, own.as_deref())).collect();
+            let ops: Vec<Value> = diffs.iter().map(|diff| encode(&room_id_owned, diff, own.as_deref())).collect();
             sink.emit(event(
                 "timeline.diff",
-                json!({ "roomId": room_id_owned, "ops": ops }),
+                json!({ "roomId": room_id_owned, "token": token_owned, "ops": ops }),
             ));
 
-            // A reply whose quoted message is not in the loaded window comes
-            // with its details `Unavailable`, and the SDK means that literally:
-            // "not available yet, and have not been requested". Nothing fetches
-            // them by itself. Without this the quote box stayed on screen with
-            // both its lines empty — for good, not "until it arrives", which is
-            // what the comment on `reply_info` used to promise.
+            // `Unavailable` means "not requested", and nothing fetches them by itself -
+            // without this the quote box stayed empty for good.
             request_reply_details(
                 diffs.iter().flat_map(replies_needing_details).collect(),
                 &mut requested,
@@ -1709,13 +1385,8 @@ pub async fn open(
         }
     });
 
-    // A room that was never in the sliding-sync window arrives with an empty
-    // timeline; fetching the first page here saves it the detour over the UI.
-    // That side keeps asking as long as the list is too short to scroll — a
-    // freshly joined room does not arrive empty, it arrives holding its own
-    // join event, which this check would miss. Spawned, not awaited — the
-    // events come back through the stream task above as ordinary diffs.
-    // Focused views load their own content and do not paginate this way.
+    // A room never in the sync window arrives empty; one page here saves the
+    // detour over the UI. Focused views load their own content.
     if live && initial_empty {
         let timeline = timeline.clone();
         detail_tasks.spawn_tracked(async move {
@@ -1737,10 +1408,8 @@ pub async fn open(
     })
 }
 
-/// Opens the timeline of one thread (`TimelineFocus::Thread`) and streams its
-/// updates as `thread.diff`. Runs next to the room's live timeline, not
-/// instead of it. Sending on this handle threads automatically — the SDK
-/// derives the relation from the focus.
+/// Opens one thread (`TimelineFocus::Thread`) as `thread.diff`, next to the
+/// room's live timeline. Sending on this handle threads automatically.
 pub async fn open_thread(
     client: &Client,
     room_id: &str,
@@ -1764,9 +1433,8 @@ pub async fn open_thread(
         .await
         .map_err(|error| format!("thread unavailable: {error}"))?;
     let timeline = Arc::new(timeline);
-    // Everything this timeline spawns is registered here and dies with it -
-    // see `TimelineTasks`. Declared before the first spawn on purpose: a task
-    // started above this line would be one nobody can stop.
+    // Everything spawned here is registered and dies with the timeline. Declared
+    // before the first spawn: a task above this line is one nobody can stop.
     let detail_tasks = TimelineTasks::new();
 
     // Owned: the stream task outlives this call, and every row it encodes
@@ -1781,7 +1449,7 @@ pub async fn open_thread(
             "roomId": room_id,
             "root": root,
             "token": token,
-            "ops": [{ "op": "reset", "values": encode_items(&initial, own.as_deref()) }],
+            "ops": [{ "op": "reset", "values": encode_items(room_id, &initial, own.as_deref()) }],
         }),
     ));
 
@@ -1803,7 +1471,7 @@ pub async fn open_thread(
         )
         .await;
         while let Some(diffs) = stream.next().await {
-            let ops: Vec<Value> = diffs.iter().map(|diff| encode(diff, own.as_deref())).collect();
+            let ops: Vec<Value> = diffs.iter().map(|diff| encode(&room_id_owned, diff, own.as_deref())).collect();
             sink.emit(event(
                 "thread.diff",
                 json!({
@@ -1824,10 +1492,8 @@ pub async fn open_thread(
         }
     });
 
-    // A thread that is not in the cache arrives empty; one page fills it.
-    // A failure here has to be reported, or the view sits on "loading" for
-    // good — the rows it would have delivered come through the diff stream,
-    // so nothing else would ever say that they are not coming.
+    // A thread not in the cache arrives empty; one page fills it. A failure has
+    // to be reported or the view sits on "loading" for good.
     if initial_empty {
         let timeline = timeline.clone();
         let root_owned = root.to_owned();
@@ -1858,42 +1524,20 @@ pub async fn open_thread(
     })
 }
 
-/// Strips anything that could identify a room, user or event from a message
-/// meant for the log or the error line.
-///
-/// Testing only a word's first character was not enough, and neither is a
-/// sigil test on its own. Measured against what the SDK actually produces:
-/// ids come wrapped in their own syntax (`EventId("$id")`), reqwest appends
-/// `for url (…)` with the id percent-encoded inside the path (`%21`, `%40`,
-/// `%23`, `%24`), and a server's JSON body is printed whole. So a word goes
-/// as soon as it looks like it could carry an identifier at all: any sigil,
-/// any percent escape, anything URL-shaped, anything quoted.
 
-/// Tries to fetch every pinned event and reports how many could be read.
-/// The pinned view is built by the SDK from exactly these fetches, so when it
-/// stays empty this says whether the events are unreachable or the view is
-/// wired up wrongly. Counts and an error class only — never an identifier.
-/// The room's pinned event ids, asked of the server with the room's own state
-/// as the fallback.
-///
-/// The two must not differ, and they did: opening a room read only
-/// `pinned_event_ids()`, which is the *local* state, while pinning something
-/// read the server. On a store that has just been created — a fresh login, or
-/// the sign-out that encrypts an old store — `m.room.pinned_events` is not in
-/// that state yet. Opening the room fetches it, so the first entry showed no
-/// banner and the second one did, which reads as "the pins keep falling out"
-/// rather than as a missing request. Measured on the device, twice in a row.
+/// The room's pinned ids: the server's answer, with the room's own state as
+/// fallback. Local state alone is empty on a store that was just created.
 async fn pinned_ids(room: &matrix_sdk::Room) -> Vec<matrix_sdk::ruma::OwnedEventId> {
     match room.load_pinned_events().await {
         Ok(Some(ids)) => ids,
-        // `Ok(None)` is "the room has no pinned event state", and an error is a
-        // failed request. Neither may claim there are none: the local state is
-        // the better answer in both cases, and it is empty anyway where it
-        // really is empty.
+        // `Ok(None)` is "no pinned state", an error is a failed request. Neither may
+        // claim there are none - local state is the better answer in both.
         _ => room.pinned_event_ids().unwrap_or_default(),
     }
 }
 
+/// Fetches every pinned event and reports how many could be read: counts and an
+/// error class only, so an empty pinned view can be told from a broken one.
 async fn pinned_load_report(
     room: &matrix_sdk::Room,
     ids: &[matrix_sdk::ruma::OwnedEventId],
@@ -1901,11 +1545,8 @@ async fn pinned_load_report(
     let mut loaded = 0;
     let mut checked = 0;
     let mut first_error = String::new();
-    // Bounded, and out of the cache where the cache has it. This runs on every
-    // opening of the room, and `Room::event` always asks the server: a room
-    // with twenty pins made twenty requests each time it was entered, for a
-    // line in the journal. `load_or_fetch_event` answers from the event cache
-    // first, and after the first count the number is not news any more.
+    // Bounded, and out of the cache: `Room::event` always asks the server, so a
+    // room with twenty pins made twenty requests on every entry.
     for id in ids.iter().take(PINNED_REPORT_LIMIT) {
         checked += 1;
         match room.load_or_fetch_event(id, None).await {
@@ -1919,9 +1560,8 @@ async fn pinned_load_report(
     (loaded, checked, first_error)
 }
 
-/// The body of the newest pinned message, for the banner. Fetched from the
-/// server (and decrypted where possible); empty when there is nothing usable
-/// to show, in which case the UI falls back to a count.
+/// The newest pinned body for the banner, fetched and decrypted where possible.
+/// Empty where there is nothing usable; the UI falls back to a count.
 async fn pinned_preview(
     room: &matrix_sdk::Room,
     ids: &[matrix_sdk::ruma::OwnedEventId],
@@ -1943,10 +1583,8 @@ async fn pinned_preview(
         .and_then(|body| body.as_str())
         .unwrap_or_default();
 
-    // The banner is one line high. A pinned announcement can be a whole
-    // changelog, so every run of whitespace — newlines included — collapses to
-    // a single space and the rest is cut off; an unfolded body would otherwise
-    // paint itself across the entire page.
+    // The banner is one line: whitespace collapses and the rest is cut, or a
+    // pinned changelog paints itself across the page.
     let mut preview = String::new();
     for word in body.split_whitespace() {
         if !preview.is_empty() {
@@ -1986,9 +1624,8 @@ pub async fn direct_chat(client: &Client, user_id: &str) -> Result<String, Strin
     request.is_direct = true;
     request.invite = vec![user.clone()];
     request.preset = Some(create_room::v3::RoomPreset::TrustedPrivateChat);
-    // Encrypted from the first message: no preset does this by itself, it is
-    // the client's job — and enabling it later cannot protect what was
-    // already sent.
+    // Encrypted from the first message: no preset does it, and enabling it later
+    // cannot protect what was already sent.
     request.initial_state = vec![InitialStateEvent::with_empty_state_key(
         RoomEncryptionEventContent::with_recommended_defaults(),
     )
@@ -2002,15 +1639,8 @@ pub async fn direct_chat(client: &Client, user_id: &str) -> Result<String, Strin
     Ok(room.room_id().as_str().to_owned())
 }
 
-/// Throws away the room's outbound group session, so the next message starts
-/// a fresh one and shares its key with every device known at that moment.
-///
-/// The remedy for "the other side cannot read what I send": a Megolm key
-/// reaches a device through an Olm session, and once that pairing is out of
-/// step the recipient stays locked out for the whole session's lifetime. Only
-/// the sending session goes — received keys stay, so nothing of the own
-/// history becomes unreadable. Messages already sent stay unreadable for
-/// whoever never got that key; this fixes the next one, not the last one.
+/// Throws away the outbound group session so the next message re-shares its
+/// key. Received keys stay; this fixes the next message, not the last one.
 pub async fn discard_room_key(client: &Client, room_id: &str) -> Result<(), String> {
     let parsed = matrix_sdk::ruma::RoomId::parse(room_id)
         .map_err(|_| "not a room identifier".to_owned())?;
@@ -2050,9 +1680,8 @@ pub async fn invite_user(client: &Client, room_id: &str, user_id: &str) -> Resul
         .map_err(|error| format!("could not invite: {error}"))
 }
 
-/// Joins a room by its address, for example `#room:server`. Also accepts a
-/// room id. The server part of the alias is offered as a routing hint, which
-/// is what lets a join succeed for a room this homeserver has never seen.
+/// Joins by address or id. The alias' server travels as a routing hint, which
+/// is what lets a join succeed for a room this homeserver never saw.
 pub async fn join_by_alias(client: &Client, alias: &str) -> Result<String, String> {
     let trimmed = alias.trim();
     let parsed = RoomOrAliasId::parse(trimmed)
@@ -2083,16 +1712,8 @@ pub async fn join(client: &Client, room_id: &str) -> Result<(), String> {
         .map_err(|error| format!("could not join: {error}"))
 }
 
-/// Everything the room-info page shows, in one reply.
-///
-/// All of it is read from the room's local state — no request goes out, so the
-/// page is filled the moment it opens. The counts are the server's summary
-/// (the "heroes" summary of sliding sync), not a member list this would have to
-/// fetch: opening the info page must not pull several hundred members.
-///
-/// The room id and the room version are in here because they are what tells a
-/// user that a room is old — the reporter of the upgrade case worked that out
-/// from those two lines in another client before any client said it outright.
+/// Everything the room-info page shows, all from local state - no request, so
+/// the page fills at once. Counts are the sync summary, not a member list.
 pub async fn room_info(client: &Client, room_id: &str) -> Result<Value, String> {
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let room = client
@@ -2123,12 +1744,8 @@ pub async fn room_info(client: &Client, room_id: &str) -> Result<Value, String> 
         "joinedMembers": room.joined_members_count(),
         "invitedMembers": room.invited_members_count(),
         "encrypted": room.encryption_state().is_encrypted(),
-        // `None` means the join rule says nothing either way; the UI then keeps
-        // quiet rather than claiming a room is private.
-        //
-        // Not named "public": a JSON field becomes a property name in QML, and
-        // `public` is a reserved word there — `info.public` does not fail at
-        // run time, it refuses to parse the whole page.
+        // `None` means the join rule says nothing; the UI then keeps quiet. Not named
+        // "public": that is reserved in QML and the page would not parse.
         "isPublic": room.is_public(),
         "direct": room.is_direct().await.unwrap_or(false),
         "space": room.is_space(),
@@ -2151,12 +1768,8 @@ pub async fn room_info(client: &Client, room_id: &str) -> Result<Value, String> 
     }))
 }
 
-/// What a tombstoned room says about its replacement, as the UI needs it.
-///
-/// A room that was upgraded keeps its history but takes no new messages: the
-/// upgrade raises the power level for sending, so the conversation simply stops
-/// while the room still looks alive. Without this the user sits in a room where
-/// nothing arrives any more and nothing says why.
+/// What a tombstoned room says about its replacement. Such a room keeps its
+/// history but takes no messages, and nothing else says why.
 async fn successor(room: &matrix_sdk::Room) -> Option<Value> {
     let successor = room.successor_room()?;
     let joined = matches!(
@@ -2178,15 +1791,8 @@ fn client_room_state(
     client.get_room(room_id).map(|room| room.state())
 }
 
-/// Follows a room upgrade: joins the room that replaced `room_id` and answers
-/// with its id, so the caller can open it.
-///
-/// Joining by id alone only works for a room the own homeserver already knows.
-/// The replacement usually lives elsewhere, so this collects routing hints the
-/// way a permalink would carry them — and it cannot lean on the room id for
-/// that: from room version 12 on a room id is a plain hash with no server part
-/// left in it (`!hash`, not `!local:server`). The server of whoever wrote the
-/// tombstone is the reliable hint; it is by definition a server in both rooms.
+/// Joins the room that replaced `room_id`. Routing hints come from the
+/// tombstone's sender: from room version 12 a room id carries no server part.
 pub async fn follow_successor(client: &Client, room_id: &str) -> Result<String, String> {
     use matrix_sdk::ruma::events::room::tombstone::RoomTombstoneEventContent;
     use matrix_sdk::ruma::OwnedUserId;

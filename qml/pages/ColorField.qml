@@ -1,16 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// A free colour choice: the classic spectrum — hue across, white to black
-// down — a grey ramp for the tones the spectrum cannot reach, a hex code to
-// read and to type, and RGB sliders for the fine end. Drawn from plain
-// gradients on purpose: the platform's own colour picker differs between the
-// OS releases this app spans, and two stacked gradients render the same on
-// both.
-//
-// `chosen` holds the colour as "#rrggbb". User interaction emits `edited`;
-// `setColor()` moves the marker and sliders without emitting, so the owner
-// can switch what is being edited without triggering a write-back.
+// A free colour choice from plain gradients: the platform's own picker differs
+// between the OS releases this app spans. `chosen` is "#rrggbb".
 Column {
     id: root
 
@@ -39,11 +31,8 @@ Column {
         placeSliders()
     }
 
-    /// A Silica slider stops following its binding the moment it has been
-    /// dragged, so a colour set from outside - a reset, a change of element -
-    /// has to move the three of them by hand. Without this the colour was
-    /// right and the sliders kept the old position until the page was left
-    /// and entered again.
+    /// A Silica slider stops following its binding once dragged, so a colour set
+    /// from outside has to move the three of them by hand.
     function placeSliders() {
         for (var i = 0; i < channels.count; i++) {
             var slider = channels.itemAt(i)
@@ -269,9 +258,8 @@ Column {
         }
     }
 
-    // The fine end: one slider per channel. Their values follow `chosen`,
-    // and the equality check in the handler is what keeps that reflection
-    // from echoing back as another edit.
+    // One slider per channel, following `chosen`. The equality check in the
+    // handler is what keeps that reflection from echoing back as an edit.
     Repeater {
         id: channels
 

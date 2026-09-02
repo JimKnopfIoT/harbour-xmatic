@@ -1,11 +1,5 @@
-//! xmatic-core — the Matrix protocol core, exposed to the Qt/QML front end
-//! through a deliberately tiny C ABI.
-//!
-//! The whole surface is six functions: a handle is created, a callback is
-//! registered, JSON commands go in, JSON messages come out. Everything else —
-//! login, room list, timeline, encryption — is a message type, not a symbol.
-//! That keeps the ABI stable while the Rust side follows matrix-rust-sdk
-//! upstream. See `protocol.rs` for the message format.
+//! xmatic-core behind a tiny C ABI: six functions, JSON in, JSON out.
+//! Everything else is a message type, not a symbol - see `protocol.rs`.
 
 // The dispatcher's futures nest deeply — every command arm contributes its own
 // future to one enum — which overruns the default limit while computing layout.
@@ -60,16 +54,14 @@ struct CoreConfig {
     #[serde(rename = "cacheDir")]
     cache_dir: PathBuf,
 
-    /// Base64 of the 32-byte store key from Sailfish Secrets. Absent when the
-    /// secrets store is unavailable — the core then runs unencrypted rather
-    /// than refusing to start. Never logged, wiped after decoding.
+    /// Base64 of the 32-byte store key. Absent where the secrets store is
+    /// unavailable; never logged, wiped after decoding.
     #[serde(rename = "storeKey", default)]
     store_key: Option<String>,
 }
 
-/// Hands out a heap-allocated C string, or NULL if the value could not be
-/// converted. Every pointer returned across the ABI comes from here, so
-/// `xm_string_free` is always the correct way to release it.
+/// Hands out a heap-allocated C string, or NULL. Every pointer crossing the
+/// ABI comes from here, so `xm_string_free` always releases it.
 fn into_c_string(value: String) -> *mut c_char {
     match CString::new(value) {
         Ok(s) => s.into_raw(),
@@ -78,10 +70,7 @@ fn into_c_string(value: String) -> *mut c_char {
 }
 
 /// Reads a borrowed UTF-8 string from the ABI.
-///
-/// # Safety
-///
-/// `pointer` must be NULL or a valid NUL-terminated string.
+/// # Safety: `pointer` must be NULL or a valid NUL-terminated string.
 unsafe fn borrow_str<'a>(pointer: *const c_char) -> Option<&'a str> {
     if pointer.is_null() {
         return None;
@@ -89,10 +78,8 @@ unsafe fn borrow_str<'a>(pointer: *const c_char) -> Option<&'a str> {
     unsafe { CStr::from_ptr(pointer) }.to_str().ok()
 }
 
-/// Version of the core library.
-///
-/// The caller owns the returned string and must release it with
-/// `xm_string_free`. Returns NULL if the version could not be produced.
+/// Version of the core. The caller owns the string and releases it with
+/// `xm_string_free`; NULL where it could not be produced.
 #[no_mangle]
 pub extern "C" fn xm_version() -> *mut c_char {
     catch_unwind(AssertUnwindSafe(|| {
@@ -101,15 +88,8 @@ pub extern "C" fn xm_version() -> *mut c_char {
     .unwrap_or(std::ptr::null_mut())
 }
 
-/// Creates a core instance.
-///
-/// `config_json` is an object with a `dataDir` member. Returns NULL if the
-/// configuration could not be read or the runtime could not be started.
-///
-/// # Safety
-///
-/// `config_json` must be a valid NUL-terminated UTF-8 string. The returned
-/// handle must eventually be released with `xm_core_free`.
+/// Creates a core instance from a config object with a `dataDir`. NULL on a
+/// bad config. # Safety: valid NUL-terminated UTF-8; free with `xm_core_free`.
 #[no_mangle]
 pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore {
     let result = catch_unwind(AssertUnwindSafe(|| {
@@ -150,17 +130,8 @@ pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore 
     result.ok().flatten().unwrap_or(std::ptr::null_mut())
 }
 
-/// Registers the function that receives every reply and event, as a JSON
-/// string. It is called from a worker thread, so the front end must hop into
-/// its own event loop before touching UI state.
-///
-/// The string passed to the callback is only valid for the duration of the
-/// call and must be copied.
-///
-/// # Safety
-///
-/// `core` must be a handle from `xm_core_new`. `user_data` must stay valid
-/// until the core is freed or another callback is registered.
+/// Registers the callback for every reply and event. It runs on a worker
+/// thread, and the string it is handed is only valid for that call.
 #[no_mangle]
 pub unsafe extern "C" fn xm_core_set_callback(
     core: *mut XmCore,
@@ -174,13 +145,8 @@ pub unsafe extern "C" fn xm_core_set_callback(
     core.sink.set_callback(callback, user_data);
 }
 
-/// Queues a command. Returns immediately; the reply arrives through the
-/// callback.
-///
-/// # Safety
-///
-/// `core` must be a handle from `xm_core_new` and `command_json` a valid
-/// NUL-terminated UTF-8 string.
+/// Queues a command and returns at once; the reply arrives through the
+/// callback. # Safety: a handle from `xm_core_new`, valid UTF-8.
 #[no_mangle]
 pub unsafe extern "C" fn xm_core_send(core: *mut XmCore, command_json: *const c_char) {
     if core.is_null() {
@@ -194,11 +160,8 @@ pub unsafe extern "C" fn xm_core_send(core: *mut XmCore, command_json: *const c_
             return;
         };
 
-        // The id is parsed separately so a malformed command can still be
-        // answered with the right id where one was given. Into a struct that
-        // holds nothing but the id: a full `Value` would copy every field of
-        // the command onto the heap unwiped — since the password login, one
-        // of those fields can be a password.
+        // The id is parsed separately so a malformed command still gets the right id.
+        // Into a struct holding only that: a `Value` would copy a password unwiped.
         #[derive(serde::Deserialize)]
         struct CommandId {
             #[serde(default)]
@@ -223,10 +186,7 @@ pub unsafe extern "C" fn xm_core_send(core: *mut XmCore, command_json: *const c_
 }
 
 /// Releases the core and stops its runtime.
-///
-/// # Safety
-///
-/// `core` must be a handle from `xm_core_new` and must not be used afterwards.
+/// # Safety: a handle from `xm_core_new`, not used afterwards.
 #[no_mangle]
 pub unsafe extern "C" fn xm_core_free(core: *mut XmCore) {
     if core.is_null() {
@@ -243,12 +203,8 @@ pub unsafe extern "C" fn xm_core_free(core: *mut XmCore) {
     runtime.shutdown_background();
 }
 
-/// Releases a string previously returned by this library.
-///
-/// # Safety
-///
-/// `s` must be NULL or a pointer returned by one of this library's functions,
-/// and must not be released twice.
+/// Releases a string this library returned.
+/// # Safety: NULL or one of ours, and never twice.
 #[no_mangle]
 pub unsafe extern "C" fn xm_string_free(s: *mut c_char) {
     if s.is_null() {

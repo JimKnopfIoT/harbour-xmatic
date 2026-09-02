@@ -12,72 +12,35 @@ repository.
 
 ## What works
 
-* Sign-in through the homeserver's own page (OAuth 2.0 / MAS), by device code
-  on another machine, or by password where the server offers no OAuth; the
-  session survives restarts
-* Session and local stores encrypted with a key from Sailfish Secrets. A
-  device whose system does not provide that key service creates no store at
-  all: it says what is missing, how to install it and how to check the result,
-  and running without encryption is an explicit choice rather than a silent
-  fallback
-* Four coloured lines say how safe the device is — backup, recovery,
-  cross-signing, local storage. Green is in order, orange is a fault you can
-  clear, red is missing. Where something is not green they come up once after
-  starting, with the action that fits and "later" always available
+* Sign-in by the homeserver's own page (OAuth 2.0 / MAS), by device code, or by
+  password where the server offers no OAuth; the session survives restarts
+* Session and local stores encrypted with a key from Sailfish Secrets; without
+  that key service no store is created, and the app says what is missing
+* Four coloured lines for backup, recovery, cross-signing and local storage
 * Room list over Simplified Sliding Sync: search, unread counts, favourites,
   low priority, mute
-* Timeline in encrypted rooms: send, reply, edit, delete, paginate. A message
-  that could not be sent can be sent again or discarded
-* Message search inside a conversation, over an index that lives on the device
-  and is encrypted with the same key as the rest of the local storage. The
-  query never leaves the phone: a homeserver cannot read an encrypted room, so
-  a server-side search could only ever cover the rooms this app does not have
-* A line marks where reading stopped, and the room can open there or at its
-  newest message
-* Everything a message can be done to — copy, reply, forward, edit, pin, react,
-  delete — on its own page, reached by a long press
-* An error log under Account: whatever failed in this run, newest first, with
-  identifiers already removed so it can be copied and passed on
-* Reactions, sent and shown, grouped by character with a count; the picker's
-  first tab is yours to fill - press and hold any emoji to keep it there - and
-  the keyboard covers what the set does not
-* Formatted messages rendered as formatting — bold, italic, code, quotes,
-  lists, headings, links. The HTML a message carries is rewritten inside the
-  app instead of being handed to a markup parser
-* Attachments: pictures with full-screen zoom, video, files; save, share,
-  forward. Voice messages recorded and played in place
-* Device verification in both directions, cross-signing, key backup and
-  recovery, and a warning before sending to devices you never verified
-* Notifications for rooms not on screen, with a background wake-up; tapping one
-  opens the room it is about. Messages written offline go out when the network
-  returns
-* Rooms: create (public or invite-only, encrypted or not, both settled at
-  creation), invite, join by address, leave, direct chats, and a search across
-  public room directories
-* A room opens where you stopped reading, counts as read while it is read, and
-  can be marked read from the chat list without opening it
-* Matrix links lead into the app: a permalink or a plain #room:server opens the
-  room, or offers to join it - the tap itself never joins
-* Spaces as their own navigation level: nested, unread badges, rooms added and
-  moved by long-press, either list as the start page
-* Members: list per room, profile with the encryption identity, moderation
-  where the power levels allow it, account-wide ignore list
-* Threads: answer in one, or start one from any message; replies stay in the
-  room's timeline as well
-* Pinned messages, own display name and avatar, profile pictures
-* Whether a room is encrypted is a padlock in front of its name: closed, or
-  open with its body struck through
-* Text typed and not sent stays in the room until it is; it is kept in memory
-  only and never written to disk
-* Who read a message, and who set a reaction — both asked for on demand rather
-  than carried by every row
-* Deleting a message takes a countdown, the way leaving a room does
+* Timeline in encrypted rooms: send, reply, edit, delete, paginate, send again
+* Message search inside a conversation, over an index kept on the device
+* A line marks where reading stopped; the room opens there or at its newest
+* A message's actions on a long press: copy, reply, forward, edit, pin, react,
+  delete
+* An error log under Account, with identifiers already removed
+* Reactions with your own first tab; press and hold an emoji to keep it there
+* Formatted messages rendered as formatting, rewritten inside the app
+* Attachments: pictures with full-screen zoom, video, files; voice messages
+* Device verification both ways, cross-signing, key backup and recovery
+* Notifications for rooms not on screen; messages written offline go out later
+* Rooms: create, invite, join by address, leave, direct chats, directory search
+* Matrix links open the room they name — the tap itself never joins
+* Spaces as their own navigation level, nested, with unread badges
+* Members: list, profile with the encryption identity, moderation, ignore list
+* Threads, pinned messages, own display name and avatar
+* A padlock in front of a room's name says whether it is encrypted
+* Unsent text stays in the room, in memory only
+* Who read a message and who reacted, asked for on demand
 * A share target for the system's share dialog, running or not
-* Voice and video calls over WebRTC. The media is encrypted between the two
-  devices either way; in an encrypted room the signalling is too, which is what
-  makes the call end-to-end and not merely encrypted on the wire
-* Twenty-nine interface languages, picked in the app rather than only by the
-  phone's setting
+* Voice and video calls over WebRTC, end-to-end in an encrypted room
+* Twenty-nine interface languages, picked in the app
 
 ## What it looks like
 
@@ -99,41 +62,23 @@ its colours from the one you use.
 
 ## What does not
 
-* **Homeservers that sign in through their own web page (SSO).** OAuth 2.0 /
-  MAS, the device code and the password flow work; the SSO redirect does not,
-  and the login page says so.
-* **Clients that only speak MatrixRTC.** They dropped the classic 1:1 call
-  flow (MSC2746); where a client still offers the legacy button, that one
-  interoperates.
-* **Search finds whole words in plain text only.** "test" does not find
-  "test9", and pictures, file names and messages a bot sends as a notice are
-  not in the index. Both limits are in the search library the app builds on,
-  and both are stated on the search page rather than left to be discovered
-* Received video is converted frame by frame on the CPU — functional, but not
-  as smooth as the outgoing direction. No GStreamer sink on this device draws
-  into a QML scene.
-* The app has to stay open; its cover on the home screen is the running
-  process. There is no background daemon, the same way other messengers on
-  this platform work.
+* **Homeservers that sign in through their own web page (SSO).**
+* **Clients that only speak MatrixRTC** — they dropped the 1:1 call flow.
+* Search finds whole words in plain text only; the search page says so.
+* Received video is converted on the CPU: functional, not smooth.
+* The app has to stay open. There is no background daemon, the same way other
+  messengers on this platform work.
 
-  Push notifications are the one way around that, and they are **off by
-  default, have their own setting, and do nothing until switched on by hand**.
-  The feature exists because users asked for it. It needs a UnifiedPush
-  distributor installed separately and a Matrix push gateway you choose
-  yourself, and it discloses metadata — which rooms, at what times — to two
-  parties that otherwise know nothing about you. Read
-  [docs/PUSH.md](docs/PUSH.md) before turning it on. Leaving it off changes
-  nothing: no address is created and your homeserver is told nothing.
-* Spoilers are marked rather than hidden: the text renderer available here
-  cannot hide a run of text.
-* **Most translations are unreviewed.** German is the project language,
-  Norwegian came largely from a Norwegian speaker, and Finnish, Swedish and
-  Danish had a correction pass. The rest, Chinese and Hindi among them, are a
-  single machine pass. An offer to review one is welcome — open an issue and
-  you get a numbered sheet.
-* Reactions are drawn as the characters they are, which on this Qt means
-  monochrome. Pictures of your own can be used instead (Appearance); none are
-  shipped and none are downloaded.
+  Push notifications are the way around that and are **off by default**. They
+  need a UnifiedPush distributor and a push gateway you choose, and they
+  disclose which rooms you get messages in, and when, to both. Read
+  [docs/PUSH.md](docs/PUSH.md) first. Left off, nothing is created or told.
+* Spoilers are marked rather than hidden.
+* **Most translations are unreviewed.** German is the project language;
+  Norwegian, Finnish, Swedish and Danish had a pass. An offer to review one is
+  welcome — open an issue.
+* Reactions are drawn as characters, which on this Qt means monochrome; your
+  own pictures can be used instead.
 
 ## Requirements
 

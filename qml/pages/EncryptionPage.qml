@@ -3,12 +3,8 @@ import Sailfish.Silica 1.0
 
 import "SecurityStatus.js" as SecurityStatus
 
-// Key backup and recovery.
-//
-// Room keys only ever reach the devices that existed when a message was sent.
-// The backup is what lets a later device — or a reinstalled one — read the
-// history at all, so this page is less about settings and more about not
-// losing anything.
+// Key backup and recovery. Room keys only reach the devices that existed when
+// a message was sent, so this is about not losing history.
 Page {
     id: page
 
@@ -21,15 +17,15 @@ Page {
         matrix.refreshStorageStatus()
     }
 
-    // The recovery key unlocks the whole key backup — the same class of secret
-    // as the login password, which the bridge wipes out of its send buffer. The
-    // way back cannot be wiped that thoroughly: a QString handed into the QML
-    // engine lives in its string pool and nothing can overwrite it there. What
-    // is possible is not keeping it reachable once this page is gone, so both
-    // the shown key and the typed one are dropped when the page is destroyed.
-    // The residual is documented alongside the password's in
-    // docs/PASSWORD-LOGIN.md.
+    // The recovery key is the same class of secret as the password. A QString in
+    // the QML engine cannot be wiped, so it is at least dropped with the page.
     Component.onDestruction: {
+        // The copy button put it there and only this can take it back. Cleared
+        // only where it is demonstrably ours - the clipboard is the user's.
+        if (page.generatedKey.length > 0
+                && Clipboard.hasText && Clipboard.text === page.generatedKey) {
+            Clipboard.text = ""
+        }
         page.generatedKey = ""
         recoveryField.text = ""
     }
@@ -39,16 +35,12 @@ Page {
         onRecoveryKeyReady: page.generatedKey = key
     }
 
-    /// Sends the key and wipes the field. A recovery key on screen is a
-    /// recovery key in a screenshot, in the task switcher and in whatever the
-    /// input method kept.
+    /// Sends the key and wipes the field: a recovery key on screen is one in a
+    /// screenshot, in the switcher and in whatever the input method kept.
     function useRecoveryKey(key) {
         matrix.recoverKeys(key)
-        // A key that was pasted in is still sitting in the clipboard, where the
-        // next application to ask for it can read it - and a recovery key opens
-        // the whole backup. Cleared only when it is demonstrably this key: the
-        // clipboard belongs to the user, and wiping something they put there
-        // for another purpose would be taking it from them.
+        // A pasted key still sits in the clipboard, where the next app can read it.
+        // Cleared only when it is demonstrably this key - the clipboard is the user's.
         if (Clipboard.hasText && Clipboard.text === key) {
             Clipboard.text = ""
         }
@@ -79,10 +71,8 @@ Page {
 
             SecurityRows { }
 
-            // The only way an existing store changes side: it is created
-            // encrypted or not at all. A sign-out clears it, the next sign-in
-            // creates a fresh one under the key. Offered only where it can
-            // actually work, and behind a dialog that says what it costs.
+            // The only way an existing store changes side: it is created encrypted or not
+            // at all. Offered where it can work, behind a dialog that says the cost.
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: matrix.storageStatus.canEncrypt
@@ -95,12 +85,8 @@ Page {
                 text: qsTr("Verify")
             }
 
-            // Only this device's own kin is verified from here. Verifying
-            // another *person* used to sit right below, as a Matrix address to
-            // type in — which asked the user for something they have never
-            // seen written down, next to a button that means something else
-            // entirely. It lives where the person does now: in the chat with
-            // them, and in the chat list's menu for the rest.
+            // Only this device's own kin is verified from here. Verifying a person lives
+            // where the person does: in the chat with them.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -110,12 +96,8 @@ Page {
                 text: qsTr("Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.")
             }
 
-            // Named for what it does in the case that matters. Reported by a
-            // new user: on a fresh device the other devices are already
-            // verified, so "verify my other devices" reads as a no-op - and
-            // this is the button that makes *this* one trusted. It still
-            // serves the other direction, where an already verified device
-            // starts the comparison; that reading is not lost by the name.
+            // Named for the case that matters: on a fresh device the others are already
+            // verified, and this is the button that makes *this* one trusted.
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 label: qsTr("Verify this device")
@@ -126,14 +108,8 @@ Page {
                 }
             }
 
-            // Only where there is something to unlock. An account with no
-            // secret storage has no recovery key to enter, and this section
-            // invited one anyway - the attempt then came back with the
-            // library's own words, "the info about the secret key could not
-            // have been found in the account data of the user", which is not a
-            // sentence anybody should have to read. Shown while the state is
-            // unknown: hiding the way in on a failed look is worse than
-            // offering it in vain.
+            // Only where there is something to unlock: an account without secret storage
+            // has no key to enter. Shown while unknown - hiding on a failed look is worse.
             readonly property bool canUnlockBackup:
                 matrix.encryptionStatus.recovery !== "disabled"
 
@@ -160,9 +136,8 @@ Page {
                 width: parent.width
                 label: qsTr("Recovery key")
                 placeholderText: qsTr("Recovery key")
-                // Sensitive: the flag that keeps the input method from
-                // remembering what is typed. The password has carried it since
-                // it existed; this field unlocks the whole key backup.
+                // Sensitive: the flag that keeps the input method from remembering what is
+                // typed. This field unlocks the whole key backup.
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                                   | Qt.ImhSensitiveData
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"

@@ -5,9 +5,8 @@
 #include "emojistore.h"
 
 namespace {
-/// A picture's name is code points in hex joined by dashes, nothing else. No
-/// dot, no slash, no upper case - built by the importer, so anything that
-/// deviates was not.
+/// A picture's name is code points in hex joined by dashes, nothing else - the
+/// importer builds it, so anything that deviates was not written by it.
 bool nameIsSound(const QString &id)
 {
     if (id.isEmpty() || id.length() > 64) {
@@ -48,9 +47,8 @@ QImage EmojiImageProvider::requestImage(const QString &id, QSize *size, const QS
     }
 
     QImage image;
-    // The format is not taken from the file: the importer writes PNG and
-    // nothing else, so anything claiming to be something else is refused
-    // rather than handed to another decoder.
+    // The format is not taken from the file: the importer writes PNG, so anything
+    // claiming otherwise is refused rather than handed to another decoder.
     if (!image.loadFromData(bytes, "PNG")) {
         return QImage();
     }

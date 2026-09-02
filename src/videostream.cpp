@@ -84,18 +84,16 @@ void VideoStream::presentYuv(const QByteArray &planes, const QSize &size)
         return;
     }
 
-    // Tightly packed I420: luma plane plus two quarter-size chroma planes.
-    // The pipeline negotiates even dimensions, so this arithmetic is exact;
-    // a decoder that pads its strides would deliver more bytes, which is
-    // refused rather than displayed as garbage.
-    const int expected = size.width() * size.height() * 3 / 2;
+    // Tightly packed I420: luma plus two quarter-size chroma planes. The pipeline
+    // negotiates even dimensions; padded strides deliver more and are refused.
+    const qint64 expected = qint64(size.width()) * size.height() * 3 / 2;
     if (planes.size() != expected) {
         static bool warned = false;
         if (!warned) {
             warned = true;
-            qWarning("xmatic: YUV frame has %d bytes, expected %d — strides are padded?",
+            qWarning("xmatic: YUV frame has %d bytes, expected %lld — strides are padded?",
                      planes.size(),
-                     expected);
+                     static_cast<long long>(expected));
         }
         return;
     }

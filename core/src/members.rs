@@ -1,10 +1,5 @@
-//! The member list of one room.
-//!
-//! Unlike the directory, this is a one-shot read rather than a live stream:
-//! the page asks for a room's members, the SDK hands back a `Vec`, and the
-//! whole list ships as a single `members.diff` reset. Joining and leaving
-//! while the page is open is rare enough that a refresh covers it; a live
-//! stream would be the follow-up if that ever matters.
+//! The member list of one room: a one-shot read, shipped as a single
+//! `members.diff` reset rather than a live stream.
 
 use crate::text::scrub_ids;
 use crate::text::strip_bidi;
@@ -96,35 +91,29 @@ pub async fn load(client: &Client, room_id: &str) -> Result<Vec<Value>, String> 
     Ok(rows.into_iter().map(|(_, _, row)| row).collect())
 }
 
-/// Joined recipients of an encrypted room the user has reason to check before
-/// sending. One entry per user: `{ userId, name, devices, reason }`, empty for
-/// an unencrypted room and when nothing is open. This device is skipped — it is
-/// always trusted to itself.
-///
-/// `reason` says what is actually wrong, because the four cases need different
-/// words and used to be reported as one:
-///
-/// * `ownDevice` — **this** device is unverified. `Device::is_verified` is only
-///   ever true once our own identity is verified (`matrix-sdk-crypto`,
-///   `identities/device.rs`), so in that state every other device reads
-///   "unverified" no matter how well it is cross-signed. The old code counted
-///   them and reported everybody's sessions as unchecked, which two users read
-///   as a bug in the counting. It is one entry now, and it names the cause.
-/// * `violation` — that user's keys changed after they were verified.
-/// * `identity` — that user was never verified; `devices` is how many they have.
-/// * `devices` — the user is verified but has sessions their own identity has
-///   not signed; `devices` counts those.
-///
-/// A member whose devices this client has never downloaded is asked for
-/// explicitly. `get_user_devices` reads the local crypto store and nothing
-/// else: it passes no timeout, and without one the SDK's `wait_if_user_pending`
-/// returns at once (`matrix-sdk-crypto`, `machine/mod.rs`). Loading the member
-/// list only *marks* those users for a later `/keys/query`. So on the first
-/// open of a room, and right after someone joins, the store is empty for them
-/// and this used to report "nothing unverified" — a warning that says everything
-/// was checked when nothing was, which is worse than no warning at all. The SDK
-/// itself waits for the query at the equivalent point, with the comment that it
-/// "may not yet have seen any devices for the user".
+/// Members whose devices were asked for in this session, so a member without
+/// any is asked for once rather than on every check. Cleared with the account.
+static DEVICES_ASKED: std::sync::Mutex<Option<std::collections::HashSet<String>>> =
+    std::sync::Mutex::new(None);
+
+/// True the first time this user is seen, false afterwards. A poisoned lock
+/// answers false: not asking costs a warning, asking in a loop costs the app.
+fn remember_asked(user_id: &str) -> bool {
+    let Ok(mut guard) = DEVICES_ASKED.lock() else {
+        return false;
+    };
+    guard
+        .get_or_insert_with(std::collections::HashSet::new)
+        .insert(user_id.to_owned())
+}
+
+/// Forgets who has been asked for. Called on sign-out with everything else.
+pub fn forget_asked() {
+    if let Ok(mut guard) = DEVICES_ASKED.lock() {
+        *guard = None;
+    }
+}
+
 pub async fn unverified_recipients(client: &Client, room_id: &str) -> Result<Vec<Value>, String> {
     let room = known_room(client, room_id)?;
     if !room.encryption_state().is_encrypted() {
@@ -140,9 +129,8 @@ pub async fn unverified_recipients(client: &Client, room_id: &str) -> Result<Vec
     let own_device = client.device_id().map(|device| device.to_owned());
     let encryption = client.encryption();
 
-    // An empty store means "never fetched", not "unverified" — the same rule
-    // the loop below applies to a member's devices. Judging this device from
-    // an empty store would warn about it right after every fresh login.
+    // An empty store means "never fetched", not "unverified" - judging this device
+    // from one would warn right after every fresh login.
     let own_verified = match &own_user {
         Some(user) => {
             let mut identity = encryption.get_user_identity(user).await.ok().flatten();
@@ -165,11 +153,9 @@ pub async fn unverified_recipients(client: &Client, room_id: &str) -> Result<Vec
             .await
             .map_err(|error| format!("could not read the devices: {}", scrub_ids(&error.to_string())))?;
 
-        // Nothing known about this member yet: ask the server before drawing
-        // any conclusion. A failure here is left to fall through to the empty
-        // list rather than failing the whole check — one unreachable user must
-        // not suppress the warning about the others.
-        if devices.devices().next().is_none() {
+        // Once, not per check: a bridge ghost has no devices at all, so the empty
+        // answer is permanent and asking again is one request per room opening.
+        if devices.devices().next().is_none() && remember_asked(user_id.as_str()) {
             if encryption.request_user_identity(user_id).await.is_ok() {
                 devices = encryption
                     .get_user_devices(user_id)
@@ -218,18 +204,14 @@ pub async fn unverified_recipients(client: &Client, room_id: &str) -> Result<Vec
         }));
     }
 
-    // While this device is unverified nothing above can be trusted as an
-    // answer about anyone else, so it collapses to the one fact that is true.
-    // A room where nothing is open stays quiet either way.
+    // While this device is unverified nothing above can be trusted about anyone
+    // else, so it collapses to the one fact that is true.
     if !own_verified {
         if !any_unverified {
             return Ok(Vec::new());
         }
-        // Not the own address: the front end keys "do not warn again" on this
-        // field, and under the own id that tick would also silence a later
-        // warning about own sessions nothing has signed. A key no Matrix id
-        // can collide with - they all start with '@' - keeps the two apart,
-        // and the own address stays out of the settings file.
+        // Not the own address: the front end keys "do not warn again" on this field,
+        // and a key no Matrix id can collide with keeps the two apart.
         return Ok(vec![json!({
             "userId": "own-device",
             "name": "",
@@ -255,18 +237,8 @@ fn parsed_user(user_id: &str) -> Result<&UserId, String> {
     <&UserId>::try_from(user_id).map_err(|_| "not a user identifier".to_owned())
 }
 
-/// What the signed-in user is allowed to do in this room, as the UI needs to
-/// know it: which entries to offer at all.
-///
-/// Asked once when a room is opened rather than per menu, because it is a
-/// store read and the answer does not change while a menu is open. Offering an
-/// action that the server will refuse is the kind of dead end this app avoids
-/// everywhere else; the member list has asked these questions since it was
-/// built, the room itself never did.
-///
-/// Deliberately generous where the answer is unknown: a room whose power
-/// levels cannot be read at all answers with the defaults, which is what the
-/// server would apply too.
+/// What the user may do here, asked once per room open - a store read whose
+/// answer does not change while a menu is open. Generous where unknown.
 pub async fn room_permissions(client: &Client, room: &Room) -> Value {
     use matrix_sdk::ruma::events::StateEventType;
 
@@ -284,16 +256,14 @@ pub async fn room_permissions(client: &Client, room: &Room) -> Value {
     })
 }
 
-/// Everything the member-profile page shows about one user in one room, as
-/// one object. Verification: `verified`, `violation` (was verified, keys
-/// changed since), `unverified`, `unknown`.
+/// Everything the member profile shows, as one object. Verification:
+/// `verified`, `violation`, `unverified`, `unknown`.
 pub async fn profile(client: &Client, room_id: &str, user_id: &str) -> Result<Value, String> {
     let room = known_room(client, room_id)?;
     let user = parsed_user(user_id)?;
 
-    // The store first: `get_member` syncs the whole member list, and opening
-    // a room already spawns that fetch — asking again would run a second full
-    // `/members` for the same room.
+    // The store first: `get_member` syncs the whole member list, and opening a
+    // room already spawns that fetch.
     let member = match room.get_member_no_sync(user).await {
         Ok(Some(member)) => member,
         _ => room
@@ -312,11 +282,8 @@ pub async fn profile(client: &Client, room_id: &str, user_id: &str) -> Result<Va
         .map(|own| power(levels.for_user(own)))
         .unwrap_or(0);
 
-    // Moderation flags decide what the page offers; the server enforces
-    // everything again. Each one is ruma's own rule, never a rebuilt
-    // comparison: unbanning also needs the kick level, and changing a role
-    // has to respect a v12 creator's infinite level, which `power()` flattens
-    // to 100 for display.
+    // Moderation flags decide what the page offers; the server enforces it again.
+    // Each is ruma's own rule - unbanning also needs the kick level.
     let banned = member.membership() == &MembershipState::Ban;
     let can_remove = !is_self
         && !banned
@@ -355,9 +322,8 @@ pub async fn profile(client: &Client, room_id: &str, user_id: &str) -> Result<Va
         String::new()
     };
 
-    // Shared rooms, names only, from the local store. `get_member_no_sync`:
-    // one network round per joined room would invite rate limits; rooms
-    // whose member list never synced undercount.
+    // Shared rooms by name, from the local store: one round trip per joined room
+    // would invite rate limits, and unsynced rooms undercount.
     let mut shared: Vec<String> = Vec::new();
     if !is_self {
         for other in client.joined_rooms() {
@@ -380,11 +346,8 @@ pub async fn profile(client: &Client, room_id: &str, user_id: &str) -> Result<Va
         shared.sort_by_key(|name| name.to_lowercase());
     }
 
-    // Empty store means "never seen", not "unverified": ask the server once
-    // before judging (same rule as `unverified_recipients`). Only in an
-    // encrypted room — `request_user_identity` is a real `/keys/query`, and
-    // behind a rate limit the SDK retries for up to fifteen minutes, which
-    // would hang this page on a room where the answer means nothing anyway.
+    // Empty store means "never seen": ask once before judging. Encrypted rooms
+    // only - a `/keys/query` behind a rate limit hangs this page for minutes.
     let encryption = client.encryption();
     let mut identity = encryption.get_user_identity(user).await.ok().flatten();
     if identity.is_none() && room.encryption_state().is_encrypted() {
@@ -455,14 +418,8 @@ pub async fn set_power(client: &Client, room_id: &str, user_id: &str, level: i64
         .map_err(|error| format!("could not change the role: {}", scrub_ids(&error.to_string())))
 }
 
-/// The account's ignore list, asked of the server rather than read from the
-/// store.
-///
-/// The SDK's own `ignore_user` reads the local copy, and an empty store there
-/// is indistinguishable from an empty list — right after a login or a store
-/// reset it would write a list of one and drop everybody else's entries. The
-/// store is only the fallback for when the server cannot be reached, and then
-/// nothing is written.
+/// The ignore list from the server, not the store: an empty local copy is
+/// indistinguishable from an empty list and would drop everybody else's entries.
 async fn ignore_list(client: &Client) -> Result<IgnoredUserListEventContent, String> {
     let account = client.account();
 
@@ -542,23 +499,8 @@ pub async fn withdraw_verification(client: &Client, user_id: &str) -> Result<(),
         .map_err(|error| format!("could not withdraw the verification: {}", scrub_ids(&error.to_string())))
 }
 
-/// The other person in a two-party encrypted direct room, or `None`.
-///
-/// What it is for: verifying someone is an action on a *person*, and the one
-/// place a user has that person in front of them is the conversation with
-/// them. Everywhere else they would have to type a Matrix address they have
-/// never seen.
-///
-/// Three conditions, all of them necessary. Unencrypted rooms have nothing to
-/// verify — the comparison secures the keys, and there are none. More than two
-/// people means "the other side" is not one address. And a room that is not a
-/// direct chat may well hold exactly two members today and a third tomorrow,
-/// which would take the action away again.
-///
-/// The membership rows decide, not `direct_targets`: that list keeps people
-/// who have long left, by the SDK's own note on it. It is only consulted where
-/// the rows do not name anybody, which is what a room whose members were never
-/// fetched looks like.
+/// The other person in a two-party encrypted direct room. The membership rows
+/// decide, not `direct_targets`, which keeps people who have long left.
 pub async fn direct_peer(client: &Client, room: &Room) -> Option<String> {
     if !room.encryption_state().is_encrypted() || !room.is_direct().await.unwrap_or(false) {
         return None;

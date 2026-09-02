@@ -1,14 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// What stands between picking a file and sending it.
-//
-// The picker used to send straight from its callback, which made three things
-// impossible at once: a caption, an answer that carries a picture, and simply
-// changing one's mind after tapping the wrong thumbnail. All three are decided
-// here, because none of them can be added afterwards — a caption travels
-// inside the media event and a reply relation cannot be attached to something
-// already sent.
+// What stands between picking a file and sending it: caption, reply and
+// second thoughts - none of the three can be added afterwards.
 Dialog {
     id: dialog
 
@@ -23,9 +17,8 @@ Dialog {
     property string replySender: ""
     property string replyBody: ""
 
-    /// What was already typed in the conversation when the file was picked.
-    /// It starts the caption off: text and picture were meant as one message,
-    /// and leaving the text behind sent two.
+    /// What was already typed when the file was picked, as the caption's start:
+    /// text and picture were meant as one message.
     property string caption: ""
 
     /// Called once the attachment is on its way, so the room can drop the
@@ -54,19 +47,14 @@ Dialog {
         }
     }
 
-    /// Who actually sends. Set by the room, because the room owns the warning
-    /// about recipients whose devices were never verified - and a dialog that
-    /// is closing cannot put another one over itself. Unset, this page sends by
-    /// itself, which is what every caller did before.
+    /// Who actually sends. Set by the room, which owns the unverified-recipient
+    /// warning - a closing dialog cannot put another one over itself.
     property var send: null
 
     onAccepted: {
         if (dialog.send) {
-            // Handed over, not sent: the room may still have to ask about
-            // unverified recipients, and what follows a send belongs after the
-            // send. Calling `afterSend` here cleared the reply the attachment
-            // was an answer to, before it was established that anything would
-            // go at all.
+            // Handed over, not sent: what follows a send belongs after it. Calling
+            // `afterSend` here cleared the reply before anything was established.
             dialog.send(dialog.plainPath, dialog.mimeType,
                         captionField.text, dialog.replyTo)
             return
@@ -94,9 +82,8 @@ Dialog {
                 acceptText: dialog.replyTo.length > 0 ? qsTr("Reply") : qsTr("Send")
             }
 
-            // The quote, shown only when this send answers something. Same
-            // shape as the quote in the conversation, so it reads as the same
-            // thing rather than as a second concept.
+            // The quote, only when this send answers something. Same shape as in the
+            // conversation, so it reads as the same thing.
             Row {
                 visible: dialog.replyTo.length > 0
                 x: Theme.horizontalPageMargin

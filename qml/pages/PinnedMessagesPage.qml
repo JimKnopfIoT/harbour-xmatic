@@ -1,9 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// The room's pinned messages, as their own view over the shared timeline
-// model. Opening this page switches the core's timeline to the pinned focus;
-// the room page switches it back to live when it becomes active again.
+// The room's pinned messages as their own view over the shared timeline model.
+// The room page switches the core back to live when it is active again.
 Page {
     id: page
 
@@ -59,9 +58,8 @@ Page {
                     color: pinnedItem.highlighted ? Theme.secondaryHighlightColor
                                                   : Theme.secondaryColor
                     textFormat: Text.PlainText
-                    // The same rule the chat list follows: the relative
-                    // timepoint carries no year, and a pin is exactly the kind
-                    // of message that is years old.
+                    // The same rule the chat list follows: the relative timepoint carries no year,
+                    // and a pin is exactly the kind of message that is years old.
                     text: (model.senderName || model.sender || "")
                           + (model.timestamp > 0
                              ? " · " + Format.formatDate(
@@ -85,19 +83,8 @@ Page {
             menu: ContextMenu {
                 MenuItem {
                     text: qsTr("Show in conversation")
-                    // Back into the normal room window, which then scrolls to
-                    // the message - no separate view, and the way back here
-                    // stays the banner.
-                    //
-                    // The conversation is not necessarily the page underneath:
-                    // this list is reached from the banner in the room *and*
-                    // from the room's info page, and in the second case the
-                    // page below is that info page. Asking it to jump did
-                    // nothing at all, and what the user saw was the room at its
-                    // end - which is where it opens when there is nothing
-                    // unread. So the room is looked for in the stack and the
-                    // stack is unwound back to it; a jump behind a page that is
-                    // still on top would be lost the same way.
+                    // Back into the room, which then scrolls to the message. The room may not be
+                    // the page underneath - reached from the info page too - so the stack is unwound.
                     onClicked: {
                         var room = pageStack.find(function(candidate) {
                             return candidate.objectName === "roomPage"
@@ -118,9 +105,8 @@ Page {
             }
         }
 
-        // The room can name pinned events that the own server does not have —
-        // it answers each of them with 404. Saying "none" would contradict the
-        // banner, which counts the room's list and is right to do so.
+        // The room can name pinned events the own server answers 404 for. Saying
+        // "none" would contradict the banner, which counts the room's own list.
         ViewPlaceholder {
             enabled: pinnedList.count === 0
             text: matrix.pinnedEventIds.length > 0

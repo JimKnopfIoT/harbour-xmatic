@@ -3,15 +3,8 @@ import Sailfish.Silica 1.0
 
 import "SecurityStatus.js" as SecurityStatus
 
-// A round indicator for one security level, or for the whole device.
-//
-// Static, not blinking: this appears on the pages the user sees every day, and
-// a permanent animation reads as "the app is broken" rather than "act on this".
-// Silica has no idiom for a blinking control either.
-//
-// Invisible while the state is unknown. Painting a colour over an unanswered
-// question is worse than showing nothing — the app would be making a claim it
-// cannot back.
+// A round indicator for one level. Static, not blinking, and invisible while
+// the state is unknown: a colour over an unanswered question is a claim.
 Item {
     id: lamp
 

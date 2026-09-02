@@ -247,7 +247,6 @@ DISTFILES += \
     qml/pages/SecurityRow.qml \
     qml/pages/SecurityRows.qml \
     qml/pages/StorageBlockedPage.qml \
-    qml/pages/AcceptUnencryptedDialog.qml \
     qml/pages/LanguagePage.qml \
     qml/pages/Formatting.js \
     qml/pages/MatrixLinks.js \

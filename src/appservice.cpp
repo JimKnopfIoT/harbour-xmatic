@@ -4,9 +4,8 @@
 
 namespace {
 
-// The path the notification's remote action, the share service and the
-// instance hand-over already use. The name itself is Sailjail's and is claimed
-// by the share provider on the QML side.
+// The path the notification's action, the share service and the instance
+// handover already use. The name is Sailjail's, claimed on the QML side.
 const char *kObjectPath = "/org/xmatic/xmatic";
 
 } // namespace

@@ -1,10 +1,5 @@
-//! Fetching and sending attachments.
-//!
-//! Media in encrypted rooms is encrypted too, and its keys live in the event,
-//! not in the URL. The front end therefore never handles an MXC URI directly:
-//! it passes the event's media source back verbatim as opaque JSON, and this
-//! module turns it into bytes on disk. That keeps decryption and caching in one
-//! place and the Qt side free of crypto.
+//! Fetching and sending attachments. Media keys live in the event, not in the
+//! URL, so the front end passes the source back as opaque JSON.
 
 use std::path::{Path, PathBuf};
 use std::time::Duration;
@@ -25,14 +20,14 @@ use matrix_sdk::{
 };
 use matrix_sdk_ui::timeline::{AttachmentConfig, AttachmentSource, Timeline};
 use serde_json::Value;
+use sha2::{Digest, Sha256};
 
 /// Size the timeline asks for. Generous enough for a phone screen, small
 /// enough that scrolling does not pull megabytes per row.
 const THUMBNAIL_EDGE: u32 = 800;
 
-/// Largest attachment this app will put in memory to send. Generous next to
-/// what a homeserver accepts (matrix.org allows 50 MiB), and far below what a
-/// phone can lose to a single allocation.
+/// Largest attachment this app puts in memory to send: generous next to what a
+/// homeserver accepts, far below what a phone loses to one allocation.
 const MAX_ATTACHMENT_BYTES: u64 = 100 * 1024 * 1024;
 
 /// Largest avatar. A profile picture is scaled down by everything that shows
@@ -43,29 +38,24 @@ pub const MAX_AVATAR_BYTES: u64 = 10 * 1024 * 1024;
 /// what the event declares, and what the download actually weighed.
 const MAX_MEDIA_BYTES: u64 = 100 * 1024 * 1024;
 
-/// How much of the device the downloaded media may occupy before the oldest of
-/// them are dropped.
-///
-/// Every picture in every room that was scrolled past used to stay for good:
-/// there was no age, no budget and no eviction anywhere in this file, and the
-/// only way out was the button on the privacy page. On a phone that is the
-/// disk, and it is the *decrypted* content of encrypted rooms. Dropping a file
-/// costs a re-download, which is why the budget is generous.
+/// How much disk the downloaded media may take before the oldest go. It is the
+/// decrypted content of encrypted rooms, and dropping one costs a re-download.
 const MAX_CACHE_BYTES: u64 = 256 * 1024 * 1024;
 
-/// Downloads between two sweeps. The sweep reads the directory, so it is not
-/// free, and the budget is large enough that a handful of files cannot cross
-/// it on their own.
+/// Downloads between two sweeps: the sweep reads the directory, and a handful
+/// of files cannot cross the budget on their own.
 const SWEEP_EVERY: usize = 16;
 
 static SINCE_SWEEP: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
 
-/// Drops the oldest files until the directory is back inside its budget.
-///
-/// Oldest by modification time, which for this directory is the time the file
-/// was downloaded. Everything here can be fetched again; nothing here is the
-/// only copy of anything - what the user asked to keep was copied out to their
-/// own folders at the moment they asked.
+/// Downloads in flight at once. One per row against a 429 is a queue this app
+/// builds for itself, and the SDK nurses each for a quarter of an hour.
+const FETCH_LANES: usize = 4;
+
+static LANES: tokio::sync::Semaphore = tokio::sync::Semaphore::const_new(FETCH_LANES);
+
+/// Drops the oldest files until the directory is inside its budget. Everything
+/// here can be fetched again; what the user kept was copied out.
 fn sweep_cache(directory: &std::path::Path) {
     let Ok(entries) = std::fs::read_dir(directory) else {
         return;
@@ -75,6 +65,15 @@ fn sweep_cache(directory: &std::path::Path) {
     for entry in entries.flatten() {
         let Ok(data) = entry.metadata() else { continue };
         if !data.is_file() {
+            continue;
+        }
+        // A download in flight is not a cache entry: taking it makes the rename
+        // that follows fail as "could not store media".
+        if entry
+            .file_name()
+            .to_string_lossy()
+            .contains(".part")
+        {
             continue;
         }
         let age = data.modified().unwrap_or(std::time::UNIX_EPOCH);
@@ -102,11 +101,8 @@ pub fn file_size(path: &str) -> Result<u64, String> {
         .map_err(|error| format!("could not read the file: {error}"))
 }
 
-/// Refuses a file that is too large to hold in memory, before it is read.
-///
-/// Every one of these paths reads its file in one piece — the SDK's attachment
-/// API wants the bytes, not a path — so the only place to stop an outsized file
-/// is before the read, not after it.
+/// Refuses a file too large to hold in memory, before it is read: every path
+/// here reads its file in one piece.
 pub fn check_size(size: u64, limit: u64, what: &str) -> Result<(), String> {
     if size > limit {
         return Err(format!(
@@ -118,23 +114,43 @@ pub fn check_size(size: u64, limit: u64, what: &str) -> Result<(), String> {
     Ok(())
 }
 
-/// Turns a request into a file name that survives a file system.
+/// A file name that survives a file system: sha256 of the SDK's media key. The
+/// old cut key dropped the format suffix and merged thumbnail with original.
 fn cache_name(request: &MediaRequestParameters) -> String {
-    let key = request.unique_key();
-    let mut name: String = key
-        .chars()
-        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
-        .collect();
-    // Keep it well below any path limit; the key stays unique enough because
-    // the media id itself is a long random string.
-    name.truncate(120);
-    name
+    let digest = Sha256::digest(request.unique_key().as_bytes());
+    format!("{}.bin", hex::encode(digest))
 }
 
-/// Downloads media and returns the path it was written to.
-///
-/// Already downloaded files are reused, so the timeline can ask repeatedly
-/// while scrolling.
+/// True for a name this module writes today.
+fn is_cache_name(name: &str) -> bool {
+    let Some(digest) = name.strip_suffix(".bin") else {
+        return false;
+    };
+    digest.len() == 64 && digest.chars().all(|c| c.is_ascii_hexdigit())
+}
+
+/// Drops what the old naming left behind: unreachable now, and the sweep would
+/// only reach them once the whole directory is over budget.
+fn drop_legacy_names(directory: &Path) {
+    static ONCE: std::sync::Once = std::sync::Once::new();
+    ONCE.call_once(|| {
+        let Ok(entries) = std::fs::read_dir(directory) else {
+            return;
+        };
+        for entry in entries.flatten() {
+            if !entry.metadata().map(|data| data.is_file()).unwrap_or(false) {
+                continue;
+            }
+            let name = entry.file_name().to_string_lossy().into_owned();
+            if !is_cache_name(&name) && !name.contains(".part") {
+                let _ = std::fs::remove_file(entry.path());
+            }
+        }
+    });
+}
+
+/// Downloads media and returns the path. Already downloaded files are reused,
+/// so the timeline can ask repeatedly while scrolling.
 pub async fn fetch(
     client: &Client,
     cache_dir: &Path,
@@ -142,20 +158,13 @@ pub async fn fetch(
     thumbnail: bool,
     declared: u64,
 ) -> Result<String, String> {
-    // The parse error is deliberately not passed on: serde quotes the input it
-    // choked on, and the input is a media address including the homeserver —
-    // an identifier, and this project logs none of those in full.
+    // The parse error is not passed on: serde quotes the input, and the input is a
+    // media address including the homeserver.
     let source: MediaSource = serde_json::from_value(source)
         .map_err(|_| "media source is neither a plain address nor an encrypted file".to_owned())?;
 
-    // Encrypted media has no server-side thumbnail and cannot have one — the
-    // homeserver only ever sees ciphertext. The SDK honours
-    // `MediaFormat::Thumbnail` on the plain arm alone and silently ignores it
-    // for an encrypted file, downloading and decrypting the original either
-    // way. Asking for a thumbnail regardless did not shrink a single byte; it
-    // only filed the very same bytes under a second cache name, so every
-    // encrypted picture was stored twice. Saying so here keeps the request and
-    // the file that comes back describing the same thing.
+    // Encrypted media has no server-side thumbnail and cannot have one. The SDK
+    // ignores the request, so asking filed the same bytes under a second name.
     let encrypted = matches!(source, MediaSource::Encrypted(_));
     let format = if thumbnail && !encrypted {
         let edge = UInt::from(THUMBNAIL_EDGE);
@@ -168,23 +177,23 @@ pub async fn fetch(
 
     std::fs::create_dir_all(cache_dir)
         .map_err(|error| format!("media cache unavailable: {error}"))?;
+    drop_legacy_names(cache_dir);
     let path: PathBuf = cache_dir.join(cache_name(&request));
 
     if path.is_file() {
         return Ok(path.to_string_lossy().into_owned());
     }
 
-    // The event's own figure, before anything is asked for. The SDK hands
-    // media over as one `Vec<u8>` and offers no way to stream it - its
-    // `get_media_file` calls the same function and writes the result - so the
-    // only place a download can be stopped without holding it in memory first
-    // is here, before the request goes out.
-    //
-    // The sender writes that figure, so this is a gate and not a guarantee:
-    // whoever lies about it still runs into the check below, which weighs what
-    // actually arrived. Two halves of one protection - the first costs the
-    // attacker the download, the second costs us the memory.
+    // The event's own figure, before anything is asked for - the SDK has no way
+    // to stream. A gate, not a guarantee: what arrives is weighed below.
     check_size(declared, MAX_MEDIA_BYTES, "attachment")?;
+
+    // Held for the request and released with it. A closed semaphore never
+    // happens here - nothing closes it - so the error is mapped, not expected.
+    let _lane = LANES
+        .acquire()
+        .await
+        .map_err(|_| "the download queue is closed".to_owned())?;
 
     let bytes = client
         .media()
@@ -192,16 +201,15 @@ pub async fn fetch(
         .await
         .map_err(|error| format!("download failed: {error}"))?;
 
-    // A ceiling before the bytes ever reach a decoder. A remote party sets both
-    // the size and the content of an attachment, so an unbounded download is a
-    // memory-exhaustion lever; the image and video decoders on this old Qt are
-    // the real target, and a hundred megabytes is already far past any genuine
-    // thumbnail or clip.
+    // A ceiling before the bytes reach a decoder: the decoders on this old Qt are
+    // the real target, and a hundred megabytes is past any genuine thumbnail.
     check_size(bytes.len() as u64, MAX_MEDIA_BYTES, "attachment")?;
 
-    // Write beside the target and rename, so a cancelled download can never be
-    // mistaken for a complete file.
-    let partial = path.with_extension("part");
+    // Write beside the target and rename, so a cancelled download is never
+    // mistaken for a complete file. The counter: the same media, asked twice.
+    static ATTEMPT: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    let attempt = ATTEMPT.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let partial = path.with_extension(format!("part{attempt}"));
     std::fs::write(&partial, bytes).map_err(|error| format!("could not write media: {error}"))?;
     // Decrypted content of an end-to-end encrypted room: owner-only, like the
     // session file. The umask alone would leave it 0644.
@@ -212,9 +220,8 @@ pub async fn fetch(
     }
     std::fs::rename(&partial, &path).map_err(|error| format!("could not store media: {error}"))?;
 
-    // Every so often, and only after the file this call was asked for is safely
-    // in place: the sweep may drop something, and it must never be the one the
-    // caller is about to open.
+    // Every so often, and only after the file this call was asked for is in
+    // place: the sweep must never drop the one the caller is about to open.
     if SINCE_SWEEP.fetch_add(1, std::sync::atomic::Ordering::Relaxed) % SWEEP_EVERY == 0 {
         if let Some(directory) = path.parent() {
             sweep_cache(directory);
@@ -224,18 +231,8 @@ pub async fn fetch(
     Ok(path.to_string_lossy().into_owned())
 }
 
-/// What this app can say about a file it is about to send.
-///
-/// The SDK writes an empty `info` when it is handed none: no size, no width,
-/// no height. Every receiving client then has to guess how much room to leave
-/// for the picture and how big it is before fetching it - this one included,
-/// which is how 0.25.0 came to show its own pictures as an attachment line.
-/// The figures are cheap and every client writes them, so they are written
-/// here, at the one place both send paths pass through.
-///
-/// The variant has to match the media type. The SDK maps an `Image` info onto
-/// a video event as an empty `VideoInfo`, so a mismatch is not an error, it is
-/// silence.
+/// What this app can say about a file it sends. The SDK writes an empty `info`
+/// when handed none, and the variant has to match the media type or it is silence.
 fn attachment_info(
     mime: &mime::Mime,
     size: usize,
@@ -248,12 +245,8 @@ fn attachment_info(
         None => (None, None),
     };
 
-    // A recording of one's own is a voice message, not an audio file. The
-    // difference is one marker (MSC3245) plus the length, and it is not
-    // cosmetic: clients draw a voice message differently, and the bridges to
-    // other networks make a native voice note only out of a message that
-    // carries it - one of them refuses everything else as an unsupported
-    // format, which reads as if the recording were broken.
+    // A recording of one's own is a voice message, not an audio file: one marker
+    // (MSC3245) plus the length, and the bridges make a native note only of that.
     if let Some(duration) = voice {
         return AttachmentInfo::Voice(BaseAudioInfo {
             duration: Some(Duration::from_millis(duration)),
@@ -286,10 +279,8 @@ fn attachment_info(
     }
 }
 
-/// Sends a file from disk to a room that is not the open one.
-///
-/// Forwarding re-uploads: the picture was decrypted for display, and the
-/// target room encrypts under its own keys, so the bytes have to travel again.
+/// Sends a file to a room that is not the open one. Forwarding re-uploads: the
+/// target room encrypts under its own keys.
 pub async fn forward_file(
     client: &Client,
     room_id: &str,
@@ -343,13 +334,8 @@ async fn upload_limit(client: &Client) -> Option<u64> {
     Some(u64::from(response.upload_size))
 }
 
-/// Sends a file from disk as an attachment. The timeline shows it immediately
-/// as a local echo.
-///
-/// `caption` and `reply_to` are both optional and both belong to this call:
-/// the caption travels inside the media event, and a reply relation cannot be
-/// added to an event that was already sent. An empty string means "not set"
-/// for either.
+/// Sends a file as an attachment, shown at once as a local echo. `caption` and
+/// `reply_to` belong to this call - neither can be added afterwards.
 pub async fn send(
     timeline: &Timeline,
     path: &str,
@@ -363,21 +349,16 @@ pub async fn send(
         .parse()
         .map_err(|_| format!("not a media type: {mime_type}"))?;
 
-    // Size first, contents second. Reading before asking how big the file is
-    // means a picked file of any size lands in memory in one piece, and on a
-    // phone that is the app being killed rather than an error the user can act
-    // on. The server's own limit is asked for below, but only after this: that
-    // question needs the network, and there is no reason to hold a gigabyte in
-    // memory while waiting for the answer.
+    // Size first, contents second: reading first means a picked file of any size
+    // lands in memory whole, which on a phone is the app being killed.
     let size = file_size(path)?;
     check_size(size, MAX_ATTACHMENT_BYTES, "attachment")?;
 
     let bytes = std::fs::read(path).map_err(|error| format!("could not read the file: {error}"))?;
     let size = bytes.len();
 
-    // Ask the server what it accepts before spending minutes uploading. The
-    // rejection itself arrives as a bare "failed sending attachment", which
-    // tells the user nothing about why.
+    // Ask the server what it accepts before spending minutes uploading: the
+    // rejection arrives as a bare "failed sending attachment".
     if let Some(limit) = upload_limit(&timeline.room().client()).await {
         if size as u64 > limit {
             return Err(format!(
@@ -400,9 +381,8 @@ pub async fn send(
         config.caption = Some(TextMessageEventContent::plain(caption));
     }
     if !reply_to.is_empty() {
-        // Refused rather than silently sent bare: an attachment that lost its
-        // reply looks like an answer to nothing, and the user cannot tell that
-        // from a working one.
+        // Refused rather than silently sent bare: an attachment that lost its reply
+        // looks like an answer to nothing.
         config.in_reply_to = Some(
             EventId::parse(reply_to)
                 .map_err(|_| "the message being answered is not known".to_owned())?,
@@ -421,4 +401,54 @@ pub async fn send(
                 size / 1024
             )
         })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use matrix_sdk::ruma::{events::room::MediaSource, OwnedMxcUri};
+
+    fn plain(uri: &str, thumbnail: bool) -> MediaRequestParameters {
+        let edge = UInt::from(THUMBNAIL_EDGE);
+        MediaRequestParameters {
+            source: MediaSource::Plain(OwnedMxcUri::from(uri)),
+            format: if thumbnail {
+                MediaFormat::Thumbnail(MediaThumbnailSettings::new(edge, edge))
+            } else {
+                MediaFormat::File
+            },
+        }
+    }
+
+    #[test]
+    fn the_name_has_one_length_whatever_goes_in() {
+        let short = cache_name(&plain("mxc://example.org/abc", false));
+        let long = cache_name(&plain(&format!("mxc://example.org/{}", "a".repeat(4000)), false));
+        assert_eq!(short.len(), 68);
+        assert_eq!(long.len(), short.len());
+        assert!(is_cache_name(&short) && is_cache_name(&long));
+    }
+
+    #[test]
+    fn a_long_id_does_not_merge_thumbnail_and_file() {
+        // What the old name did: the format sat at the end of the key and the
+        // cut to 120 characters took it off, so both of these were one file.
+        let uri = format!("mxc://example.org/{}", "b".repeat(200));
+        assert_ne!(cache_name(&plain(&uri, true)), cache_name(&plain(&uri, false)));
+    }
+
+    #[test]
+    fn a_shared_prefix_is_not_a_shared_name() {
+        let mine = format!("mxc://example.org/{}", "c".repeat(200));
+        let theirs = format!("{mine}x");
+        assert_ne!(cache_name(&plain(&mine, false)), cache_name(&plain(&theirs, false)));
+    }
+
+    #[test]
+    fn the_old_names_are_not_taken_for_current_ones() {
+        assert!(!is_cache_name("mxc___example_org_abc_file"));
+        assert!(!is_cache_name(&"a".repeat(64)));
+        assert!(!is_cache_name(&format!("{}.bin", "z".repeat(64))));
+        assert!(is_cache_name(&format!("{}.bin", "0".repeat(64))));
+    }
 }

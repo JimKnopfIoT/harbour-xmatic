@@ -54,19 +54,16 @@ Page {
         fillMode: VideoOutput.PreserveAspectFit
         source: matrix.calls.selfVideo
 
-        // Turned left to right, and only here: this is the preview, not the
-        // picture that goes out. Qt 5.6's VideoOutput has no `mirror` of its
-        // own, so it is a transform on the item — the pipeline is untouched
-        // and the other side keeps seeing what the camera sees.
+        // Turned left to right, and only here: this is the preview. Qt 5.6's
+        // VideoOutput has no `mirror`, so it is a transform - the pipeline is untouched.
         transform: Scale {
             origin.x: selfView.width / 2
             xScale: -1
         }
     }
 
-    // While the other side's picture fills the page, the controls have
-    // something to be out of the way of. In a voice call they have not, and
-    // the middle of an empty page is where they belong.
+    // While the other side's picture fills the page the controls have something to
+    // be out of the way of; in a voice call the middle is where they belong.
     readonly property bool videoMode: matrix.calls.remoteVideo.active
 
     Column {
@@ -115,19 +112,14 @@ Page {
             text: qsTr("Video calls are switched off in Privacy; this one is answered as a voice call.")
         }
 
-        // Stacked, not in a row: three actions do not fit a phone side by side,
-        // and the one that answers the call as it was offered belongs on top.
-        // The habitual first tap must not be the one that leaves the camera off.
+        // Stacked, not in a row: three actions do not fit side by side, and the one
+        // that answers as offered belongs on top.
         Column {
             width: parent.width
             spacing: Theme.paddingMedium
 
-            // The width is given, not measured off the buttons. It used to be
-            // the widest of the three, which a wrapping button cannot answer -
-            // it carries no label of its own, so its implicit width is the
-            // platform minimum and all three would collapse to it. And the
-            // three must stay the same width whatever the language does to
-            // "Accept without camera".
+            // The width is given, not measured: a wrapping button carries no label of its
+            // own, so all three would collapse to the platform minimum.
             readonly property real buttonWidth: Math.min(
                     Theme.buttonWidthLarge,
                     width - 2 * Theme.horizontalPageMargin)
@@ -173,10 +165,8 @@ Page {
         }
     }
 
-    // The same two actions during a video call: symbols in the lower left
-    // corner, over the picture instead of across the face in the middle of it.
-    // Left, because the own camera sits in the other corner. Half transparent,
-    // because they are a means and the picture is the point.
+    // The same two actions during a video call, in the lower left over the
+    // picture. Half transparent: they are a means, the picture is the point.
     Row {
         anchors {
             left: parent.left
@@ -197,9 +187,8 @@ Page {
         }
 
         IconButton {
-            // The cover-sized icon, scaled down: Silica ships no hang-up at
-            // icon-m size, and a picture made smaller stays sharp where one
-            // made larger does not.
+            // The cover-sized icon scaled down: Silica ships no hang-up at icon-m, and a
+            // picture made smaller stays sharp where one made larger does not.
             icon.source: "image://theme/icon-cover-hangup"
             icon.width: Theme.iconSizeMedium
             icon.height: Theme.iconSizeMedium

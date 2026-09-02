@@ -1,16 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Everything that can be done with one message, on a page of its own.
-//
-// This exists because of the landscape case: the screen is 1080 px high there,
-// and after the room's name strip, the pinned banner and the composer the
-// conversation keeps under 600 — four menu rows, where a message's own menu
-// needs six. A context menu cannot scroll (Silica's is a plain column without
-// a flickable, and flicking closes it), so the entries that do not fit move
-// here, where a page has the whole screen.
-//
-// In portrait the menu still holds every entry and this page is not used.
+// Everything that can be done with one message, on a page. For landscape,
+// where the conversation keeps four menu rows and a message's menu needs six.
 Page {
     id: page
 
@@ -29,26 +21,24 @@ Page {
     property bool isImage: false
     property bool canSave: false
 
-    /// What saveAttachment needs: id, msgtype and the media map. Copied out of
-    /// the delegate rather than passed along as the model row, which stops
-    /// existing the moment the row scrolls out of the cache.
+    /// What `saveAttachment` needs: id, msgtype, media. Copied out of the delegate,
+    /// whose model row stops existing once it leaves the cache.
     property var item
 
     allowedOrientations: Orientation.All
 
-    // Reply and edit hand the work back to the room page instead of doing it
-    // here: both put focus into the composer, and focus set while the page
-    // stack is still animating does not stick. The room page applies it when
-    // it is on top again.
+    // What focuses the composer or pushes a page is handed back to the room page:
+    // a `push()` during this page's own `pop()` returns nothing to connect to.
     function handBack(kind) {
         roomPage.pendingAction = {
             "kind": kind,
             "eventId": page.eventId,
             "senderName": page.senderName,
             "body": page.body,
-            // Deleting hands back for a different reason than reply and edit:
-            // its countdown has to run where it can be seen and called off,
-            // and this page is gone a moment later.
+            // For forwarding an attachment, which needs the row's own data.
+            "item": page.item,
+            // Deleting hands back for another reason: its countdown has to run where it
+            // can be seen and called off, and this page is gone a moment later.
             "txnId": page.txnId,
             "unsent": page.unsent
         }
@@ -68,9 +58,8 @@ Page {
                 title: qsTr("Message")
             }
 
-            // One condition per entry, never on the column: hiding the
-            // container would take every other action with it and leave the
-            // page without a single thing to do.
+            // One condition per entry, never on the column: hiding the container takes
+            // every other action with it.
             ListItem {
                 contentHeight: Theme.itemSizeSmall
                 visible: page.body.length > 0
@@ -118,29 +107,20 @@ Page {
                 }
             }
 
-            // Text and attachments both, and each as itself.
-            //
-            // This entry used to be hidden for a picture and shown for every
-            // other attachment - where `body` is the file name, so it forwarded
-            // "holiday.pdf" as a sentence. A picture could only be forwarded
-            // from the full-screen view, which is not where anybody looks for
-            // it. Reported as "there is no Forward".
+            // Text and attachments both. Hidden for a picture and shown for other files,
+            // this forwarded "holiday.pdf" as a sentence - reported as "there is no Forward".
             ListItem {
                 contentHeight: Theme.itemSizeSmall
                 visible: page.canSave || page.body.length > 0
                 onClicked: {
                     if (page.canSave) {
-                        // Pushed, not replaced: the file may still have to be
-                        // fetched, and the room page opens the picker when it
-                        // lands. This list goes with the pop below it.
-                        var item = page.item
-                        pageStack.pop()
-                        page.roomPage.forwardAttachment(item)
+                        // Handed back rather than pushed: the file may still have to be fetched, and
+                        // the room page opens the picker when it lands.
+                        page.handBack("forwardAttachment")
                         return
                     }
-                    // Replaces rather than pushes: forwarding pops one page
-                    // when it is done, and that has to land back in the
-                    // conversation, not on this list.
+                    // Replaces rather than pushes: forwarding pops one page when it is done, and
+                    // that has to land in the conversation.
                     pageStack.replace(Qt.resolvedUrl("ForwardPage.qml"), {
                                           body: page.body
                                       })
@@ -192,11 +172,7 @@ Page {
             ListItem {
                 contentHeight: Theme.itemSizeSmall
                 visible: page.eventId.length > 0
-                onClicked: {
-                    var target = page.eventId
-                    pageStack.pop()
-                    page.roomPage.openThread(target)
-                }
+                onClicked: page.handBack("thread")
                 Label {
                     anchors {
                         left: parent.left
@@ -210,11 +186,7 @@ Page {
             ListItem {
                 contentHeight: Theme.itemSizeSmall
                 visible: page.eventId.length > 0
-                onClicked: {
-                    var target = page.eventId
-                    pageStack.pop()
-                    page.roomPage.pickReaction(target)
-                }
+                onClicked: page.handBack("react")
                 Label {
                     anchors {
                         left: parent.left

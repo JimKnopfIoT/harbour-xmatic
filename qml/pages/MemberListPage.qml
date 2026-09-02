@@ -1,10 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// The members of one room. The primary line is the display name, the line
-// below it the Matrix address. Tapping a row opens the member's profile page;
-// all actions live there. Ordering (most powerful first, then by name) comes
-// from the core.
+// The members of one room, name over address. A row opens the profile page,
+// where all actions live; the order comes from the core.
 Page {
     id: page
 

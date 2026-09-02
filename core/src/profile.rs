@@ -1,8 +1,5 @@
-//! The user's own profile: display name and avatar.
-//!
-//! Small by design — reading is one request, writing is one or two. The
-//! avatar upload reads the picked file from disk, uploads it and sets the
-//! resulting `mxc:` URL in a single step via the SDK.
+//! The user's own display name and avatar. Reading is one request; the avatar
+//! upload reads the file, uploads it and sets the `mxc:` URL in one step.
 
 use matrix_sdk::Client;
 use serde_json::{json, Value};
@@ -44,9 +41,8 @@ pub async fn set_display_name(client: &Client, name: &str) -> Result<(), String>
 
 /// Uploads a picture from disk and makes it the avatar.
 pub async fn set_avatar(client: &Client, path: &str) -> Result<Value, String> {
-    // Asked before it is read, for the same reason as an attachment: the upload
-    // API takes the bytes, so an outsized file would already be in memory by
-    // the time anything could object.
+    // Asked before it is read, like an attachment: the upload API takes the bytes,
+    // so an outsized file would already be in memory.
     crate::media::check_size(
         crate::media::file_size(path)?,
         crate::media::MAX_AVATAR_BYTES,

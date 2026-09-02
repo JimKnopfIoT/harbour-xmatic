@@ -1,23 +1,15 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Create a room. Unlike a space this is a room with messages; unlike a direct
-// chat it has a name and can hold any number of people.
-//
-// Everything on this page is asked once because the server takes it once.
-// Encryption cannot be switched off again, the address and the federation are
-// fixed for the room's lifetime, and a power level set later depends on a right
-// the creator may no longer have. A settings page would therefore be a page
-// full of writes that fail quietly — so the decisions live here, at the only
-// moment they are all still open.
+// Create a room. Everything is asked once because the server takes it once:
+// encryption, address and federation are fixed for the room's lifetime.
 Dialog {
     id: dialog
 
     allowedOrientations: Orientation.All
 
-    // The server part of the own address, for the address preview. Only the
-    // server, never the whole ID: the preview has to explain what the room will
-    // be called, not who is creating it.
+    // The server part of the own address, for the preview: never the whole ID -
+    // the preview explains what the room will be called, not who creates it.
     readonly property string homeServer: {
         var parts = matrix.userId.split(":")
         return parts.length > 1 ? parts[1] : ""
@@ -26,11 +18,8 @@ Dialog {
     // The order the core expects; the combo box only knows its index.
     readonly property var historyKeys: ["world_readable", "shared", "invited", "joined"]
 
-    // The word being typed is not in `text` yet: Sailfish's keyboard holds it
-    // in the input method's preedit until it is committed. Without this the
-    // accept button stays grey over a name that is plainly on screen, and a
-    // one-word name arrives empty. Committing on acceptance is harmless even
-    // where the toolkit already does it.
+    // The word being typed sits in the input method's preedit, not in `text`:
+    // without this the accept button stays grey over a name plainly on screen.
     canAccept: nameField.text.trim().length > 0 || nameField.inputMethodComposing
 
     onAccepted: {
@@ -112,10 +101,8 @@ Dialog {
                 placeholderText: qsTr("Address")
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                 description: text.trim().length > 0 && dialog.homeServer.length > 0
-                             // The address people will type elsewhere, spelled
-                             // out — the leading # and the server are added by
-                             // the server, and nobody guesses that from a bare
-                             // input field.
+                             // The address people will type elsewhere, spelled out: the `#` and the server
+                             // are added by the server, and nobody guesses that from a bare field.
                              ? qsTr("Reachable as %1").arg("#" + text.trim() + ":" + dialog.homeServer)
                              : qsTr("The name people can use to find the room, without # and without the server part. Optional.")
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
@@ -158,10 +145,8 @@ Dialog {
             TextSwitch {
                 id: equalPowerSwitch
 
-                // Offered for private rooms only. In a public room it would
-                // promote whoever happened to be invited at creation and nobody
-                // who joins afterwards, which reads as a bug rather than as a
-                // decision.
+                // Private rooms only: in a public one it would promote whoever happened to be
+                // invited at creation and nobody who joins later.
                 visible: !publicSwitch.checked
                 text: qsTr("Invited people get my rights")
                 description: qsTr("Everyone invited below starts as an administrator. Later members do not.")

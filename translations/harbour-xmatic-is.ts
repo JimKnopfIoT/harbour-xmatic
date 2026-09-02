@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Halda áfram án dulkóðunar</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Til baka</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Allt sem xmatic geymir á þessu tæki er áfram læsilegt: setan þín, skilaboðin þín og herbergislyklarnir þínir.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Veldu þetta aðeins ef ekki er hægt að setja þjónustuna upp á þessu tæki. Setjir þú hana upp síðar geturðu skipt yfir á dulkóðunarsíðunni — það kostar eina útskráningu og endurheimtarlykilinn þinn.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic mun áfram sýna þetta ástand undir Dulkóðun.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -348,6 +325,10 @@
     <message>
         <source>connected</source>
         <translation>tengt</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>ekki var hægt að halda símtalinu áfram</translation>
     </message>
 </context>
 <context>
@@ -1139,22 +1120,6 @@
         <translation>Tæki</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Dulkóðun</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Auðkenni staðfest</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Auðkennið hefur breyst síðan það var staðfest. Staðfestu aftur eða afturkallaðu staðfestinguna.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Auðkenni ekki staðfest</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Senda bein skilaboð</translation>
     </message>
@@ -1183,16 +1148,32 @@
         <translation>Sameiginleg herbergi</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Engin önnur sameiginleg herbergi</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Banna símtöl</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Leyfa símtöl</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Auðkenni</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>staðfest</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>breyttist eftir staðfestingu — staðfestu aftur eða dragðu til baka</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>óstaðfest</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>engin</translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1465,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Listinn er dulritaður og lykill hans er ekki tiltækur. Hann verður læsilegur aftur eftir að tækið hefur verið aflæst og forritið endurræst.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Hlaða myndir sjálfkrafa</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Kveikt: mynd eða myndskeið hleðst um leið og skilaboðin birtast. Slökkt: hleðst þegar ýtt er á það — að skruna framhjá er beiðni til vefþjóns sendanda.</translation>
     </message>
 </context>
 <context>
@@ -2089,6 +2078,38 @@
         <translation>%1 breytti aðgangssniði sínu</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Afrita</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Svara</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Vista</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Áframsenda</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Breyta</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Festa</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Eyða</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Meira…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Ekki er hægt að hlaða tilvitnuðu skilaboðunum: þau eru ekki lengur til eða þú mátt ekki sjá þau.</translation>
     </message>
@@ -2149,6 +2170,22 @@
         <translation>Þessi skilaboð eru ekki í hlaðnu sögunni</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Henda</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Senda aftur</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Bregðast við</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svara í þræðinum</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Afrita hlekk spjallrásar</translation>
     </message>
@@ -2207,6 +2244,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Staðfesta tengilið</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Ekki tókst að hlaða samtalið</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Opna þetta vistfang?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Opna</translation>
     </message>
 </context>
 <context>
@@ -2626,20 +2675,8 @@
         <translation>Athuga aftur</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Ef það er ekki hægt</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Þú getur notað xmatic án staðbundinnar dulkóðunar. Seta, skilaboðagagnagrunnur og herbergislyklar liggja þá læsileg á tækinu: hver sem kemst í skráakerfi þess les með, og týndur sími gefur frá sér allt sem á honum er.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Skilaboð haldast enda-í-enda dulkóðuð á leið sinni um netið hvort sem er. Hér snýst þetta aðeins um það sem liggur á tækinu.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Halda áfram án dulkóðunar</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2707,6 +2744,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>Áreiðanleiki óstaðfestur</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Opna þetta vistfang?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Opna</translation>
     </message>
 </context>
 <context>

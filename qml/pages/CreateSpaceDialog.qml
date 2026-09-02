@@ -1,19 +1,15 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Create a new, empty space. A space is a room that groups other rooms and
-// carries no messages of its own; once created it appears in the overview and
-// rooms can be organised under it.
+// Create an empty space: a room that groups other rooms and carries no
+// messages of its own.
 Dialog {
     id: dialog
 
     allowedOrientations: Orientation.All
 
-    // The word being typed is not in `text` yet: Sailfish's keyboard holds it
-    // in the input method's preedit until it is committed. Without this the
-    // accept button stays grey over a name that is plainly on screen, and a
-    // one-word name arrives empty. Committing on acceptance is harmless even
-    // where the toolkit already does it.
+    // The word being typed sits in the input method's preedit, not in `text`:
+    // without this the accept button stays grey over a name plainly on screen.
     canAccept: nameField.text.trim().length > 0 || nameField.inputMethodComposing
 
     onAccepted: {
@@ -21,9 +17,8 @@ Dialog {
         matrix.createSpace(nameField.text)
     }
 
-    // In landscape the dialog is barely taller than its header, so the
-    // field below it has to be reachable by scrolling — on the wide
-    // device it would otherwise sit behind the keyboard.
+    // In landscape the dialog is barely taller than its header, so the field has
+    // to be reachable by scrolling.
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height

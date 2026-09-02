@@ -1,15 +1,5 @@
-//! OAuth 2.0 authorization code login, the way modern Matrix clients do it.
-//!
-//! matrix.org has moved to the Matrix Authentication Service, so there is no
-//! password endpoint to talk to: the user authenticates in a browser and the
-//! authorization server redirects back with a code.
-//!
-//! The redirect goes to a loopback listener the SDK spawns for us
-//! (RFC 8252 §7.3) rather than to a custom `xmatic://` URI scheme. That avoids
-//! registering a scheme handler and a D-Bus activation path on the device, and
-//! it keeps the whole flow inside this crate — the front end only has to open
-//! a URL. The port is picked from a small fixed range because every redirect
-//! URI has to be declared up front during client registration.
+//! OAuth 2.0 authorization code login. The redirect goes to a loopback
+//! listener (RFC 8252 §7.3), whose port must be declared at registration.
 
 use std::ops::Range;
 
@@ -85,15 +75,8 @@ const SCOPE_API: &str = "urn:matrix:org.matrix.msc2967.client:api:*";
 /// Binds the device ID this login creates to the issued tokens (MSC2967).
 const SCOPE_DEVICE_PREFIX: &str = "urn:matrix:org.matrix.msc2967.client:device:";
 
-/// A device-code login (RFC 8628) waiting for the user to approve it
-/// somewhere else.
-///
-/// This flow exists because the authorization-code flow needs a browser on
-/// the device, and the browser of older Sailfish releases cannot render the
-/// authentication service's pages. Here the app only displays a short URL and
-/// a code; the sign-in happens on any other device while we poll the token
-/// endpoint. The SDK implements this grant only inside its QR-code login, so
-/// the flow is assembled here from the same public pieces it uses.
+/// A device-code login (RFC 8628) for devices whose browser cannot render the
+/// auth pages. The SDK wires this grant up only for QR, so it is assembled here.
 pub struct PendingDeviceLogin {
     /// Where the user has to go, shown by the front end.
     pub verification_uri: String,
@@ -119,12 +102,8 @@ pub async fn start_device(client: &Client) -> Result<PendingDeviceLogin, String>
         .await
         .map_err(|error| format!("server metadata unavailable: {error}"))?;
 
-    // The registration goes over plain HTTP on purpose: the SDK's
-    // `register_client` stores the resulting auth data on the client, and
-    // `restore_session` — which activates the session at the end of this
-    // flow — panics if anything set that data before it. Registration is a
-    // bare unauthenticated JSON POST, so doing it by hand keeps the client
-    // untouched.
+    // Registration is a bare JSON POST by hand: the SDK's `register_client`
+    // stores auth data on the client, and `restore_session` panics if any was set.
     let registration_endpoint = server_metadata
         .registration_endpoint
         .clone()
@@ -183,11 +162,8 @@ pub async fn start_device(client: &Client) -> Result<PendingDeviceLogin, String>
     })
 }
 
-/// Polls the token endpoint until the user approves (or the code expires),
-/// then activates the session on `client`.
-///
-/// The `oauth2` crate handles the polling interval, including the server's
-/// `slow_down` responses, so this simply takes as long as the user takes.
+/// Polls the token endpoint until the user approves or the code expires. The
+/// `oauth2` crate handles the interval, `slow_down` included.
 pub async fn finish_device(client: &Client, pending: PendingDeviceLogin) -> Result<(), String> {
     let oauth = client.oauth();
 
@@ -251,12 +227,8 @@ pub async fn finish_device(client: &Client, pending: PendingDeviceLogin) -> Resu
     Ok(())
 }
 
-/// Where the homeserver lets people create an account.
-///
-/// Registration is deliberately not reimplemented here: on servers using the
-/// Matrix Authentication Service it involves terms, a captcha and e-mail
-/// confirmation, all of which change without notice. The authorization
-/// server's own page handles that, and the normal sign-in works afterwards.
+/// Where the homeserver lets people create an account. Registration is not
+/// reimplemented: terms, captcha and e-mail confirmation change without notice.
 pub async fn registration_url(client: &Client) -> Result<String, String> {
     let metadata = client
         .oauth()
@@ -302,10 +274,8 @@ pub async fn start(client: &Client, homeserver: String) -> Result<PendingLogin, 
     })
 }
 
-/// Waits for the browser redirect and completes the login.
-///
-/// Returns `Ok(false)` when the listener was shut down without a redirect,
-/// which is what an aborted login looks like.
+/// Waits for the browser redirect. `Ok(false)` is a listener shut down without
+/// one, which is what an aborted login looks like.
 pub async fn finish(client: &Client, redirect: LocalServerRedirectHandle) -> Result<bool, String> {
     let Some(query) = redirect.await else {
         return Ok(false);
@@ -320,23 +290,14 @@ pub async fn finish(client: &Client, redirect: LocalServerRedirectHandle) -> Res
     Ok(true)
 }
 
-/// True if the server offers the classic password login (`m.login.password`).
-///
-/// Only consulted after OAuth discovery answered `NotSupported` — the two
-/// answers together are the affirmative finding that allows the front end to
-/// show a password form at all. A transport error here is an error, never a
-/// reason to fall back.
+/// True if the server offers `m.login.password`. Only consulted after OAuth
+/// answered `NotSupported`; a transport error is an error, never a fallback.
 pub async fn password_offered(client: &Client) -> Result<bool, String> {
     Ok(login_flows(client).await?.iter().any(|flow| flow == "password"))
 }
 
-/// Every sign-in method the server offers, as flow names.
-///
-/// The point is the negative case: when none of them fits, the user needs to
-/// hear what the server actually wanted, not just that this app cannot do it.
-/// "Sign-in failed" is the same sentence for a wrong password, an unreachable
-/// server and a method this app never implemented — three different problems
-/// with three different remedies.
+/// Every sign-in method the server offers. The point is the negative case: the
+/// user needs to hear what the server wanted, not just that this app cannot.
 pub async fn login_flows(client: &Client) -> Result<Vec<String>, String> {
     use matrix_sdk::ruma::api::client::session::get_login_types::v3::LoginType;
 
@@ -367,12 +328,8 @@ pub async fn login_flows(client: &Client) -> Result<Vec<String>, String> {
         .collect())
 }
 
-/// Signs in with `m.login.password` and activates the session on `client`.
-///
-/// The refresh token is requested on purpose (MSC2918): where the server
-/// supports it, the stored access token is short-lived and rotates, the same
-/// at-rest property the OAuth sessions have. The password crosses this
-/// function as a borrow and is wiped by its owner; nothing here copies it.
+/// Signs in with `m.login.password`. The refresh token is requested (MSC2918)
+/// so the stored token rotates; the password is borrowed and never copied.
 pub async fn password(client: &Client, user: &str, password: &str) -> Result<(), String> {
     client
         .matrix_auth()

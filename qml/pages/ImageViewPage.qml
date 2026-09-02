@@ -2,20 +2,16 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Sailfish.Share 1.0
 
-// Full size view of an attachment.
-//
-// The timeline shows a thumbnail; this page asks for the original, which in an
-// encrypted room means downloading and decrypting it first. Until it arrives
-// the thumbnail already on disk is shown, so the picture never blinks away.
+// Full size view of an attachment. Until the original arrives the thumbnail
+// already on disk is shown, so the picture never blinks away.
 Page {
     id: page
 
     /// Cache key of the full size image; the thumbnail uses a different one.
     property string mediaKey
     property string source: ""
-    /// The fetch came back as a failure - refused for its size, dropped, or
-    /// given up on. Without it the indicator turns for as long as the page
-    /// lives over something that is not coming.
+    /// The fetch failed - refused, dropped, given up on. Without it the indicator
+    /// turns for the life of the page over something that is not coming.
     property bool mediaFailed: false
     /// Name the picture gets when saved, taken from the message.
     property string fileName: ""
@@ -75,10 +71,8 @@ Page {
                 }
             }
         }
-        // A rotation changes what "fitted" means, and the sizes above are no
-        // longer bound to anything after the first zoom - so the zoom starts
-        // over rather than keeping a size that belonged to the other
-        // orientation.
+        // A rotation changes what "fitted" means, and the sizes are no longer bound
+        // after the first zoom, so the zoom starts over.
         onWidthChanged: fitContent()
         onHeightChanged: fitContent()
 
@@ -88,18 +82,13 @@ Page {
             returnToBounds()
         }
 
-        // Set once and then owned by resizeContent(): zooming rewrites these,
-        // which is exactly what makes the picture grow around the fingers
-        // instead of around its own middle.
+        // Set once and then owned by `resizeContent()`: zooming rewrites these, which
+        // is what makes the picture grow around the fingers.
         contentWidth: width
         contentHeight: height
 
-        // Zoom that stays under the fingers. Scaling the picture itself grows
-        // it around its transform origin - the middle - so the spot being
-        // pinched wanders off, which is what was reported. The flickable's own
-        // resizeContent() takes the centre of the gesture and keeps that point
-        // where it is; the two lines above it follow the fingers while they
-        // also move.
+        // Zoom that stays under the fingers: scaling the picture grows it around its
+        // middle, so the pinched spot wanders off.
         PinchArea {
             id: zoom
 
@@ -140,10 +129,8 @@ Page {
                 height: flickable.contentHeight
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
-                // A ceiling on the decode, not on the zoom: the size of the
-                // allocation must not be the sender's decision. Three times
-                // the view keeps a deep zoom sharp, the absolute cap keeps a
-                // huge picture from deciding how much memory this costs.
+                // A ceiling on the decode, not on the zoom: the allocation must not be the
+                // sender's decision. Three times the view keeps a deep zoom sharp.
                 sourceSize.width: Math.min(2048, Math.round(flickable.width * 3))
                 // Both axes, for the same reason as in the conversation: a
                 // width alone lets the height follow the sender's aspect ratio.
@@ -154,10 +141,8 @@ Page {
 
             MouseArea {
                 anchors.fill: parent
-                // Double tap toggles between fit and a useful magnification —
-                // the gesture people try first when pinching is awkward. It
-                // zooms around the tapped point, for the same reason the pinch
-                // does.
+                // Double tap toggles fit and magnification - the gesture people try first. It
+                // zooms around the tapped point, like the pinch.
                 onDoubleClicked: {
                     var zoomedIn = flickable.contentWidth > flickable.width * 1.05
                     var target = zoomedIn ? flickable.width : flickable.width * 2.5
@@ -177,9 +162,8 @@ Page {
         running: page.source.length === 0 && !page.mediaFailed
     }
 
-    // A state with no action and no explanation is a dead end; this one at
-    // least says what happened. The attachment is still in the room, so trying
-    // again is leaving and coming back.
+    // A state with no action and no explanation is a dead end. The attachment is
+    // still in the room, so trying again is leaving and coming back.
     Label {
         anchors.centerIn: parent
         width: parent.width - 4 * Theme.horizontalPageMargin

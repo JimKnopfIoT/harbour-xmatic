@@ -1,16 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// A padlock, closed or standing open. Drawn rather than taken from the theme
-// for the same reason FaceIcon and EyeIcon are: it needs no set of zoom
-// levels and it can be drawn in the two shapes this app needs.
-//
-// It says one thing, at the top of the room next to its name: whether what is
-// written here is encrypted. Closed for an encrypted room, open for one
-// without - the shackle swung out and the body struck through. The shape
-// carries it, not a colour: red and green over a room name shout louder than
-// everything else in the strip, and the strip is there for the name. That is
-// why the room header no longer spells it out in words either.
+// A padlock, closed or open, at the top of the room: the shape carries it, not
+// a colour - red and green over a room name shout down the name.
 Item {
     id: lock
 
@@ -32,20 +24,12 @@ Item {
 
         anchors.fill: parent
 
-        // Kept as an image, not as a framebuffer, and repainted when the app
-        // comes back to the front. A Canvas hands its framebuffer back when the
-        // window leaves the screen, and what returns is empty until something
-        // asks for a repaint - the mark was there on entering a room, gone
-        // after a trip through the tile view, and back again after leaving the
-        // room and returning, which is when the page rebuilt it. Nothing else
-        // in this row is drawn, which is why nothing else showed it.
+        // Kept as an image, not a framebuffer, and repainted on return: a Canvas hands
+        // its framebuffer back when the window leaves and comes back empty.
         renderTarget: Canvas.Image
 
-        // A canvas draws nothing while it is invisible, and the delegates of
-        // a conversation are recycled: one that comes back showing a mark it
-        // did not show before had an empty canvas over it - the number stood
-        // there without its picture. Asking for the paint when it becomes
-        // visible costs nothing where it was visible all along.
+        // A canvas draws nothing while invisible, and delegates are recycled - one
+        // coming back showed the number without its picture.
         onVisibleChanged: {
             if (visible) {
                 requestPaint()
@@ -69,9 +53,8 @@ Item {
             var cx = width / 2
             var cy = height / 2
 
-            // The same hairline the face in the composer is drawn with
-            // (FaceIcon), by the same rule: one stroke for every mark this app
-            // draws itself, so they read as one hand.
+            // The same hairline the face in the composer uses: one stroke for every mark
+            // this app draws itself, so they read as one hand.
             ctx.lineWidth = Math.max(1, Math.round(s / 24))
             ctx.strokeStyle = lock.color
             ctx.lineJoin = "round"
@@ -87,9 +70,8 @@ Item {
             ctx.rect(bodyCx - bodyWidth / 2, bodyTop, bodyWidth, bodyHeight)
             ctx.stroke()
 
-            // The shackle, an arch on two straight legs rather than a bare
-            // half circle: the legs are what make it stand clear of the body
-            // at this size.
+            // The shackle as an arch on two straight legs: the legs are what make it
+            // stand clear of the body at this size.
             var r = lock.locked ? s * 0.2 : s * 0.18
             var neck = r * 0.5
 
@@ -103,9 +85,8 @@ Item {
                 return
             }
 
-            // Open: the same arch, lifted out of the body and set down beside
-            // it - out and up, where a shackle goes when it is not holding
-            // anything.
+            // Open: the same arch, lifted out of the body and set beside it - where a
+            // shackle goes when it holds nothing.
             ctx.save()
             ctx.translate(bodyCx + r * 0.85, bodyTop - neck * 0.9)
             ctx.beginPath()
@@ -116,9 +97,8 @@ Item {
             ctx.stroke()
             ctx.restore()
 
-            // And struck through, corner to corner across the body: the shape
-            // alone would be a small difference on a small screen, a line
-            // across it is not.
+            // And struck through corner to corner: the shape alone is a small difference
+            // on a small screen, a line across it is not.
             ctx.beginPath()
             ctx.moveTo(bodyCx - bodyWidth / 2, bodyTop)
             ctx.lineTo(bodyCx + bodyWidth / 2, bodyTop + bodyHeight)

@@ -1,9 +1,5 @@
-//! The command dispatcher and the callback sink.
-//!
-//! Commands arrive from the Qt thread, are queued, and are handled on the
-//! tokio runtime. Replies and events travel back through a single C callback.
-//! Each command gets its own task, so a login that waits minutes for the user
-//! to finish in the browser never blocks anything else.
+//! The command dispatcher and the callback sink. Each command is its own
+//! task, so a login that waits minutes for the browser blocks nothing.
 
 use std::ffi::CString;
 use std::os::raw::{c_char, c_void};
@@ -38,10 +34,8 @@ use crate::verification;
 /// Signature of the function the front end registers to receive messages.
 pub type XmCallback = extern "C" fn(*mut c_void, *const c_char);
 
-/// The most search results one command may ask for. A page is meant to fill a
-/// screen and be asked for again, not to be the whole answer: every row costs
-/// an event load, and a hundred of those before the first row is drawn is a
-/// search that looks broken.
+/// The most results one search command may ask for: a page fills a screen and
+/// is asked for again. Every row costs an event load.
 const SEARCH_PAGE_MAX: usize = 50;
 
 struct CallbackSlot {
@@ -49,9 +43,8 @@ struct CallbackSlot {
     user_data: *mut c_void,
 }
 
-// The pointer is opaque to Rust and is only ever handed back to the front end
-// together with a message. The C++ side owns it, keeps it alive for as long as
-// the core exists, and its trampoline is safe to call from any thread.
+// The pointer is opaque to Rust and only handed back with a message. C++ owns
+// it, keeps it alive, and its trampoline is safe from any thread.
 unsafe impl Send for CallbackSlot {}
 unsafe impl Sync for CallbackSlot {}
 
@@ -80,12 +73,16 @@ impl Sink {
     /// Serialises `value` and hands it to the front end. Messages sent before a
     /// callback is registered are dropped.
     pub fn emit(&self, value: Value) {
-        let Ok(slot) = self.slot.lock() else { return };
-        let Some(func) = slot.func else { return };
+        // Pointer copied out, lock released before the front end is called: a
+        // deadlock should not be the price of the first callback in.
+        let (func, user_data) = {
+            let Ok(slot) = self.slot.lock() else { return };
+            let Some(func) = slot.func else { return };
+            (func, slot.user_data)
+        };
         let Ok(text) = serde_json::to_string(&value) else { return };
         let Ok(message) = CString::new(text) else { return };
 
-        let user_data = slot.user_data;
         let _ = catch_unwind(AssertUnwindSafe(|| func(user_data, message.as_ptr())));
     }
 }
@@ -98,19 +95,16 @@ struct PendingLogin {
 
 struct State {
     paths: Paths,
-    /// The store key from Sailfish Secrets; `None` degrades to unencrypted.
-    /// Behind a lock because the front end may hand it in later: after a
-    /// locked secrets collection the user retries, and `session.restore`
-    /// then carries the key the start did not have.
+    /// The store key; `None` opens nothing new. Behind a lock because the front
+    /// end may hand it in later, after the user retried a locked collection.
     store_key: std::sync::RwLock<Option<session::StoreKey>>,
     client: Mutex<Option<Client>>,
     pending: Mutex<Option<PendingLogin>>,
     /// A device-code login polling for approval, kept so it can be cancelled.
     pending_device: Mutex<Option<tokio::task::JoinHandle<()>>>,
     rooms: Mutex<Option<RoomListHandle>>,
-    /// The UnifiedPush connector, started on the first push command and never
-    /// before: it claims a D-Bus name and would otherwise do so on every start,
-    /// on every device, for a feature nobody turned on.
+    /// The UnifiedPush connector, started on the first push command: it claims a
+    /// D-Bus name and must not do so for a feature nobody turned on.
     push: Mutex<Option<crate::push::PushHandle>>,
     spaces: Mutex<Option<tokio::task::JoinHandle<()>>>,
     open_space: Mutex<Option<tokio::task::JoinHandle<()>>>,
@@ -129,41 +123,18 @@ struct State {
     /// `Subscriptions` — they have to be requested together or not at all.
     subscriptions: Mutex<Subscriptions>,
     directory: Mutex<Option<DirectoryHandle>>,
-    /// The observers that outlive a command: the recovery/backup state watcher
-    /// and the session watcher. Both hold a client clone, and a task holding
-    /// one keeps the SQLite pool open - `reset_store` on sign-out would then
-    /// delete the directory under a live connection, which is the one mistake
-    /// this project has already paid for. Kept here so they can be stopped
-    /// before the client goes.
+    /// Observers that outlive a command. Each holds a client clone and keeps the
+    /// SQLite pool open, so they are stopped before `reset_store` runs.
     observers: Mutex<Vec<tokio::task::JoinHandle<()>>>,
     verification: verification::Slot,
-    /// How many command tasks are in flight.
-    ///
-    /// Each of them runs on its own and most hold a clone of the client, so a
-    /// sign-out can delete the store directory while one is still inside a
-    /// request - the same fault the timeline handles were taught to avoid, on
-    /// the one path that has no handle to close. They cannot be aborted
-    /// (a command that is half-way through a send has to finish), so they are
-    /// counted, and the sign-out waits briefly for the count to fall.
+    /// How many command tasks are in flight. They cannot be aborted mid-send, so
+    /// they are counted and the sign-out waits briefly for the count to fall.
     running: std::sync::atomic::AtomicUsize,
     sink: Arc<Sink>,
 }
 
-/// The rooms that need a sliding-sync subscription, by what wants them.
-///
-/// They live together because `subscribe_to_rooms` is not additive: "All
-/// previous room subscriptions will be forgotten" (`matrix-sdk-ui`,
-/// `room_list_service/mod.rs`), and the sliding sync clears its whole
-/// subscription map on every call. Requesting one room therefore cancels
-/// whatever was requested before, which is why these three used to knock each
-/// other out — starting a verification dropped the open room back to one
-/// timeline event per sync, and opening a room dropped the verification's
-/// direct chat, leaving the flow apparently stalled.
-///
-/// A subscription is not a nicety: an unsubscribed room delivers a single
-/// timeline event per sync response (`DEFAULT_LIST_TIMELINE_LIMIT`), so a burst
-/// — a call's ICE candidates, several quick messages — arrives as its last
-/// event alone.
+/// The rooms needing a sliding-sync subscription, by what wants them.
+/// `subscribe_to_rooms` is not additive - a call forgets every earlier one.
 #[derive(Default)]
 struct Subscriptions {
     /// The room whose conversation is on screen.
@@ -200,13 +171,8 @@ impl State {
         self.client.lock().await.clone()
     }
 
-    /// The open timeline, or `None`. Cloned for the same reason as the client:
-    /// every timeline command is a network round trip, and the lock must not
-    /// be held across it. It used to be — a pagination that the server left
-    /// hanging (matrix.org answers `M_LIMIT_EXCEEDED`, and the SDK then retries
-    /// for up to fifteen minutes) blocked not just the next pagination but
-    /// `open_timeline` as well, so switching rooms froze until the server
-    /// relented.
+    /// The open timeline, cloned like the client: every timeline command is a
+    /// round trip, and holding the lock across one froze every room switch.
     async fn timeline(&self) -> Option<Arc<TimelineHandle>> {
         self.timeline.lock().await.clone()
     }
@@ -215,13 +181,8 @@ impl State {
         self.thread.lock().await.clone()
     }
 
-    /// Waits, briefly, for the running commands to finish.
-    ///
-    /// Bounded on purpose: a command stuck in the SDK's retry budget must not
-    /// hold a sign-out for a quarter of an hour, and what one of them can still
-    /// do after this wait is a single request against a server that is about to
-    /// forget the session anyway. The sign-out itself is one of the commands,
-    /// hence the comparison against one rather than zero.
+    /// Waits briefly for running commands. Bounded: a command in the SDK's retry
+    /// budget must not hold a sign-out for a quarter of an hour.
     async fn drain_commands(&self, limit: std::time::Duration) {
         let deadline = tokio::time::Instant::now() + limit;
         while self.running.load(std::sync::atomic::Ordering::SeqCst) > 1
@@ -231,18 +192,11 @@ impl State {
         }
     }
 
-    /// Records what a part of the app needs subscribed and asks the sliding
-    /// sync for the whole set. Always the whole set: a call with fewer rooms
-    /// silently unsubscribes the rest.
+    /// Records what a part of the app needs and asks for the whole set. Always the
+    /// whole set: a call with fewer rooms unsubscribes the rest.
     async fn subscribe(&self, change: impl FnOnce(&mut Subscriptions)) {
-        // The lock is held across the request, not just across the bookkeeping.
-        // Releasing it first would leave a window in which a second caller
-        // records its own change and gets its list out ahead of this one; since
-        // the request replaces the entire subscription list rather than adding
-        // to it, the older list would then be the one left standing and a room
-        // would silently lose its subscription. Nothing waits on the network
-        // inside here — the sliding sync only rewrites its map and nudges its
-        // loop — so holding it costs nothing.
+        // The lock is held across the request: the call replaces the whole list, so a
+        // second caller getting ahead would leave the older list standing.
         let mut subscriptions = self.subscriptions.lock().await;
         change(&mut subscriptions);
         let wanted = subscriptions.wanted();
@@ -321,7 +275,18 @@ pub fn spawn(
             state.running.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             tokio::spawn(Box::pin(async move {
                 let counted = state.clone();
-                handle(state, command).await;
+                let id = command.id();
+                // A panic here would take the reply and the counter with it, and
+                // the protocol promises exactly one answer per id.
+                let outcome = futures_util::FutureExt::catch_unwind(
+                    std::panic::AssertUnwindSafe(handle(state, command)),
+                )
+                .await;
+                if outcome.is_err() {
+                    counted
+                        .sink
+                        .emit(reply_error(id, "the command failed unexpectedly"));
+                }
                 counted.running.fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
             }));
         }
@@ -372,13 +337,14 @@ async fn handle(state: Arc<State>, command: Command) {
             room_id,
             focus,
             receipts,
+            token,
             ..
-        } => open_timeline(&state, id, room_id, focus, receipts).await,
+        } => open_timeline(&state, id, room_id, focus, receipts, token).await,
         Command::RoomMarkRead { room_id, receipt, .. } => {
             mark_room_read(&state, id, room_id, receipt).await
         }
         Command::RoomResolve { address, .. } => resolve_room(&state, id, address).await,
-        Command::TimelineClose { .. } => close_timeline(&state, id).await,
+        Command::TimelineClose { room_id, .. } => close_timeline(&state, id, room_id).await,
         Command::TimelinePaginate { .. } => paginate_timeline(&state, id).await,
         Command::TimelineSend { body, .. } => send_message(&state, id, body).await,
         Command::TimelineMarkRead { receipt, .. } => mark_read(&state, id, receipt).await,
@@ -387,11 +353,8 @@ async fn handle(state: Arc<State>, command: Command) {
                 private::Loaded::Lists(lists) => {
                     state.sink.emit(reply_ok(id, json!({ "lists": lists, "readable": true })))
                 }
-                // Empty *and* writable is only true where a key exists. Without
-                // one every write is refused, and answering "readable" sent the
-                // app into the legacy migration, whose failure asks again -
-                // measured as an endless command loop on a device whose secrets
-                // collection was still locked after a reboot.
+                // Empty *and* writable is only true where a key exists. Otherwise the app
+                // went into the migration, whose failure asks again - an endless loop.
                 private::Loaded::Empty => {
                     let readable = state.store_key().is_some();
                     state
@@ -407,9 +370,8 @@ async fn handle(state: Arc<State>, command: Command) {
         }
 
         Command::PrivateSet { lists, .. } => {
-            // The front end sends the whole state, so nothing has to be read
-            // first and no two writes can overwrite each other. The file is
-            // only consulted to refuse a write over an unreadable one.
+            // The front end sends the whole state, so nothing is read first and no two
+            // writes collide. The file is only consulted to refuse writing over it.
             match private::load(&state.paths.private_file, state.store_key().as_ref()) {
                 private::Loaded::Unreadable => {
                     state.sink.emit(reply_error(
@@ -576,10 +538,8 @@ async fn handle(state: Arc<State>, command: Command) {
             sdp,
             ..
         } => {
-            // A call's signalling rides the room's timeline, and an
-            // unsubscribed room hands out one event per sync response — a
-            // burst of ICE candidates then arrives as its last one alone,
-            // which is a call that connects and stays silent.
+            // A call's signalling rides the room timeline, and an unsubscribed room hands
+            // out one event per sync - a burst of ICE candidates arrives as its last.
             set_call_room(&state, Some(&room_id)).await;
             let client = match state.client().await {
                 Some(client) => client,
@@ -946,10 +906,8 @@ async fn search_index(state: &Arc<State>, id: u64, room_id: String) {
     }
 }
 
-/// One page of search results. The rows go back in the reply rather than as
-/// an event: a search is an answer to a question somebody asked, not a stream
-/// the app has to keep up with, and tying them to the command means a late
-/// answer to an abandoned search cannot overwrite a newer one.
+/// One page of search results, in the reply rather than as an event: a late
+/// answer to an abandoned search then cannot overwrite a newer one.
 async fn search_room(
     state: &Arc<State>,
     id: u64,
@@ -967,10 +925,8 @@ async fn search_room(
     let limit = limit.clamp(1, SEARCH_PAGE_MAX);
     match search::room(&client, &room_id, &query, limit, offset).await {
         Ok(rows) => {
-            // "Fewer than asked for" is how the caller knows to stop. Said
-            // here rather than left to be worked out, because the row count
-            // alone cannot distinguish a short page from a page whose events
-            // could not be loaded.
+            // "Fewer than asked for" is how the caller knows to stop; the row count alone
+            // cannot tell a short page from one whose events would not load.
             let more = rows.len() >= limit;
             state.sink.emit(reply_ok(
                 id,
@@ -989,10 +945,21 @@ async fn members_load(state: &Arc<State>, id: u64, room_id: String) {
     match members::load(&client, &room_id).await {
         Ok(rows) => {
             let count = rows.len();
+            // One message per batch: every event is serialised, copied over the
+            // ABI and parsed again, and a large member list froze the screen.
+            const BATCH: usize = 200;
+            let mut chunks = rows.chunks(BATCH);
+            let first = chunks.next().unwrap_or(&[]);
             state.sink.emit(event(
                 "members.diff",
-                json!({ "ops": [{ "op": "reset", "values": rows }] }),
+                json!({ "ops": [{ "op": "reset", "values": first }] }),
             ));
+            for chunk in chunks {
+                state.sink.emit(event(
+                    "members.diff",
+                    json!({ "ops": [{ "op": "append", "values": chunk }] }),
+                ));
+            }
             state.sink.emit(reply_ok(id, json!({ "count": count })));
         }
         Err(message) => state.sink.emit(reply_error(id, message)),
@@ -1119,11 +1086,6 @@ async fn encryption_status(state: &Arc<State>, id: u64) {
     state.sink.emit(reply_ok(id, status));
 }
 
-/// Answers what the local storage on this device amounts to.
-///
-/// Synchronous and client-free on purpose: the answer is about files, and the
-/// UI needs it while signed out too — an install that runs unencrypted should
-/// say so before the first login, not only after it.
 /// The connector, started on demand. One per process; the handle stays.
 async fn push_handle(state: &Arc<State>) -> ()
 {
@@ -1136,9 +1098,8 @@ async fn push_handle(state: &Arc<State>) -> ()
     }
 }
 
-/// What UnifiedPush looks like on this device. The answer arrives as a
-/// `push.state` event rather than in the reply: the connector lives on its own
-/// thread and the question crosses two channels to reach it.
+/// What UnifiedPush looks like here. Answered as a `push.state` event: the
+/// connector lives on its own thread, two channels away.
 async fn push_status(state: &Arc<State>, id: u64) {
     push_handle(state).await;
     if let Some(handle) = state.push.lock().await.as_ref() {
@@ -1147,10 +1108,16 @@ async fn push_status(state: &Arc<State>, id: u64) {
     state.sink.emit(reply_ok(id, json!({ "asked": true })));
 }
 
-/// Registers with a distributor. The endpoint follows as `push.endpoint`, and
-/// the front end hands it back with the gateway so the pusher can be set — the
-/// gateway is not the core's to remember, it is a setting.
+/// Registers with a distributor; the endpoint follows as `push.endpoint`. The
+/// gateway is a setting, not the core's to remember.
 async fn push_enable(state: &Arc<State>, id: u64, gateway: String) {
+    if !crate::push::gateway_is_sound(&gateway) {
+        state.sink.emit(reply_error(
+            id,
+            "the push gateway has to be an https address",
+        ));
+        return;
+    }
     if gateway.trim().is_empty() {
         state
             .sink
@@ -1164,16 +1131,17 @@ async fn push_enable(state: &Arc<State>, id: u64, gateway: String) {
     state.sink.emit(reply_ok(id, json!({ "enabled": true })));
 }
 
-/// Gives the registration back, and deletes the pusher with it. Both halves:
-/// a pusher left on the server keeps pointing at an endpoint that no longer
-/// exists, and the server keeps trying it.
+/// Gives the registration back and deletes the pusher. Both: a pusher left
+/// behind keeps pointing at an endpoint that no longer exists.
 async fn push_disable(state: &Arc<State>, id: u64, endpoint: String) {
-    // The server first, while the endpoint is still known: once the
-    // registration is given back it is gone from the storage, and the pusher
-    // would stay behind with nothing left to delete it by.
-    if !endpoint.is_empty() {
+    // By app id, not by the endpoint: that is never persisted, and a pusher
+    // nobody can name keeps the server posting for ever.
+    {
         if let Some(client) = state.client().await {
-            if let Err(error) = crate::push::clear_pusher(&client, &endpoint).await {
+            if !endpoint.is_empty() {
+                let _ = crate::push::clear_pusher(&client, &endpoint).await;
+            }
+            if let Err(error) = crate::push::clear_own_pushers(&client).await {
                 // Said, not fatal: the registration goes either way, and a
                 // pusher that outlives it only wastes the server's attempts.
                 state.sink.emit(event(
@@ -1191,14 +1159,21 @@ async fn push_disable(state: &Arc<State>, id: u64, endpoint: String) {
 }
 
 /// Turns a push into a banner. Answers with an error where the push rules say
-/// this one is not to be shown — silence is the right outcome then, and the
-/// caller must not make a notification out of it anyway.
+/// not to show it: silence is the right outcome then.
 async fn push_notify(state: &Arc<State>, id: u64, room_id: String, event_id: String) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
-    match crate::push::notification_for(&client, &room_id, &event_id).await {
+    // The running sync service where there is one - the woken process has none,
+    // and there it really is the only process.
+    let sync = state
+        .rooms
+        .lock()
+        .await
+        .as_ref()
+        .map(|handle| handle.sync.clone());
+    match crate::push::notification_for(&client, &room_id, &event_id, sync).await {
         Ok(data) => state.sink.emit(reply_ok(id, data)),
         Err(error) => state.sink.emit(reply_error(id, error)),
     }
@@ -1243,10 +1218,8 @@ fn storage_status(state: &Arc<State>, id: u64) {
             "sessionPresent": storage.session_present,
             "sessionEncrypted": storage.session_encrypted,
             "keyAvailable": storage.key_available,
-            // True where the stores could be encrypted but are not, and a key
-            // exists to do it with — the only case in which offering the
-            // re-encryption is honest. `store_key_applies` can never upgrade an
-            // existing store in place, so this is a sign-out away, not a switch.
+            // True where the stores could be encrypted but are not and a key exists - the
+            // only case in which offering it is honest. A sign-out away, not a switch.
             "canEncrypt": storage.key_available && !storage.store_encrypted,
         }),
     ));
@@ -1330,10 +1303,8 @@ async fn request_verification(state: &Arc<State>, id: u64, user_id: String) {
     .await
     {
         Ok(room_id) => {
-            // Verifying another user runs in-room inside the direct chat, and
-            // an unsubscribed room delivers one timeline event per sync — the
-            // other side's acceptance would only turn up if the user happened
-            // to open that chat, and the flow would look stalled at "created".
+            // Verifying another user runs in the direct chat, and an unsubscribed room
+            // delivers one event per sync - the acceptance would look like a stall.
             if let Some(room_id) = room_id {
                 state
                     .subscribe(move |rooms| rooms.verification = Some(room_id))
@@ -1383,44 +1354,22 @@ async fn open_timeline(
     room_id: String,
     focus: String,
     receipts: bool,
+    token: String,
 ) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
 
-    // One open at a time. Every command runs in its own task, so leaving a room
-    // and stepping straight back into it puts a close and an open in flight
-    // together; without this, both could find an empty slot, neither would shut
-    // the other's stream down, and whichever finished last would decide which
-    // room the next message is sent to. A lock of its own rather than the
-    // timeline's, which must stay free for the commands that are running.
+    // One open at a time: leaving a room and stepping back in puts a close and an
+    // open in flight together. Its own lock, so timeline commands stay free.
     let _opening = state.opening.lock().await;
 
-    // Opening a different room replaces the previous timeline: a phone shows
-    // one room at a time, and keeping stale streams alive only costs memory.
-    // A focused open always rebuilds, even for the same room — the view is a
-    // different one.
-    //
-    // The guard is bound to a name on purpose. Written as
-    // `if let Some(previous) = state.timeline.lock().await.take()`, the
-    // temporary guard lives until the end of the `if let` body in edition 2021,
-    // so locking again inside it deadlocks a mutex that is not reentrant — and
-    // that mutex is the one every other timeline command needs.
-    // Where this device's own reading stopped, so the view can open there
-    // instead of at the newest message. Read before the timeline lock is taken:
-    // it is a store read, and this project already froze every room switch once
-    // by awaiting inside that lock. It also has to be the state *before* this
-    // visit marks anything read.
+    // Opening another room replaces the timeline. The guard is bound to a name:
+    // as an `if let` temporary it lives to the end of the body and deadlocks.
     let (marker, fallback_marker) = timeline::own_read_marker(&client, &room_id).await;
-    // What this account may do in this room, for the menus that would
-    // otherwise offer an action the server refuses. Read here for the same
-    // reason as the marker: it is a store read, and it must not happen under
-    // the timeline lock.
-    //
-    // The other person in a two-party encrypted chat travels with it: the
-    // room's menu offers verifying them, and it is the only place in the app
-    // where that address is already known.
+    // Permissions and the two-party peer, read before the timeline lock: store
+    // reads under that lock froze every room switch once.
     let (permissions, direct_peer) = match matrix_sdk::ruma::RoomId::parse(&room_id)
         .ok()
         .and_then(|parsed| client.get_room(&parsed))
@@ -1460,24 +1409,21 @@ async fn open_timeline(
         }
     }
 
-    // Past the early return, so re-entering the same room keeps its thread:
-    // a thread belongs to the view it was opened from, and a stream left
-    // running would keep emitting `thread.diff` for the room just left.
+    // Past the early return, so re-entering a room keeps its thread - a stream
+    // left running would emit `thread.diff` for the room just left.
     if let Some(handle) = state.thread.lock().await.take() {
         handle.close().await;
     }
 
-    // Sliding sync only sends a minimal timeline for rooms in the list — one
-    // event per response. A room that is being read has to be subscribed
-    // explicitly, or its newer messages never arrive and the view shows
-    // whatever the event cache happened to hold.
+    // Sliding sync sends one event per response for rooms in the list. A room
+    // being read has to be subscribed, or newer messages never arrive.
     if let Ok(parsed) = matrix_sdk::ruma::RoomId::parse(&room_id) {
         state
             .subscribe(move |rooms| rooms.open = Some(parsed))
             .await;
     }
 
-    match timeline::open(&client, &room_id, &focus, receipts, state.sink.clone()).await {
+    match timeline::open(&client, &room_id, &focus, receipts, &token, state.sink.clone()).await {
         Ok(handle) => {
             *state.timeline.lock().await = Some(Arc::new(handle));
             // Rebuilt, so the view starts from nothing and may open where
@@ -1487,10 +1433,8 @@ async fn open_timeline(
                 json!({
                     "open": true,
                     "readMarker": marker,
-                    // Was missing here since the fallback was added, and this
-                    // is the branch that matters: a room opened for the first
-                    // time rebuilds, and only a re-entered one took the branch
-                    // above that carried it.
+                    // The branch that matters: a room opened for the first time rebuilds, and
+                    // only a re-entered one took the branch that already carried this.
                     "readReceipt": fallback_marker,
                     "rebuilt": true,
                     "can": permissions,
@@ -1534,7 +1478,24 @@ async fn mark_room_read(state: &Arc<State>, id: u64, room_id: String, receipt: b
     }
 }
 
-async fn close_timeline(state: &Arc<State>, id: u64) {
+async fn close_timeline(state: &Arc<State>, id: u64, room_id: String) {
+    // The lock the open takes: leaving one room and entering another puts both
+    // in flight, and the close used to take the fresh handle away.
+    let _opening = state.opening.lock().await;
+    if !room_id.is_empty() {
+        let open_room = state
+            .timeline
+            .lock()
+            .await
+            .as_ref()
+            .map(|handle| handle.room_id.clone());
+        if let Some(open_room) = open_room {
+            if open_room != room_id {
+                state.sink.emit(reply_ok(id, json!({ "open": true })));
+                return;
+            }
+        }
+    }
     if let Some(handle) = state.timeline.lock().await.take() {
         handle.close().await;
     }
@@ -1573,9 +1534,8 @@ async fn open_thread(
     }
 }
 
-/// Closes the open thread. A close that names a different thread than the one
-/// currently open is ignored: commands run as independent tasks, so the close
-/// of the thread just left can reach the core after the open of the next one.
+/// Closes the open thread. A close naming another thread is ignored: commands
+/// are independent tasks and can arrive in either order.
 async fn close_thread(state: &Arc<State>, id: u64, root_event_id: String) {
     let mut open = state.thread.lock().await;
     let matches = open
@@ -1721,10 +1681,8 @@ async fn redact_message(state: &Arc<State>, id: u64, event_id: String, txn_id: S
     }
 }
 
-/// Zero means "not measured": the bridge reads a picture's size before it
-/// hands the file over and leaves both at zero for everything else. A
-/// half-known pair is no measurement either - a client that is told a width
-/// and no height lays out worse than one that is told nothing.
+/// Zero means "not measured". A half-known pair is no measurement either: a
+/// client told a width and no height lays out worse than one told nothing.
 fn dimensions(width: u64, height: u64) -> Option<(u64, u64)> {
     if width > 0 && height > 0 {
         Some((width, height))
@@ -1822,9 +1780,8 @@ async fn fetch_media(state: &Arc<State>, id: u64, source: Value, thumbnail: bool
 }
 
 async fn mark_read(state: &Arc<State>, id: u64, receipt: bool) {
-    // The room goes back with the answer: a receipt does not reliably come
-    // back as a room-list diff, so the app clears the badge itself - and it
-    // may only do that for the room this actually marked.
+    // The room goes back with the answer: a receipt does not reliably return as a
+    // diff, and the badge may only be cleared for the room this marked.
     let handle = state.timeline().await;
     let room_id = handle
         .as_ref()
@@ -1843,14 +1800,8 @@ async fn mark_read(state: &Arc<State>, id: u64, receipt: bool) {
     }
 }
 
-/// Shared shape of the call commands: they all need a signed-in client and
-/// answer with either ok or the reason.
-/// Keeps the room of a call being set up or running in the subscription set.
-///
-/// Only the outgoing side and the moment of answering pass through here, so an
-/// invitation that arrives while the app is idle is still read from the
-/// unsubscribed stream until the user picks up. Handling that would mean giving
-/// `call::install`'s event handlers a way back into this state.
+/// Keeps the room of a call in the subscription set. Only the outgoing side
+/// and answering pass here; an idle invitation is read unsubscribed.
 async fn set_call_room(state: &Arc<State>, room_id: Option<&str>) {
     let parsed = room_id.and_then(|room| RoomId::parse(room).ok());
     if room_id.is_some() && parsed.is_none() {
@@ -1956,13 +1907,8 @@ async fn follow_successor(state: &Arc<State>, id: u64, room_id: String) {
     }
 }
 
-/// The running room list's service, starting the list first if needed.
-///
-/// The space list and a space's rooms ride on the room list's sync service,
-/// and which page runs first depends on the user's start-page choice — so
-/// every entry point ensures the sync is up instead of assuming an order.
-/// The lock is held across the start so two racing commands cannot start two
-/// sync services.
+/// The room list's sync service, started if needed: which page runs first is
+/// the user's start-page choice. The lock stops two racing starts.
 async fn ensure_room_list(
     state: &Arc<State>,
 ) -> Result<std::sync::Arc<matrix_sdk_ui::room_list_service::RoomListService>, String> {
@@ -1995,12 +1941,8 @@ async fn filter_room_list(state: &Arc<State>, id: u64, pattern: String) {
     }
 }
 
-/// One more page of rooms for a list that has reached its end.
-///
-/// The dynamic adapter behind the room list holds one page and grows only when
-/// told to (`add_one_page`), so an account with more rooms than a page simply
-/// had no others - and nothing said so. Asking again once everything is loaded
-/// does nothing, which is why this needs no "is there more" of its own.
+/// One more page of rooms. The dynamic adapter holds one page and grows only
+/// when told; asking again once everything is loaded does nothing.
 async fn load_more_rooms(state: &Arc<State>, id: u64) {
     let asked = match &*state.rooms.lock().await {
         Some(handle) => handle.load_more(),
@@ -2052,9 +1994,8 @@ async fn start_spaces(state: &Arc<State>, id: u64) {
     }
 }
 
-/// Emits the space child structure now and once more after a short delay, to
-/// catch the change once it has synced back — a state event written with
-/// `send_state_event` only lands in the local store on the next sync.
+/// Emits the space child structure now and once more shortly after: a state
+/// event written with `send_state_event` lands locally on the next sync.
 fn emit_space_children_soon(state: &Arc<State>) {
     let state = state.clone();
     tokio::spawn(async move {
@@ -2071,10 +2012,8 @@ async fn stop_spaces(state: &Arc<State>, id: u64) {
     state.sink.emit(reply_ok(id, json!({ "running": false })));
 }
 
-/// Recomputes the per-space child structure and pushes it to the front end,
-/// which turns it into the count badge on each space. Called whenever that
-/// structure can have changed — the space list started, a space created, a
-/// child added or removed.
+/// Recomputes the per-space child structure for the badges. Called whenever it
+/// can have changed - list started, space created, child added or removed.
 async fn emit_space_children(state: &Arc<State>) {
     if let Some(client) = state.client().await {
         let data = roomlist::space_children_map(&client).await;
@@ -2146,9 +2085,8 @@ async fn create_room(state: &Arc<State>, id: u64, room: roomlist::NewRoom) {
     let name = room.name.trim().to_owned();
     let encrypted = room.encrypted;
 
-    // The room reaches the list through the running sync. The reply carries the
-    // name and the encryption state back so the front end can open the room
-    // under its title, and with the right state, before the first diff.
+    // The room reaches the list through the sync. The reply carries name and
+    // encryption so the front end can open it before the first diff.
     match roomlist::create_room(&client, room).await {
         Ok(room_id) => state.sink.emit(reply_ok(
             id,
@@ -2164,9 +2102,8 @@ async fn leave_room(state: &Arc<State>, id: u64, room_id: String) {
         return;
     };
 
-    // The row disappears on its own: leaving turns the room's state to Left,
-    // which the "non left" filter drops on the next diff. A space that held the
-    // room has one child less, so its badge is recomputed.
+    // The row disappears on its own: leaving turns the state to Left, which the
+    // filter drops on the next diff. The holding space loses a child.
     match roomlist::leave_room(&client, &room_id).await {
         Ok(()) => {
             state
@@ -2250,9 +2187,8 @@ async fn remove_space_child(state: &Arc<State>, id: u64, space_id: String, room_
 }
 
 async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>) {
-    // A key handed in with the command replaces the one from start. Only a
-    // well-formed key does — a garbled one must not silently turn into "no
-    // key" and open an unencrypted path.
+    // A key handed in with the command replaces the one from start - but only a
+    // well-formed one: a garbled key must not become "no key".
     if let Some(mut encoded) = store_key {
         use zeroize::Zeroize;
         let decoded = session::decode_key(&encoded);
@@ -2272,9 +2208,8 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
             state.sink.emit(reply_ok(id, json!({ "state": "none" })));
             return;
         }
-        // The session is there, the key is not: a state of its own, never
-        // "no session". The UI shows a retry, not the login page, and no
-        // login may reset the store while the file is on disk.
+        // Session there, key not: a state of its own, never "no session". The UI
+        // retries, and no login may reset the store while the file is on disk.
         session::LoadOutcome::Locked => {
             let data = json!({ "state": "locked" });
             state.sink.emit(reply_ok(id, data.clone()));
@@ -2299,15 +2234,13 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("could not open the session: {error}")));
+                .emit(reply_error(id, error));
             return;
         }
     };
 
-    // Before the token is handed to the client, not after: the stored server
-    // string goes through discovery again on every start, and a `.well-known`
-    // that changed to http would put the access token in the clear from then
-    // on. The rule that guards the first sign-in has to guard every one after.
+    // Before the token reaches the client: the stored server goes through
+    // discovery on every start, and a `.well-known` moved to http exposes it.
     if let Err(message) = require_https(&client) {
         state.sink.emit(reply_error(id, message));
         return;
@@ -2325,14 +2258,11 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
 
     verification::install(&client, state.sink.clone(), state.verification.clone());
     call::install(&client, state.sink.clone());
-    // The backup unlocks itself once a verification hands over the key; only
-    // this stream says so. Kept, not dropped: it holds a client clone and
-    // would otherwise still be holding one after a sign-out.
+    // The backup unlocks itself once a verification hands the key over, and only
+    // this stream says so. Kept, because it holds a client clone.
     let recovery_task = recovery::watch(&client, state.sink.clone());
-    // Rewritten once per restore so a plaintext session.json from before the
-    // store key existed becomes encrypted now — token refreshes would do it
-    // eventually for OAuth, but a classic session without refresh tokens
-    // would otherwise stay plaintext forever.
+    // Rewritten once per restore, so a plaintext session file becomes encrypted
+    // now - a classic session has no refresh to do it eventually.
     persist(state, &client, homeserver.clone()).await;
     let session_task = watch_session(state, &client, homeserver);
     state
@@ -2347,18 +2277,8 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
     state.sink.emit(event("session.changed", data));
 }
 
-/// Clears the ground for a login that starts a new device: without a stored
-/// session, whatever the previous device left in the store has to go first —
-/// otherwise the crypto store still describes a device this session is not.
-///
-/// A client an earlier `login.start` cached has its SQLite stores open on that
-/// very directory, so it is taken out of the state and dropped *before* the
-/// reset. Resetting under it does not fail the login: the open files keep
-/// serving their existing connections, but every connection the store pool
-/// opens afterwards finds an empty database, and the sync service that starts
-/// after the sign-in fails and retries with nothing reaching the room list
-/// until a restart. That was the 0.18.0 password-login report; the rule since
-/// is that `reset_store` runs only when no client has the directory open.
+/// Clears the ground for a login that starts a new device. The cached client
+/// is dropped *before* the reset: resetting under an open store shreds it.
 async fn prepare_fresh_login(state: &Arc<State>) -> Result<(), String> {
     match session::load(&state.paths.session_file, state.store_key().as_ref()) {
         session::LoadOutcome::None => {
@@ -2367,9 +2287,8 @@ async fn prepare_fresh_login(state: &Arc<State>) -> Result<(), String> {
                 .map_err(|error| format!("could not clear old data: {error}"))?;
         }
         session::LoadOutcome::Session(_) => {}
-        // A locked session is a session. Logging in over it would reset the
-        // store its key still protects; the way out of a lost key is an
-        // explicit sign-out, not a login.
+        // A locked session is a session. Logging in over it resets the store its key
+        // still protects; the way out of a lost key is an explicit sign-out.
         session::LoadOutcome::Locked => {
             return Err(
                 "a session is stored but its key is not available; unlock or sign out first"
@@ -2383,19 +2302,8 @@ async fn prepare_fresh_login(state: &Arc<State>) -> Result<(), String> {
         .map_err(|error| format!("could not prepare storage: {error}"))
 }
 
-/// Refuses a homeserver that is not reached over https.
-///
-/// Asked of the client, not of what was typed: a homeserver may be found
-/// through `.well-known`, and that document is free to name an http URL.
-/// Without this the SDK notices the plain scheme itself and switches OAuth
-/// into its insecure mode - after which the client registration, the token
-/// exchange and every request carrying the token go over the wire in the
-/// clear. An access token opens the same account a password does.
-///
-/// One function rather than the same three lines at each entrance: the rule
-/// was written four times and still missed the two paths that matter most -
-/// restoring a stored session, which runs at every single start, and the
-/// registration page, which sends the user off to create an account.
+/// Refuses a homeserver not reached over https. Asked of the client, since
+/// `.well-known` may name an http URL and the SDK then goes insecure.
 fn require_https(client: &Client) -> Result<(), String> {
     if client.homeserver().scheme() == "https" {
         return Ok(());
@@ -2414,7 +2322,7 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))));
+                .emit(reply_error(id, error));
             return;
         }
     };
@@ -2424,29 +2332,23 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
         return;
     }
 
-    // Which sign-in does this server speak? OAuth discovery decides. The
-    // password form is only ever offered on the affirmative `NotSupported`
-    // answer — a transport error, a timeout or a broken authentication
-    // service is an error, never a downgrade to asking for a password.
+    // Which sign-in does this server speak? Only the affirmative `NotSupported`
+    // offers the password form - a transport error is never a downgrade.
     match client.oauth().server_metadata().await {
         Ok(_) => {}
         Err(OAuthDiscoveryError::NotSupported) => {
             let flows = login::login_flows(&client).await;
             match flows.as_ref().map(|list| list.iter().any(|flow| flow == "password")) {
                 Ok(true) => {
-                    // No scheme check here: this function refused anything but
-                    // https before it got this far.
-                    // Kept so `login.password` reuses this client — and with
-                    // it this discovery result — instead of trusting the UI.
+                    // No scheme check: anything but https was refused above. The client is kept
+                    // so `login.password` reuses this discovery instead of trusting the UI.
                     *state.client.lock().await = Some(client);
                     state
                         .sink
                         .emit(reply_ok(id, json!({ "passwordLogin": true })));
                 }
-                // Naming the method the server does want is the whole point:
-                // SSO is a redirect to the server's own web page, and a user
-                // told only "sign-in failed" will retype a password that was
-                // never wrong.
+                // Naming the method the server wants is the point: told only "sign-in
+                // failed", a user retypes a password that was never wrong.
                 Ok(false) => {
                     let sso = flows
                         .as_ref()
@@ -2530,14 +2432,8 @@ async fn start_login(state: &Arc<State>, id: u64, homeserver: String) {
     });
 }
 
-/// Signs in with `m.login.password`. Unlike the browser and device-code
-/// flows there is nothing external to wait for, so the reply is the complete
-/// outcome: an error for a wrong password, `session.changed` on success.
-///
-/// The password arrives as a `Secret` — wiped on drop, unprintable — and is
-/// only borrowed onwards. The UI is not trusted with the flow decision: the
-/// checks that put the password form on screen are repeated here, so a UI
-/// bug cannot send a password to an OAuth server or over plain http.
+/// Signs in with `m.login.password`; the reply is the whole outcome. The
+/// checks that put the form on screen are repeated here, not trusted.
 async fn password_login(
     state: &Arc<State>,
     id: u64,
@@ -2545,14 +2441,8 @@ async fn password_login(
     user: String,
     password: Secret,
 ) {
-    // Reuse the client `login.start` built and vetted; build one only if the
-    // UI skipped that step, and then vet it the same way.
-    //
-    // The store reset every fresh login begins with belongs to whoever builds
-    // the client: `login.start` ran it before building the cached client,
-    // whose SQLite stores have been open on that directory ever since.
-    // Running it again here — as 0.18.0 did — deleted those files under the
-    // live client (see `prepare_fresh_login`).
+    // Reuse the client `login.start` built and vetted. The reset belongs to
+    // whoever builds the client - running it again deleted the open files.
     let cached = state.client.lock().await.clone();
     let client = match cached {
         Some(client) => client,
@@ -2566,7 +2456,7 @@ async fn password_login(
                 Err(error) => {
                     state
                         .sink
-                        .emit(reply_error(id, format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))));
+                        .emit(reply_error(id, error));
                     return;
                 }
             }
@@ -2617,9 +2507,8 @@ async fn password_login(
     state.sink.emit(event("session.changed", data));
 }
 
-/// Begins the device-code login: like `start_login`, but instead of a browser
-/// URL the reply carries a short verification URL and a code, and completion
-/// means the user approved the login on some other device.
+/// Begins the device-code login: the reply carries a short URL and a code, and
+/// the approval happens on some other device.
 async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
     if let Err(message) = prepare_fresh_login(state).await {
         state.sink.emit(reply_error(id, message));
@@ -2631,7 +2520,7 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))));
+                .emit(reply_error(id, error));
             return;
         }
     };
@@ -2692,13 +2581,11 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
     *state.pending_device.lock().await = Some(task);
 }
 
-/// Writes the freshly obtained session to disk. A failure here is not fatal for
-/// the running session, only for surviving a restart, so it is reported as an
-/// event rather than aborting the login.
+/// Writes the session to disk. A failure costs the restart, not the running
+/// session, so it is an event rather than an aborted login.
 async fn persist(state: &Arc<State>, client: &Client, homeserver: String) {
-    // Whichever auth API owns the session: OAuth for the browser and
-    // device-code logins, the Matrix API for the password login. Only the
-    // tokens are stored either way — a password never reaches this function.
+    // Whichever auth API owns the session: OAuth for browser and device code, the
+    // Matrix API for the password login. Only tokens are stored.
     let stored = if let Some(oauth_session) = client.oauth().full_session() {
         StoredSession::from_oauth(homeserver, &oauth_session)
     } else if let Some(matrix_session) = client.matrix_auth().session() {
@@ -2718,19 +2605,8 @@ async fn persist(state: &Arc<State>, client: &Client, homeserver: String) {
     }
 }
 
-/// Keeps `session.json` in step with the SDK's tokens for the life of the
-/// client, started once after login and once after a restore.
-///
-/// OAuth refresh tokens rotate: `handle_refresh_tokens` trades the old one for a
-/// new pair in the background, and the server invalidates the old refresh token
-/// the instant it is used. Persisting only at login leaves the file holding a
-/// spent refresh token; the next start replays it and the server answers
-/// `invalid_grant`, which looks like a forced re-login on every launch — made
-/// worse here because there is no background process, so the client restarts
-/// constantly. Writing the refreshed session back is what stops that.
-///
-/// This is a broadcast subscription, not a `Client::add_event_handler` handler,
-/// so listening in a spawned task does not wedge the sync loop.
+/// Keeps `session.json` in step with rotating tokens: persisting only at login
+/// leaves a spent refresh token and every start looks like a forced re-login.
 fn watch_session(
     state: &Arc<State>,
     client: &Client,
@@ -2743,31 +2619,21 @@ fn watch_session(
         loop {
             match changes.recv().await {
                 Ok(SessionChange::TokensRefreshed) => {
-                    // Said out loud, because a refresh is invisible and a
-                    // request that was in flight across one comes back as
-                    // "token is not active" - which reads as an ended session
-                    // while the sync alongside it carries on. Without this the
-                    // two cannot be told apart afterwards. Through the sink,
-                    // because the core has no log of its own; the bridge writes
-                    // the line.
+                    // Said out loud: a refresh is invisible, and a request in flight across one
+                    // comes back as "token is not active", which reads as an ended session.
                     state.sink.emit(event("session.refreshed", json!({})));
                     persist(&state, &client, homeserver.clone()).await;
                 }
                 Ok(SessionChange::UnknownToken(_)) => {
-                    // The refresh token is gone for good and only a new login can
-                    // recover. Say so, rather than leaving the UI to show empty
-                    // rooms that look like a bug - and stop everything that is
-                    // still talking to a server which has thrown this session
-                    // away, instead of leaving a sync service to retry against
-                    // it for as long as the app runs.
+                    // The refresh token is gone for good. Say so, and stop everything still
+                    // talking to a server that has thrown this session away.
                     session_expired(&state).await;
                     state.sink.emit(event(
                         "session.expired",
                         json!({ "message": "the session has expired, please sign in again" }),
                     ));
-                    // Nothing more can arrive on this subscription, and the
-                    // clone this task holds is the last thing keeping the old
-                    // client alive.
+                    // Nothing more can arrive on this subscription, and this task's clone is the
+                    // last thing keeping the old client alive.
                     break;
                 }
                 // Missing a refresh notification only costs a redundant write
@@ -2792,7 +2658,7 @@ async fn registration_url(state: &Arc<State>, id: u64, homeserver: String) {
         Err(error) => {
             state
                 .sink
-                .emit(reply_error(id, format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))));
+                .emit(reply_error(id, error));
             return;
         }
     };
@@ -2830,17 +2696,8 @@ async fn stop_observers(state: &Arc<State>) {
     }
 }
 
-/// What is done when the server says this session no longer exists.
-///
-/// The same teardown as signing out, minus two things: there is no point
-/// telling the server about a token it has already thrown away, and the stores
-/// stay where they are - the account is unchanged, a fresh login resets the
-/// store itself, and wiping the crypto store here would take the device's keys
-/// with it for a session that may only have been revoked by mistake.
-///
-/// The session file does go: left on disk it would be restored at the next
-/// start, fail every sync, and show as "offline" over an empty room list
-/// instead of as the login page.
+/// The teardown of a sign-out, minus telling the server and minus the stores:
+/// the account is unchanged. The session file goes, or the next start fails.
 async fn session_expired(state: &Arc<State>) {
     stop_observers(state).await;
     if let Some(handle) = state.timeline.lock().await.take() {
@@ -2875,17 +2732,13 @@ async fn logout(state: &Arc<State>, id: u64) {
     if let Some(handle) = state.timeline.lock().await.take() {
         handle.close().await;
     }
-    // A thread handle holds the timeline, and through it the client and the
-    // open SQLite pool — `reset_store` below would delete the directory from
-    // under it.
+    // A thread handle holds the timeline, and through it the client and the open
+    // pool - `reset_store` below would delete the directory under it.
     if let Some(handle) = state.thread.lock().await.take() {
         handle.close().await;
     }
-    // And a verification in progress holds one too: the SDK's request type
-    // carries a `Client` of its own, so a sign-out during a verification left
-    // the store open under the very `reset_store` at the end of this function -
-    // the fault that cost this project its users' device identities once
-    // already, in a different module.
+    // A verification in progress holds a `Client` of its own: signing out during
+    // one left the store open under `reset_store`.
     verification::cancel_active(&state.verification).await;
     drop(state.verification.lock().await.take());
     if let Some(handle) = state.directory.lock().await.take() {
@@ -2900,25 +2753,29 @@ async fn logout(state: &Arc<State>, id: u64) {
     if let Some(handle) = state.rooms.lock().await.take() {
         handle.stop().await;
     }
-    // The handles above are ours to close; the command tasks are not, so the
-    // sign-out gives them a moment to finish before the store goes. Bounded -
-    // see `drain_commands`.
+    // The handles above are ours to close, the command tasks are not - they get a
+    // moment before the store goes. Bounded, see `drain_commands`.
     state.drain_commands(std::time::Duration::from_secs(2)).await;
     let client = state.client.lock().await.take();
     if let Some(client) = client {
-        // Best effort, and bounded. Even if the server cannot be reached, the
-        // local session must go away - but the SDK's retry policy has no
-        // attempt limit and a fifteen-minute budget, so an unanswered logout
-        // used to hold up everything below it: the session file, the crypto
-        // store and, because the app clears the media on the state change that
-        // comes last, every downloaded picture. Signing out in a dead spot
-        // looked like nothing happening, and the next start restored the
-        // session. Ten seconds is a server saying yes; anything longer is the
-        // local wipe's business alone.
+        // Before the session, or the homeserver keeps posting to an endpoint
+        // nothing can name. Bounded and best effort, like the sign-out.
+        let _ = tokio::time::timeout(
+            std::time::Duration::from_secs(5),
+            crate::push::clear_own_pushers(&client),
+        )
+        .await;
+        // Best effort and bounded: the local session must go even where the server
+        // cannot be reached, and an unanswered logout used to hold up the whole wipe.
         let _ = tokio::time::timeout(std::time::Duration::from_secs(10), client.logout()).await;
         // Explicit: `reset_store` below must not run while a client still has
         // the store directory open.
         drop(client);
+    }
+    // And the registration itself, so the distributor stops pushing to a device
+    // that no longer has an account. The file goes with `reset_store` below.
+    if let Some(handle) = state.push.lock().await.as_ref() {
+        handle.disable();
     }
     session::forget(&state.paths.session_file);
     // The lists that name people belong to the account that is leaving.
@@ -2926,6 +2783,8 @@ async fn logout(state: &Arc<State>, id: u64) {
     // Same for what is only in memory: remembered display names, the call
     // policy with its allow list, and who rang when.
     timeline::forget_senders();
+    roomlist::forget_name_requests();
+    members::forget_asked();
     call::forget_state();
     if let Err(error) = session::reset_store(&state.paths) {
         state.sink.emit(event(

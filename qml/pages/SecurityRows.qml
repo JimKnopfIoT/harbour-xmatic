@@ -3,11 +3,8 @@ import Sailfish.Silica 1.0
 
 import "SecurityStatus.js" as SecurityStatus
 
-// The four lines that make up "how safe is this device", in one place.
-//
-// Used by the encryption page and by the page that interrupts the start. Two
-// copies would drift, and the two are read minutes apart by the same person —
-// if they ever disagreed, neither would be believed again.
+// The four lines of "how safe is this device", in one place: the encryption
+// page and the start page must never disagree about them.
 Column {
     id: rows
 
@@ -22,9 +19,8 @@ Column {
             if (s.backupEnabled) {
                 return qsTr("Your room keys are backed up.")
             }
-            // Null, not false: the core could not reach the server. Saying
-            // "there is no backup" there is a claim about the account made
-            // from a failed request.
+            // Null, not false: the core could not reach the server, and "there is no
+            // backup" would be a claim made from a failed request.
             if (s.backupOnServer === undefined || s.backupOnServer === null) {
                 return qsTr("The server could not be asked whether a backup exists.")
             }
@@ -41,17 +37,13 @@ Column {
             if (matrix.encryptionStatus.recovery === "enabled") {
                 return qsTr("Recovery is set up.")
             }
-            // The key was accepted and the state has not caught up yet. Without
-            // this the line looks untouched and people enter the key again -
-            // which is what a tester did, and the app taught them to.
+            // The key was accepted and the state has not caught up. Without this the line
+            // looks untouched and people enter the key again.
             if (matrix.recoverySettling) {
                 return qsTr("Recovery key accepted — finishing. This can take a moment.")
             }
-            // "Not set up" and "not unlocked here" are different situations and
-            // want opposite advice. Telling somebody with no recovery at all to
-            // enter their recovery key sends them looking for something that
-            // does not exist - and the line above says red, which is the honest
-            // colour for it.
+            // "Not set up" and "not unlocked here" want opposite advice: telling somebody
+            // with no recovery to enter their key sends them after something that does not exist.
             if (matrix.encryptionStatus.recovery === "disabled") {
                 return qsTr("There is no recovery for this account yet. Set up a key backup to create one.")
             }

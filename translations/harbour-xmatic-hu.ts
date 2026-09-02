@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Folytatás titkosítás nélkül</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Vissza</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Minden, amit az xmatic ezen az eszközön tárol, olvasható marad: a munkameneted, az üzeneteid és a szobakulcsaid.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Csak akkor válaszd ezt, ha a szolgáltatás nem telepíthető erre az eszközre. Ha később telepíted, a titkosítási oldalon átválthatsz — egy kijelentkezésbe és a helyreállítási kulcsodba kerül.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>Az xmatic továbbra is mutatja ezt az állapotot a Titkosítás alatt.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -347,6 +324,10 @@
     <message>
         <source>connected</source>
         <translation>kapcsolódva</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>a hívást nem lehetett folytatni</translation>
     </message>
 </context>
 <context>
@@ -1137,22 +1118,6 @@
         <translation>Eszközök</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Titkosítás</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Személyazonosság ellenőrizve</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>A személyazonosság az ellenőrzés óta megváltozott. Ellenőrizd újra, vagy vond vissza az ellenőrzést.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Személyazonosság nincs ellenőrizve</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Közvetlen üzenet küldése</translation>
     </message>
@@ -1181,16 +1146,32 @@
         <translation>Közös szobák</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Nincs több közös szoba</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Hívások tiltása</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Hívások engedélyezése</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Személyazonosság</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>ellenőrizve</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>az ellenőrzés óta megváltozott — ellenőrizd újra vagy vond vissza</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>nincs ellenőrizve</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>nincs</translation>
     </message>
 </context>
 <context>
@@ -1482,6 +1463,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>A lista titkosított, a kulcsa nem érhető el. Újra olvasható lesz, miután feloldottad az eszközt és újraindítottad az alkalmazást.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Képek automatikus betöltése</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Be: a kép vagy videó azonnal betöltődik, amint az üzenet megjelenik. Ki: érintésre töltődik be — elgörgetni mellette kérés a küldő kiszolgálójához.</translation>
     </message>
 </context>
 <context>
@@ -2086,6 +2075,38 @@
         <translation>%1 módosította a profilját</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Másolás</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Válasz</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Mentés</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Továbbítás</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Szerkesztés</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kitűzés</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Több…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Az idézett üzenet nem tölthető be: már nem létezik, vagy nincs jogod látni.</translation>
     </message>
@@ -2146,6 +2167,22 @@
         <translation>Ez az üzenet nincs a betöltött előzményekben</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Elvetés</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Küldés újra</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagálás</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Válasz a szálban</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Szobahivatkozás másolása</translation>
     </message>
@@ -2204,6 +2241,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Partner ellenőrzése</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>A beszélgetést nem sikerült betölteni</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Megnyitja ezt a címet?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Megnyitás</translation>
     </message>
 </context>
 <context>
@@ -2622,20 +2671,8 @@
         <translation>Ellenőrzés újra</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Ha ez nem lehetséges</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>Az xmaticot helyi titkosítás nélkül is használhatod. A munkamenet, az üzenet-adatbázis és a szobakulcsok ekkor olvashatóan hevernek az eszközön: aki hozzáfér a fájlrendszeréhez, együtt olvas, egy elveszett telefon pedig mindent kiad, ami rajta van.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Az üzenetek a hálózaton át vezető úton mindenképp végponttól végpontig titkosítva maradnak. Itt csak arról van szó, ami az eszközön hever.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Folytatás titkosítás nélkül</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2703,6 +2740,14 @@
     <message>
         <source>Authenticity not confirmed</source>
         <translation>A hitelesség nincs megerősítve</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Megnyitja ezt a címet?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Megnyitás</translation>
     </message>
 </context>
 <context>

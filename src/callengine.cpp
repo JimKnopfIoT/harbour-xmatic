@@ -18,30 +18,16 @@
 
 namespace {
 
-/// Audio only. Video is the same negotiation with another media section, but
-/// it is not worth adding before a call can be heard.
-///
-/// The volume element sits in front of the encoder so muting costs nothing and
-/// does not disturb the stream: a muted call keeps sending silence rather than
-/// stopping, which some clients interpret as a dropped connection.
+/// Audio only. The volume element sits before the encoder, so a muted call
+/// keeps sending silence rather than stopping.
 const char *kAudioPipeline =
     "webrtcbin name=sendrecv bundle-policy=max-bundle latency=100 "
     "autoaudiosrc ! queue leaky=downstream max-size-time=200000000 ! audioconvert ! audioresample ! "
     "volume name=micvolume ! opusenc ! rtpopuspay pt=111 ! "
     "application/x-rtp,media=audio,encoding-name=OPUS,payload=111 ! sendrecv.";
 
-/// The same, plus a camera. VP8 rather than H.264 because the device has no
-/// H.264 encoder and Matrix clients negotiate VP8 anyway. The resolution is
-/// deliberately modest: every received frame is converted on the CPU before it
-/// reaches the screen, since this device has no GStreamer sink for QML.
-/// What a call costs must fit the device: a 32-bit build means an old,
-/// fanless SoC, so it captures QVGA at 15 frames and half the bitrate. The
-/// stronger devices keep VGA at full rate. Everything downstream (including
-/// the other side) adapts through the normal negotiation.
-// A 32-bit build means an old, fanless SoC that also has to encode this, so
-// it sends QVGA at 15 fps; stronger devices keep VGA. (A weak peer receiving
-// VGA is a separate, unsolved matter — its WebRTC receive transport errors
-// out regardless of resolution, so capping the send does not help it.)
+/// The same plus a camera, VP8: the device has no H.264 encoder and Matrix
+/// negotiates VP8. A 32-bit build means an old SoC - QVGA at 15 fps.
 #ifdef Q_PROCESSOR_ARM_32
 const int kCallWidth = 320;
 const int kCallHeight = 240;
@@ -54,9 +40,8 @@ const int kCallFps = 30;
 const int kCallBitrate = 512000;
 #endif
 
-/// Assembled at run time so the size, rate and bitrate above can flow in.
-/// The scale caps pin I420: the encoder needs it anyway, and pinning it
-/// before the tee means the self-view branch gets it conversion-free too.
+/// Assembled at run time so size, rate and bitrate flow in. The scale caps pin
+/// I420, which the encoder needs and the self-view branch then gets free.
 QByteArray videoPipelineDescription()
 {
     return QStringLiteral(
@@ -66,10 +51,8 @@ QByteArray videoPipelineDescription()
                "application/x-rtp,media=audio,encoding-name=OPUS,payload=111 ! sendrecv. "
                "appsrc name=camsrc is-live=true do-timestamp=true format=time "
                "max-bytes=2000000 ! "
-               // max-rate on the element, not a fixed rate in the caps: the
-               // camera declares no framerate, and drop-only videorate cannot
-               // promise an exact one — that combination refuses to negotiate
-               // and the first frame kills the pipeline.
+               // max-rate on the element, not a fixed rate in the caps: the camera declares
+               // none, and drop-only videorate cannot promise one - the pipeline dies.
                "videoconvert ! videoscale ! videorate drop-only=true max-rate=%3 ! "
                "video/x-raw,format=I420,width=%1,height=%2 ! "
                // The rotation is set from the device orientation at run time; a
@@ -93,13 +76,8 @@ QByteArray videoPipelineDescription()
         .toLatin1();
 }
 
-/// Which decoders a call may plug in.
-///
-/// Matrix negotiates Opus and VP8, so those are the ones a call needs. Without
-/// a list the other side decides which of the phone's decoders parses its
-/// bytes - every one of them, gst-libav included, from a stranger's RTP.
-/// Also skips gst-droid, which force-sw-decoders does not catch and which
-/// takes the call's audio down with it.
+/// Which decoders a call may plug in - Opus and VP8. Without a list the other
+/// side picks any of the phone's decoders for its RTP, gst-droid included.
 gint chooseDecoder(GstElement *, GstPad *, GstCaps *, GstElementFactory *factory, gpointer)
 {
     // 2 = GST_AUTOPLUG_SELECT_SKIP, 0 = GST_AUTOPLUG_SELECT_TRY.
@@ -127,10 +105,8 @@ gint chooseDecoder(GstElement *, GstPad *, GstCaps *, GstElementFactory *factory
 const int kMaximumRemoteWidth = 1920;
 const int kMaximumRemoteHeight = 1920;
 
-/// A random identifier for one call, as the specification requires.
-///
-/// From the kernel, not from a clock and an LCG: everybody in the room sees a
-/// call id, and an id that can be guessed is an id somebody else can answer.
+/// A random call id from the kernel, not from a clock: everybody in the room
+/// sees it, and a guessable id is one somebody else can answer.
 QString freshId(const QString &prefix)
 {
     QByteArray random(16, '\0');
@@ -164,9 +140,8 @@ CallEngine::CallEngine(QObject *parent)
             this,
             &CallEngine::pushCameraFrame,
             Qt::QueuedConnection);
-    // A camera that never delivers would leave the offer unbuilt and the
-    // other side would never even see the call. Better a voice call that
-    // rings than a video call that fails silently.
+    // A camera that never delivers would leave the offer unbuilt and the other
+    // side would never see the call. A voice call that rings beats that.
     m_cameraWatchdog.setSingleShot(true);
     m_cameraWatchdog.setInterval(3000);
     connect(&m_cameraWatchdog, &QTimer::timeout, this, [this]() {
@@ -246,6 +221,10 @@ void CallEngine::setTurnServers(const QVariantList &servers)
 
 void CallEngine::tearDown()
 {
+    if (m_busWatch != 0) {
+        g_source_remove(m_busWatch);
+        m_busWatch = 0;
+    }
     m_audioRouter.stop();
     m_candidateTimer.stop();
     m_pendingCandidates.clear();
@@ -290,10 +269,9 @@ bool CallEngine::buildPipeline()
     // Without a bus watch a pipeline failure is completely silent: the call
     // simply never connects and nothing says why.
     GstBus *bus = gst_element_get_bus(m_pipeline);
-    // A captureless lambda gives the correctly typed function pointer without
-    // moving GStreamer types into the header; casting the member directly
-    // would be undefined behaviour.
-    gst_bus_add_watch(
+    // A captureless lambda gives the typed pointer without GStreamer types in
+    // the header. The id is kept: the watch stays on the main context for good.
+    m_busWatch = gst_bus_add_watch(
         bus,
         [](GstBus *b, GstMessage *m, gpointer u) -> gboolean {
             return CallEngine::busMessage(b, m, u) != 0;
@@ -317,9 +295,8 @@ bool CallEngine::buildPipeline()
         gst_object_unref(m_audioSource);
     }
 
-    // Count what the camera actually delivers. An outgoing video call that
-    // never connects looks identical whether the sensor produced nothing or
-    // the negotiation failed, and only this tells the two apart.
+    // Count what the camera actually delivers: a video call that never connects
+    // looks the same whether the sensor or the negotiation failed.
     m_cameraFrames.store(0);
     m_cameraFormat.clear();
     m_cameraFeed = m_withVideo ? gst_bin_get_by_name(GST_BIN(m_pipeline), "camsrc") : nullptr;
@@ -369,10 +346,8 @@ void CallEngine::applyTurnServers()
             continue;
         }
 
-        // webrtcbin wants the credentials inside the URI, percent-encoded, and
-        // the scheme kept: `turns:` is the relay over TLS, and rewriting it to
-        // `turn:` sent the allocation out in the clear. Only the leading
-        // scheme goes, never a match somewhere inside the host.
+        // webrtcbin wants credentials inside the URI, percent-encoded, with the
+        // scheme kept: rewriting `turns:` sent the allocation out in the clear.
         QString scheme = QStringLiteral("turn");
         QString address = uri;
         if (address.startsWith(QStringLiteral("turns:"), Qt::CaseInsensitive)) {
@@ -434,9 +409,8 @@ void CallEngine::placeCall(const QString &roomId, bool withVideo)
         return;
     }
 
-    // Without a camera the video branch would never produce caps, the
-    // pipeline would not start, and no invitation would go out at all. Falling
-    // back to voice is far better than a call that silently never rings.
+    // Without a camera the video branch produces no caps, the pipeline does not
+    // start and no invitation goes out. Falling back to voice beats silence.
     m_withVideo = withVideo && CameraSource::isAvailable();
     if (withVideo && !m_withVideo) {
         setStatus(tr("no camera — placing a voice call"));
@@ -487,10 +461,8 @@ void CallEngine::onRemoteInvite(const QString &roomId,
     m_callId = callId;
     m_partyId = freshId(QStringLiteral("p"));
     m_isCaller = false;
-    // What was offered, not what will be answered: the camera opens when the
-    // user picks the action that opens it, never because the offer asked. The
-    // core has already applied the privacy setting to this flag - with video
-    // calls switched off it arrives false and the two actions collapse to one.
+    // What was offered, not what will be answered: the camera opens when the user
+    // picks the action. The core has already applied the privacy setting.
     m_videoOffered = videoAllowed && CameraSource::isAvailable();
     m_videoRefused = videoOffered && !m_videoOffered;
     m_withVideo = false;
@@ -543,10 +515,8 @@ void CallEngine::onRemoteAnswer(const QString &roomId,
                                const QString &callId,
                                const QString &sdp)
 {
-    // The id alone is not an authentication: in a room with more than two
-    // members everybody sees it. Who we called is not known in advance, so the
-    // first answer decides it and every later event has to come from the same
-    // party - that is what MSC2746 calls selecting an answer.
+    // The id alone is not authentication - everybody in the room sees it. The
+    // first answer decides the party, and every later event must match it.
     if (callId != m_callId || !m_isCaller || roomId != m_roomId) {
         return;
     }
@@ -602,9 +572,8 @@ void CallEngine::onRemoteCandidates(const QString &roomId,
                                    const QString &callId,
                                    const QVariantList &candidates)
 {
-    // Same rule as the answer: an injected candidate makes this device send
-    // STUN probes to an address of somebody else's choosing. Before the party
-    // is known - our own call, not yet answered - the room is the whole check.
+    // Same rule as the answer: an injected candidate makes this device probe an
+    // address of somebody else's choosing. Before the party is known, the room is the check.
     if (callId != m_callId || !m_webrtc || roomId != m_roomId) {
         return;
     }
@@ -640,13 +609,8 @@ void CallEngine::onRemoteHangup(const QString &roomId,
     if (m_state == QLatin1String("idle")) {
         return;
     }
-    // Match strictly: only a hangup naming this exact call ends it. The old
-    // loose match — honouring a different or empty call id "to be safe" —
-    // let stale hangup events, of which a busy test room accumulates many,
-    // replay on sync and kill a freshly placed call within a second. A
-    // genuinely dropped connection is caught by the connection-state teardown,
-    // and the user's own hang-up button by hangUp(); neither needs this to be
-    // lenient.
+    // Only a hangup naming this exact call ends it. The loose match let stale
+    // hangups replay on sync and kill a freshly placed call within a second.
     if (callId.isEmpty() || m_callId.isEmpty() || callId != m_callId) {
         qInfo("xmatic: ignoring hangup for another call");
         return;
@@ -690,9 +654,8 @@ void CallEngine::setOrientation(int orientation)
         return;
     }
 
-    // GstVideoFlipMethod: 0 none, 1 a quarter turn clockwise, 2 half a turn,
-    // 3 a quarter turn anticlockwise. The sensor sits a quarter turn from the
-    // upright phone, so every orientation shifts that baseline.
+    // GstVideoFlipMethod: 0 none, 1 quarter clockwise, 2 half, 3 quarter
+    // anticlockwise. The sensor sits a quarter turn from the upright phone.
     int method = 3;
     switch (orientation) {
     case 1: // Orientation.Portrait
@@ -803,19 +766,14 @@ void CallEngine::streamAdded(GstElement *, GstPad *pad, void *user)
         return;
     }
 
-    // The incoming stream arrives as RTP. decodebin works out the rest and
-    // announces a pad once it knows whether this is audio or video, which is
-    // where the two branches part.
+    // The stream arrives as RTP; decodebin announces a pad once it knows whether
+    // this is audio or video, which is where the branches part.
     GstElement *decode = gst_element_factory_make("decodebin", nullptr);
     if (!decode) {
         return;
     }
-    // Skip the Android hardware decoder for the incoming VP8. On the Gemini
-    // decodebin otherwise plugs droidvdec, which refuses the caps
-    // ("not-negotiated") and kills the whole receive transport — taking the
-    // call's audio down with the video, since they share it. force-sw-decoders
-    // alone does not skip it (gst-droid does not tag it as hardware), so reject
-    // any droid* factory explicitly. VP8 in software is cheap enough.
+    // Skip the Android hardware decoder for incoming VP8: droidvdec refuses the
+    // caps and takes the whole receive transport, audio included, down with it.
     g_object_set(decode, "force-sw-decoders", TRUE, nullptr);
     g_signal_connect(decode, "autoplug-select", G_CALLBACK(chooseDecoder), nullptr);
 
@@ -849,45 +807,28 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
     const bool isVideo = name && g_str_has_prefix(name, "video/");
     gst_caps_unref(caps);
 
-    // Dropped here, which is later than it should be. The stream has already
-    // been through `decodebin` by the time this runs, so the other side still
-    // picks which of this phone's decoders sees their bytes - the switch shuts
-    // the camera and the picture, not the decoder. Shutting the decoder means
-    // refusing the video line in the SDP answer instead of discarding the pad
-    // afterwards, and an unlinked pad is exactly what can take the whole call
-    // down with it (see the notes further down), so it is not a change to make
-    // without a device to test it on.
+    // Dropped later than it should be - the stream has already been through
+    // decodebin. Refusing the video line in the SDP needs a device to test on.
     if (isVideo && !engine->m_withVideo) {
         return;
     }
 
     GstElement *first = nullptr;
     GstElement *last = nullptr;
-    // The branch elements, kept so they can be started only AFTER everything
-    // is linked. Syncing them to the pipeline's PLAYING state before the pad
-    // is linked lets the decoder push into an unlinked pad — GST_FLOW_NOT_LINKED
-    // — which surfaces as "Internal data stream error" from the receive
-    // transport and kills the whole call.
+    // The branch elements, started only after everything is linked: pushing into
+    // an unlinked pad surfaces as "internal data stream error" and kills the call.
     GstElement *chain[4] = {nullptr, nullptr, nullptr, nullptr};
     int chainN = 0;
 
     if (isVideo) {
-        // Straight to RGB: the frames are handed to Qt as images, so the
-        // conversion has to happen here rather than on the QML side.
-        // A leaky queue decouples video decoding from the shared transport
-        // thread: without it a slow decoder (the Gemini decoding an incoming
-        // VGA stream) stalls the whole receive path and takes the audio with
-        // it. Dropping late video is the right trade — audio must keep flowing.
+        // Straight to RGB - the frames go to Qt as images. A leaky queue keeps a slow
+        // video decoder from stalling the shared transport and the audio with it.
         GstElement *queue = gst_element_factory_make("queue", nullptr);
         GstElement *convert = gst_element_factory_make("videoconvert", nullptr);
         GstElement *sink = gst_element_factory_make("appsink", nullptr);
         if (!queue || !convert || !sink) {
-            // Whatever was created has to be released by hand: the elements are
-            // only handed to the bin further down, so leaving here would drop
-            // the last reference to them without anyone taking ownership.
-            // Missing plugins are the only way in, so this is a small and
-            // deterministic leak — but it sits in the path that exists to
-            // survive exactly that.
+            // What was created has to be released by hand: the elements only reach the bin
+            // further down. Missing plugins are the only way in, so the leak is bounded.
             if (queue) {
                 gst_object_unref(queue);
             }
@@ -901,14 +842,8 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
         }
         g_object_set(queue, "leaky", 2, "max-size-buffers", 3, nullptr);
 
-        // I420 is what the decoder produces, so the convert element in front
-        // is a passthrough and the colour conversion happens on the GPU when
-        // the frame is drawn.
-        // No size in these caps. They sit downstream of the decoder, so they
-        // cannot shrink what it already allocated - all they would do is turn
-        // an oversize frame into a not-negotiated error, and that error kills
-        // the shared transport, taking the call's audio with it. The frame is
-        // bounded where it is copied instead.
+        // I420 is what the decoder produces, so the convert in front is a passthrough.
+        // No size here: downstream caps cannot shrink an allocation, only fail it.
         GstCaps *wanted = gst_caps_new_simple("video/x-raw",
                                               "format", G_TYPE_STRING, "I420",
                                               nullptr);
@@ -927,23 +862,16 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
         chain[chainN++] = convert;
         chain[chainN++] = sink;
     } else {
-        // The queue is what keeps audio playing while video decodes on the
-        // same pipeline: it gives the audio branch its own thread so a busy
-        // video path can no longer starve it (silent audio in video calls,
-        // while voice-only calls were fine).
+        // The queue gives the audio branch its own thread, so a busy video path can no
+        // longer starve it - silent audio in video calls, voice-only fine.
         GstElement *queue = gst_element_factory_make("queue", nullptr);
         GstElement *convert = gst_element_factory_make("audioconvert", nullptr);
         GstElement *resample = gst_element_factory_make("audioresample", nullptr);
-        // pulsesink, not autoaudiosink: the latter follows PulseAudio's
-        // default sink, which on these devices is sink.null — so received
-        // audio played into nothing. A bare pulsesink routes to the real
-        // output through the droid card policy, on Xperia and Gemini alike.
+        // pulsesink, not autoaudiosink: the default sink on these devices is
+        // sink.null, so received audio played into nothing.
         GstElement *sink = gst_element_factory_make("pulsesink", nullptr);
-        // And bypass module-stream-restore: it had the default "x-maemo"
-        // stream role remembered as muted, so every received call stream
-        // inherited that mute and the call was silent even though audio
-        // reached PulseAudio. An empty restore id opts this stream out of the
-        // saved per-role state; mute=false sets it explicitly regardless.
+        // And bypass module-stream-restore: the "x-maemo" role was remembered as
+        // muted, so every received call inherited that mute.
         if (sink) {
             GstStructure *props = gst_structure_new("stream-properties",
                                                     "application.name",
@@ -1003,18 +931,16 @@ int CallEngine::videoFrameArrived(void *sink, void *user)
         if (gst_video_frame_map(&frame, &info, buffer, GST_MAP_READ)) {
             const int width = GST_VIDEO_FRAME_WIDTH(&frame);
             const int height = GST_VIDEO_FRAME_HEIGHT(&frame);
-            // What the other side sends decides this allocation, so it is
-            // bounded here. Beyond the cap the frame is dropped rather than
-            // copied; a call that sends 4K to a phone is not a call.
+            // What the other side sends decides this allocation, so it is bounded here.
+            // A call that sends 4K to a phone is not a call.
             if (width <= 0 || height <= 0 || width > kMaximumRemoteWidth
                 || height > kMaximumRemoteHeight) {
                 gst_video_frame_unmap(&frame);
                 gst_sample_unref(sample);
                 return GST_FLOW_OK;
             }
-            // Repack into tight I420: the decoder's planes may be padded to an
-            // alignment (16 or 32 on the Gemini), and a QVideoFrame wants
-            // contiguous rows. Copy row by row from each plane's real stride.
+            // Repack into tight I420: the decoder's planes may be padded to an alignment,
+            // and a QVideoFrame wants contiguous rows.
             QByteArray tight;
             tight.resize(width * height * 3 / 2);
             char *out = tight.data();
@@ -1129,9 +1055,8 @@ void CallEngine::connectionStateChanged(GstElement *webrtc, void *, void *user)
         return;
     }
 
-    // A connection that fails or closes has to return the engine to idle by
-    // itself. Otherwise the call never ends from this side's point of view and
-    // every later call is silently refused as "busy".
+    // A failed or closed connection has to return the engine to idle, or the call
+    // never ends here and every later one is refused as busy.
     if (state == GST_WEBRTC_PEER_CONNECTION_STATE_FAILED
         || state == GST_WEBRTC_PEER_CONNECTION_STATE_CLOSED) {
         QMetaObject::invokeMethod(engine, "markDisconnected", Qt::QueuedConnection);
@@ -1152,9 +1077,10 @@ unsigned CallEngine::cameraProbe(GstPad *, void *, void *user)
     return GST_PAD_PROBE_OK;
 }
 
-int CallEngine::busMessage(void *, void *message, void *)
+int CallEngine::busMessage(void *, void *message, void *user)
 {
     auto *msg = static_cast<GstMessage *>(message);
+    auto *engine = static_cast<CallEngine *>(user);
 
     switch (GST_MESSAGE_TYPE(msg)) {
     case GST_MESSAGE_ERROR: {
@@ -1167,6 +1093,15 @@ int CallEngine::busMessage(void *, void *message, void *)
         if (debug) {
             qWarning("xmatic: pipeline detail: %s", debug);
             g_free(debug);
+        }
+        // Back to idle, like every other failure here: a dying pipeline used to
+        // leave the call on "connecting" with no reason on screen.
+        if (engine) {
+            const QString reason = error && error->message
+                    ? QString::fromUtf8(error->message)
+                    : QString();
+            QMetaObject::invokeMethod(
+                engine, "reportPipelineFailure", Qt::QueuedConnection, Q_ARG(QString, reason));
         }
         if (error) {
             g_error_free(error);
@@ -1249,10 +1184,8 @@ void CallEngine::deliverCandidate(const QString &candidate, int mediaLineIndex)
     entry.insert(QStringLiteral("candidate"), candidate);
     entry.insert(QStringLiteral("sdpMLineIndex"), mediaLineIndex);
 
-    // Batched: ICE produces bursts of candidates, and one room event per
-    // candidate runs straight into the homeserver's rate limit — the server
-    // then rejects the batch's tail with 429 and the call never connects.
-    // A quarter second of collecting turns a dozen events into one.
+    // Batched: ICE produces bursts, and one room event per candidate runs into the
+    // rate limit - the tail is rejected and the call never connects.
     m_pendingCandidates.append(entry);
     if (!m_candidateTimer.isActive()) {
         m_candidateTimer.start();
@@ -1268,6 +1201,14 @@ void CallEngine::flushCandidates()
     const QVariantList batch = m_pendingCandidates;
     m_pendingCandidates.clear();
     emit candidatesReady(m_roomId, m_callId, m_partyId, batch);
+}
+
+/// A GStreamer error, from the bus thread. Queued into the Qt thread, where
+/// `reportFailure` may touch the pipeline and the properties.
+void CallEngine::reportPipelineFailure(const QString &reason)
+{
+    reportFailure(reason.isEmpty() ? tr("the call could not be carried on")
+                                   : tr("pipeline failed: %1").arg(reason));
 }
 
 void CallEngine::reportFailure(const QString &message)

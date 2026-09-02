@@ -25,29 +25,6 @@
     </message>
 </context>
 <context>
-    <name>AcceptUnencryptedDialog</name>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Turpināt bez šifrēšanas</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Atpakaļ</translation>
-    </message>
-    <message>
-        <source>Everything xmatic stores on this device stays readable: your session, your messages and your room keys.</source>
-        <translation>Viss, ko xmatic glabā šajā ierīcē, paliek lasāms: tava sesija, tavas ziņas un tavas istabu atslēgas.</translation>
-    </message>
-    <message>
-        <source>Choose this only if the service cannot be installed on this device. If you install it later, you can switch over on the encryption page — it costs one sign-out and your recovery key.</source>
-        <translation>Izvēlies to tikai tad, ja pakalpojumu šajā ierīcē nevar uzstādīt. Ja uzstādīsi to vēlāk, varēsi pārslēgties šifrēšanas lapā — tas maksās vienu izrakstīšanos un tavu atkopšanas atslēgu.</translation>
-    </message>
-    <message>
-        <source>xmatic will keep showing this state under Encryption.</source>
-        <translation>xmatic turpinās rādīt šo stāvokli sadaļā Šifrēšana.</translation>
-    </message>
-</context>
-<context>
     <name>AccountPage</name>
     <message>
         <source>Signed in</source>
@@ -349,6 +326,10 @@
     <message>
         <source>connected</source>
         <translation>savienots</translation>
+    </message>
+    <message>
+        <source>the call could not be carried on</source>
+        <translation>zvanu nevarēja turpināt</translation>
     </message>
 </context>
 <context>
@@ -1141,22 +1122,6 @@
         <translation>Ierīces</translation>
     </message>
     <message>
-        <source>Encryption</source>
-        <translation>Šifrēšana</translation>
-    </message>
-    <message>
-        <source>Identity verified</source>
-        <translation>Identitāte apstiprināta</translation>
-    </message>
-    <message>
-        <source>The identity has changed since it was verified. Verify again, or withdraw the verification.</source>
-        <translation>Identitāte kopš apstiprināšanas ir mainījusies. Apstiprini vēlreiz vai atsauc apstiprinājumu.</translation>
-    </message>
-    <message>
-        <source>Identity not verified</source>
-        <translation>Identitāte nav apstiprināta</translation>
-    </message>
-    <message>
         <source>Send direct message</source>
         <translation>Sūtīt tiešu ziņu</translation>
     </message>
@@ -1185,16 +1150,32 @@
         <translation>Kopīgas istabas</translation>
     </message>
     <message>
-        <source>No other shared rooms</source>
-        <translation>Nav citu kopīgu istabu</translation>
-    </message>
-    <message>
         <source>Forbid calls</source>
         <translation>Aizliegt zvanus</translation>
     </message>
     <message>
         <source>Allow calls</source>
         <translation>Atļaut zvanus</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identitāte</translation>
+    </message>
+    <message>
+        <source>verified</source>
+        <translation>apstiprināta</translation>
+    </message>
+    <message>
+        <source>changed since it was verified — verify again or withdraw</source>
+        <translation>mainījusies kopš apstiprināšanas — apstiprini vēlreiz vai atsauc</translation>
+    </message>
+    <message>
+        <source>not verified</source>
+        <translation>nav apstiprināta</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>nav</translation>
     </message>
 </context>
 <context>
@@ -1486,6 +1467,14 @@
     <message>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>Saraksts ir šifrēts, un tā atslēga nav pieejama. To varēs izlasīt atkal, kad ierīce būs atbloķēta un lietotne pārstartēta.</translation>
+    </message>
+    <message>
+        <source>Load pictures automatically</source>
+        <translation>Automātiski ielādēt attēlus</translation>
+    </message>
+    <message>
+        <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
+        <translation>Ieslēgts: attēls vai video tiek ielādēts, tiklīdz parādās ziņa. Izslēgts: ielādējas pēc pieskāriena — paritināšana garām ir pieprasījums sūtītāja serverim.</translation>
     </message>
 </context>
 <context>
@@ -2092,6 +2081,38 @@
         <translation>%1 mainīja savu profilu</translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation>Kopēt</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Atbildēt</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Saglabāt</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Pārsūtīt</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Rediģēt</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Piespraust</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Dzēst</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Vairāk…</translation>
+    </message>
+    <message>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>Citēto ziņu nevar ielādēt: tās vairs nav vai tev nav atļauts to redzēt.</translation>
     </message>
@@ -2152,6 +2173,22 @@
         <translation>Šī ziņa nav ielādētajā vēsturē</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation>Atmest</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Sūtīt vēlreiz</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reaģēt</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Atbildēt pavedienā</translation>
+    </message>
+    <message>
         <source>Copy room link</source>
         <translation>Kopēt istabas saiti</translation>
     </message>
@@ -2210,6 +2247,18 @@
     <message>
         <source>Verify contact</source>
         <translation>Apstiprināt kontaktu</translation>
+    </message>
+    <message>
+        <source>The conversation could not be loaded</source>
+        <translation>Neizdevās ielādēt sarunu</translation>
+    </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Vai atvērt šo adresi?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Atvērt</translation>
     </message>
 </context>
 <context>
@@ -2630,20 +2679,8 @@
         <translation>Pārbaudīt vēlreiz</translation>
     </message>
     <message>
-        <source>If that is not possible</source>
-        <translation>Ja tas nav iespējams</translation>
-    </message>
-    <message>
-        <source>You can use xmatic without local encryption. Session, message database and room keys then lie readable on this device: anyone who reaches its filesystem can read along, and a lost phone gives away everything on it.</source>
-        <translation>xmatic vari lietot arī bez vietējās šifrēšanas. Sesija, ziņu datubāze un istabu atslēgas tad ierīcē ir lasāmas: kas piekļūst tās failu sistēmai, lasa līdzi, un pazaudēts tālrunis atdod visu, kas tajā ir.</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>Ziņas ceļā pa tīklu jebkurā gadījumā paliek šifrētas no gala līdz galam. Šeit runa ir tikai par to, kas atrodas ierīcē.</translation>
-    </message>
-    <message>
-        <source>Continue without encryption</source>
-        <translation>Turpināt bez šifrēšanas</translation>
     </message>
     <message>
         <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
@@ -2712,6 +2749,14 @@
         <source>Authenticity not confirmed</source>
         <translation>Autentiskums nav apstiprināts</translation>
     </message>
+    <message>
+        <source>Open this address?</source>
+        <translation>Vai atvērt šo adresi?</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Atvērt</translation>
+    </message>
 </context>
 <context>
     <name>UnverifiedRecipientsDialog</name>
@@ -2745,7 +2790,7 @@
     </message>
     <message>
         <source>not verified</source>
-        <translation>neapstiprināts</translation>
+        <translation>nav apstiprināta</translation>
     </message>
     <message>
         <source>This device is not verified</source>

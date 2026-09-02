@@ -1,19 +1,15 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Pick rooms to add to a space. The list is the ordinary chat list (spaces are
-// already excluded from it in the core). Long-pressing a room adds it to the
-// space right away — no selecting and confirming.
+// Pick rooms to add to a space, from the ordinary chat list. A long press adds
+// one right away - no selecting and confirming.
 Page {
     id: page
 
     property string spaceId
 
-    // Leaving the foreground aborts a running countdown at once, instead of only
-    // suppressing it when it expires. Suppressing at expiry was not enough:
-    // minimising the app and coming back inside the four seconds left the
-    // countdown running, and it fired on return. The remorse object has to be
-    // kept for that - Remorse.popupAction() hands it back.
+    // Leaving the foreground aborts a running countdown at once: suppressing it
+    // at expiry left it firing on return from a minimised app.
     property var activeRemorse: null
     readonly property bool appForeground: Qt.application.active
     onAppForegroundChanged: {

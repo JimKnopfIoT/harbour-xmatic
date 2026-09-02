@@ -1,18 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Turning an existing, unencrypted local store into an encrypted one.
-//
-// There is no in-place migration and there cannot be a cheap one: a store
-// created without encryption has no cipher row, and opening it under a key
-// would mint a fresh cipher and turn every value into garbage. What works is
-// starting over — sign out, which clears the store, then sign in again, which
-// creates it under the key.
-//
-// That means this dialog offers exactly the operation that cost users their
-// history once before, only this time deliberately and with the one condition
-// that makes it safe: the room keys must already be in a backup on the server.
-// Without that, accepting is refused rather than warned about.
+// A store created without encryption has no cipher row, so there is no
+// in-place migration: sign out, which clears it, then sign in. Refused without a backup.
 Dialog {
     id: dialog
 
@@ -52,11 +42,8 @@ Dialog {
             text: qsTr("You will need your recovery key afterwards to unlock the backup, and this device has to be verified again. Have the recovery key at hand before you continue.")
         }
 
-        // Said before the sign-out, not discovered after it. On Sailfish 4 the
-        // browser cannot finish an OAuth sign-in, so somebody who signs out
-        // here and reaches for the usual button is stuck outside their own
-        // account - which is exactly what happened during the field test, to
-        // the person who wrote this dialog.
+        // Said before the sign-out, not discovered after it: on Sailfish 4 the browser
+        // cannot finish an OAuth sign-in, which happened in the field test.
         Label {
             x: Theme.horizontalPageMargin
             width: parent.width - 2 * Theme.horizontalPageMargin

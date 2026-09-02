@@ -8,14 +8,8 @@
 
 class QCamera;
 
-/// Captures the camera through Qt rather than GStreamer.
-///
-/// Sailfish's `droidcamsrc` comes from the Android adaptation layer: it has
-/// several outputs, needs a mode and an explicit start before video flows, and
-/// hands out hardware buffers. Driven like an ordinary source it delivers
-/// exactly one frame — which is what this class exists to avoid. Qt's camera
-/// stack already wraps all of that, so frames are taken from there and pushed
-/// into the pipeline.
+/// Captures through Qt rather than GStreamer: `droidcamsrc` needs a mode and an
+/// explicit start and otherwise delivers exactly one frame.
 class CameraSource : public QAbstractVideoSurface
 {
     Q_OBJECT
