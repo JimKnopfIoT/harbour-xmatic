@@ -225,16 +225,8 @@
         <translation>Непрозрачность облачков</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Реакции как картинки</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Выключено — реакция рисуется как знак, которым она является: всегда верно и бесплатно. Включено — xmatic ищет для неё твою собственную картинку в %1, названную по её кодовым точкам (1f44d.svg). Ничего не поставляется и ничего не скачивается. Взвесь: файл картинки открывает декодер изображений, и именно там приложение такого рода наиболее уязвимо.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Выбрать картинки эмодзи</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -253,10 +245,6 @@
         <translation>Сбросить цвета</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Удалить картинки эмодзи</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Скрывать клавиатуру после отправки</translation>
     </message>
@@ -271,6 +259,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Включено: при входе ты попадаешь на последнее прочитанное сообщение, новые — под ним. Выключено: комната открывается на самом новом сообщении, а черту, отмечающую, где ты остановился, найдёшь, прокрутив вверх.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Загрузить набор эмодзи</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Удалить набор эмодзи</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Картинки ещё не загружены - эмодзи остаются символами, чёрно-белыми.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Готовых картинок: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Распакуй набор куда угодно в свои папки - хоть Downloads, хоть Public. Это открывается в домашней папке; дойди нажатиями до набора, и папка с картинками прочитается, как только ты её нажмёшь. Картинки должны лежать прямо в ней, а не в подпапках. Чтение идёт в фоне и копирует их в собственное хранилище xmatic, так что твоя папка потом не нужна.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Реакции как картинки (эмодзи)</translation>
     </message>
 </context>
 <context>
@@ -587,6 +599,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Публичные комнаты выбранного каталога появляются здесь.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Где набор?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Взять эту папку</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>На уровень выше</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Здесь нет папок</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Меню сверху берёт папку, в которой ты находишься.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Здесь картинки - нажми, чтобы прочитать</translation>
     </message>
 </context>
 <context>

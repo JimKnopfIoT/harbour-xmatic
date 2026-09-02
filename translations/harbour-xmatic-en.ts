@@ -224,16 +224,8 @@
         <translation>Bubble opacity</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reactions as pictures</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Choose emoji pictures</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Reset colours to defaults</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Remove emoji pictures</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Hide the keyboard after sending</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Read in an emoji pack</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Remove the emoji pack</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>No pictures read in yet - emoji stay the characters they are, in black and white.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Pictures ready: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reactions as pictures (emoji)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Public rooms of the chosen directory show up here.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Where is the pack?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Take this folder</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>One level up</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>No folders in here</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>The pull-down takes the folder you are in.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Pictures in here - tap to read them in</translation>
     </message>
 </context>
 <context>

@@ -252,6 +252,8 @@ Page {
     Component {
         id: avatarPicker
 
+        // Same as the attachment picker: the platform pushes its own sub-pages
+        // without passing an orientation on, so this one must not declare one.
         ImagePickerPage {
             onSelectedContentPropertiesChanged: {
                 if (selectedContentProperties.filePath.length > 0) {

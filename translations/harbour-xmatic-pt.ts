@@ -224,16 +224,8 @@
         <translation>Opacidade dos balões</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reações como imagens</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Desligado, uma reação é desenhada como o carácter que é — sempre correto e gratuito. Ligado, o xmatic procura para ela uma imagem tua em %1, com o nome dos seus pontos de código (1f44d.svg). Nada é incluído nem descarregado. Pondera: um ficheiro de imagem é aberto por um descodificador de imagens, e é aí que uma aplicação destas está mais exposta.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Escolher imagens de emoji</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Repor as cores predefinidas</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Remover as imagens de emoji</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Ocultar o teclado depois de enviar</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ligado: ao entrar, chegas à tua última mensagem lida e as novas ficam por baixo. Desligado: a sala abre na mensagem mais recente e a linha que marca onde paraste encontra-se subindo.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Carregar um pacote de emojis</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Remover o pacote de emojis</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Ainda não foi carregada nenhuma imagem - os emojis continuam a ser os caracteres que são, a preto e branco.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Imagens prontas: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Extrai o pacote onde quiseres nas tuas próprias pastas - Downloads ou Public, por exemplo. Isto abre na tua pasta pessoal; toca até chegares ao pacote, e a pasta com as imagens é lida assim que lhe tocas. Têm de estar diretamente nela, não em subpastas. A leitura é feita em segundo plano e copia-as para o armazenamento do próprio xmatic, por isso a tua pasta deixa de ser precisa.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reações como imagens (emojis)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>As salas públicas do diretório escolhido aparecem aqui.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Onde está o pacote?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Usar esta pasta</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Um nível acima</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Aqui não há pastas</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>O menu suspenso usa a pasta onde estás.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Imagens aqui - toca para as ler</translation>
     </message>
 </context>
 <context>

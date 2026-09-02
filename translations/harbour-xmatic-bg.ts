@@ -224,16 +224,8 @@
         <translation>Прозрачност на балончетата</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Реакции като картинки</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Изключено реакцията се изчертава като знака, който е — винаги вярно и безплатно. Включено xmatic търси за нея твоя собствена картинка в %1, наименувана по кодовите ѝ точки (1f44d.svg). Нищо не се доставя и нищо не се изтегля. Претегли: файл с картинка се отваря от декодер на изображения, а там приложение от този вид е най-уязвимо.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Избор на емоджи картинки</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Връщане на цветовете към стандартните</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Премахване на емоджи картинките</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Скриване на клавиатурата след изпращане</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Включено: при влизане попадаш на последното си прочетено съобщение, новите са под него. Изключено: стаята се отваря при най-новото съобщение, а линията, показваща докъде си стигнал, намираш с превъртане нагоре.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Зареждане на пакет с емоджита</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Премахване на пакета с емоджита</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Още не са заредени изображения - емоджитата остават знаци, черно-бели.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Готови изображения: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Разархивирай пакета където искаш в собствените си папки - например Downloads или Public. Това се отваря в домашната ти папка; докосни се до пакета и папката с изображенията се прочита веднага щом я докоснеш. Те трябва да са непосредствено в нея, не в подпапки. Четенето върви на заден план и ги копира в собственото хранилище на xmatic, така че папката ти после не е нужна.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Реакции като картинки (емоджита)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Публичните стаи от избрания каталог се появяват тук.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Къде е пакетът?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Вземи тази папка</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Едно ниво нагоре</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Тук няма папки</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Падащото меню взема папката, в която си.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Изображения тук - докосни за прочитане</translation>
     </message>
 </context>
 <context>

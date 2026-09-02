@@ -224,16 +224,8 @@
         <translation>Kuplien peittävyys</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reaktiot kuvina</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Pois päältä reaktio piirretään merkkinä, joka se on — aina oikein ja ilmaiseksi. Päällä xmatic etsii sille omaa kuvaasi kansiosta %1, nimettynä sen koodipisteiden mukaan (1f44d.svg). Mitään ei toimiteta mukana eikä ladata. Punnitse: kuvatiedoston avaa kuvadekooderi, ja siinä tämänkaltainen sovellus on haavoittuvimmillaan.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Valitse emoji-kuvat</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Palauta oletusvärit</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Poista emoji-kuvat</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Piilota näppäimistö lähetyksen jälkeen</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Päällä: huoneeseen tullessasi päädyt viimeksi lukemaasi viestiin, uudet ovat sen alla. Pois: huone avautuu uusimpaan viestiin, ja viivan siitä mihin jäit löydät vierittämällä ylöspäin.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Lue emojipaketti sisään</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Poista emojipaketti</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Kuvia ei ole vielä luettu - emojit pysyvät merkkeinä, mustavalkoisina.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Kuvia valmiina: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Pura paketti mihin tahansa omiin kansioihisi - vaikka Downloads tai Public. Tämä avautuu kotikansioosi; napauta itsesi pakettiin, ja kuvat sisältävä kansio luetaan heti kun napautat sitä. Kuvien on oltava suoraan siinä, ei alikansioissa. Luku tapahtuu taustalla ja kopioi ne xmaticin omaan tallennustilaan, joten kansiotasi ei tarvita enää.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reaktiot kuvina (emojit)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Valitun hakemiston julkiset huoneet näkyvät täällä.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Missä paketti on?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Valitse tämä kansio</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Yksi taso ylös</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Täällä ei ole kansioita</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Vetovalikko ottaa kansion, jossa olet.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Kuvia täällä - napauta lukeaksesi</translation>
     </message>
 </context>
 <context>

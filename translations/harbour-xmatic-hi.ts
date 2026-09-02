@@ -205,135 +205,150 @@
 <context>
     <name>AppearancePage</name>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="83"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="89"/>
         <source>Reset to defaults</source>
         <translation>डिफ़ॉल्ट पर रीसेट करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="101"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="107"/>
         <source>Appearance</source>
         <translation>रूप-रंग</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="126"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="132"/>
         <source>Somebody</source>
         <comment>sample sender on the appearance page</comment>
         <translation>कोई</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="132"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="138"/>
         <source>A received message looks like this.</source>
         <translation>प्राप्त संदेश ऐसा दिखता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="151"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="157"/>
         <source>And one of my own like this.</source>
         <translation>और अपना भेजा हुआ ऐसा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="158"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="164"/>
         <source>Colouring</source>
         <translation>रंग</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="162"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="168"/>
         <source>Their bubble</source>
         <translation>उनका बुलबुला</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="163"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="169"/>
         <source>My bubble</source>
         <translation>मेरा बुलबुला</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="164"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="170"/>
         <source>Sender name</source>
         <translation>भेजने वाले का नाम</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="165"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="171"/>
         <source>Their text</source>
         <translation>उनका पाठ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="166"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="172"/>
         <source>My text</source>
         <translation>मेरा पाठ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="180"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="186"/>
         <source>Follow the ambience</source>
         <translation>परिवेश के अनुसार</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="181"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="187"/>
         <source>Off, the colour below applies</source>
         <translation>बंद होने पर नीचे दिया रंग लागू होता है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="206"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="212"/>
         <source>Bubble opacity</source>
         <translation>बुलबुले की अपारदर्शिता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="232"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="238"/>
         <source>Reset colours to defaults</source>
         <translation>रंग डिफ़ॉल्ट पर लौटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="239"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="245"/>
         <source>Open a room where you stopped reading</source>
         <translation>कक्ष वहीं खोलो जहाँ तुमने पढ़ना छोड़ा था</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="240"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="246"/>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>चालू: कक्ष में जाते ही तुम अपने आखिरी पढ़े संदेश पर पहुँचते हो, नए उसके नीचे रहते हैं। बंद: कक्ष सबसे नए संदेश पर खुलता है, और जहाँ तुमने छोड़ा था उसकी रेखा ऊपर स्क्रॉल करने पर मिलती है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="247"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="253"/>
         <source>Hide the keyboard after sending</source>
         <translation>भेजने के बाद कीबोर्ड छिपाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="248"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="254"/>
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>चालू होने पर संदेश जाते ही कीबोर्ड बंद हो जाता है और बातचीत फिर पूरी दिखती है। बंद होने पर वह अगले संदेश के लिए खुला रहता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="255"/>
-        <source>Reactions as pictures</source>
-        <translation>प्रतिक्रियाएँ चित्रों के रूप में</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="258"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="264"/>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>बंद होने पर प्रतिक्रिया उसी अक्षर के रूप में खींची जाती है जो वह है — हमेशा सही और मुफ़्त। चालू होने पर xmatic उसके लिए तुम्हारा अपना चित्र %1 में खोजता है, जिसका नाम उसके कोड पॉइंट पर होता है (1f44d.svg)। कुछ भी साथ नहीं आता और कुछ भी डाउनलोड नहीं होता। तौलो: चित्र फ़ाइल को एक इमेज डिकोडर खोलता है, और वहीं इस तरह का ऐप सबसे असुरक्षित होता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="272"/>
-        <source>Choose emoji pictures</source>
-        <translation>इमोजी चित्र चुनें</translation>
+        <location filename="../qml/pages/AppearancePage.qml" line="289"/>
+        <source>Read in an emoji pack</source>
+        <translation>इमोजी पैक पढ़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="283"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="302"/>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>अभी तक कोई तस्वीर नहीं पढ़ी गई - इमोजी वही अक्षर रहते हैं, श्वेत-श्याम।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="312"/>
+        <source>Pictures ready: %1</source>
+        <translation>तैयार तस्वीरें: %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="352"/>
+        <source>Remove the emoji pack</source>
+        <translation>इमोजी पैक हटाएँ</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="322"/>
         <source>Reading the pictures…</source>
         <translation>चित्र पढ़े जा रहे हैं…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="293"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="261"/>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>प्रतिक्रियाएँ चित्रों के रूप में (इमोजी)</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="278"/>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>पैक को अपने किसी भी फ़ोल्डर में खोलो - जैसे Downloads या Public। यह तुम्हारे होम फ़ोल्डर में खुलता है; टैप करते हुए पैक तक जाओ, और तस्वीरों वाला फ़ोल्डर टैप करते ही पढ़ लिया जाता है। तस्वीरें सीधे उसी में होनी चाहिए, उपफ़ोल्डरों में नहीं। पढ़ना पृष्ठभूमि में चलता है और उन्हें xmatic के अपने भंडार में कॉपी करता है, इसलिए बाद में तुम्हारे फ़ोल्डर की ज़रूरत नहीं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="332"/>
         <source>%1 taken over, %2 refused</source>
         <translation>%1 लिए गए, %2 अस्वीकृत</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="304"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="343"/>
         <source>The pictures have changed since they were read in and are not shown.</source>
         <translation>पढ़ने के बाद चित्र बदल गए हैं और दिखाए नहीं जा रहे।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="313"/>
-        <source>Remove emoji pictures</source>
-        <translation>इमोजी चित्र हटाएँ</translation>
     </message>
 </context>
 <context>
@@ -726,6 +741,39 @@
         <location filename="../qml/pages/DirectoryPage.qml" line="242"/>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>चुनी हुई डायरेक्टरी के सार्वजनिक कक्ष यहाँ दिखते हैं।</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="38"/>
+        <source>Where is the pack?</source>
+        <translation>पैक कहाँ है?</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="44"/>
+        <source>Take this folder</source>
+        <translation>यह फ़ोल्डर लो</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="51"/>
+        <source>One level up</source>
+        <translation>एक स्तर ऊपर</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="108"/>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>यहाँ तस्वीरें हैं - पढ़ने के लिए टैप करो</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="125"/>
+        <source>No folders in here</source>
+        <translation>यहाँ कोई फ़ोल्डर नहीं</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="126"/>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>ऊपर खींचने वाला मेन्यू उसी फ़ोल्डर को लेता है जिसमें तुम हो।</translation>
     </message>
 </context>
 <context>
@@ -2753,52 +2801,52 @@
         <translation>संदेश संपादित हो रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2580"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2587"/>
         <source>New text</source>
         <translation>नया पाठ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2581"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2588"/>
         <source>Message</source>
         <translation>संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3111"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3112"/>
         <source>Sent unencrypted</source>
         <translation>बिना एन्क्रिप्शन भेजा गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3112"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3113"/>
         <source>Not sent by the account it names</source>
         <translation>जिस खाते का नाम है, उसने नहीं भेजा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3113"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3114"/>
         <source>The sender&apos;s keys changed</source>
         <translation>भेजने वाले की कुंजियाँ बदल गईं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3115"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3116"/>
         <source>From an unverified device</source>
         <translation>अपुष्ट उपकरण से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3116"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3117"/>
         <source>From an unverified person</source>
         <translation>अपुष्ट व्यक्ति से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3117"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3118"/>
         <source>Authenticity not confirmed</source>
         <translation>प्रामाणिकता की पुष्टि नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3132"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3133"/>
         <source>Open this address?</source>
         <translation>यह पता खोलें?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3134"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3135"/>
         <source>Open</source>
         <translation>खोलें</translation>
     </message>
@@ -3636,53 +3684,53 @@
 <context>
     <name>harbour-xmatic</name>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="140"/>
+        <location filename="../qml/harbour-xmatic.qml" line="143"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="141"/>
+        <location filename="../qml/harbour-xmatic.qml" line="144"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="142"/>
+        <location filename="../qml/harbour-xmatic.qml" line="145"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="143"/>
+        <location filename="../qml/harbour-xmatic.qml" line="146"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="144"/>
+        <location filename="../qml/harbour-xmatic.qml" line="147"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="145"/>
+        <location filename="../qml/harbour-xmatic.qml" line="148"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="341"/>
+        <location filename="../qml/harbour-xmatic.qml" line="344"/>
         <source>Incoming video call</source>
         <translation>आने वाला वीडियो कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="338"/>
-        <location filename="../qml/harbour-xmatic.qml" line="342"/>
+        <location filename="../qml/harbour-xmatic.qml" line="341"/>
+        <location filename="../qml/harbour-xmatic.qml" line="345"/>
         <source>Incoming call</source>
         <translation>आती हुई कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="410"/>
+        <location filename="../qml/harbour-xmatic.qml" line="413"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="416"/>
+        <location filename="../qml/harbour-xmatic.qml" line="419"/>
         <source>%n mention(s)</source>
         <translation>
             <numerusform>%n उल्लेख</numerusform>
@@ -3690,7 +3738,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="417"/>
+        <location filename="../qml/harbour-xmatic.qml" line="420"/>
         <source>%n new message(s)</source>
         <translation>
             <numerusform>%n नया संदेश</numerusform>

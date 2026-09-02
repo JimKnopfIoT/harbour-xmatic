@@ -224,16 +224,8 @@
         <translation>Mullide läbipaistvus</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reaktsioonid piltidena</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Väljas joonistatakse reaktsioon märgina, mis ta on — alati õige ja tasuta. Sees otsib xmatic sellele sinu enda pilti kaustast %1, nimetatuna koodipunktide järgi (1f44d.svg). Midagi ei tarnita kaasa ega laadita alla. Kaalu: pildifaili avab pildidekooder, ja seal on selline rakendus kõige haavatavam.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Vali emoji-pildid</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Lähtesta värvid</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Eemalda emoji-pildid</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Peida klaviatuur pärast saatmist</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Sees: sisenedes satud oma viimasena loetud sõnumi juurde, uued jäävad selle alla. Väljas: tuba avaneb uusima sõnumi juures ja joone, mis näitab, kuhu jäid, leiad üles kerides.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Loe emoji-pakk sisse</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Eemalda emoji-pakk</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Pilte pole veel sisse loetud - emojid jäävad märkideks, mustvalgeteks.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Pilte valmis: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Paki pakk lahti ükskõik kuhu oma kaustadesse - kas või Downloads või Public. See avaneb sinu kodukaustas; puuduta end pakini ja piltidega kaust loetakse sisse kohe, kui seda puudutad. Pildid peavad olema otse selles, mitte alamkaustades. Sisselugemine käib taustal ja kopeerib need xmatici enda hoidlasse, nii et sinu kausta pärast seda enam vaja ei ole.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reaktsioonid piltidena (emojid)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Valitud kataloogi avalikud toad ilmuvad siia.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Kus pakk on?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Võta see kaust</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Üks tase üles</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Siin pole kaustu</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Ripploend võtab kausta, milles sa oled.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Siin on pildid - puuduta sisselugemiseks</translation>
     </message>
 </context>
 <context>

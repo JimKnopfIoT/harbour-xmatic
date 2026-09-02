@@ -224,16 +224,8 @@
         <translation>Boblernes dækkeevne</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reaktioner som billeder</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Slået fra tegnes en reaktion som det tegn, den er — altid rigtigt og gratis. Slået til leder xmatic efter dit eget billede til den i %1, opkaldt efter dens kodepunkter (1f44d.svg). Intet leveres med, og intet hentes. Vej det op: en billedfil åbnes af en billeddekoder, og dér er en app som denne mest udsat.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Vælg emoji-billeder</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Nulstil farver til standard</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Fjern emoji-billeder</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Skjul tastaturet efter afsendelse</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Til: når du går ind, lander du ved din sidst læste besked, og de nye står under den. Fra: rummet åbner ved den nyeste besked, og linjen, der viser hvor du slap, finder du ved at rulle op.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Indlæs en emojipakke</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Fjern emojipakken</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Ingen billeder indlæst endnu - emojier forbliver de tegn, de er, i sort-hvid.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Billeder klar: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Pak pakken ud hvor som helst i dine egne mapper - Downloads eller Public for eksempel. Dette åbner i din hjemmemappe; tryk dig frem til pakken, så indlæses mappen med billederne, så snart du trykker på den. Billederne skal ligge direkte i den, ikke i undermapper. Indlæsningen sker i baggrunden og kopierer dem til xmatics eget lager, så din mappe er ikke nødvendig bagefter.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reaktioner som billeder (emojier)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Offentlige rum i det valgte katalog vises her.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Hvor ligger pakken?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Tag denne mappe</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Et niveau op</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Ingen mapper her</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Rullemenuen tager den mappe, du er i.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Billeder her - tryk for at indlæse</translation>
     </message>
 </context>
 <context>

@@ -225,16 +225,8 @@
         <translation>Opacitatea bulelor</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reacții ca imagini</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Dezactivat, o reacție este desenată ca semnul care este — mereu corect și gratuit. Activat, xmatic caută pentru ea o imagine proprie în %1, denumită după punctele ei de cod (1f44d.svg). Nu se livrează și nu se descarcă nimic. Cântărește: un fișier imagine este deschis de un decodor de imagini, iar acolo o aplicație de acest fel este cea mai expusă.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Alege imagini emoji</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -253,10 +245,6 @@
         <translation>Resetează culorile</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Elimină imaginile emoji</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Ascunde tastatura după trimitere</translation>
     </message>
@@ -271,6 +259,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Pornit: la intrare ajungi la ultimul mesaj citit, cele noi sunt sub el. Oprit: camera se deschide la cel mai recent mesaj, iar linia care marchează unde ai rămas o găsești derulând în sus.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Încarcă un pachet de emoji</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Elimină pachetul de emoji</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Încă nu au fost încărcate imagini - emoji rămân caracterele care sunt, alb-negru.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Imagini pregătite: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Dezarhivează pachetul oriunde în dosarele tale - Downloads sau Public, de exemplu. Aici se deschide dosarul tău personal; atinge până la pachet, iar dosarul cu imaginile este citit de îndată ce îl atingi. Imaginile trebuie să se afle direct în el, nu în subdosare. Citirea se face în fundal și le copiază în spațiul propriu al xmatic, așa că dosarul tău nu mai e necesar după aceea.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reacții ca imagini (emoji)</translation>
     </message>
 </context>
 <context>
@@ -587,6 +599,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Camerele publice ale directorului ales apar aici.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Unde este pachetul?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Ia acest dosar</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Un nivel mai sus</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Aici nu sunt dosare</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Meniul derulant ia dosarul în care ești.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Imagini aici - atinge pentru a le citi</translation>
     </message>
 </context>
 <context>

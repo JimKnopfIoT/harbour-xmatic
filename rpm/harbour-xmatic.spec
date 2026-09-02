@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.28.1
+Version:    0.28.2
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -105,6 +105,15 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Sep 02 2026 harbour-xmatic contributors 0.28.2-1
+- The paper clip sits right of the message field now, the emoji face left.
+- The emoji page says what to do, which state it is in, and how many
+  pictures are ready; the buttons and the switch name the emoji pack.
+- An emoji pack is read in by tapping its folder; the browser opens at the
+  home folder and Downloads is no longer the only place a pack may lie.
+- On a device with a landscape screen the attachment and avatar pickers come
+  up in the device's orientation and no longer stall.
+
 * Wed Sep 02 2026 harbour-xmatic contributors 0.28.1-1
 - A message's menu is a context menu again; landscape keeps the actions page.
 - Reactions work again, as do "Reply in thread" and forwarding an attachment.

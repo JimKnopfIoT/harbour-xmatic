@@ -224,16 +224,8 @@
         <translation>Doorzichtigheid van ballonnen</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reacties als afbeeldingen</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Uit wordt een reactie getekend als het teken dat ze is — altijd juist en gratis. Aan zoekt xmatic er een eigen afbeelding voor in %1, genoemd naar de code points (1f44d.svg). Er wordt niets meegeleverd en niets gedownload. Weeg af: een afbeeldingsbestand wordt door een beelddecoder geopend, en daar is een app als deze het kwetsbaarst.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Emoji-afbeeldingen kiezen</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Kleuren terugzetten</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Emoji-afbeeldingen verwijderen</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Toetsenbord verbergen na het verzenden</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Aan: bij het binnengaan kom je uit bij je laatst gelezen bericht, de nieuwe staan eronder. Uit: de kamer opent bij het nieuwste bericht, en de lijn die aangeeft waar je gebleven bent vind je door omhoog te scrollen.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Emoji-pakket inlezen</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Emoji-pakket verwijderen</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Nog geen afbeeldingen ingelezen - emoji blijven de tekens die ze zijn, in zwart-wit.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Afbeeldingen gereed: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Pak het pakket uit waar je wilt in je eigen mappen - Downloads of Public bijvoorbeeld. Dit opent in je persoonlijke map; tik door naar het pakket, en de map met de afbeeldingen wordt ingelezen zodra je erop tikt. Ze moeten er rechtstreeks in staan, niet in submappen. Het inlezen gebeurt op de achtergrond en kopieert ze naar xmatics eigen opslag, dus je map is daarna niet meer nodig.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reacties als afbeeldingen (emoji)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Openbare kamers van het gekozen adresboek verschijnen hier.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Waar staat het pakket?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Deze map nemen</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Eén niveau omhoog</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Hier zijn geen mappen</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Het pull-downmenu neemt de map waarin je bent.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Afbeeldingen hierin - tik om in te lezen</translation>
     </message>
 </context>
 <context>

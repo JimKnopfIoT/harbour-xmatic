@@ -224,16 +224,8 @@
         <translation>Auf Standard zurücksetzen</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reaktionen als Bilder</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Aus wird eine Reaktion als das Zeichen gezeichnet, das sie ist — immer richtig und kostenlos. An sucht xmatic dafür ein eigenes Bild in %1, benannt nach seinen Codepunkten (1f44d.svg). Es wird nichts mitgeliefert und nichts heruntergeladen. Wäge ab: Eine Bilddatei wird von einem Bilddekoder geöffnet, und dort ist eine App dieser Art am verwundbarsten.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Emoji-Bilder wählen</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Farben auf Standard zurücksetzen</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Emoji-Bilder entfernen</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Tastatur nach dem Senden ausblenden</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>An: Beim Betreten landest du bei deiner zuletzt gelesenen Nachricht, die neuen stehen darunter. Aus: Der Raum öffnet bei der neuesten Nachricht, und die Linie, die deinen Lesestand markiert, findest du beim Hochscrollen.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Emoji-Paket einlesen</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Emoji-Paket entfernen</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Noch keine Bilder eingelesen - Emoji bleiben die Zeichen, die sie sind, in Schwarz-Weiß.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Bilder bereit: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Entpack das Paket irgendwo in deinen eigenen Ordnern - Downloads oder Public zum Beispiel. Das hier öffnet in deinem Persönlichen Ordner; tipp dich zum Paket durch, und der Ordner mit den Bildern wird eingelesen, sobald du ihn antippst. Sie müssen direkt darin liegen, nicht in Unterordnern. Gelesen wird im Hintergrund, die Bilder landen in xmatics eigenem Speicher - dein Ordner wird danach nicht mehr gebraucht.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reaktionen als Bilder (Emojis)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Öffentliche Räume des gewählten Verzeichnisses erscheinen hier.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Wo liegt das Paket?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Diesen Ordner nehmen</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Eine Ebene höher</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Hier sind keine Ordner</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Das Pull-down nimmt den Ordner, in dem du bist.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Bilder darin - antippen liest sie ein</translation>
     </message>
 </context>
 <context>

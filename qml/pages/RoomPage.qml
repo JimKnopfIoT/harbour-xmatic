@@ -2544,33 +2544,40 @@ Page {
                     width: parent.width
                     height: Math.max(Theme.itemSizeMedium, messageField.height + Theme.paddingMedium)
 
-                    IconButton {
-                        id: attachButton
+                    // The face keeps the left edge; the platform's messengers put their
+                    // actions right and start the field at the margin. The icon is drawn, so no IconButton.
+                    MouseArea {
+                        id: emojiButton
 
                         anchors {
                             left: parent.left
                             leftMargin: Theme.paddingMedium
                             verticalCenter: parent.verticalCenter
                         }
-                        visible: page.editingEventId.length === 0
-                        icon.source: "image://theme/icon-m-attach"
-                        // The same step down as the face beside it. Both are offers; the send arrow
-                        // is the action and brightens by itself once there is something to send.
-                        icon.opacity: Theme.opacityLow
-                        onClicked: pageStack.push(contentPicker)
+                        width: Theme.itemSizeSmall
+                        height: Theme.itemSizeSmall
+
+                        onClicked: page.pickEmoji()
+
+                        FaceIcon {
+                            anchors.centerIn: parent
+                            // Measured against the theme's icons, not set to their nominal size: at
+                            // iconSizeMedium the face came out a third taller than the theme's arrow.
+                            size: Math.round(Theme.iconSizeMedium * 0.78)
+                            color: emojiButton.pressed ? Theme.highlightColor
+                                                       : Theme.primaryColor
+                        }
                     }
 
                     TextArea {
                         id: messageField
 
                         anchors {
-                            // Straight after the paper clip, and at the page margin where that is hidden.
+                            // Between the two ends: the face left, clip and arrow right.
                             // The lock that stood in this gap says its piece at the top of the room now.
-                            left: attachButton.visible ? attachButton.right
-                                                       : parent.left
-                            leftMargin: attachButton.visible
-                                        ? 0 : Theme.horizontalPageMargin
-                            right: emojiButton.left
+                            left: emojiButton.right
+                            right: attachButton.visible ? attachButton.left
+                                                        : sendButton.left
                             verticalCenter: parent.verticalCenter
                         }
                         // The field brings a page margin of its own, which in a row with a button at
@@ -2614,29 +2621,22 @@ Page {
                         onCanceled: matrix.recorder.cancel()
                     }
 
-                    // Microphone and send share the right slot - never both - so the face does
-                    // not move when one takes over. Not an IconButton: the icon is drawn.
-                    MouseArea {
-                        id: emojiButton
+                    IconButton {
+                        id: attachButton
 
                         anchors {
+                            // Held against the arrow even while the microphone stands in its place:
+                            // both own that slot, never both at once, so the clip does not move.
                             right: sendButton.left
                             rightMargin: Theme.paddingSmall
                             verticalCenter: parent.verticalCenter
                         }
-                        width: Theme.itemSizeSmall
-                        height: Theme.itemSizeSmall
-
-                        onClicked: page.pickEmoji()
-
-                        FaceIcon {
-                            anchors.centerIn: parent
-                            // Measured against the theme's icons, not set to their nominal size: at
-                            // iconSizeMedium the face came out a third taller than the arrow beside it.
-                            size: Math.round(Theme.iconSizeMedium * 0.78)
-                            color: emojiButton.pressed ? Theme.highlightColor
-                                                       : Theme.primaryColor
-                        }
+                        visible: page.editingEventId.length === 0
+                        icon.source: "image://theme/icon-m-attach"
+                        // The same step down as the face at the other end. Both are offers; the send
+                        // arrow is the action and brightens by itself once there is something to send.
+                        icon.opacity: Theme.opacityLow
+                        onClicked: pageStack.push(contentPicker)
                     }
 
                     IconButton {
@@ -2669,8 +2669,9 @@ Page {
     Component {
         id: contentPicker
 
+        // No orientation of its own: this page pushes sub-pages of the platform's
+        // making and hands them nothing, so the two must share the window's default.
         ContentPickerPage {
-            allowedOrientations: Orientation.All
             // Only remembered here, never navigated from here: the picker is running its
             // own transition and answered a `replace` with "cannot pop". The timer opens it.
             onSelectedContentPropertiesChanged: {
