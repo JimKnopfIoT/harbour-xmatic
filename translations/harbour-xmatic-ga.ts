@@ -225,16 +225,8 @@
         <translation>Teimhneacht na mbolgán</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Freagairtí mar phictiúir</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Múchta, tarraingítear freagairt mar an carachtar atá inti — ceart i gcónaí agus saor in aisce. Lasta, lorgaíonn xmatic pictiúr de do chuid féin di i %1, ainmnithe as a pointí cóid (1f44d.svg). Ní sheoltar aon rud leis agus ní íoslódáiltear aon rud. Meáigh é: osclaíonn díchódóir íomhánna comhad pictiúir, agus is ansin is mó atá aip den chineál seo neamhchosanta.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Roghnaigh íomhánna emoji</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -253,10 +245,6 @@
         <translation>Athshocraigh na dathanna</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Bain na híomhánna emoji</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Folaigh an méarchlár tar éis seolta</translation>
     </message>
@@ -271,6 +259,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ar siúl: agus tú ag dul isteach, tagann tú chuig an teachtaireacht dheireanach a léigh tú, agus bíonn na cinn nua faoina bun. As: osclaítear an seomra ag an teachtaireacht is nuaí, agus gheobhaidh tú an líne a mharcálann an áit ar stad tú trí scrollú suas.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Léigh isteach pacáiste emoji</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Bain an pacáiste emoji</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Níl aon phictiúr léite isteach fós - fanann na emoji ina gcarachtair, dubh agus bán.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Pictiúir réidh: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Bain an pacáiste as an gcartlann áit ar bith i d&apos;fhillteáin féin - Downloads nó Public, cuir i gcás. Osclaítear anseo d&apos;fhillteán baile; tapáil ar aghaidh go dtí an pacáiste, agus léitear an fillteán a bhfuil na pictiúir ann chomh luath is a thapálann tú é. Caithfidh siad a bheith go díreach ann, ní i bhfofhillteáin. Léitear sa chúlra iad agus cóipeáiltear isteach i stóras xmatic féin iad, mar sin ní bheidh d&apos;fhillteán ag teastáil ina dhiaidh sin.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Freagairtí mar phictiúir (emoji)</translation>
     </message>
 </context>
 <context>
@@ -587,6 +599,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Taispeántar seomraí poiblí an eolaire roghnaithe anseo.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Cá bhfuil an pacáiste?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Tóg an fillteán seo</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Leibhéal amháin suas</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Níl aon fhillteán anseo</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Tógann an roghchlár tarraingthe an fillteán ina bhfuil tú.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Pictiúir anseo - tapáil chun iad a léamh</translation>
     </message>
 </context>
 <context>

@@ -225,16 +225,8 @@
         <translation>Debesėlių nepermatomumas</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reakcijos kaip paveikslėliai</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Išjungus reakcija piešiama kaip ženklas, kuriuo ji yra — visada teisinga ir nemokama. Įjungus xmatic ieško jai tavo paties paveikslėlio aplanke %1, pavadinto pagal jos kodo taškus (1f44d.svg). Nieko nepridedama ir nieko neatsiunčiama. Pasverk: paveikslėlio failą atveria vaizdų dekoderis, o ten tokia programa yra pažeidžiamiausia.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Pasirinkti jaustukų paveikslėlius</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -253,10 +245,6 @@
         <translation>Atkurti numatytas spalvas</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Pašalinti jaustukų paveikslėlius</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Slėpti klaviatūrą po išsiuntimo</translation>
     </message>
@@ -271,6 +259,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Įjungta: įėjęs atsiduri ties paskutine perskaityta žinute, naujosios lieka po ja. Išjungta: kambarys atveriamas ties naujausia žinute, o brūkšnį, žymintį kur sustojai, rasi slinkdamas aukštyn.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Įkelti jaustukų paketą</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Pašalinti jaustukų paketą</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Paveikslėliai dar neįkelti - jaustukai lieka ženklais, nespalvoti.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Paruošta paveikslėlių: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Išpakuok paketą bet kur savo aplankuose - kad ir Downloads ar Public. Tai atsidaro tavo namų aplanke; bakstelėdamas nueik iki paketo, ir aplankas su paveikslėliais bus įkeltas, vos jį bakstelėsi. Paveikslėliai turi būti tiesiai jame, ne poaplankiuose. Įkeliama fone ir nukopijuojama į paties xmatic saugyklą, tad tavo aplanko paskui nebereikia.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reakcijos kaip paveikslėliai (jaustukai)</translation>
     </message>
 </context>
 <context>
@@ -587,6 +599,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Pasirinkto katalogo vieši kambariai atsiranda čia.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Kur yra paketas?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Imti šį aplanką</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Vienu lygiu aukštyn</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Čia nėra aplankų</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Išskleidžiamas meniu ima aplanką, kuriame esi.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Čia yra paveikslėlių - bakstelėk, kad įkeltum</translation>
     </message>
 </context>
 <context>

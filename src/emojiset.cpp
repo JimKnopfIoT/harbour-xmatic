@@ -3,6 +3,7 @@
 #include <QBuffer>
 #include <QCryptographicHash>
 #include <QDir>
+#include <QDirIterator>
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
@@ -249,6 +250,31 @@ void EmojiSet::importFrom(const QString &folderUrl)
 
         return outcome;
     }));
+}
+
+bool EmojiSet::holdsPictures(const QString &folder) const
+{
+    const QString path = folder.startsWith(QStringLiteral("file://"))
+            ? QUrl(folder).toLocalFile()
+            : folder;
+    if (path.isEmpty()) {
+        return false;
+    }
+    // The same filters the import uses, so what this promises is what that takes.
+    QDirIterator walk(path,
+                      QStringList() << QStringLiteral("*.svg") << QStringLiteral("*.png"),
+                      QDir::Files | QDir::NoSymLinks);
+    // Bounded: this runs once per row of a list somebody is scrolling, and a
+    // directory of thousands of files that are not emoji must not stall it.
+    int looked = 0;
+    while (walk.hasNext() && looked++ < 512) {
+        const QFileInfo file(walk.next());
+        if (nameIsSound(file.completeBaseName().toLower())
+                && file.size() <= MaximumSourceBytes) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void EmojiSet::removeAll()

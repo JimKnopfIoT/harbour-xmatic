@@ -226,16 +226,8 @@
         <translation>Opaċità tal-bżieżaq</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reazzjonijiet bħala stampi</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Mitfi, reazzjoni titpinġa bħala l-karattru li hi — dejjem tajjeb u bla ħlas. Mixgħul, xmatic ifittex għaliha stampa tiegħek f&apos;%1, imsemmija skont il-code points tagħha (1f44d.svg). Xejn ma jinġieb miegħu u xejn ma jitniżżel. Iżen: fajl ta&apos; stampa jinfetaħ minn dekowder tal-istampi, u hemm hu fejn app ta&apos; din ix-xorta hija l-aktar esposta.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Agħżel stampi tal-emoji</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -254,10 +246,6 @@
         <translation>Erġa&apos; lura għall-kuluri awtomatiċi</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Neħħi l-istampi tal-emoji</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Aħbi t-tastiera wara li tibgħat</translation>
     </message>
@@ -272,6 +260,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Mixgħul: meta tidħol tasal fl-aħħar messaġġ li qrajt, u l-ġodda jkunu taħtu. Mitfi: il-kamra tinfetaħ fl-aktar messaġġ riċenti, u l-linja li timmarka fejn waqaft issibha billi tiskrollja &apos;l fuq.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Aqra pakkett ta&apos; emoji</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Neħħi l-pakkett ta&apos; emoji</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Għadhom ma nqrawx stampi - l-emoji jibqgħu l-karattri li huma, bl-iswed u l-abjad.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Stampi lesti: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Ħoll il-pakkett fejn trid fil-folders tiegħek - Downloads jew Public, ngħidu aħna. Dan jinfetaħ fil-folder tad-dar tiegħek; mess sakemm tasal għall-pakkett, u l-folder bl-istampi tinqara malli tmissha. L-istampi jridu jkunu direttament fiha, mhux f&apos;sottofolders. Il-qari jsir fl-isfond u jikkopjahom fil-ħażna ta&apos; xmatic stess, għalhekk il-folder tiegħek ma jkunx meħtieġ wara.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reazzjonijiet bħala stampi (emoji)</translation>
     </message>
 </context>
 <context>
@@ -589,6 +601,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Il-kmamar pubbliċi tad-direttorju magħżul jidhru hawn.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Fejn hu l-pakkett?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Ħu din il-folder</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Livell &apos;il fuq</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>M&apos;hawnx folders hawn</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Il-menu li tiġbed jieħu l-folder li qiegħed fih.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Stampi hawn - mess biex jinqraw</translation>
     </message>
 </context>
 <context>

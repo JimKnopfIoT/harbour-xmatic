@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Sailfish.Pickers 1.0
 
 // The conversation's colours. The preview uses the very expressions the
 // conversation uses, and the reset is the way out of an unreadable palette.
@@ -8,6 +7,13 @@ Page {
     id: page
 
     allowedOrientations: Orientation.All
+
+    // Where a TextSwitch puts its text: behind the toggle, not at the page margin.
+    // Notes under one belong in that column, or the block reads as two.
+    readonly property real noteX: Theme.horizontalPageMargin - Theme.paddingLarge
+                                  + Theme.itemSizeExtraSmall
+                                  + (Theme.colorScheme === Theme.DarkOnLight
+                                     ? Theme.paddingMedium : 0)
 
     // What the spectrum is currently colouring.
     readonly property var elementKeys: ["otherBubble", "ownBubble", "name",
@@ -252,13 +258,24 @@ Page {
             }
 
             TextSwitch {
-                text: qsTr("Reactions as pictures")
+                text: qsTr("Reactions as pictures (emoji)")
                 // The path and the warning belong where the choice is made,
                 // not in a manual nobody has.
                 description: qsTr("Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.").arg(matrix.emojiDirectory)
                 checked: settings.emojiImages
                 automaticCheck: false
                 onClicked: settings.emojiImages = !settings.emojiImages
+            }
+
+            // What the switch above does not say: which folder, and that the app
+            // keeps its own copy. Asked for from the field.
+            Label {
+                x: page.noteX
+                width: parent.width - page.noteX - Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryHighlightColor
+                text: qsTr("Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic's own storage, so your folder is not needed afterwards.")
             }
 
             // Reading a set in rather than copying files by hand: what it buys is the
@@ -269,13 +286,35 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: content.buttonWidth
                 enabled: !emojiSet.busy
-                label: qsTr("Choose emoji pictures")
+                label: qsTr("Read in an emoji pack")
                 onClicked: pageStack.push(folderPicker)
             }
 
+            // The state the page never admitted: switched on with nothing read in
+            // draws characters, and the field reported exactly that as a fault.
             Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
+                x: page.noteX
+                width: parent.width - page.noteX - Theme.horizontalPageMargin
+                visible: !emojiSet.busy && !emojiSet.verified
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.highlightColor
+                text: qsTr("No pictures read in yet - emoji stay the characters they are, in black and white.")
+            }
+
+            Label {
+                x: page.noteX
+                width: parent.width - page.noteX - Theme.horizontalPageMargin
+                visible: !emojiSet.busy && emojiSet.verified
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.highlightColor
+                text: qsTr("Pictures ready: %1").arg(emojiSet.count)
+            }
+
+            Label {
+                x: page.noteX
+                width: parent.width - page.noteX - Theme.horizontalPageMargin
                 visible: emojiSet.busy
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
@@ -284,8 +323,8 @@ Page {
             }
 
             Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
+                x: page.noteX
+                width: parent.width - page.noteX - Theme.horizontalPageMargin
                 visible: !emojiSet.busy && (emojiSet.lastImported > 0 || emojiSet.lastRejected > 0)
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
@@ -295,8 +334,8 @@ Page {
             }
 
             Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
+                x: page.noteX
+                width: parent.width - page.noteX - Theme.horizontalPageMargin
                 visible: emojiSet.tampered
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
@@ -310,7 +349,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: content.buttonWidth
                 visible: emojiSet.verified && !emojiSet.busy
-                label: qsTr("Remove emoji pictures")
+                label: qsTr("Remove the emoji pack")
                 onClicked: emojiSet.removeAll()
             }
 
@@ -323,15 +362,12 @@ Page {
         VerticalScrollDecorator { }
     }
 
-    // The picker hands back a folder; everything else happens in the core of
-    // the app, not here.
+    // Our own browser rather than the platform's picker: that one starts on a
+    // partition list and its accept action is labelled with a blank space.
     Component {
         id: folderPicker
 
-        FolderPickerPage {
-            allowedOrientations: Orientation.All
-            onSelectedPathChanged: emojiSet.importFrom(selectedPath)
-        }
+        EmojiFolderPage { }
     }
 
     function resetAll() {

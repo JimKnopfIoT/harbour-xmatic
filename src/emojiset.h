@@ -39,6 +39,10 @@ public:
     /// Throws the set away again, checksums and pictures both.
     Q_INVOKABLE void removeAll();
 
+    /// Whether that folder holds a picture this import would take. Stops at the
+    /// first one, so it costs a directory read and no more.
+    Q_INVOKABLE bool holdsPictures(const QString &folder) const;
+
 signals:
     void busyChanged();
     void statusChanged();

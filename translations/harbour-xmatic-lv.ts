@@ -225,16 +225,8 @@
         <translation>Burbuļu necaurspīdīgums</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reakcijas kā attēli</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Izslēgts reakcija tiek zīmēta kā zīme, kas tā ir — vienmēr pareizi un bez maksas. Ieslēgts xmatic meklē tai tavu paša attēlu mapē %1, nosauktu pēc tās koda punktiem (1f44d.svg). Nekas netiek piegādāts līdzi un nekas netiek lejupielādēts. Apsver: attēla failu atver attēlu dekodētājs, un tur šāda lietotne ir visneaizsargātākā.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Izvēlēties emocijzīmju attēlus</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -253,10 +245,6 @@
         <translation>Atjaunot noklusējuma krāsas</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Noņemt emocijzīmju attēlus</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Slēpt tastatūru pēc nosūtīšanas</translation>
     </message>
@@ -271,6 +259,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ieslēgts: ienākot nonāc pie savas pēdējās izlasītās ziņas, jaunās ir zem tās. Izslēgts: istaba atveras pie jaunākās ziņas, un līniju, kas iezīmē, kur apstājies, atradīsi ritinot uz augšu.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Ielasīt emocijzīmju paku</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Noņemt emocijzīmju paku</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Attēli vēl nav ielasīti - emocijzīmes paliek tās zīmes, kas tās ir, melnbaltas.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Gatavi attēli: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Atpako paku jebkur savās mapēs - kaut vai Downloads vai Public. Šis atveras tavā mājas mapē; aizej ar pieskārieniem līdz pakai, un mape ar attēliem tiek ielasīta, tiklīdz tai pieskaries. Attēliem jāatrodas tieši tajā, nevis apakšmapēs. Ielasīšana notiek fonā un pārkopē tos xmatic paša krātuvē, tāpēc tava mape pēc tam vairs nav vajadzīga.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reakcijas kā attēli (emocijzīmes)</translation>
     </message>
 </context>
 <context>
@@ -587,6 +599,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Izvēlētā kataloga publiskās istabas parādās šeit.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Kur ir paka?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Ņemt šo mapi</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Vienu līmeni augšup</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Šeit nav mapju</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Izvelkamā izvēlne ņem mapi, kurā tu esi.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Šeit ir attēli - pieskaries, lai ielasītu</translation>
     </message>
 </context>
 <context>

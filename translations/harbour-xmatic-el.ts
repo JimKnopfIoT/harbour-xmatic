@@ -224,16 +224,8 @@
         <translation>Αδιαφάνεια συννεφάκια</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Αντιδράσεις ως εικόνες</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Απενεργοποιημένο, μια αντίδραση σχεδιάζεται ως ο χαρακτήρας που είναι — πάντα σωστά και δωρεάν. Ενεργοποιημένο, το xmatic ψάχνει γι&apos; αυτήν δική σου εικόνα στο %1, με όνομα από τα code points της (1f44d.svg). Τίποτα δεν παραδίδεται και τίποτα δεν κατεβαίνει. Ζύγισέ το: ένα αρχείο εικόνας το ανοίγει ένας αποκωδικοποιητής εικόνας, και εκεί μια τέτοια εφαρμογή είναι πιο εκτεθειμένη.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Επιλογή εικόνων emoji</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Επαναφορά προεπιλεγμένων χρωμάτων</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Αφαίρεση εικόνων emoji</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Απόκρυψη πληκτρολογίου μετά την αποστολή</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ενεργό: μπαίνοντας βρίσκεσαι στο τελευταίο μήνυμα που διάβασες, τα νέα είναι από κάτω. Ανενεργό: το δωμάτιο ανοίγει στο νεότερο μήνυμα και τη γραμμή που δείχνει πού σταμάτησες τη βρίσκεις κάνοντας κύλιση προς τα πάνω.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Φόρτωση πακέτου emoji</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Αφαίρεση πακέτου emoji</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Δεν έχουν φορτωθεί ακόμη εικόνες - τα emoji μένουν οι χαρακτήρες που είναι, ασπρόμαυρα.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Έτοιμες εικόνες: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Αποσυμπίεσε το πακέτο όπου θέλεις στους δικούς σου φακέλους - στο Downloads ή στο Public, ας πούμε. Αυτό ανοίγει στον προσωπικό σου φάκελο· πάτα μέχρι το πακέτο, και ο φάκελος με τις εικόνες διαβάζεται μόλις τον πατήσεις. Πρέπει να βρίσκονται απευθείας μέσα του, όχι σε υποφακέλους. Η ανάγνωση γίνεται στο παρασκήνιο και τις αντιγράφει στον δικό του χώρο του xmatic, οπότε ο φάκελός σου δεν χρειάζεται μετά.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Αντιδράσεις ως εικόνες (emoji)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Τα δημόσια δωμάτια του επιλεγμένου καταλόγου εμφανίζονται εδώ.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Πού είναι το πακέτο;</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Πάρε αυτόν τον φάκελο</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Ένα επίπεδο πάνω</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Δεν υπάρχουν φάκελοι εδώ</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Το μενού από πάνω παίρνει τον φάκελο στον οποίο βρίσκεσαι.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Εικόνες εδώ - πάτα για ανάγνωση</translation>
     </message>
 </context>
 <context>

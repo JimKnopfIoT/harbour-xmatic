@@ -35,6 +35,9 @@ ApplicationWindow {
     // Never assign `defaultAllowedOrientations`: it is read-only in Silica and
     // assigning it makes the whole window fail to load, white screen.
     allowedOrientations: defaultAllowedOrientations
+    // The writable door: every Page without its own declaration binds to this
+    // (Silica Page.qml) - the platform pickers' sub-pages included.
+    _defaultPageOrientations: Orientation.All
 
     // The root a `replaceAbove` is still owed. Silica drops a push issued during a
     // transition, and the login page then never appears at all.

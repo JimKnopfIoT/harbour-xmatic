@@ -224,16 +224,8 @@
         <translation>Gegnsæi blaðra</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Viðbrögð sem myndir</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Slökkt er viðbragð teiknað sem táknið sem það er — alltaf rétt og ókeypis. Kveikt leitar xmatic að þinni eigin mynd fyrir það í %1, nefndri eftir kóðapunktum hennar (1f44d.svg). Engu er dreift með og ekkert er sótt. Vegðu og metdu: myndskrá er opnuð af myndafkóðara, og þar er forrit af þessu tagi berskjaldaðast.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Velja emoji-myndir</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -252,10 +244,6 @@
         <translation>Endurstilla liti</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Fjarlægja emoji-myndir</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Fela lyklaborðið eftir sendingu</translation>
     </message>
@@ -270,6 +258,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Kveikt: þegar þú ferð inn lendirðu á síðustu lesnu skilaboðunum þínum og þau nýju eru fyrir neðan. Slökkt: herbergið opnast á nýjustu skilaboðunum og línuna sem markar hvar þú hættir finnurðu með því að fletta upp.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Lesa inn emoji-pakka</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Fjarlægja emoji-pakkann</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Engar myndir hafa verið lesnar inn enn - emoji haldast þau tákn sem þau eru, í svarthvítu.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Myndir tilbúnar: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Taktu pakkann úr þjöppun hvar sem er í þínum eigin möppum - til dæmis Downloads eða Public. Þetta opnast í heimamöppunni þinni; ýttu þig áfram að pakkanum, og mappan með myndunum er lesin inn um leið og þú ýtir á hana. Myndirnar verða að liggja beint í henni, ekki í undirmöppum. Lesið er inn í bakgrunni og myndirnar afritaðar í eigin geymslu xmatic, svo möppunnar þinnar er ekki þörf eftir á.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Viðbrögð sem myndir (emoji)</translation>
     </message>
 </context>
 <context>
@@ -585,6 +597,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Opin herbergi valinnar skrár birtast hér.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Hvar er pakkinn?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Taka þessa möppu</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Eitt þrep upp</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Hér eru engar möppur</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Fellivalmyndin tekur möppuna sem þú ert í.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Myndir hér - ýttu til að lesa inn</translation>
     </message>
 </context>
 <context>

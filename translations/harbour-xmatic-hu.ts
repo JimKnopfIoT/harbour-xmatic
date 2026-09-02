@@ -223,16 +223,8 @@
         <translation>Buborékok átlátszósága</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reakciók képként</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Kikapcsolva a reakció úgy jelenik meg, ahogy a karakter szól — mindig helyesen és ingyen. Bekapcsolva az xmatic saját képet keres hozzá itt: %1, a kódpontjai szerint elnevezve (1f44d.svg). Semmi sincs mellékelve és semmi sem töltődik le. Mérlegeld: egy képfájlt egy képdekódoló nyit meg, és ott a legsebezhetőbb egy ilyen alkalmazás.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Emodzsi képek választása</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -251,10 +243,6 @@
         <translation>Színek visszaállítása</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Emodzsi képek eltávolítása</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Billentyűzet elrejtése küldés után</translation>
     </message>
@@ -269,6 +257,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Bekapcsolva: belépéskor az utolsó elolvasott üzenetednél kötsz ki, az újak alatta vannak. Kikapcsolva: a szoba a legújabb üzenetnél nyílik meg, és a vonalat, amely jelzi, hol hagytad abba, felfelé görgetve találod meg.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Emodzsicsomag beolvasása</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Emodzsicsomag eltávolítása</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Még nincsenek beolvasott képek - az emodzsik maradnak azok a karakterek, amik, fekete-fehéren.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Kész képek: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Csomagold ki a csomagot bárhová a saját mappáidba - például a Downloads vagy a Public mappába. Ez a saját mappádban nyílik meg; koppints el a csomagig, és a képeket tartalmazó mappa beolvasásra kerül, amint rákoppintasz. A képeknek közvetlenül benne kell lenniük, nem almappákban. A beolvasás a háttérben fut, és a képeket az xmatic saját tárolójába másolja, így a mappádra utána már nincs szükség.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reakciók képként (emodzsik)</translation>
     </message>
 </context>
 <context>
@@ -583,6 +595,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>A kiválasztott katalógus nyilvános szobái itt jelennek meg.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Hol van a csomag?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Ezt a mappát</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Egy szinttel feljebb</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Itt nincsenek mappák</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>A lehúzható menü azt a mappát veszi, amelyikben vagy.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Itt képek vannak - koppints a beolvasáshoz</translation>
     </message>
 </context>
 <context>

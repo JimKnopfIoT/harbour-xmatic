@@ -204,135 +204,150 @@
 <context>
     <name>AppearancePage</name>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="83"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="89"/>
         <source>Reset to defaults</source>
         <translation>恢复默认</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="101"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="107"/>
         <source>Appearance</source>
         <translation>外观</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="126"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="132"/>
         <source>Somebody</source>
         <comment>sample sender on the appearance page</comment>
         <translation>某人</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="132"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="138"/>
         <source>A received message looks like this.</source>
         <translation>收到的消息看起来是这样。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="151"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="157"/>
         <source>And one of my own like this.</source>
         <translation>自己发出的消息是这样。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="158"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="164"/>
         <source>Colouring</source>
         <translation>配色</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="162"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="168"/>
         <source>Their bubble</source>
         <translation>对方的气泡</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="163"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="169"/>
         <source>My bubble</source>
         <translation>我的气泡</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="164"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="170"/>
         <source>Sender name</source>
         <translation>发送者名字</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="165"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="171"/>
         <source>Their text</source>
         <translation>对方的文字</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="166"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="172"/>
         <source>My text</source>
         <translation>我的文字</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="180"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="186"/>
         <source>Follow the ambience</source>
         <translation>跟随主题氛围</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="181"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="187"/>
         <source>Off, the colour below applies</source>
         <translation>关闭时使用下面的颜色</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="206"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="212"/>
         <source>Bubble opacity</source>
         <translation>气泡不透明度</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="232"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="238"/>
         <source>Reset colours to defaults</source>
         <translation>恢复默认颜色</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="239"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="245"/>
         <source>Open a room where you stopped reading</source>
         <translation>打开房间时回到上次读到的地方</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="240"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="246"/>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>开启：进入房间时会回到你最后读过的消息，新消息在它下面。关闭：房间从最新的消息打开，标记你读到哪里的横线需要向上滚动才能看到。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="247"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="253"/>
         <source>Hide the keyboard after sending</source>
         <translation>发送后隐藏键盘</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="248"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="254"/>
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>开启后，消息发出即收起键盘，对话重新完整显示。关闭则键盘保持打开，方便继续输入。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="255"/>
-        <source>Reactions as pictures</source>
-        <translation>用图片显示回应</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="258"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="264"/>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>关闭时，回应就按它本身的字符绘制——始终正确且不占空间。开启时，xmatic 会在 %1 中寻找你自己的图片，文件名取自它的码位（1f44d.svg）。本应用不附带任何图片，也不下载任何图片。请权衡：图片文件由图像解码器打开，而那正是这类应用最脆弱的地方。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="272"/>
-        <source>Choose emoji pictures</source>
-        <translation>选择表情图片</translation>
+        <location filename="../qml/pages/AppearancePage.qml" line="289"/>
+        <source>Read in an emoji pack</source>
+        <translation>读入表情包</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="283"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="302"/>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>尚未读入任何图片 — 表情仍是字符本身，黑白显示。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="312"/>
+        <source>Pictures ready: %1</source>
+        <translation>已就绪的图片：%1</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="352"/>
+        <source>Remove the emoji pack</source>
+        <translation>移除表情包</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="322"/>
         <source>Reading the pictures…</source>
         <translation>正在读取图片…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="293"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="261"/>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>用图片显示回应（表情）</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="278"/>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>把表情包解压到你自己的任意文件夹里 —— 比如 Downloads 或 Public。这里打开的是你的主文件夹；一路点到表情包，装着图片的那个文件夹一点就会被读入。图片必须直接放在其中，不能放在子文件夹里。读取在后台进行，并把图片复制到 xmatic 自己的存储中，之后就不再需要你的文件夹了。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="332"/>
         <source>%1 taken over, %2 refused</source>
         <translation>已接受 %1 张，拒绝 %2 张</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="304"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="343"/>
         <source>The pictures have changed since they were read in and are not shown.</source>
         <translation>图片在读取后被更改，因此不予显示。</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="313"/>
-        <source>Remove emoji pictures</source>
-        <translation>移除表情图片</translation>
     </message>
 </context>
 <context>
@@ -724,6 +739,39 @@
         <location filename="../qml/pages/DirectoryPage.qml" line="242"/>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>所选目录中的公开聊天室会显示在这里。</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="38"/>
+        <source>Where is the pack?</source>
+        <translation>表情包在哪里？</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="44"/>
+        <source>Take this folder</source>
+        <translation>选用此文件夹</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="51"/>
+        <source>One level up</source>
+        <translation>上一级</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="108"/>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>这里有图片 —— 点一下就读入</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="125"/>
+        <source>No folders in here</source>
+        <translation>这里没有文件夹</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EmojiFolderPage.qml" line="126"/>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>下拉菜单会选用你当前所在的文件夹。</translation>
     </message>
 </context>
 <context>
@@ -2750,52 +2798,52 @@
         <translation>正在编辑消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2580"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2587"/>
         <source>New text</source>
         <translation>新文本</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2581"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2588"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3111"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3112"/>
         <source>Sent unencrypted</source>
         <translation>以明文发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3112"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3113"/>
         <source>Not sent by the account it names</source>
         <translation>并非署名的账号发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3113"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3114"/>
         <source>The sender&apos;s keys changed</source>
         <translation>发送者的密钥已更改</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3115"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3116"/>
         <source>From an unverified device</source>
         <translation>来自未验证的设备</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3116"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3117"/>
         <source>From an unverified person</source>
         <translation>来自未验证的人</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3117"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3118"/>
         <source>Authenticity not confirmed</source>
         <translation>真实性未确认</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3132"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3133"/>
         <source>Open this address?</source>
         <translation>打开此地址？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3134"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3135"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
@@ -3631,60 +3679,60 @@
 <context>
     <name>harbour-xmatic</name>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="140"/>
+        <location filename="../qml/harbour-xmatic.qml" line="143"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="141"/>
+        <location filename="../qml/harbour-xmatic.qml" line="144"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="142"/>
+        <location filename="../qml/harbour-xmatic.qml" line="145"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="143"/>
+        <location filename="../qml/harbour-xmatic.qml" line="146"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="144"/>
+        <location filename="../qml/harbour-xmatic.qml" line="147"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="145"/>
+        <location filename="../qml/harbour-xmatic.qml" line="148"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="341"/>
+        <location filename="../qml/harbour-xmatic.qml" line="344"/>
         <source>Incoming video call</source>
         <translation>来电视频通话</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="338"/>
-        <location filename="../qml/harbour-xmatic.qml" line="342"/>
+        <location filename="../qml/harbour-xmatic.qml" line="341"/>
+        <location filename="../qml/harbour-xmatic.qml" line="345"/>
         <source>Incoming call</source>
         <translation>来电</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="410"/>
+        <location filename="../qml/harbour-xmatic.qml" line="413"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="416"/>
+        <location filename="../qml/harbour-xmatic.qml" line="419"/>
         <source>%n mention(s)</source>
         <translation>
             <numerusform>%n 条提及</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="417"/>
+        <location filename="../qml/harbour-xmatic.qml" line="420"/>
         <source>%n new message(s)</source>
         <translation>
             <numerusform>%n 条新消息</numerusform>

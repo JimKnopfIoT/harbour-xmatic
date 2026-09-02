@@ -231,6 +231,7 @@ DISTFILES += \
     qml/pages/SearchPage.qml \
     qml/pages/ShieldGlossaryPage.qml \
     qml/pages/AppearancePage.qml \
+    qml/pages/EmojiFolderPage.qml \
     qml/pages/PrivacyPage.qml \
     qml/pages/PushPage.qml \
     qml/pages/ColorField.qml \

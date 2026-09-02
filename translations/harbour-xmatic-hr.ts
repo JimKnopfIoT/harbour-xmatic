@@ -225,16 +225,8 @@
         <translation>Prozirnost oblačića</translation>
     </message>
     <message>
-        <source>Reactions as pictures</source>
-        <translation>Reakcije kao slike</translation>
-    </message>
-    <message>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>Isključeno se reakcija crta kao znak koji jest — uvijek točno i besplatno. Uključeno xmatic za nju traži tvoju vlastitu sliku u %1, nazvanu po njezinim kodnim točkama (1f44d.svg). Ništa se ne isporučuje niti preuzima. Odvagni: slikovnu datoteku otvara dekoder slika, a ondje je aplikacija ove vrste najizloženija.</translation>
-    </message>
-    <message>
-        <source>Choose emoji pictures</source>
-        <translation>Odaberi emoji sličice</translation>
     </message>
     <message>
         <source>Reading the pictures…</source>
@@ -253,10 +245,6 @@
         <translation>Vrati zadane boje</translation>
     </message>
     <message>
-        <source>Remove emoji pictures</source>
-        <translation>Ukloni emoji sličice</translation>
-    </message>
-    <message>
         <source>Hide the keyboard after sending</source>
         <translation>Sakrij tipkovnicu nakon slanja</translation>
     </message>
@@ -271,6 +259,30 @@
     <message>
         <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Uključeno: ulaskom dolaziš do svoje zadnje pročitane poruke, nove su ispod nje. Isključeno: soba se otvara kod najnovije poruke, a crtu koja označava gdje si stao pronaći ćeš pomicanjem prema gore.</translation>
+    </message>
+    <message>
+        <source>Read in an emoji pack</source>
+        <translation>Učitaj paket emojija</translation>
+    </message>
+    <message>
+        <source>Remove the emoji pack</source>
+        <translation>Ukloni paket emojija</translation>
+    </message>
+    <message>
+        <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
+        <translation>Slike još nisu učitane - emojiji ostaju znakovi, crno-bijeli.</translation>
+    </message>
+    <message>
+        <source>Pictures ready: %1</source>
+        <translation>Spremne slike: %1</translation>
+    </message>
+    <message>
+        <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
+        <translation>Raspakiraj paket bilo gdje u vlastite mape - recimo Downloads ili Public. Ovo se otvara u tvojoj osobnoj mapi; dođi dodirom do paketa i mapa sa slikama učitat će se čim je dodirneš. Slike moraju biti izravno u njoj, ne u podmapama. Učitava se u pozadini i kopira ih u vlastitu pohranu xmatica, pa ti mapa poslije više ne treba.</translation>
+    </message>
+    <message>
+        <source>Reactions as pictures (emoji)</source>
+        <translation>Reakcije kao slike (emojiji)</translation>
     </message>
 </context>
 <context>
@@ -587,6 +599,33 @@
     <message>
         <source>Public rooms of the chosen directory show up here.</source>
         <translation>Javne sobe odabranog imenika pojavljuju se ovdje.</translation>
+    </message>
+</context>
+<context>
+    <name>EmojiFolderPage</name>
+    <message>
+        <source>Where is the pack?</source>
+        <translation>Gdje je paket?</translation>
+    </message>
+    <message>
+        <source>Take this folder</source>
+        <translation>Uzmi ovu mapu</translation>
+    </message>
+    <message>
+        <source>One level up</source>
+        <translation>Jednu razinu više</translation>
+    </message>
+    <message>
+        <source>No folders in here</source>
+        <translation>Ovdje nema mapa</translation>
+    </message>
+    <message>
+        <source>The pull-down takes the folder you are in.</source>
+        <translation>Padajući izbornik uzima mapu u kojoj jesi.</translation>
+    </message>
+    <message>
+        <source>Pictures in here - tap to read them in</source>
+        <translation>Slike ovdje - dodirni za učitavanje</translation>
     </message>
 </context>
 <context>
