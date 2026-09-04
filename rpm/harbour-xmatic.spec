@@ -135,6 +135,7 @@ strip %{buildroot}%{_bindir}/%{name}
 - A message's actions are ordered by how often they are wanted: what deletes at
   the top, what answers at the bottom.
 - The conversation no longer jumps while the keyboard opens.
+- Switching rooms no longer leaves a red error on the account page.
 
 * Wed Sep 02 2026 harbour-xmatic contributors 0.28.2-1
 - The paper clip sits right of the message field now, the emoji face left.
