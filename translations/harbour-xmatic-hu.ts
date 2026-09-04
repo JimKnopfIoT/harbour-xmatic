@@ -282,6 +282,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reakciók képként (emodzsik)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Küldés az Enter billentyűvel</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Bekapcsolva az Enter billentyű elküldi az üzenetet; a mező melletti nyíl továbbra is működik. Új sort ekkor a nyíl hosszú nyomva tartása ad, vagy hardveres billentyűzeten a Shift és az Enter. Kikapcsolva az Enter billentyű új sort kezd, és csak a nyíl küld.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Mind</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Képek</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Letöltések</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 kiválasztva</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Melléklet</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galéria</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Fájlok</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Saját mappa</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Egyéb fájlok</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Itt nincsenek képek</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Itt nincs semmi</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1592,16 +1647,20 @@
         <translation>Reagálás</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Valami más</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Itt nincs semmi</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Tarts nyomva egy emodzsit egy másik lapon, hogy ide kerüljön</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>A saját szöveged</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>A szöveged reakcióként</translation>
     </message>
 </context>
 <context>
@@ -2293,6 +2352,10 @@
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Fájlok kiválasztása</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2456,6 +2519,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Felirat (nem kötelező)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 fájl, egymás után elküldve. A felirat az elsővel megy.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Küldés eredeti felbontásban</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Kikapcsolva a kép küldés előtt kisebb lesz, és a metaadatai – köztük a készítés helye – nem mennek vele.</translation>
     </message>
 </context>
 <context>

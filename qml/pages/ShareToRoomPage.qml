@@ -33,7 +33,9 @@ Page {
             opacity: enabled ? 1.0 : 0.4
 
             onClicked: {
-                matrix.forwardToRoom(model.id, page.body, page.path, page.mimeType)
+                // Fresh from another application, not a picture that has been
+                // through the network once: it goes through the same shrinking.
+                matrix.forwardToRoom(model.id, page.body, page.path, page.mimeType, false)
                 pageStack.replace(Qt.resolvedUrl("RoomPage.qml"), {
                                       roomId: model.id,
                                       roomName: model.name,

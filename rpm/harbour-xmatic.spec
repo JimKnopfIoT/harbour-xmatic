@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.28.2
+Version:    0.28.3
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -15,11 +15,16 @@ Packager:   harbour-xmatic contributors
 Requires:   sailfishsilica-qt5
 # Round profile pictures are masked with QtGraphicalEffects (Avatar.qml).
 Requires:   qt5-qtgraphicaleffects
-# Both are QML imports, which RPM does not resolve on its own: Sailfish.Share
+# QML imports, which RPM does not resolve on its own: Sailfish.Share
 # in the root document (without it the app does not start at all) and
 # Sailfish.Pickers wherever a file or a folder is chosen.
 Requires:   sailfishshare-components
 Requires:   sailfish-components-pickers-qt5
+# The attachment picker's own gallery: the thumbnails, the query that finds the
+# pictures, and the model that lists a folder.
+Requires:   sailfish-components-gallery-qt5
+Requires:   qt5-qtdocgallery
+Requires:   qt5-qtdeclarative-import-folderlistmodel
 Requires:   sailfish-content-graphics
 Requires:   nemo-qml-plugin-notifications-qt5
 # Calls load these at run time rather than linking them, so they have to be
@@ -105,6 +110,32 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Sep 04 2026 harbour-xmatic contributors 0.28.3-1
+- Messages can be formatted. Hold a word in the message field to mark it, then
+  bold, italic, struck through, underlined or monospace from the row above.
+  Markers typed by hand work the same way, and what goes out carries the
+  formatting other clients read.
+- Struck-through and monospace text from other clients is drawn as such. It
+  never was: the platform's text renderer has no tag for either.
+- New switch under Appearance: the return key sends the message. Off it makes
+  a line break, as before, and only the arrow sends. Where it sends, holding
+  the send arrow makes the line break instead.
+- The keyboard stays up after sending where the setting says so. It never did:
+  the send arrow is a press outside the message field, and that clears its
+  focus on its own.
+- One picker for an attachment, with two tabs: the gallery, divided by the
+  folders that exist, and the file system from the home folder down. Both
+  select several files at once, and they can be mixed.
+- Pictures are made smaller before they go out and lose their metadata with
+  them, the place a photograph was taken included. A screenshot keeps every
+  pixel. "Send at original resolution" on the send page keeps a single picture
+  as it lies; a forwarded one is never re-encoded.
+- The text field in the emoji picker says what it does: your text becomes the
+  reaction. It was read as a search field, which it is not.
+- A message's actions are ordered by how often they are wanted: what deletes at
+  the top, what answers at the bottom.
+- The conversation no longer jumps while the keyboard opens.
+
 * Wed Sep 02 2026 harbour-xmatic contributors 0.28.2-1
 - The paper clip sits right of the message field now, the emoji face left.
 - The emoji page says what to do, which state it is in, and how many

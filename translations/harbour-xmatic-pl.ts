@@ -284,6 +284,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reakcje jako obrazki (emoji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Wysyłanie klawiszem Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Włączone, klawisz Enter wysyła wiadomość; strzałka obok pola nadal działa. Nowy wiersz daje wtedy długie przytrzymanie tej strzałki albo Shift i Enter na klawiaturze sprzętowej. Wyłączone, klawisz Enter tworzy nowy wiersz i wysyła tylko strzałka.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Wszystkie</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Obrazy</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Pobrane</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>Wybrano: %1</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Załącznik</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galeria</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Pliki</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Katalog domowy</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Inne pliki</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Tu nie ma obrazów</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Tu nic nie ma</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1596,16 +1651,20 @@
         <translation>Zareaguj</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Coś innego</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Nic tu nie ma</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Przytrzymaj emoji w innej zakładce, aby zachować je tutaj</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Twój własny tekst</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Twój tekst jako reakcja</translation>
     </message>
 </context>
 <context>
@@ -2299,6 +2358,10 @@
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Wybierz pliki</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2462,6 +2525,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Podpis (opcjonalny)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 plików, wysyłane jeden po drugim. Podpis idzie z pierwszym.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Wyślij w oryginalnej rozdzielczości</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Wyłączone, zdjęcie jest przed wysłaniem pomniejszane, a jego metadane – między innymi miejsce wykonania – nie jadą razem z nim.</translation>
     </message>
 </context>
 <context>

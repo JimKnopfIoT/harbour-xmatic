@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Réactions en images (emojis)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Envoyer avec la touche Entrée</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Activé, la touche Entrée envoie le message ; la flèche à côté du champ continue de fonctionner. Un saut de ligne s&apos;obtient alors par un appui long sur cette flèche, ou par Maj et Entrée sur un clavier physique. Désactivé, la touche Entrée fait un saut de ligne et seule la flèche envoie.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Toutes</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Images</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Téléchargements</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 sélectionnées</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Pièce jointe</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galerie</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Fichiers</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Dossier personnel</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Autres fichiers</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Aucune image ici</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Rien ici</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Réagir</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Autre chose</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Rien ici</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Appuie longuement sur un émoji dans un autre onglet pour le garder ici</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Ton propre texte</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Ton texte comme réaction</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Choisir des fichiers</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Légende (facultative)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 fichiers, envoyés l&apos;un après l&apos;autre. La légende accompagne le premier.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Envoyer en résolution d&apos;origine</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Désactivé, l&apos;image est réduite avant l&apos;envoi et ses métadonnées — dont le lieu de prise de vue — ne l&apos;accompagnent pas.</translation>
     </message>
 </context>
 <context>

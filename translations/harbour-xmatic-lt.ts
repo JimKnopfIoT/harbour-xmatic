@@ -284,6 +284,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reakcijos kaip paveikslėliai (jaustukai)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Siųsti Enter klavišu</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Įjungta, Enter klavišas išsiunčia žinutę; rodyklė šalia lauko veikia toliau. Naują eilutę tada duoda ilgas rodyklės paspaudimas arba Shift ir Enter fizinėje klaviatūroje. Išjungta, Enter klavišas daro naują eilutę ir siunčia tik rodyklė.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Visos</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Paveikslėliai</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Atsisiuntimai</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>Pasirinkta: %1</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Priedas</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galerija</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Failai</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Namų aplankas</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Kiti failai</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Čia nėra paveikslėlių</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Čia nieko nėra</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1596,16 +1651,20 @@
         <translation>Reaguoti</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Kas nors kita</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Čia nieko nėra</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Kitoje kortelėje palaikyk jaustuką, kad jį čia išsaugotum</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Tavo paties tekstas</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Tavo tekstas kaip reakcija</translation>
     </message>
 </context>
 <context>
@@ -2299,6 +2358,10 @@
         <source>Open</source>
         <translation>Atverti</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Pasirinkti failus</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2462,6 +2525,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Antraštė (nebūtina)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 failai, siunčiami vienas po kito. Antraštė keliauja su pirmuoju.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Siųsti originalia raiška</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Išjungta, paveikslėlis prieš išsiunčiant sumažinamas, o jo metaduomenys – tarp jų ir nufotografavimo vieta – kartu nekeliauja.</translation>
     </message>
 </context>
 <context>

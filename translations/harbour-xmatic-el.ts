@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Αντιδράσεις ως εικόνες (emoji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Αποστολή με το πλήκτρο Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Ενεργό, το πλήκτρο Enter στέλνει το μήνυμα· το βέλος δίπλα στο πεδίο εξακολουθεί να λειτουργεί. Αλλαγή γραμμής δίνει τότε το παρατεταμένο πάτημα του βέλους, ή Shift και Enter σε φυσικό πληκτρολόγιο. Ανενεργό, το πλήκτρο Enter αλλάζει γραμμή και στέλνει μόνο το βέλος.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Όλα</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Εικόνες</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Λήψεις</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 επιλεγμένα</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Συνημμένο</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Συλλογή</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Αρχεία</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Προσωπικός φάκελος</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Άλλα αρχεία</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Δεν υπάρχουν εικόνες εδώ</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Δεν υπάρχει τίποτα εδώ</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Αντίδραση</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Κάτι άλλο</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Δεν υπάρχει τίποτα εδώ</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Κράτα πατημένο ένα emoji σε άλλη καρτέλα για να το κρατήσεις εδώ</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Δικό σου κείμενο</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Το κείμενό σου ως αντίδραση</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Άνοιγμα</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Επιλογή αρχείων</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Λεζάντα (προαιρετική)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 αρχεία, στέλνονται το ένα μετά το άλλο. Η λεζάντα πάει με το πρώτο.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Αποστολή σε αρχική ανάλυση</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Ανενεργό, η εικόνα σμικρύνεται πριν σταλεί και τα μεταδεδομένα της — μεταξύ άλλων ο τόπος λήψης — δεν ταξιδεύουν μαζί της.</translation>
     </message>
 </context>
 <context>

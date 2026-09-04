@@ -8,9 +8,14 @@ Dialog {
 
     allowedOrientations: Orientation.All
 
-    /// What the picker handed over — may or may not carry a file:// prefix.
-    property string path: ""
-    property string mimeType: ""
+    /// What the picker handed over: one entry per file, `path` and `mimeType`
+    /// each. Paths may or may not carry a file:// prefix.
+    property var files: []
+
+    /// The first of them, which is what the preview shows and what the caption
+    /// and the reply belong to.
+    readonly property string path: files.length > 0 ? files[0].path : ""
+    readonly property string mimeType: files.length > 0 ? files[0].mimeType : ""
     /// Event this attachment answers, empty for a plain send.
     property string replyTo: ""
     /// Who wrote that event and what it said, for the quote above the caption.
@@ -28,6 +33,10 @@ Dialog {
     /// Called when the send was called off, with the caption as it stands, so
     /// the conversation can put the text back where it was typed.
     property var afterCancel: null
+
+    /// Whether the picture goes as it lies. Off, it is re-encoded towards a
+    /// size a mobile line carries - and loses its metadata on the way.
+    property bool original: false
 
     readonly property bool isImage: mimeType.indexOf("image/") === 0
     // The picker speaks URLs, the core wants a path, and the preview wants a
@@ -51,16 +60,35 @@ Dialog {
     /// warning - a closing dialog cannot put another one over itself.
     property var send: null
 
+    /// The files with their prefixes taken off, in the order they were picked.
+    function plainFiles() {
+        var out = []
+        for (var i = 0; i < dialog.files.length; i++) {
+            var file = dialog.files[i]
+            out.push({
+                path: file.path.indexOf("file://") === 0 ? file.path.substring(7)
+                                                         : file.path,
+                mimeType: file.mimeType
+            })
+        }
+        return out
+    }
+
     onAccepted: {
         if (dialog.send) {
             // Handed over, not sent: what follows a send belongs after it. Calling
             // `afterSend` here cleared the reply before anything was established.
-            dialog.send(dialog.plainPath, dialog.mimeType,
-                        captionField.text, dialog.replyTo)
+            dialog.send(dialog.plainFiles(), captionField.text, dialog.replyTo,
+                        dialog.original)
             return
         }
-        matrix.sendMedia(dialog.plainPath, dialog.mimeType,
-                         captionField.text, dialog.replyTo)
+        var picked = dialog.plainFiles()
+        for (var i = 0; i < picked.length; i++) {
+            matrix.sendMedia(picked[i].path, picked[i].mimeType,
+                             i === 0 ? captionField.text : "",
+                             i === 0 ? dialog.replyTo : "",
+                             0, dialog.original)
+        }
         if (dialog.afterSend) {
             dialog.afterSend()
         }
@@ -166,6 +194,29 @@ Dialog {
                         text: dialog.fileName
                     }
                 }
+            }
+
+            // What the page cannot show: the others, and where the caption goes.
+            Label {
+                visible: dialog.files.length > 1
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryHighlightColor
+                text: qsTr("%1 files, sent one after another. The caption goes with the first one.")
+                          .arg(dialog.files.length)
+            }
+
+            // Only where one picture is at stake: several at full size is what
+            // the shrinking is there to prevent.
+            TextSwitch {
+                visible: dialog.isImage && dialog.files.length === 1
+                text: qsTr("Send at original resolution")
+                description: qsTr("Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.")
+                checked: dialog.original
+                automaticCheck: false
+                onClicked: dialog.original = !dialog.original
             }
 
             TextArea {

@@ -71,8 +71,12 @@ Dialog {
 
         TextField {
             width: parent.width
-            label: qsTr("Something else")
-            placeholderText: qsTr("Something else")
+            // The same dialog serves two jobs, and "something else" named
+            // neither: here the text is reacted with, there it is typed into
+            // the message.
+            label: dialog.forMessage ? qsTr("Your own text")
+                                     : qsTr("Your text as reaction")
+            placeholderText: label
             inputMethodHints: Qt.ImhNoPredictiveText
             EnterKey.iconSource: "image://theme/icon-m-enter-accept"
             EnterKey.onClicked: {

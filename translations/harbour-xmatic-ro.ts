@@ -284,6 +284,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reacții ca imagini (emoji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Trimite cu tasta Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Pornit, tasta Enter trimite mesajul; săgeata de lângă câmp funcționează în continuare. O linie nouă se obține atunci ținând apăsată acea săgeată, sau cu Shift și Enter pe o tastatură fizică. Oprit, tasta Enter face o linie nouă și trimite doar săgeata.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Toate</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Imagini</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Descărcări</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 selectate</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Atașament</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galerie</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Fișiere</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Dosar personal</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Alte fișiere</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Nu sunt imagini aici</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Nu e nimic aici</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1596,16 +1651,20 @@
         <translation>Reacționează</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Altceva</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Nimic aici</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Ține apăsat un emoji din altă filă ca să-l păstrezi aici</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Textul tău</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Textul tău ca reacție</translation>
     </message>
 </context>
 <context>
@@ -2299,6 +2358,10 @@
         <source>Open</source>
         <translation>Deschide</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Alege fișiere</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2462,6 +2525,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Legendă (opțională)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 fișiere, trimise unul după altul. Descrierea merge cu primul.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Trimite la rezoluția originală</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Oprit, imaginea este micșorată înainte de a pleca, iar metadatele ei – printre care locul unde a fost făcută – nu călătoresc cu ea.</translation>
     </message>
 </context>
 <context>

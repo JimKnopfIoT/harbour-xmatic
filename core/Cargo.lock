@@ -5843,7 +5843,7 @@ dependencies = [
 
 [[package]]
 name = "xmatic-core"
-version = "0.28.2"
+version = "0.28.3"
 dependencies = [
  "async-trait",
  "base64",

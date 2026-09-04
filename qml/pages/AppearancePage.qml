@@ -250,6 +250,14 @@ Page {
             }
 
             TextSwitch {
+                text: qsTr("Send with the return key")
+                description: qsTr("On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.")
+                checked: settings.sendByEnter
+                automaticCheck: false
+                onClicked: settings.sendByEnter = !settings.sendByEnter
+            }
+
+            TextSwitch {
                 text: qsTr("Hide the keyboard after sending")
                 description: qsTr("On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.")
                 checked: settings.hideKeyboardOnSend

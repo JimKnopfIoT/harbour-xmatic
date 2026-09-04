@@ -284,6 +284,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Freagairtí mar phictiúir (emoji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Seol le heochair Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Air, seolann eochair Enter an teachtaireacht; oibríonn an tsaighead in aice leis an réimse fós. Faightear briseadh líne ansin trí bhrú fada ar an tsaighead sin, nó le Shift agus Enter ar mhéarchlár crua-earraí. As, déanann eochair Enter briseadh líne agus ní sheolann ach an tsaighead.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Uile</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Pictiúir</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Íoslódálacha</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 roghnaithe</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Ceangaltán</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Gailearaí</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Comhaid</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Fillteán baile</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Comhaid eile</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Níl pictiúr ar bith anseo</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Níl aon rud anseo</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1596,16 +1651,20 @@
         <translation>Freagair</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Rud éigin eile</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Níl aon rud anseo</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Coinnigh emoji i gcluaisín eile síos chun é a choinneáil anseo</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Do théacs féin</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Do théacs mar fhreagairt</translation>
     </message>
 </context>
 <context>
@@ -2299,6 +2358,10 @@
         <source>Open</source>
         <translation>Oscail</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Roghnaigh comhaid</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2462,6 +2525,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Foscríbhinn (roghnach)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 comhad, seoltar ceann i ndiaidh a chéile iad. Téann an fotheideal leis an gcéad cheann.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Seol sa bhunghéire</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>As, laghdaítear an pictiúr sula seoltar é agus ní théann a mheiteashonraí — an áit ar tógadh é ina measc — leis.</translation>
     </message>
 </context>
 <context>

@@ -6,6 +6,7 @@
 #![recursion_limit = "512"]
 
 mod call;
+mod compose;
 mod directory;
 mod login;
 mod media;

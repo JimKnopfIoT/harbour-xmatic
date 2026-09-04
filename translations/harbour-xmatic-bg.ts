@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Реакции като картинки (емоджита)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Изпращане с клавиша Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Включено, клавишът Enter изпраща съобщението; стрелката до полето продължава да работи. Нов ред тогава се получава със задържане на тази стрелка или с Shift и Enter на хардуерна клавиатура. Изключено, клавишът Enter прави нов ред и изпраща само стрелката.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Всички</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Снимки</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Изтегляния</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 избрани</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Прикачен файл</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Галерия</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Файлове</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Домашна папка</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Други файлове</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Тук няма снимки</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Тук няма нищо</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Реагирай</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Нещо друго</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Тук няма нищо</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Задръж емоджи в друг раздел, за да го запазиш тук</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Твой собствен текст</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Твоят текст като реакция</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Отвори</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Избор на файлове</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Надпис (по желание)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 файла, изпращат се един след друг. Описанието върви с първия.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Изпращане в оригинална разделителна способност</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Изключено, снимката се смалява преди изпращане и метаданните ѝ — включително мястото на заснемане — не пътуват с нея.</translation>
     </message>
 </context>
 <context>

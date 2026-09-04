@@ -284,6 +284,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Реакции как картинки (эмодзи)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Отправлять клавишей Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Включено — клавиша Enter отправляет сообщение; стрелка рядом с полем продолжает работать. Перенос строки тогда даёт долгое нажатие на эту стрелку или Shift с Enter на аппаратной клавиатуре. Выключено — клавиша Enter переносит строку, а отправляет только стрелка.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Все</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Изображения</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Загрузки</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>Выбрано: %1</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Вложение</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Галерея</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Файлы</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Домашняя папка</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Другие файлы</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Здесь нет изображений</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Здесь ничего нет</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1596,16 +1651,20 @@
         <translation>Отреагировать</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Что-то другое</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Здесь ничего нет</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Задержи эмодзи в другой вкладке, чтобы оставить его здесь</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Твой собственный текст</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Твой текст как реакция</translation>
     </message>
 </context>
 <context>
@@ -2299,6 +2358,10 @@
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Выбрать файлы</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2462,6 +2525,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Подпись (необязательно)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 файлов, отправляются один за другим. Подпись уходит с первым.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Отправить в исходном разрешении</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Выключено — снимок уменьшается перед отправкой, и его метаданные, в том числе место съёмки, с ним не уходят.</translation>
     </message>
 </context>
 <context>

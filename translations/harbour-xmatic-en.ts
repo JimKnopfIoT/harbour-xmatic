@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reactions as pictures (emoji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Send with the return key</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>All</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Pictures</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Downloads</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 selected</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Attachment</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Gallery</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Home folder</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Other files</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>No pictures here</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Nothing here</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>React</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Something else</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Nothing kept here</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Press and hold an emoji in another tab to keep it here</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Your own text</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Your text as reaction</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Open</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Select files</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Caption (optional)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 files, sent one after another. The caption goes with the first one.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Send at original resolution</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</translation>
     </message>
 </context>
 <context>

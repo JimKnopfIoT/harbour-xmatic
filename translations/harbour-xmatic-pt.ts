@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reações como imagens (emojis)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Enviar com a tecla Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Ligado, a tecla Enter envia a mensagem; a seta ao lado do campo continua a funcionar. Uma quebra de linha obtém-se então mantendo essa seta premida, ou com Shift e Enter num teclado físico. Desligado, a tecla Enter faz uma quebra de linha e só a seta envia.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Todas</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Imagens</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Transferências</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 selecionadas</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Anexo</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galeria</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Ficheiros</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Pasta pessoal</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Outros ficheiros</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Não há imagens aqui</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Aqui não há nada</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Reagir</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Outra coisa</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Aqui não há nada</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Mantém premido um emoji noutro separador para o guardares aqui</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>O teu próprio texto</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>O teu texto como reação</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Escolher ficheiros</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Legenda (opcional)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 ficheiros, enviados um a seguir ao outro. A legenda vai com o primeiro.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Enviar na resolução original</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Desligado, a imagem é reduzida antes de sair e os seus metadados — entre eles o local onde foi tirada — não viajam com ela.</translation>
     </message>
 </context>
 <context>

@@ -10,6 +10,8 @@
 #include <QFileInfo>
 #include <QGuiApplication>
 #include <QImageReader>
+
+#include "outgoingimage.h"
 #include <QJSValue>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -1748,7 +1750,7 @@ static void insertDimensions(QJsonObject &arguments, const QString &localPath,
 
 void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                              const QString &caption, const QString &replyTo,
-                             qint64 voiceDuration)
+                             qint64 voiceDuration, bool original)
 {
     // The type, never the name: a file name carries whatever the user called
     // it, and the log is not the place for that.
@@ -1760,12 +1762,16 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
     if (local.startsWith(QLatin1String("file://"))) {
         local = QUrl(local).toLocalFile();
     }
-    arguments.insert(QStringLiteral("path"), local);
+    // A copy in the cache, or the file itself. Measured afterwards, never
+    // before: the re-encode is what decides the dimensions that go out.
+    const OutgoingImage outgoing = prepareOutgoingImage(local, mimeType, original);
+    arguments.insert(QStringLiteral("path"), outgoing.path);
     arguments.insert(QStringLiteral("mimeType"),
-                     mimeType.isEmpty() ? QStringLiteral("application/octet-stream") : mimeType);
+                     outgoing.mimeType.isEmpty() ? QStringLiteral("application/octet-stream")
+                                                 : outgoing.mimeType);
     arguments.insert(QStringLiteral("caption"), caption);
     arguments.insert(QStringLiteral("replyTo"), replyTo);
-    insertDimensions(arguments, local, mimeType);
+    insertDimensions(arguments, outgoing.path, outgoing.mimeType);
     if (voiceDuration > 0) {
         arguments.insert(QStringLiteral("voice"), true);
         arguments.insert(QStringLiteral("duration"), double(voiceDuration));
@@ -1781,7 +1787,8 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
 void MatrixBridge::forwardToRoom(const QString &roomId,
                                  const QString &body,
                                  const QString &path,
-                                 const QString &mimeType)
+                                 const QString &mimeType,
+                                 bool original)
 {
     if (roomId.isEmpty()) {
         return;
@@ -1792,12 +1799,16 @@ void MatrixBridge::forwardToRoom(const QString &roomId,
         local = QUrl(local).toLocalFile();
     }
 
+    // A forwarded picture has been through someone's encoder already; one from
+    // another application has not, and goes the same way the paper clip does.
+    const OutgoingImage outgoing = prepareOutgoingImage(local, mimeType, original);
+
     QJsonObject arguments;
     arguments.insert(QStringLiteral("roomId"), roomId);
     arguments.insert(QStringLiteral("body"), body);
-    arguments.insert(QStringLiteral("path"), local);
-    arguments.insert(QStringLiteral("mimeType"), mimeType);
-    insertDimensions(arguments, local, mimeType);
+    arguments.insert(QStringLiteral("path"), outgoing.path);
+    arguments.insert(QStringLiteral("mimeType"), outgoing.mimeType);
+    insertDimensions(arguments, outgoing.path, outgoing.mimeType);
     send(QStringLiteral("room.forward"), arguments);
 }
 
