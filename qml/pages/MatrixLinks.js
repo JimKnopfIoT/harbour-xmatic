@@ -71,3 +71,18 @@ function parse(link) {
 function hasAddress(body) {
     return ADDRESS.test(body || "")
 }
+
+/// Where a tapped link leads, decided in one place. The allowlist for web
+/// addresses lives here and nowhere else: two copies of it drift apart, and
+/// this one decides whether a stranger's string reaches a browser.
+/// Kinds: "room", "user", "web", "none". Acting on it belongs to the page.
+function decide(link) {
+    var target = parse(link)
+    if (target) {
+        return target
+    }
+    if (/^https?:\/\//i.test(link)) {
+        return { "kind": "web", "id": link }
+    }
+    return { "kind": "none", "id": "" }
+}

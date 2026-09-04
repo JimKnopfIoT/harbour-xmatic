@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reaktioner som billeder (emojier)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Send med retur-tasten</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Til sender retur-tasten beskeden; pilen ved siden af feltet virker fortsat. Et linjeskift får du så ved at holde på pilen eller med Skift og retur på et fysisk tastatur. Fra laver retur-tasten et linjeskift, og kun pilen sender.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Alle</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Billeder</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Downloads</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 valgt</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Vedhæftning</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galleri</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Filer</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Hjemmemappe</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Andre filer</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Ingen billeder her</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Intet her</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Reagér</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Noget andet</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Intet gemt her</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Hold en emoji nede i en anden fane for at gemme den her</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Din egen tekst</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Din tekst som reaktion</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Vælg filer</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Billedtekst (valgfri)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 filer, sendes én efter én. Billedteksten følger med den første.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Send i original opløsning</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Fra gøres billedet mindre inden afsendelsen, og dets metadata – blandt andet stedet, det blev taget – følger ikke med.</translation>
     </message>
 </context>
 <context>

@@ -39,6 +39,7 @@ use matrix_sdk_ui::{
 };
 use serde_json::{json, Value};
 
+use crate::compose::to_formatted_body;
 use crate::protocol::event;
 use crate::runtime::Sink;
 use crate::text::{safe_file_name, scrub_ids, strip_bidi};
@@ -161,10 +162,11 @@ impl TimelineHandle {
             .map_err(|error| format!("could not load older messages: {error}"))
     }
 
-    /// Sends a plain text message. It shows up as a local echo immediately.
+    /// Sends a text message. It shows up as a local echo immediately. Where the
+    /// composer's markers said so, a `formatted_body` travels beside the text.
     pub async fn send_text(&self, body: String) -> Result<(), String> {
         self.timeline
-            .send(RoomMessageEventContent::text_plain(body).into())
+            .send(text_content(body).into())
             .await
             .map(|_| ())
             .map_err(|error| format!("message could not be sent: {error}"))
@@ -180,7 +182,7 @@ impl TimelineHandle {
     pub async fn reply(&self, event_id: &str, body: String) -> Result<(), String> {
         let id = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
         self.timeline
-            .send_reply(RoomMessageEventContent::text_plain(body).into(), id)
+            .send_reply(text_content(body).into(), id)
             .await
             .map_err(|error| format!("could not reply: {error}"))
     }
@@ -191,13 +193,11 @@ impl TimelineHandle {
         let id = parse_event_id(event_id)?;
         let content = match self.is_media_event(&id).await {
             Some(true) => EditedContent::MediaCaption {
+                formatted_caption: to_formatted_body(&body).map(FormattedBody::html),
                 caption: Some(body).filter(|text| !text.is_empty()),
-                formatted_caption: None,
                 mentions: None,
             },
-            Some(false) => {
-                EditedContent::RoomMessage(RoomMessageEventContent::text_plain(body).into())
-            }
+            Some(false) => EditedContent::RoomMessage(text_content(body).into()),
             // Unknown kind: refusing costs an edit the UI could not have
             // offered anyway, while guessing "text" on a picture destroys it.
             None => return Err("this message is no longer loaded".to_owned()),
@@ -1848,4 +1848,14 @@ pub async fn follow_successor(client: &Client, room_id: &str) -> Result<String, 
         .map_err(|error| format!("could not join the new room: {error}"))?;
 
     Ok(joined.room_id().as_str().to_owned())
+}
+
+/// One place decides whether a message ships a formatted copy: the markers in
+/// the text. The plain body keeps them, which is what a client without HTML
+/// shows and what an edit reads back.
+fn text_content(body: String) -> RoomMessageEventContent {
+    match to_formatted_body(&body) {
+        Some(html) => RoomMessageEventContent::text_html(body, html),
+        None => RoomMessageEventContent::text_plain(body),
+    }
 }

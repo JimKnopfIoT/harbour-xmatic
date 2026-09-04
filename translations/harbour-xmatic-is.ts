@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Viðbrögð sem myndir (emoji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Senda með Enter-lyklinum</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Kveikt sendir Enter-lykillinn skilaboðin; örin við hliðina á reitnum virkar áfram. Línuskil fást þá með því að halda inni örinni, eða með Shift og Enter á vélbúnaðarlyklaborði. Slökkt býr Enter-lykillinn til línuskil og aðeins örin sendir.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Allar</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Myndir</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Niðurhal</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 valdar</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Viðhengi</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Myndasafn</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Skrár</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Heimamappa</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Aðrar skrár</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Hér eru engar myndir</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Hér er ekkert</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Bregðast við</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Eitthvað annað</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Ekkert hér</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Haltu inni emoji í öðrum flipa til að geyma það hér</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Þinn eigin texti</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Textinn þinn sem viðbrögð</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Opna</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Velja skrár</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Myndatexti (valfrjáls)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 skrár, sendar hver á eftir annarri. Skýringin fylgir þeirri fyrstu.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Senda í upprunalegri upplausn</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Slökkt er myndin minnkuð áður en hún fer og lýsigögn hennar – þar á meðal staðurinn þar sem hún var tekin – fylgja ekki með.</translation>
     </message>
 </context>
 <context>

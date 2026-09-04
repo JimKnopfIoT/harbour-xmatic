@@ -1,22 +1,26 @@
 #!/usr/bin/env python3
-"""Find bindings assigned twice inside one QML object scope.
+"""Two ways a QML file refuses to load, neither of which the build reports.
 
-qmllint only parses; "Property value set multiple times" is raised when the
-type is loaded, which on this project means at runtime on the device — the
-page simply fails to push. This walks brace scopes instead, ignoring braces
-that live in strings or comments, and reports a name bound twice in the same
-scope.
+qmllint only parses; "Property value set multiple times" and "id is not
+unique" are both raised when the type is *loaded*, which on this project means
+at runtime on the device — the page simply fails to push. This walks brace
+scopes instead, ignoring braces that live in strings or comments, and reports
+a name bound twice in the same scope or an id used twice in one file.
 """
 import re
 import sys
 import pathlib
 
 BINDING = re.compile(r'^\s*((?:on[A-Z]\w*)|[a-z]\w*(?:\.\w+)*)\s*:(?!:)')
+# An id is unique per file, not per scope - a component of ours reusing a name
+# the page already has takes the whole page down with it.
+IDENT = re.compile(r'^\s*id\s*:\s*([A-Za-z_]\w*)\s*$')
 
 
 def scan(path):
     text = path.read_text()
     scopes = [{}]           # stack of {name: line}
+    identifiers = {}        # id -> line, for the whole file
     findings = []
     in_block_comment = False
     for lineno, raw in enumerate(text.splitlines(), 1):
@@ -36,6 +40,15 @@ def scan(path):
             line = line[:start] + (line[start:].split('*/', 1)[1]
                                    if not in_block_comment else '')
         line = re.sub(r'//.*$', '', line)
+
+        identifier = IDENT.match(line)
+        if identifier:
+            name = identifier.group(1)
+            previous = identifiers.get(name)
+            if previous is not None:
+                findings.append((lineno, "id " + name, previous))
+            else:
+                identifiers[name] = lineno
 
         match = BINDING.match(line)
         if match:
@@ -58,7 +71,8 @@ status = 0
 for arg in sys.argv[1:]:
     for path in sorted(pathlib.Path(arg).rglob('*.qml')) if pathlib.Path(arg).is_dir() else [pathlib.Path(arg)]:
         for lineno, name, previous in scan(path):
-            print(f"{path}:{lineno}: '{name}' already bound at line {previous}")
+            what = "already used" if name.startswith("id ") else "already bound"
+            print(f"{path}:{lineno}: '{name}' {what} at line {previous}")
             status = 1
-print("no duplicate bindings" if status == 0 else "", end="")
+print("no duplicate bindings or ids" if status == 0 else "", end="")
 sys.exit(status)

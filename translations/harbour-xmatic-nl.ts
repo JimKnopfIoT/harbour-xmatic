@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reacties als afbeeldingen (emoji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Verzenden met de enter-toets</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Aan verstuurt de enter-toets het bericht; de pijl naast het veld blijft werken. Een regeleinde krijg je dan door die pijl ingedrukt te houden, of met shift en enter op een fysiek toetsenbord. Uit maakt de enter-toets een regeleinde en verstuurt alleen de pijl.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Alle</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Afbeeldingen</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Downloads</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 geselecteerd</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Bijlage</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galerij</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Bestanden</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Persoonlijke map</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Andere bestanden</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Hier zijn geen afbeeldingen</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Hier is niets</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Reageren</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Iets anders</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Hier staat niets</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Houd een emoji in een ander tabblad ingedrukt om hem hier te bewaren</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Je eigen tekst</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Je tekst als reactie</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Openen</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Bestanden kiezen</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Bijschrift (optioneel)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 bestanden, één voor één verstuurd. Het bijschrift gaat met het eerste mee.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>In originele resolutie versturen</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Uit wordt de foto vóór het versturen verkleind en gaan de metagegevens – waaronder de plaats van opname – niet mee.</translation>
     </message>
 </context>
 <context>

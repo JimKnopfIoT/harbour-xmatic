@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "Formatting.js" as Formatting
 import "MatrixLinks.js" as MatrixLinks
+import "Composing.js" as Composing
 
 // One thread of a room: root first, replies below, own composer. Text-focused,
 // attachments render as their kind.
@@ -74,22 +75,11 @@ Page {
 
     /// Recipients the user has not chosen to trust yet. Empty means nothing
     /// stands in the way of sending.
-    function pendingUnverified() {
-        var out = []
-        for (var i = 0; i < unverifiedUsers.length; i++) {
-            var entry = unverifiedUsers[i]
-            if (!matrix.recipientTrusted(entry.userId)) {
-                out.push(entry)
-            }
-        }
-        return out
-    }
-
     function submit() {
         // The uncommitted word, same as in RoomPage.submit() - the reason is
         // written out there.
         Qt.inputMethod.commit()
-        var pending = pendingUnverified()
+        var pending = Composing.pendingUnverified(page.unverifiedUsers, matrix)
         if (pending.length > 0) {
             var dialog = pageStack.push(Qt.resolvedUrl("UnverifiedRecipientsDialog.qml"),
                                         { users: pending })
@@ -100,33 +90,35 @@ Page {
     }
 
     function doSubmit() {
-        matrix.sendThreadMessage(threadInput.text)
-        threadInput.text = ""
+        matrix.sendThreadMessage(composer.text)
+        composer.clearField()
         // The same rule as in the room below: with the setting on, the
         // keyboard goes once the post is away.
         page.followTail = true
         if (settings.hideKeyboardOnSend) {
-            threadInput.focus = false
+            composer.releaseField()
+            return
         }
+        composer.holdKeyboard()
+        composer.focusField()
     }
 
     // A tapped link, as in the room below: a Matrix address is answered inside
     // the app, anything else is a web address.
     function followLink(link) {
-        var target = MatrixLinks.parse(link)
-        if (!target) {
-            // The same allowlist as the room view: everything the system would
-            // otherwise dispatch is a stranger's choice, not the user's.
-            if (/^https?:\/\//i.test(link)) {
-                // The address before it is opened: what a link says and where it
-                // goes are two strings a stranger writes.
-                var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), {
-                                                question: qsTr("Open this address?"),
-                                                subject: link,
-                                                acceptLabel: qsTr("Open")
-                                            })
-                dialog.accepted.connect(function() { Qt.openUrlExternally(link) })
-            }
+        var target = MatrixLinks.decide(link)
+        if (target.kind === "none") {
+            return
+        }
+        if (target.kind === "web") {
+            // The address before it is opened: what a link says and where it
+            // goes are two strings a stranger writes.
+            var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), {
+                                            question: qsTr("Open this address?"),
+                                            subject: link,
+                                            acceptLabel: qsTr("Open")
+                                        })
+            dialog.accepted.connect(function() { Qt.openUrlExternally(link) })
             return
         }
         if (target.kind === "user") {
@@ -344,7 +336,8 @@ Page {
                         }
                         if (hasFormatted) {
                             return Formatting.renderFormatted(model.formatted,
-                                                              settings.clickableLinks)
+                                                              settings.clickableLinks,
+                                                              Theme.highlightColor)
                         }
                         return model.body || ""
                     }
@@ -376,9 +369,9 @@ Page {
         VerticalScrollDecorator { }
     }
 
-    // Sending on the thread timeline threads automatically. Laid out like the
-    // room's composer: no label, so focusing does not jump the height.
-    Row {
+    // Sending on the thread timeline threads automatically. The same composer
+    // the room below uses, without the offers a thread has no room for.
+    Composer {
         id: composer
 
         anchors {
@@ -387,24 +380,7 @@ Page {
             bottom: parent.bottom
         }
 
-        TextArea {
-            id: threadInput
-
-            width: parent.width - sendButton.width
-            placeholderText: qsTr("Reply in thread")
-            labelVisible: false
-        }
-
-        IconButton {
-            id: sendButton
-
-            anchors.bottom: threadInput.bottom
-            anchors.bottomMargin: Theme.paddingMedium
-            width: Theme.itemSizeSmall
-            icon.source: "image://theme/icon-m-send"
-            enabled: threadInput.text.trim().length > 0
-                     || threadInput.inputMethodComposing
-            onClicked: page.submit()
-        }
+        placeholderText: qsTr("Reply in thread")
+        onSubmitted: page.submit()
     }
 }

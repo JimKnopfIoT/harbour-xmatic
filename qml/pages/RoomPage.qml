@@ -4,6 +4,7 @@ import Sailfish.Pickers 1.0
 import QtMultimedia 5.6
 import "Formatting.js" as Formatting
 import "MatrixLinks.js" as MatrixLinks
+import "Composing.js" as Composing
 import "SecurityStatus.js" as SecurityStatus
 
 // A single room: history above, composer below. The list keeps the core's
@@ -58,6 +59,9 @@ Page {
     // The timeline's height before the last change: keyboard, banner and composer
     // all take height away, and what was on screen has to stay there.
     property real lastTimelineHeight: 0
+    /// Whether the reader stood at the newest message when the viewport began to
+    /// change. Asked before the keyboard shortens the page, answered after.
+    property bool wasAtEnd: false
 
     // A save that is waiting for its download to finish.
     property string pendingSaveKey: ""
@@ -104,7 +108,7 @@ Page {
             // everything except the word the user stopped in the middle of.
             Qt.inputMethod.commit()
             matrix.setDraft(roomId,
-                            page.editingEventId.length > 0 ? "" : messageField.text)
+                            page.editingEventId.length > 0 ? "" : messageComposer.text)
         }
     }
 
@@ -123,7 +127,7 @@ Page {
         if (!invited) {
             // What was typed here last time. Going back destroys this page, so the field
             // is filled from somewhere that outlives it.
-            messageField.text = matrix.draft(roomId)
+            messageComposer.text = matrix.draft(roomId)
             matrix.openRoom(roomId)
             refreshRecipients(true)
             // The lock has to state the room's answer, not the caller's guess - not every
@@ -444,6 +448,8 @@ Page {
                     beginEdit(action.eventId, action.body)
                 } else if (action.kind === "sendMedia") {
                     submitMedia(action)
+                } else if (action.kind === "otherFiles") {
+                    pageStack.push(multiContentPicker)
                 } else if (action.kind === "react") {
                     // These three push a page of their own. From the actions page, after its pop
                     // had started, `push()` handed nothing back and the picker never appeared.
@@ -1159,7 +1165,8 @@ Page {
                     var base = ""
                     if (hasFormatted) {
                         base = Formatting.renderFormatted(model.formatted,
-                                                          settings.clickableLinks)
+                                                          settings.clickableLinks,
+                                                          Theme.highlightColor)
                     } else if (hasLink) {
                         base = page.linkifyBody(model.body || "")
                     } else if (settings.emojiImages) {
@@ -1252,21 +1259,34 @@ Page {
                     }
                 }
 
+                // `!page.isLandscape` on most entries: there the conversation keeps under
+                // 600 px, four menu rows, and a message's menu needs six. Those move to a page.
                 menu: ContextMenu {
+
                     MenuItem {
-                        text: qsTr("Copy")
-                        visible: (model.body || "").length > 0
-                        onClicked: Clipboard.text = model.body
+                        // Also the only way out for a send that failed for good: it has no event id,
+                        // and without this it sits in the room for ever.
+                        text: model.sendState === "failed"
+                              ? qsTr("Discard") : qsTr("Delete")
+                        visible: row.isOwn && !page.isLandscape
+                        onClicked: page.confirmDelete(model.eventId || "",
+                                                      model.txnId || "",
+                                                      model.sendState === "failed")
                     }
 
                     MenuItem {
-                        text: qsTr("Reply")
-                        visible: model.kind === "message"
-                        onClicked: page.beginReply(model.eventId, model.senderName, model.body)
+                        text: qsTr("Pin")
+                        // Only where this account may write the pinned list. `!== false`: until the
+                        // room answers there is no entry, and a slow answer must not remove an action.
+                        visible: model.kind === "message" && (model.eventId || "").length > 0
+                                 && !page.isLandscape
+                                 && matrix.roomPermissions.pin !== false
+                        onClicked: matrix.pinMessage(model.eventId, true)
                     }
 
-                    // `!page.isLandscape` below: there the conversation keeps under 600 px, four
-                    // menu rows, and a message's menu needs six. Those move to a page.
+
+
+
                     MenuItem {
                         // Starting one, not only answering in one that exists: the marker opens a
                         // thread that is already there.
@@ -1285,11 +1305,33 @@ Page {
                                                   })
                     }
 
+
+
+                    MenuItem {
+                        // The queue gave up on this one; this puts it back in
+                        // line. Nothing else in the app could move it.
+                        text: qsTr("Send again")
+                        visible: model.sendState === "failed" && !page.isLandscape
+                        onClicked: matrix.retryMessage(model.txnId || "")
+                    }
+
+
+
                     MenuItem {
                         text: qsTr("Save")
                         visible: (row.isFile || row.isImage) && !page.isLandscape
                         onClicked: page.saveAttachment(model)
                     }
+
+
+
+                    MenuItem {
+                        text: qsTr("Copy")
+                        visible: (model.body || "").length > 0
+                        onClicked: Clipboard.text = model.body
+                    }
+
+
 
                     MenuItem {
                         text: qsTr("Forward")
@@ -1300,21 +1342,15 @@ Page {
                                                   })
                     }
 
+
+
                     MenuItem {
                         text: qsTr("Edit")
                         visible: row.isOwn && model.editable === true && !page.isLandscape
                         onClicked: page.beginEdit(model.eventId, model.body)
                     }
 
-                    MenuItem {
-                        text: qsTr("Pin")
-                        // Only where this account may write the pinned list. `!== false`: until the
-                        // room answers there is no entry, and a slow answer must not remove an action.
-                        visible: model.kind === "message" && (model.eventId || "").length > 0
-                                 && !page.isLandscape
-                                 && matrix.roomPermissions.pin !== false
-                        onClicked: matrix.pinMessage(model.eventId, true)
-                    }
+
 
                     MenuItem {
                         text: qsTr("React")
@@ -1324,24 +1360,15 @@ Page {
                         onClicked: page.pickReaction(model.eventId)
                     }
 
-                    MenuItem {
-                        // The queue gave up on this one; this puts it back in
-                        // line. Nothing else in the app could move it.
-                        text: qsTr("Send again")
-                        visible: model.sendState === "failed" && !page.isLandscape
-                        onClicked: matrix.retryMessage(model.txnId || "")
-                    }
+
 
                     MenuItem {
-                        // Also the only way out for a send that failed for good: it has no event id,
-                        // and without this it sits in the room for ever.
-                        text: model.sendState === "failed"
-                              ? qsTr("Discard") : qsTr("Delete")
-                        visible: row.isOwn && !page.isLandscape
-                        onClicked: page.confirmDelete(model.eventId || "",
-                                                      model.txnId || "",
-                                                      model.sendState === "failed")
+                        text: qsTr("Reply")
+                        visible: model.kind === "message"
+                        onClicked: page.beginReply(model.eventId, model.senderName, model.body)
                     }
+
+
 
                     MenuItem {
                         text: qsTr("More…")
@@ -2320,6 +2347,20 @@ Page {
                 }
             }
 
+            // The run of height changes is over once none has come for a moment. A
+            // reader who stood at the end is put back there exactly, not arithmetically.
+            Timer {
+                id: viewportSettle
+
+                interval: 120
+                onTriggered: {
+                    if (page.wasAtEnd && page.jumpTargetId.length === 0) {
+                        timelineView.positionViewAtEnd()
+                        page.followTail = true
+                    }
+                }
+            }
+
             onMovementEnded: {
                 page.followTail = atYEnd
                 // A hand on the list outranks the marker search: being carried off to a jump
@@ -2363,9 +2404,33 @@ Page {
             onHeightChanged: {
                 var lost = page.lastTimelineHeight - height
                 page.lastTimelineHeight = height
-                if (lost > 0) {
+                // A height of nothing is a moment during layout, not a viewport the reader
+                // lost: measured, the list is briefly negative in height while the composer
+                // is laid out, and acting on that pins it to its first row.
+                if (height <= 0 || lost === 0) {
+                    return
+                }
+                // Not while the room is still deciding where to open. The unread
+                // marker positions the list itself, and `followTail` is still at its
+                // default `true` then - the settle below would answer "the reader
+                // stood at the end" and undo the very jump the room was opened for.
+                if (page.status !== PageStatus.Active
+                        || page.jumpTargetId.length > 0
+                        || page.unreadFromId.length > 0
+                        || unreadRetry.running || followCheck.running) {
+                    return
+                }
+                // The keyboard arrives over many frames. Where the reader stood is asked
+                // once, at the first of them, and answered again when they stop coming:
+                // this list's content height is an estimate that halves and doubles as
+                // delegates come and go, so holding contentY does not hold the position.
+                if (!viewportSettle.running) {
+                    page.wasAtEnd = page.followTail || atYEnd
+                }
+                viewportSettle.restart()
+                if (lost > 0 && contentHeight > height) {
                     contentY = Math.min(contentY + lost,
-                                        originY + Math.max(0, contentHeight - height))
+                                        originY + contentHeight - height)
                 } else if (lost < 0 && page.followTail
                            && page.jumpTargetId.length === 0) {
                     tailTimer.restart()
@@ -2540,151 +2605,78 @@ Page {
                     }
                 }
 
-                Item {
-                    width: parent.width
-                    height: Math.max(Theme.itemSizeMedium, messageField.height + Theme.paddingMedium)
+                Composer {
+                    id: messageComposer
 
-                    // The face keeps the left edge; the platform's messengers put their
-                    // actions right and start the field at the margin. The icon is drawn, so no IconButton.
-                    MouseArea {
-                        id: emojiButton
-
-                        anchors {
-                            left: parent.left
-                            leftMargin: Theme.paddingMedium
-                            verticalCenter: parent.verticalCenter
-                        }
-                        width: Theme.itemSizeSmall
-                        height: Theme.itemSizeSmall
-
-                        onClicked: page.pickEmoji()
-
-                        FaceIcon {
-                            anchors.centerIn: parent
-                            // Measured against the theme's icons, not set to their nominal size: at
-                            // iconSizeMedium the face came out a third taller than the theme's arrow.
-                            size: Math.round(Theme.iconSizeMedium * 0.78)
-                            color: emojiButton.pressed ? Theme.highlightColor
-                                                       : Theme.primaryColor
-                        }
+                    // Anchored, not bound: a width that is briefly zero makes the
+                    // field's implicit height enormous, and the list under it loses
+                    // its viewport for a frame.
+                    anchors {
+                        left: parent.left
+                        right: parent.right
                     }
+                    attachments: true
+                    emoji: true
+                    voice: true
+                    editing: page.editingEventId.length > 0
+                    placeholderText: page.editingEventId.length > 0
+                                     ? qsTr("New text") : qsTr("Message")
 
-                    TextArea {
-                        id: messageField
-
-                        anchors {
-                            // Between the two ends: the face left, clip and arrow right.
-                            // The lock that stood in this gap says its piece at the top of the room now.
-                            left: emojiButton.right
-                            right: attachButton.visible ? attachButton.left
-                                                        : sendButton.left
-                            verticalCenter: parent.verticalCenter
-                        }
-                        // The field brings a page margin of its own, which in a row with a button at
-                        // each end is margin twice over. The row's spacing does that job.
-                        textMargin: 0
-                        placeholderText: page.editingEventId.length > 0
-                                         ? qsTr("New text")
-                                         : qsTr("Message")
-                        labelVisible: false
-
-                        // Grow with the text, but stop before the composer eats the screen: past the
-                        // cap the field scrolls internally instead of pushing lines behind the header.
-                        height: Math.min(implicitHeight, Theme.itemSizeMedium * 3)
-                    }
-
-                    // Hold to record, release to send. A tap-to-start button
-                    // invites accidental minute-long recordings.
-                    IconButton {
-                        id: recordButton
-
-                        anchors {
-                            right: parent.right
-                            rightMargin: Theme.horizontalPageMargin
-                            verticalCenter: parent.verticalCenter
-                        }
-                        visible: settings.voiceMessages
-                                 && page.editingEventId.length === 0
-                                 && messageField.text.trim().length === 0
-                                 && !messageField.inputMethodComposing
-                        icon.source: matrix.recorder.recording
-                                     ? "image://theme/icon-m-mic?" + Theme.errorColor
-                                     : "image://theme/icon-m-mic"
-
-                        onPressAndHold: matrix.recorder.start()
-                        onReleased: {
-                            if (matrix.recorder.recording) {
-                                matrix.recorder.stop()
-                                page.followTail = true
-                            }
-                        }
-                        onCanceled: matrix.recorder.cancel()
-                    }
-
-                    IconButton {
-                        id: attachButton
-
-                        anchors {
-                            // Held against the arrow even while the microphone stands in its place:
-                            // both own that slot, never both at once, so the clip does not move.
-                            right: sendButton.left
-                            rightMargin: Theme.paddingSmall
-                            verticalCenter: parent.verticalCenter
-                        }
-                        visible: page.editingEventId.length === 0
-                        icon.source: "image://theme/icon-m-attach"
-                        // The same step down as the face at the other end. Both are offers; the send
-                        // arrow is the action and brightens by itself once there is something to send.
-                        icon.opacity: Theme.opacityLow
-                        onClicked: pageStack.push(contentPicker)
-                    }
-
-                    IconButton {
-                        id: sendButton
-
-                        anchors {
-                            right: parent.right
-                            rightMargin: Theme.horizontalPageMargin
-                            verticalCenter: parent.verticalCenter
-                        }
-                        visible: !recordButton.visible
-                        // `inputMethodComposing` is the uncommitted word and what Qt 5.6 offers -
-                        // `preeditText` arrives in 5.7.
-                        enabled: messageField.text.trim().length > 0
-                                 || messageField.inputMethodComposing
-                        icon.source: "image://theme/icon-m-send"
-                        // The arrow fills barely half its box and reads as a smaller button. Scaled
-                        // rather than replaced: the artwork is the platform's.
-                        icon.scale: 1.25
-                        onClicked: page.submit()
-                    }
+                    onSubmitted: page.submit()
+                    onAttachRequested: pageStack.push(picturePicker)
+                    onEmojiRequested: page.pickEmoji()
+                    onRecordingStopped: page.followTail = true
                 }
             }
         }
     }
 
 
-    // One picker for everything: pictures, documents, downloads. Two separate
-    // entry points would only make the user guess which one holds their file.
+    // Gallery by folder or the file system, in one page. The platform offers
+    // each of them but not together, and its gallery is one undivided grid.
     Component {
-        id: contentPicker
+        id: picturePicker
 
-        // No orientation of its own: this page pushes sub-pages of the platform's
-        // making and hands them nothing, so the two must share the window's default.
-        ContentPickerPage {
-            // Only remembered here, never navigated from here: the picker is running its
-            // own transition and answered a `replace` with "cannot pop". The timer opens it.
-            onSelectedContentPropertiesChanged: {
-                page.pendingAttachment = {
-                    path: selectedContentProperties.filePath,
-                    mimeType: selectedContentProperties.mimeType
+        AttachmentPickerPage {
+            onAccepted: {
+                // Handed to the room, never pushed from here: a dialog that is
+                // popping does not hand back the page it would push.
+                if (otherFilesWanted) {
+                    page.pendingAction = { "kind": "otherFiles" }
+                    return
                 }
+                if (picked.length > 0) {
+                    page.pendingAttachment = picked
+                    attachmentWait.restart()
+                }
+            }
+        }
+    }
+
+    // Several files in one go. Matrix has no album: each one is its own event,
+    // and the caption belongs to the first of them.
+    Component {
+        id: multiContentPicker
+
+        MultiContentPickerDialog {
+            title: qsTr("Select files")
+
+            onAccepted: {
+                var picked = []
+                for (var i = 0; i < selectedContent.count; i++) {
+                    var item = selectedContent.get(i)
+                    picked.push({ path: item.filePath, mimeType: item.mimeType })
+                }
+                if (picked.length === 0) {
+                    return
+                }
+                page.pendingAttachment = picked
                 attachmentWait.restart()
             }
         }
     }
 
-    // The file picked, until the conversation is back on top and the send page
+    // The files picked, until the conversation is back on top and the send page
     // can be opened over it.
     property var pendingAttachment: null
 
@@ -2708,24 +2700,23 @@ Page {
                 page.pendingAttachment = null
                 // What was typed goes along as the caption - one message. The field is
                 // cleared so it cannot be sent twice, and refilled if the send is called off.
-                var typed = messageField.text
-                messageField.text = ""
+                var typed = messageComposer.text
+                messageComposer.clearField()
                 pageStack.push(Qt.resolvedUrl("SendMediaPage.qml"), {
-                    path: picked.path,
-                    mimeType: picked.mimeType,
+                    files: picked,
                     caption: typed,
                     replyTo: page.replyingEventId,
                     replySender: page.replyingTo,
                     replyBody: page.replyingBody,
                     // Handed back here rather than sent from the dialog: the unverified-recipient
                     // warning lives on this page, and an attachment went past it.
-                    send: function (path, mimeType, caption, replyTo) {
+                    send: function (files, caption, replyTo, original) {
                         page.pendingAction = {
                             "kind": "sendMedia",
-                            "path": path,
-                            "mimeType": mimeType,
+                            "files": files,
                             "caption": caption,
-                            "replyTo": replyTo
+                            "replyTo": replyTo,
+                            "original": original
                         }
                     },
                     // Only reached where this page does not take the send over itself; kept so
@@ -2735,7 +2726,7 @@ Page {
                         page.followTail = true
                     },
                     afterCancel: function (text) {
-                        messageField.text = text
+                        messageComposer.text = text
                     }
                 })
                 return
@@ -2753,26 +2744,13 @@ Page {
         }
     }
 
-    // Recipients with unverified devices the user has not chosen to trust yet.
-    // Empty means nothing stands in the way of sending.
-    function pendingUnverified() {
-        var out = []
-        for (var i = 0; i < unverifiedUsers.length; i++) {
-            var entry = unverifiedUsers[i]
-            if (!matrix.recipientTrusted(entry.userId)) {
-                out.push(entry)
-            }
-        }
-        return out
-    }
-
     function submit() {
         // The word being typed is in the input method's preedit, not in `text`: whoever
         // reaches straight for send sent everything but the last word.
         Qt.inputMethod.commit()
         // In an encrypted room, warn once before a message reaches a recipient with
         // unverified devices. The dialog handles "send anyway" and calls back.
-        var pending = pendingUnverified()
+        var pending = Composing.pendingUnverified(page.unverifiedUsers, matrix)
         if (pending.length > 0) {
             var dialog = pageStack.push(Qt.resolvedUrl("UnverifiedRecipientsDialog.qml"),
                                         { users: pending })
@@ -2787,26 +2765,31 @@ Page {
     function afterSend() {
         page.followTail = true
         if (settings.hideKeyboardOnSend) {
-            messageField.focus = false
+            messageComposer.releaseField()
+            return
         }
+        // Keeping the keyboard is an action, not the absence of one: the arrow
+        // that was just tapped is a press outside the field.
+        messageComposer.holdKeyboard()
+        messageComposer.focusField()
     }
 
     function doSubmit() {
         if (page.editingEventId.length > 0) {
-            matrix.editMessage(page.editingEventId, messageField.text)
+            matrix.editMessage(page.editingEventId, messageComposer.text)
             // cancelEdit drops the focus by itself - an edit that is done is
             // done, whatever the setting says.
             page.cancelEdit()
             return
         }
         if (page.replyingEventId.length > 0) {
-            matrix.replyToMessage(page.replyingEventId, messageField.text)
+            matrix.replyToMessage(page.replyingEventId, messageComposer.text)
             page.cancelReply()
             page.afterSend()
             return
         }
-        matrix.sendMessage(messageField.text)
-        messageField.text = ""
+        matrix.sendMessage(messageComposer.text)
+        messageComposer.clearField()
         page.afterSend()
     }
 
@@ -2819,7 +2802,7 @@ Page {
             page.deferredMedia = action
             return
         }
-        var pending = pendingUnverified()
+        var pending = Composing.pendingUnverified(page.unverifiedUsers, matrix)
         if (pending.length > 0) {
             var dialog = pageStack.push(Qt.resolvedUrl("UnverifiedRecipientsDialog.qml"),
                                         { users: pending })
@@ -2859,7 +2842,15 @@ Page {
     }
 
     function sendMediaNow(action) {
-        matrix.sendMedia(action.path, action.mimeType, action.caption, action.replyTo)
+        // One event per file, in the order they were picked. Caption and reply
+        // belong to the first: a reply answers one event, not a batch.
+        for (var i = 0; i < action.files.length; i++) {
+            var file = action.files[i]
+            matrix.sendMedia(file.path, file.mimeType,
+                             i === 0 ? action.caption : "",
+                             i === 0 ? action.replyTo : "",
+                             0, action.original === true)
+        }
         page.clearReplyState()
         page.followTail = true
     }
@@ -2871,14 +2862,14 @@ Page {
         // as two lines, the way the quote in the conversation does.
         page.replyingBody = body || ""
         page.editingEventId = ""
-        messageField.forceActiveFocus()
+        messageComposer.focusField()
     }
 
     function cancelReply() {
         page.replyingEventId = ""
         page.replyingTo = ""
         page.replyingBody = ""
-        messageField.text = ""
+        messageComposer.clearField()
     }
 
     // After an attachment went out as a reply. Unlike `cancelReply` this leaves
@@ -3093,12 +3084,9 @@ Page {
                                     { forMessage: true })
         dialog.accepted.connect(function() {
             if (dialog.key.length > 0) {
-                var position = messageField.cursorPosition
-                messageField.text = messageField.text.slice(0, position)
-                        + dialog.key + messageField.text.slice(position)
-                messageField.cursorPosition = position + dialog.key.length
+                messageComposer.insertAtCursor(dialog.key)
             }
-            messageField.forceActiveFocus()
+            messageComposer.focusField()
         })
     }
 
@@ -3122,20 +3110,19 @@ Page {
     // A tapped link. A Matrix address is answered inside the app; anything
     // else is a web address and goes where it always went.
     function followLink(link) {
-        var target = MatrixLinks.parse(link)
-        if (!target) {
-            // Only the two schemes this app produces. Everything else the system would
-            // dispatch is a stranger's choice, and the allowlist belongs at the last step.
-            if (/^https?:\/\//i.test(link)) {
-                // The address before it is opened: what a link says and where it
-                // goes are two strings a stranger writes.
-                var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), {
-                                                question: qsTr("Open this address?"),
-                                                subject: link,
-                                                acceptLabel: qsTr("Open")
-                                            })
-                dialog.accepted.connect(function() { Qt.openUrlExternally(link) })
-            }
+        var target = MatrixLinks.decide(link)
+        if (target.kind === "none") {
+            return
+        }
+        if (target.kind === "web") {
+            // The address before it is opened: what a link says and where it
+            // goes are two strings a stranger writes.
+            var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), {
+                                            question: qsTr("Open this address?"),
+                                            subject: link,
+                                            acceptLabel: qsTr("Open")
+                                        })
+            dialog.accepted.connect(function() { Qt.openUrlExternally(link) })
             return
         }
         if (target.kind === "user") {
@@ -3254,14 +3241,14 @@ Page {
 
     function beginEdit(eventId, body) {
         page.editingEventId = eventId
-        messageField.text = body
-        messageField.forceActiveFocus()
+        messageComposer.text = body
+        messageComposer.focusField()
     }
 
     function cancelEdit() {
         page.editingEventId = ""
-        messageField.text = ""
-        messageField.focus = false
+        messageComposer.clearField()
+        messageComposer.releaseField()
     }
 
     // What the notice below is currently saying.

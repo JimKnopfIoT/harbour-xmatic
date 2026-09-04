@@ -241,6 +241,26 @@ void AppSettings::setHideKeyboardOnSend(bool enabled)
     emit hideKeyboardOnSendChanged();
 }
 
+bool AppSettings::sendByEnter() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("ui/sendByEnter"), false).toBool();
+}
+
+void AppSettings::setSendByEnter(bool enabled)
+{
+    if (enabled == sendByEnter()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("ui/sendByEnter"), enabled,
+          "the return key setting");
+    if (settings.status() == QSettings::NoError) {
+        qInfo("xmatic: return key %s", enabled ? "sends" : "breaks the line");
+    }
+    emit sendByEnterChanged();
+}
+
 bool AppSettings::emojiImages() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

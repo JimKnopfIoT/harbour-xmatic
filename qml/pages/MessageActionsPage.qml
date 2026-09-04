@@ -60,11 +60,31 @@ Page {
 
             // One condition per entry, never on the column: hiding the container takes
             // every other action with it.
+
             ListItem {
                 contentHeight: Theme.itemSizeSmall
-                visible: page.body.length > 0
+                visible: page.isOwn
+                onClicked: page.handBack("delete")
+                Label {
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: page.unsent ? qsTr("Discard") : qsTr("Delete")
+                    color: Theme.errorColor
+                }
+            }
+
+
+            ListItem {
+                contentHeight: Theme.itemSizeSmall
+                // As in the room's own menu: hidden only where the room has
+                // answered that this account may not pin.
+                visible: page.eventId.length > 0
+                         && matrix.roomPermissions.pin !== false
                 onClicked: {
-                    Clipboard.text = page.body
+                    matrix.pinMessage(page.eventId, true)
                     pageStack.pop()
                 }
                 Label {
@@ -73,22 +93,43 @@ Page {
                         leftMargin: Theme.horizontalPageMargin
                         verticalCenter: parent.verticalCenter
                     }
-                    text: qsTr("Copy")
+                    text: qsTr("Pin")
                 }
             }
 
+
             ListItem {
                 contentHeight: Theme.itemSizeSmall
-                onClicked: page.handBack("reply")
+                visible: page.eventId.length > 0
+                onClicked: page.handBack("thread")
                 Label {
                     anchors {
                         left: parent.left
                         leftMargin: Theme.horizontalPageMargin
                         verticalCenter: parent.verticalCenter
                     }
-                    text: qsTr("Reply")
+                    text: qsTr("Reply in thread")
                 }
             }
+
+
+            ListItem {
+                contentHeight: Theme.itemSizeSmall
+                visible: page.unsent
+                onClicked: {
+                    matrix.retryMessage(page.txnId)
+                    pageStack.pop()
+                }
+                Label {
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: qsTr("Send again")
+                }
+            }
+
 
             ListItem {
                 contentHeight: Theme.itemSizeSmall
@@ -106,6 +147,24 @@ Page {
                     text: qsTr("Save")
                 }
             }
+
+            ListItem {
+                contentHeight: Theme.itemSizeSmall
+                visible: page.body.length > 0
+                onClicked: {
+                    Clipboard.text = page.body
+                    pageStack.pop()
+                }
+                Label {
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: qsTr("Copy")
+                }
+            }
+
 
             // Text and attachments both. Hidden for a picture and shown for other files,
             // this forwarded "holiday.pdf" as a sentence - reported as "there is no Forward".
@@ -135,6 +194,7 @@ Page {
                 }
             }
 
+
             ListItem {
                 contentHeight: Theme.itemSizeSmall
                 visible: page.isOwn && page.editable
@@ -149,39 +209,6 @@ Page {
                 }
             }
 
-            ListItem {
-                contentHeight: Theme.itemSizeSmall
-                // As in the room's own menu: hidden only where the room has
-                // answered that this account may not pin.
-                visible: page.eventId.length > 0
-                         && matrix.roomPermissions.pin !== false
-                onClicked: {
-                    matrix.pinMessage(page.eventId, true)
-                    pageStack.pop()
-                }
-                Label {
-                    anchors {
-                        left: parent.left
-                        leftMargin: Theme.horizontalPageMargin
-                        verticalCenter: parent.verticalCenter
-                    }
-                    text: qsTr("Pin")
-                }
-            }
-
-            ListItem {
-                contentHeight: Theme.itemSizeSmall
-                visible: page.eventId.length > 0
-                onClicked: page.handBack("thread")
-                Label {
-                    anchors {
-                        left: parent.left
-                        leftMargin: Theme.horizontalPageMargin
-                        verticalCenter: parent.verticalCenter
-                    }
-                    text: qsTr("Reply in thread")
-                }
-            }
 
             ListItem {
                 contentHeight: Theme.itemSizeSmall
@@ -197,35 +224,17 @@ Page {
                 }
             }
 
-            ListItem {
-                contentHeight: Theme.itemSizeSmall
-                visible: page.unsent
-                onClicked: {
-                    matrix.retryMessage(page.txnId)
-                    pageStack.pop()
-                }
-                Label {
-                    anchors {
-                        left: parent.left
-                        leftMargin: Theme.horizontalPageMargin
-                        verticalCenter: parent.verticalCenter
-                    }
-                    text: qsTr("Send again")
-                }
-            }
 
             ListItem {
                 contentHeight: Theme.itemSizeSmall
-                visible: page.isOwn
-                onClicked: page.handBack("delete")
+                onClicked: page.handBack("reply")
                 Label {
                     anchors {
                         left: parent.left
                         leftMargin: Theme.horizontalPageMargin
                         verticalCenter: parent.verticalCenter
                     }
-                    text: page.unsent ? qsTr("Discard") : qsTr("Delete")
-                    color: Theme.errorColor
+                    text: qsTr("Reply")
                 }
             }
         }

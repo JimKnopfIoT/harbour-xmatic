@@ -285,6 +285,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Odzivi kot slike (emodžiji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Pošiljanje s tipko Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Vklopljeno, tipka Enter pošlje sporočilo; puščica ob polju še naprej deluje. Novo vrstico takrat da dolg pritisk na to puščico ali Shift in Enter na strojni tipkovnici. Izklopljeno, tipka Enter naredi novo vrstico in pošilja samo puščica.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Vse</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Slike</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Prenosi</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>Izbranih: %1</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Priponka</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galerija</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Datoteke</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Domača mapa</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Druge datoteke</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Tu ni slik</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Tu ni ničesar</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1598,16 +1653,20 @@
         <translation>Odzovi se</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Nekaj drugega</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Tukaj ni ničesar</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Pridrži emotikon v drugem zavihku, da ga shraniš sem</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Tvoje lastno besedilo</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Tvoje besedilo kot odziv</translation>
     </message>
 </context>
 <context>
@@ -2302,6 +2361,10 @@
         <source>Open</source>
         <translation>Odpri</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Izberi datoteke</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2465,6 +2528,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Napis (neobvezno)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 datotek, poslanih ena za drugo. Napis gre s prvo.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Pošlji v izvirni ločljivosti</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Izklopljeno se slika pred pošiljanjem pomanjša, njeni metapodatki – med njimi kraj posnetka – pa ne potujejo z njo.</translation>
     </message>
 </context>
 <context>

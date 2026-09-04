@@ -50,6 +50,7 @@ SOURCES += \
     src/emojiset.cpp \
     src/emojistore.cpp \
     src/emojiimageprovider.cpp \
+    src/outgoingimage.cpp \
     src/matrixbridge.cpp \
     src/roomlistmodel.cpp \
     src/roomsortmodel.cpp \
@@ -76,6 +77,7 @@ HEADERS += \
     src/pushwake.h \
     src/languagesettings.h \
     src/matrixbridge.h \
+    src/outgoingimage.h \
     src/secretskeeper.h \
     src/roomlistmodel.h \
     src/roomsortmodel.h \
@@ -227,6 +229,11 @@ DISTFILES += \
     qml/pages/AddToSpacePage.qml \
     qml/pages/MoveToSpacePage.qml \
     qml/pages/RoomPage.qml \
+    qml/pages/Composer.qml \
+    qml/pages/Composing.js \
+    qml/pages/FormatBar.qml \
+    qml/pages/AttachmentPickerPage.qml \
+    qml/pages/ModeTab.qml \
     qml/pages/RoomInfoPage.qml \
     qml/pages/SearchPage.qml \
     qml/pages/ShieldGlossaryPage.qml \

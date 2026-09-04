@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reaktiot kuvina (emojit)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Lähetä Enter-näppäimellä</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Päällä Enter-näppäin lähettää viestin; kentän vieressä oleva nuoli toimii edelleen. Rivinvaihdon saa silloin painamalla nuolta pitkään tai Shiftillä ja Enterillä fyysisessä näppäimistössä. Pois päältä Enter-näppäin tekee rivinvaihdon ja vain nuoli lähettää.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Kaikki</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Kuvat</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Lataukset</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 valittu</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Liite</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galleria</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Tiedostot</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Kotikansio</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Muut tiedostot</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Täällä ei ole kuvia</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Täällä ei ole mitään</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Reagoi</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Jokin muu</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Täällä ei ole mitään</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Paina emojia pitkään toisessa välilehdessä, niin se tallentuu tähän</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Oma tekstisi</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Tekstisi reaktiona</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Avaa</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Valitse tiedostot</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Kuvateksti (valinnainen)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 tiedostoa, lähetetään yksi kerrallaan. Kuvateksti menee ensimmäisen mukana.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Lähetä alkuperäisellä tarkkuudella</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Pois päältä kuva pienennetään ennen lähetystä, eivätkä sen metatiedot – muun muassa kuvauspaikka – kulje mukana.</translation>
     </message>
 </context>
 <context>

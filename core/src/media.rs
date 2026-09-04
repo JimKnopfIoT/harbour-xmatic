@@ -321,7 +321,14 @@ pub async fn forward_text(client: &Client, room_id: &str, body: String) -> Resul
         .get_room(&parsed)
         .ok_or_else(|| "room is not known".to_owned())?;
 
-    room.send(RoomMessageEventContent::text_plain(body))
+    // The same markers a message in the open room carries; a forward is not a
+    // different kind of message.
+    let content = match crate::compose::to_formatted_body(&body) {
+        Some(html) => RoomMessageEventContent::text_html(body, html),
+        None => RoomMessageEventContent::text_plain(body),
+    };
+
+    room.send(content)
         .await
         .map(|_| ())
         .map_err(|error| format!("could not forward the message: {error}"))

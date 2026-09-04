@@ -38,6 +38,8 @@ class AppSettings : public QObject
                NOTIFY voiceMessagesChanged)
     Q_PROPERTY(bool hideKeyboardOnSend READ hideKeyboardOnSend WRITE setHideKeyboardOnSend
                NOTIFY hideKeyboardOnSendChanged)
+    Q_PROPERTY(bool sendByEnter READ sendByEnter WRITE setSendByEnter
+               NOTIFY sendByEnterChanged)
     Q_PROPERTY(bool emojiImages READ emojiImages WRITE setEmojiImages
                NOTIFY emojiImagesChanged)
     Q_PROPERTY(QString directoryServer READ directoryServer WRITE setDirectoryServer
@@ -137,6 +139,11 @@ public:
     bool hideKeyboardOnSend() const;
     void setHideKeyboardOnSend(bool enabled);
 
+    /// Whether the return key sends. Off: it makes a line break, and the arrow
+    /// sends - the only combination in which both are reachable on a touch keyboard.
+    bool sendByEnter() const;
+    void setSendByEnter(bool enabled);
+
     /// Whether reactions are drawn from the user's own image files. Off: the
     /// characters cost nothing, an image is a file for a decoder to open.
     bool emojiImages() const;
@@ -172,6 +179,7 @@ signals:
     void pushChanged();
     void voiceMessagesChanged();
     void hideKeyboardOnSendChanged();
+    void sendByEnterChanged();
     void emojiImagesChanged();
     void directoryServerChanged();
     void directoryServersChanged();

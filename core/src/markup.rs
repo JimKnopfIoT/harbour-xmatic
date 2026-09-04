@@ -86,6 +86,9 @@ struct Context {
     in_anchor: bool,
     /// Inside a monospace run. `<pre><code>` would otherwise open the font twice.
     monospace: bool,
+    /// Inside `<del>`/`<s>`/`<strike>`. StyledText has no tag for it, so the
+    /// line is drawn by the text: an overlay per character.
+    struck: bool,
     /// Guards this module's own recursion; ruma caps the tree at 100 levels.
     depth: u32,
 }
@@ -135,22 +138,34 @@ impl Writer {
             if crate::text::is_bidi_control(character) {
                 continue;
             }
+            let mut drawn = true;
             match character {
                 '&' => self.push_raw("&amp;"),
                 '<' => self.push_raw("&lt;"),
                 '>' => self.push_raw("&gt;"),
-                '\n' if context.preformatted => self.push_tag("<br>"),
+                '\n' if context.preformatted => {
+                    self.push_tag("<br>");
+                    drawn = false;
+                }
                 // Only leading spaces: `&nbsp;` everywhere would stop the
                 // label wrapping, and a long code line would be cut off.
-                ' ' if context.preformatted && self.at_indent() => self.push_raw("&nbsp;"),
+                ' ' if context.preformatted && self.at_indent() => {
+                    self.push_raw("&nbsp;");
+                    drawn = false;
+                }
                 // A bidi override in a target reverses what the address
                 // looks like; the text filter drops them and so does this.
-                _ if crate::text::is_bidi_control(character) => {}
+                _ if crate::text::is_bidi_control(character) => drawn = false,
                 _ => {
                     let mut buffer = [0u8; 4];
                     let encoded: &str = character.encode_utf8(&mut buffer);
                     self.push_raw(encoded);
                 }
+            }
+            // The strike-out line, drawn by the text because Qt has no tag for
+            // it. Written as raw text, never as markup.
+            if context.struck && drawn && carries_overlay(character) {
+                self.push_raw(STRIKE_OVERLAY);
             }
         }
     }
@@ -179,18 +194,33 @@ impl Writer {
     }
 }
 
+/// U+0336 COMBINING LONG STROKE OVERLAY: one per character is what a struck
+/// line is, where the renderer offers no tag for one.
+const STRIKE_OVERLAY: &str = "\u{336}";
+
+/// Whether a character may carry the overlay. A joiner, a variation selector, a
+/// mark of its own or an emoji would be cut off from what it belongs to.
+fn carries_overlay(character: char) -> bool {
+    let code = character as u32;
+    !matches!(code, 0x200D | 0xFE0E | 0xFE0F | 0x0300..=0x036F
+                    | 0x2190..=0x2BFF | 0x1F000..=0x1FAFF)
+        && character != '\n'
+        && character != '\r'
+}
+
 /// Which of Qt's tags an element maps to, where the mapping is a plain wrap.
 fn inline_wrapper(name: &str) -> Option<(&'static str, &'static str)> {
     match name {
         "b" | "strong" => Some(("<b>", "</b>")),
         "i" | "em" | "cite" | "dfn" | "var" => Some(("<i>", "</i>")),
         "u" | "ins" => Some(("<u>", "</u>")),
-        "s" | "del" | "strike" => Some(("<s>", "</s>")),
         "sub" => Some(("<sub>", "</sub>")),
         "sup" => Some(("<sup>", "</sup>")),
-        // No `<code>` in StyledText. Generic family name: fontconfig resolves
-        // it, a concrete font would be a guess about the device.
-        "code" | "kbd" | "samp" | "tt" => Some(("<font family=\"monospace\">", "</font>")),
+        // Qt's `<font>` takes `color` and `size` and nothing else - `family` is
+        // silently ignored (`qquickstyledtext.cpp`), and `<pre>` would break the
+        // line mid-sentence. A marker Qt does not know: the UI paints it, and
+        // where it does not, the tag contributes its text and nothing else.
+        "code" | "kbd" | "samp" | "tt" => Some(("<code>", "</code>")),
         _ => None,
     }
 }
@@ -225,12 +255,20 @@ impl Writer {
     ) {
         let inner = Context { depth: context.depth + 1, ..*context };
 
+        // Struck text carries its own line, so there is no tag to open.
+        if matches!(name, "s" | "del" | "strike") {
+            self.markup = true;
+            let struck = Context { struck: true, ..inner };
+            self.children(node.children(), &struck);
+            return;
+        }
+
         if let Some((open, close)) = inline_wrapper(name) {
-            if context.monospace && open.starts_with("<font") {
+            if context.monospace && open == "<code>" {
                 self.children(node.children(), &inner);
                 return;
             }
-            let inner = Context { monospace: open.starts_with("<font"), ..inner };
+            let inner = Context { monospace: open == "<code>", ..inner };
             self.push_tag(open);
             self.children(node.children(), &inner);
             self.push_tag(close);
@@ -294,12 +332,15 @@ impl Writer {
                 self.block_break();
             }
 
+            // The one place Qt does give a monospace font: `<pre>` sets
+            // "Courier New,courier" and fixed pitch. It forces a line break with
+            // it, which is what a block wants anyway.
             "pre" => {
                 self.block_break();
                 let preformatted = Context { preformatted: true, monospace: true, ..inner };
-                self.push_tag("<font family=\"monospace\">");
+                self.push_tag("<pre>");
                 self.children(node.children(), &preformatted);
-                self.push_tag("</font>");
+                self.push_tag("</pre>");
                 self.block_break();
             }
 
@@ -562,7 +603,36 @@ mod tests {
     fn code_keeps_its_line_breaks_and_indentation() {
         let rendered = to_styled_text("<pre><code>fn a() {\n    b()\n}</code></pre>").unwrap();
         assert!(rendered.contains("<br>&nbsp;&nbsp;&nbsp;&nbsp;b()"), "{rendered}");
-        assert!(rendered.contains("monospace"), "{rendered}");
+        // `<pre>` is the only tag that gives Qt a fixed-pitch font; `<font
+        // family=…>` is accepted and ignored.
+        assert!(rendered.contains("<pre>"), "{rendered}");
+    }
+
+    #[test]
+    fn struck_text_carries_its_own_line() {
+        // StyledText knows no strike-out tag, so the line is a combining
+        // overlay on each character.
+        assert_eq!(to_styled_text("<del>ab</del>").as_deref(), Some("a\u{336}b\u{336}"));
+        assert_eq!(to_styled_text("<s>ab</s>").as_deref(), Some("a\u{336}b\u{336}"));
+        assert_eq!(
+            to_styled_text("<strike>a&amp;b</strike>").as_deref(),
+            Some("a\u{336}&amp;\u{336}b\u{336}")
+        );
+    }
+
+    #[test]
+    fn an_overlay_is_never_cut_into_a_sequence() {
+        // A variation selector or a joiner belongs to the character before it.
+        let rendered = to_styled_text("<del>a\u{1f44d}b</del>").unwrap();
+        assert!(!rendered.contains("\u{1f44d}\u{336}"), "{rendered}");
+    }
+
+    #[test]
+    fn inline_code_is_marked_for_the_ui_to_paint() {
+        assert_eq!(
+            to_styled_text("<code>x</code>").as_deref(),
+            Some("<code>x</code>")
+        );
     }
 
     #[test]

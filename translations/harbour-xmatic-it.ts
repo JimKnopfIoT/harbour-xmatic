@@ -283,6 +283,61 @@
         <source>Reactions as pictures (emoji)</source>
         <translation>Reazioni come immagini (emoji)</translation>
     </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Invia con il tasto Invio</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Attivo, il tasto Invio invia il messaggio; la freccia accanto al campo continua a funzionare. Un a capo si ottiene allora tenendo premuta quella freccia, oppure con Maiusc e Invio su una tastiera fisica. Disattivato, il tasto Invio va a capo e invia solo la freccia.</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentPickerPage</name>
+    <message>
+        <source>All</source>
+        <translation>Tutte</translation>
+    </message>
+    <message>
+        <source>Pictures</source>
+        <translation>Immagini</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation>Scaricati</translation>
+    </message>
+    <message>
+        <source>%1 selected</source>
+        <translation>%1 selezionate</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>Allegato</translation>
+    </message>
+    <message>
+        <source>Gallery</source>
+        <translation>Galleria</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>File</translation>
+    </message>
+    <message>
+        <source>Home folder</source>
+        <translation>Cartella personale</translation>
+    </message>
+    <message>
+        <source>Other files</source>
+        <translation>Altri file</translation>
+    </message>
+    <message>
+        <source>No pictures here</source>
+        <translation>Nessuna immagine qui</translation>
+    </message>
+    <message>
+        <source>Nothing here</source>
+        <translation>Qui non c&apos;è nulla</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1594,16 +1649,20 @@
         <translation>Reagisci</translation>
     </message>
     <message>
-        <source>Something else</source>
-        <translation>Altro</translation>
-    </message>
-    <message>
         <source>Nothing kept here</source>
         <translation>Qui non c&apos;è nulla</translation>
     </message>
     <message>
         <source>Press and hold an emoji in another tab to keep it here</source>
         <translation>Tieni premuta un&apos;emoji in un&apos;altra scheda per tenerla qui</translation>
+    </message>
+    <message>
+        <source>Your own text</source>
+        <translation>Il tuo testo</translation>
+    </message>
+    <message>
+        <source>Your text as reaction</source>
+        <translation>Il tuo testo come reazione</translation>
     </message>
 </context>
 <context>
@@ -2296,6 +2355,10 @@
         <source>Open</source>
         <translation>Apri</translation>
     </message>
+    <message>
+        <source>Select files</source>
+        <translation>Scegli file</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -2459,6 +2522,18 @@
     <message>
         <source>Caption (optional)</source>
         <translation>Didascalia (facoltativa)</translation>
+    </message>
+    <message>
+        <source>%1 files, sent one after another. The caption goes with the first one.</source>
+        <translation>%1 file, inviati uno dopo l&apos;altro. La didascalia va con il primo.</translation>
+    </message>
+    <message>
+        <source>Send at original resolution</source>
+        <translation>Invia alla risoluzione originale</translation>
+    </message>
+    <message>
+        <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
+        <translation>Disattivato, l&apos;immagine viene rimpicciolita prima di partire e i suoi metadati — fra cui il luogo dello scatto — non viaggiano con lei.</translation>
     </message>
 </context>
 <context>

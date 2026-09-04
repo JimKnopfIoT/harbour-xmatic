@@ -614,10 +614,13 @@ public:
 
     /// Sends a file as an attachment; `caption` and `replyTo` may be empty and
     /// cannot be added later. `voiceDuration` above zero marks a voice message.
+    /// `original` keeps a picture as it lies; without it, it is re-encoded
+    /// towards a size a mobile line can carry.
     Q_INVOKABLE void sendMedia(const QString &path, const QString &mimeType,
                                const QString &caption = QString(),
                                const QString &replyTo = QString(),
-                               qint64 voiceDuration = 0);
+                               qint64 voiceDuration = 0,
+                               bool original = false);
 
     /// Downloads an attachment, answered by mediaReady(key, path). `declaredSize`
     /// lets the core refuse an outsized file before it is held in memory whole.
@@ -635,7 +638,8 @@ public:
     Q_INVOKABLE void forwardToRoom(const QString &roomId,
                                    const QString &body,
                                    const QString &path,
-                                   const QString &mimeType);
+                                   const QString &mimeType,
+                                   bool original = true);
 
     /// The type of a file on disk, from name and content. A file handed over by
     /// another app carries none, and an attachment without one is not a picture.
