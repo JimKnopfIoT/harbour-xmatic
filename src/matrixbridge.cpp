@@ -2064,6 +2064,15 @@ void MatrixBridge::handleReply(const QJsonObject &message)
             emit pushNotificationFailed(error);
             return;
         }
+        // Between closing one room and opening the next there is a moment with no
+        // timeline, and a request already in flight comes back into it. The user
+        // switched rooms; there is nothing to act on. The log keeps it.
+        if (error.startsWith(QLatin1String("no timeline is open"))
+            || error.startsWith(QLatin1String("no thread is open"))) {
+            qWarning("xmatic: %s came back to a view that had closed",
+                     qPrintable(command));
+            return;
+        }
         const bool tokenRotated = error.contains(QLatin1String("M_UNKNOWN_TOKEN"));
         if (tokenRotated || wasMedia) {
             qWarning("xmatic: %s failed: %s", qPrintable(command),
