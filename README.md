@@ -87,15 +87,15 @@ repository.
 
 | | | |
 |---|---|---|
-| ![Security at a glance](screenshots/01-security-status.jpg) | ![Verification](screenshots/02-verification.jpg) | ![Encryption](screenshots/03-encryption.jpg) |
+| <img src="screenshots/01-security-status.jpg" alt="Security at a glance" width="240"> | <img src="screenshots/02-verification.jpg" alt="Verification" width="240"> | <img src="screenshots/03-encryption.jpg" alt="Encryption" width="240"> |
 | What is not in order yet, and what to do about it | Seven emoji, in the same order on both devices | Backup, recovery, cross-signing, local storage |
-| ![The account](screenshots/04-account.jpg) | ![Colours](screenshots/05_1-appearance-colours.jpg) | ![More appearance](screenshots/05_2-appearance-options.jpg) |
+| <img src="screenshots/04-account.jpg" alt="The account" width="240"> | <img src="screenshots/05_1-appearance-colours.jpg" alt="Colours" width="240"> | <img src="screenshots/05_2-appearance-options.jpg" alt="More appearance" width="240"> |
 | The account, the device and this app | Every bubble, name and text colour is yours to set | Opacity, the return key, the keyboard, reactions as pictures |
-| ![Privacy](screenshots/06-privacy.jpg) | ![On this device](screenshots/07-privacy-device.jpg) | ![Languages](screenshots/08-languages.jpg) |
+| <img src="screenshots/06-privacy.jpg" alt="Privacy" width="240"> | <img src="screenshots/07-privacy-device.jpg" alt="On this device" width="240"> | <img src="screenshots/08-languages.jpg" alt="Languages" width="240"> |
 | Who may call, and what others learn | What stays here, and for how long | Twenty-nine languages, switchable in the app |
-| ![The room list](screenshots/09-rooms.jpg) | ![A conversation](screenshots/10-conversation.jpg) | ![The room's menu](screenshots/11-room-menu.jpg) |
+| <img src="screenshots/09-rooms.jpg" alt="The room list" width="240"> | <img src="screenshots/10-conversation.jpg" alt="A conversation" width="240"> | <img src="screenshots/11-room-menu.jpg" alt="The room's menu" width="240"> |
 | The room list, with search | Replies, reactions, a pinned message and a picture | What a room offers, including a call |
-| ![Room info](screenshots/12-room-info.jpg) | ![Starting something](screenshots/13-rooms-menu.jpg) | ![The room directory](screenshots/14-directory.jpg) |
+| <img src="screenshots/12-room-info.jpg" alt="Room info" width="240"> | <img src="screenshots/13-rooms-menu.jpg" alt="Starting something" width="240"> | <img src="screenshots/14-directory.jpg" alt="The room directory" width="240"> |
 | A room's own settings and address | New chat, new room, join, discover | Public rooms, from your server or another |
 
 Taken on a phone with a camera cutout, across several ambiences — the app takes
