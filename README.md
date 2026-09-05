@@ -87,16 +87,16 @@ repository.
 
 | | | |
 |---|---|---|
+| ![Security at a glance](screenshots/01-security-status.jpg) | ![Verification](screenshots/02-verification.jpg) | ![Encryption](screenshots/03-encryption.jpg) |
+| What is not in order yet, and what to do about it | Seven emoji, in the same order on both devices | Backup, recovery, cross-signing, local storage |
+| ![The account](screenshots/04-account.jpg) | ![Colours](screenshots/05_1-appearance-colours.jpg) | ![More appearance](screenshots/05_2-appearance-options.jpg) |
+| The account, the device and this app | Every bubble, name and text colour is yours to set | Opacity, the return key, the keyboard, reactions as pictures |
+| ![Privacy](screenshots/06-privacy.jpg) | ![On this device](screenshots/07-privacy-device.jpg) | ![Languages](screenshots/08-languages.jpg) |
+| Who may call, and what others learn | What stays here, and for how long | Twenty-nine languages, switchable in the app |
 | ![The room list](screenshots/09-rooms.jpg) | ![A conversation](screenshots/10-conversation.jpg) | ![The room's menu](screenshots/11-room-menu.jpg) |
 | The room list, with search | Replies, reactions, a pinned message and a picture | What a room offers, including a call |
 | ![Room info](screenshots/12-room-info.jpg) | ![Starting something](screenshots/13-rooms-menu.jpg) | ![The room directory](screenshots/14-directory.jpg) |
 | A room's own settings and address | New chat, new room, join, discover | Public rooms, from your server or another |
-| ![Security at a glance](screenshots/01-security-status.jpg) | ![Encryption](screenshots/02-encryption.jpg) | ![The account](screenshots/03-account.jpg) |
-| What is not in order yet, and what to do about it | Backup, recovery, cross-signing, local storage | The account, the device and this app |
-| ![Colours](screenshots/04-appearance-colours.jpg) | ![More appearance](screenshots/05-appearance-options.jpg) | ![Languages](screenshots/08-languages.jpg) |
-| Every bubble, name and text colour is yours to set | Opacity, the keyboard, reactions as pictures | Twenty-nine languages, switchable in the app |
-| ![Privacy](screenshots/06-privacy.jpg) | ![On this device](screenshots/07-privacy-device.jpg) | |
-| Who may call, and what others learn | What stays here, and for how long | |
 
 Taken on a phone with a camera cutout, across several ambiences — the app takes
 its colours from the one you use.
