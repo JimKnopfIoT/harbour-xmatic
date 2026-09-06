@@ -548,6 +548,7 @@ pub async fn notification_for(
 fn notification_body(
     event: &matrix_sdk_ui::notification_client::NotificationEvent,
 ) -> (&'static str, String) {
+    use matrix_sdk::ruma::events::poll::unstable_start::UnstablePollStartEventContent;
     use matrix_sdk::ruma::events::room::message::MessageType;
     use matrix_sdk::ruma::events::{AnyMessageLikeEventContent, AnySyncTimelineEvent};
     use matrix_sdk_ui::notification_client::NotificationEvent;
@@ -572,6 +573,11 @@ fn notification_body(
             MessageType::Location(_) => ("location", String::new()),
             _ => ("", String::new()),
         },
+        // The question alone: the fallback text carries the answers as well and
+        // would spill them into the banner.
+        Some(AnyMessageLikeEventContent::UnstablePollStart(
+            UnstablePollStartEventContent::New(started),
+        )) => ("poll", crate::text::strip_bidi(&started.poll_start.question.text)),
         // Encrypted here means it could not be decrypted: the keys for it never
         // reached this device. The banner says so rather than counting it.
         Some(AnyMessageLikeEventContent::RoomEncrypted(_)) | None => ("encrypted", String::new()),

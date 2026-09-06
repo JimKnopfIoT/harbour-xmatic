@@ -145,6 +145,7 @@ ApplicationWindow {
         case "audio": return qsTr("Voice message")
         case "file": return qsTr("File")
         case "location": return qsTr("Location")
+        case "poll": return text.length > 0 ? qsTr("Poll: %1").arg(text) : qsTr("Poll")
         case "encrypted": return qsTr("Encrypted message")
         default: return ""
         }

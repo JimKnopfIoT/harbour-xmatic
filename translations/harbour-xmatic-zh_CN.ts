@@ -592,6 +592,60 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="64"/>
+        <source>Create poll</source>
+        <translation>创建投票</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="71"/>
+        <source>Question</source>
+        <translation>问题</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="72"/>
+        <source>What are you asking?</source>
+        <translation>你想问什么？</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="85"/>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="86"/>
+        <source>Answer %1</source>
+        <translation>选项 %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="96"/>
+        <source>Add answer</source>
+        <translation>添加选项</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="104"/>
+        <source>Allow several answers</source>
+        <translation>允许多选</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="105"/>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>每个人都可以选择多个选项。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="111"/>
+        <source>Hide results until the poll ends</source>
+        <translation>投票结束前隐藏结果</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="112"/>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>各客户端在投票结束前会隐藏票数，你的也一样。这是常见客户端遵守的约定，而不是锁。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/CreatePollDialog.qml" line="123"/>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>投票不是无记名的：谁投了什么，在房间里仍然可见。</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <location filename="../qml/pages/CreateRoomDialog.qml" line="62"/>
@@ -1105,7 +1159,7 @@
 <context>
     <name>LanguageSettings</name>
     <message>
-        <location filename="../src/languagesettings.cpp" line="71"/>
+        <location filename="../src/languagesettings.cpp" line="73"/>
         <source>Follow the device</source>
         <translation>跟随设备</translation>
     </message>
@@ -1249,96 +1303,106 @@
         <translation>协议内核无法启动。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="288"/>
+        <location filename="../src/matrixbridge.cpp" line="306"/>
         <source>The protocol core is not available.</source>
         <translation>协议内核不可用。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="486"/>
-        <location filename="../src/matrixbridge.cpp" line="525"/>
-        <location filename="../src/matrixbridge.cpp" line="541"/>
+        <location filename="../src/matrixbridge.cpp" line="504"/>
+        <location filename="../src/matrixbridge.cpp" line="543"/>
+        <location filename="../src/matrixbridge.cpp" line="559"/>
         <source>Enter a homeserver first.</source>
         <translation>请先输入主服务器。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="507"/>
+        <location filename="../src/matrixbridge.cpp" line="525"/>
         <source>Enter username and password first.</source>
         <translation>请先输入用户名和密码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1371"/>
-        <location filename="../src/matrixbridge.cpp" line="1386"/>
+        <location filename="../src/matrixbridge.cpp" line="1390"/>
+        <location filename="../src/matrixbridge.cpp" line="1405"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>暂时无法读取已保存的名单。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1625"/>
+        <location filename="../src/matrixbridge.cpp" line="1644"/>
         <source>Enter a push gateway first.</source>
         <translation>请先填写推送网关。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1653"/>
+        <location filename="../src/matrixbridge.cpp" line="1672"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1849"/>
-        <location filename="../src/matrixbridge.cpp" line="1877"/>
+        <location filename="../src/matrixbridge.cpp" line="1868"/>
+        <location filename="../src/matrixbridge.cpp" line="1896"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2108"/>
+        <location filename="../src/matrixbridge.cpp" line="2139"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2151"/>
+        <location filename="../src/matrixbridge.cpp" line="2182"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2171"/>
+        <location filename="../src/matrixbridge.cpp" line="2202"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2975"/>
+        <location filename="../src/matrixbridge.cpp" line="3025"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3280"/>
+        <location filename="../src/matrixbridge.cpp" line="3330"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3283"/>
+        <location filename="../src/matrixbridge.cpp" line="3333"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3286"/>
+        <location filename="../src/matrixbridge.cpp" line="3336"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3289"/>
+        <location filename="../src/matrixbridge.cpp" line="3339"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3292"/>
+        <location filename="../src/matrixbridge.cpp" line="3342"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3295"/>
+        <location filename="../src/matrixbridge.cpp" line="3345"/>
+        <source>Poll</source>
+        <translation>投票</translation>
+    </message>
+    <message>
+        <location filename="../src/matrixbridge.cpp" line="3345"/>
+        <source>Poll: %1</source>
+        <translation>投票：%1</translation>
+    </message>
+    <message>
+        <location filename="../src/matrixbridge.cpp" line="3348"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3298"/>
+        <location filename="../src/matrixbridge.cpp" line="3351"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -1718,6 +1782,46 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <location filename="../qml/pages/PollBlock.qml" line="61"/>
+        <source>The poll has ended.</source>
+        <translation>投票已结束。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PollBlock.qml" line="153"/>
+        <source>%1 %</source>
+        <translation>%1%</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PollBlock.qml" line="197"/>
+        <source>Results are shown once the poll ends</source>
+        <translation>结果将在投票结束后显示</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/pages/PollBlock.qml" line="214"/>
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n 票</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PollBlock.qml" line="225"/>
+        <source>Ended</source>
+        <translation>已结束</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PollBlock.qml" line="228"/>
+        <source>Several answers</source>
+        <translation>多选</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PollBlock.qml" line="242"/>
+        <source>End poll</source>
+        <translation>结束投票</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <location filename="../qml/pages/PrivacyPage.qml" line="37"/>
@@ -1780,62 +1884,63 @@
         <translation>开启时，消息出现即加载图片或视频。关闭时，点按才加载——滚动经过就是向发送者的服务器发出请求。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="168"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="197"/>
         <source>Messages and keys are stored encrypted.</source>
         <translation>消息和密钥以加密方式保存。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="169"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="198"/>
         <source>Messages and keys lie on this device unencrypted - the encryption page says why and what can be done about it.</source>
         <translation>本机上的消息和密钥未加密存放——加密页面说明原因以及可以怎么办。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="171"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="200"/>
         <source>Pictures, videos and documents you opened are not - they lie on the device like the ones in the gallery, readable to anybody who has it.</source>
         <translation>你打开过的图片、视频和文档则不是——它们像相册里的照片一样留在设备上，任何拿到设备的人都能读取。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="172"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="201"/>
         <source>By default they are deleted when you sign out, so save what you want to keep.</source>
         <translation>默认情况下，它们会在你退出登录时删除，所以想留下的请先保存。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="173"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="202"/>
         <source>&quot;Never&quot; keeps them for good - convenient, and not recommended.</source>
         <translation>“从不”会永久保留它们——方便，但不建议。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="178"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="207"/>
         <source>Delete downloaded media</source>
         <translation>删除已下载的媒体</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="190"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="167"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="219"/>
         <source>Never</source>
         <translation>从不</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="191"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="220"/>
         <source>When you sign out</source>
         <translation>退出登录时</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="192"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="221"/>
         <source>When the app is closed</source>
         <translation>关闭应用时</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="193"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="222"/>
         <source>As soon as the app is not in front</source>
         <translation>应用一离开前台</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="216"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="245"/>
         <source>Allowed callers</source>
         <translation>允许来电的人</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="261"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="290"/>
         <source>The list is encrypted and its key is not available. It can be read again after the device has been unlocked and the app restarted.</source>
         <translation>该列表已加密，其密钥当前不可用。解锁设备并重启应用后即可再次读取。</translation>
     </message>
@@ -1905,47 +2010,67 @@
         <translation>开启时，点击消息中的链接会打开浏览器；关闭时链接保持纯文本。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="153"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="156"/>
+        <source>Link previews</source>
+        <translation>链接预览</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="157"/>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>你的主服务器会获取该页面并显示其标题。它由此得知每一个被询问的链接；在加密房间里，这是它本来永远看不到的内容。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="168"/>
+        <source>Only in unencrypted rooms</source>
+        <translation>仅在未加密的房间</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="169"/>
+        <source>Always</source>
+        <translation>总是</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PrivacyPage.qml" line="182"/>
         <source>On this device</source>
         <translation>在本设备上</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="179"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="208"/>
         <source>Anything deleted is fetched again when you open it.</source>
         <translation>被删除的内容会在你打开时重新获取。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="211"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="240"/>
         <source>Delete media now</source>
         <translation>立即删除媒体</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="225"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="254"/>
         <source>They may always call. The list stays on this device.</source>
         <translation>他们随时可以来电。名单只留在本设备上。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="232"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="261"/>
         <source>Matrix address</source>
         <translation>Matrix 地址</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="233"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="262"/>
         <source>@name:server</source>
         <translation>@name:server</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="244"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="273"/>
         <source>Allow calls</source>
         <translation>允许通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="260"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="289"/>
         <source>Nobody yet.</source>
         <translation>还没有人。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PrivacyPage.qml" line="272"/>
+        <location filename="../qml/pages/PrivacyPage.qml" line="301"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
@@ -2598,12 +2723,12 @@
         <translation>加入新聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="840"/>
+        <location filename="../qml/pages/RoomPage.qml" line="848"/>
         <source>Load older messages</source>
         <translation>加载更早的消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="818"/>
+        <location filename="../qml/pages/RoomPage.qml" line="826"/>
         <source>Room info</source>
         <translation>聊天室信息</translation>
     </message>
@@ -2628,302 +2753,327 @@
         <translation>验证联系人</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="829"/>
+        <location filename="../qml/pages/RoomPage.qml" line="837"/>
         <source>Search messages</source>
         <translation>搜索消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="941"/>
+        <location filename="../qml/pages/RoomPage.qml" line="949"/>
         <source>Offline — waiting for the network</source>
         <translation>离线——正在等待网络</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="942"/>
+        <location filename="../qml/pages/RoomPage.qml" line="950"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="988"/>
+        <location filename="../qml/pages/RoomPage.qml" line="996"/>
         <source>This room has been replaced</source>
         <translation>此聊天室已被取代</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1002"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1010"/>
         <source>Switching to the new room…</source>
         <translation>正在切换到新聊天室…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1004"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1012"/>
         <source>Tap to open the new room</source>
         <translation>点按以打开新聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1005"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1013"/>
         <source>Tap to join the new room</source>
         <translation>点按以加入新聊天室</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/pages/RoomPage.qml" line="1061"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1069"/>
         <source>%n pinned message(s)</source>
         <translation>
             <numerusform>%n 条置顶消息</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1104"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1112"/>
         <source>Beginning of the conversation</source>
         <translation>会话的开头</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1202"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1239"/>
         <source>Call</source>
         <comment>timeline system line, a noun</comment>
         <translation>通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1203"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1240"/>
         <source>%1 joined</source>
         <translation>%1 加入了</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1204"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1241"/>
         <source>%1 left</source>
         <translation>%1 离开了</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1205"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1242"/>
         <source>%1 was invited</source>
         <translation>%1 被邀请了</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1206"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1243"/>
         <source>%1 was removed</source>
         <translation>%1 被移出了</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1207"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1244"/>
         <source>%1 was banned</source>
         <translation>%1 被封禁了</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1208"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1245"/>
         <source>%1 declined the invitation</source>
         <translation>%1 拒绝了邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1209"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1246"/>
         <source>%1 asked to join</source>
         <translation>%1 请求加入</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1210"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1247"/>
         <source>%1 changed membership</source>
         <translation>%1 更改了成员身份</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1211"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1248"/>
         <source>%1 changed their profile</source>
         <translation>%1 修改了个人资料</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1329"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1366"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1366"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1403"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1293"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1330"/>
         <source>Reply in thread</source>
         <translation>在话题中回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1321"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1358"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1337"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1374"/>
         <source>Forward</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1348"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1385"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1278"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1315"/>
         <source>Pin</source>
         <translation>置顶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1356"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1393"/>
         <source>React</source>
         <translation>回应</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1313"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1350"/>
         <source>Send again</source>
         <translation>重新发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1270"/>
+        <location filename="../qml/pages/RoomPage.qml" line="818"/>
+        <source>New poll</source>
+        <translation>新投票</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="1307"/>
         <source>Discard</source>
         <translation>丢弃</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1270"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1307"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1374"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1411"/>
         <source>More…</source>
         <translation>更多…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1714"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1751"/>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>无法加载被引用的消息：它已不存在，或者你无权查看。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1879"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1916"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1949"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1987"/>
         <source>Message deleted</source>
         <translation>消息已删除</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1954"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1992"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1990"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2060"/>
         <source>What do these marks mean?</source>
         <translation>这些标记是什么意思？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2015"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2085"/>
         <source>Thread · %1</source>
         <translation>话题 · %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2016"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2086"/>
         <source>In thread</source>
         <translation>在话题中</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2067"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2137"/>
         <source>This reaction hides text and was not sent</source>
         <translation>该回应隐藏了文字，未发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2200"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2270"/>
         <source>not sent</source>
         <translation>未发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2201"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2271"/>
         <source>edited</source>
         <translation>已编辑</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2444"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2514"/>
         <source>The conversation could not be loaded</source>
         <translation>无法加载对话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2445"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2515"/>
         <source>No messages</source>
         <translation>没有消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2472"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2542"/>
         <source>Room link copied</source>
         <translation>房间链接已复制</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2533"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2603"/>
         <source>Accept invitation</source>
         <translation>接受邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2559"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2629"/>
         <source>Recording… %1 s</source>
         <translation>正在录音… %1 秒</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2574"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2644"/>
         <source>Reply to %1</source>
         <translation>回复 %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2597"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2667"/>
         <source>Editing message</source>
         <translation>正在编辑消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2623"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2693"/>
         <source>New text</source>
         <translation>新文本</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2623"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2693"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2662"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2732"/>
         <source>Select files</source>
         <translation>选择文件</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3100"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3170"/>
         <source>Sent unencrypted</source>
         <translation>以明文发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3101"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3171"/>
         <source>Not sent by the account it names</source>
         <translation>并非署名的账号发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3102"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3172"/>
         <source>The sender&apos;s keys changed</source>
         <translation>发送者的密钥已更改</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3104"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3174"/>
         <source>From an unverified device</source>
         <translation>来自未验证的设备</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3105"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3175"/>
         <source>From an unverified person</source>
         <translation>来自未验证的人</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3106"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3176"/>
         <source>Authenticity not confirmed</source>
         <translation>真实性未确认</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3121"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3191"/>
         <source>Open this address?</source>
         <translation>打开此地址？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3123"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3193"/>
         <source>Open</source>
         <translation>打开</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="3339"/>
+        <source>Voting failed</source>
+        <translation>投票失败</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="3341"/>
+        <source>The poll could not be ended</source>
+        <translation>无法结束投票</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="3343"/>
+        <source>The poll could not be sent</source>
+        <translation>无法发送投票</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomPage.qml" line="3346"/>
+        <source>Your vote was not sent</source>
+        <translation>你的票未发送</translation>
     </message>
     <message>
         <location filename="../qml/pages/RoomPage.qml" line="604"/>
@@ -3798,34 +3948,44 @@
     </message>
     <message>
         <location filename="../qml/harbour-xmatic.qml" line="148"/>
+        <source>Poll: %1</source>
+        <translation>投票：%1</translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-xmatic.qml" line="148"/>
+        <source>Poll</source>
+        <translation>投票</translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-xmatic.qml" line="149"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="344"/>
+        <location filename="../qml/harbour-xmatic.qml" line="345"/>
         <source>Incoming video call</source>
         <translation>来电视频通话</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="341"/>
-        <location filename="../qml/harbour-xmatic.qml" line="345"/>
+        <location filename="../qml/harbour-xmatic.qml" line="342"/>
+        <location filename="../qml/harbour-xmatic.qml" line="346"/>
         <source>Incoming call</source>
         <translation>来电</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="413"/>
+        <location filename="../qml/harbour-xmatic.qml" line="414"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="419"/>
+        <location filename="../qml/harbour-xmatic.qml" line="420"/>
         <source>%n mention(s)</source>
         <translation>
             <numerusform>%n 条提及</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="420"/>
+        <location filename="../qml/harbour-xmatic.qml" line="421"/>
         <source>%n new message(s)</source>
         <translation>
             <numerusform>%n 条新消息</numerusform>

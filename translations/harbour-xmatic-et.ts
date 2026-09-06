@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Loo küsitlus</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Küsimus</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Mida sa küsid?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Vastus %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Lisa vastus</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Luba mitu vastust</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Siis saab igaüks valida rohkem kui ühe vastuse.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Peida tulemused kuni küsitluse lõpuni</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Küsitlus ei ole salajane hääletus: kes mille poolt hääletas, jääb toas loetavaks.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Kliendid hoiavad arve peidus kuni küsitluse lõpuni, ka sinu oma. Tava, mida levinud kliendid järgivad, mitte lukk.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Kutse</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Küsitlus</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Küsitlus: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Küsitlus on lõppenud.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Tulemused ilmuvad, kui küsitlus on lõppenud</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n hääl</numerusform>
+            <numerusform>%n häält</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Lõppenud</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Mitu vastust</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Lõpeta küsitlus</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Sees: pilt või video laaditakse kohe, kui sõnum ilmub. Väljas: laaditakse puudutamisel — mööda kerimine on päring saatja serverisse.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Linkide eelvaade</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Sinu koduserver laadib lehe ja näitab selle pealkirja. Nii saab ta teada iga lingi, mille kohta küsitakse; krüptitud toas on see sisu, mida ta muidu kunagi ei näe.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Ainult krüptimata tubades</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Alati</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Vali failid</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Uus küsitlus</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Hääletamine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Küsitlust ei õnnestunud lõpetada</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Küsitlust ei õnnestunud saata</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Sinu häält ei saadetud</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>Uus sõnum</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Küsitlus: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Küsitlus</translation>
     </message>
 </context>
 </TS>

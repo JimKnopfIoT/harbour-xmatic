@@ -52,6 +52,8 @@ SOURCES += \
     src/emojiimageprovider.cpp \
     src/outgoingimage.cpp \
     src/matrixbridge.cpp \
+    src/pollactions.cpp \
+    src/linkpreviews.cpp \
     src/roomlistmodel.cpp \
     src/roomsortmodel.cpp \
     src/directorymodel.cpp \
@@ -77,6 +79,8 @@ HEADERS += \
     src/pushwake.h \
     src/languagesettings.h \
     src/matrixbridge.h \
+    src/pollactions.h \
+    src/linkpreviews.h \
     src/outgoingimage.h \
     src/secretskeeper.h \
     src/roomlistmodel.h \
@@ -171,6 +175,7 @@ INSTALLS += pushservice
 # that. A language is listed here only once actually translated; review state
 # per language is in translations/STATUS.md.
 TRANSLATIONS += \
+    translations/harbour-xmatic-ar.ts \
     translations/harbour-xmatic-bg.ts \
     translations/harbour-xmatic-cs.ts \
     translations/harbour-xmatic-da.ts \
@@ -179,6 +184,7 @@ TRANSLATIONS += \
     translations/harbour-xmatic-en.ts \
     translations/harbour-xmatic-es.ts \
     translations/harbour-xmatic-et.ts \
+    translations/harbour-xmatic-fa.ts \
     translations/harbour-xmatic-fi.ts \
     translations/harbour-xmatic-fr.ts \
     translations/harbour-xmatic-ga.ts \
@@ -187,6 +193,7 @@ TRANSLATIONS += \
     translations/harbour-xmatic-hu.ts \
     translations/harbour-xmatic-is.ts \
     translations/harbour-xmatic-it.ts \
+    translations/harbour-xmatic-ja.ts \
     translations/harbour-xmatic-lt.ts \
     translations/harbour-xmatic-lv.ts \
     translations/harbour-xmatic-mt.ts \
@@ -230,6 +237,9 @@ DISTFILES += \
     qml/pages/MoveToSpacePage.qml \
     qml/pages/RoomPage.qml \
     qml/pages/Composer.qml \
+    qml/pages/PollBlock.qml \
+    qml/pages/LinkPreviewCard.qml \
+    qml/pages/CreatePollDialog.qml \
     qml/pages/Composing.js \
     qml/pages/FormatBar.qml \
     qml/pages/AttachmentPickerPage.qml \

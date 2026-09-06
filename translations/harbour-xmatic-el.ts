@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Δημιουργία δημοσκόπησης</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Ερώτηση</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Τι θέλεις να ρωτήσεις;</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Απάντηση %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Προσθήκη απάντησης</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Να επιτρέπονται πολλές απαντήσεις</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Τότε ο καθένας μπορεί να διαλέξει περισσότερες από μία απαντήσεις.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Απόκρυψη αποτελεσμάτων μέχρι το τέλος</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Η δημοσκόπηση δεν είναι μυστική ψηφοφορία: ποιος ψήφισε τι παραμένει αναγνώσιμο στο δωμάτιο.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Οι εφαρμογές κρατούν τους αριθμούς κρυφούς μέχρι το τέλος της δημοσκόπησης, και η δική σου. Μια σύμβαση που ακολουθούν οι συνηθισμένες εφαρμογές, όχι κλειδαριά.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Πρόσκληση</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Δημοσκόπηση</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Δημοσκόπηση: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Η δημοσκόπηση έληξε.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Τα αποτελέσματα εμφανίζονται μόλις λήξει η δημοσκόπηση</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n ψήφος</numerusform>
+            <numerusform>%n ψήφοι</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Έληξε</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Πολλές απαντήσεις</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Λήξη δημοσκόπησης</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Ενεργό: η εικόνα ή το βίντεο φορτώνεται μόλις εμφανιστεί το μήνυμα. Ανενεργό: φορτώνεται με το άγγιγμα — η κύλιση δίπλα του είναι αίτημα στον διακομιστή του αποστολέα.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Προεπισκόπηση συνδέσμων</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Ο διακομιστής σου ανακτά τη σελίδα και δείχνει τον τίτλο της. Μαθαίνει έτσι κάθε σύνδεσμο για τον οποίο ερωτάται· σε κρυπτογραφημένο δωμάτιο αυτό είναι περιεχόμενο που αλλιώς δεν βλέπει ποτέ.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Μόνο σε μη κρυπτογραφημένα δωμάτια</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Πάντα</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Επιλογή αρχείων</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Νέα δημοσκόπηση</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Η ψηφοφορία απέτυχε</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Η δημοσκόπηση δεν μπόρεσε να λήξει</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Η δημοσκόπηση δεν μπόρεσε να σταλεί</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Η ψήφος σου δεν στάλθηκε</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>Νέο μήνυμα</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Δημοσκόπηση: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Δημοσκόπηση</translation>
     </message>
 </context>
 </TS>

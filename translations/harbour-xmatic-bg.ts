@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Създаване на анкета</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Въпрос</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Какво питаш?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Отговор %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Добавяне на отговор</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Разрешаване на няколко отговора</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Тогава всеки може да избере повече от един отговор.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Скриване на резултатите до края на анкетата</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Анкетата не е тайно гласуване: кой за какво е гласувал остава четимо в стаята.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Клиентите крият броя до края на анкетата, включително твоят. Конвенция, която обичайните клиенти спазват, не ключалка.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Покана</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Анкета</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Анкета: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Анкетата приключи.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Резултатите се показват след края на анкетата</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n глас</numerusform>
+            <numerusform>%n гласа</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Приключила</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Няколко отговора</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Приключване на анкетата</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Включено: снимка или видео се зарежда веднага щом съобщението се появи. Изключено: зарежда се при докосване — прелистването покрай нея е заявка към сървъра на подателя.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Преглед на връзки</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Твоят сървър изтегля страницата и показва заглавието ѝ. Така той научава всяка връзка, за която бъде попитан; в шифрована стая това е съдържание, което иначе никога не вижда.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Само в нешифровани стаи</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Винаги</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Избор на файлове</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Нова анкета</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Гласуването не успя</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Анкетата не можа да бъде приключена</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Анкетата не можа да бъде изпратена</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Гласът ти не беше изпратен</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>Ново съобщение</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Анкета: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Анкета</translation>
     </message>
 </context>
 </TS>

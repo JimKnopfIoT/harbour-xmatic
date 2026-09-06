@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Luo kysely</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Kysymys</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Mitä haluat kysyä?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Vastaus %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Lisää vastaus</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Salli useita vastauksia</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Silloin jokainen voi valita useamman kuin yhden vastauksen.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Piilota tulokset kyselyn loppuun asti</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Kysely ei ole salainen äänestys: kuka äänesti mitä, näkyy huoneessa.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Sovellukset pitävät luvut piilossa kyselyn loppuun asti, myös sinun. Käytäntö, jota yleiset sovellukset noudattavat, ei lukko.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Kutsu</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Kysely</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Kysely: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Kysely on päättynyt.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Tulokset näkyvät, kun kysely päättyy</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n ääni</numerusform>
+            <numerusform>%n ääntä</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Päättynyt</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Useita vastauksia</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Päätä kysely</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Päällä: kuva tai video latautuu heti viestin ilmestyessä. Pois: latautuu napautettaessa — ohi vierittäminen on pyyntö lähettäjän palvelimelle.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Linkkien esikatselu</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Kotipalvelimesi hakee sivun ja näyttää sen otsikon. Se saa näin tietää jokaisen linkin, josta sitä kysytään; salatussa huoneessa se on sisältöä, jota se ei muuten koskaan näe.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Vain salaamattomissa huoneissa</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Aina</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Valitse tiedostot</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Uusi kysely</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Äänestys epäonnistui</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Kyselyä ei voitu päättää</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Kyselyä ei voitu lähettää</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Ääntäsi ei lähetetty</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>Uusi viesti</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Kysely: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Kysely</translation>
     </message>
 </context>
 </TS>

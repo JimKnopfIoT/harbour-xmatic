@@ -9,6 +9,7 @@ use futures_util::StreamExt;
 use matrix_sdk::deserialized_responses::{SyncOrStrippedState, TimelineEventKind};
 use matrix_sdk::latest_events::LatestEventValue;
 use matrix_sdk::room::Receipts;
+use matrix_sdk::ruma::events::poll::unstable_start::UnstablePollStartEventContent;
 use matrix_sdk::ruma::events::room::message::{MessageType, Relation};
 use matrix_sdk::ruma::events::{
     AnySyncMessageLikeEvent, AnySyncTimelineEvent, SyncMessageLikeEvent,
@@ -234,6 +235,18 @@ fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>,
         }
         AnySyncMessageLikeEvent::Sticker(SyncMessageLikeEvent::Original(_)) => {
             (Some("image"), None, sender)
+        }
+        // The question, not the fallback text: that one lists the answers too and
+        // would fill the row with them.
+        AnySyncMessageLikeEvent::UnstablePollStart(SyncMessageLikeEvent::Original(poll)) => {
+            match &poll.content {
+                UnstablePollStartEventContent::New(started) => (
+                    Some("poll"),
+                    Some(preview_text(&started.poll_start.question.text)),
+                    sender,
+                ),
+                _ => (Some("poll"), None, sender),
+            }
         }
         _ => (None, None, None),
     }

@@ -20,6 +20,8 @@
 #include "membermodel.h"
 #include "searchmodel.h"
 #include "callengine.h"
+#include "linkpreviews.h"
+#include "pollactions.h"
 #include "voicerecorder.h"
 #include "timelinemodel.h"
 #include "secretskeeper.h"
@@ -91,6 +93,8 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *threadTimeline READ threadTimeline CONSTANT)
     Q_PROPERTY(QObject *recorder READ recorder CONSTANT)
     Q_PROPERTY(QObject *calls READ calls CONSTANT)
+    Q_PROPERTY(QObject *polls READ polls CONSTANT)
+    Q_PROPERTY(QObject *linkPreviews READ linkPreviews CONSTANT)
     Q_PROPERTY(QString openRoomId READ openRoomId NOTIFY openRoomChanged)
     Q_PROPERTY(QStringList pinnedEventIds READ pinnedEventIds NOTIFY pinnedChanged)
     Q_PROPERTY(QString pinnedPreview READ pinnedPreview NOTIFY pinnedChanged)
@@ -211,6 +215,8 @@ public:
     QObject *threadTimeline() { return &m_threadTimeline; }
     QObject *recorder() { return m_recorder; }
     QObject *calls() { return m_calls; }
+    QObject *polls() { return m_polls; }
+    QObject *linkPreviews() { return m_linkPreviews; }
     QString openRoomId() const { return m_openRoomId; }
 
     /// Event ids of the open room's pinned messages, for the banner and the
@@ -930,6 +936,8 @@ private:
     RoomListModel m_spaceRooms;
     VoiceRecorder *m_recorder = nullptr;
     CallEngine *m_calls = nullptr;
+    PollActions *m_polls = nullptr;
+    LinkPreviews *m_linkPreviews = nullptr;
     TimelineModel m_timeline;
     TimelineModel m_threadTimeline;
     /// Which room `m_members` was loaded for, so an action in another room

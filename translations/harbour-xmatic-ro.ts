@@ -480,6 +480,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Creează un sondaj</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Întrebare</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Ce vrei să întrebi?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Răspunsul %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Adaugă un răspuns</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Permite mai multe răspunsuri</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Atunci fiecare poate alege mai mult de un răspuns.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Ascunde rezultatele până la încheierea sondajului</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Un sondaj nu este vot secret: cine ce a votat rămâne vizibil în cameră.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Clienții țin numărătoarea ascunsă până la încheierea sondajului, și al tău. O convenție pe care o respectă clienții obișnuiți, nu un lacăt.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1081,6 +1124,14 @@
         <source>Invitation</source>
         <translation>Invitație</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Sondaj</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Sondaj: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1385,6 +1436,41 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Sondajul s-a încheiat.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Rezultatele apar după încheierea sondajului</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n vot</numerusform>
+            <numerusform>%n voturi</numerusform>
+            <numerusform>%n de voturi</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Încheiat</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Mai multe răspunsuri</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Încheie sondajul</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1569,6 +1655,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Pornit: imaginea sau videoclipul se încarcă imediat ce apare mesajul. Oprit: se încarcă la atingere — a derula pe lângă el este o cerere către serverul expeditorului.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Previzualizarea linkurilor</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Serverul tău descarcă pagina și îi arată titlul. Astfel află fiecare link despre care este întrebat; într-o cameră criptată acesta este conținut pe care altfel nu îl vede niciodată.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Doar în camerele necriptate</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Întotdeauna</translation>
     </message>
 </context>
 <context>
@@ -2362,6 +2464,26 @@
         <source>Select files</source>
         <translation>Alege fișiere</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Sondaj nou</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Votarea a eșuat</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Sondajul nu a putut fi încheiat</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Sondajul nu a putut fi trimis</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Votul tău nu a fost trimis</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3100,6 +3222,14 @@
     <message>
         <source>New message</source>
         <translation>Mesaj nou</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Sondaj: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Sondaj</translation>
     </message>
 </context>
 </TS>

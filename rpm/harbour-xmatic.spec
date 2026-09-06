@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.28.3
+Version:    0.29.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -110,6 +110,20 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Sep 05 2026 harbour-xmatic contributors 0.29.0-1
+- Polls. A poll from any client is shown as its question with a bar under
+  each answer; tap a line to vote, tap it again to take the vote back. "New
+  poll" in the room's pull-down creates one, with a choice of several answers
+  and of hiding the results until the poll ends. The creator can end it.
+- A hidden poll that is still running shows no numbers - and none reach the
+  page that could show them. What a poll cannot be is said where it is made:
+  who voted for what stays readable in the room, in every client.
+- The chat list and notifications name a poll by its question.
+- Link previews, off by default. Under Privacy they can be allowed never, only
+  in unencrypted rooms, or always. Your homeserver fetches the page and the
+  message shows its host, title and description under the text; the setting
+  says what the server learns from that.
+
 * Fri Sep 04 2026 harbour-xmatic contributors 0.28.3-1
 - Messages can be formatted. Hold a word in the message field to mark it, then
   bold, italic, struck through, underlined or monospace from the row above.

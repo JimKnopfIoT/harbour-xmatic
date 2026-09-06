@@ -22,12 +22,14 @@ QString storedCode()
 // Endonyms: a language is named in itself, so the list stays readable to
 // somebody who cannot read the current UI language.
 const char *const kLanguages[][2] = {
-    { "bg", "Български" }, { "cs", "Čeština" },   { "da", "Dansk" },
+    { "ar", "العربية" },    { "bg", "Български" }, { "cs", "Čeština" },
+    { "da", "Dansk" },
     { "de", "Deutsch" },   { "el", "Ελληνικά" },  { "en", "English" },
-    { "es", "Español" },   { "et", "Eesti" },     { "fi", "Suomi" },
+    { "es", "Español" },   { "et", "Eesti" },     { "fa", "فارسی" },
+    { "fi", "Suomi" },
     { "fr", "Français" },  { "ga", "Gaeilge" },   { "hr", "Hrvatski" },
     { "hi", "हिन्दी" },       { "hu", "Magyar" },    { "is", "Íslenska" },
-    { "it", "Italiano" },
+    { "it", "Italiano" },  { "ja", "日本語" },
     { "lt", "Lietuvių" },  { "lv", "Latviešu" },  { "mt", "Malti" },
     { "nb", "Norsk bokmål" }, { "nl", "Nederlands" }, { "pl", "Polski" },
     { "pt", "Português" }, { "ro", "Română" },    { "ru", "Русский" },

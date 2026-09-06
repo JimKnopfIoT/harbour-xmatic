@@ -480,6 +480,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Vytvořit anketu</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Otázka</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Na co se ptáš?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Odpověď %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Přidat odpověď</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Povolit více odpovědí</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Každý pak může vybrat více než jednu odpověď.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Skrýt výsledky do ukončení ankety</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Anketa není tajné hlasování: kdo co zvolil, zůstává v místnosti čitelné.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Klienti drží počty skryté až do ukončení ankety, včetně tvého. Zvyklost, kterou běžné klienty dodržují, ne zámek.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1081,6 +1124,14 @@
         <source>Invitation</source>
         <translation>Pozvání</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Anketa</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Anketa: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1385,6 +1436,41 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Anketa byla ukončena.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Výsledky se zobrazí po ukončení ankety</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n hlas</numerusform>
+            <numerusform>%n hlasy</numerusform>
+            <numerusform>%n hlasů</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Ukončeno</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Více odpovědí</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Ukončit anketu</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1569,6 +1655,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Zapnuto: obrázek nebo video se načte, jakmile se zpráva objeví. Vypnuto: načte se po klepnutí — projít kolem něj znamená požadavek na server odesílatele.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Náhledy odkazů</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Tvůj domovský server stáhne stránku a zobrazí její titulek. Dozví se tak o každém odkazu, na který se ho zeptáš; v šifrované místnosti je to obsah, který jinak nikdy nevidí.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Jen v nešifrovaných místnostech</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Vždy</translation>
     </message>
 </context>
 <context>
@@ -2362,6 +2464,26 @@
         <source>Select files</source>
         <translation>Vybrat soubory</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Nová anketa</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Hlasování se nezdařilo</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Anketu se nepodařilo ukončit</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Anketu se nepodařilo odeslat</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Tvůj hlas nebyl odeslán</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3100,6 +3222,14 @@
     <message>
         <source>New message</source>
         <translation>Nová zpráva</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Anketa: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Anketa</translation>
     </message>
 </context>
 </TS>

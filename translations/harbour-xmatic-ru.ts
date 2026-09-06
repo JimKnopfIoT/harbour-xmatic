@@ -480,6 +480,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Создать опрос</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Вопрос</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Что ты хочешь спросить?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Ответ %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Добавить ответ</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Разрешить несколько ответов</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Тогда каждый сможет выбрать больше одного ответа.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Скрыть результаты до завершения опроса</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Опрос — не тайное голосование: кто за что голосовал, остаётся видно в комнате.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Клиенты скрывают цифры до завершения опроса, твой тоже. Это соглашение, которому следуют обычные клиенты, а не замок.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1081,6 +1124,14 @@
         <source>Invitation</source>
         <translation>Приглашение</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Опрос</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Опрос: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1385,6 +1436,41 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Опрос завершён.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Результаты появятся после завершения опроса</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n голос</numerusform>
+            <numerusform>%n голоса</numerusform>
+            <numerusform>%n голосов</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Завершён</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Несколько ответов</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Завершить опрос</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1569,6 +1655,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Включено: изображение или видео загружается, как только появляется сообщение. Выключено: загружается по касанию — прокрутка мимо это запрос к серверу отправителя.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Предпросмотр ссылок</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Твой домашний сервер загружает страницу и показывает её заголовок. Так он узнаёт каждую ссылку, о которой его спрашивают; в зашифрованной комнате это содержимое, которого он иначе никогда не видит.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Только в незашифрованных комнатах</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Всегда</translation>
     </message>
 </context>
 <context>
@@ -2362,6 +2464,26 @@
         <source>Select files</source>
         <translation>Выбрать файлы</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Новый опрос</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Не удалось проголосовать</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Не удалось завершить опрос</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Не удалось отправить опрос</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Твой голос не был отправлен</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3100,6 +3222,14 @@
     <message>
         <source>New message</source>
         <translation>Новое сообщение</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Опрос: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Опрос</translation>
     </message>
 </context>
 </TS>

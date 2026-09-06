@@ -481,6 +481,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Ustvari anketo</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Vprašanje</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Kaj želiš vprašati?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Odgovor %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Dodaj odgovor</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Dovoli več odgovorov</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Vsakdo lahko potem izbere več kot en odgovor.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Skrij rezultate do konca ankete</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Anketa ni tajno glasovanje: kdo je kaj izbral, ostane berljivo v sobi.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Odjemalci držijo števila skrita do konca ankete, tudi tvoj. Dogovor, ki ga običajni odjemalci upoštevajo, ne ključavnica.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1083,6 +1126,14 @@
         <source>Invitation</source>
         <translation>Povabilo</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Anketa</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Anketa: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1387,6 +1438,42 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Anketa je končana.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Rezultati se pokažejo, ko se anketa konča</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n glas</numerusform>
+            <numerusform>%n glasova</numerusform>
+            <numerusform>%n glasovi</numerusform>
+            <numerusform>%n glasov</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Končana</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Več odgovorov</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Končaj anketo</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1571,6 +1658,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Vklopljeno: slika ali videoposnetek se naloži, takoj ko se sporočilo pojavi. Izklopljeno: naloži se ob dotiku — drsenje mimo je zahteva strežniku pošiljatelja.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Predogled povezav</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Tvoj domači strežnik prenese stran in pokaže njen naslov. Tako izve za vsako povezavo, po kateri ga vprašaš; v šifrirani sobi je to vsebina, ki je sicer nikoli ne vidi.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Samo v nešifriranih sobah</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Vedno</translation>
     </message>
 </context>
 <context>
@@ -2365,6 +2468,26 @@
         <source>Select files</source>
         <translation>Izberi datoteke</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Nova anketa</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Glasovanje ni uspelo</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Ankete ni bilo mogoče končati</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Ankete ni bilo mogoče poslati</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Tvoj glas ni bil poslan</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3107,6 +3230,14 @@
     <message>
         <source>New message</source>
         <translation>Novo sporočilo</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Anketa: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Anketa</translation>
     </message>
 </context>
 </TS>

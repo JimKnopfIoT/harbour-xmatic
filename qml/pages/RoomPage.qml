@@ -812,6 +812,14 @@ Page {
                 }
             }
 
+            // Made here rather than from the composer's attach button: a poll is
+            // not an attachment, and the picker is about files.
+            MenuItem {
+                text: qsTr("New poll")
+                visible: !page.invited
+                onClicked: pageStack.push(Qt.resolvedUrl("CreatePollDialog.qml"))
+            }
+
             // Everything about the room rather than the conversation lives one page
             // further in - this menu had grown to ten entries.
             MenuItem {
@@ -1141,6 +1149,35 @@ Page {
                 readonly property bool isFile: model.kind === "message"
                                                && !!model.media
                                                && !isImage
+                // The first web address in the text, where the setting allows a
+                // preview here. Empty means no card - and no question to the server.
+                readonly property string previewUrl: {
+                    if (model.kind !== "message" || !!model.media || row.isPoll) {
+                        return ""
+                    }
+                    // Unknown counts as encrypted: the failure direction of this
+                    // gate is the one that asks the server nothing.
+                    if (settings.linkPreviews === "never"
+                            || (settings.linkPreviews === "unencrypted"
+                                && (page.encrypted || !page.encryptionKnown))) {
+                        return ""
+                    }
+                    // The same alphabet linkifyBody uses, so the card describes
+                    // the address a tap on the text would open.
+                    var found = /https?:\/\/[^\s<>"]+/.exec(model.body || "")
+                    if (!found) {
+                        return ""
+                    }
+                    var address = found[0].replace(/[.,;:!?]+$/, "")
+                    // A closing bracket without its opener belongs to the sentence.
+                    if (/\)$/.test(address) && address.indexOf("(") < 0) {
+                        address = address.slice(0, -1)
+                    }
+                    return address
+                }
+                // A poll draws itself; its fallback text would repeat the
+                // question and list the answers a second time.
+                readonly property bool isPoll: model.kind === "message" && !!model.poll
                 readonly property bool isOwn: model.own === true
                 // Only a body that visibly carries a link pays the rich-text path, behind a
                 // setting. Never for a file row: its caption is a stranger's text.
@@ -1891,8 +1928,9 @@ Page {
                                             bubbleColumn.maxTextWidth)
                             // A picture or a voice message shows itself; its
                             // caption is the one thing that still needs a line.
-                            visible: (!row.hasPreview && !row.isAudio)
-                                     || row.hasCaption
+                            visible: !row.isPoll
+                                     && ((!row.hasPreview && !row.isAudio)
+                                         || row.hasCaption)
 
                             Label {
                                 id: bodyMeasure
@@ -1960,6 +1998,38 @@ Page {
                                     return row.richBody
                                 }
                                 return model.body || ""
+                            }
+                        }
+
+                        // The poll. Loaded only for a poll row - two hundred rows must
+                        // not carry its repeater - and its width handed in, never
+                        // measured back out of it.
+                        Loader {
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+                            active: row.isPoll
+                            visible: active
+                            sourceComponent: PollBlock {
+                                availableWidth: bubbleColumn.maxTextWidth
+                                poll: model.poll
+                                eventId: row.rowEventId
+                                own: row.isOwn
+                                // Not before the server has it: an echo has no id to vote on.
+                                pending: model.pending === true
+                            }
+                        }
+
+                        // The linked page, as the homeserver describes it. Loaded only
+                        // where a preview may be asked for, shown once there is one.
+                        Loader {
+                            id: previewLoader
+
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+                            active: row.previewUrl.length > 0
+                            visible: active && !!item && item.available
+                            sourceComponent: LinkPreviewCard {
+                                availableWidth: bubbleColumn.maxTextWidth
+                                url: row.previewUrl
+                                onActivated: page.followLink(link)
                             }
                         }
 
@@ -3259,6 +3329,21 @@ Page {
     function showNotice(text) {
         page.noticeText = text
         jumpNoticeTimer.restart()
+    }
+
+    // A refused poll command has no row to mark, so the page says it.
+    Connections {
+        target: matrix.polls
+        onFailed: {
+            if (command === "poll.vote") {
+                page.showNotice(qsTr("Voting failed"))
+            } else if (command === "poll.end") {
+                page.showNotice(qsTr("The poll could not be ended"))
+            } else {
+                page.showNotice(qsTr("The poll could not be sent"))
+            }
+        }
+        onVoteFailed: page.showNotice(qsTr("Your vote was not sent"))
     }
 
     // Said out loud when a jump gives up.

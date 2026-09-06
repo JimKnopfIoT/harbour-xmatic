@@ -480,6 +480,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Izveidot aptauju</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Jautājums</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Ko vēlies jautāt?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>%1. atbilde</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Pievienot atbildi</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Atļaut vairākas atbildes</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Tad ikviens var izvēlēties vairāk nekā vienu atbildi.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Slēpt rezultātus līdz aptaujas beigām</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Aptauja nav aizklāta balsošana: kurš par ko balsojis, paliek lasāms istabā.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Programmas tur skaitļus slēptus līdz aptaujas beigām, arī tava. Vienošanās, ko ievēro ierastās programmas, nevis slēdzene.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1081,6 +1124,14 @@
         <source>Invitation</source>
         <translation>Ielūgums</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Aptauja</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Aptauja: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1385,6 +1436,41 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Aptauja ir beigusies.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Rezultāti parādās, kad aptauja beidzas</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n balsu</numerusform>
+            <numerusform>%n balss</numerusform>
+            <numerusform>%n balsis</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Beigusies</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Vairākas atbildes</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Beigt aptauju</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1569,6 +1655,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Ieslēgts: attēls vai video tiek ielādēts, tiklīdz parādās ziņa. Izslēgts: ielādējas pēc pieskāriena — paritināšana garām ir pieprasījums sūtītāja serverim.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Saišu priekšskatījums</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Tavs mājas serveris ielādē lapu un parāda tās virsrakstu. Tā tas uzzina katru saiti, par kuru tam jautā; šifrētā istabā tas ir saturs, ko tas citādi nekad neredz.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Tikai nešifrētās istabās</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Vienmēr</translation>
     </message>
 </context>
 <context>
@@ -2362,6 +2464,26 @@
         <source>Select files</source>
         <translation>Izvēlēties failus</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Jauna aptauja</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Balsošana neizdevās</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Aptauju neizdevās beigt</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Aptauju neizdevās nosūtīt</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Tava balss netika nosūtīta</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3100,6 +3222,14 @@
     <message>
         <source>New message</source>
         <translation>Jauna ziņa</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Aptauja: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Aptauja</translation>
     </message>
 </context>
 </TS>

@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Skapa omröstning</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Fråga</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Vad vill du fråga?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Svar %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Lägg till svar</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Tillåt flera svar</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Då kan alla välja mer än ett svar.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Dölj resultatet tills omröstningen är slut</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>En omröstning är inte hemlig: vem som röstade på vad går att läsa i rummet.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Klienterna håller siffrorna dolda tills omröstningen är slut, din också. En konvention som de vanliga klienterna följer, inte ett lås.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Inbjudan</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Omröstning</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Omröstning: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Omröstningen är avslutad.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Resultatet visas när omröstningen är slut</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n röst</numerusform>
+            <numerusform>%n röster</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Avslutad</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Flera svar</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Avsluta omröstning</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>På: en bild eller video läses in så snart meddelandet visas. Av: den läses in när du trycker — att bläddra förbi är en förfrågan till avsändarens server.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Förhandsvisning av länkar</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Din hemserver hämtar sidan och visar dess titel. Den får därmed veta varje länk den tillfrågas om; i ett krypterat rum är det innehåll som den annars aldrig ser.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Bara i okrypterade rum</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Alltid</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Välj filer</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Ny omröstning</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Röstningen misslyckades</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Omröstningen kunde inte avslutas</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Omröstningen kunde inte skickas</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Din röst skickades inte</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>Nytt meddelande</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Omröstning: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Omröstning</translation>
     </message>
 </context>
 </TS>

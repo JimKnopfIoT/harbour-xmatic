@@ -555,6 +555,44 @@ fn replies_needing_details(diff: &VectorDiff<Arc<TimelineItem>>) -> Vec<OwnedEve
     }
 }
 
+/// The items a diff carries, for checks that look at rows rather than ops.
+fn diff_items(diff: &VectorDiff<Arc<TimelineItem>>) -> Vec<&Arc<TimelineItem>> {
+    match diff {
+        VectorDiff::Append { values } | VectorDiff::Reset { values } => values.iter().collect(),
+        VectorDiff::PushBack { value }
+        | VectorDiff::PushFront { value }
+        | VectorDiff::Insert { value, .. }
+        | VectorDiff::Set { value, .. } => vec![value],
+        _ => Vec::new(),
+    }
+}
+
+/// One server round trip per poll whose end is not yet the creator's word,
+/// in the same lanes as the quote fetches. See core/src/poll.rs.
+async fn request_poll_checks(
+    checks: Vec<crate::poll::Check>,
+    timeline: &Arc<matrix_sdk_ui::timeline::Timeline>,
+    sink: &Arc<Sink>,
+    tasks: &TimelineTasks,
+) {
+    for check in checks {
+        let room = timeline.room().clone();
+        let sink = sink.clone();
+        let inner = tasks.clone();
+        tasks
+            .spawn_tracked(async move {
+                let Ok(_permit) = inner.poll_permits.clone().acquire_owned().await else {
+                    return;
+                };
+                if !inner.open.load(Ordering::SeqCst) {
+                    return;
+                }
+                crate::poll::verify(room, check, sink).await;
+            })
+            .await;
+    }
+}
+
 /// How often one reply's details are asked for. A failure returns as a `Set`
 /// diff that qualifies again - unbounded, that is a loop against a 429.
 const DETAIL_ATTEMPTS: u8 = 2;
@@ -562,6 +600,9 @@ const DETAIL_ATTEMPTS: u8 = 2;
 /// How many pinned events the diagnostic may look at. "N pinned, only M
 /// readable" gets no truer past twenty, and each miss is a request.
 const PINNED_REPORT_LIMIT: usize = 20;
+
+/// Poll end checks in flight per timeline.
+const POLL_LANES: usize = 2;
 
 /// Quote fetches in flight per timeline. Unbounded, a room of quoted messages
 /// fired a hundred requests at once, each 429 nursed for fifteen minutes.
@@ -572,6 +613,9 @@ const DETAIL_LANES: usize = 4;
 #[derive(Clone)]
 struct TimelineTasks {
     permits: Arc<tokio::sync::Semaphore>,
+    /// Poll checks in their own lanes: a room full of ended polls must not
+    /// hold the quotes behind it.
+    poll_permits: Arc<tokio::sync::Semaphore>,
     open: Arc<AtomicBool>,
     /// Every fetch that may still be running: closing the queue is not enough, a
     /// task holding a permit sits inside a request the SDK nurses for minutes.
@@ -582,6 +626,7 @@ impl TimelineTasks {
     fn new() -> Self {
         Self {
             permits: Arc::new(tokio::sync::Semaphore::new(DETAIL_LANES)),
+            poll_permits: Arc::new(tokio::sync::Semaphore::new(POLL_LANES)),
             open: Arc::new(AtomicBool::new(true)),
             running: Arc::new(tokio::sync::Mutex::new(Vec::new())),
         }
@@ -609,6 +654,7 @@ impl TimelineTasks {
         // Wakes everything waiting; `acquire_owned` then fails and the task drops its
         // handle instead of holding it for the next quarter of an hour.
         self.permits.close();
+        self.poll_permits.close();
         let handles: Vec<_> = {
             let mut running = self.running.lock().await;
             running.drain(..).collect()
@@ -930,7 +976,9 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
             ),
             MsgLikeKind::Poll(poll) => (
                 "message",
-                poll.fallback_text().as_deref().map(strip_bidi).unwrap_or_default(),
+                // The question where a sender wrote no fallback: a bubble with
+                // nothing in it says less than the poll's own words.
+                strip_bidi(&poll.fallback_text().unwrap_or_else(|| poll.results().question)),
                 "m.poll".to_owned(),
                 false,
                 None,
@@ -1026,6 +1074,18 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
         _ => None,
     };
 
+    // The votes as the core decided they may be seen - an undisclosed poll that is
+    // still running carries none. See core/src/poll.rs.
+    let poll = match event.content() {
+        TimelineItemContent::MsgLike(content) => match &content.kind {
+            MsgLikeKind::Poll(state) => {
+                Some(crate::poll::from_state(state, own, event.event_id()))
+            }
+            _ => None,
+        },
+        _ => None,
+    };
+
     json!({
         "id": id,
         "eventId": event.event_id().map(|id| id.as_str()),
@@ -1037,13 +1097,17 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
         },
         // The SDK calls a local echo editable, but every edit path here goes by event
         // id, and a queued message has none.
-        "editable": event.is_editable() && event.event_id().is_some(),
+        // The SDK calls a fresh poll editable; an edit would go out as text
+        // and be refused as a content mismatch.
+        "editable": event.is_editable() && event.event_id().is_some() && poll.is_none(),
         "kind": kind,
         "body": body,
         // The same message as `body`, as markup, where it adds something. Null
         // for most messages — see core/src/markup.rs.
         "formatted": formatted,
         "msgtype": msgtype,
+        // Null for everything that is not a poll.
+        "poll": poll,
         "media": media,
         "caption": caption,
         "replyTo": reply,
@@ -1364,6 +1428,13 @@ pub async fn open(
             &task_tasks,
         )
         .await;
+        request_poll_checks(
+            crate::poll::checks_needed(initial.iter()),
+            &detail_source,
+            &sink,
+            &task_tasks,
+        )
+        .await;
 
         while let Some(diffs) = stream.next().await {
             let ops: Vec<Value> = diffs.iter().map(|diff| encode(&room_id_owned, diff, own.as_deref())).collect();
@@ -1371,6 +1442,14 @@ pub async fn open(
                 "timeline.diff",
                 json!({ "roomId": room_id_owned, "token": token_owned, "ops": ops }),
             ));
+
+            request_poll_checks(
+                crate::poll::checks_needed(diffs.iter().flat_map(diff_items)),
+                &detail_source,
+                &sink,
+                &task_tasks,
+            )
+            .await;
 
             // `Unavailable` means "not requested", and nothing fetches them by itself -
             // without this the quote box stayed empty for good.

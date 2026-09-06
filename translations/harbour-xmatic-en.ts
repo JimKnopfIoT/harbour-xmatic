@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Create poll</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Question</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>What are you asking?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Answer %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Add answer</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Allow several answers</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Everyone can then pick more than one answer.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Hide results until the poll ends</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>A poll is not a secret ballot: who voted for what stays readable in the room.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Invitation</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Poll</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Poll: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>The poll has ended.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1%</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Results are shown once the poll ends</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n vote</numerusform>
+            <numerusform>%n votes</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Ended</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Several answers</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>End poll</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Link previews</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Only in unencrypted rooms</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Always</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Select files</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>New poll</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Voting failed</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>The poll could not be ended</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>The poll could not be sent</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Your vote was not sent</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>New message</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Poll: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Poll</translation>
     </message>
 </context>
 </TS>

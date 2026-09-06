@@ -481,6 +481,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Oħloq stħarriġ</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Mistoqsija</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>X&apos;trid tistaqsi?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Tweġiba %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Żid tweġiba</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Ħalli aktar minn tweġiba waħda</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Kulħadd imbagħad jista&apos; jagħżel aktar minn tweġiba waħda.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Aħbi r-riżultati sa tmiem l-istħarriġ</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Stħarriġ mhuwiex vot sigriet: min ivvota għal xiex jibqa&apos; jinqara fil-kamra.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Il-klijenti jżommu n-numri moħbija sa tmiem l-istħarriġ, tiegħek ukoll. Konvenzjoni li l-klijenti komuni jsegwu, mhux serratura.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1083,6 +1126,14 @@
         <source>Invitation</source>
         <translation>Stedina</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Stħarriġ</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Stħarriġ: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1387,6 +1438,42 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>L-istħarriġ intemm.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Ir-riżultati jidhru meta jintemm l-istħarriġ</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n vot</numerusform>
+            <numerusform>%n voti</numerusform>
+            <numerusform>%n voti</numerusform>
+            <numerusform>%n voti</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Intemm</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Aktar minn tweġiba waħda</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Temm l-istħarriġ</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1571,6 +1658,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Mixgħul: ritratt jew vidjo jitgħabba hekk kif tidher il-messaġġ. Mitfi: jitgħabba meta tmissu — li tiskrollja ħdejh hija talba lis-server ta’ min bagħat.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Preview tal-links</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Is-server tiegħek iġib il-paġna u juri t-titlu tagħha. Hekk isir jaf b&apos;kull link li jiġi mistoqsi dwaru; f&apos;kamra kriptata dak hu kontenut li altrimenti qatt ma jara.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Biss f&apos;kmamar mhux kriptati</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Dejjem</translation>
     </message>
 </context>
 <context>
@@ -2365,6 +2468,26 @@
         <source>Select files</source>
         <translation>Agħżel fajls</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Stħarriġ ġdid</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Il-vot falla</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>L-istħarriġ ma setax jintemm</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>L-istħarriġ ma setax jintbagħat</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Il-vot tiegħek ma ntbagħatx</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3107,6 +3230,14 @@
     <message>
         <source>New message</source>
         <translation>Messaġġ ġdid</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Stħarriġ: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Stħarriġ</translation>
     </message>
 </context>
 </TS>

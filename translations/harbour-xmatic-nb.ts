@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Opprett avstemning</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Spørsmål</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Hva vil du spørre om?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Svar %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Legg til svar</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Tillat flere svar</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Da kan alle velge mer enn ett svar.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Skjul resultatene til avstemningen er over</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>En avstemning er ikke hemmelig: hvem som stemte hva, kan leses i rommet.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Klientene holder tallene skjult til avstemningen er over, din også. En konvensjon de vanlige klientene følger, ikke en lås.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Invitasjon</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Avstemning</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Avstemning: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Avstemningen er avsluttet.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Resultatet vises når avstemningen er over</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n stemme</numerusform>
+            <numerusform>%n stemmer</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Avsluttet</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Flere svar</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Avslutt avstemning</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>På: et bilde eller en video lastes så snart meldingen vises. Av: det lastes når du trykker — å rulle forbi er en forespørsel til avsenderens tjener.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Forhåndsvisning av lenker</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Hjemmeserveren din henter siden og viser tittelen. Den får dermed vite om hver lenke den blir spurt om; i et kryptert rom er det innhold den ellers aldri ser.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Bare i ukrypterte rom</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Alltid</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Velg filer</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Ny avstemning</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Avstemningen mislyktes</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Avstemningen kunne ikke avsluttes</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Avstemningen kunne ikke sendes</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Stemmen din ble ikke sendt</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>Ny melding</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Avstemning: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Avstemning</translation>
     </message>
 </context>
 </TS>

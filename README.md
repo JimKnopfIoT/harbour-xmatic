@@ -58,6 +58,16 @@ repository.
 * Rooms: create (public or invite-only, encrypted or not, both settled at
   creation), invite, join by address, leave, direct chats, and a search across
   public room directories
+* Polls, drawn as themselves: the question, a bar under every answer, the own
+  choice ticked. Tap to vote, tap again to take it back; create one from the
+  room's pull-down, with several answers allowed or the results kept closed
+  until the end. Only the poll's creator can end it — the app checks that
+  itself, since the protocol library does not — and a closed poll's numbers
+  never reach the screen until it ends
+* Link previews, off by default: your homeserver fetches the page and the
+  message shows its host, title and description underneath. The setting says
+  what the server learns from that, and can limit previews to unencrypted
+  rooms
 * A room opens where you stopped reading, counts as read while it is read, and
   can be marked read from the chat list without opening it
 * Matrix links lead into the app: a permalink or a plain #room:server opens the

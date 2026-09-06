@@ -353,6 +353,27 @@ void AppSettings::removeDirectoryServer(const QString &server)
     emit directoryServersChanged();
 }
 
+QString AppSettings::linkPreviews() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    const QString value = settings.value(QStringLiteral("privacy/linkPreviews"),
+                                         QStringLiteral("never")).toString();
+    if (value == QLatin1String("unencrypted") || value == QLatin1String("always")) {
+        return value;
+    }
+    return QStringLiteral("never");
+}
+
+void AppSettings::setLinkPreviews(const QString &policy)
+{
+    if (policy == linkPreviews()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/linkPreviews"), policy, "the link preview setting");
+    emit linkPreviewsChanged();
+}
+
 QString AppSettings::callPolicy() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);
