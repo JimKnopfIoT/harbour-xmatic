@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.29.0
+Version:    0.30.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -110,6 +110,14 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Sep 06 2026 harbour-xmatic contributors 0.30.0-1
+- Mentions. Typing "@" opens a row of the room's members over the message
+  line; tapping one puts the name in the text. The message then carries the
+  mention itself, so the other side is notified whatever its client reads.
+- A member's page has "Mention" beside the other actions: it takes you back
+  to the room with the name already in the message line.
+- Where your power level allows it, "@room" stands at the front of the row.
+
 * Sat Sep 05 2026 harbour-xmatic contributors 0.29.0-1
 - Polls. A poll from any client is shown as its question with a bar under
   each answer; tap a line to vote, tap it again to take the vote back. "New

@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>niciuna</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Menționează</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

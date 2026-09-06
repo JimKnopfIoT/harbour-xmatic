@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>engin</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Nefna</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

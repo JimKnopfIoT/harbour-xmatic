@@ -1324,6 +1324,10 @@
         <source>none</source>
         <translation>xejn</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Semmi</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

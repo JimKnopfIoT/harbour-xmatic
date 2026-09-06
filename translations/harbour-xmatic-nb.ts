@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>ingen</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Nevn</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

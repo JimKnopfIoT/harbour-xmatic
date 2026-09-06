@@ -265,6 +265,29 @@ Page {
 
     // Not while the marker search runs: a room opens at its end, and marking read
     // there moves the very marker it is looking for.
+    // The member page has no composer; it hands the mention to the room page,
+    // which is the one that stays. Applied when this page is on top again -
+    // a focus set while the stack animates does not stick.
+    Connections {
+        target: matrix.mentions
+
+        onInsertRequested: {
+            if (roomId !== page.roomId || page.invited) {
+                return
+            }
+            if (page.status === PageStatus.Active) {
+                messageComposer.insertMention(userId, displayName)
+                return
+            }
+            page.pendingAction = {
+                "kind": "mention",
+                "userId": userId,
+                "displayName": displayName
+            }
+            pageStack.pop(page)
+        }
+    }
+
     Connections {
         target: Qt.application
         onActiveChanged: {
@@ -458,6 +481,8 @@ Page {
                     openThread(action.eventId)
                 } else if (action.kind === "forwardAttachment") {
                     forwardAttachment(action.item)
+                } else if (action.kind === "mention") {
+                    messageComposer.insertMention(action.userId, action.displayName)
                 } else if (action.kind === "delete") {
                     // The countdown belongs on the page that stays: started on the actions page,
                     // Silica executes it the moment that page pops.
@@ -2685,6 +2710,7 @@ Page {
                         left: parent.left
                         right: parent.right
                     }
+                    roomId: page.roomId
                     attachments: true
                     emoji: true
                     voice: true
@@ -2846,20 +2872,25 @@ Page {
 
     function doSubmit() {
         if (page.editingEventId.length > 0) {
+            // An edit carries no mentions: it replaces a body, and the ping
+            // went out with the original.
             matrix.editMessage(page.editingEventId, messageComposer.text)
             // cancelEdit drops the focus by itself - an edit that is done is
             // done, whatever the setting says.
             page.cancelEdit()
             return
         }
+        var mentions = messageComposer.mentionIds()
         if (page.replyingEventId.length > 0) {
-            matrix.replyToMessage(page.replyingEventId, messageComposer.text)
+            matrix.replyToMessage(page.replyingEventId, messageComposer.text, mentions)
+            messageComposer.clearMentions()
             page.cancelReply()
             page.afterSend()
             return
         }
-        matrix.sendMessage(messageComposer.text)
+        matrix.sendMessage(messageComposer.text, mentions)
         messageComposer.clearField()
+        messageComposer.clearMentions()
         page.afterSend()
     }
 

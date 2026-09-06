@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>καμία</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Αναφορά</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

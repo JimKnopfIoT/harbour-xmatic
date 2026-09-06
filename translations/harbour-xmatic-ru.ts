@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>нет</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Упомянуть</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

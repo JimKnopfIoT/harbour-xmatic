@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>puuduvad</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Maini</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

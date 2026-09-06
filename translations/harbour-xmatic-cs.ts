@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>žádné</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Zmínit</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

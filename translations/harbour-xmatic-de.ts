@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>keine</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Erwähnen</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

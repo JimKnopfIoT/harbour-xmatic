@@ -1328,6 +1328,10 @@
         <source>Ignoring</source>
         <translation>جارٍ التجاهل</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>إشارة</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

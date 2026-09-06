@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>nėra</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Paminėti</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

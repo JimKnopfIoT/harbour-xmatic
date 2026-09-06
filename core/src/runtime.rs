@@ -26,6 +26,7 @@ use crate::private;
 use crate::protocol::{event, reply_error, reply_ok, Command, Secret};
 use crate::media;
 use crate::members;
+use crate::mention;
 use crate::recovery;
 use crate::roomlist::{self, RoomListHandle};
 use crate::session::{self, Paths, StoredSession};
@@ -348,7 +349,9 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::RoomResolve { address, .. } => resolve_room(&state, id, address).await,
         Command::TimelineClose { room_id, .. } => close_timeline(&state, id, room_id).await,
         Command::TimelinePaginate { .. } => paginate_timeline(&state, id).await,
-        Command::TimelineSend { body, .. } => send_message(&state, id, body).await,
+        Command::TimelineSend { body, mentions, .. } => {
+            send_message(&state, id, body, mentions).await
+        }
         Command::TimelineMarkRead { receipt, .. } => mark_read(&state, id, receipt).await,
         Command::PrivateGet { .. } => {
             match private::load(&state.paths.private_file, state.store_key().as_ref()) {
@@ -451,8 +454,8 @@ async fn handle(state: Arc<State>, command: Command) {
                 Err(message) => state.sink.emit(reply_error(id, message)),
             }
         }
-        Command::TimelineReply { event_id, body, .. } => {
-            reply_message(&state, id, event_id, body).await
+        Command::TimelineReply { event_id, body, mentions, .. } => {
+            reply_message(&state, id, event_id, body, mentions).await
         }
         Command::TimelineEdit { event_id, body, .. } => edit_message(&state, id, event_id, body).await,
         Command::TimelineRetry { txn_id, .. } => retry_message(&state, id, txn_id).await,
@@ -661,6 +664,10 @@ async fn handle(state: Arc<State>, command: Command) {
             search_room(&state, id, room_id, query, offset, limit).await
         }
         Command::MembersLoad { room_id, .. } => members_load(&state, id, room_id).await,
+        // Routed, not handled: what a mention is lives in core/src/mention.rs.
+        Command::MentionCandidates { room_id, query, .. } => {
+            mention_candidates(&state, id, room_id, query).await
+        }
         Command::RoomCheckRecipients { room_id, .. } => {
             room_check_recipients(&state, id, room_id).await
         }
@@ -700,7 +707,9 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::ThreadClose { root_event_id, .. } => {
             close_thread(&state, id, root_event_id).await
         }
-        Command::ThreadSend { body, .. } => send_thread_message(&state, id, body).await,
+        Command::ThreadSend { body, mentions, .. } => {
+            send_thread_message(&state, id, body, mentions).await
+        }
         Command::ThreadPaginate { .. } => paginate_thread(&state, id).await,
     }
 }
@@ -943,6 +952,34 @@ async fn search_room(
                 json!({ "rows": rows, "offset": offset, "more": more }),
             ));
         }
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// The message a send command turns into. Without a client the mentions are
+/// dropped rather than the message: a body still goes out.
+async fn mention_content(
+    state: &Arc<State>,
+    room_id: &str,
+    body: String,
+    mentions: &[String],
+) -> matrix_sdk::ruma::events::room::message::RoomMessageEventContent {
+    let client = state.client().await;
+    mention::text_content(client.as_ref(), room_id, body, mentions).await
+}
+
+async fn mention_candidates(state: &Arc<State>, id: u64, room_id: String, query: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match mention::candidates(&client, &room_id, &query).await {
+        // The query travels back: the picker has moved on by the time a stale
+        // answer lands, and it has no request id to tell them apart by.
+        Ok(rows) => state.sink.emit(reply_ok(
+            id,
+            json!({ "roomId": room_id, "query": query, "candidates": rows }),
+        )),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
@@ -1561,14 +1598,17 @@ async fn close_thread(state: &Arc<State>, id: u64, root_event_id: String) {
     state.sink.emit(reply_ok(id, json!({ "open": false })));
 }
 
-async fn send_thread_message(state: &Arc<State>, id: u64, body: String) {
+async fn send_thread_message(state: &Arc<State>, id: u64, body: String, mentions: Vec<String>) {
     if body.trim().is_empty() {
         state.sink.emit(reply_error(id, "nothing to send"));
         return;
     }
 
     let outcome = match state.thread().await {
-        Some(handle) => handle.send_text(body).await,
+        Some(handle) => {
+            let content = mention_content(state, handle.room_id(), body, &mentions).await;
+            handle.send_content(content).await
+        }
         None => Err("no thread is open".to_owned()),
     };
 
@@ -1606,14 +1646,17 @@ async fn paginate_timeline(state: &Arc<State>, id: u64) {
     }
 }
 
-async fn send_message(state: &Arc<State>, id: u64, body: String) {
+async fn send_message(state: &Arc<State>, id: u64, body: String, mentions: Vec<String>) {
     if body.trim().is_empty() {
         state.sink.emit(reply_error(id, "nothing to send"));
         return;
     }
 
     let outcome = match state.timeline().await {
-        Some(handle) => handle.send_text(body).await,
+        Some(handle) => {
+            let content = mention_content(state, handle.room_id(), body, &mentions).await;
+            handle.send_content(content).await
+        }
         None => Err("no timeline is open".to_owned()),
     };
 
@@ -1623,14 +1666,23 @@ async fn send_message(state: &Arc<State>, id: u64, body: String) {
     }
 }
 
-async fn reply_message(state: &Arc<State>, id: u64, event_id: String, body: String) {
+async fn reply_message(
+    state: &Arc<State>,
+    id: u64,
+    event_id: String,
+    body: String,
+    mentions: Vec<String>,
+) {
     if body.trim().is_empty() {
         state.sink.emit(reply_error(id, "a reply cannot be empty"));
         return;
     }
 
     let outcome = match state.timeline().await {
-        Some(handle) => handle.reply(&event_id, body).await,
+        Some(handle) => {
+            let content = mention_content(state, handle.room_id(), body, &mentions).await;
+            handle.reply_content(&event_id, content).await
+        }
         None => Err("no timeline is open".to_owned()),
     };
 

@@ -422,6 +422,17 @@ Page {
                 WrapButton {
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: actions.buttonWidth
+                    label: qsTr("Mention")
+                    // Somebody who has left the room is addressed by nothing.
+                    visible: page.loaded && (profile.membership === "join"
+                                             || profile.membership === "invite")
+                    onClicked: matrix.mentions.requestInsert(
+                                   page.roomId, page.userId, profile.displayName)
+                }
+
+                WrapButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: actions.buttonWidth
                     label: qsTr("Verify")
                     visible: page.loaded
                              && (profile.verification === "unverified"

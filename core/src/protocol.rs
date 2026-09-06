@@ -205,9 +205,15 @@ pub enum Command {
     #[serde(rename = "timeline.paginate")]
     TimelinePaginate { id: u64 },
 
-    /// Send a plain text message to the open room.
+    /// Send a plain text message to the open room. `mentions` carries the user
+    /// ids the picker collected, `@room` among them for the whole room.
     #[serde(rename = "timeline.send")]
-    TimelineSend { id: u64, body: String },
+    TimelineSend {
+        id: u64,
+        body: String,
+        #[serde(default)]
+        mentions: Vec<String>,
+    },
 
     /// Replace the body of a message that was already sent.
     #[serde(rename = "timeline.edit")]
@@ -225,6 +231,8 @@ pub enum Command {
         #[serde(rename = "eventId")]
         event_id: String,
         body: String,
+        #[serde(default)]
+        mentions: Vec<String>,
     },
 
     /// Delete a message.
@@ -753,6 +761,17 @@ pub enum Command {
         room_id: String,
     },
 
+    /// Who can be mentioned in this room, filtered by what stands after the
+    /// `@`. Answered from the store, so it costs no request per keystroke.
+    #[serde(rename = "mention.candidates")]
+    MentionCandidates {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(default)]
+        query: String,
+    },
+
     /// Which joined recipients still have unverified devices, so the UI can warn.
     /// Replies `{ roomId, users: [{ userId, name, devices }] }`.
     #[serde(rename = "room.checkRecipients")]
@@ -879,7 +898,12 @@ pub enum Command {
 
     /// Send a text message into the open thread.
     #[serde(rename = "thread.send")]
-    ThreadSend { id: u64, body: String },
+    ThreadSend {
+        id: u64,
+        body: String,
+        #[serde(default)]
+        mentions: Vec<String>,
+    },
 
     /// Load older events of the open thread.
     #[serde(rename = "thread.paginate")]
@@ -971,6 +995,7 @@ impl Command {
             | Command::DirectoryLoadMore { id }
             | Command::DirectoryStop { id }
             | Command::MembersLoad { id, .. }
+            | Command::MentionCandidates { id, .. }
             | Command::RoomCheckRecipients { id, .. }
             | Command::MemberRemove { id, .. }
             | Command::MemberProfile { id, .. }

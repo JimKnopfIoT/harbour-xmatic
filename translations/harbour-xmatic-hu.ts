@@ -1318,6 +1318,10 @@
         <source>none</source>
         <translation>nincs</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Említés</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

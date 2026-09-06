@@ -90,8 +90,9 @@ Page {
     }
 
     function doSubmit() {
-        matrix.sendThreadMessage(composer.text)
+        matrix.sendThreadMessage(composer.text, composer.mentionIds())
         composer.clearField()
+        composer.clearMentions()
         // The same rule as in the room below: with the setting on, the
         // keyboard goes once the post is away.
         page.followTail = true
@@ -380,6 +381,7 @@ Page {
             bottom: parent.bottom
         }
 
+        roomId: page.roomId
         placeholderText: qsTr("Reply in thread")
         onSubmitted: page.submit()
     }

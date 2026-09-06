@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>brak</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Wspomnij</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

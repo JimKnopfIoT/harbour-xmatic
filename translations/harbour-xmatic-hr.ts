@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>nema</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Spomeni</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

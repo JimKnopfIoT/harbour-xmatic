@@ -1318,6 +1318,10 @@
         <source>Ignoring</source>
         <translation>در حال نادیده‌گرفتن</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>اشاره کردن</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

@@ -18,6 +18,7 @@
 #include "roomsortmodel.h"
 #include "directorymodel.h"
 #include "membermodel.h"
+#include "mentions.h"
 #include "searchmodel.h"
 #include "callengine.h"
 #include "linkpreviews.h"
@@ -95,6 +96,7 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *calls READ calls CONSTANT)
     Q_PROPERTY(QObject *polls READ polls CONSTANT)
     Q_PROPERTY(QObject *linkPreviews READ linkPreviews CONSTANT)
+    Q_PROPERTY(QObject *mentions READ mentions CONSTANT)
     Q_PROPERTY(QString openRoomId READ openRoomId NOTIFY openRoomChanged)
     Q_PROPERTY(QStringList pinnedEventIds READ pinnedEventIds NOTIFY pinnedChanged)
     Q_PROPERTY(QString pinnedPreview READ pinnedPreview NOTIFY pinnedChanged)
@@ -217,6 +219,7 @@ public:
     QObject *calls() { return m_calls; }
     QObject *polls() { return m_polls; }
     QObject *linkPreviews() { return m_linkPreviews; }
+    QObject *mentions() { return m_mentions; }
     QString openRoomId() const { return m_openRoomId; }
 
     /// Event ids of the open room's pinned messages, for the banner and the
@@ -492,13 +495,15 @@ public:
     Q_INVOKABLE void closeThread();
 
     /// Sends a text message into the open thread.
-    Q_INVOKABLE void sendThreadMessage(const QString &body);
+    Q_INVOKABLE void sendThreadMessage(const QString &body,
+                                       const QStringList &mentions = QStringList());
 
     /// Loads older events of the open thread.
     Q_INVOKABLE void threadLoadOlder();
 
     /// Sends a plain text message to the open room.
-    Q_INVOKABLE void sendMessage(const QString &body);
+    Q_INVOKABLE void sendMessage(const QString &body,
+                                 const QStringList &mentions = QStringList());
 
     /// Sends a read receipt for the open room.
     Q_INVOKABLE void markRead();
@@ -601,7 +606,8 @@ public:
     Q_INVOKABLE void fetchRoomKeys(const QString &roomId);
 
     /// Sends a reply to an earlier message.
-    Q_INVOKABLE void replyToMessage(const QString &eventId, const QString &body);
+    Q_INVOKABLE void replyToMessage(const QString &eventId, const QString &body,
+                                    const QStringList &mentions = QStringList());
 
     /// Replaces the body of a message that was already sent.
     Q_INVOKABLE void editMessage(const QString &eventId, const QString &body);
@@ -938,6 +944,7 @@ private:
     CallEngine *m_calls = nullptr;
     PollActions *m_polls = nullptr;
     LinkPreviews *m_linkPreviews = nullptr;
+    Mentions *m_mentions = nullptr;
     TimelineModel m_timeline;
     TimelineModel m_threadTimeline;
     /// Which room `m_members` was loaded for, so an action in another room
