@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>geen</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Vermelden</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

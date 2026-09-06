@@ -162,29 +162,34 @@ impl TimelineHandle {
             .map_err(|error| format!("could not load older messages: {error}"))
     }
 
-    /// Sends a text message. It shows up as a local echo immediately. Where the
-    /// composer's markers said so, a `formatted_body` travels beside the text.
-    pub async fn send_text(&self, body: String) -> Result<(), String> {
+    /// Sends a message the caller has already built: the mention module fills in
+    /// the pill and `m.mentions`, the composer's markers the `formatted_body`.
+    /// It shows up as a local echo immediately.
+    pub async fn send_content(&self, content: RoomMessageEventContent) -> Result<(), String> {
         self.timeline
-            .send(text_content(body).into())
+            .send(content.into())
             .await
             .map(|_| ())
             .map_err(|error| format!("message could not be sent: {error}"))
+    }
+
+    /// The same for a reply.
+    pub async fn reply_content(
+        &self,
+        event_id: &str,
+        content: RoomMessageEventContent,
+    ) -> Result<(), String> {
+        let id = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
+        self.timeline
+            .send_reply(content.into(), id)
+            .await
+            .map_err(|error| format!("could not reply: {error}"))
     }
 
     /// A shared handle on the underlying timeline, for the media module.
     /// `Timeline` itself is not `Clone`, hence the `Arc`.
     pub fn timeline(&self) -> Arc<matrix_sdk_ui::timeline::Timeline> {
         self.timeline.clone()
-    }
-
-    /// Sends a reply to an earlier message.
-    pub async fn reply(&self, event_id: &str, body: String) -> Result<(), String> {
-        let id = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
-        self.timeline
-            .send_reply(text_content(body).into(), id)
-            .await
-            .map_err(|error| format!("could not reply: {error}"))
     }
 
     /// An attachment is edited as a *caption*: `EditedContent::RoomMessage` would

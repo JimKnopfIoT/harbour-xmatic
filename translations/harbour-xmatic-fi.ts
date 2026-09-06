@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>ei mitään</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Mainitse</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

@@ -12,6 +12,7 @@ mod linkpreview;
 mod login;
 mod media;
 mod members;
+mod mention;
 mod profile;
 mod push;
 mod poll;

@@ -1324,6 +1324,10 @@
         <source>none</source>
         <translation>brez</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Omeni</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

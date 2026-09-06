@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>ceann ar bith</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Luaigh</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

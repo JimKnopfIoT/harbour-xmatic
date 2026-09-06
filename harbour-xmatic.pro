@@ -54,6 +54,7 @@ SOURCES += \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
     src/linkpreviews.cpp \
+    src/mentions.cpp \
     src/roomlistmodel.cpp \
     src/roomsortmodel.cpp \
     src/directorymodel.cpp \
@@ -81,6 +82,7 @@ HEADERS += \
     src/matrixbridge.h \
     src/pollactions.h \
     src/linkpreviews.h \
+    src/mentions.h \
     src/outgoingimage.h \
     src/secretskeeper.h \
     src/roomlistmodel.h \
@@ -287,6 +289,7 @@ DISTFILES += \
     qml/pages/AddDirectoryServerDialog.qml \
     qml/pages/PinnedMessagesPage.qml \
     qml/pages/MemberListPage.qml \
+    qml/pages/MentionPicker.qml \
     qml/pages/MemberProfilePage.qml \
     qml/pages/IgnoredUsersPage.qml \
     qml/pages/ThreadPage.qml \

@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>nessuna</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Menziona</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>nav</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Pieminēt</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

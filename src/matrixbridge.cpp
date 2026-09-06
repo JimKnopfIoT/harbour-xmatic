@@ -148,6 +148,7 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
         // Another account's previews must not answer for this one, whatever
         // the media setting says about the files.
         m_linkPreviews->clear();
+        m_mentions->clear();
         if (m_settings->mediaWipe() != QLatin1String("never")) {
             clearMediaCache();
         }
@@ -200,6 +201,14 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     // Same shape: asks through the bridge, remembers on its own. src/linkpreviews.cpp.
     m_linkPreviews = new LinkPreviews(this);
     connect(m_linkPreviews, &LinkPreviews::commandReady, this,
+            [this](const QString &command, const QJsonObject &arguments) {
+                send(command, arguments);
+            });
+
+    // Third of the same shape: the bridge routes, mention rules live in the
+    // core and the picker's state in src/mentions.cpp.
+    m_mentions = new Mentions(this);
+    connect(m_mentions, &Mentions::commandReady, this,
             [this](const QString &command, const QJsonObject &arguments) {
                 send(command, arguments);
             });
@@ -844,13 +853,27 @@ void MatrixBridge::closeThread()
     send(QStringLiteral("thread.close"), arguments);
 }
 
-void MatrixBridge::sendThreadMessage(const QString &body)
+/// The picked mentions as the core takes them. Never the names: those are
+/// looked up there, so what is linked comes from the room, not from the field.
+static QJsonArray mentionArray(const QStringList &mentions)
+{
+    QJsonArray array;
+    for (const QString &id : mentions) {
+        if (!id.isEmpty()) {
+            array.append(id);
+        }
+    }
+    return array;
+}
+
+void MatrixBridge::sendThreadMessage(const QString &body, const QStringList &mentions)
 {
     if (body.trimmed().isEmpty()) {
         return;
     }
     QJsonObject arguments;
     arguments.insert(QStringLiteral("body"), body);
+    arguments.insert(QStringLiteral("mentions"), mentionArray(mentions));
     send(QStringLiteral("thread.send"), arguments);
 }
 
@@ -1257,7 +1280,7 @@ void MatrixBridge::fetchSpaceHierarchy(const QString &spaceId)
     m_hierarchyRequests.insert(id, spaceId);
 }
 
-void MatrixBridge::sendMessage(const QString &body)
+void MatrixBridge::sendMessage(const QString &body, const QStringList &mentions)
 {
     // Length only, never content: this exists to tell "the UI never asked"
     // apart from "the server refused".
@@ -1268,6 +1291,7 @@ void MatrixBridge::sendMessage(const QString &body)
     }
     QJsonObject arguments;
     arguments.insert(QStringLiteral("body"), body);
+    arguments.insert(QStringLiteral("mentions"), mentionArray(mentions));
     send(QStringLiteral("timeline.send"), arguments);
 }
 
@@ -1694,7 +1718,8 @@ void MatrixBridge::fetchRoomKeys(const QString &roomId)
     send(QStringLiteral("encryption.fetchKeys"), arguments);
 }
 
-void MatrixBridge::replyToMessage(const QString &eventId, const QString &body)
+void MatrixBridge::replyToMessage(const QString &eventId, const QString &body,
+                                  const QStringList &mentions)
 {
     if (eventId.isEmpty() || body.trimmed().isEmpty()) {
         return;
@@ -1702,6 +1727,7 @@ void MatrixBridge::replyToMessage(const QString &eventId, const QString &body)
     QJsonObject arguments;
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("body"), body);
+    arguments.insert(QStringLiteral("mentions"), mentionArray(mentions));
     send(QStringLiteral("timeline.reply"), arguments);
 }
 
@@ -2095,6 +2121,11 @@ void MatrixBridge::handleReply(const QJsonObject &message)
                      qPrintable(command));
             return;
         }
+        // A picker asking who can be mentioned is nobody's errand: it fails
+        // while the list is closed anyway, and a banner over it says nothing.
+        if (command == QLatin1String("mention.candidates")) {
+            return;
+        }
         const bool tokenRotated = error.contains(QLatin1String("M_UNKNOWN_TOKEN"));
         if (tokenRotated || wasMedia) {
             qWarning("xmatic: %s failed: %s", qPrintable(command),
@@ -2370,6 +2401,10 @@ bool MatrixBridge::replySearch(quint64 id, const QString &command, const QJsonOb
 /// Replies about members and moderation.
 bool MatrixBridge::replyMember(quint64 id, const QString &command, const QJsonObject &data)
 {
+    if (command == QLatin1String("mention.candidates")) {
+        m_mentions->deliver(data);
+        return true;
+    }
 
     if (command == QLatin1String("member.remove")) {
         m_members.removeUser(m_removeRequests.take(id));

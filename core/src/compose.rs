@@ -168,6 +168,15 @@ fn digit_at(chars: &[char], index: usize, valid: bool) -> bool {
     valid && chars.get(index).map_or(false, |c| c.is_ascii_digit())
 }
 
+/// The same escaping the formatter does, for a caller that needs a formatted
+/// body where the text itself carries no markers.
+pub fn escape_text(text: &str) -> String {
+    let chars: Vec<char> = text.chars().collect();
+    let mut out = String::new();
+    escape(&chars, &mut out);
+    out
+}
+
 fn escape(chars: &[char], out: &mut String) {
     for c in chars {
         match c {

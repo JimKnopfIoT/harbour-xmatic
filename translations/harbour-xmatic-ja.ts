@@ -1318,6 +1318,10 @@
         <source>Ignoring</source>
         <translation>無視しています</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>メンション</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

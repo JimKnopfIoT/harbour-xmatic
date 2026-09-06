@@ -1320,6 +1320,10 @@
         <source>none</source>
         <translation>няма</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Спомени</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>

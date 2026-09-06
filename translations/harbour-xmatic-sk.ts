@@ -1322,6 +1322,10 @@
         <source>none</source>
         <translation>žiadne</translation>
     </message>
+    <message>
+        <source>Mention</source>
+        <translation>Spomenúť</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
