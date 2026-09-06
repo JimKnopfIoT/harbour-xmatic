@@ -480,6 +480,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Utwórz ankietę</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Pytanie</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>O co chcesz zapytać?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Odpowiedź %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Dodaj odpowiedź</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Zezwól na kilka odpowiedzi</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Każdy może wtedy wybrać więcej niż jedną odpowiedź.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Ukryj wyniki do zakończenia ankiety</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Ankieta nie jest tajnym głosowaniem: kto na co głosował, pozostaje widoczne w pokoju.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Klienci ukrywają liczby do zakończenia ankiety, twój też. Konwencja, której przestrzegają typowe klienty, nie zamek.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1081,6 +1124,14 @@
         <source>Invitation</source>
         <translation>Zaproszenie</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Ankieta</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Ankieta: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1385,6 +1436,41 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Ankieta została zakończona.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Wyniki pojawią się po zakończeniu ankiety</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n głos</numerusform>
+            <numerusform>%n głosy</numerusform>
+            <numerusform>%n głosów</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Zakończona</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Kilka odpowiedzi</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Zakończ ankietę</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1569,6 +1655,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Włączone: obraz lub wideo wczytuje się, gdy tylko pojawi się wiadomość. Wyłączone: wczytuje się po dotknięciu — przewinięcie obok to żądanie do serwera nadawcy.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Podgląd odnośników</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Twój serwer domowy pobiera stronę i pokazuje jej tytuł. Poznaje w ten sposób każdy odnośnik, o który zostanie zapytany; w szyfrowanym pokoju to treść, której inaczej nigdy nie widzi.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Tylko w nieszyfrowanych pokojach</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Zawsze</translation>
     </message>
 </context>
 <context>
@@ -2362,6 +2464,26 @@
         <source>Select files</source>
         <translation>Wybierz pliki</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Nowa ankieta</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Głosowanie nie powiodło się</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Nie udało się zakończyć ankiety</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Nie udało się wysłać ankiety</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Twój głos nie został wysłany</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3100,6 +3222,14 @@
     <message>
         <source>New message</source>
         <translation>Nowa wiadomość</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Ankieta: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Ankieta</translation>
     </message>
 </context>
 </TS>

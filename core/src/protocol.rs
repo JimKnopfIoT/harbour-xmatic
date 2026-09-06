@@ -666,6 +666,43 @@ pub enum Command {
         pin: bool,
     },
 
+    /// Ask the homeserver what a page says about itself. Always answered `ok`:
+    /// `available: false` covers "no preview" and "could not ask" alike.
+    #[serde(rename = "link.preview")]
+    LinkPreview { id: u64, url: String },
+
+    /// Put a poll into the open room.
+    #[serde(rename = "poll.start")]
+    PollStart {
+        id: u64,
+        question: String,
+        answers: Vec<String>,
+        /// Results stay closed until the poll is ended.
+        #[serde(default)]
+        undisclosed: bool,
+        #[serde(default, rename = "maxSelections")]
+        max_selections: u64,
+    },
+
+    /// Vote in a poll, or change the vote: `answers` is the whole selection.
+    #[serde(rename = "poll.vote")]
+    PollVote {
+        id: u64,
+        #[serde(rename = "eventId")]
+        event_id: String,
+        answers: Vec<String>,
+    },
+
+    /// End a poll. `text` is the fallback other clients show.
+    #[serde(rename = "poll.end")]
+    PollEnd {
+        id: u64,
+        #[serde(rename = "eventId")]
+        event_id: String,
+        #[serde(default)]
+        text: String,
+    },
+
     /// Search a public directory; an empty pattern lists the popular rooms.
     /// Without `server` the own homeserver, with it that one over federation.
     #[serde(rename = "directory.search")]
@@ -926,6 +963,10 @@ impl Command {
             | Command::RoomSetFavourite { id, .. }
             | Command::RoomSetLowPriority { id, .. }
             | Command::TimelinePin { id, .. }
+            | Command::LinkPreview { id, .. }
+            | Command::PollStart { id, .. }
+            | Command::PollVote { id, .. }
+            | Command::PollEnd { id, .. }
             | Command::DirectorySearch { id, .. }
             | Command::DirectoryLoadMore { id }
             | Command::DirectoryStop { id }

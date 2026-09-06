@@ -480,6 +480,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Cruthaigh pobalbhreith</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Ceist</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Cad atá á fhiafraí agat?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Freagra %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Cuir freagra leis</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Ceadaigh níos mó ná freagra amháin</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Is féidir le gach duine níos mó ná freagra amháin a roghnú ansin.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Folaigh na torthaí go dtí deireadh na pobalbhreithe</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Ní vótáil rúnda í pobalbhreith: fanann sé inléite sa seomra cé a vótáil ar cad.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Coinníonn na cliaint na huimhreacha i bhfolach go dtí deireadh na pobalbhreithe, do cheannsa san áireamh. Gnás a leanann na gnáthchliaint, ní glas.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1081,6 +1124,14 @@
         <source>Invitation</source>
         <translation>Cuireadh</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Pobalbhreith</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Pobalbhreith: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1385,6 +1436,41 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Tá an phobalbhreith thart.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Taispeántar na torthaí nuair a bheidh an phobalbhreith thart</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n vóta</numerusform>
+            <numerusform>%n vóta</numerusform>
+            <numerusform>%n vóta</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Thart</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Roinnt freagraí</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Cuir deireadh leis an bpobalbhreith</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1569,6 +1655,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Air: lódáiltear pictiúr nó físeán chomh luath is a thagann an teachtaireacht. As: lódáiltear é nuair a bhuailtear air — is iarratas chuig freastalaí an tseoltóra é scrollú thairis.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Réamhamhairc nasc</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Faigheann do fhreastalaí baile an leathanach agus taispeánann sé a theideal. Foghlaimíonn sé gach nasc a fhiafraítear de; i seomra criptithe is ábhar é sin nach bhfeiceann sé riamh ar shlí eile.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>I seomraí neamhchriptithe amháin</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>I gcónaí</translation>
     </message>
 </context>
 <context>
@@ -2362,6 +2464,26 @@
         <source>Select files</source>
         <translation>Roghnaigh comhaid</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Pobalbhreith nua</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Theip ar an vótáil</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Níorbh fhéidir deireadh a chur leis an bpobalbhreith</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Níorbh fhéidir an phobalbhreith a sheoladh</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Níor seoladh do vóta</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3100,6 +3222,14 @@
     <message>
         <source>New message</source>
         <translation>Teachtaireacht nua</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Pobalbhreith: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Pobalbhreith</translation>
     </message>
 </context>
 </TS>

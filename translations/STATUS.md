@@ -4,12 +4,20 @@ Source language: English. One `.ts` per target; `.qm` is build output. A
 language is listed in `TRANSLATIONS` only once it is actually translated —
 an empty file would ship as coverage that is not there.
 
-Beyond the EU: Russian, Norwegian Bokmål, Icelandic, Simplified Chinese and
-Hindi. The last two were added for reach, not because anyone asked - Chinese
-because it opens the app to people who do not read English, Hindi because
-leaving out the second-largest language group while shipping Maltese would be
-a strange thing to defend. Both are unreviewed machine output, like most of
-the list.
+Beyond the EU: Russian, Norwegian Bokmål, Icelandic, Simplified Chinese,
+Hindi, Japanese, Persian and Arabic. Chinese and Hindi were added for reach,
+not because anyone asked - Chinese because it opens the app to people who do
+not read English, Hindi because leaving out the second-largest language group
+while shipping Maltese would be a strange thing to defend. Japanese, Persian
+and Arabic followed the download figures: the store lists Japan, Iran, Saudi
+Arabia and Ethiopia, and those four had nothing but the English fallback.
+Amharic is not in yet - the font it needs is not certain on this platform.
+All of them are unreviewed machine output, like most of the list.
+
+Persian and Arabic are read right to left. The catalogues are complete; the
+layout is not mirrored, so the text runs correctly inside each line while the
+page still stands the way it does in English. That is a UI change of its own,
+and it needs a device to be judged.
 
 Not shipped, deliberately: `nn` (Norwegian Nynorsk), Sámi, Faroese, traditional
 Chinese (`zh_TW` is its own file, not the same one in other characters), and
@@ -32,6 +40,9 @@ pass without a native speaker — usable, not verified.
 | ga mt | Irish, Maltese | machine, low confidence | 3 and 4 plural forms; smallest corpora |
 | zh_CN | Simplified Chinese | machine | one plural form; `Space` kept as the English term |
 | hi | Hindi | machine, low confidence | one plural form; informal (तुम) throughout, as everywhere else |
+| ja | Japanese | machine | one plural form; polite plain form (ですます) for sentences, bare nouns on buttons |
+| fa | Persian | machine, low confidence | one plural form by Qt's rule - a second one is dropped by lupdate; **right-to-left, and the layout does not mirror yet** |
+| ar | Arabic | machine, low confidence | six plural forms; **right-to-left, and the layout does not mirror yet** |
 
 ## Known corrections already applied
 

@@ -115,6 +115,7 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(BodyRole, "body");
     names.insert(FormattedRole, "formatted");
     names.insert(MsgTypeRole, "msgtype");
+    names.insert(PollRole, "poll");
     names.insert(SenderRole, "sender");
     names.insert(SenderNameRole, "senderName");
     names.insert(SenderAvatarRole, "senderAvatar");
@@ -136,6 +137,11 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(ReadMarkByRole, "readMarkBy");
     names.insert(ShieldRole, "shield");
     return names;
+}
+
+void TimelineModel::setPoll(const QString &eventId, const QJsonValue &poll)
+{
+    patchField(indexOfEvent(eventId), QStringLiteral("poll"), poll);
 }
 
 int TimelineModel::indexOfEvent(const QString &eventId) const

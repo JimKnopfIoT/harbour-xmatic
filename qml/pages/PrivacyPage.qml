@@ -149,6 +149,35 @@ Page {
                 onClicked: settings.clickableLinks = !settings.clickableLinks
             }
 
+            // Off by default and said why: the server, not the phone, fetches the
+            // page - and so learns the link, in an encrypted room a thing it never sees.
+            ComboBox {
+                width: parent.width
+                label: qsTr("Link previews")
+                description: qsTr("Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.")
+                currentIndex: {
+                    switch (settings.linkPreviews) {
+                    case "unencrypted": return 1
+                    case "always": return 2
+                    default: return 0
+                    }
+                }
+
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("Never") }
+                    MenuItem { text: qsTr("Only in unencrypted rooms") }
+                    MenuItem { text: qsTr("Always") }
+                }
+
+                onCurrentIndexChanged: {
+                    switch (currentIndex) {
+                    case 1: settings.linkPreviews = "unencrypted"; break
+                    case 2: settings.linkPreviews = "always"; break
+                    default: settings.linkPreviews = "never"; break
+                    }
+                }
+            }
+
             SectionHeader {
                 text: qsTr("On this device")
             }

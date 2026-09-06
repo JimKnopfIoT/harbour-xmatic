@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Búa til könnun</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Spurning</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Hvað viltu spyrja um?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Svar %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Bæta við svari</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Leyfa fleiri en eitt svar</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Þá geta allir valið fleiri en eitt svar.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Fela niðurstöður þar til könnun lýkur</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Könnun er ekki leynileg kosning: hver kaus hvað er áfram læsilegt í rýminu.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Forritin halda tölunum földum þar til könnuninni lýkur, þitt líka. Venja sem algeng forrit fylgja, ekki lás.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Boð</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Könnun</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Könnun: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>Könnuninni er lokið.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Niðurstöður birtast þegar könnuninni lýkur</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n atkvæði</numerusform>
+            <numerusform>%n atkvæði</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Lokið</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Fleiri svör</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Ljúka könnun</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Kveikt: mynd eða myndskeið hleðst um leið og skilaboðin birtast. Slökkt: hleðst þegar ýtt er á það — að skruna framhjá er beiðni til vefþjóns sendanda.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Forskoðun tengla</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Heimaþjónninn þinn sækir síðuna og sýnir titil hennar. Þannig fær hann að vita um hvern tengil sem hann er spurður um; í dulkóðuðu rými er það efni sem hann sér annars aldrei.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Aðeins í ódulkóðuðum rýmum</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Alltaf</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Velja skrár</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Ný könnun</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Atkvæðagreiðsla mistókst</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>Ekki tókst að ljúka könnuninni</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>Ekki tókst að senda könnunina</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Atkvæði þitt var ekki sent</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>Ný skilaboð</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Könnun: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Könnun</translation>
     </message>
 </context>
 </TS>

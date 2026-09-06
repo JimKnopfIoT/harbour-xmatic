@@ -39,6 +39,19 @@ QVariant DiffListModel::valueFor(const QJsonObject &row, int role) const
     return row.value(QString::fromLatin1(field)).toVariant();
 }
 
+void DiffListModel::patchField(int row, const QString &field, const QJsonValue &value)
+{
+    if (row < 0 || row >= m_rows.count()) {
+        return;
+    }
+    if (m_rows.at(row).value(field) == value) {
+        return;
+    }
+    m_rows[row].insert(field, value);
+    const QModelIndex changed = createIndex(row, 0);
+    emit dataChanged(changed, changed);
+}
+
 /// An operation whose index the model cannot satisfy: dropped, because applying
 /// it would be worse - but never silently, every later index is then off.
 void DiffListModel::reportDrift(const QString &op, int index) const

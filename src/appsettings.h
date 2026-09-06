@@ -26,6 +26,10 @@ class AppSettings : public QObject
                NOTIFY jumpToReadMarkerChanged)
     Q_PROPERTY(bool clickableLinks READ clickableLinks WRITE setClickableLinks
                NOTIFY clickableLinksChanged)
+    /// "never", "unencrypted" or "always": when the homeserver may be asked
+    /// what a linked page says about itself. Off: the server learns every link.
+    Q_PROPERTY(QString linkPreviews READ linkPreviews WRITE setLinkPreviews
+               NOTIFY linkPreviewsChanged)
     /// Whether push was turned on. Stored rather than derived: a registration
     /// survives a restart, and the next start has to know one was made.
     Q_PROPERTY(bool pushEnabled READ pushEnabled WRITE setPushEnabled
@@ -129,6 +133,9 @@ public:
     void setPushGateway(const QString &gateway);
     void setClickableLinks(bool enabled);
 
+    QString linkPreviews() const;
+    void setLinkPreviews(const QString &policy);
+
     /// Whether the microphone sits next to the message field. On, but it is one
     /// hold away from a recording and not everybody wants that in reach.
     bool voiceMessages() const;
@@ -176,6 +183,7 @@ signals:
     void showReadStatusChanged();
     void jumpToReadMarkerChanged();
     void clickableLinksChanged();
+    void linkPreviewsChanged();
     void pushChanged();
     void voiceMessagesChanged();
     void hideKeyboardOnSendChanged();

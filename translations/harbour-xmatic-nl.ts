@@ -479,6 +479,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Peiling maken</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Vraag</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Wat wil je vragen?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>Antwoord %1</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Antwoord toevoegen</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Meerdere antwoorden toestaan</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Iedereen kan dan meer dan één antwoord kiezen.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Resultaten verbergen tot de peiling is afgelopen</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>Een peiling is geen geheime stemming: wie wat koos, blijft leesbaar in de kamer.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>Clients houden de aantallen verborgen tot de peiling is afgelopen, die van jou ook. Een afspraak die de gangbare clients volgen, geen slot.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1079,6 +1122,14 @@
         <source>Invitation</source>
         <translation>Uitnodiging</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Peiling</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Peiling: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1383,6 +1434,40 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>De peiling is afgelopen.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>De resultaten verschijnen zodra de peiling is afgelopen</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n stem</numerusform>
+            <numerusform>%n stemmen</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Afgelopen</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Meerdere antwoorden</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Peiling beëindigen</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1567,6 +1652,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Aan: een afbeelding of video laadt zodra het bericht verschijnt. Uit: laadt bij aantikken — eraan voorbij scrollen is een verzoek aan de server van de afzender.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Linkvoorbeelden</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>Je homeserver haalt de pagina op en toont de titel. Zo kent hij elke link waarnaar gevraagd wordt; in een versleutelde kamer is dat inhoud die hij anders nooit ziet.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Alleen in onversleutelde kamers</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Altijd</translation>
     </message>
 </context>
 <context>
@@ -2359,6 +2460,26 @@
         <source>Select files</source>
         <translation>Bestanden kiezen</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Nieuwe peiling</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>Stemmen mislukt</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>De peiling kon niet worden beëindigd</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>De peiling kon niet worden verzonden</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>Je stem is niet verzonden</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3093,6 +3214,14 @@
     <message>
         <source>New message</source>
         <translation>Nieuw bericht</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Peiling: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Peiling</translation>
     </message>
 </context>
 </TS>

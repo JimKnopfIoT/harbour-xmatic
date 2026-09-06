@@ -145,6 +145,9 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
         m_privateLists.clear();
         m_privateListsReadable = false;
         emit privateListsChanged();
+        // Another account's previews must not answer for this one, whatever
+        // the media setting says about the files.
+        m_linkPreviews->clear();
         if (m_settings->mediaWipe() != QLatin1String("never")) {
             clearMediaCache();
         }
@@ -186,8 +189,21 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     m_stallWatch->setInterval(5000);
     connect(m_stallWatch, &QTimer::timeout, this, &MatrixBridge::checkStalledCommands);
 
-    // Recordings are throwaway files; they live in the cache next to the
-    // downloaded attachments.
+    // Its own object, its own file: the bridge routes, it does not know what a
+    // poll is. See src/pollactions.cpp.
+    m_polls = new PollActions(this);
+    connect(m_polls, &PollActions::commandReady, this,
+            [this](const QString &command, const QJsonObject &arguments) {
+                send(command, arguments);
+            });
+
+    // Same shape: asks through the bridge, remembers on its own. src/linkpreviews.cpp.
+    m_linkPreviews = new LinkPreviews(this);
+    connect(m_linkPreviews, &LinkPreviews::commandReady, this,
+            [this](const QString &command, const QJsonObject &arguments) {
+                send(command, arguments);
+            });
+
     m_calls = new CallEngine(this);
 
     // The engine produces what has to be signalled and is fed what arrives;
@@ -232,6 +248,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                 send(QStringLiteral("call.hangup"), arguments);
             });
 
+    // Recordings are throwaway files; they live in the cache next to the
+    // downloaded attachments.
     m_voiceDirectory = cacheDirectory + QStringLiteral("/voice");
     m_recorder = new VoiceRecorder(m_voiceDirectory, this);
     connect(m_recorder, &VoiceRecorder::finished, this, [this](const QString &path,
@@ -1302,6 +1320,7 @@ bool MatrixBridge::shareableFile(const QString &path) const
 
 void MatrixBridge::clearMediaCache()
 {
+    m_linkPreviews->clear();
     if (m_cacheDirectory.isEmpty()) {
         return;
     }
@@ -2018,6 +2037,9 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (command == QLatin1String("member.profile")) {
             emit memberProfileFailed(error);
         }
+        if (command.startsWith(QLatin1String("poll."))) {
+            m_polls->reportFailure(command);
+        }
         if (id == m_indexRequest && m_indexRequest != 0) {
             m_indexRequest = 0;
             emit indexingChanged();
@@ -2400,6 +2422,11 @@ bool MatrixBridge::replyMember(quint64 id, const QString &command, const QJsonOb
 /// Replies about the timeline and its media.
 bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJsonObject &data)
 {
+
+    if (command == QLatin1String("link.preview")) {
+        m_linkPreviews->deliver(data);
+        return true;
+    }
 
     if (command == QLatin1String("media.fetch")) {
         const QString key = m_mediaRequests.take(id);
@@ -2855,6 +2882,20 @@ bool MatrixBridge::eventTimeline(const QString &name, const QJsonObject &data)
             qWarning("xmatic: thread could not be loaded: %s", qPrintable(message));
             emit threadFailed(message);
         }
+    } else if (name == QLatin1String("poll.voteFailed")) {
+        if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
+            m_polls->reportVoteFailed(data.value(QStringLiteral("eventId")).toString());
+        }
+    } else if (name == QLatin1String("poll.endFailed")) {
+        if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
+            m_polls->reportFailure(QStringLiteral("poll.end"));
+        }
+    } else if (name == QLatin1String("poll.verified")) {
+        // Who ended a poll is checked after the diff; the row learns it here.
+        if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
+            m_timeline.setPoll(data.value(QStringLiteral("eventId")).toString(),
+                               data.value(QStringLiteral("poll")));
+        }
     } else if (name == QLatin1String("timeline.detailError")) {
         // The quoted event of a reply could not be fetched; ids arrive
         // pre-truncated, the error pre-scrubbed.
@@ -3299,6 +3340,9 @@ QString MatrixBridge::previewLine(const QString &kind, const QString &text) cons
     }
     if (kind == QLatin1String("location")) {
         return tr("Location");
+    }
+    if (kind == QLatin1String("poll")) {
+        return text.isEmpty() ? tr("Poll") : tr("Poll: %1").arg(text);
     }
     if (kind == QLatin1String("encrypted")) {
         return tr("Encrypted message");

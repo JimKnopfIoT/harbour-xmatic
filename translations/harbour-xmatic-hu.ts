@@ -478,6 +478,49 @@
     </message>
 </context>
 <context>
+    <name>CreatePollDialog</name>
+    <message>
+        <source>Create poll</source>
+        <translation>Szavazás létrehozása</translation>
+    </message>
+    <message>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <source>What are you asking?</source>
+        <translation>Mit szeretnél kérdezni?</translation>
+    </message>
+    <message>
+        <source>Answer %1</source>
+        <translation>%1. válasz</translation>
+    </message>
+    <message>
+        <source>Add answer</source>
+        <translation>Válasz hozzáadása</translation>
+    </message>
+    <message>
+        <source>Allow several answers</source>
+        <translation>Több válasz engedélyezése</translation>
+    </message>
+    <message>
+        <source>Everyone can then pick more than one answer.</source>
+        <translation>Ekkor mindenki egynél több választ is megjelölhet.</translation>
+    </message>
+    <message>
+        <source>Hide results until the poll ends</source>
+        <translation>Eredmény elrejtése a szavazás végéig</translation>
+    </message>
+    <message>
+        <source>A poll is not a secret ballot: who voted for what stays readable in the room.</source>
+        <translation>A szavazás nem titkos: ki mire szavazott, olvasható marad a szobában.</translation>
+    </message>
+    <message>
+        <source>Clients keep the counts hidden until the poll ends, yours included. A convention every common client follows, not a lock.</source>
+        <translation>A kliensek a szavazás végéig rejtve tartják a számokat, a tiéd is. Ez a szokásos kliensek által követett megállapodás, nem zár.</translation>
+    </message>
+</context>
+<context>
     <name>CreateRoomDialog</name>
     <message>
         <source>Create room</source>
@@ -1077,6 +1120,14 @@
         <source>Invitation</source>
         <translation>Meghívó</translation>
     </message>
+    <message>
+        <source>Poll</source>
+        <translation>Szavazás</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Szavazás: %1</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1381,6 +1432,39 @@
     </message>
 </context>
 <context>
+    <name>PollBlock</name>
+    <message>
+        <source>The poll has ended.</source>
+        <translation>A szavazás véget ért.</translation>
+    </message>
+    <message>
+        <source>%1 %</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
+        <source>Results are shown once the poll ends</source>
+        <translation>Az eredmény a szavazás végén jelenik meg</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n vote(s)</source>
+        <translation>
+            <numerusform>%n szavazat</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Lezárva</translation>
+    </message>
+    <message>
+        <source>Several answers</source>
+        <translation>Több válasz</translation>
+    </message>
+    <message>
+        <source>End poll</source>
+        <translation>Szavazás lezárása</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -1565,6 +1649,22 @@
     <message>
         <source>On, a picture or video loads as soon as its message appears. Off, it loads when you tap it — scrolling past one is a request to the sender&apos;s server.</source>
         <translation>Be: a kép vagy videó azonnal betöltődik, amint az üzenet megjelenik. Ki: érintésre töltődik be — elgörgetni mellette kérés a küldő kiszolgálójához.</translation>
+    </message>
+    <message>
+        <source>Link previews</source>
+        <translation>Hivatkozás-előnézet</translation>
+    </message>
+    <message>
+        <source>Your homeserver fetches the page and shows its title. It learns every link it is asked about; in an encrypted room that is content it otherwise never sees.</source>
+        <translation>A saját kiszolgálód letölti az oldalt, és megmutatja a címét. Így minden hivatkozásról tud, amelyről megkérdezik; titkosított szobában ez olyan tartalom, amit egyébként soha nem lát.</translation>
+    </message>
+    <message>
+        <source>Only in unencrypted rooms</source>
+        <translation>Csak titkosítatlan szobákban</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Mindig</translation>
     </message>
 </context>
 <context>
@@ -2356,6 +2456,26 @@
         <source>Select files</source>
         <translation>Fájlok kiválasztása</translation>
     </message>
+    <message>
+        <source>New poll</source>
+        <translation>Új szavazás</translation>
+    </message>
+    <message>
+        <source>Voting failed</source>
+        <translation>A szavazás nem sikerült</translation>
+    </message>
+    <message>
+        <source>The poll could not be ended</source>
+        <translation>A szavazást nem sikerült lezárni</translation>
+    </message>
+    <message>
+        <source>The poll could not be sent</source>
+        <translation>A szavazást nem sikerült elküldeni</translation>
+    </message>
+    <message>
+        <source>Your vote was not sent</source>
+        <translation>A szavazatod nem lett elküldve</translation>
+    </message>
 </context>
 <context>
     <name>SearchPage</name>
@@ -3086,6 +3206,14 @@
     <message>
         <source>New message</source>
         <translation>Új üzenet</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Szavazás: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Szavazás</translation>
     </message>
 </context>
 </TS>

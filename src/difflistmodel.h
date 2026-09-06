@@ -37,8 +37,12 @@ protected:
     /// the role; override to add fallbacks or derived values.
     virtual QVariant valueFor(const QJsonObject &row, int role) const;
 
+    /// Replaces one field of one row, for what the core learns after the diff
+    /// - the SDK emits nothing for it. Every role of the row is re-read.
+    void patchField(int row, const QString &field, const QJsonValue &value);
+
     /// The rows, readable by subclasses for lookups such as finding an event
-    /// by id. Only `applyOperation` mutates them.
+    /// by id. Only `applyOperation` and `patchField` mutate them.
     const QVector<QJsonObject> &rows() const { return m_rows; }
 
 private:

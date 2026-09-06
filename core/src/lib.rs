@@ -8,11 +8,13 @@
 mod call;
 mod compose;
 mod directory;
+mod linkpreview;
 mod login;
 mod media;
 mod members;
 mod profile;
 mod push;
+mod poll;
 mod private;
 mod protocol;
 mod markup;

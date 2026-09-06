@@ -20,6 +20,8 @@ use crate::call;
 use crate::directory;
 use crate::login;
 use crate::profile;
+use crate::linkpreview;
+use crate::poll;
 use crate::private;
 use crate::protocol::{event, reply_error, reply_ok, Command, Secret};
 use crate::media;
@@ -455,6 +457,14 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::TimelineEdit { event_id, body, .. } => edit_message(&state, id, event_id, body).await,
         Command::TimelineRetry { txn_id, .. } => retry_message(&state, id, txn_id).await,
         Command::TimelineReact { event_id, key, .. } => react(&state, id, event_id, key).await,
+        Command::LinkPreview { url, .. } => {
+            linkpreview::handle(state.client().await, &state.sink, id, url).await
+        }
+        // Routed, not handled: the poll rules live in core/src/poll.rs.
+        Command::PollStart { .. } | Command::PollVote { .. } | Command::PollEnd { .. } => {
+            let timeline = state.timeline().await.map(|handle| handle.timeline());
+            poll::handle(command, timeline, &state.sink).await
+        }
         Command::TimelineRedact {
             event_id, txn_id, ..
         } => redact_message(&state, id, event_id, txn_id).await,
@@ -2783,6 +2793,8 @@ async fn logout(state: &Arc<State>, id: u64) {
     // Same for what is only in memory: remembered display names, the call
     // policy with its allow list, and who rang when.
     timeline::forget_senders();
+    linkpreview::forget();
+    poll::forget();
     roomlist::forget_name_requests();
     members::forget_asked();
     call::forget_state();

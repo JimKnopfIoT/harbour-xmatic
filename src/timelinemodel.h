@@ -24,6 +24,9 @@ public:
         BodyRole,
         FormattedRole,
         MsgTypeRole,
+        /// The poll's question, answers and - unless it is undisclosed and still
+        /// running - the counts. Null for every other row.
+        PollRole,
         SenderRole,
         SenderNameRole,
         SenderAvatarRole,
@@ -56,6 +59,9 @@ public:
     /// Row of the event with this id, or -1. Lets the view jump to a pinned
     /// message that is already loaded.
     Q_INVOKABLE int indexOfEvent(const QString &eventId) const;
+
+    /// The poll as the core vouches for it after checking who ended it.
+    void setPoll(const QString &eventId, const QJsonValue &poll);
 
     /// The server's thread roots, event id to reply count. A root cached before
     /// threading has no SDK summary, so the way in would depend on the store.
