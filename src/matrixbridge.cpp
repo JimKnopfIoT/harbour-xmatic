@@ -11,6 +11,7 @@
 #include <QGuiApplication>
 #include <QImageReader>
 
+#include "imagefacts.h"
 #include "outgoingimage.h"
 #include <QJSValue>
 #include <QJsonArray>
@@ -1868,6 +1869,24 @@ QString MatrixBridge::mimeTypeForPath(const QString &path) const
     // other application had, and a temporary copy may well carry no suffix.
     const QMimeType type = QMimeDatabase().mimeTypeForFile(local);
     return type.isValid() ? type.name() : QStringLiteral("application/octet-stream");
+}
+
+QVariantMap MatrixBridge::imageFactsForPath(const QString &path) const
+{
+    const ImageFacts facts = imageFacts(path);
+
+    QVariantMap map;
+    map.insert(QStringLiteral("format"), facts.format);
+    map.insert(QStringLiteral("width"), facts.width);
+    map.insert(QStringLiteral("height"), facts.height);
+    map.insert(QStringLiteral("frames"), facts.frames);
+    map.insert(QStringLiteral("mayAnimate"), mayAnimate(facts));
+    return map;
+}
+
+QStringList MatrixBridge::animatableImageFormats() const
+{
+    return animatableFormats();
 }
 
 QString MatrixBridge::saveToPictures(const QString &path, const QString &suggestedName)

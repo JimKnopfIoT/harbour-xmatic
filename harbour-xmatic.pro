@@ -51,6 +51,7 @@ SOURCES += \
     src/emojistore.cpp \
     src/emojiimageprovider.cpp \
     src/outgoingimage.cpp \
+    src/imagefacts.cpp \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
     src/linkpreviews.cpp \
@@ -84,6 +85,7 @@ HEADERS += \
     src/linkpreviews.h \
     src/mentions.h \
     src/outgoingimage.h \
+    src/imagefacts.h \
     src/secretskeeper.h \
     src/roomlistmodel.h \
     src/roomsortmodel.h \

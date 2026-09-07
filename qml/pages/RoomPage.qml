@@ -443,6 +443,20 @@ Page {
                    || status === PageStatus.Inactive) {
             matrix.setVisibleRoom("")
             page.markReadIfDue()
+            if (status === PageStatus.Deactivating) {
+                page.keepAnchor()
+            }
+        }
+
+        // The page is on screen during the transition already, so this cannot wait
+        // for `Active`: what is painted there is what the reader sees jump.
+        if (status === PageStatus.Activating || status === PageStatus.Active) {
+            page.restoreAnchor()
+        }
+        // Let go a moment after the return - held for ever, the anchor would
+        // refuse every scroll.
+        if (status === PageStatus.Active && page.keptIndex >= 0) {
+            anchorHold.restart()
         }
 
         if (status === PageStatus.Active && !invited) {
@@ -525,6 +539,75 @@ Page {
                         }
                     })
     }
+
+    // Where the reader stood, as a row and a distance into it. A pixel position
+    // means nothing across a page change: covered, the list destroys its
+    // delegates, and on return it re-estimates. Measured on the device, four
+    // times over: contentHeight 31135 -> 42134 with an unchanged count of 50,
+    // originY moving with it, and the kept contentY then twelve rows too high.
+    property int keptIndex: -1
+    property real keptOffset: 0
+
+    /// Takes the anchor. At the end there is nothing to keep - the tail logic
+    /// owns that case and puts the view back exactly.
+    function keepAnchor() {
+        page.keptIndex = -1
+        if (page.followTail || timelineView.atYEnd
+                || page.jumpTargetId.length > 0 || page.unreadFromId.length > 0) {
+            return
+        }
+        var probeY = timelineView.contentY + 1
+        var idx = timelineView.indexAt(timelineView.width / 2, probeY)
+        if (idx < 0) {
+            return
+        }
+        var item = timelineView.itemAt(timelineView.width / 2, probeY)
+        page.keptIndex = idx
+        page.keptOffset = item ? (timelineView.contentY - item.y) : 0
+    }
+
+    property bool restoringAnchor: false
+
+    /// Puts the row back under the top edge. Re-applied while the list is still
+    /// re-measuring, because one application lands on the geometry of that frame.
+    function restoreAnchor() {
+        // Positioning creates delegates, which changes the content height, which is
+        // where this is called from: without the guard it calls itself.
+        if (page.keptIndex < 0 || page.restoringAnchor) {
+            return
+        }
+        // A hand on the list outranks the anchor, and so does a jump the user asked
+        // for. Both end the restore rather than fight it.
+        if (page.jumpTargetId.length > 0 || page.unreadFromId.length > 0
+                || ((timelineView.moving || timelineView.dragging)
+                    && page.status === PageStatus.Active)) {
+            page.keptIndex = -1
+            return
+        }
+        page.restoringAnchor = true
+        timelineView.positionViewAtIndex(page.keptIndex, ListView.Beginning)
+        timelineView.contentY += page.keptOffset
+        page.restoringAnchor = false
+    }
+
+    // The re-measuring runs on for a while after the page is back, so the anchor
+    // is held for a moment and then let go - a restore that never ends would
+    // refuse every scroll.
+    Timer {
+        id: anchorHold
+
+        interval: 900
+        onTriggered: page.keptIndex = -1
+    }
+
+    // Asked once for the page: the plugin set does not change while it is open.
+    readonly property var animatableFormats: matrix.animatableImageFormats()
+
+    // Someone else's message: only in a two-party chat and only where the room
+    // says this account may redact for others. `=== true` on both, not the
+    // `!== false` the pin entry uses - an unanswered room offers nothing here.
+    readonly property bool canRedactOthers: matrix.roomPermissions.redactOthers === true
+                                            && matrix.roomPermissions.direct === true
 
     // Deleting is not undoable and used to be one tap away. The countdown runs on
     // this page; a failed send is discarded rather than deleted.
@@ -1171,6 +1254,14 @@ Page {
                 readonly property bool isVideo: model.kind === "message"
                                                 && model.msgtype === "m.video"
                                                 && !!model.media
+                // A picture whose kind this device can animate. Asked of Qt rather
+                // than listed here: the WebP handler on this Qt reads a file but
+                // does not animate it, and a mark the viewer cannot honour is a lie.
+                // Only the mark is drawn here; it plays in the viewer, when asked.
+                readonly property bool isAnimated: row.isImage
+                        && page.animatableFormats.indexOf(
+                            String(model.media.mimetype || "").toLowerCase()
+                                .replace(/^image\//, "")) >= 0
                 readonly property bool isFile: model.kind === "message"
                                                && !!model.media
                                                && !isImage
@@ -1204,6 +1295,11 @@ Page {
                 // question and list the answers a second time.
                 readonly property bool isPoll: model.kind === "message" && !!model.poll
                 readonly property bool isOwn: model.own === true
+                // A sent message of someone else's, where the room allows it.
+                readonly property bool canDeleteForOther: !row.isOwn
+                        && page.canRedactOthers
+                        && model.kind === "message"
+                        && (model.eventId || "").length > 0
                 // Only a body that visibly carries a link pays the rich-text path, behind a
                 // setting. Never for a file row: its caption is a stranger's text.
                 readonly property bool hasLink: model.kind === "message"
@@ -1330,7 +1426,8 @@ Page {
                         // and without this it sits in the room for ever.
                         text: model.sendState === "failed"
                               ? qsTr("Discard") : qsTr("Delete")
-                        visible: row.isOwn && !page.isLandscape
+                        visible: !page.isLandscape
+                                 && (row.isOwn || row.canDeleteForOther)
                         onClicked: page.confirmDelete(model.eventId || "",
                                                       model.txnId || "",
                                                       model.sendState === "failed")
@@ -1443,6 +1540,7 @@ Page {
                                                       body: model.body || "",
                                                       senderName: model.senderName || "",
                                                       isOwn: row.isOwn,
+                                                      canDelete: row.isOwn || row.canDeleteForOther,
                                                       editable: model.editable === true,
                                                       isImage: row.isImage,
                                                       canSave: row.isFile || row.isImage,
@@ -1872,7 +1970,8 @@ Page {
                                 // Play affordance over the still.
                                 Image {
                                     anchors.centerIn: parent
-                                    visible: row.isVideo && attachment.source != ""
+                                    visible: (row.isVideo || row.isAnimated)
+                                             && attachment.source != ""
                                     source: "image://theme/icon-l-play?" + Theme.lightPrimaryColor
                                 }
 
@@ -2481,6 +2580,13 @@ Page {
             // Fill and tail both hang off a changing content height: a row that grows
             // after layout pushes the end out of view without changing the count.
             onContentHeightChanged: {
+                // The estimate moved: whatever the anchor was pointing at is
+                // somewhere else now, so it is applied again. Deliberately not
+                // only while the page is on top - the re-measuring happens while
+                // it is covered, and correcting it afterwards is a visible jump.
+                if (page.keptIndex >= 0) {
+                    page.restoreAnchor()
+                }
                 // An open menu grows the content by its own height, which is not
                 // new content: following the tail takes the pressed row off the top.
                 if (page.openMenus > 0) {

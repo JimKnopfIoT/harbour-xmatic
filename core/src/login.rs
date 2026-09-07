@@ -1,5 +1,5 @@
 //! OAuth 2.0 authorization code login. The redirect goes to a loopback
-//! listener (RFC 8252 §7.3), whose port must be declared at registration.
+//! listener (RFC 8252 §7.3), whose port is a request-time detail.
 
 use std::ops::Range;
 
@@ -23,9 +23,13 @@ use oauth2::{
 use oauth2_reqwest::ReqwestClient;
 use url::Url;
 
-/// Ports the loopback listener may bind to. All of them are declared as
-/// redirect URIs, so any one of them is accepted by the authorization server.
+/// Ports the loopback listener may bind to. Not part of the registration:
+/// RFC 8252 §7.3 has the server ignore the port when matching a loopback URI.
 const REDIRECT_PORTS: Range<u16> = 53182..53192;
+
+/// The loopback redirect URI, declared without a port. A declared port is not
+/// merely superfluous, some servers reject it for a native client.
+const REDIRECT_URI: &str = "http://127.0.0.1/";
 
 /// Identifies the client to the authorization server; shown to the user on the
 /// consent screen. It does not have to resolve.
@@ -49,11 +53,7 @@ pub struct PendingLogin {
 
 /// Declares what this client is and where it may be redirected to.
 fn client_metadata() -> Result<Raw<ClientMetadata>, serde_json::Error> {
-    let redirect_uris = REDIRECT_PORTS
-        .map(|port| {
-            Url::parse(&format!("http://127.0.0.1:{port}/")).expect("loopback URI is well-formed")
-        })
-        .collect();
+    let redirect_uris = vec![Url::parse(REDIRECT_URI).expect("loopback URI is well-formed")];
 
     let client_uri = Url::parse(CLIENT_URI).expect("client URI is well-formed");
 
@@ -341,4 +341,38 @@ pub async fn password(client: &Client, user: &str, password: &str) -> Result<(),
         .map_err(|error| format!("sign-in failed: {error}"))?;
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A declared port is what a strict server rejects for a native client;
+    /// the listener's actual port is matched by the server ignoring it.
+    #[test]
+    fn redirect_uri_carries_no_port() {
+        let raw = client_metadata().expect("metadata serialises");
+        let json: serde_json::Value =
+            serde_json::from_str(raw.json().get()).expect("metadata is JSON");
+
+        let uris = json["redirect_uris"].as_array().expect("redirect_uris is a list");
+        assert_eq!(uris.len(), 1);
+
+        let uri = Url::parse(uris[0].as_str().expect("redirect URI is a string"))
+            .expect("redirect URI parses");
+        assert_eq!(uri.port(), None);
+        assert_eq!(uri.host_str(), Some("127.0.0.1"));
+        assert_eq!(uri.path(), "/");
+    }
+
+    /// The listener binds inside the declared-free port range; what the server
+    /// sees has to reduce to the registered URI.
+    #[test]
+    fn listener_uri_reduces_to_the_registered_one() {
+        for port in REDIRECT_PORTS {
+            let mut uri = Url::parse(&format!("http://127.0.0.1:{port}/")).expect("listener URI");
+            uri.set_port(None).expect("port can be dropped");
+            assert_eq!(uri.as_str(), REDIRECT_URI);
+        }
+    }
 }

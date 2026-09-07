@@ -238,7 +238,9 @@ fn parsed_user(user_id: &str) -> Result<&UserId, String> {
 }
 
 /// What the user may do here, asked once per room open - a store read whose
-/// answer does not change while a menu is open. Generous where unknown.
+/// answer does not change while a menu is open. Generous where unknown, except
+/// where the action is not the user's own message: `direct` qualifies
+/// `redactOthers`, and its failure direction is the one that offers nothing.
 pub async fn room_permissions(client: &Client, room: &Room) -> Value {
     use matrix_sdk::ruma::events::StateEventType;
 
@@ -247,10 +249,17 @@ pub async fn room_permissions(client: &Client, room: &Room) -> Value {
     };
     let levels = room.power_levels_or_default().await;
 
+    // Deleting a stranger's message is offered in a two-party chat and nowhere
+    // else. Not a permission but the room's kind, and it qualifies one: a room
+    // that answers neither counts as not direct, which offers nothing.
+    let two_party = room.is_direct().await.unwrap_or(false)
+        && (1..=2).contains(&room.active_members_count());
+
     json!({
         "pin": levels.user_can_send_state(own, StateEventType::RoomPinnedEvents),
         "invite": levels.user_can_invite(own),
         "redactOthers": levels.user_can_redact_event_of_other(own),
+        "direct": two_party,
         "topic": levels.user_can_send_state(own, StateEventType::RoomTopic),
         "name": levels.user_can_send_state(own, StateEventType::RoomName),
     })

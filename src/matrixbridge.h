@@ -130,7 +130,9 @@ class MatrixBridge : public QObject
     /// line stays orange long enough that testers paste the key twice.
     Q_PROPERTY(bool recoverySettling READ recoverySettling NOTIFY encryptionChanged)
     /// What the user may do in the open room: `pin`, `invite`, `redactOthers`,
-    /// `topic`, `name`. A missing entry is "not answered yet", so menus show.
+    /// `topic`, `name`, plus `direct` — the room's kind, which qualifies
+    /// `redactOthers`. A missing entry is "not answered yet", so menus show;
+    /// the two that gate deleting someone else's message are read strictly.
     Q_PROPERTY(QVariantMap roomPermissions READ roomPermissions NOTIFY roomPermissionsChanged)
     /// The other person in the open room where it is an encrypted two-party chat.
     /// The one place where a person to verify is already on screen.
@@ -656,6 +658,16 @@ public:
     /// The type of a file on disk, from name and content. A file handed over by
     /// another app carries none, and an attachment without one is not a picture.
     Q_INVOKABLE QString mimeTypeForPath(const QString &path) const;
+
+    /// What a downloaded picture is, read from its header: `format`, `width`,
+    /// `height`, `frames` and `mayAnimate`. The last one is the answer the
+    /// viewer acts on — `AnimatedImage` bounds nothing itself.
+    Q_INVOKABLE QVariantMap imageFactsForPath(const QString &path) const;
+
+    /// The picture formats this device can animate, as media subtypes
+    /// (`["gif"]` on this Qt). The conversation marks a picture from this, so
+    /// the mark is not a promise the viewer cannot keep.
+    Q_INVOKABLE QStringList animatableImageFormats() const;
 
     /// Copies a downloaded attachment into the user's picture folder.
     /// Returns the new path, or an empty string on failure.

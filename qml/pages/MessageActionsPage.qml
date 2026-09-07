@@ -17,6 +17,9 @@ Page {
     property string body
     property string senderName
     property bool isOwn: false
+    /// Own message, or someone else's in a two-party chat where the room allows
+    /// it. The rule lives in the room page; this is its answer.
+    property bool canDelete: false
     property bool editable: false
     property bool isImage: false
     property bool canSave: false
@@ -63,7 +66,7 @@ Page {
 
             ListItem {
                 contentHeight: Theme.itemSizeSmall
-                visible: page.isOwn
+                visible: page.canDelete
                 onClicked: page.handBack("delete")
                 Label {
                     anchors {
