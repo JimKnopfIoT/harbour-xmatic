@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.30.0
+Version:    0.30.1
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -110,6 +110,17 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Sep 07 2026 harbour-xmatic contributors 0.30.1-1
+- Sign-in works against homeservers that refuse a redirect address carrying a
+  port. The port belongs to the moment of signing in, not to the registration,
+  and declaring it made some servers reject the app before the browser opened.
+- Animated pictures are marked as such in the conversation and play in the
+  full-screen view when the play mark is tapped. Nothing moves on its own.
+- In a two-party chat, the other person's message can be deleted where the
+  room allows it — for a voice message both sides are done with.
+- Coming back from a picture, a member's page or any other page keeps the place
+  in the conversation. It used to land on the same older message every time.
+
 * Sun Sep 06 2026 harbour-xmatic contributors 0.30.0-1
 - Mentions. Typing "@" opens a row of the room's members over the message
   line; tapping one puts the name in the text. The message then carries the

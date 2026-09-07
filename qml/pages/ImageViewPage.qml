@@ -19,6 +19,19 @@ Page {
 
     property string savedTo: ""
 
+    /// Read from the file's header once it is on disk, never from its name:
+    /// `mayAnimate` is the only thing bounding what a frame may cost. A binding,
+    /// so it is asked whenever the file changes and never before there is one.
+    readonly property var facts: page.source.length > 0
+                                 ? matrix.imageFactsForPath(page.source) : ({})
+    readonly property bool animatable: page.facts.mayAnimate === true
+
+    /// Off until asked. Nothing in this app moves by itself, and one running
+    /// animation at a time is the whole exposure.
+    property bool playing: false
+
+    onSourceChanged: page.playing = false
+
     allowedOrientations: Orientation.All
 
     Connections {
@@ -137,6 +150,24 @@ Page {
                 sourceSize.height: Math.min(2048, Math.round(flickable.height * 3))
                 smooth: true
                 source: page.source
+                visible: !page.playing
+            }
+
+            // Only while it plays, and only ever this one. `cache` is false
+            // because the default keeps every frame as a pixmap; there is no
+            // `sourceSize` to write, so the ceiling was taken before loading.
+            AnimatedImage {
+                id: movie
+
+                width: flickable.contentWidth
+                height: flickable.contentHeight
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
+                cache: false
+                smooth: true
+                visible: page.playing
+                playing: page.playing
+                source: page.playing ? page.source : ""
             }
 
             MouseArea {
@@ -154,6 +185,26 @@ Page {
                 }
             }
         }
+    }
+
+    // The one way in and out of the animation. An icon over the still, the same
+    // mark a video carries in the conversation; nothing moves until it is hit.
+    IconButton {
+        anchors.centerIn: parent
+        visible: page.animatable && !page.playing
+        icon.source: "image://theme/icon-l-play?" + Theme.lightPrimaryColor
+        onClicked: page.playing = true
+    }
+
+    IconButton {
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: Theme.paddingLarge
+            horizontalCenter: parent.horizontalCenter
+        }
+        visible: page.playing
+        icon.source: "image://theme/icon-m-pause"
+        onClicked: page.playing = false
     }
 
     BusyIndicator {
