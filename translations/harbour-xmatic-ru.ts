@@ -811,6 +811,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Сравнивает семь эмодзи с другим твоим устройством. Оно должно быть перед тобой; как только оба подтвердят, это устройство сможет читать общие ключи комнат.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Проблемы с хранилищем ключей?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2513,6 +2517,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Снова войти</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>В этой системе нет службы, которая хранит ключи шифрования.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Защищённое хранилище устройства сообщает о повреждённых данных. В этом состоянии ничего разблокировать нельзя.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Само защищённое хранилище устройства заблокировано. Это касается каждого приложения на телефоне, которое хранит секреты, а не только xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Собственное хранилище ключей xmatic заблокировано и ждёт твоего подтверждения.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Защищённое хранилище не выдало ключ и не сказало почему.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Это свойство операционной системы, а не ошибка xmatic. Пакет существует и его можно установить; некоторые образы Sailfish просто его не содержат.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Это вне досягаемости xmatic. Починка означает сброс собственных данных службы, а это затрагивает каждое приложение на устройстве, которое хранит секреты — сначала спроси в каналах поддержки Sailfish.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Служба разблокируется при запуске кодом блокировки устройства. Если эта передача перестала работать, перезагрузка каждый раз заканчивается в том же состоянии — заново заданный код и есть то, что снова её запускает.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Разрешение действует до следующей перезагрузки устройства. Если запрос вообще не появляется, могут отсутствовать системные части, которые его рисуют.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Стоит задать код блокировки устройства заново и перезагрузиться: именно это разблокирует службу при запуске.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Что делать</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Включи режим разработчика в системных настройках, в Настройки › Инструменты разработчика.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Открой приложение Terminal и выполни строку ниже — коснись её, чтобы скопировать. Затем перезагрузи устройство и снова открой xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Запиши, что эта страница сообщает ниже, и отнеси это в каналы поддержки Sailfish. Выход из xmatic это не чинит.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Вернись назад и коснись «Попробовать снова», затем подтверди запрос системы. Если ничего не появится, установи недостающие части (коснись строки, чтобы скопировать) и перезагрузи устройство.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Открой Настройки › Блокировка устройства и задай новый код безопасности.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Перезагрузи устройство.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Снова открой xmatic.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Выход не помогает</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>При выходе ключи шифрования этого устройства удаляются вместе с локальными данными. Тебе пришлось бы затем заново подтвердить это устройство с другого, а для старых сообщений понадобился бы твой ключ восстановления. Защищённое хранилище это не чинит.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Что измерила эта страница</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2684,12 +2779,16 @@
         <translation>Сессия сохранена в зашифрованном виде, а ключ при запуске xmatic был недоступен.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Ключ хранится в защищённом хранилище устройства. Попробуй ещё раз и подтверди системный запрос; разрешение действует до следующей перезагрузки устройства.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Попробовать снова</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Ключ лежит в защищённом хранилище устройства. Попробуй снова и подтверди запрос системы; разрешение действует до следующей перезагрузки устройства. Если запрос вообще не появляется, виновато защищённое хранилище, а не твоя учётная запись.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Нужна помощь?</translation>
     </message>
 </context>
 <context>
@@ -2879,42 +2978,6 @@
         <translation>В этой системе нет службы, хранящей ключи шифрования, поэтому xmatic не может создать зашифрованную базу.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Это свойство операционной системы, а не ошибка xmatic. Пакет существует и его можно установить; некоторые образы Sailfish просто его не содержат.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Система сообщила: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Как это исправить</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Включи режим разработчика в системных настройках, в Настройки › Инструменты разработчика.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Открой приложение Терминал и стань root командой:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Установи службу (коснись строки, чтобы скопировать её):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Перезагрузи устройство. Служба потом запустится сама.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Убедись сам, что она есть — это должно вывести файл, а не ошибку:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Запусти xmatic снова и коснись «Проверить ещё раз».</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Проверить ещё раз</translation>
     </message>
@@ -2923,8 +2986,12 @@
         <translation>Сообщения в любом случае остаются зашифрованными от края до края на пути через сеть. Здесь речь только о том, что лежит на устройстве.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Проверено — служба по-прежнему недоступна. Установка прошла до конца и устройство было перезагружено?</translation>
+        <source>Need help?</source>
+        <translation>Нужна помощь?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Проверено — защищённое хранилище всё ещё не выдаёт ключ.</translation>
     </message>
 </context>
 <context>

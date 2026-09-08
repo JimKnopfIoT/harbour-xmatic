@@ -81,6 +81,13 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("EncryptStorageDialog.qml"))
             }
 
+            // Reachable before the app refuses to start, not only after.
+            WrapButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                label: qsTr("Trouble with the key storage?")
+                onClicked: pageStack.push(Qt.resolvedUrl("SecretsHelpPage.qml"))
+            }
+
             SectionHeader {
                 text: qsTr("Verify")
             }

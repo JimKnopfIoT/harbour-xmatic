@@ -10,7 +10,10 @@
 #include <QDir>
 #include <QFile>
 
+#include <Sailfish/Secrets/collectionnamesrequest.h>
 #include <Sailfish/Secrets/createcollectionrequest.h>
+#include <Sailfish/Secrets/healthcheckrequest.h>
+#include <Sailfish/Secrets/lockcoderequest.h>
 #include <Sailfish/Secrets/result.h>
 #include <Sailfish/Secrets/secret.h>
 #include <Sailfish/Secrets/secretmanager.h>
@@ -151,6 +154,76 @@ StoreKeyResult failure(StoreKeyState state, const Result &result)
 }
 
 } // namespace
+
+SecretsDiagnosis inspectSecrets()
+{
+    SecretsDiagnosis outcome;
+    SecretManager manager;
+
+    // The first failure only: the page shows one line.
+    const auto note = [&outcome](const Result &result) {
+        if (outcome.errorCode == 0) {
+            outcome.errorCode = static_cast<int>(result.errorCode());
+            outcome.errorMessage = result.errorMessage();
+        }
+    };
+
+    // `PreventInteraction`: this runs while a page is built.
+    {
+        LockCodeRequest lock;
+        lock.setManager(&manager);
+        lock.setLockCodeRequestType(LockCodeRequest::QueryLockStatus);
+        lock.setLockCodeTargetType(LockCodeRequest::MetadataDatabase);
+        lock.setUserInteractionMode(SecretManager::PreventInteraction);
+        lock.startRequest();
+        lock.waitForFinished();
+        if (lock.result().code() == Result::Succeeded) {
+            outcome.lockStatus = static_cast<int>(lock.lockStatus());
+        } else {
+            note(lock.result());
+        }
+    }
+
+    // Corrupted is not locked, and needs other advice.
+    {
+        HealthCheckRequest health;
+        health.setManager(&manager);
+        health.startRequest();
+        health.waitForFinished();
+        if (health.result().code() == Result::Succeeded) {
+            outcome.masterlockHealth = static_cast<int>(health.masterlockHealth());
+            outcome.saltDataHealth = static_cast<int>(health.saltDataHealth());
+        } else {
+            note(health.result());
+        }
+    }
+
+    // Whether it is only this app's collection.
+    {
+        CollectionNamesRequest names;
+        names.setManager(&manager);
+        names.setStoragePluginName(SecretManager::DefaultEncryptedStoragePluginName);
+        names.startRequest();
+        names.waitForFinished();
+        if (names.result().code() == Result::Succeeded) {
+            outcome.collection = names.collectionNames().contains(collectionName)
+                                     ? (names.isCollectionLocked(collectionName) ? 1 : 0)
+                                     : 2;
+        } else {
+            note(names.result());
+        }
+    }
+
+    qInfo("xmatic: secrets diagnosis - metadata lock %d, masterlock health %d, "
+          "salt health %d, own collection %d (%d: %s)",
+          outcome.lockStatus,
+          outcome.masterlockHealth,
+          outcome.saltDataHealth,
+          outcome.collection,
+          outcome.errorCode,
+          qPrintable(outcome.errorMessage));
+    return outcome;
+}
 
 StoreKeyResult obtainStoreKey(const QString &dataDirectory)
 {

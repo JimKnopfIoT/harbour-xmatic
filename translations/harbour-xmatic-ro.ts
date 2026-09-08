@@ -811,6 +811,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Compară șapte emoji cu celălalt dispozitiv al tău. Ai nevoie de acel dispozitiv în față; după ce amândouă au confirmat, acesta poate citi cheile comune ale camerelor.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Probleme cu stocarea cheilor?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2513,6 +2517,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Înapoi înăuntru</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Acestui sistem îi lipsește serviciul care păstrează cheile de criptare.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Stocarea securizată a dispozitivului raportează date deteriorate. În această stare nu se poate debloca nimic.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Stocarea securizată a dispozitivului este ea însăși blocată. Sunt afectate toate aplicațiile de pe telefon care păstrează secrete, nu doar xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Stocarea proprie de chei a xmatic este blocată și așteaptă confirmarea ta.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Stocarea securizată nu a eliberat nicio cheie și nu a spus de ce.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Este o proprietate a sistemului de operare, nu un defect al xmatic. Pachetul există și poate fi instalat; unele imagini Sailfish pur și simplu nu îl includ.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Asta depășește ceea ce poate atinge xmatic. Repararea înseamnă resetarea datelor proprii ale serviciului, ceea ce afectează toate aplicațiile de pe dispozitiv care păstrează secrete — întreabă mai întâi pe canalele de asistență Sailfish.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Serviciul este deblocat la pornire cu codul de blocare al dispozitivului. Dacă acea predare a încetat să funcționeze, o repornire ajunge de fiecare dată în aceeași stare — setarea din nou a codului este ceea ce o pune iar în mișcare.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Aprobarea ține până la următoarea repornire a dispozitivului. Dacă nu apare nicio cerere, este posibil să lipsească componentele de sistem care o desenează.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Merită să setezi din nou codul de blocare și să repornești: exact asta deblochează serviciul la pornire.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Ce poți face</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Activează modul dezvoltator în setările sistemului, la Setări › Instrumente pentru dezvoltatori.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Deschide aplicația Terminal și rulează linia de mai jos — atinge-o pentru a o copia. Apoi repornește dispozitivul și deschide xmatic din nou.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Notează ce raportează această pagină mai jos și du-l pe canalele de asistență Sailfish. Deconectarea din xmatic nu repară asta.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Întoarce-te și atinge „Încearcă din nou”, apoi confirmă cererea sistemului. Dacă nu apare nimic, instalează componentele lipsă (atinge linia pentru a o copia) și repornește dispozitivul.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Deschide Setări › Blocarea dispozitivului și setează un cod de securitate nou.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Repornește dispozitivul.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Deschide xmatic din nou.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Deconectarea nu ajută</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>La deconectare, cheile de criptare ale acestui dispozitiv se șterg împreună cu datele locale. Ar trebui apoi să verifici acest dispozitiv din nou de pe altul, iar mesajele mai vechi ar avea nevoie de cheia ta de recuperare. Stocarea securizată nu se repară astfel.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Ce a măsurat această pagină</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2684,12 +2779,16 @@
         <translation>Sesiunea ta este stocată criptat, iar cheia nu a fost disponibilă când xmatic a pornit.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Cheia se află în stocarea de secrete a dispozitivului. Încearcă din nou și confirmă cererea sistemului; aprobarea este valabilă până la următoarea repornire a dispozitivului.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Încearcă din nou</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Cheia se află în stocarea securizată a dispozitivului. Încearcă din nou și confirmă cererea sistemului; aprobarea ține până la următoarea repornire a dispozitivului. Dacă nu apare nicio cerere, vina este a stocării securizate, nu a contului tău.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Ai nevoie de ajutor?</translation>
     </message>
 </context>
 <context>
@@ -2879,42 +2978,6 @@
         <translation>Acestui sistem îi lipsește serviciul care păstrează cheile de criptare, așa că xmatic nu poate crea o bază criptată.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Este o proprietate a sistemului de operare, nu un defect al xmatic. Pachetul există și poate fi instalat; unele imagini Sailfish pur și simplu nu îl includ.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Sistemul a raportat: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Cum să repari</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Activează modul dezvoltator în setările sistemului, la Setări › Instrumente pentru dezvoltatori.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Deschide aplicația Terminal și devino root cu:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Instalează serviciul (atinge linia pentru a o copia):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Repornește dispozitivul. Serviciul pornește apoi de la sine.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Convinge-te singur că există — asta trebuie să afișeze un fișier, nu o eroare:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Pornește xmatic din nou și atinge „Verifică din nou”.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Verifică din nou</translation>
     </message>
@@ -2923,8 +2986,12 @@
         <translation>Mesajele rămân oricum criptate cap la cap pe drumul lor prin rețea. Aici este vorba doar despre ce se află pe dispozitiv.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Verificat — serviciul tot nu este accesibil. A mers instalarea până la capăt și a fost repornit dispozitivul?</translation>
+        <source>Need help?</source>
+        <translation>Ai nevoie de ajutor?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Verificat — stocarea securizată tot nu eliberează nicio cheie.</translation>
     </message>
 </context>
 <context>

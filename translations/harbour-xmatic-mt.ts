@@ -813,6 +813,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Iqabbel seba&apos; emoji mal-apparat l-ieħor tiegħek. Għandek bżonn dak l-apparat quddiemek; ladarba t-tnejn ikkonfermaw, dan jista&apos; jaqra ċ-ċwievet komuni tal-kmamar.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Problemi bil-ħażna taċ-ċwievet?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2517,6 +2521,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Lura ġewwa</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Din is-sistema hija nieqsa mis-servizz li jżomm iċ-ċwievet tal-kriptaġġ.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Il-ħażna sigura tal-apparat qed tirrapporta data bil-ħsara. F&apos;dan l-istat ma jista&apos; jinfetaħ xejn.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Il-ħażna sigura tal-apparat innifisha hija msakkra. Dan jolqot kull app fit-telefon li taħżen sigrieti, mhux biss xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Il-ħażna taċ-ċwievet ta&apos; xmatic innifsu hija msakkra u qed tistenna l-konferma tiegħek.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Il-ħażna sigura ma tatx ċavetta u ma qaletx għaliex.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Din hija karatteristika tas-sistema operattiva, mhux difett f&apos;xmatic. Il-pakkett jeżisti u jista&apos; jiġi installat; xi immaġini ta&apos; Sailfish sempliċement ma jġibuhx magħhom.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Dan huwa lil hinn minn dak li jista&apos; jilħaq xmatic. Tiswija tfisser li d-data tas-servizz innifsu terġa&apos; għal żero, u dan jolqot kull app fl-apparat li taħżen sigrieti — staqsi l-ewwel fil-kanali ta&apos; appoġġ ta&apos; Sailfish.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Is-servizz jinfetaħ mal-bidu bil-kodiċi tas-sakra tal-apparat. Jekk dak it-tqegħid waqaf jaħdem, ir-ristartjar jispiċċa kull darba fl-istess stat — li terġa&apos; tissettja l-kodiċi huwa dak li jħaddmu mill-ġdid.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>L-approvazzjoni ddum sar-ristart li jmiss tal-apparat. Jekk ma tidher l-ebda talba, jista&apos; jkun li jonqsu l-partijiet tas-sistema li jpinġuha.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Jaqbel li terġa&apos; tissettja l-kodiċi tas-sakra tal-apparat u tirristartja: dak eżatt jiftaħ is-servizz mal-bidu.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>X&apos;tista&apos; tagħmel</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Ixgħel il-modalità tal-iżviluppatur fis-settings tas-sistema, taħt Settings › Għodod tal-iżviluppatur.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Iftaħ l-app Terminal u ħaddem il-linja ta&apos; hawn taħt — messha biex tikkopjaha. Imbagħad irristartja l-apparat u erġa&apos; iftaħ xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Niżżel dak li tirrapporta din il-paġna hawn taħt u ħudu fil-kanali ta&apos; appoġġ ta&apos; Sailfish. Li toħroġ minn xmatic ma jsewwihx.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Mur lura u messa „Erġa&apos; pprova“, imbagħad ikkonferma t-talba tas-sistema. Jekk ma jidher xejn, installa l-partijiet nieqsa (messa l-linja biex tikkopjaha) u rristartja l-apparat.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Iftaħ Issettjar › Sakra tal-apparat u ssettja kodiċi ta&apos; sigurtà ġdid.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Irristartja l-apparat.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Erġa&apos; iftaħ xmatic.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Li toħroġ ma jgħinx</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Meta toħroġ, iċ-ċwievet tal-kriptaġġ ta&apos; dan l-apparat jitħassru flimkien mad-data lokali. Imbagħad ikollok tivverifika dan l-apparat mill-ġdid minn ieħor, u l-messaġġi eqdem ikollhom bżonn iċ-ċavetta tal-irkupru tiegħek. Il-ħażna sigura ma tissewwiex b&apos;hekk.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>X&apos;kejlet din il-paġna</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2688,12 +2783,16 @@
         <translation>Is-sessjoni tiegħek hija maħżuna ċċifrata, u ċ-ċavetta ma kinitx disponibbli meta beda xmatic.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Iċ-ċavetta tinsab fil-ħażna tas-sigrieti tal-apparat. Erġa&apos; pprova u kkonferma t-talba tas-sistema; l-approvazzjoni tgħodd sal-istartjar li jmiss tal-apparat.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Erġa&apos; pprova</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Iċ-ċavetta tinsab fil-ħażna sigura tal-apparat. Erġa&apos; pprova u kkonferma t-talba tas-sistema; l-approvazzjoni ddum sar-ristart li jmiss tal-apparat. Jekk ma tidher l-ebda talba, it-tort huwa tal-ħażna sigura u mhux tal-kont tiegħek.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Għandek bżonn għajnuna?</translation>
     </message>
 </context>
 <context>
@@ -2884,42 +2983,6 @@
         <translation>F&apos;din is-sistema jonqos is-servizz li jżomm iċ-ċwievet tal-kriptaġġ, għalhekk xmatic ma jistax joħloq database kriptata.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Din hija karatteristika tas-sistema operattiva, mhux difett f&apos;xmatic. Il-pakkett jeżisti u jista&apos; jiġi installat; xi immaġini ta&apos; Sailfish sempliċement ma jġibuhx magħhom.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Is-sistema rrappurtat: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Kif issewwiha</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Ixgħel il-modalità tal-iżviluppatur fis-settings tas-sistema, taħt Settings › Għodod tal-iżviluppatur.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Iftaħ l-applikazzjoni Terminal u sir root b&apos;dan:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Installa s-servizz (tektek il-linja biex tikkopjaha):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Erġa&apos; ibda l-apparat. Is-servizz imbagħad jibda waħdu.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Ikkonferma int stess li qiegħed hemm — dan irid joħroġ fajl, mhux żball:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Erġa&apos; ibda xmatic u tektek „Iċċekkja mill-ġdid“.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Iċċekkja mill-ġdid</translation>
     </message>
@@ -2928,8 +2991,12 @@
         <translation>Il-messaġġi jibqgħu kriptati minn tarf sa tarf fi triqthom mis-sistema xorta waħda. Hawn qed nitkellmu biss dwar dak li jinsab fuq l-apparat.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Iċċekkjat — is-servizz għadu ma jintlaħaqx. L-installazzjoni għaddiet kollha, u l-apparat reġa&apos; nbeda?</translation>
+        <source>Need help?</source>
+        <translation>Għandek bżonn għajnuna?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Iċċekkjat — il-ħażna sigura għadha ma tagħtix ċavetta.</translation>
     </message>
 </context>
 <context>

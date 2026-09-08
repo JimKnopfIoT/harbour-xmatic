@@ -809,6 +809,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Vergleicht sieben Emoji mit deinem anderen Gerät. Du brauchst dieses Gerät vor dir; sobald beide bestätigt haben, kann dieses hier die gemeinsamen Raumschlüssel lesen.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Probleme mit dem Schlüsselspeicher?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2509,6 +2513,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Wieder hineinkommen</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Auf diesem System fehlt der Dienst, der Verschlüsselungsschlüssel verwahrt.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Der sichere Speicher des Geräts meldet beschädigte Daten. In diesem Zustand lässt sich nichts entsperren.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Der sichere Speicher des Geräts ist selbst gesperrt. Davon ist jede App auf diesem Telefon betroffen, die Geheimnisse ablegt, nicht nur xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Der eigene Schlüsselspeicher von xmatic ist gesperrt und wartet auf deine Bestätigung.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Der sichere Speicher hat keinen Schlüssel herausgegeben und keinen Grund genannt.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Das ist eine Eigenschaft des Betriebssystems und kein Fehler von xmatic. Das Paket gibt es und es lässt sich installieren; manche Sailfish-Abbilder liefern es schlicht nicht mit.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Das liegt außerhalb dessen, was xmatic erreichen kann. Eine Reparatur bedeutet, die Daten des Dienstes zurückzusetzen, und das betrifft jede App auf dem Gerät, die Geheimnisse ablegt — frag vorher in den Sailfish-Supportkanälen nach.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Der Dienst wird beim Start über deinen Gerätesperrcode entsperrt. Wenn diese Übergabe nicht mehr funktioniert, landet ein Neustart jedes Mal im selben Zustand — den Code neu zu setzen ist das, was sie wieder in Gang bringt.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Die Freigabe gilt bis zum nächsten Neustart des Geräts. Wenn überhaupt keine Anfrage erscheint, fehlen möglicherweise die Systemkomponenten, die sie anzeigen.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Den Gerätesperrcode neu zu setzen und neu zu starten ist einen Versuch wert: genau das entsperrt den Dienst beim Start.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Was zu tun ist</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Schalte den Entwicklermodus in den Systemeinstellungen ein, unter Einstellungen › Entwicklerwerkzeuge.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Öffne die Terminal-App und führe die Zeile unten aus — tippe sie an, um sie zu kopieren. Starte danach das Gerät neu und öffne xmatic wieder.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Notiere, was diese Seite unten meldet, und bring es in die Sailfish-Supportkanäle. Sich von xmatic abzumelden repariert es nicht.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Geh zurück und tippe auf „Erneut versuchen“, bestätige dann die Anfrage des Systems. Erscheint nichts, installiere die fehlenden Komponenten (Zeile antippen, um sie zu kopieren) und starte das Gerät neu.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Öffne Einstellungen › Gerätesperre und setze einen neuen Sicherheitscode.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Starte das Gerät neu.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Öffne xmatic wieder.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Abmelden hilft nicht</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Beim Abmelden werden die Verschlüsselungsschlüssel dieses Geräts zusammen mit den lokalen Daten gelöscht. Du müsstest dieses Gerät dann von einem anderen aus erneut verifizieren, und ältere Nachrichten bräuchten deinen Wiederherstellungsschlüssel. Den sicheren Speicher repariert es nicht.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Was diese Seite gemessen hat</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2680,12 +2775,16 @@
         <translation>Deine Sitzung ist verschlüsselt gespeichert, und der Schlüssel war beim Start von xmatic nicht verfügbar.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Der Schlüssel liegt im Geheimnisspeicher des Geräts. Versuch es erneut und bestätige die Abfrage des Systems; die Freigabe gilt bis zum nächsten Neustart des Geräts.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Erneut versuchen</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Der Schlüssel liegt im sicheren Speicher des Geräts. Versuche es erneut und bestätige die Anfrage des Systems; die Freigabe gilt bis zum nächsten Neustart des Geräts. Wenn überhaupt keine Anfrage erscheint, liegt der Fehler beim sicheren Speicher und nicht bei deinem Konto.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Brauchst du Hilfe?</translation>
     </message>
 </context>
 <context>
@@ -2874,42 +2973,6 @@
         <translation>Auf diesem System fehlt der Dienst, der Verschlüsselungsschlüssel verwahrt, deshalb kann xmatic keine verschlüsselte Datenbank anlegen.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Das ist eine Eigenschaft des Betriebssystems und kein Fehler von xmatic. Das Paket gibt es und es lässt sich installieren; manche Sailfish-Abbilder liefern es schlicht nicht mit.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Das System meldet: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>So bringst du es in Ordnung</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Schalte den Entwicklermodus in den Systemeinstellungen ein, unter Einstellungen › Entwicklerwerkzeuge.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Öffne die Terminal-App und werde mit diesem Befehl root:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Installiere den Dienst (tippe die Zeile an, um sie zu kopieren):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Starte das Gerät neu. Der Dienst startet danach von allein.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Überzeuge dich selbst, dass er da ist — das muss eine Datei ausgeben, keinen Fehler:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Starte xmatic erneut und tippe auf „Erneut prüfen“.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Erneut prüfen</translation>
     </message>
@@ -2918,8 +2981,12 @@
         <translation>Nachrichten bleiben auf ihrem Weg durch das Netz in jedem Fall Ende-zu-Ende-verschlüsselt. Hier geht es nur um das, was auf dem Gerät liegt.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Geprüft — der Dienst ist weiterhin nicht erreichbar. Ist die Installation durchgelaufen, und wurde das Gerät neu gestartet?</translation>
+        <source>Need help?</source>
+        <translation>Brauchst du Hilfe?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Geprüft — der sichere Speicher gibt weiterhin keinen Schlüssel heraus.</translation>
     </message>
 </context>
 <context>

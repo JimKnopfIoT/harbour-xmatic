@@ -811,6 +811,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Cuireann sé seacht n-emoji i gcomparáid le do ghléas eile. Teastaíonn an gléas eile sin os do chomhair; nuair a bheidh an dá cheann deimhnithe, is féidir leis an gceann seo na heochracha comhroinnte seomra a léamh.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Fadhbanna leis an stóras eochracha?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2513,6 +2517,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Isteach arís</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Tá an tseirbhís a choinníonn eochracha criptithe in easnamh ar an gcóras seo.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Tuairiscíonn stóras slán an ghléis sonraí damáistithe. Sa staid sin ní féidir aon rud a dhíghlasáil.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Tá stóras slán an ghléis féin faoi ghlas. Cuireann sé sin isteach ar gach aip ar an bhfón a stórálann rúin, ní hamháin xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Tá stóras eochracha xmatic féin faoi ghlas agus tá sé ag fanacht le do dhearbhú.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Níor thug an stóras slán eochair uaidh agus níor dhúirt sé cén fáth.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Airí den chóras oibriúcháin é seo, ní locht in xmatic. Tá an pacáiste ann agus is féidir é a shuiteáil; níl sé i ngach íomhá Sailfish.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Tá sé seo lasmuigh de raon xmatic. Ciallaíonn deisiú sonraí na seirbhíse féin a athshocrú, rud a chuireann isteach ar gach aip ar an ngléas a stórálann rúin — fiafraigh ar dtús i gcainéil tacaíochta Sailfish.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Díghlasáiltear an tseirbhís ag am tosaithe le cód glasála an ghléis. Má tá deireadh leis an aistriú sin, críochnaíonn atosú sa staid chéanna gach uair — is é an cód a shocrú as an nua a chuireann ag imeacht arís í.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Maireann an ceadú go dtí an chéad atosú eile den ghléas. Mura dtagann iarratas ar bith aníos, seans go bhfuil na comhpháirteanna córais a tharraingíonn é in easnamh.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Is fiú cód glasála an ghléis a shocrú as an nua agus atosú: sin go díreach a dhíghlasálann an tseirbhís ag am tosaithe.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Cad is féidir a dhéanamh</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Cuir an mód forbróra ar siúl i socruithe an chórais, faoi Socruithe › Uirlisí forbróra.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Oscail an aip Terminal agus rith an líne thíos — tapáil í chun í a chóipeáil. Ansin atosaigh an gléas agus oscail xmatic arís.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Breac síos a dtuairiscíonn an leathanach seo thíos agus tabhair chuig cainéil tacaíochta Sailfish é. Ní dheisíonn sé é síniú amach as xmatic.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Téigh ar ais agus tapáil „Bain triail eile as“, ansin dearbhaigh iarratas an chórais. Mura dtagann rud ar bith aníos, suiteáil na comhpháirteanna atá in easnamh (tapáil an líne chun í a chóipeáil) agus atosaigh an gléas.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Oscail Socruithe › Glas gléis agus socraigh cód slándála nua.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Atosaigh an gléas.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Oscail xmatic arís.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Ní chabhraíonn sé síniú amach</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Nuair a shíníonn tú amach scriostar eochracha criptithe an ghléis seo in éineacht leis na sonraí áitiúla. Chaithfeá an gléas seo a fhíorú arís ó cheann eile ansin, agus theastódh d&apos;eochair athshlánaithe do sheanteachtaireachtaí. Ní dheisíonn sé an stóras slán.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>A dtomhais an leathanach seo</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2684,12 +2779,16 @@
         <translation>Tá do sheisiún stóráilte criptithe, agus ní raibh an eochair ar fáil nuair a thosaigh xmatic.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Tá an eochair i stóras rún an ghléis. Bain triail eile as agus deimhnigh iarratas an chórais; maireann an ceadú go dtí an chéad atosú eile den ghléas.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Bain triail eile as</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Tá an eochair i stóras slán an ghléis. Bain triail eile as agus dearbhaigh iarratas an chórais; maireann an ceadú go dtí an chéad atosú eile den ghléas. Mura dtagann iarratas ar bith aníos, is ar an stóras slán atá an locht agus ní ar do chuntas.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>An bhfuil cabhair uait?</translation>
     </message>
 </context>
 <context>
@@ -2879,42 +2978,6 @@
         <translation>Tá an tseirbhís a choinníonn eochracha criptithe in easnamh ar an gcóras seo, mar sin ní féidir le xmatic bunachar criptithe a chruthú.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Airí den chóras oibriúcháin é seo, ní locht in xmatic. Tá an pacáiste ann agus is féidir é a shuiteáil; níl sé i ngach íomhá Sailfish.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Thuairiscigh an córas: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Conas é a réiteach</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Cuir an mód forbróra ar siúl i socruithe an chórais, faoi Socruithe › Uirlisí forbróra.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Oscail an feidhmchlár Teirminéal agus déan root díot féin le:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Suiteáil an tseirbhís (tapáil an líne chun í a chóipeáil):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Atosaigh an gléas. Tosaíonn an tseirbhís léi féin ina dhiaidh sin.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Deimhnigh duit féin go bhfuil sí ann — caithfidh sé seo comhad a phriontáil, ní earráid:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Tosaigh xmatic arís agus tapáil „Seiceáil arís“.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Seiceáil arís</translation>
     </message>
@@ -2923,8 +2986,12 @@
         <translation>Fanann teachtaireachtaí criptithe ó cheann go ceann ar a mbealach tríd an líonra ar aon nós. Níl anseo ach an méid atá ar an ngléas.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Seiceáilte — níl an tseirbhís le sroicheadh fós. Ar chríochnaigh an tsuiteáil, agus ar atosaíodh an gléas?</translation>
+        <source>Need help?</source>
+        <translation>An bhfuil cabhair uait?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Seiceáilte — níl an stóras slán ag tabhairt eochrach uaidh fós.</translation>
     </message>
 </context>
 <context>

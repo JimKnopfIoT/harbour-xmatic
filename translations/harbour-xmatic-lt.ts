@@ -811,6 +811,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Palygina septynis jaustukus su kitu tavo įrenginiu. Tas įrenginys turi būti prieš tave; kai abu patvirtina, šis gali skaityti bendrus kambarių raktus.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Problemos su raktų saugykla?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2513,6 +2517,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Vėl vidun</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Šioje sistemoje trūksta tarnybos, kuri saugo šifravimo raktus.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Įrenginio saugioji saugykla praneša apie sugadintus duomenis. Tokioje būsenoje nieko atrakinti negalima.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Pati įrenginio saugioji saugykla yra užrakinta. Tai liečia kiekvieną telefono programą, kuri saugo paslaptis, ne tik xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Paties xmatic raktų saugykla užrakinta ir laukia tavo patvirtinimo.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Saugioji saugykla neišdavė rakto ir nepasakė kodėl.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Tai operacinės sistemos savybė, o ne xmatic klaida. Paketas egzistuoja ir jį galima įdiegti; kai kurie Sailfish atvaizdai jo tiesiog neteikia.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Tai už xmatic galimybių ribų. Taisymas reiškia pačios tarnybos duomenų atstatymą, o tai liečia kiekvieną įrenginio programą, kuri saugo paslaptis — pirmiausia paklausk Sailfish palaikymo kanaluose.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Tarnyba paleidžiant atrakinama įrenginio užrakto kodu. Jei šis perdavimas nustojo veikti, perkrovimas kiekvieną kartą baigiasi ta pačia būsena — būtent kodo nustatymas iš naujo ją vėl paleidžia.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Patvirtinimas galioja iki kito įrenginio perkrovimo. Jei jokia užklausa apskritai nepasirodo, gali trūkti sistemos dalių, kurios ją piešia.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Verta iš naujo nustatyti įrenginio užrakto kodą ir perkrauti: būtent tai atrakina tarnybą paleidžiant.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Ką daryti</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Sistemos nustatymuose įjunk kūrėjo režimą, skiltyje Nustatymai › Kūrėjo įrankiai.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Atverk programą Terminal ir paleisk žemiau esančią eilutę — bakstelėk ją, kad nukopijuotum. Tada perkrauk įrenginį ir vėl atverk xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Užsirašyk, ką šis puslapis praneša žemiau, ir nunešk tai į Sailfish palaikymo kanalus. Atsijungimas nuo xmatic to nepataiso.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Grįžk atgal ir bakstelėk „Bandyti dar kartą“, tada patvirtink sistemos užklausą. Jei niekas nepasirodo, įdiek trūkstamas dalis (bakstelėk eilutę, kad nukopijuotum) ir perkrauk įrenginį.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Atverk Nustatymai › Įrenginio užraktas ir nustatyk naują saugos kodą.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Perkrauk įrenginį.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Vėl atverk xmatic.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Atsijungimas nepadeda</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Atsijungiant kartu su vietiniais duomenimis ištrinami šio įrenginio šifravimo raktai. Tada šį įrenginį reikėtų iš naujo patvirtinti iš kito, o senesnėms žinutėms prireiktų tavo atkūrimo rakto. Saugiosios saugyklos tai nepataiso.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Ką šis puslapis išmatavo</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2684,12 +2779,16 @@
         <translation>Tavo seansas įrašytas užšifruotas, o raktas paleidžiant xmatic buvo neprieinamas.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Raktas yra įrenginio paslapčių saugykloje. Bandyk dar kartą ir patvirtink sistemos užklausą; leidimas galioja iki kito įrenginio paleidimo iš naujo.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Bandyti dar kartą</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Raktas yra įrenginio saugiojoje saugykloje. Bandyk dar kartą ir patvirtink sistemos užklausą; patvirtinimas galioja iki kito įrenginio perkrovimo. Jei jokia užklausa apskritai nepasirodo, kalta saugioji saugykla, o ne tavo paskyra.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Reikia pagalbos?</translation>
     </message>
 </context>
 <context>
@@ -2879,42 +2978,6 @@
         <translation>Šioje sistemoje trūksta paslaugos, saugančios šifravimo raktus, todėl xmatic negali sukurti šifruotos duomenų bazės.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Tai operacinės sistemos savybė, o ne xmatic klaida. Paketas egzistuoja ir jį galima įdiegti; kai kurie Sailfish atvaizdai jo tiesiog neteikia.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Sistema pranešė: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Kaip tai sutvarkyti</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Sistemos nustatymuose įjunk kūrėjo režimą, skiltyje Nustatymai › Kūrėjo įrankiai.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Atverk Terminalo programą ir tapk root komanda:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Įdiek paslaugą (bakstelėk eilutę, kad ją nukopijuotum):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Paleisk įrenginį iš naujo. Paslauga po to pasileidžia pati.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Pats įsitikink, kad ji yra — tai turi išvesti failą, o ne klaidą:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Paleisk xmatic iš naujo ir bakstelėk „Tikrinti dar kartą“.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Tikrinti dar kartą</translation>
     </message>
@@ -2923,8 +2986,12 @@
         <translation>Žinutės kelyje per tinklą bet kuriuo atveju lieka šifruotos nuo galo iki galo. Čia kalbama tik apie tai, kas guli įrenginyje.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Patikrinta — paslauga vis dar nepasiekiama. Ar diegimas baigėsi ir ar įrenginys buvo paleistas iš naujo?</translation>
+        <source>Need help?</source>
+        <translation>Reikia pagalbos?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Patikrinta — saugioji saugykla vis dar neišduoda rakto.</translation>
     </message>
 </context>
 <context>

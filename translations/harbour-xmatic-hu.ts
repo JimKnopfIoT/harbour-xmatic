@@ -807,6 +807,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Hét emodzsit hasonlít össze a másik eszközöddel. Szükséged van arra az eszközre magad előtt; ha mindkettő megerősítette, ez az eszköz olvashatja a megosztott szobakulcsokat.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Gond van a kulcstárolóval?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2505,6 +2509,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Vissza be</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Ebből a rendszerből hiányzik a szolgáltatás, amely a titkosítási kulcsokat őrzi.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Az eszköz biztonságos tárolója sérült adatokat jelez. Ebben az állapotban semmit sem lehet feloldani.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Az eszköz biztonságos tárolója maga is zárolva van. Ez a telefon minden titkot tároló alkalmazását érinti, nem csak az xmaticot.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Az xmatic saját kulcstárolója zárolva van, és a megerősítésedre vár.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>A biztonságos tároló nem adott ki kulcsot, és nem mondta meg, miért.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Ez az operációs rendszer tulajdonsága, nem az xmatic hibája. A csomag létezik és telepíthető; néhány Sailfish lemezkép egyszerűen nem szállítja.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Ez túlmutat azon, amit az xmatic elér. A javítás a szolgáltatás saját adatainak nullázását jelenti, ami az eszköz minden titkot tároló alkalmazását érinti — kérdezz előbb a Sailfish támogatási csatornáin.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>A szolgáltatás induláskor az eszköz zárolási kódjával oldódik fel. Ha ez az átadás már nem működik, az újraindítás minden alkalommal ugyanabban az állapotban végződik — a kód újbóli beállítása az, ami újra elindítja.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>A jóváhagyás az eszköz következő újraindításáig tart. Ha egyáltalán nem jelenik meg kérés, hiányozhatnak a rendszer részei, amelyek megrajzolják.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Érdemes újra beállítani az eszköz zárolási kódját és újraindítani: pontosan ez oldja fel a szolgáltatást induláskor.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Mit tehetsz</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Kapcsold be a fejlesztői módot a rendszerbeállításokban, a Beállítások › Fejlesztői eszközök alatt.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Nyisd meg a Terminal alkalmazást, és futtasd az alábbi sort — koppints rá a másoláshoz. Utána indítsd újra az eszközt, és nyisd meg újra az xmaticot.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Jegyezd fel, mit jelez ez az oldal alább, és vidd el a Sailfish támogatási csatornáira. Az xmaticból való kijelentkezés ezt nem javítja meg.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Menj vissza, koppints az „Újra” gombra, majd erősítsd meg a rendszer kérését. Ha semmi sem jelenik meg, telepítsd a hiányzó részeket (koppints a sorra a másoláshoz), és indítsd újra az eszközt.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Nyisd meg a Beállítások › Eszközzár menüt, és állíts be új biztonsági kódot.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Indítsd újra az eszközt.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Nyisd meg újra az xmaticot.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>A kijelentkezés nem segít</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Kijelentkezéskor az eszköz titkosítási kulcsai a helyi adatokkal együtt törlődnek. Ezután egy másik eszközről kellene újra ellenőrizned ezt az eszközt, a régebbi üzenetekhez pedig a helyreállítási kulcsod kellene. A biztonságos tárolót ez nem javítja meg.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Mit mért ez az oldal</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2676,12 +2771,16 @@
         <translation>A munkameneted titkosítva van tárolva, és a kulcs nem volt elérhető az xmatic indulásakor.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>A kulcs az eszköz titoktárolójában van. Próbáld újra, és hagyd jóvá a rendszer kérését; a jóváhagyás az eszköz következő újraindításáig érvényes.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Újra</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>A kulcs az eszköz biztonságos tárolójában van. Próbáld újra, és erősítsd meg a rendszer kérését; a jóváhagyás az eszköz következő újraindításáig tart. Ha egyáltalán nem jelenik meg kérés, a hiba a biztonságos tárolóban van, nem a fiókodban.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Segítségre van szükséged?</translation>
     </message>
 </context>
 <context>
@@ -2869,42 +2968,6 @@
         <translation>Ebből a rendszerből hiányzik a titkosítási kulcsokat őrző szolgáltatás, így az xmatic nem tud titkosított adatbázist létrehozni.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Ez az operációs rendszer tulajdonsága, nem az xmatic hibája. A csomag létezik és telepíthető; néhány Sailfish lemezkép egyszerűen nem szállítja.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>A rendszer jelentése: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Így hozhatod rendbe</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Kapcsold be a fejlesztői módot a rendszerbeállításokban, a Beállítások › Fejlesztői eszközök alatt.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Nyisd meg a Terminál alkalmazást, és válj rootttá ezzel:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Telepítsd a szolgáltatást (koppints a sorra a másoláshoz):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Indítsd újra az eszközt. A szolgáltatás ezután magától elindul.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Győződj meg magad róla, hogy megvan — ennek fájlt kell kiírnia, nem hibát:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Indítsd újra az xmaticot, és koppints az „Ellenőrzés újra” gombra.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Ellenőrzés újra</translation>
     </message>
@@ -2913,8 +2976,12 @@
         <translation>Az üzenetek a hálózaton át vezető úton mindenképp végponttól végpontig titkosítva maradnak. Itt csak arról van szó, ami az eszközön hever.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Ellenőrizve — a szolgáltatás továbbra sem érhető el. Végigfutott a telepítés, és újraindult az eszköz?</translation>
+        <source>Need help?</source>
+        <translation>Segítségre van szükséged?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Ellenőrizve — a biztonságos tároló továbbra sem ad ki kulcsot.</translation>
     </message>
 </context>
 <context>

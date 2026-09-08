@@ -44,7 +44,7 @@ Page {
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryHighlightColor
-                text: qsTr("The key lives in the device's secrets storage. Try again and confirm the system's request; the approval lasts until the next restart of the device.")
+                text: qsTr("The key lives in the device's secrets storage. Try again and confirm the system's request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.")
             }
 
             WrapButton {
@@ -52,6 +52,13 @@ Page {
                 label: qsTr("Try again")
                 enabled: !matrix.busy
                 onClicked: matrix.retryUnlock()
+            }
+
+            // The third way out, next to a retry and a destructive sign-out.
+            WrapButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                label: qsTr("Need help?")
+                onClicked: pageStack.push(Qt.resolvedUrl("SecretsHelpPage.qml"))
             }
 
             BusyIndicator {

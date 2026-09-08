@@ -809,6 +809,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Compare sept émojis avec ton autre appareil. Il te faut cet appareil devant toi ; une fois que les deux ont confirmé, celui-ci peut lire les clés de salon partagées.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Problème avec le stockage des clés ?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2509,6 +2513,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Retrouver l&apos;accès</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Ce système ne dispose pas du service qui conserve les clés de chiffrement.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Le stockage sécurisé de l&apos;appareil signale des données endommagées. Dans cet état, rien ne peut être déverrouillé.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Le stockage sécurisé de l&apos;appareil est lui-même verrouillé. Toutes les applications de ce téléphone qui stockent des secrets sont touchées, pas seulement xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Le stockage de clés propre à xmatic est verrouillé et attend ta confirmation.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Le stockage sécurisé n&apos;a fourni aucune clé et n&apos;a pas dit pourquoi.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>C&apos;est une propriété du système d&apos;exploitation, pas un défaut de xmatic. Le paquet existe et peut être installé ; certaines images Sailfish ne le livrent simplement pas.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Cela dépasse ce que xmatic peut atteindre. Réparer signifie réinitialiser les données du service lui-même, ce qui touche toutes les applications de l&apos;appareil qui stockent des secrets — demande d&apos;abord dans les canaux d&apos;assistance Sailfish.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Le service est déverrouillé au démarrage à partir de ton code de verrouillage. Si ce passage de relais ne fonctionne plus, un redémarrage aboutit chaque fois au même état — c&apos;est le fait de redéfinir le code qui le relance.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>L&apos;autorisation vaut jusqu&apos;au prochain redémarrage de l&apos;appareil. Si aucune demande n&apos;apparaît du tout, les composants système qui l&apos;affichent sont peut-être absents.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Redéfinir le code de verrouillage et redémarrer vaut la peine d&apos;être essayé : c&apos;est ce qui déverrouille le service au démarrage.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Que faire</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Active le mode développeur dans les réglages du système, sous Réglages › Outils de développement.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Ouvre l&apos;application Terminal et exécute la ligne ci-dessous — appuie dessus pour la copier. Redémarre ensuite l&apos;appareil et rouvre xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Note ce que cette page signale ci-dessous et porte-le dans les canaux d&apos;assistance Sailfish. Se déconnecter de xmatic ne le répare pas.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Reviens en arrière et appuie sur « Réessayer », puis confirme la demande du système. Si rien n&apos;apparaît, installe les composants manquants (appuie sur la ligne pour la copier) et redémarre l&apos;appareil.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Ouvre Réglages › Verrouillage de l&apos;appareil et définis un nouveau code de sécurité.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Redémarre l&apos;appareil.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Rouvre xmatic.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Se déconnecter n&apos;aide pas</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>La déconnexion supprime les clés de chiffrement de cet appareil en même temps que les données locales. Tu devrais alors vérifier de nouveau cet appareil depuis un autre, et les anciens messages exigeraient ta clé de récupération. Cela ne répare pas le stockage sécurisé.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Ce que cette page a mesuré</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2680,12 +2775,16 @@
         <translation>Ta session est stockée chiffrée, et la clé n&apos;était pas disponible au démarrage de xmatic.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>La clé se trouve dans le stockage de secrets de l&apos;appareil. Réessaie et confirme la demande du système ; l&apos;autorisation vaut jusqu&apos;au prochain redémarrage de l&apos;appareil.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Réessayer</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>La clé se trouve dans le stockage sécurisé de l&apos;appareil. Réessaie et confirme la demande du système ; l&apos;autorisation vaut jusqu&apos;au prochain redémarrage de l&apos;appareil. Si aucune demande n&apos;apparaît du tout, la faute revient au stockage sécurisé et non à ton compte.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Besoin d&apos;aide ?</translation>
     </message>
 </context>
 <context>
@@ -2874,42 +2973,6 @@
         <translation>Il manque à ce système le service qui conserve les clés de chiffrement, xmatic ne peut donc pas créer de base chiffrée.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>C&apos;est une propriété du système d&apos;exploitation, pas un défaut de xmatic. Le paquet existe et peut être installé ; certaines images Sailfish ne le livrent simplement pas.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Le système a signalé : %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Comment y remédier</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Active le mode développeur dans les réglages du système, sous Réglages › Outils de développement.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Ouvre l&apos;application Terminal et deviens root avec :</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Installe le service (touche la ligne pour la copier) :</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Redémarre l&apos;appareil. Le service démarre ensuite tout seul.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Vérifie toi-même qu&apos;il est là — ceci doit afficher un fichier, pas une erreur :</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Relance xmatic et touche « Vérifier à nouveau ».</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Vérifier à nouveau</translation>
     </message>
@@ -2918,8 +2981,12 @@
         <translation>Les messages restent chiffrés de bout en bout sur le réseau dans tous les cas. Il ne s&apos;agit ici que de ce qui se trouve sur l&apos;appareil.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Vérifié — le service reste injoignable. L&apos;installation est-elle allée au bout, et l&apos;appareil a-t-il été redémarré ?</translation>
+        <source>Need help?</source>
+        <translation>Besoin d&apos;aide ?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Vérifié — le stockage sécurisé ne fournit toujours aucune clé.</translation>
     </message>
 </context>
 <context>

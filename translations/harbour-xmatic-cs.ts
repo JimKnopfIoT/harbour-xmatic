@@ -811,6 +811,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Porovná sedm emodži s tvým druhým zařízením. Musíš ho mít před sebou; jakmile obě potvrdí, může toto zařízení číst sdílené klíče místností.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Potíže s úložištěm klíčů?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2513,6 +2517,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Zpátky dovnitř</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>V tomto systému chybí služba, která uchovává šifrovací klíče.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Zabezpečené úložiště zařízení hlásí poškozená data. V tomto stavu nelze nic odemknout.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Zabezpečené úložiště zařízení je samo zamčené. Týká se to každé aplikace v telefonu, která ukládá tajemství, nejen xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Vlastní úložiště klíčů aplikace xmatic je zamčené a čeká na tvé potvrzení.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Zabezpečené úložiště nevydalo žádný klíč a neřeklo proč.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Je to vlastnost operačního systému, ne chyba xmaticu. Balíček existuje a lze ho nainstalovat; některé obrazy Sailfishu ho prostě nedodávají.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>To je mimo dosah aplikace xmatic. Oprava znamená vynulovat vlastní data služby, což se dotkne každé aplikace v zařízení, která ukládá tajemství — zeptej se nejdřív v podpůrných kanálech Sailfishu.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Služba se odemyká při startu pomocí kódu zámku zařízení. Pokud toto předání přestalo fungovat, restart skončí pokaždé ve stejném stavu — znovu nastavit kód je to, co ji opět rozběhne.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Schválení platí do dalšího restartu zařízení. Pokud se žádný požadavek vůbec neobjeví, mohou chybět systémové součásti, které jej vykreslují.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Znovu nastavit kód zámku zařízení a restartovat stojí za pokus: právě to odemyká službu při startu.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Co dělat</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Zapni v systémovém nastavení vývojářský režim, v Nastavení › Vývojářské nástroje.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Otevři aplikaci Terminal a spusť řádek níže — klepnutím jej zkopíruješ. Potom zařízení restartuj a znovu otevři xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Poznamenej si, co tato stránka níže hlásí, a vezmi to do podpůrných kanálů Sailfishu. Odhlášení z aplikace xmatic to neopraví.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Vrať se zpět a klepni na „Zkusit znovu“, pak potvrď požadavek systému. Pokud se nic neobjeví, nainstaluj chybějící součásti (klepnutím řádek zkopíruješ) a restartuj zařízení.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Otevři Nastavení › Zámek zařízení a nastav nový bezpečnostní kód.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Restartuj zařízení.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Znovu otevři xmatic.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Odhlášení nepomůže</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Při odhlášení se spolu s místními daty smažou šifrovací klíče tohoto zařízení. Musel bys pak toto zařízení znovu ověřit z jiného a starší zprávy by vyžadovaly tvůj obnovovací klíč. Zabezpečené úložiště to neopraví.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Co tato stránka naměřila</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2684,12 +2779,16 @@
         <translation>Tvá relace je uložena šifrovaně a klíč nebyl při startu xmatic dostupný.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Klíč je v úložišti tajemství zařízení. Zkus to znovu a potvrď žádost systému; schválení platí do dalšího restartu zařízení.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Zkusit znovu</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Klíč leží v zabezpečeném úložišti zařízení. Zkus to znovu a potvrď požadavek systému; schválení platí do dalšího restartu zařízení. Pokud se žádný požadavek vůbec neobjeví, chyba je v zabezpečeném úložišti, a ne v tvém účtu.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Potřebuješ pomoc?</translation>
     </message>
 </context>
 <context>
@@ -2879,42 +2978,6 @@
         <translation>V tomto systému chybí služba, která uchovává šifrovací klíče, takže xmatic nemůže vytvořit šifrovanou databázi.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Je to vlastnost operačního systému, ne chyba xmaticu. Balíček existuje a lze ho nainstalovat; některé obrazy Sailfishu ho prostě nedodávají.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Systém hlásil: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Jak to napravit</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Zapni v systémovém nastavení vývojářský režim, v Nastavení › Vývojářské nástroje.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Otevři aplikaci Terminál a staň se rootem příkazem:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Nainstaluj službu (klepnutím na řádek jej zkopíruješ):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Restartuj zařízení. Služba se pak spustí sama.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Přesvědč se sám, že tam je — tohle musí vypsat soubor, ne chybu:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Spusť xmatic znovu a klepni na „Zkontrolovat znovu“.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Zkontrolovat znovu</translation>
     </message>
@@ -2923,8 +2986,12 @@
         <translation>Zprávy zůstávají na cestě sítí tak jako tak šifrované od konce ke konci. Tady jde jen o to, co leží na zařízení.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Zkontrolováno — služba je stále nedostupná. Proběhla instalace až do konce a bylo zařízení restartováno?</translation>
+        <source>Need help?</source>
+        <translation>Potřebuješ pomoc?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Zkontrolováno — zabezpečené úložiště stále nevydává žádný klíč.</translation>
     </message>
 </context>
 <context>

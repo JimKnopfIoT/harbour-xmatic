@@ -811,6 +811,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Salīdzina septiņas emocijzīmes ar tavu otru ierīci. Tai ierīcei jābūt tev priekšā; kad abas ir apstiprinājušas, šī var lasīt kopīgās istabu atslēgas.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Problēmas ar atslēgu krātuvi?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2513,6 +2517,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Atkal iekšā</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Šajā sistēmā trūkst pakalpojuma, kas glabā šifrēšanas atslēgas.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Ierīces drošā krātuve ziņo par bojātiem datiem. Šādā stāvoklī neko nevar atslēgt.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Pati ierīces drošā krātuve ir slēgta. Tas skar katru tālruņa lietotni, kas glabā noslēpumus, ne tikai xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Paša xmatic atslēgu krātuve ir slēgta un gaida tavu apstiprinājumu.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Drošā krātuve neizsniedza atslēgu un nepateica, kāpēc.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Tā ir operētājsistēmas īpašība, nevis xmatic kļūda. Pakotne pastāv un to var uzstādīt; daži Sailfish attēli to vienkārši nepiegādā.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Tas ir ārpus xmatic sniedzamības. Labošana nozīmē paša pakalpojuma datu atiestatīšanu, kas skar katru ierīces lietotni, kura glabā noslēpumus — vispirms pajautā Sailfish atbalsta kanālos.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Pakalpojums startējot tiek atslēgts ar ierīces bloķēšanas kodu. Ja šī nodošana ir pārstājusi darboties, pārstartēšana katru reizi beidzas tajā pašā stāvoklī — tieši koda iestatīšana no jauna to atkal iedarbina.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Apstiprinājums ir spēkā līdz nākamajai ierīces pārstartēšanai. Ja pieprasījums vispār neparādās, var trūkt sistēmas daļu, kas to zīmē.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Ir vērts no jauna iestatīt ierīces bloķēšanas kodu un pārstartēt: tieši tas startējot atslēdz pakalpojumu.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Ko darīt</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Ieslēdz izstrādātāja režīmu sistēmas iestatījumos, sadaļā Iestatījumi › Izstrādātāja rīki.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Atver lietotni Terminal un izpildi zemāk esošo rindu — pieskaries tai, lai kopētu. Pēc tam pārstartē ierīci un atkal atver xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Pieraksti, ko šī lapa ziņo zemāk, un aiznes to uz Sailfish atbalsta kanāliem. Izrakstīšanās no xmatic to nesalabo.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Ej atpakaļ un pieskaries „Mēģināt vēlreiz“, tad apstiprini sistēmas pieprasījumu. Ja nekas neparādās, uzstādi trūkstošās daļas (pieskaries rindai, lai kopētu) un pārstartē ierīci.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Atver Iestatījumi › Ierīces bloķēšana un iestati jaunu drošības kodu.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Pārstartē ierīci.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Atkal atver xmatic.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Izrakstīšanās nepalīdz</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Izrakstoties kopā ar vietējiem datiem tiek dzēstas šīs ierīces šifrēšanas atslēgas. Tad šī ierīce būtu no jauna jāpārbauda no citas, un vecākām ziņām būtu vajadzīga tava atkopšanas atslēga. Drošo krātuvi tas nesalabo.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Ko šī lapa izmērīja</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2684,12 +2779,16 @@
         <translation>Tava sesija ir saglabāta šifrēta, un atslēga xmatic startēšanas brīdī nebija pieejama.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Atslēga atrodas ierīces noslēpumu krātuvē. Mēģini vēlreiz un apstiprini sistēmas pieprasījumu; atļauja der līdz nākamajai ierīces pārstartēšanai.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Mēģināt vēlreiz</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Atslēga atrodas ierīces drošajā krātuvē. Mēģini vēlreiz un apstiprini sistēmas pieprasījumu; apstiprinājums ir spēkā līdz nākamajai ierīces pārstartēšanai. Ja pieprasījums vispār neparādās, vainīga ir drošā krātuve, nevis tavs konts.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Vajag palīdzību?</translation>
     </message>
 </context>
 <context>
@@ -2879,42 +2978,6 @@
         <translation>Šajā sistēmā trūkst pakalpojuma, kas glabā šifrēšanas atslēgas, tāpēc xmatic nevar izveidot šifrētu datubāzi.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Tā ir operētājsistēmas īpašība, nevis xmatic kļūda. Pakotne pastāv un to var uzstādīt; daži Sailfish attēli to vienkārši nepiegādā.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Sistēma ziņoja: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Kā to salabot</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Ieslēdz izstrādātāja režīmu sistēmas iestatījumos, sadaļā Iestatījumi › Izstrādātāja rīki.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Atver Termināļa lietotni un kļūsti par root ar:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Uzstādi pakalpojumu (pieskaries rindai, lai to kopētu):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Restartē ierīci. Pakalpojums pēc tam startē pats.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Pārliecinies pats, ka tas ir — šim jāizvada fails, nevis kļūda:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Palaid xmatic vēlreiz un pieskaries „Pārbaudīt vēlreiz”.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Pārbaudīt vēlreiz</translation>
     </message>
@@ -2923,8 +2986,12 @@
         <translation>Ziņas ceļā pa tīklu jebkurā gadījumā paliek šifrētas no gala līdz galam. Šeit runa ir tikai par to, kas atrodas ierīcē.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Pārbaudīts — pakalpojums joprojām nav sasniedzams. Vai uzstādīšana tika pabeigta un ierīce pārstartēta?</translation>
+        <source>Need help?</source>
+        <translation>Vajag palīdzību?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Pārbaudīts — drošā krātuve joprojām neizsniedz atslēgu.</translation>
     </message>
 </context>
 <context>

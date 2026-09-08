@@ -30,6 +30,24 @@ struct StoreKeyResult {
     QString errorMessage;
 };
 
+/// What the secrets service says about itself. -1 everywhere it could not be
+/// asked; corrupted is not locked, and no unlocking heals it.
+struct SecretsDiagnosis {
+    /// `LockCodeRequest::LockStatus`: 0 unknown, 1 unsupported, 2 open, 3 locked.
+    int lockStatus = -1;
+    /// `HealthCheckRequest::Health`: 0 ok, 1 unknown, 2 corrupted, 3 other.
+    int masterlockHealth = -1;
+    int saltDataHealth = -1;
+    /// This app's collection: -1 unknown, 0 open, 1 locked, 2 absent.
+    int collection = -1;
+    /// The first request that failed.
+    int errorCode = 0;
+    QString errorMessage;
+};
+
+// Never interactive, unlike `obtainStoreKey`: it cannot hang on a dialog.
+SecretsDiagnosis inspectSecrets();
+
 // Fetches - or on first run creates - the 32-byte key. System interaction is
 // allowed so secretsd can run its device-lock dialog; blocking, called at start.
 StoreKeyResult obtainStoreKey(const QString &dataDirectory);

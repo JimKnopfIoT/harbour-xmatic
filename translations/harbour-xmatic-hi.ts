@@ -945,64 +945,69 @@
         <translation>स्थानीय भंडारण एन्क्रिप्ट करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="85"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="92"/>
         <source>Verify</source>
         <translation>सत्यापित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="103"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="110"/>
         <source>Verify this device</source>
         <translation>इस उपकरण को सत्यापित करो</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="96"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="103"/>
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>तुम्हारे दूसरे उपकरण के साथ सात इमोजी मिलाता है। वह उपकरण तुम्हारे सामने होना चाहिए; दोनों की पुष्टि के बाद यह उपकरण साझा कक्ष-कुंजियाँ पढ़ सकता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="117"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="87"/>
+        <source>Trouble with the key storage?</source>
+        <translation>कुंजी भंडार में दिक्कत?</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EncryptionPage.qml" line="124"/>
         <source>Unlock backup</source>
         <translation>बैकअप खोलें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="128"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="135"/>
         <source>Enter the recovery key from your other client. This device then fetches the room keys it is missing, and older messages become readable.</source>
         <translation>अपने दूसरे क्लाइंट से रिकवरी कुंजी दर्ज करो। यह उपकरण फिर वे कक्ष-कुंजियाँ ले आता है जो उसके पास नहीं हैं, और पुराने संदेश पढ़े जा सकते हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="137"/>
-        <location filename="../qml/pages/EncryptionPage.qml" line="138"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="144"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="145"/>
         <source>Recovery key</source>
         <translation>रिकवरी कुंजी</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="150"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="157"/>
         <source>Unlock</source>
         <translation>खोलें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="156"/>
-        <location filename="../qml/pages/EncryptionPage.qml" line="173"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="163"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="180"/>
         <source>Set up backup</source>
         <translation>बैकअप सेट करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="167"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="174"/>
         <source>Creates a backup of your room keys on the server, encrypted with a recovery key that only you hold. Without it, reinstalling loses every encrypted message.</source>
         <translation>सर्वर पर तुम्हारी कक्ष-कुंजियों का बैकअप बनाता है, एक रिकवरी कुंजी से एन्क्रिप्टेड जो केवल तुम्हारे पास है। इसके बिना दोबारा इंस्टॉल करने पर हर एन्क्रिप्टेड संदेश खो जाता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="186"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="193"/>
         <source>Your recovery key</source>
         <translation>तुम्हारी रिकवरी कुंजी</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="205"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="212"/>
         <source>Write this down now. It is shown only once and is not stored on this device.</source>
         <translation>इसे अभी लिख लो। यह केवल एक बार दिखती है और इस उपकरण पर सहेजी नहीं जाती।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="210"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="217"/>
         <source>Copy</source>
         <translation>कॉपी करें</translation>
     </message>
@@ -1310,101 +1315,101 @@
         <translation>प्रोटोकॉल कोर उपलब्ध नहीं है।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="514"/>
-        <location filename="../src/matrixbridge.cpp" line="553"/>
-        <location filename="../src/matrixbridge.cpp" line="569"/>
+        <location filename="../src/matrixbridge.cpp" line="527"/>
+        <location filename="../src/matrixbridge.cpp" line="566"/>
+        <location filename="../src/matrixbridge.cpp" line="582"/>
         <source>Enter a homeserver first.</source>
         <translation>पहले कोई होमसर्वर दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="535"/>
+        <location filename="../src/matrixbridge.cpp" line="548"/>
         <source>Enter username and password first.</source>
         <translation>पहले उपयोगकर्ता नाम और पासवर्ड दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1415"/>
-        <location filename="../src/matrixbridge.cpp" line="1430"/>
+        <location filename="../src/matrixbridge.cpp" line="1428"/>
+        <location filename="../src/matrixbridge.cpp" line="1443"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>सहेजी सूचियाँ अभी पढ़ी नहीं जा सकतीं।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1669"/>
+        <location filename="../src/matrixbridge.cpp" line="1682"/>
         <source>Enter a push gateway first.</source>
         <translation>पहले एक पुश गेटवे दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1697"/>
+        <location filename="../src/matrixbridge.cpp" line="1710"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1913"/>
-        <location filename="../src/matrixbridge.cpp" line="1941"/>
+        <location filename="../src/matrixbridge.cpp" line="1926"/>
+        <location filename="../src/matrixbridge.cpp" line="1954"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2189"/>
+        <location filename="../src/matrixbridge.cpp" line="2202"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2232"/>
+        <location filename="../src/matrixbridge.cpp" line="2245"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2252"/>
+        <location filename="../src/matrixbridge.cpp" line="2265"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3079"/>
+        <location filename="../src/matrixbridge.cpp" line="3092"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3384"/>
+        <location filename="../src/matrixbridge.cpp" line="3397"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3387"/>
+        <location filename="../src/matrixbridge.cpp" line="3400"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3390"/>
+        <location filename="../src/matrixbridge.cpp" line="3403"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3393"/>
+        <location filename="../src/matrixbridge.cpp" line="3406"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3396"/>
+        <location filename="../src/matrixbridge.cpp" line="3409"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3399"/>
+        <location filename="../src/matrixbridge.cpp" line="3412"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3399"/>
+        <location filename="../src/matrixbridge.cpp" line="3412"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3402"/>
+        <location filename="../src/matrixbridge.cpp" line="3415"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3405"/>
+        <location filename="../src/matrixbridge.cpp" line="3418"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -3119,6 +3124,119 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="52"/>
+        <source>Getting in again</source>
+        <translation>फिर से भीतर</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="72"/>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>इस सिस्टम में वह सेवा नहीं है जो एन्क्रिप्शन कुंजियाँ रखती है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="74"/>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>उपकरण का सुरक्षित भंडार क्षतिग्रस्त डेटा बता रहा है। इस स्थिति में कुछ भी नहीं खोला जा सकता।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="76"/>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>उपकरण का सुरक्षित भंडार स्वयं बंद है। इससे फ़ोन का हर वह ऐप प्रभावित है जो रहस्य रखता है, सिर्फ़ xmatic नहीं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="78"/>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>xmatic का अपना कुंजी भंडार बंद है और तुम्हारी पुष्टि की प्रतीक्षा कर रहा है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="80"/>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>सुरक्षित भंडार ने कोई कुंजी नहीं दी और कारण भी नहीं बताया।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="95"/>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>यह ऑपरेटिंग सिस्टम का गुण है, xmatic की खामी नहीं। पैकेज मौजूद है और स्थापित किया जा सकता है; कुछ Sailfish छवियाँ इसे साथ नहीं देतीं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="97"/>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>यह xmatic की पहुँच से बाहर है। मरम्मत का मतलब है सेवा का अपना डेटा शून्य करना, जिससे उपकरण का हर वह ऐप प्रभावित होगा जो रहस्य रखता है — पहले Sailfish के सहायता चैनलों में पूछो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="99"/>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>सेवा शुरू होते समय उपकरण के लॉक कोड से खुलती है। यदि यह सौंपना काम करना बंद कर दे, तो पुनः आरंभ हर बार उसी स्थिति में पहुँचता है — कोड को नए सिरे से लगाना ही उसे फिर चलाता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="101"/>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>यह अनुमति उपकरण के अगले पुनः आरंभ तक चलती है। यदि कोई अनुरोध बिलकुल न दिखे, तो उसे बनाने वाले सिस्टम के हिस्से शायद मौजूद नहीं हैं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="103"/>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>उपकरण का लॉक कोड नए सिरे से लगाना और पुनः आरंभ करना आज़माने लायक है: यही सेवा को शुरू होते समय खोलता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="109"/>
+        <source>What to do</source>
+        <translation>क्या करें</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="121"/>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. सिस्टम सेटिंग्स में डेवलपर मोड चालू करें, सेटिंग्स › डेवलपर उपकरण के अंतर्गत।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="123"/>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Terminal ऐप खोलो और नीचे दी पंक्ति चलाओ — नकल के लिए उस पर टैप करो। फिर उपकरण पुनः आरंभ करो और xmatic दोबारा खोलो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="125"/>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>यह पृष्ठ नीचे जो बताता है उसे लिख लो और Sailfish के सहायता चैनलों तक ले जाओ। xmatic से साइन आउट करने से यह ठीक नहीं होता।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="127"/>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>वापस जाओ और “फिर से कोशिश करें” पर टैप करो, फिर सिस्टम के अनुरोध की पुष्टि करो। यदि कुछ न दिखे, तो लापता हिस्से इंस्टॉल करो (नकल के लिए पंक्ति पर टैप करो) और उपकरण पुनः आरंभ करो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="129"/>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. सेटिंग्स › उपकरण लॉक खोलो और नया सुरक्षा कोड लगाओ।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="131"/>
+        <source>2. Restart the device.</source>
+        <translation>2. उपकरण पुनः आरंभ करो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="133"/>
+        <source>3. Start xmatic again.</source>
+        <translation>3. xmatic दोबारा खोलो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="163"/>
+        <source>Signing out does not help</source>
+        <translation>साइन आउट करने से मदद नहीं मिलती</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="173"/>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>साइन आउट करने पर इस उपकरण की एन्क्रिप्शन कुंजियाँ स्थानीय डेटा के साथ मिट जाती हैं। तब तुम्हें यह उपकरण किसी दूसरे से दोबारा सत्यापित करना होगा, और पुराने संदेशों के लिए तुम्हारी पुनर्प्राप्ति कुंजी चाहिए होगी। इससे सुरक्षित भंडार ठीक नहीं होता।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="177"/>
+        <source>What this page measured</source>
+        <translation>इस पृष्ठ ने क्या मापा</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <location filename="../qml/pages/SecurityRows.qml" line="15"/>
@@ -3331,8 +3449,13 @@
     </message>
     <message>
         <location filename="../qml/pages/SessionLockedPage.qml" line="47"/>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>कुंजी उपकरण के सीक्रेट्स भंडारण में रहती है। फिर से कोशिश करो और सिस्टम का अनुरोध स्वीकार करो; यह अनुमति उपकरण के अगले पुनरारंभ तक चलती है।</translation>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>कुंजी उपकरण के सुरक्षित भंडार में है। फिर से कोशिश करो और सिस्टम के अनुरोध की पुष्टि करो; अनुमति उपकरण के अगले पुनः आरंभ तक चलती है। यदि कोई अनुरोध बिलकुल न दिखे, तो दोष सुरक्षित भंडार का है, तुम्हारे खाते का नहीं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SessionLockedPage.qml" line="60"/>
+        <source>Need help?</source>
+        <translation>मदद चाहिए?</translation>
     </message>
     <message>
         <location filename="../qml/pages/SessionLockedPage.qml" line="52"/>
@@ -3549,82 +3672,42 @@
 <context>
     <name>StorageBlockedPage</name>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="46"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="40"/>
         <source>Encryption not possible</source>
         <translation>एन्क्रिप्शन संभव नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="47"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="41"/>
         <source>Matrix for Sailfish OS</source>
         <translation>Sailfish OS के लिए Matrix</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="65"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="59"/>
         <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
         <translation>सुरक्षित भंडार ने कोई कुंजी नहीं दी, इसलिए xmatic एन्क्रिप्टेड डेटाबेस नहीं बना सकता।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="66"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="60"/>
         <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
         <translation>इस सिस्टम में वह सेवा नहीं है जो एन्क्रिप्शन कुंजियाँ रखती है, इसलिए xmatic एन्क्रिप्टेड डेटाबेस नहीं बना सकता।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="76"/>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>यह ऑपरेटिंग सिस्टम का गुण है, xmatic की खामी नहीं। पैकेज मौजूद है और स्थापित किया जा सकता है; कुछ Sailfish छवियाँ इसे साथ नहीं देतीं।</translation>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="79"/>
+        <source>Need help?</source>
+        <translation>मदद चाहिए?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="86"/>
-        <source>The system reported: %1</source>
-        <translation>सिस्टम ने बताया: %1</translation>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="93"/>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>जाँच लिया — सुरक्षित भंडार अब भी कोई कुंजी नहीं दे रहा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="90"/>
-        <source>How to fix it</source>
-        <translation>इसे कैसे ठीक करें</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="99"/>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. सिस्टम सेटिंग्स में डेवलपर मोड चालू करें, सेटिंग्स › डेवलपर उपकरण के अंतर्गत।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="101"/>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. टर्मिनल ऐप खोलें और इससे root बनें:</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="129"/>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. सेवा स्थापित करें (पंक्ति को कॉपी करने के लिए उस पर टैप करें):</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="157"/>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. डिवाइस पुनः आरंभ करें। सेवा उसके बाद स्वयं शुरू हो जाती है।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="159"/>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. स्वयं देख लें कि वह है — इससे एक फ़ाइल दिखनी चाहिए, त्रुटि नहीं:</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="187"/>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. xmatic फिर से शुरू करें और „फिर जाँचें“ पर टैप करें।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="192"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="66"/>
         <source>Check again</source>
         <translation>फिर जाँचें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="212"/>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>जाँचा गया — सेवा अब भी उपलब्ध नहीं है। क्या इंस्टॉलेशन पूरा हुआ, और क्या डिवाइस पुनः आरंभ किया गया?</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="229"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="110"/>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>संदेश नेटवर्क से गुजरते समय हर हाल में एंड-टू-एंड एन्क्रिप्टेड रहते हैं। यहाँ बात केवल उसकी है जो डिवाइस पर है।</translation>
     </message>
