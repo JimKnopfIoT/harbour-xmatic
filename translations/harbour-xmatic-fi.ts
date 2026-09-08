@@ -809,6 +809,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Vertaa seitsemää emojia toisen laitteesi kanssa. Tarvitset sen laitteen eteesi; kun molemmat ovat vahvistaneet, tämä laite voi lukea jaetut huoneavaimet.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Ongelmia avainsäilössä?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2509,6 +2513,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Takaisin sisään</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Tästä järjestelmästä puuttuu palvelu, joka säilyttää salausavaimia.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Laitteen suojattu säilö ilmoittaa vaurioituneista tiedoista. Tässä tilassa mitään ei voi avata.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Laitteen suojattu säilö on itse lukittu. Tämä koskee jokaista puhelimen sovellusta, joka säilyttää salaisuuksia, ei vain xmaticia.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>xmaticin oma avainsäilö on lukittu ja odottaa vahvistustasi.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Suojattu säilö ei antanut avainta eikä kertonut syytä.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Tämä on käyttöjärjestelmän ominaisuus, ei xmaticin vika. Paketti on olemassa ja se voidaan asentaa; jotkin Sailfish-levykuvat eivät yksinkertaisesti sisällä sitä.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Tämä on xmaticin ulottumattomissa. Korjaaminen tarkoittaa palvelun omien tietojen nollaamista, mikä koskee jokaista laitteen sovellusta, joka säilyttää salaisuuksia — kysy ensin Sailfishin tukikanavilta.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Palvelu avataan käynnistyksessä laitteen lukituskoodilla. Jos tämä luovutus on lakannut toimimasta, uudelleenkäynnistys päätyy joka kerta samaan tilaan — koodin asettaminen uudelleen on se, mikä käynnistää sen taas.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Hyväksyntä kestää laitteen seuraavaan uudelleenkäynnistykseen. Jos pyyntöä ei ilmesty lainkaan, sen piirtävät järjestelmän osat saattavat puuttua.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Laitteen lukituskoodin asettaminen uudelleen ja uudelleenkäynnistys kannattaa kokeilla: juuri se avaa palvelun käynnistyksessä.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Mitä tehdä</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Ota Kehittäjätila käyttöön järjestelmäasetuksissa, kohdassa Asetukset › Kehittäjätyökalut.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Avaa Terminal-sovellus ja suorita alla oleva rivi — kopioi se napauttamalla. Käynnistä sitten laite uudelleen ja avaa xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Kirjoita muistiin, mitä tämä sivu alla ilmoittaa, ja vie se Sailfishin tukikanaville. Uloskirjautuminen xmaticista ei korjaa sitä.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Palaa takaisin ja napauta ”Yritä uudelleen”, vahvista sitten järjestelmän pyyntö. Jos mitään ei ilmesty, asenna puuttuvat osat (kopioi rivi napauttamalla) ja käynnistä laite uudelleen.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Avaa Asetukset › Laitteen lukitus ja aseta uusi turvakoodi.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Käynnistä laite uudelleen.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Avaa xmatic uudelleen.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Uloskirjautuminen ei auta</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Uloskirjautuminen poistaa tämän laitteen salausavaimet paikallisten tietojen mukana. Sinun olisi sitten varmennettava tämä laite uudelleen toiselta laitteelta, ja vanhemmat viestit vaatisivat palautusavaimesi. Suojattua säilöä se ei korjaa.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Mitä tämä sivu mittasi</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2680,12 +2775,16 @@
         <translation>Istuntosi on tallennettu salattuna, eikä avain ollut käytettävissä xmaticin käynnistyessä.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Avain on laitteen suojatussa säilössä. Yritä uudelleen ja vahvista järjestelmän pyyntö; hyväksyntä on voimassa laitteen seuraavaan uudelleenkäynnistykseen asti.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Yritä uudelleen</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Avain on laitteen suojatussa säilössä. Yritä uudelleen ja vahvista järjestelmän pyyntö; hyväksyntä kestää laitteen seuraavaan uudelleenkäynnistykseen. Jos pyyntöä ei ilmesty lainkaan, vika on suojatussa säilössä eikä tilissäsi.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Tarvitsetko apua?</translation>
     </message>
 </context>
 <context>
@@ -2874,42 +2973,6 @@
         <translation>Järjestelmästä puuttuu palvelu, joka säilyttää salausavaimia, joten xmatic ei voi luoda salattua tietokantaa.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Tämä on käyttöjärjestelmän ominaisuus, ei xmaticin vika. Paketti on olemassa ja se voidaan asentaa; jotkin Sailfish-levykuvat eivät yksinkertaisesti sisällä sitä.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Järjestelmä ilmoitti: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Näin korjaat sen</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Ota Kehittäjätila käyttöön järjestelmäasetuksissa, kohdassa Asetukset › Kehittäjätyökalut.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Avaa Pääte-sovellus ja siirry root-käyttäjäksi komennolla:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Asenna palvelu (kopioi rivi napauttamalla):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Käynnistä laite uudelleen. Palvelu käynnistyy sen jälkeen itsestään.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Tarkista itse, että se on olemassa — tämän on tulostettava tiedosto, ei virhettä:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Käynnistä xmatic uudelleen ja napauta ”Tarkista uudelleen”.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Tarkista uudelleen</translation>
     </message>
@@ -2918,8 +2981,12 @@
         <translation>Viestit pysyvät verkon läpi kulkiessaan joka tapauksessa päästä päähän salattuina. Tässä on kyse vain siitä, mitä laitteella on.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Tarkistettu — palveluun ei edelleenkään saada yhteyttä. Menikö asennus läpi ja käynnistettiinkö laite uudelleen?</translation>
+        <source>Need help?</source>
+        <translation>Tarvitsetko apua?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Tarkistettu — suojattu säilö ei vieläkään anna avainta.</translation>
     </message>
 </context>
 <context>

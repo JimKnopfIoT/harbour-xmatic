@@ -8,12 +8,6 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    // Everything the user has to type, in one place so the instructions and
-    // the copy button cannot drift apart.
-    readonly property string installCommand:
-        "pkcon install sailfishsecretsdaemon sailfishsecretsdaemon-secretsplugin-common"
-    readonly property string checkCommand: "ls -l /usr/bin/sailfishsecretsd"
-
     /// Set once a check has run and found nothing. Only then is there anything
     /// to say - before that the page has not made a claim.
     property bool checked: false
@@ -67,126 +61,6 @@ Page {
                 }
             }
 
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.secondaryHighlightColor
-                text: qsTr("This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.")
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryColor
-                visible: matrix.storeKeyReason.length > 0
-                text: qsTr("The system reported: %1").arg(matrix.storeKeyReason)
-            }
-
-            SectionHeader {
-                text: qsTr("How to fix it")
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.primaryColor
-                text: qsTr("1. Switch on Developer mode in the system settings, under Settings › Developer tools.")
-                      + "\n\n"
-                      + qsTr("2. Open the Terminal app and become root with:")
-            }
-
-            BackgroundItem {
-                width: parent.width
-                height: rootLine.height + 2 * Theme.paddingMedium
-                onClicked: Clipboard.text = "devel-su"
-
-                Label {
-                    id: rootLine
-
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2 * Theme.horizontalPageMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    wrapMode: Text.WrapAnywhere
-                    font.family: "monospace"
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.highlightColor
-                    text: "devel-su"
-                }
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.primaryColor
-                text: qsTr("3. Install the service (tap the line to copy it):")
-            }
-
-            BackgroundItem {
-                width: parent.width
-                height: installLine.height + 2 * Theme.paddingMedium
-                onClicked: Clipboard.text = page.installCommand
-
-                Label {
-                    id: installLine
-
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2 * Theme.horizontalPageMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    wrapMode: Text.WrapAnywhere
-                    font.family: "monospace"
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.highlightColor
-                    text: page.installCommand
-                }
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.primaryColor
-                text: qsTr("4. Restart the device. The service then starts on its own.")
-                      + "\n\n"
-                      + qsTr("5. Check for yourself that it is there — this has to print a file, not an error:")
-            }
-
-            BackgroundItem {
-                width: parent.width
-                height: checkLine.height + 2 * Theme.paddingMedium
-                onClicked: Clipboard.text = page.checkCommand
-
-                Label {
-                    id: checkLine
-
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2 * Theme.horizontalPageMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    wrapMode: Text.WrapAnywhere
-                    font.family: "monospace"
-                    font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.highlightColor
-                    text: page.checkCommand
-                }
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.primaryColor
-                text: qsTr("6. Start xmatic again and tap “Check again”.")
-            }
-
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 label: qsTr("Check again")
@@ -199,6 +73,13 @@ Page {
                 }
             }
 
+            // The instructions live one page further in, behind the measurement.
+            WrapButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                label: qsTr("Need help?")
+                onClicked: pageStack.push(Qt.resolvedUrl("SecretsHelpPage.qml"))
+            }
+
             // A check that finds nothing leaves the page as it was, and a button that
             // visibly does nothing reads as broken. So the check says that it ran.
             Label {
@@ -209,7 +90,7 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryHighlightColor
                 visible: page.checked
-                text: qsTr("Checked — the service is still not reachable. Did the installation run through, and was the device restarted?")
+                text: qsTr("Checked — the secure storage still will not hand out a key.")
             }
 
             BusyIndicator {

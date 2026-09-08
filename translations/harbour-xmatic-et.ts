@@ -809,6 +809,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Võrdleb seitset emotikoni sinu teise seadmega. Vajad seda seadet enda ees; kui mõlemad on kinnitanud, saab see seade lugeda ühiseid toavõtmeid.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Probleemid võtmehoidlaga?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2509,6 +2513,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Tagasi sisse</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Selles süsteemis puudub teenus, mis hoiab krüptovõtmeid.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Seadme turvaline hoidla teatab kahjustatud andmetest. Selles olekus ei saa midagi avada.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Seadme turvaline hoidla on ise lukus. See puudutab iga telefonis olevat rakendust, mis hoiab saladusi, mitte ainult xmaticut.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>xmaticu enda võtmehoidla on lukus ja ootab sinu kinnitust.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Turvaline hoidla ei väljastanud võtit ega öelnud, miks.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>See on operatsioonisüsteemi omadus, mitte xmaticu viga. Pakett on olemas ja seda saab paigaldada; mõned Sailfishi tõmmised lihtsalt ei sisalda seda.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>See on väljaspool xmaticu ulatust. Parandamine tähendab teenuse enda andmete lähtestamist, mis puudutab iga seadme rakendust, mis hoiab saladusi — küsi enne Sailfishi tugikanalites.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Teenus avatakse käivitumisel seadme lukukoodiga. Kui see üleandmine on lakanud töötamast, satub taaskäivitus iga kord samasse olekusse — koodi uuesti määramine on see, mis ta jälle käima paneb.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Luba kehtib seadme järgmise taaskäivituseni. Kui ühtegi päringut üldse ei ilmu, võivad puududa süsteemi osad, mis seda joonistavad.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Seadme lukukoodi uuesti määramine ja taaskäivitamine tasub proovida: just see avab teenuse käivitumisel.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Mida teha</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Lülita süsteemiseadetes sisse arendajarežiim, jaotises Seaded › Arendaja tööriistad.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Ava rakendus Terminal ja käivita allolev rida — puuduta seda kopeerimiseks. Seejärel taaskäivita seade ja ava xmatic uuesti.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Pane kirja, mida see leht allpool teatab, ja vii see Sailfishi tugikanalitesse. xmaticust väljalogimine ei paranda seda.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Mine tagasi ja puuduta „Proovi uuesti“, seejärel kinnita süsteemi päring. Kui midagi ei ilmu, paigalda puuduvad osad (rea kopeerimiseks puuduta seda) ja taaskäivita seade.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Ava Seaded › Seadme lukk ja määra uus turvakood.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Taaskäivita seade.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Ava xmatic uuesti.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Väljalogimine ei aita</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Väljalogimisel kustutatakse selle seadme krüptovõtmed koos kohalike andmetega. Sa peaksid siis selle seadme teisest uuesti kinnitama ja vanemad sõnumid vajaksid sinu taastevõtit. Turvalist hoidlat see ei paranda.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Mida see leht mõõtis</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2680,12 +2775,16 @@
         <translation>Sinu seanss on salvestatud krüptituna ja võti polnud xmaticu käivitumisel saadaval.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Võti asub seadme saladuste hoidlas. Proovi uuesti ja kinnita süsteemi päring; luba kehtib seadme järgmise taaskäivituseni.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Proovi uuesti</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Võti asub seadme turvalises hoidlas. Proovi uuesti ja kinnita süsteemi päring; luba kehtib seadme järgmise taaskäivituseni. Kui ühtegi päringut üldse ei ilmu, on süüdi turvaline hoidla, mitte sinu konto.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Vajad abi?</translation>
     </message>
 </context>
 <context>
@@ -2874,42 +2973,6 @@
         <translation>Selles süsteemis puudub teenus, mis krüptovõtmeid hoiab, seega ei saa xmatic krüptitud andmebaasi luua.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>See on operatsioonisüsteemi omadus, mitte xmaticu viga. Pakett on olemas ja seda saab paigaldada; mõned Sailfishi tõmmised lihtsalt ei sisalda seda.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Süsteem teatas: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Kuidas seda parandada</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Lülita süsteemiseadetes sisse arendajarežiim, jaotises Seaded › Arendaja tööriistad.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Ava Terminali rakendus ja saa rootiks käsuga:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Paigalda teenus (puuduta rida, et see kopeerida):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Taaskäivita seade. Teenus käivitub seejärel ise.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Veendu ise, et see on olemas — see peab väljastama faili, mitte vea:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Käivita xmatic uuesti ja puuduta „Kontrolli uuesti“.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Kontrolli uuesti</translation>
     </message>
@@ -2918,8 +2981,12 @@
         <translation>Sõnumid jäävad võrgu kaudu liikudes igal juhul otsast lõpuni krüptituks. Siin on jutt ainult sellest, mis on seadmes.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Kontrollitud — teenus ei ole endiselt kättesaadav. Kas paigaldus läks lõpuni ja kas seade taaskäivitati?</translation>
+        <source>Need help?</source>
+        <translation>Vajad abi?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Kontrollitud — turvaline hoidla ei väljasta ikka veel võtit.</translation>
     </message>
 </context>
 <context>

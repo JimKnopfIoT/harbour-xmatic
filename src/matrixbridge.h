@@ -280,6 +280,9 @@ public:
     /// yet: this only updates what the app knows, so the gate can open.
     Q_INVOKABLE void retryStoreKey();
 
+    /// The secrets service's own state, for the help page. Never interactive.
+    Q_INVOKABLE QVariantMap secretsDiagnosis() const;
+
     bool secretsDaemonPresent() const { return m_secretsDaemonPresent; }
     bool browserLoginReliable() const;
     bool recoverySettling() const { return m_recoverySettling; }

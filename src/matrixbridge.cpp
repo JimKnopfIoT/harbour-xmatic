@@ -468,6 +468,19 @@ bool MatrixBridge::storageBlocked() const
     return true;
 }
 
+QVariantMap MatrixBridge::secretsDiagnosis() const
+{
+    const SecretsDiagnosis diagnosis = ::inspectSecrets();
+    QVariantMap map;
+    map.insert(QStringLiteral("lockStatus"), diagnosis.lockStatus);
+    map.insert(QStringLiteral("masterlockHealth"), diagnosis.masterlockHealth);
+    map.insert(QStringLiteral("saltDataHealth"), diagnosis.saltDataHealth);
+    map.insert(QStringLiteral("collection"), diagnosis.collection);
+    map.insert(QStringLiteral("errorCode"), diagnosis.errorCode);
+    map.insert(QStringLiteral("errorMessage"), diagnosis.errorMessage);
+    return map;
+}
+
 void MatrixBridge::retryStoreKey()
 {
     StoreKeyResult result = obtainStoreKey(m_dataDirectory);

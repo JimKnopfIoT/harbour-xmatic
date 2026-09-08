@@ -807,6 +807,10 @@
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>鍵の保管領域に問題？</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2505,6 +2509,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>もう一度入るには</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>このシステムには暗号鍵を保管するサービスがありません。</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>端末の安全な保管領域が破損したデータを報告しています。この状態では何も解錠できません。</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>端末の安全な保管領域そのものが施錠されています。秘密を保存する端末上のすべてのアプリが影響を受けており、xmatic だけではありません。</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>xmatic 自身の鍵保管領域が施錠され、確認を待っています。</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>安全な保管領域は鍵を渡さず、理由も言いませんでした。</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>これはオペレーティングシステムの性質であって、xmatic の不具合ではありません。パッケージは存在し、インストールできます。一部の Sailfish イメージが同梱していないだけです。</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>これは xmatic の手の届く範囲を超えています。修復はサービス自身のデータを初期化することを意味し、秘密を保存する端末上のすべてのアプリに影響します — まず Sailfish のサポート窓口で尋ねてください。</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>サービスは起動時に端末のロックコードで解錠されます。この受け渡しが機能しなくなると、再起動は毎回同じ状態に終わります — コードを設定し直すことがそれを再び動かします。</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>承認は端末の次の再起動まで有効です。要求がまったく現れない場合、それを描画するシステムの部品が入っていない可能性があります。</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>端末のロックコードを設定し直して再起動する価値はあります。それこそが起動時にサービスを解錠するものです。</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>できること</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. システム設定の 設定 › 開発者ツール で開発者モードを有効にします。</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Terminal アプリを開き、下の行を実行してください — 触れると複写できます。その後、端末を再起動して xmatic を開き直してください。</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>このページが下に報告する内容を書き留め、Sailfish のサポート窓口へ持って行ってください。xmatic からサインアウトしても直りません。</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>戻って「もう一度試す」に触れ、システムの要求を確認してください。何も現れない場合は、足りない部品を導入し（行に触れると複写できます）、端末を再起動してください。</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. 設定 › 端末ロックを開き、新しいセキュリティコードを設定してください。</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. 端末を再起動してください。</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. xmatic を開き直してください。</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>サインアウトしても解決しません</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>サインアウトすると、この端末の暗号鍵がローカルデータとともに削除されます。その後この端末を別の端末から改めて確認する必要があり、古いメッセージには復旧鍵が必要になります。安全な保管領域は修復されません。</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>このページが測定した内容</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2676,12 +2771,16 @@
         <translation>セッションは暗号化して保存されており、xmatic の起動時に鍵を利用できませんでした。</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>鍵はデバイスの秘密保管領域にあります。もう一度試して、システムの要求を承認してください。承認は次回の端末再起動まで有効です。</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>もう一度試す</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>鍵は端末の安全な保管領域にあります。もう一度試してシステムの要求を確認してください。承認は端末の次の再起動まで有効です。要求がまったく現れない場合、原因はアカウントではなく安全な保管領域にあります。</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>助けが必要ですか？</translation>
     </message>
 </context>
 <context>
@@ -2869,52 +2968,20 @@
         <translation>この端末には暗号鍵を保管するサービスがないため、xmatic は暗号化されたデータベースを作れません。</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>これはオペレーティングシステムの性質であって、xmatic の不具合ではありません。パッケージは存在し、インストールできます。一部の Sailfish イメージが同梱していないだけです。</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>システムの報告: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>直しかた</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. システム設定の 設定 › 開発者ツール で開発者モードを有効にします。</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. ターミナルアプリを開き、次のコマンドで root になります:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. サービスをインストールします (行をタップするとコピーします):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. 端末を再起動します。サービスはその後、自動で開始します。</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. 自分で存在を確認します - これはエラーではなくファイルを表示するはずです:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. xmatic をもう一度起動し、「もう一度確認」をタップします。</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>もう一度確認</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>確認しました - サービスにはまだ到達できません。インストールは完了しましたか? 端末は再起動しましたか?</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>メッセージは、いずれの場合もネットワーク上ではエンドツーエンドで暗号化されたままです。ここで問題にしているのは、デバイスに置かれるものだけです。</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>助けが必要ですか？</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>確認しました — 安全な保管領域は依然として鍵を渡しません。</translation>
     </message>
 </context>
 <context>

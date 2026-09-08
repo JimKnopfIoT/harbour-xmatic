@@ -809,6 +809,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Jämför sju emojier med din andra enhet. Du behöver den enheten framför dig; när båda har bekräftat kan den här läsa de delade rumsnycklarna.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Problem med nyckellagringen?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2509,6 +2513,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>In igen</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Det här systemet saknar tjänsten som förvarar krypteringsnycklar.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Enhetens säkra lagring rapporterar skadade data. I det tillståndet går ingenting att låsa upp.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Enhetens säkra lagring är själv låst. Det drabbar varje app i telefonen som lagrar hemligheter, inte bara xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>xmatics egen nyckellagring är låst och väntar på din bekräftelse.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Den säkra lagringen lämnade inte ut någon nyckel och sa inte varför.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Detta är en egenskap hos operativsystemet, inte ett fel i xmatic. Paketet finns och går att installera; vissa Sailfish-avbildningar levererar det helt enkelt inte.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Det här ligger utanför vad xmatic når. En reparation innebär att tjänstens egna data nollställs, vilket drabbar varje app i enheten som lagrar hemligheter — fråga först i Sailfish supportkanaler.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Tjänsten låses upp vid start med din enhetslåskod. Om den överlämningen har slutat fungera hamnar en omstart varje gång i samma tillstånd — att sätta koden på nytt är det som får igång den igen.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Godkännandet gäller till nästa omstart av enheten. Om ingen förfrågan alls dyker upp kan systemdelarna som ritar den saknas.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Att sätta enhetslåskoden på nytt och starta om är värt ett försök: det är det som låser upp tjänsten vid start.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Vad du kan göra</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Slå på Utvecklarläge i systeminställningarna, under Inställningar › Utvecklarverktyg.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Öppna Terminal-appen och kör raden nedan — tryck på den för att kopiera. Starta sedan om enheten och öppna xmatic igen.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Anteckna vad den här sidan rapporterar nedan och ta det till Sailfish supportkanaler. Att logga ut ur xmatic reparerar det inte.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Gå tillbaka och tryck på ”Försök igen”, bekräfta sedan systemets förfrågan. Om ingenting dyker upp, installera de delar som saknas (tryck på raden för att kopiera) och starta om enheten.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Öppna Inställningar › Enhetslås och sätt en ny säkerhetskod.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Starta om enheten.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Öppna xmatic igen.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Att logga ut hjälper inte</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Att logga ut raderar den här enhetens krypteringsnycklar tillsammans med de lokala data. Du skulle sedan behöva verifiera enheten på nytt från en annan, och äldre meddelanden skulle kräva din återställningsnyckel. Den säkra lagringen repareras inte.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Vad den här sidan mätte</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2680,12 +2775,16 @@
         <translation>Din session är sparad krypterad, och nyckeln var inte tillgänglig när xmatic startade.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Nyckeln finns i enhetens hemlighetslagring. Försök igen och bekräfta systemets förfrågan; godkännandet gäller till nästa omstart av enheten.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Försök igen</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Nyckeln ligger i enhetens säkra lagring. Försök igen och bekräfta systemets förfrågan; godkännandet gäller till nästa omstart av enheten. Om ingen förfrågan alls dyker upp ligger felet i den säkra lagringen och inte i ditt konto.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Behöver du hjälp?</translation>
     </message>
 </context>
 <context>
@@ -2874,42 +2973,6 @@
         <translation>Systemet saknar tjänsten som förvarar krypteringsnycklar, så xmatic kan inte skapa en krypterad databas.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Detta är en egenskap hos operativsystemet, inte ett fel i xmatic. Paketet finns och går att installera; vissa Sailfish-avbildningar levererar det helt enkelt inte.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Systemet rapporterade: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Så här åtgärdar du det</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Slå på Utvecklarläge i systeminställningarna, under Inställningar › Utvecklarverktyg.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Öppna Terminal-appen och bli root med:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Installera tjänsten (tryck på raden för att kopiera den):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Starta om enheten. Tjänsten startar sedan av sig själv.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Kontrollera själv att den finns — detta måste skriva ut en fil, inte ett fel:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Starta xmatic igen och tryck på ”Kontrollera igen”.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Kontrollera igen</translation>
     </message>
@@ -2918,8 +2981,12 @@
         <translation>Meddelanden förblir totalsäkrade på vägen genom nätet oavsett. Det här gäller bara det som ligger på enheten.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Kontrollerat — tjänsten går fortfarande inte att nå. Gick installationen igenom, och startades enheten om?</translation>
+        <source>Need help?</source>
+        <translation>Behöver du hjälp?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Kontrollerat — den säkra lagringen lämnar fortfarande inte ut någon nyckel.</translation>
     </message>
 </context>
 <context>

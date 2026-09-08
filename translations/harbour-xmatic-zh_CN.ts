@@ -943,64 +943,69 @@
         <translation>加密本地存储</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="85"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="92"/>
         <source>Verify</source>
         <translation>验证</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="103"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="110"/>
         <source>Verify this device</source>
         <translation>验证这台设备</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="96"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="103"/>
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>与你的另一台设备比对七个表情符号。你需要把那台设备放在面前；两边都确认后，本设备便可读取共享的聊天室密钥。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="117"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="87"/>
+        <source>Trouble with the key storage?</source>
+        <translation>密钥存储有问题？</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/EncryptionPage.qml" line="124"/>
         <source>Unlock backup</source>
         <translation>解锁备份</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="128"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="135"/>
         <source>Enter the recovery key from your other client. This device then fetches the room keys it is missing, and older messages become readable.</source>
         <translation>输入你在其他客户端的恢复密钥。此设备随后会取回缺失的聊天室密钥，旧消息就能读取了。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="137"/>
-        <location filename="../qml/pages/EncryptionPage.qml" line="138"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="144"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="145"/>
         <source>Recovery key</source>
         <translation>恢复密钥</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="150"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="157"/>
         <source>Unlock</source>
         <translation>解锁</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="156"/>
-        <location filename="../qml/pages/EncryptionPage.qml" line="173"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="163"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="180"/>
         <source>Set up backup</source>
         <translation>设置备份</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="167"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="174"/>
         <source>Creates a backup of your room keys on the server, encrypted with a recovery key that only you hold. Without it, reinstalling loses every encrypted message.</source>
         <translation>在服务器上创建聊天室密钥的备份，用只有你持有的恢复密钥加密。没有它，重新安装会丢失所有加密消息。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="186"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="193"/>
         <source>Your recovery key</source>
         <translation>你的恢复密钥</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="205"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="212"/>
         <source>Write this down now. It is shown only once and is not stored on this device.</source>
         <translation>现在就把它记下来。它只显示一次，并且不会保存在此设备上。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/EncryptionPage.qml" line="210"/>
+        <location filename="../qml/pages/EncryptionPage.qml" line="217"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
@@ -1308,101 +1313,101 @@
         <translation>协议内核不可用。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="514"/>
-        <location filename="../src/matrixbridge.cpp" line="553"/>
-        <location filename="../src/matrixbridge.cpp" line="569"/>
+        <location filename="../src/matrixbridge.cpp" line="527"/>
+        <location filename="../src/matrixbridge.cpp" line="566"/>
+        <location filename="../src/matrixbridge.cpp" line="582"/>
         <source>Enter a homeserver first.</source>
         <translation>请先输入主服务器。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="535"/>
+        <location filename="../src/matrixbridge.cpp" line="548"/>
         <source>Enter username and password first.</source>
         <translation>请先输入用户名和密码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1415"/>
-        <location filename="../src/matrixbridge.cpp" line="1430"/>
+        <location filename="../src/matrixbridge.cpp" line="1428"/>
+        <location filename="../src/matrixbridge.cpp" line="1443"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>暂时无法读取已保存的名单。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1669"/>
+        <location filename="../src/matrixbridge.cpp" line="1682"/>
         <source>Enter a push gateway first.</source>
         <translation>请先填写推送网关。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1697"/>
+        <location filename="../src/matrixbridge.cpp" line="1710"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1913"/>
-        <location filename="../src/matrixbridge.cpp" line="1941"/>
+        <location filename="../src/matrixbridge.cpp" line="1926"/>
+        <location filename="../src/matrixbridge.cpp" line="1954"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2189"/>
+        <location filename="../src/matrixbridge.cpp" line="2202"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2232"/>
+        <location filename="../src/matrixbridge.cpp" line="2245"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2252"/>
+        <location filename="../src/matrixbridge.cpp" line="2265"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3079"/>
+        <location filename="../src/matrixbridge.cpp" line="3092"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3384"/>
+        <location filename="../src/matrixbridge.cpp" line="3397"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3387"/>
+        <location filename="../src/matrixbridge.cpp" line="3400"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3390"/>
+        <location filename="../src/matrixbridge.cpp" line="3403"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3393"/>
+        <location filename="../src/matrixbridge.cpp" line="3406"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3396"/>
+        <location filename="../src/matrixbridge.cpp" line="3409"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3399"/>
+        <location filename="../src/matrixbridge.cpp" line="3412"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3399"/>
+        <location filename="../src/matrixbridge.cpp" line="3412"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3402"/>
+        <location filename="../src/matrixbridge.cpp" line="3415"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3405"/>
+        <location filename="../src/matrixbridge.cpp" line="3418"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -3115,6 +3120,119 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="52"/>
+        <source>Getting in again</source>
+        <translation>重新进入</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="72"/>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>本系统缺少保管加密密钥的服务。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="74"/>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>设备的安全存储报告数据已损坏。在这种状态下什么都无法解锁。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="76"/>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>设备的安全存储本身被锁定。手机上每个保存机密的应用都受影响，不只是 xmatic。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="78"/>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>xmatic 自己的密钥存储被锁定，正在等待你的确认。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="80"/>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>安全存储没有交出密钥，也没有说明原因。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="95"/>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>这是操作系统的特性，不是 xmatic 的缺陷。该软件包是存在的，可以安装；有些 Sailfish 镜像只是没有随附它。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="97"/>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>这超出了 xmatic 能触及的范围。修复意味着重置服务自身的数据，这会影响设备上每个保存机密的应用 — 请先在 Sailfish 的支持渠道询问。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="99"/>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>该服务在启动时由设备锁定码解锁。若这一交接不再工作，重启每次都会落到同一状态 — 重新设置锁定码才会让它再次运转。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="101"/>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>该批准持续到设备下次重启。若根本没有出现请求，绘制它的系统组件可能没有安装。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="103"/>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>值得重新设置设备锁定码并重启：正是它在启动时解锁该服务。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="109"/>
+        <source>What to do</source>
+        <translation>可以做什么</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="121"/>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. 在系统设置中打开开发者模式，位于“设置 › 开发者工具”。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="123"/>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. 打开 Terminal 应用并执行下面这一行 — 轻点即可复制。然后重启设备并重新打开 xmatic。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="125"/>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>记下本页下方报告的内容，带到 Sailfish 的支持渠道。退出 xmatic 的登录并不能修复它。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="127"/>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>返回并轻点「再试一次」，然后确认系统的请求。若什么都没出现，请安装缺少的组件（轻点该行即可复制）并重启设备。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="129"/>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. 打开设置 › 设备锁定，设置新的安全码。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="131"/>
+        <source>2. Restart the device.</source>
+        <translation>2. 重启设备。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="133"/>
+        <source>3. Start xmatic again.</source>
+        <translation>3. 重新打开 xmatic。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="163"/>
+        <source>Signing out does not help</source>
+        <translation>退出登录没有帮助</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="173"/>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>退出登录会连同本地数据一起删除本设备的加密密钥。之后你需要从另一台设备重新验证本设备，较早的消息则需要你的恢复密钥。它不会修复安全存储。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="177"/>
+        <source>What this page measured</source>
+        <translation>本页测得的内容</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <location filename="../qml/pages/SecurityRows.qml" line="15"/>
@@ -3327,8 +3445,13 @@
     </message>
     <message>
         <location filename="../qml/pages/SessionLockedPage.qml" line="47"/>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>密钥存放在设备的密钥存储中。请再试一次并确认系统的请求；该授权在设备下次重启前一直有效。</translation>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>密钥位于设备的安全存储中。请再试一次并确认系统的请求；该批准持续到设备下次重启。若根本没有出现请求，问题出在安全存储，而不是你的账户。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SessionLockedPage.qml" line="60"/>
+        <source>Need help?</source>
+        <translation>需要帮助？</translation>
     </message>
     <message>
         <location filename="../qml/pages/SessionLockedPage.qml" line="52"/>
@@ -3544,82 +3667,42 @@
 <context>
     <name>StorageBlockedPage</name>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="46"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="40"/>
         <source>Encryption not possible</source>
         <translation>无法加密</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="47"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="41"/>
         <source>Matrix for Sailfish OS</source>
         <translation>面向 Sailfish OS 的 Matrix</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="65"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="59"/>
         <source>The secure storage did not hand out a key, so xmatic cannot create an encrypted database.</source>
         <translation>安全存储没有交出密钥，因此 xmatic 无法创建加密的数据库。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="66"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="60"/>
         <source>This system is missing the service that keeps encryption keys, so xmatic cannot create an encrypted database.</source>
         <translation>本系统缺少保管加密密钥的服务，因此 xmatic 无法创建加密的数据库。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="76"/>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>这是操作系统的特性，不是 xmatic 的缺陷。该软件包是存在的，可以安装；有些 Sailfish 镜像只是没有随附它。</translation>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="79"/>
+        <source>Need help?</source>
+        <translation>需要帮助？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="86"/>
-        <source>The system reported: %1</source>
-        <translation>系统报告：%1</translation>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="93"/>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>已检查 — 安全存储仍然不交出密钥。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="90"/>
-        <source>How to fix it</source>
-        <translation>如何解决</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="99"/>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. 在系统设置中打开开发者模式，位于“设置 › 开发者工具”。</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="101"/>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. 打开终端应用，用以下命令切换到 root：</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="129"/>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. 安装该服务（点按此行即可复制）：</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="157"/>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. 重启设备。之后该服务会自行启动。</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="159"/>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. 自己确认它确实在——这条命令必须输出一个文件，而不是错误：</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="187"/>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. 重新启动 xmatic，然后点按“重新检查”。</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="192"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="66"/>
         <source>Check again</source>
         <translation>重新检查</translation>
     </message>
     <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="212"/>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>已检查——仍然无法访问该服务。安装是否完整执行，设备是否重启过？</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/StorageBlockedPage.qml" line="229"/>
+        <location filename="../qml/pages/StorageBlockedPage.qml" line="110"/>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>消息在通过网络传输的途中无论如何都保持端到端加密。这里只关乎留在设备上的内容。</translation>
     </message>

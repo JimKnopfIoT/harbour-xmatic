@@ -807,6 +807,10 @@
         <source>Copy</source>
         <translation>رونوشت</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>مشکلی با انبارهٔ کلیدها؟</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2505,6 +2509,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>بازگشت به درون</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>این سامانه سرویسی را که کلیدهای رمزگذاری را نگه می‌دارد ندارد.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>انبارهٔ امن دستگاه از داده‌های آسیب‌دیده خبر می‌دهد. در این وضعیت چیزی باز نمی‌شود.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>خودِ انبارهٔ امن دستگاه قفل است. این هر برنامه‌ای در تلفن را که رازها را نگه می‌دارد در بر می‌گیرد، نه فقط xmatic را.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>انبارهٔ کلیدهای خودِ xmatic قفل است و منتظر تأیید توست.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>انبارهٔ امن کلیدی نداد و نگفت چرا.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>این ویژگی سیستم‌عامل است، نه ایرادی در xmatic. بسته وجود دارد و می‌توان نصبش کرد؛ برخی ایمیج‌های Sailfish آن را همراه ندارند.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>این فراتر از دسترس xmatic است. تعمیر یعنی صفر کردن داده‌های خودِ سرویس، که هر برنامه‌ای در دستگاه را که رازها را نگه می‌دارد در بر می‌گیرد — اول در کانال‌های پشتیبانی Sailfish بپرس.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>سرویس هنگام راه‌اندازی با رمز قفل دستگاه باز می‌شود. اگر این تحویل از کار افتاده باشد، راه‌اندازی دوباره هر بار به همان وضعیت می‌رسد — تنظیم دوبارهٔ رمز همان چیزی است که آن را دوباره به راه می‌اندازد.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>این اجازه تا راه‌اندازی بعدی دستگاه معتبر است. اگر هیچ درخواستی اصلاً ظاهر نشود، ممکن است بخش‌های سامانه که آن را می‌کشند نصب نباشند.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>تنظیم دوبارهٔ رمز قفل دستگاه و راه‌اندازی دوباره ارزش امتحان دارد: دقیقاً همین سرویس را هنگام راه‌اندازی باز می‌کند.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>چه باید کرد</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>۱. حالت توسعه‌دهنده را در تنظیمات سامانه، در تنظیمات › ابزارهای توسعه‌دهنده روشن کن.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>۲. برنامهٔ Terminal را باز کن و خط زیر را اجرا کن — برای رونوشت روی آن ضربه بزن. سپس دستگاه را دوباره راه‌اندازی کن و xmatic را باز کن.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>آنچه این صفحه در پایین گزارش می‌کند یادداشت کن و به کانال‌های پشتیبانی Sailfish ببر. خروج از xmatic آن را درست نمی‌کند.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>برگرد و روی «تلاش دوباره» ضربه بزن، سپس درخواست سامانه را تأیید کن. اگر چیزی ظاهر نشد، اجزای لازم را نصب کن (برای رونوشت روی خط ضربه بزن) و دستگاه را دوباره راه‌اندازی کن.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>۱. تنظیمات › قفل دستگاه را باز کن و رمز امنیتی تازه‌ای تعیین کن.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>۲. دستگاه را دوباره راه‌اندازی کن.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>۳. xmatic را دوباره باز کن.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>خروج کمکی نمی‌کند</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>با خروج، کلیدهای رمزگذاری این دستگاه همراه داده‌های محلی پاک می‌شوند. آنگاه باید این دستگاه را دوباره از دستگاهی دیگر تأیید کنی و پیام‌های قدیمی‌تر به کلید بازیابی تو نیاز خواهند داشت. انبارهٔ امن را درست نمی‌کند.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>آنچه این صفحه اندازه گرفت</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2676,12 +2771,16 @@
         <translation>نشست تو رمزگذاری‌شده ذخیره شده و هنگام آغاز xmatic کلید در دسترس نبود.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>کلید در انبارهٔ رازهای دستگاه است. دوباره تلاش کن و درخواست سامانه را تأیید کن؛ این تأیید تا راه‌اندازی بعدی دستگاه پابرجاست.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>تلاش دوباره</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>کلید در انبارهٔ امن دستگاه است. دوباره تلاش کن و درخواست سامانه را تأیید کن؛ این اجازه تا راه‌اندازی بعدی دستگاه معتبر است. اگر هیچ درخواستی اصلاً ظاهر نشود، ایراد از انبارهٔ امن است نه از حساب تو.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>کمک می‌خواهی؟</translation>
     </message>
 </context>
 <context>
@@ -2869,52 +2968,20 @@
         <translation>این سامانه خدمتی که کلیدهای رمزگذاری را نگه می‌دارد ندارد، پس xmatic نمی‌تواند پایگاه دادهٔ رمزگذاری‌شده بسازد.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>این ویژگی سیستم‌عامل است، نه ایرادی در xmatic. بسته وجود دارد و می‌توان نصبش کرد؛ برخی ایمیج‌های Sailfish آن را همراه ندارند.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>سامانه گزارش داد: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>چگونه درستش کنیم</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>۱. حالت توسعه‌دهنده را در تنظیمات سامانه، در تنظیمات › ابزارهای توسعه‌دهنده روشن کن.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>۲. برنامهٔ پایانه را باز کن و با این فرمان root شو:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>۳. خدمت را نصب کن (برای رونوشت روی خط ضربه بزن):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>۴. دستگاه را دوباره راه‌اندازی کن. خدمت آن‌گاه خودبه‌خود آغاز می‌شود.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>۵. خودت بررسی کن که هست - این باید پرونده‌ای چاپ کند، نه خطا:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>۶. xmatic را دوباره اجرا کن و «دوباره بررسی کن» را بزن.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>دوباره بررسی کن</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>بررسی شد - خدمت هنوز در دسترس نیست. آیا نصب تا پایان رفت و دستگاه دوباره راه‌اندازی شد؟</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>پیام‌ها در مسیر شبکه در هر حال سرتاسری رمزگذاری‌شده می‌مانند. سخن این‌جا تنها دربارهٔ آن چیزی است که روی دستگاه می‌ماند.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>کمک می‌خواهی؟</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>بررسی شد — انبارهٔ امن هنوز کلیدی نمی‌دهد.</translation>
     </message>
 </context>
 <context>

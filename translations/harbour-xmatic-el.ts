@@ -809,6 +809,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Συγκρίνει επτά emoji με την άλλη σου συσκευή. Χρειάζεσαι εκείνη τη συσκευή μπροστά σου· μόλις επιβεβαιώσουν και οι δύο, αυτή εδώ μπορεί να διαβάσει τα κοινά κλειδιά δωματίων.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Πρόβλημα με τον χώρο κλειδιών;</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2509,6 +2513,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Ξανά μέσα</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Από αυτό το σύστημα λείπει η υπηρεσία που φυλάει τα κλειδιά κρυπτογράφησης.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Ο ασφαλής χώρος της συσκευής αναφέρει κατεστραμμένα δεδομένα. Σε αυτή την κατάσταση δεν ξεκλειδώνει τίποτα.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Ο ασφαλής χώρος της συσκευής είναι ο ίδιος κλειδωμένος. Αυτό αφορά κάθε εφαρμογή του τηλεφώνου που αποθηκεύει μυστικά, όχι μόνο το xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Ο δικός του χώρος κλειδιών του xmatic είναι κλειδωμένος και περιμένει την επιβεβαίωσή σου.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Ο ασφαλής χώρος δεν έδωσε κλειδί και δεν είπε γιατί.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Αυτό είναι ιδιότητα του λειτουργικού συστήματος, όχι σφάλμα του xmatic. Το πακέτο υπάρχει και εγκαθίσταται· ορισμένες εικόνες του Sailfish απλώς δεν το περιλαμβάνουν.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Αυτό ξεπερνά όσα φτάνει το xmatic. Η επιδιόρθωση σημαίνει μηδενισμό των ίδιων των δεδομένων της υπηρεσίας, που αφορά κάθε εφαρμογή της συσκευής που αποθηκεύει μυστικά — ρώτησε πρώτα στα κανάλια υποστήριξης του Sailfish.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Η υπηρεσία ξεκλειδώνει κατά την εκκίνηση με τον κωδικό κλειδώματος της συσκευής. Αν αυτή η παράδοση έπαψε να λειτουργεί, κάθε επανεκκίνηση καταλήγει στην ίδια κατάσταση — το να ορίσεις τον κωδικό εκ νέου είναι αυτό που την ξαναβάζει μπροστά.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Η έγκριση ισχύει μέχρι την επόμενη επανεκκίνηση της συσκευής. Αν δεν εμφανίζεται καθόλου αίτημα, ίσως λείπουν τα μέρη του συστήματος που το σχεδιάζουν.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Αξίζει να ορίσεις εκ νέου τον κωδικό κλειδώματος και να επανεκκινήσεις: αυτό ακριβώς ξεκλειδώνει την υπηρεσία κατά την εκκίνηση.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Τι να κάνεις</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Ενεργοποίησε τη λειτουργία προγραμματιστή στις ρυθμίσεις συστήματος, στο Ρυθμίσεις › Εργαλεία προγραμματιστή.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Άνοιξε την εφαρμογή Terminal και εκτέλεσε την παρακάτω γραμμή — άγγιξέ την για αντιγραφή. Έπειτα επανεκκίνησε τη συσκευή και άνοιξε ξανά το xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Σημείωσε τι αναφέρει αυτή η σελίδα παρακάτω και πήγαινέ το στα κανάλια υποστήριξης του Sailfish. Η αποσύνδεση από το xmatic δεν το διορθώνει.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Γύρνα πίσω και άγγιξε «Δοκίμασε ξανά», μετά επιβεβαίωσε το αίτημα του συστήματος. Αν δεν εμφανιστεί τίποτα, εγκατέστησε τα μέρη που λείπουν (άγγιξε τη γραμμή για αντιγραφή) και επανεκκίνησε τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Άνοιξε Ρυθμίσεις › Κλείδωμα συσκευής και όρισε νέο κωδικό ασφαλείας.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Επανεκκίνησε τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Άνοιξε ξανά το xmatic.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Η αποσύνδεση δεν βοηθά</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Με την αποσύνδεση διαγράφονται τα κλειδιά κρυπτογράφησης αυτής της συσκευής μαζί με τα τοπικά δεδομένα. Θα έπρεπε τότε να επαληθεύσεις ξανά αυτή τη συσκευή από μια άλλη, και τα παλαιότερα μηνύματα θα χρειάζονταν το κλειδί ανάκτησής σου. Τον ασφαλή χώρο δεν τον διορθώνει.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Τι μέτρησε αυτή η σελίδα</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2680,12 +2775,16 @@
         <translation>Η συνεδρία σου είναι αποθηκευμένη κρυπτογραφημένα, και το κλειδί δεν ήταν διαθέσιμο όταν ξεκίνησε το xmatic.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Το κλειδί βρίσκεται στον χώρο μυστικών της συσκευής. Δοκίμασε ξανά και επιβεβαίωσε το αίτημα του συστήματος· η έγκριση ισχύει μέχρι την επόμενη επανεκκίνηση της συσκευής.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Δοκίμασε ξανά</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Το κλειδί βρίσκεται στον ασφαλή χώρο της συσκευής. Δοκίμασε ξανά και επιβεβαίωσε το αίτημα του συστήματος· η έγκριση ισχύει μέχρι την επόμενη επανεκκίνηση της συσκευής. Αν δεν εμφανίζεται καθόλου αίτημα, το φταίξιμο είναι του ασφαλούς χώρου και όχι του λογαριασμού σου.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Χρειάζεσαι βοήθεια;</translation>
     </message>
 </context>
 <context>
@@ -2874,42 +2973,6 @@
         <translation>Από αυτό το σύστημα λείπει η υπηρεσία που φυλάει τα κλειδιά κρυπτογράφησης, οπότε το xmatic δεν μπορεί να δημιουργήσει κρυπτογραφημένη βάση.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Αυτό είναι ιδιότητα του λειτουργικού συστήματος, όχι σφάλμα του xmatic. Το πακέτο υπάρχει και εγκαθίσταται· ορισμένες εικόνες του Sailfish απλώς δεν το περιλαμβάνουν.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Το σύστημα ανέφερε: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Πώς διορθώνεται</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Ενεργοποίησε τη λειτουργία προγραμματιστή στις ρυθμίσεις συστήματος, στο Ρυθμίσεις › Εργαλεία προγραμματιστή.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Άνοιξε την εφαρμογή Τερματικό και γίνε root με:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Εγκατέστησε την υπηρεσία (άγγιξε τη γραμμή για αντιγραφή):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Επανεκκίνησε τη συσκευή. Η υπηρεσία ξεκινά μετά από μόνη της.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Βεβαιώσου και ο ίδιος ότι υπάρχει — αυτό πρέπει να τυπώσει αρχείο, όχι σφάλμα:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Ξεκίνα ξανά το xmatic και άγγιξε «Έλεγχος ξανά».</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Έλεγχος ξανά</translation>
     </message>
@@ -2918,8 +2981,12 @@
         <translation>Τα μηνύματα παραμένουν έτσι κι αλλιώς κρυπτογραφημένα από άκρο σε άκρο στον δρόμο τους μέσα από το δίκτυο. Εδώ πρόκειται μόνο για ό,τι βρίσκεται στη συσκευή.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Ελέγχθηκε — η υπηρεσία εξακολουθεί να μην είναι προσβάσιμη. Ολοκληρώθηκε η εγκατάσταση και επανεκκινήθηκε η συσκευή;</translation>
+        <source>Need help?</source>
+        <translation>Χρειάζεσαι βοήθεια;</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Ελέγχθηκε — ο ασφαλής χώρος εξακολουθεί να μη δίνει κλειδί.</translation>
     </message>
 </context>
 <context>

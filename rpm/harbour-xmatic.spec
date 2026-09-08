@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.30.1
+Version:    0.31.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -110,6 +110,13 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Sep 08 2026 harbour-xmatic contributors 0.31.0-1
+- A help page measures why the secure storage hands out no key and gives the
+  advice that fits the answer. Where the storage service itself is locked, that
+  is a new device lock code and a restart, not an installation.
+- The locked and "encryption not possible" screens lead there, and say that
+  signing out deletes this device's keys without repairing anything.
+
 * Mon Sep 07 2026 harbour-xmatic contributors 0.30.1-1
 - Sign-in works against homeservers that refuse a redirect address carrying a
   port. The port belongs to the moment of signing in, not to the registration,

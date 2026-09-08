@@ -817,6 +817,10 @@
         <source>Copy</source>
         <translation>نسخ</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>مشكلة في مخزن المفاتيح؟</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2525,6 +2529,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>العودة إلى الداخل</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>يفتقر هذا النظام إلى الخدمة التي تحفظ مفاتيح التعمية.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>يبلّغ التخزين الآمن في الجهاز عن بيانات تالفة. في هذه الحالة لا يمكن فتح أي شيء.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>التخزين الآمن في الجهاز نفسه مقفل. يشمل ذلك كل تطبيق في الهاتف يحفظ أسرارًا، لا xmatic وحده.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>مخزن مفاتيح xmatic الخاص مقفل وينتظر تأكيدك.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>لم يسلّم التخزين الآمن مفتاحًا ولم يذكر السبب.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>هذه خاصية في نظام التشغيل، لا خلل في xmatic. الحزمة موجودة ويمكن تثبيتها؛ بعض صور Sailfish لا تشحنها فحسب.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>هذا خارج ما يستطيع xmatic بلوغه. الإصلاح يعني تصفير بيانات الخدمة نفسها، وهو ما يشمل كل تطبيق في الجهاز يحفظ أسرارًا — اسأل أولًا في قنوات دعم Sailfish.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>تُفتح الخدمة عند الإقلاع برمز قفل الجهاز. إذا توقف هذا التسليم عن العمل، فإن إعادة التشغيل تنتهي في الحالة نفسها كل مرة — إعادة ضبط الرمز هي ما يعيد تشغيلها.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>تدوم الموافقة حتى إعادة تشغيل الجهاز التالية. إذا لم يظهر أي طلب إطلاقًا، فقد تكون مكوّنات النظام التي ترسمه ناقصة.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>يستحق الأمر إعادة ضبط رمز قفل الجهاز وإعادة التشغيل: هذا تحديدًا ما يفتح الخدمة عند الإقلاع.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>ما العمل</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>١. فعّل وضع المطوّر في إعدادات النظام، تحت الإعدادات › أدوات المطوّر.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>٢. افتح تطبيق Terminal ونفّذ السطر أدناه — المسه لنسخه. ثم أعد تشغيل الجهاز وافتح xmatic من جديد.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>دوّن ما تبلّغ عنه هذه الصفحة أدناه وخذه إلى قنوات دعم Sailfish. تسجيل الخروج من xmatic لا يصلحه.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>عد إلى الخلف والمس «أعد المحاولة»، ثم أكّد طلب النظام. إن لم يظهر شيء، فثبّت المكوّنات الناقصة (المس السطر لنسخه) وأعد تشغيل الجهاز.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>١. افتح الإعدادات › قفل الجهاز واضبط رمز أمان جديدًا.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>٢. أعد تشغيل الجهاز.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>٣. افتح xmatic من جديد.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>تسجيل الخروج لا يساعد</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>عند تسجيل الخروج تُحذف مفاتيح التعمية الخاصة بهذا الجهاز مع البيانات المحلية. ستحتاج عندئذ إلى التحقق من هذا الجهاز مرة أخرى من جهاز آخر، وستحتاج الرسائل الأقدم إلى مفتاح الاسترداد. وهذا لا يصلح التخزين الآمن.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>ما قاسته هذه الصفحة</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2696,12 +2791,16 @@
         <translation>جلستك مخزَّنة مُعمّاة، ولم يكن المفتاح متاحًا عند بدء xmatic.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>يقيم المفتاح في مخزن أسرار الجهاز. أعد المحاولة ووافق على طلب النظام؛ تدوم الموافقة حتى إعادة تشغيل الجهاز التالية.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>أعد المحاولة</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>المفتاح موجود في التخزين الآمن في الجهاز. أعد المحاولة وأكّد طلب النظام؛ تدوم الموافقة حتى إعادة تشغيل الجهاز التالية. إذا لم يظهر أي طلب إطلاقًا، فالخلل في التخزين الآمن لا في حسابك.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>تحتاج مساعدة؟</translation>
     </message>
 </context>
 <context>
@@ -2894,52 +2993,20 @@
         <translation>يفتقر هذا النظام إلى الخدمة التي تحفظ مفاتيح التعمية، فلا يستطيع xmatic إنشاء قاعدة بيانات مُعمّاة.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>هذه خاصية في نظام التشغيل، لا خلل في xmatic. الحزمة موجودة ويمكن تثبيتها؛ بعض صور Sailfish لا تشحنها فحسب.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>أبلغ النظام: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>كيف تُصلحه</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>١. فعّل وضع المطوّر في إعدادات النظام، تحت الإعدادات › أدوات المطوّر.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>٢. افتح تطبيق الطرفية وصِر المستخدم الجذر بـ:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>٣. ثبّت الخدمة (انقر على السطر لنسخه):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>٤. أعد تشغيل الجهاز. تبدأ الخدمة بعدها من تلقاء نفسها.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>٥. تحقّق بنفسك من وجودها - يجب أن يطبع هذا ملفًا، لا خطأً:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>٦. شغّل xmatic مجددًا وانقر «تحقّق مجددًا».</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>تحقّق مجددًا</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>تم التحقق - الخدمة لا تزال غير متاحة. هل اكتمل التثبيت، وهل أُعيد تشغيل الجهاز؟</translation>
-    </message>
-    <message>
         <source>Messages stay end-to-end encrypted on their way through the network either way. This is only about what lies on the device.</source>
         <translation>تبقى الرسائل مُعمّاة طرفًا لطرف في طريقها عبر الشبكة في الحالتين. الأمر هنا يخصّ ما يقيم على الجهاز فقط.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>تحتاج مساعدة؟</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>تم الفحص — لا يزال التخزين الآمن لا يسلّم مفتاحًا.</translation>
     </message>
 </context>
 <context>

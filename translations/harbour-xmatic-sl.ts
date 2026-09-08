@@ -813,6 +813,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Primerja sedem emojijev s tvojo drugo napravo. To napravo potrebuješ pred seboj; ko obe potrdita, lahko ta bere deljene ključe sob.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Težave s shrambo ključev?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2517,6 +2521,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Nazaj noter</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Temu sistemu manjka storitev, ki hrani šifrirne ključe.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Varna shramba naprave javlja poškodovane podatke. V tem stanju ni mogoče ničesar odkleniti.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Varna shramba naprave je sama zaklenjena. To zadeva vsako aplikacijo v telefonu, ki hrani skrivnosti, ne le xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Lastna shramba ključev aplikacije xmatic je zaklenjena in čaka na tvojo potrditev.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Varna shramba ni izdala ključa in ni povedala, zakaj.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>To je lastnost operacijskega sistema, ne napaka xmatica. Paket obstaja in ga je mogoče namestiti; nekatere slike Sailfisha ga preprosto ne prinesejo s seboj.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>To presega doseg aplikacije xmatic. Popravilo pomeni ponastavitev lastnih podatkov storitve, kar zadeva vsako aplikacijo v napravi, ki hrani skrivnosti — najprej vprašaj v podpornih kanalih Sailfisha.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Storitev se ob zagonu odklene s kodo zaklepa naprave. Če je ta predaja prenehala delovati, se ponovni zagon vsakič konča v istem stanju — ponovna nastavitev kode je tisto, kar jo spet požene.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Odobritev velja do naslednjega ponovnega zagona naprave. Če se zahteva sploh ne pojavi, morda manjkajo sistemski deli, ki jo izrišejo.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Kodo zaklepa naprave je vredno nastaviti na novo in znova zagnati: prav to odklene storitev ob zagonu.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Kaj storiti</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. V sistemskih nastavitvah vklopi razvijalski način, pod Nastavitve › Razvijalska orodja.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Odpri aplikacijo Terminal in zaženi spodnjo vrstico — tapni jo, da jo kopiraš. Nato znova zaženi napravo in znova odpri xmatic.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Zapiši si, kaj ta stran spodaj javlja, in to odnesi v podporne kanale Sailfisha. Odjava iz aplikacije xmatic tega ne popravi.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Vrni se nazaj in tapni »Poskusi znova«, nato potrdi zahtevo sistema. Če se nič ne pojavi, namesti manjkajoče dele (tapni vrstico, da jo kopiraš) in znova zaženi napravo.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Odpri Nastavitve › Zaklep naprave in nastavi novo varnostno kodo.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Znova zaženi napravo.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Znova odpri xmatic.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Odjava ne pomaga</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Ob odjavi se skupaj s krajevnimi podatki izbrišejo šifrirni ključi te naprave. Nato bi moral to napravo znova preveriti z druge, starejša sporočila pa bi potrebovala tvoj obnovitveni ključ. Varne shrambe to ne popravi.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Kaj je ta stran izmerila</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2688,12 +2783,16 @@
         <translation>Tvoja seja je shranjena šifrirano, ključ pa ob zagonu xmatica ni bil na voljo.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Ključ je v shrambi skrivnosti naprave. Poskusi znova in potrdi zahtevo sistema; odobritev velja do naslednjega ponovnega zagona naprave.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Poskusi znova</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Ključ je v varni shrambi naprave. Poskusi znova in potrdi zahtevo sistema; odobritev velja do naslednjega ponovnega zagona naprave. Če se zahteva sploh ne pojavi, je kriva varna shramba in ne tvoj račun.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Potrebuješ pomoč?</translation>
     </message>
 </context>
 <context>
@@ -2884,42 +2983,6 @@
         <translation>V tem sistemu manjka storitev, ki hrani šifrirne ključe, zato xmatic ne more ustvariti šifrirane zbirke.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>To je lastnost operacijskega sistema, ne napaka xmatica. Paket obstaja in ga je mogoče namestiti; nekatere slike Sailfisha ga preprosto ne prinesejo s seboj.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Sistem je sporočil: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Kako to popraviti</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. V sistemskih nastavitvah vklopi razvijalski način, pod Nastavitve › Razvijalska orodja.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Odpri aplikacijo Terminal in postani root z:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Namesti storitev (tapni vrstico, da jo kopiraš):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Znova zaženi napravo. Storitev se nato zažene sama.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Sam se prepričaj, da je tam — to mora izpisati datoteko, ne napake:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Znova zaženi xmatic in tapni »Preveri znova«.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Preveri znova</translation>
     </message>
@@ -2928,8 +2991,12 @@
         <translation>Sporočila ostanejo na poti skozi omrežje tako ali tako šifrirana od konca do konca. Tu gre samo za to, kar leži na napravi.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Preverjeno — storitev še vedno ni dosegljiva. Ali je namestitev stekla do konca in ali je bila naprava znova zagnana?</translation>
+        <source>Need help?</source>
+        <translation>Potrebuješ pomoč?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Preverjeno — varna shramba še vedno ne izda ključa.</translation>
     </message>
 </context>
 <context>

@@ -809,6 +809,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Ber saman sjö tjákn við hitt tækið þitt. Þú þarft það tæki fyrir framan þig; þegar bæði hafa staðfest getur þetta tæki lesið sameiginlega herbergjalykla.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Vandræði með lyklageymsluna?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2509,6 +2513,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Inn aftur</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Þetta kerfi vantar þjónustuna sem geymir dulritunarlykla.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>Örugga geymsla tækisins tilkynnir skemmd gögn. Í því ástandi er ekkert hægt að opna.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>Örugga geymsla tækisins er sjálf læst. Það hefur áhrif á hvert forrit í símanum sem geymir leyndarmál, ekki bara xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>Eigin lyklageymsla xmatic er læst og bíður staðfestingar þinnar.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>Örugga geymslan afhenti engan lykil og sagði ekki hvers vegna.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Þetta er eiginleiki stýrikerfisins, ekki villa í xmatic. Pakkinn er til og hægt er að setja hann upp; sumar Sailfish-kerfismyndir fylgja honum einfaldlega ekki.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Þetta er utan þess sem xmatic nær til. Viðgerð þýðir að núllstilla gögn þjónustunnar sjálfrar, sem hefur áhrif á hvert forrit í tækinu sem geymir leyndarmál — spurðu fyrst í stuðningsrásum Sailfish.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>Þjónustan er opnuð við ræsingu með lásakóða tækisins. Hafi sú afhending hætt að virka lendir endurræsing alltaf í sama ástandi — að setja kóðann að nýju er það sem kemur henni af stað aftur.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>Samþykkið gildir fram að næstu endurræsingu tækisins. Birtist engin beiðni yfirleitt gætu kerfishlutarnir sem teikna hana vantað.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>Það er þess virði að setja lásakóða tækisins að nýju og endurræsa: það er einmitt það sem opnar þjónustuna við ræsingu.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Hvað er hægt að gera</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Kveiktu á Þróunarham í kerfisstillingum, undir Stillingar › Þróunartól.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Opnaðu Terminal-forritið og keyrðu línuna hér að neðan — pikkaðu á hana til að afrita. Endurræstu svo tækið og opnaðu xmatic aftur.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Skrifaðu niður það sem þessi síða tilkynnir hér að neðan og farðu með það í stuðningsrásir Sailfish. Að skrá sig út úr xmatic lagar það ekki.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Farðu til baka og pikkaðu á „Reyna aftur“, staðfestu svo beiðni kerfisins. Birtist ekkert skaltu setja upp hlutana sem vantar (pikkaðu á línuna til að afrita) og endurræsa tækið.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Opnaðu Stillingar › Tækjalás og settu nýjan öryggiskóða.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Endurræstu tækið.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Opnaðu xmatic aftur.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Að skrá sig út hjálpar ekki</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Við útskráningu eyðast dulritunarlyklar þessa tækis ásamt staðbundnu gögnunum. Þú þyrftir þá að sannreyna þetta tæki aftur frá öðru, og eldri skilaboð þyrftu endurheimtulykilinn þinn. Öruggu geymsluna lagar það ekki.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Hvað þessi síða mældi</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2680,12 +2775,16 @@
         <translation>Lotan þín er geymd dulkóðuð og lykillinn var ekki tiltækur þegar xmatic ræsti.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>Lykillinn er í leyndargeymslu tækisins. Reyndu aftur og staðfestu beiðni kerfisins; samþykkið gildir fram að næstu endurræsingu tækisins.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Reyna aftur</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>Lykillinn liggur í öruggu geymslu tækisins. Reyndu aftur og staðfestu beiðni kerfisins; samþykkið gildir fram að næstu endurræsingu tækisins. Birtist engin beiðni yfirleitt er villan í öruggu geymslunni en ekki í reikningnum þínum.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Þarftu hjálp?</translation>
     </message>
 </context>
 <context>
@@ -2874,42 +2973,6 @@
         <translation>Á þetta kerfi vantar þjónustuna sem geymir dulkóðunarlykla, svo xmatic getur ekki búið til dulkóðaðan gagnagrunn.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Þetta er eiginleiki stýrikerfisins, ekki villa í xmatic. Pakkinn er til og hægt er að setja hann upp; sumar Sailfish-kerfismyndir fylgja honum einfaldlega ekki.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Kerfið tilkynnti: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Svona lagarðu það</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Kveiktu á Þróunarham í kerfisstillingum, undir Stillingar › Þróunartól.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Opnaðu Skjáhermi-forritið og verðu root með:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Settu þjónustuna upp (pikkaðu á línuna til að afrita hana):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Endurræstu tækið. Þjónustan ræsist síðan sjálf.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Gakktu sjálf úr skugga um að hún sé til — þetta verður að prenta skrá, ekki villu:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Ræstu xmatic aftur og pikkaðu á „Athuga aftur“.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Athuga aftur</translation>
     </message>
@@ -2918,8 +2981,12 @@
         <translation>Skilaboð haldast enda-í-enda dulkóðuð á leið sinni um netið hvort sem er. Hér snýst þetta aðeins um það sem liggur á tækinu.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Athugað — þjónustan næst enn ekki. Kláraðist uppsetningin og var tækið endurræst?</translation>
+        <source>Need help?</source>
+        <translation>Þarftu hjálp?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Athugað — örugga geymslan afhendir enn engan lykil.</translation>
     </message>
 </context>
 <context>

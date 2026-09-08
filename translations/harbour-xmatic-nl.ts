@@ -809,6 +809,10 @@
         <source>Compares seven emoji with your other device. It needs that other device in front of you, and once both have confirmed, this one can read the shared room keys.</source>
         <translation>Vergelijkt zeven emoji met je andere apparaat. Je hebt dat apparaat voor je nodig; zodra beide bevestigd hebben, kan dit apparaat de gedeelde kamersleutels lezen.</translation>
     </message>
+    <message>
+        <source>Trouble with the key storage?</source>
+        <translation>Problemen met de sleutelopslag?</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -2509,6 +2513,97 @@
     </message>
 </context>
 <context>
+    <name>SecretsHelpPage</name>
+    <message>
+        <source>Getting in again</source>
+        <translation>Weer naar binnen</translation>
+    </message>
+    <message>
+        <source>This system is missing the service that keeps encryption keys.</source>
+        <translation>Op dit systeem ontbreekt de dienst die versleutelingssleutels bewaart.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service reports damaged data. Nothing can be unlocked in this state.</source>
+        <translation>De beveiligde opslag van het apparaat meldt beschadigde gegevens. In die toestand valt er niets te ontgrendelen.</translation>
+    </message>
+    <message>
+        <source>The device&apos;s secrets service itself is locked. Every app on this phone that stores secrets is affected, not only xmatic.</source>
+        <translation>De beveiligde opslag van het apparaat is zelf vergrendeld. Dat treft elke app op deze telefoon die geheimen bewaart, niet alleen xmatic.</translation>
+    </message>
+    <message>
+        <source>xmatic&apos;s own key store is locked and waiting for your confirmation.</source>
+        <translation>De eigen sleutelopslag van xmatic is vergrendeld en wacht op je bevestiging.</translation>
+    </message>
+    <message>
+        <source>The secrets service did not hand out a key, and it did not say why.</source>
+        <translation>De beveiligde opslag heeft geen sleutel afgegeven en zei niet waarom.</translation>
+    </message>
+    <message>
+        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
+        <translation>Dat is een eigenschap van het besturingssysteem, geen fout in xmatic. Het pakket bestaat en is te installeren; sommige Sailfish-images leveren het eenvoudigweg niet mee.</translation>
+    </message>
+    <message>
+        <source>This is beyond what xmatic can reach. Repairing it means resetting the service&apos;s own data, which affects every app on the device that stores secrets — ask in the Sailfish support channels before doing that.</source>
+        <translation>Dit ligt buiten wat xmatic kan bereiken. Herstellen betekent de eigen gegevens van de dienst wissen, wat elke app op het apparaat treft die geheimen bewaart — vraag het eerst in de Sailfish-ondersteuningskanalen.</translation>
+    </message>
+    <message>
+        <source>The service is unlocked at start-up from your device lock code. Where that hand-off has stopped working, restarting lands in the same state every time — setting the code afresh is what starts it again.</source>
+        <translation>De dienst wordt bij het opstarten ontgrendeld met je apparaatvergrendelingscode. Werkt die overdracht niet meer, dan komt een herstart elke keer in dezelfde toestand terecht — de code opnieuw instellen is wat hem weer op gang brengt.</translation>
+    </message>
+    <message>
+        <source>The approval lasts until the device is restarted. If no request appears at all, the system components that draw it may be missing.</source>
+        <translation>De goedkeuring geldt tot de volgende herstart van het apparaat. Verschijnt er helemaal geen verzoek, dan ontbreken mogelijk de systeemonderdelen die het tekenen.</translation>
+    </message>
+    <message>
+        <source>Setting the device lock code afresh and restarting is worth trying: it is what unlocks the service at start-up.</source>
+        <translation>De apparaatvergrendelingscode opnieuw instellen en herstarten is een poging waard: precies dat ontgrendelt de dienst bij het opstarten.</translation>
+    </message>
+    <message>
+        <source>What to do</source>
+        <translation>Wat je kunt doen</translation>
+    </message>
+    <message>
+        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
+        <translation>1. Zet Ontwikkelaarsmodus aan in de systeeminstellingen, onder Instellingen › Ontwikkelaarsgereedschap.</translation>
+    </message>
+    <message>
+        <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
+        <translation>2. Open de Terminal-app en voer de regel hieronder uit — tik erop om te kopiëren. Herstart daarna het apparaat en open xmatic opnieuw.</translation>
+    </message>
+    <message>
+        <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
+        <translation>Noteer wat deze pagina hieronder meldt en breng het naar de Sailfish-ondersteuningskanalen. Uitloggen uit xmatic herstelt het niet.</translation>
+    </message>
+    <message>
+        <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
+        <translation>Ga terug en tik op ‘Opnieuw proberen’, bevestig dan het verzoek van het systeem. Verschijnt er niets, installeer dan de ontbrekende onderdelen (tik op de regel om te kopiëren) en herstart het apparaat.</translation>
+    </message>
+    <message>
+        <source>1. Open Settings › Device lock and set a new security code.</source>
+        <translation>1. Open Instellingen › Apparaatvergrendeling en stel een nieuwe beveiligingscode in.</translation>
+    </message>
+    <message>
+        <source>2. Restart the device.</source>
+        <translation>2. Herstart het apparaat.</translation>
+    </message>
+    <message>
+        <source>3. Start xmatic again.</source>
+        <translation>3. Open xmatic opnieuw.</translation>
+    </message>
+    <message>
+        <source>Signing out does not help</source>
+        <translation>Uitloggen helpt niet</translation>
+    </message>
+    <message>
+        <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
+        <translation>Bij uitloggen worden de versleutelingssleutels van dit apparaat samen met de lokale gegevens gewist. Je zou dit apparaat dan opnieuw moeten verifiëren vanaf een ander, en oudere berichten zouden je herstelsleutel nodig hebben. De beveiligde opslag wordt er niet mee hersteld.</translation>
+    </message>
+    <message>
+        <source>What this page measured</source>
+        <translation>Wat deze pagina heeft gemeten</translation>
+    </message>
+</context>
+<context>
     <name>SecurityRows</name>
     <message>
         <source>Backup</source>
@@ -2680,12 +2775,16 @@
         <translation>Je sessie is versleuteld opgeslagen en de sleutel was niet beschikbaar toen xmatic startte.</translation>
     </message>
     <message>
-        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device.</source>
-        <translation>De sleutel zit in de geheimenopslag van het apparaat. Probeer het opnieuw en bevestig het verzoek van het systeem; de goedkeuring geldt tot de volgende herstart van het apparaat.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translation>Opnieuw proberen</translation>
+    </message>
+    <message>
+        <source>The key lives in the device&apos;s secrets storage. Try again and confirm the system&apos;s request; the approval lasts until the next restart of the device. If no request appears at all, the secrets service itself is at fault rather than your account.</source>
+        <translation>De sleutel ligt in de beveiligde opslag van het apparaat. Probeer opnieuw en bevestig het verzoek van het systeem; de goedkeuring geldt tot de volgende herstart van het apparaat. Verschijnt er helemaal geen verzoek, dan ligt de fout bij de beveiligde opslag en niet bij je account.</translation>
+    </message>
+    <message>
+        <source>Need help?</source>
+        <translation>Hulp nodig?</translation>
     </message>
 </context>
 <context>
@@ -2874,42 +2973,6 @@
         <translation>Op dit systeem ontbreekt de dienst die versleutelingssleutels bewaart, dus xmatic kan geen versleutelde database aanmaken.</translation>
     </message>
     <message>
-        <source>This is a property of the operating system, not a fault in xmatic. The package exists and can be installed; some Sailfish images simply do not ship it.</source>
-        <translation>Dat is een eigenschap van het besturingssysteem, geen fout in xmatic. Het pakket bestaat en is te installeren; sommige Sailfish-images leveren het eenvoudigweg niet mee.</translation>
-    </message>
-    <message>
-        <source>The system reported: %1</source>
-        <translation>Het systeem meldde: %1</translation>
-    </message>
-    <message>
-        <source>How to fix it</source>
-        <translation>Zo los je het op</translation>
-    </message>
-    <message>
-        <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
-        <translation>1. Zet Ontwikkelaarsmodus aan in de systeeminstellingen, onder Instellingen › Ontwikkelaarsgereedschap.</translation>
-    </message>
-    <message>
-        <source>2. Open the Terminal app and become root with:</source>
-        <translation>2. Open de Terminal-app en word root met:</translation>
-    </message>
-    <message>
-        <source>3. Install the service (tap the line to copy it):</source>
-        <translation>3. Installeer de dienst (tik op de regel om hem te kopiëren):</translation>
-    </message>
-    <message>
-        <source>4. Restart the device. The service then starts on its own.</source>
-        <translation>4. Herstart het apparaat. De dienst start daarna vanzelf.</translation>
-    </message>
-    <message>
-        <source>5. Check for yourself that it is there — this has to print a file, not an error:</source>
-        <translation>5. Overtuig jezelf dat hij er is — dit moet een bestand tonen, geen foutmelding:</translation>
-    </message>
-    <message>
-        <source>6. Start xmatic again and tap “Check again”.</source>
-        <translation>6. Start xmatic opnieuw en tik op “Opnieuw controleren”.</translation>
-    </message>
-    <message>
         <source>Check again</source>
         <translation>Opnieuw controleren</translation>
     </message>
@@ -2918,8 +2981,12 @@
         <translation>Berichten blijven op hun weg door het netwerk hoe dan ook eind-tot-eind versleuteld. Het gaat hier alleen om wat op het apparaat ligt.</translation>
     </message>
     <message>
-        <source>Checked — the service is still not reachable. Did the installation run through, and was the device restarted?</source>
-        <translation>Gecontroleerd — de dienst is nog steeds niet bereikbaar. Is de installatie doorgelopen en is het apparaat herstart?</translation>
+        <source>Need help?</source>
+        <translation>Hulp nodig?</translation>
+    </message>
+    <message>
+        <source>Checked — the secure storage still will not hand out a key.</source>
+        <translation>Gecontroleerd — de beveiligde opslag geeft nog steeds geen sleutel af.</translation>
     </message>
 </context>
 <context>
