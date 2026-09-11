@@ -1381,6 +1381,10 @@
         <source>Reply in thread</source>
         <translation>Freagair sa snáithe</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Tiontaigh go téacs</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1577,10 +1581,6 @@
         <translation>Teachtaireachtaí gutha</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Lasta, tá micreafón in aice leis an réimse teachtaireachta: coinnigh síos chun taifeadadh, scaoil chun seoladh. Múchta, níl sé ann.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Naisc gréasáin inbhrúite</translation>
     </message>
@@ -1679,6 +1679,34 @@
     <message>
         <source>Always</source>
         <translation>I gcónaí</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Teachtaireachtaí gutha mar théacs</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Tiontaigh teachtaireachtaí gutha go téacs</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Lasta, tairgeann brú fada ar theachtaireacht ghutha í a thiontú. Ní thiontaítear aon rud mura n-iarrann tú é, agus ní fhágann an taifeadadh an fón seo riamh.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Tá gá le clár nach dtugann an aip seo léi, ó OpenRepos, a shuiteálann tú féin: “Speech Note” (thart ar 40 MB le híoslódáil, 104 MB suiteáilte) agus ann an tsamhail “Auto (WhisperCpp Small)” (190 MB), a aithníonn teanga gach teachtaireachta léi féin. Ar fhóin 64 giotán amháin.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Seiceáil</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Á sheiceáil. An chéad uair, féadfaidh sé leathnóiméad a thógáil.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Lasta, tá micreafón in aice leis an réimse teachtaireachta: coinnigh síos chun taifeadadh, scaoil chun seoladh – nó tapáil é chun taifeadadh gan lámha, agus seolann an dara tapáil nó seacht soicind ciúnais é. Múchta, níl sé ann.</translation>
     </message>
 </context>
 <context>
@@ -2261,18 +2289,6 @@
         <translation>D&apos;fhág %1</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>Tugadh cuireadh do %1</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>Baineadh %1 amach</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>Cuireadh toirmeasc ar %1</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>Dhiúltaigh %1 don chuireadh</translation>
     </message>
@@ -2491,6 +2507,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Níor seoladh do vóta</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>Thug %1 cuireadh do %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>Bhain %1 %2 amach</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>Chuir %1 toirmeasc ar %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>Bhain %1 an toirmeasc de %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>Tharraing %1 an cuireadh do %2 siar</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Tiontaigh go téacs</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Á thiontú go téacs…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Aitheanta go huathoibríoch, d’fhéadfadh botúin a bheith ann</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Ag taifeadadh… %1 s. Tapáil an micreafón chun seoladh.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Níor dúradh aon rud, mar sin níor seoladh aon rud.</translation>
     </message>
 </context>
 <context>
@@ -3238,6 +3299,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Níor taifeadadh aon rud.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Níl comhad ag an teachtaireacht ghutha seo.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Tá an teachtaireacht ghutha rófhada le tiontú.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Níorbh fhéidir an teachtaireacht ghutha a íoslódáil.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Níorbh fhéidir an teachtaireacht ghutha a léamh.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Ní teachtaireacht ghutha is féidir a thiontú í seo.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Níorbh fhéidir an teachtaireacht ghutha a dhíchódú.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Thóg an tiontú rófhada agus stopadh é.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Níl Speech Note suiteáilte, nó ní thosaíonn a sheirbhís.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Níl samhail ag Speech Note a aithníonn an teanga léi féin. Íoslódáil “Auto (WhisperCpp Small)” in Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Tá an tseirbhís urlabhra gnóthach. Bain triail eile as i gceann tamaillín.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Dhiúltaigh an tseirbhís urlabhra don teachtaireacht ghutha.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Thuairiscigh an tseirbhís urlabhra earráid.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Oibríonn gach rud: is féidir teachtaireachtaí gutha a thiontú.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Níor aithníodh aon urlabhra.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>Níl cead ag xmatic labhairt leis an tseirbhís urlabhra. Má athshuiteálann tú xmatic, tagann an cead ar ais.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Níl an tseirbhís urlabhra ag freagairt.</translation>
     </message>
 </context>
 <context>

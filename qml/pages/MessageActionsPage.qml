@@ -23,6 +23,8 @@ Page {
     property bool editable: false
     property bool isImage: false
     property bool canSave: false
+    /// A voice message the settings allow converting, not yet converted.
+    property bool canTranscribe: false
 
     /// What `saveAttachment` needs: id, msgtype, media. Copied out of the delegate,
     /// whose model row stops existing once it leaves the cache.
@@ -76,6 +78,20 @@ Page {
                     }
                     text: page.unsent ? qsTr("Discard") : qsTr("Delete")
                     color: Theme.errorColor
+                }
+            }
+
+            ListItem {
+                contentHeight: Theme.itemSizeSmall
+                visible: page.canTranscribe
+                onClicked: page.handBack("transcribe")
+                Label {
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: qsTr("Convert to text")
                 }
             }
 

@@ -1,0 +1,10 @@
+# x-sailjail-description = Voice messages to text
+# x-sailjail-long-description = Hand a voice message to the offline speech-to-text service and read back the text
+
+# Converting a received voice message to text, on request: xmatic hands a WAV
+# it decoded itself to the offline speech-to-text service and reads back the
+# text. Talking to that one service and hearing its signals, nothing else.
+# Without a program that owns the name, the permission grants nothing.
+
+dbus-user.talk org.mkiol.Speech
+dbus-user.broadcast org.mkiol.Speech=org.mkiol.Speech.*@/*

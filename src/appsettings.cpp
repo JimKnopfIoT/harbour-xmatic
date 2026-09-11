@@ -221,6 +221,25 @@ void AppSettings::setVoiceMessages(bool enabled)
     emit voiceMessagesChanged();
 }
 
+bool AppSettings::voiceTranscripts() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("ui/voiceTranscripts"), false).toBool();
+}
+
+void AppSettings::setVoiceTranscripts(bool enabled)
+{
+    if (enabled == voiceTranscripts()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("ui/voiceTranscripts"), enabled, "the voice transcript setting");
+    if (settings.status() == QSettings::NoError) {
+        qInfo("xmatic: voice transcripts %s", enabled ? "on" : "off");
+    }
+    emit voiceTranscriptsChanged();
+}
+
 bool AppSettings::hideKeyboardOnSend() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

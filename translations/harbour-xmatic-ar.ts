@@ -1387,6 +1387,10 @@
         <source>Reply</source>
         <translation>رد</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>تحويل إلى نص</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1578,10 +1582,6 @@
         <translation>الرسائل الصوتية</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>عند التشغيل، يوجد ميكروفون بجوار حقل الرسالة: اضغط مطوّلًا للتسجيل وأفلِت للإرسال. عند الإيقاف، لا وجود له.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>روابط وِب قابلة للنقر</translation>
     </message>
@@ -1688,6 +1688,34 @@
     <message>
         <source>Always</source>
         <translation>دائمًا</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>الرسائل الصوتية كنص</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>تحويل الرسائل الصوتية إلى نص</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>عند التشغيل، يعرض الضغط المطوّل على رسالة صوتية تحويلها. لا يُحوَّل شيء ما لم تطلب ذلك، ولا يغادر التسجيل هذا الهاتف أبدًا.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>يتطلب هذا برنامجًا لا يأتي مع هذا التطبيق، من OpenRepos، تثبّته بنفسك: «Speech Note» (نحو 40 ميغابايت للتنزيل، و104 ميغابايت بعد التثبيت)، وفيه النموذج «Auto (WhisperCpp Small)» (190 ميغابايت) الذي يتعرّف بنفسه على لغة كل رسالة. على الهواتف ذات 64 بت فقط.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>تحقّق</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>جارٍ التحقق. قد يستغرق ذلك نصف دقيقة في المرة الأولى.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>عند التشغيل، يوجد ميكروفون بجوار حقل الرسالة: اضغط مطوّلًا للتسجيل وأفلِت للإرسال، أو المسه للتسجيل دون استخدام اليدين، وتُرسِل لمسة ثانية أو سبع ثوانٍ من الصمت. عند الإيقاف، لا وجود له.</translation>
     </message>
 </context>
 <context>
@@ -2297,18 +2325,6 @@
         <translation>غادر %1</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>دُعي %1</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>أُزيل %1</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>حُظر %1</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>رفض %1 الدعوة</translation>
     </message>
@@ -2503,6 +2519,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>لم يُرسَل صوتك</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>دعا %1 المستخدم %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>أزال %1 المستخدم %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>حظر %1 المستخدم %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>رفع %1 الحظر عن %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>سحب %1 الدعوة الموجّهة إلى %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>تحويل إلى نص</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>جارٍ التحويل إلى نص…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>تم التعرّف عليه تلقائيًا، وقد يحتوي على أخطاء</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>يجري التسجيل… %1 ثانية. المس الميكروفون للإرسال.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>لم يُقل شيء، لذا لم يُرسل شيء.</translation>
     </message>
 </context>
 <context>
@@ -3256,6 +3317,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>لم يُسجَّل شيء.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>لا يوجد ملف لهذه الرسالة الصوتية.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>الرسالة الصوتية أطول من أن تُحوَّل.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>تعذّر تنزيل الرسالة الصوتية.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>تعذّرت قراءة الرسالة الصوتية.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>هذه ليست رسالة صوتية يمكن تحويلها.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>تعذّر فك ترميز الرسالة الصوتية.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>استغرق التحويل وقتًا طويلًا فأُوقف.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>لم يتم تثبيت Speech Note، أو أن خدمته لا تبدأ.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>لا يملك Speech Note نموذجًا يتعرّف على اللغة بنفسه. نزّل «Auto (WhisperCpp Small)» في Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>خدمة الكلام مشغولة. حاول مرة أخرى بعد قليل.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>رفضت خدمة الكلام الرسالة الصوتية.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>أبلغت خدمة الكلام عن خطأ.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>كل شيء يعمل: يمكن تحويل الرسائل الصوتية.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>لم يُتعرَّف على أي كلام.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>لا يُسمح لـ xmatic بالتواصل مع خدمة الكلام. إعادة تثبيت xmatic تعيد الإذن.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>خدمة الكلام لا تستجيب.</translation>
     </message>
 </context>
 <context>

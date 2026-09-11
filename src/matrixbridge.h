@@ -23,6 +23,7 @@
 #include "callengine.h"
 #include "linkpreviews.h"
 #include "pollactions.h"
+#include "voicetranscripts.h"
 #include "voicerecorder.h"
 #include "timelinemodel.h"
 #include "secretskeeper.h"
@@ -97,6 +98,7 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *polls READ polls CONSTANT)
     Q_PROPERTY(QObject *linkPreviews READ linkPreviews CONSTANT)
     Q_PROPERTY(QObject *mentions READ mentions CONSTANT)
+    Q_PROPERTY(QObject *transcripts READ transcripts CONSTANT)
     Q_PROPERTY(QString openRoomId READ openRoomId NOTIFY openRoomChanged)
     Q_PROPERTY(QStringList pinnedEventIds READ pinnedEventIds NOTIFY pinnedChanged)
     Q_PROPERTY(QString pinnedPreview READ pinnedPreview NOTIFY pinnedChanged)
@@ -222,6 +224,7 @@ public:
     QObject *polls() { return m_polls; }
     QObject *linkPreviews() { return m_linkPreviews; }
     QObject *mentions() { return m_mentions; }
+    QObject *transcripts() { return m_transcripts; }
     QString openRoomId() const { return m_openRoomId; }
 
     /// Event ids of the open room's pinned messages, for the banner and the
@@ -960,6 +963,7 @@ private:
     PollActions *m_polls = nullptr;
     LinkPreviews *m_linkPreviews = nullptr;
     Mentions *m_mentions = nullptr;
+    VoiceTranscripts *m_transcripts = nullptr;
     TimelineModel m_timeline;
     TimelineModel m_threadTimeline;
     /// Which room `m_members` was loaded for, so an action in another room

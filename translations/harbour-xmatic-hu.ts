@@ -1377,6 +1377,10 @@
         <source>Reply in thread</source>
         <translation>Válasz a szálban</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Átalakítás szöveggé</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1571,10 +1575,6 @@
         <translation>Hangüzenetek</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Bekapcsolva az üzenetmező mellett mikrofon van: tartsd nyomva a felvételhez, engedd el a küldéshez. Kikapcsolva nincs ott.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Megérinthető webes hivatkozások</translation>
     </message>
@@ -1673,6 +1673,34 @@
     <message>
         <source>Always</source>
         <translation>Mindig</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Hangüzenetek szövegként</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Hangüzenetek átalakítása szöveggé</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Bekapcsolva egy hangüzenet hosszú megnyomása felajánlja az átalakítását. Semmi sem alakul át, amíg nem kéred, és a felvétel sosem hagyja el ezt a telefont.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Ehhez egy olyan program kell, amelyet ez az alkalmazás nem hoz magával, az OpenReposból, te telepíted: „Speech Note” (kb. 40 MB letöltés, 104 MB telepítve), és benne az „Auto (WhisperCpp Small)” modell (190 MB), amely magától felismeri minden üzenet nyelvét. Csak 64 bites telefonokon.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Ellenőrzés</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Ellenőrzés folyamatban. Első alkalommal fél percig is eltarthat.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Bekapcsolva az üzenetmező mellett mikrofon van: tartsd nyomva a felvételhez, engedd el a küldéshez – vagy koppints rá a kéz nélküli felvételhez, és egy második koppintás vagy hét másodperc csend elküldi. Kikapcsolva nincs ott.</translation>
     </message>
 </context>
 <context>
@@ -2253,18 +2281,6 @@
         <translation>%1 kilépett</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 meghívást kapott</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 eltávolítva</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 kitiltva</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 elutasította a meghívót</translation>
     </message>
@@ -2483,6 +2499,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>A szavazatod nem lett elküldve</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 meghívta %2 felhasználót</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 eltávolította %2 felhasználót</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 kitiltotta %2 felhasználót</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 feloldotta %2 felhasználó kitiltását</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 visszavonta %2 meghívását</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Átalakítás szöveggé</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Átalakítás szöveggé…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Automatikusan felismerve, hibákat tartalmazhat</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Felvétel… %1 mp. Koppints a mikrofonra a küldéshez.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Semmi sem hangzott el, így semmi sem lett elküldve.</translation>
     </message>
 </context>
 <context>
@@ -3226,6 +3287,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Semmi nem lett rögzítve.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Ehhez a hangüzenethez nincs fájl.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>A hangüzenet túl hosszú az átalakításhoz.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>A hangüzenetet nem sikerült letölteni.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>A hangüzenetet nem sikerült beolvasni.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Ez nem olyan hangüzenet, amely átalakítható.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>A hangüzenetet nem sikerült dekódolni.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Az átalakítás túl sokáig tartott, és leállt.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>A Speech Note nincs telepítve, vagy a szolgáltatása nem indul el.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>A Speech Note-ban nincs olyan modell, amely magától felismeri a nyelvet. Töltsd le a Speech Note-ban az „Auto (WhisperCpp Small)” modellt.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>A beszédszolgáltatás foglalt. Próbáld újra egy pillanat múlva.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>A beszédszolgáltatás elutasította a hangüzenetet.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>A beszédszolgáltatás hibát jelzett.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Minden működik: a hangüzenetek átalakíthatók.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Nem sikerült beszédet felismerni.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>Az xmatic nem kommunikálhat a beszédszolgáltatással. Az xmatic újratelepítése visszaadja az engedélyt.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>A beszédszolgáltatás nem válaszol.</translation>
     </message>
 </context>
 <context>

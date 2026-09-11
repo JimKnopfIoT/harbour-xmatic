@@ -41,7 +41,10 @@ repository.
   appears. Markers typed by hand do the same, and a message without any ships
   no second copy of itself
 * Attachments: pictures with full-screen zoom, video, files; save, share,
-  forward. Voice messages recorded and played in place
+  forward. Voice messages recorded and played in place - held to record, or
+  hands-free with a tap that sends on a second tap or after seven seconds of
+  silence - and converted to text on request by an offline speech-to-text
+  program from OpenRepos, installed separately
 * One picker for an attachment with two tabs: the gallery, divided by the
   folders that exist, and the file system from the home folder down. Both
   select several files at once, into one list

@@ -1381,6 +1381,10 @@
         <source>Reply in thread</source>
         <translation>Odpovědět ve vlákně</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Převést na text</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1577,10 +1581,6 @@
         <translation>Hlasové zprávy</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Zapnuto je vedle pole zprávy mikrofon: podrž pro nahrávání, pusť pro odeslání. Vypnuto tam není.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Klikatelné webové odkazy</translation>
     </message>
@@ -1679,6 +1679,34 @@
     <message>
         <source>Always</source>
         <translation>Vždy</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Hlasové zprávy jako text</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Převádět hlasové zprávy na text</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Zapnuto dlouhé podržení hlasové zprávy nabídne její převod. Nic se nepřevádí, dokud o to nepožádáš, a nahrávka nikdy neopustí tento telefon.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>K tomu je potřeba program, který tato aplikace nemá, z OpenRepos, instalovaný tebou: „Speech Note“ (asi 40 MB ke stažení, 104 MB po instalaci) a v něm model „Auto (WhisperCpp Small)“ (190 MB), který sám rozpozná jazyk každé zprávy. Jen na 64bitových telefonech.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Zkontrolovat</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Probíhá kontrola. Poprvé to může trvat půl minuty.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Zapnuto je vedle pole zprávy mikrofon: podrž pro nahrávání, pusť pro odeslání – nebo klepni pro nahrávání bez držení a druhé klepnutí nebo sedm sekund ticha odešle. Vypnuto tam není.</translation>
     </message>
 </context>
 <context>
@@ -2261,18 +2289,6 @@
         <translation>%1 odešel</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 byl pozván</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 byl odebrán</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 byl zablokován</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 odmítl pozvání</translation>
     </message>
@@ -2491,6 +2507,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Tvůj hlas nebyl odeslán</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 pozval %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 odebral %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 zablokoval %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 odblokoval %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 zrušil pozvánku pro %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Převést na text</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Převádí se na text…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Rozpoznáno automaticky, může obsahovat chyby</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Nahrávám… %1 s. Klepni na mikrofon pro odeslání.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Nic nebylo řečeno, takže nic nebylo odesláno.</translation>
     </message>
 </context>
 <context>
@@ -3238,6 +3299,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Nic se nenahrálo.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Tato hlasová zpráva nemá soubor.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Hlasová zpráva je příliš dlouhá na převod.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Hlasovou zprávu se nepodařilo stáhnout.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Hlasovou zprávu se nepodařilo přečíst.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Tohle není hlasová zpráva, kterou lze převést.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Hlasovou zprávu se nepodařilo dekódovat.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Převod trval příliš dlouho a byl zastaven.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note není nainstalovaný, nebo se jeho služba nespustí.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note nemá model, který sám rozpozná jazyk. Stáhni v Speech Note „Auto (WhisperCpp Small)“.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Hlasová služba je zaneprázdněná. Zkus to za chvíli znovu.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Hlasová služba odmítla hlasovou zprávu.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Hlasová služba ohlásila chybu.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Vše funguje: hlasové zprávy lze převádět.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Nebyla rozpoznána žádná řeč.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic nesmí komunikovat s hlasovou službou. Přeinstalování xmatic oprávnění vrátí.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Hlasová služba neodpovídá.</translation>
     </message>
 </context>
 <context>

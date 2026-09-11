@@ -56,6 +56,8 @@ SOURCES += \
     src/pollactions.cpp \
     src/linkpreviews.cpp \
     src/mentions.cpp \
+    src/voicedecode.cpp \
+    src/voicetranscripts.cpp \
     src/roomlistmodel.cpp \
     src/roomsortmodel.cpp \
     src/directorymodel.cpp \
@@ -84,6 +86,8 @@ HEADERS += \
     src/pollactions.h \
     src/linkpreviews.h \
     src/mentions.h \
+    src/voicedecode.h \
+    src/voicetranscripts.h \
     src/outgoingimage.h \
     src/imagefacts.h \
     src/secretskeeper.h \
@@ -169,6 +173,17 @@ pushservice.files = org.unifiedpush.Connector.xmatic.service
 pushservice.path = /usr/share/dbus-1/services
 INSTALLS += pushservice
 
+# The sandbox's leave to talk to the offline speech service, for a voice message
+# converted to text on request. Sailjail reads permissions from this directory only.
+speechpermission.files = XmaticSpeech.permission
+speechpermission.path = /etc/sailjail/permissions
+INSTALLS += speechpermission
+
+# One second of silence in Ogg/Opus: the check runs the real path with it.
+voicecheck.files = data/voice-check.opus
+voicecheck.path = /usr/share/$${TARGET}/data
+INSTALLS += voicecheck
+
 # English is the source language; the files below carry the translations.
 # libsailfishapp loads the .qm matching the device locale and falls back to the
 # source strings where there is none.
@@ -224,6 +239,8 @@ DISTFILES += \
     LICENSE \
     README.md \
     harbour-xmatic.desktop \
+    XmaticSpeech.permission \
+    data/voice-check.opus \
     rpm/harbour-xmatic.spec \
     icons/xmatic-logo.svg \
     qml/harbour-xmatic.qml \

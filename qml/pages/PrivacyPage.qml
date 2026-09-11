@@ -135,7 +135,7 @@ Page {
 
             TextSwitch {
                 text: qsTr("Voice messages")
-                description: qsTr("On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.")
+                description: qsTr("On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.")
                 checked: settings.voiceMessages
                 automaticCheck: false
                 onClicked: settings.voiceMessages = !settings.voiceMessages
@@ -176,6 +176,51 @@ Page {
                     default: settings.linkPreviews = "never"; break
                     }
                 }
+            }
+
+            SectionHeader {
+                text: qsTr("Voice messages as text")
+            }
+
+            TextSwitch {
+                text: qsTr("Convert voice messages to text")
+                description: qsTr("On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.")
+                checked: settings.voiceTranscripts
+                automaticCheck: false
+                onClicked: settings.voiceTranscripts = !settings.voiceTranscripts
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryColor
+                textFormat: Text.PlainText
+                text: qsTr("This needs a program this app does not bring, from OpenRepos, installed by you: \"Speech Note\" (about 40 MB to download, 104 MB installed), and in it the model \"Auto (WhisperCpp Small)\" (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.")
+            }
+
+            WrapButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: content.buttonWidth
+                label: qsTr("Check")
+                enabled: matrix.transcripts.checkState !== "running"
+                onClicked: matrix.transcripts.check()
+            }
+
+            // What the check found, in its own words: which of the pieces is missing.
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: matrix.transcripts.checkState.length > 0
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                textFormat: Text.PlainText
+                color: matrix.transcripts.checkState === "failed" ? Theme.errorColor
+                                                                   : Theme.highlightColor
+                text: matrix.transcripts.checkState === "running"
+                      ? qsTr("Checking. The first time can take half a minute.")
+                      : matrix.transcripts.checkMessage
             }
 
             SectionHeader {

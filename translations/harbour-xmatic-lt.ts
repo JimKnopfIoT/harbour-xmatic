@@ -1381,6 +1381,10 @@
         <source>Reply in thread</source>
         <translation>Atsakyti gijoje</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Paversti tekstu</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1577,10 +1581,6 @@
         <translation>Balso žinutės</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Įjungus šalia žinutės lauko yra mikrofonas: laikyk, kad įrašytum, paleisk, kad išsiųstum. Išjungus jo nėra.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Paliečiamos saitai</translation>
     </message>
@@ -1679,6 +1679,34 @@
     <message>
         <source>Always</source>
         <translation>Visada</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Balso žinutės kaip tekstas</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Paversti balso žinutes tekstu</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Įjungus ilgas balso žinutės paspaudimas pasiūlo ją paversti. Niekas nepaverčiama, jei neprašai, o įrašas niekada nepalieka šio telefono.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Tam reikia programos, kurios ši programėlė neturi, iš OpenRepos, kurią įdiegi pats: „Speech Note“ (apie 40 MB atsisiųsti, 104 MB įdiegta) ir joje modelio „Auto (WhisperCpp Small)“ (190 MB), kuris pats atpažįsta kiekvienos žinutės kalbą. Tik 64 bitų telefonuose.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Patikrinti</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Tikrinama. Pirmą kartą tai gali užtrukti pusę minutės.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Įjungus šalia žinutės lauko yra mikrofonas: laikyk, kad įrašytum, paleisk, kad išsiųstum – arba paliesk, kad įrašytum laisvomis rankomis, o antras palietimas ar septynios sekundės tylos išsiunčia. Išjungus jo nėra.</translation>
     </message>
 </context>
 <context>
@@ -2261,18 +2289,6 @@
         <translation>%1 išėjo</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 buvo pakviestas</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 buvo pašalintas</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 buvo užblokuotas</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 atmetė pakvietimą</translation>
     </message>
@@ -2491,6 +2507,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Tavo balsas nebuvo išsiųstas</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 pakvietė %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 pašalino %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 užblokavo %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 atblokavo %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 atšaukė kvietimą %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Paversti tekstu</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Verčiama tekstu…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Atpažinta automatiškai, gali būti klaidų</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Įrašoma… %1 s. Paliesk mikrofoną, kad išsiųstum.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Nieko nepasakyta, todėl nieko neišsiųsta.</translation>
     </message>
 </context>
 <context>
@@ -3238,6 +3299,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Nieko nebuvo įrašyta.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Ši balso žinutė neturi failo.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Balso žinutė per ilga, kad ją būtų galima paversti.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Nepavyko atsisiųsti balso žinutės.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Nepavyko perskaityti balso žinutės.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Tai ne balso žinutė, kurią galima paversti.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Nepavyko iškoduoti balso žinutės.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Pavertimas užtruko per ilgai ir buvo sustabdytas.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note neįdiegta arba jos paslauga nepasileidžia.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note neturi modelio, kuris pats atpažintų kalbą. Atsisiųsk „Auto (WhisperCpp Small)“ programoje Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Kalbos paslauga užimta. Bandyk dar kartą po akimirkos.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Kalbos paslauga atmetė balso žinutę.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Kalbos paslauga pranešė apie klaidą.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Viskas veikia: balso žinutes galima paversti.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Kalba neatpažinta.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic negali kalbėtis su kalbos paslauga. Iš naujo įdiegus xmatic, leidimas grįžta.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Kalbos paslauga neatsako.</translation>
     </message>
 </context>
 <context>

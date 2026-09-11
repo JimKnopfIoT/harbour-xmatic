@@ -21,7 +21,7 @@ use matrix_sdk::{
                 encryption::RoomEncryptionEventContent,
                 message::{FormattedBody, MessageFormat, MessageType, RoomMessageEventContent},
             },
-            InitialStateEvent,
+            InitialStateEvent, StateEventContentChange,
         },
         EventId, OwnedEventId, OwnedServerName, OwnedUserId, RoomId, RoomOrAliasId, ServerName,
         UserId,
@@ -33,7 +33,8 @@ use matrix_sdk_ui::{
     eyeball_im::VectorDiff,
     timeline::{
         EncryptedMessage, EventSendState, EventTimelineItem, MembershipChange, MsgLikeKind,
-        RoomExt, TimelineDetails, TimelineEventItemId, TimelineItem, TimelineItemContent,
+        RoomExt, RoomMembershipChange, TimelineDetails, TimelineEventItemId, TimelineItem,
+        TimelineItemContent,
         TimelineReadReceiptTracking, VirtualTimelineItem,
     },
 };
@@ -43,6 +44,9 @@ use crate::compose::to_formatted_body;
 use crate::protocol::event;
 use crate::runtime::Sink;
 use crate::text::{safe_file_name, scrub_ids, strip_bidi};
+
+/// What a system line holds of a stranger's reason.
+const REASON_CHARS: usize = 200;
 
 /// How many events one backwards pagination asks for.
 const PAGE_SIZE: u16 = 30;
@@ -508,6 +512,19 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
         _ => (None, None),
     };
 
+    // Declared, so a claim: the page refuses on it early, the decoder enforces.
+    let (duration, voice) = match message_type {
+        MessageType::Audio(content) => (
+            content
+                .info
+                .as_ref()
+                .and_then(|i| i.duration)
+                .map(|d| u64::try_from(d.as_millis()).unwrap_or(u64::MAX)),
+            content.voice.is_some(),
+        ),
+        _ => (None, false),
+    };
+
     Some(json!({
         "source": serde_json::to_value(source).ok(),
         "thumbnailSource": thumbnail,
@@ -520,6 +537,10 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
         // read it as "not declared" and let it through.
         "width": width.map(u64::from),
         "height": height.map(u64::from),
+        // Milliseconds. Null for anything not audio, and for audio that says nothing.
+        "duration": duration,
+        // Marked as a recording (MSC3245), not an audio file.
+        "voice": voice,
     }))
 }
 
@@ -910,6 +931,45 @@ fn sender_avatar(room_id: &str, item: &EventTimelineItem) -> Option<String> {
     }
 }
 
+/// Who a membership change is about - never the sender: a ban carries no
+/// display name, and falling back to the sender named the moderator instead.
+fn member_name(room_id: &str, change: &RoomMembershipChange) -> String {
+    let user = change.user_id().as_str();
+    change
+        .display_name()
+        .map(|name| strip_bidi(&name))
+        .filter(|name| !name.trim().is_empty())
+        .or_else(|| recall_sender(room_id, user).map(|(name, _)| name))
+        .unwrap_or_else(|| user.to_owned())
+}
+
+/// The reason a moderator gave, bounded and filtered like a message body.
+/// Only where it is one: the spec warns that an invite's reason is a spam
+/// vector, and a self-chosen leave reason is the same free text.
+fn member_reason(item: &EventTimelineItem, token: &str) -> Option<String> {
+    if !matches!(
+        token,
+        "member.kicked" | "member.banned" | "member.unbanned" | "member.revoked"
+    ) {
+        return None;
+    }
+    let TimelineItemContent::MembershipChange(change) = item.content() else {
+        return None;
+    };
+    let StateEventContentChange::Original { content, .. } = change.content() else {
+        return None;
+    };
+    let reason = content.reason.as_deref()?.trim();
+    if reason.is_empty() {
+        return None;
+    }
+    let mut cut: String = reason.chars().take(REASON_CHARS).collect();
+    if cut.chars().count() < reason.chars().count() {
+        cut.push('\u{2026}');
+    }
+    Some(strip_bidi(&cut))
+}
+
 /// One timeline item as the UI needs it. Items that are neither messages nor
 /// dividers stay as kind "other": dropping them shifts the indices.
 fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Value {
@@ -1009,8 +1069,9 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
                 Some(MembershipChange::Banned) | Some(MembershipChange::KickedAndBanned) => {
                     "member.banned"
                 }
-                Some(MembershipChange::InvitationRejected)
-                | Some(MembershipChange::InvitationRevoked) => "member.declined",
+                Some(MembershipChange::Unbanned) => "member.unbanned",
+                Some(MembershipChange::InvitationRejected) => "member.declined",
+                Some(MembershipChange::InvitationRevoked) => "member.revoked",
                 Some(MembershipChange::Knocked) => "member.knocked",
                 _ => "member",
             };
@@ -1022,7 +1083,7 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
                 None,
                 None,
                 token,
-                strip_bidi(&change.display_name().unwrap_or_default()),
+                member_name(room_id, change),
             )
         }
         TimelineItemContent::ProfileChange(_) => {
@@ -1068,6 +1129,10 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
         },
         _ => None,
     };
+
+    // Separate from the tuple above for the same reason as `formatted`: it
+    // belongs to one arm.
+    let reason = member_reason(event, system);
 
     // Separate from the tuple above: it concerns exactly one of its arms, and
     // threading a ninth element through every other arm would say otherwise.
@@ -1123,6 +1188,8 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
         "edited": edited,
         "system": system,
         "name": name,
+        // Null for every row that is not a moderator's act.
+        "reason": reason,
         "sender": event.sender().as_str(),
         "senderName": sender_name(room_id, event),
         "senderAvatar": sender_avatar(room_id, event),

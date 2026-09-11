@@ -40,6 +40,10 @@ class AppSettings : public QObject
                NOTIFY pushChanged)
     Q_PROPERTY(bool voiceMessages READ voiceMessages WRITE setVoiceMessages
                NOTIFY voiceMessagesChanged)
+    /// Whether a long press on a voice message offers to convert it to text.
+    /// Off by default: it needs a program this app does not bring.
+    Q_PROPERTY(bool voiceTranscripts READ voiceTranscripts WRITE setVoiceTranscripts
+               NOTIFY voiceTranscriptsChanged)
     Q_PROPERTY(bool hideKeyboardOnSend READ hideKeyboardOnSend WRITE setHideKeyboardOnSend
                NOTIFY hideKeyboardOnSendChanged)
     Q_PROPERTY(bool sendByEnter READ sendByEnter WRITE setSendByEnter
@@ -140,6 +144,8 @@ public:
     /// hold away from a recording and not everybody wants that in reach.
     bool voiceMessages() const;
     void setVoiceMessages(bool enabled);
+    bool voiceTranscripts() const;
+    void setVoiceTranscripts(bool enabled);
 
     /// Whether the keyboard goes away once a message is sent. On: the conversation
     /// is what one wants to see afterwards.
@@ -186,6 +192,7 @@ signals:
     void linkPreviewsChanged();
     void pushChanged();
     void voiceMessagesChanged();
+    void voiceTranscriptsChanged();
     void hideKeyboardOnSendChanged();
     void sendByEnterChanged();
     void emojiImagesChanged();

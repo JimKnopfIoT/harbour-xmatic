@@ -443,6 +443,10 @@ Page {
                    || status === PageStatus.Inactive) {
             matrix.setVisibleRoom("")
             page.markReadIfDue()
+            // A hands-free take has no finger that lifts on leaving: dropped, not sent.
+            if (matrix.recorder.handsFree) {
+                matrix.recorder.cancel()
+            }
             if (status === PageStatus.Deactivating) {
                 page.keepAnchor()
             }
@@ -497,6 +501,8 @@ Page {
                     forwardAttachment(action.item)
                 } else if (action.kind === "mention") {
                     messageComposer.insertMention(action.userId, action.displayName)
+                } else if (action.kind === "transcribe") {
+                    matrix.transcripts.transcribe(action.item.id, action.eventId, action.item.media)
                 } else if (action.kind === "delete") {
                     // The countdown belongs on the page that stays: started on the actions page,
                     // Silica executes it the moment that page pops.
@@ -1251,6 +1257,12 @@ Page {
                 readonly property bool isAudio: model.kind === "message"
                                                 && model.msgtype === "m.audio"
                                                 && !!model.media
+                // Offered where the switch is on; whether it can work is the check's
+                // business on the privacy page, and the answer's in the bubble.
+                readonly property bool canTranscribe: row.isAudio && settings.voiceTranscripts
+                                                      && row.rowEventId.length > 0
+                readonly property string transcriptState: matrix.transcripts.revision >= 0
+                        ? matrix.transcripts.state(row.rowEventId) : ""
                 readonly property bool isVideo: model.kind === "message"
                                                 && model.msgtype === "m.video"
                                                 && !!model.media
@@ -1354,21 +1366,33 @@ Page {
                 // Localised here, not in the core: the token comes from Rust, the
                 // wording and language belong to the UI.
                 function systemText() {
+                    // The person the change is about, and the one who made it. For a ban
+                    // those are two different people, and naming only one named the wrong.
                     var who = (model.name && model.name.length > 0)
                               ? model.name : model.senderName
+                    var by = model.senderName
+                    var line = ""
                     switch (model.system) {
                     case "call":            return qsTr("Call", "timeline system line, a noun")
-                    case "member.joined":   return qsTr("%1 joined").arg(who)
-                    case "member.left":     return qsTr("%1 left").arg(who)
-                    case "member.invited":  return qsTr("%1 was invited").arg(who)
-                    case "member.kicked":   return qsTr("%1 was removed").arg(who)
-                    case "member.banned":   return qsTr("%1 was banned").arg(who)
-                    case "member.declined": return qsTr("%1 declined the invitation").arg(who)
-                    case "member.knocked":  return qsTr("%1 asked to join").arg(who)
-                    case "member":          return qsTr("%1 changed membership").arg(who)
-                    case "profile":         return qsTr("%1 changed their profile").arg(who)
+                    case "member.joined":   line = qsTr("%1 joined").arg(who); break
+                    case "member.left":     line = qsTr("%1 left").arg(who); break
+                    case "member.invited":  line = qsTr("%1 invited %2").arg(by).arg(who); break
+                    case "member.kicked":   line = qsTr("%1 removed %2").arg(by).arg(who); break
+                    case "member.banned":   line = qsTr("%1 banned %2").arg(by).arg(who); break
+                    case "member.unbanned": line = qsTr("%1 unbanned %2").arg(by).arg(who); break
+                    case "member.revoked":  line = qsTr("%1 withdrew the invitation for %2").arg(by).arg(who); break
+                    case "member.declined": line = qsTr("%1 declined the invitation").arg(who); break
+                    case "member.knocked":  line = qsTr("%1 asked to join").arg(who); break
+                    case "member":          line = qsTr("%1 changed membership").arg(who); break
+                    case "profile":         line = qsTr("%1 changed their profile").arg(who); break
                     default:                return ""
                     }
+                    // Only where the core vouches for one - see member_reason().
+                    if (model.reason && model.reason.length > 0) {
+                        line = qsTr("%1: %2", "system line and the reason given for it")
+                               .arg(line).arg(model.reason)
+                    }
+                    return line
                 }
 
                 // What the sender declares about a picture. `sourceSize` is a hint an
@@ -1482,6 +1506,14 @@ Page {
                         onClicked: page.saveAttachment(model)
                     }
 
+                    MenuItem {
+                        text: qsTr("Convert to text")
+                        visible: row.canTranscribe && !page.isLandscape
+                                 && row.transcriptState !== "working"
+                                 && row.transcriptState !== "done"
+                        onClicked: matrix.transcripts.transcribe(model.id, model.eventId, model.media)
+                    }
+
 
 
                     MenuItem {
@@ -1544,6 +1576,9 @@ Page {
                                                       editable: model.editable === true,
                                                       isImage: row.isImage,
                                                       canSave: row.isFile || row.isImage,
+                                                      canTranscribe: row.canTranscribe
+                                                                     && row.transcriptState !== "working"
+                                                                     && row.transcriptState !== "done",
                                                       // Copied out, not handed over: the model row is gone once it leaves the
                                                       // cache.
                                                       item: {
@@ -2041,6 +2076,65 @@ Page {
                             }
                         }
 
+                        // A voice message converted on request: text a machine heard, from a
+                        // stranger. Plain, capped in src/voicetranscripts.cpp, never linked.
+                        Label {
+                            id: transcriptLabel
+
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+                            // Measured by its twin, as the body is: a wrapped label's own implicit
+                            // width follows its laid-out width, and reading that back loops.
+                            width: Math.min(transcriptMeasure.implicitWidth,
+                                            bubbleColumn.maxTextWidth)
+                            visible: row.isAudio && row.transcriptState.length > 0
+
+                            Label {
+                                id: transcriptMeasure
+
+                                visible: false
+                                textFormat: Text.PlainText
+                                font.pixelSize: transcriptLabel.font.pixelSize
+                                text: transcriptLabel.text
+                            }
+                            textFormat: Text.PlainText
+                            wrapMode: Text.Wrap
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: {
+                                if (row.transcriptState !== "done") {
+                                    return Theme.secondaryColor
+                                }
+                                var own = row.isOwn ? appearance.ownTextColor
+                                                    : appearance.otherTextColor
+                                return own.length > 0 ? own : Theme.primaryColor
+                            }
+                            text: {
+                                if (matrix.transcripts.revision < 0) {
+                                    return ""
+                                }
+                                switch (row.transcriptState) {
+                                case "working": return qsTr("Converting to text…")
+                                case "failed": return matrix.transcripts.failure(row.rowEventId)
+                                case "done": return matrix.transcripts.text(row.rowEventId)
+                                default: return ""
+                                }
+                            }
+                            MouseArea {
+                                anchors.fill: parent
+                                onPressAndHold: row.openMenu()
+                            }
+                        }
+
+                        Label {
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+                            width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
+                            visible: row.isAudio && row.transcriptState === "done"
+                            truncationMode: TruncationMode.Fade
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            color: Theme.secondaryColor
+                            textFormat: Text.PlainText
+                            text: qsTr("Recognised automatically, may contain mistakes")
+                        }
+
                         Label {
                             id: bodyLabel
 
@@ -2518,9 +2612,15 @@ Page {
                         top: parent.top
                         topMargin: Theme.paddingMedium
                     }
-                    // A system line can be long; keep it inside the page.
-                    width: Math.min(implicitWidth, timelineView.width - 2 * Theme.horizontalPageMargin)
-                    truncationMode: TruncationMode.Fade
+                    // A system line carries two names and a reason; it wraps rather
+                    // than fading away, and stops after three lines.
+                    width: timelineView.width - 2 * Theme.horizontalPageMargin
+                    wrapMode: Text.Wrap
+                    maximumLineCount: 3
+                    elide: Text.ElideRight
+                    // Names and reasons are text a stranger wrote: AutoText would
+                    // hand a body with a tag to the rich-text renderer.
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeExtraSmall
                     font.italic: true
                     color: Theme.secondaryColor
@@ -2751,13 +2851,42 @@ Page {
 
                 // While recording, the elapsed time replaces the hints above the
                 // field so it is obvious that the microphone is live.
-                Label {
-                    x: Theme.horizontalPageMargin
-                    width: parent.width - 2 * Theme.horizontalPageMargin
-                    visible: matrix.recorder.recording
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    color: Theme.errorColor
-                    text: qsTr("Recording… %1 s").arg(Math.round(matrix.recorder.duration / 1000))
+                Item {
+                    width: parent.width
+                    height: recordingLabel.visible
+                            ? Math.max(recordingLabel.height,
+                                       cancelRecording.visible ? cancelRecording.height : 0)
+                            : 0
+
+                    Label {
+                        id: recordingLabel
+
+                        x: Theme.horizontalPageMargin
+                        width: parent.width - 2 * Theme.horizontalPageMargin
+                               - (cancelRecording.visible ? cancelRecording.width : 0)
+                        anchors.verticalCenter: parent.verticalCenter
+                        visible: matrix.recorder.recording
+                        wrapMode: Text.Wrap
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: Theme.errorColor
+                        text: matrix.recorder.handsFree
+                              ? qsTr("Recording… %1 s. Tap the microphone to send.")
+                                    .arg(Math.round(matrix.recorder.duration / 1000))
+                              : qsTr("Recording… %1 s").arg(Math.round(matrix.recorder.duration / 1000))
+                    }
+
+                    // Hands-free has no finger to lift: this is its way out without sending.
+                    IconButton {
+                        id: cancelRecording
+
+                        anchors {
+                            right: parent.right
+                            verticalCenter: parent.verticalCenter
+                        }
+                        visible: matrix.recorder.handsFree
+                        icon.source: "image://theme/icon-m-clear"
+                        onClicked: matrix.recorder.cancel()
+                    }
                 }
 
                 Row {
@@ -3466,6 +3595,12 @@ Page {
     function showNotice(text) {
         page.noticeText = text
         jumpNoticeTimer.restart()
+    }
+
+    // A hands-free take that heard nothing is dropped, and the page says so.
+    Connections {
+        target: matrix.recorder
+        onNothingHeard: page.showNotice(qsTr("Nothing was said, so nothing was sent."))
     }
 
     // A refused poll command has no row to mark, so the page says it.
