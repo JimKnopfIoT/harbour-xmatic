@@ -45,6 +45,22 @@ Column {
     /// tick after the press, which is when it asks.
     property bool keepKeyboard: false
 
+    // Hands-free also ends by itself; the conversation follows as after a tap.
+    Connections {
+        target: matrix.recorder
+        onAutoStopped: composer.recordingStopped()
+    }
+
+    // A hands-free take never runs on behind the user's back: dropped, not sent.
+    Connections {
+        target: Qt.application
+        onActiveChanged: {
+            if (!Qt.application.active && matrix.recorder.handsFree) {
+                matrix.recorder.cancel()
+            }
+        }
+    }
+
     function holdKeyboard() {
         composer.keepKeyboard = true
         keepKeyboardWindow.restart()
@@ -321,31 +337,57 @@ Column {
             }
         }
 
-        // Hold to record, release to send. A tap-to-start button invites
-        // accidental minute-long recordings.
+        // Hold to record, release to send - or tap for hands-free, where a second tap
+        // or silence after speech sends. Silence and a ceiling bound a forgotten one.
         IconButton {
             id: recordButton
+
+            /// This press started a held recording: its release sends, and no tap follows.
+            property bool held: false
 
             anchors {
                 right: parent.right
                 rightMargin: Theme.horizontalPageMargin
                 verticalCenter: parent.verticalCenter
             }
-            visible: composer.voice && settings.voiceMessages && !composer.editing
-                     && messageField.text.trim().length === 0
-                     && !messageField.inputMethodComposing
+            // Stays while recording: it is the way to end a hands-free take.
+            visible: matrix.recorder.recording
+                     || (composer.voice && settings.voiceMessages && !composer.editing
+                         && messageField.text.trim().length === 0
+                         && !messageField.inputMethodComposing)
             icon.source: matrix.recorder.recording
                          ? "image://theme/icon-m-mic?" + Theme.errorColor
                          : "image://theme/icon-m-mic"
 
-            onPressAndHold: matrix.recorder.start()
+            onPressed: held = false
+            onPressAndHold: {
+                if (!matrix.recorder.recording) {
+                    held = true
+                    matrix.recorder.start()
+                }
+            }
             onReleased: {
-                if (matrix.recorder.recording) {
+                if (held && matrix.recorder.recording) {
                     matrix.recorder.stop()
                     composer.recordingStopped()
                 }
             }
-            onCanceled: matrix.recorder.cancel()
+            onCanceled: {
+                if (held) {
+                    matrix.recorder.cancel()
+                }
+            }
+            onClicked: {
+                if (held) {
+                    return
+                }
+                if (matrix.recorder.recording) {
+                    matrix.recorder.stop()
+                    composer.recordingStopped()
+                } else {
+                    matrix.recorder.startHandsFree()
+                }
+            }
         }
 
         IconButton {

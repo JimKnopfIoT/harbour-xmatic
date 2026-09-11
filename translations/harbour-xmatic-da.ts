@@ -1379,6 +1379,10 @@
         <source>Reply in thread</source>
         <translation>Svar i tråden</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Konvertér til tekst</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1574,10 +1578,6 @@
         <translation>Talebeskeder</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Slået til sidder der en mikrofon ved siden af beskedfeltet: hold den nede for at optage, slip for at sende. Slået fra er den der ikke.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Weblinks der kan trykkes på</translation>
     </message>
@@ -1676,6 +1676,34 @@
     <message>
         <source>Always</source>
         <translation>Altid</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Talebeskeder som tekst</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Konvertér talebeskeder til tekst</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Slået til tilbyder et langt tryk på en talebesked at konvertere den. Intet konverteres, uden at du beder om det, og optagelsen forlader aldrig denne telefon.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Det kræver et program, som denne app ikke har med, fra OpenRepos, som du selv installerer: »Speech Note« (ca. 40 MB at hente, 104 MB installeret) og i det modellen »Auto (WhisperCpp Small)« (190 MB), som selv genkender sproget i hver besked. Kun på 64-bit-telefoner.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Tjek</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Tjekker. Første gang kan det tage et halvt minut.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Slået til sidder der en mikrofon ved siden af beskedfeltet: hold den nede for at optage, slip for at sende – eller tryk for at optage håndfrit, og et tryk til eller syv sekunders stilhed sender. Slået fra er den der ikke.</translation>
     </message>
 </context>
 <context>
@@ -2257,18 +2285,6 @@
         <translation>%1 gik</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 blev inviteret</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 blev fjernet</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 blev bortvist</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 afslog invitationen</translation>
     </message>
@@ -2487,6 +2503,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Din stemme blev ikke sendt</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 inviterede %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 fjernede %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 bortviste %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 ophævede bortvisningen af %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 trak invitationen til %2 tilbage</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Konvertér til tekst</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Konverterer til tekst…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Genkendt automatisk, kan indeholde fejl</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Optager… %1 s. Tryk på mikrofonen for at sende.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Der blev ikke sagt noget, så der blev ikke sendt noget.</translation>
     </message>
 </context>
 <context>
@@ -3232,6 +3293,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Der blev ikke optaget noget.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Denne talebesked har ingen fil.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Talebeskeden er for lang til at blive konverteret.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Talebeskeden kunne ikke hentes.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Talebeskeden kunne ikke læses.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Dette er ikke en talebesked, der kan konverteres.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Talebeskeden kunne ikke afkodes.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Konverteringen tog for lang tid og blev stoppet.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note er ikke installeret, eller dens tjeneste starter ikke.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note har ingen model, der selv genkender sproget. Hent »Auto (WhisperCpp Small)« i Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Taletjenesten er optaget. Prøv igen om lidt.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Taletjenesten afviste talebeskeden.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Taletjenesten meldte en fejl.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Alt virker: talebeskeder kan konverteres.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Der blev ikke genkendt nogen tale.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic må ikke tale med taletjenesten. Geninstallation af xmatic giver tilladelsen tilbage.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Taletjenesten svarer ikke.</translation>
     </message>
 </context>
 <context>

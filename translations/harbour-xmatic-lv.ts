@@ -1381,6 +1381,10 @@
         <source>Reply in thread</source>
         <translation>Atbildēt pavedienā</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Pārvērst tekstā</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1577,10 +1581,6 @@
         <translation>Balss ziņas</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Ieslēgts blakus ziņas laukam ir mikrofons: turi, lai ierakstītu, atlaid, lai sūtītu. Izslēgts tā tur nav.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Pieskaramas tīmekļa saites</translation>
     </message>
@@ -1679,6 +1679,34 @@
     <message>
         <source>Always</source>
         <translation>Vienmēr</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Balss ziņas kā teksts</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Pārvērst balss ziņas tekstā</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Ieslēgts ilgs spiediens uz balss ziņas piedāvā to pārvērst. Nekas netiek pārvērsts, ja tu to neprasi, un ieraksts nekad neatstāj šo tālruni.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Tam vajag programmu, ko šī lietotne neiekļauj, no OpenRepos, ko tu instalē pats: “Speech Note” (apmēram 40 MB lejupielāde, 104 MB instalēta) un tajā modeli “Auto (WhisperCpp Small)” (190 MB), kas pats atpazīst katras ziņas valodu. Tikai 64 bitu tālruņos.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Pārbaudīt</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Notiek pārbaude. Pirmajā reizē tas var aizņemt pusminūti.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Ieslēgts blakus ziņas laukam ir mikrofons: turi, lai ierakstītu, atlaid, lai sūtītu – vai pieskaries, lai ierakstītu brīvroku režīmā, un otrs pieskāriens vai septiņas sekundes klusuma nosūta. Izslēgts tā tur nav.</translation>
     </message>
 </context>
 <context>
@@ -2261,18 +2289,6 @@
         <translation>%1 aizgāja</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 tika ielūgts</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 tika noņemts</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 tika liegts</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 noraidīja ielūgumu</translation>
     </message>
@@ -2491,6 +2507,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Tava balss netika nosūtīta</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 ielūdza %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 noņēma %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 liedza %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 atcēla liegumu %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 atsauca ielūgumu %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Pārvērst tekstā</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Pārvērš tekstā…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Atpazīts automātiski, var saturēt kļūdas</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Ieraksta… %1 s. Pieskaries mikrofonam, lai sūtītu.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Nekas netika pateikts, tāpēc nekas netika nosūtīts.</translation>
     </message>
 </context>
 <context>
@@ -3238,6 +3299,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Nekas netika ierakstīts.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Šai balss ziņai nav faila.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Balss ziņa ir pārāk gara, lai to pārvērstu.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Balss ziņu neizdevās lejupielādēt.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Balss ziņu neizdevās nolasīt.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Šī nav balss ziņa, ko var pārvērst.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Balss ziņu neizdevās atkodēt.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Pārvēršana ilga pārāk ilgi un tika apturēta.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note nav instalēta, vai tās pakalpojums nesāk darboties.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note nav modeļa, kas pats atpazīst valodu. Lejupielādē Speech Note “Auto (WhisperCpp Small)”.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Runas pakalpojums ir aizņemts. Mēģini vēlreiz pēc brīža.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Runas pakalpojums noraidīja balss ziņu.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Runas pakalpojums ziņoja par kļūdu.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Viss darbojas: balss ziņas var pārvērst.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Runa netika atpazīta.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic nedrīkst sazināties ar runas pakalpojumu. Instalējot xmatic no jauna, atļauja atgriežas.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Runas pakalpojums neatbild.</translation>
     </message>
 </context>
 <context>

@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.31.0
+Version:    0.32.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -107,9 +107,29 @@ strip %{buildroot}%{_bindir}/%{name}
 # of the desktop file, so nothing has to be run here.
 %{_datadir}/dbus-1/services/org.xmatic.xmatic.service
 %{_datadir}/dbus-1/services/org.unifiedpush.Connector.xmatic.service
+# The sandbox's leave to talk to the offline speech service; Sailjail reads
+# permissions from /etc only.
+%config %{_sysconfdir}/sailjail/permissions/XmaticSpeech.permission
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Sep 11 2026 harbour-xmatic contributors 0.32.0-1
+- A voice message can be converted to text on request: a long press offers it
+  where Privacy allows it, off by default. It needs an offline speech-to-text
+  program from OpenRepos with a model that recognises the language by itself;
+  the privacy page names both, with their sizes, and a check button tests the
+  whole path. The recording is decoded inside the app's sandbox and only a
+  plain WAV reaches the other program; the text is shown as plain text, marked
+  as recognised automatically, and kept in memory only.
+- A voice message can be recorded hands-free: a tap on the microphone starts
+  it, a second tap sends it, and seven seconds of silence after speech send it
+  by themselves. Silence alone drops it, and so does leaving the room or the
+  app; a cancel button stands next to the running time. Holding to record and
+  releasing to send stays as it was.
+- A ban, a removal or an invitation names both people, and a ban or removal
+  its reason. The line used to fall back to the sender where the event carried
+  no name, which named the moderator as the one banned.
+
 * Tue Sep 08 2026 harbour-xmatic contributors 0.31.0-1
 - A help page measures why the secure storage hands out no key and gives the
   advice that fits the answer. Where the storage service itself is locked, that

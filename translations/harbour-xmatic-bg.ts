@@ -1379,6 +1379,10 @@
         <source>Reply in thread</source>
         <translation>Отговори в темата</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Преобразувай в текст</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1574,10 +1578,6 @@
         <translation>Гласови съобщения</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Включено, до полето за съобщение има микрофон: задръж, за да запишеш, пусни, за да изпратиш. Изключено го няма.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Уеб връзки с натискане</translation>
     </message>
@@ -1676,6 +1676,34 @@
     <message>
         <source>Always</source>
         <translation>Винаги</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Гласови съобщения като текст</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Преобразувай гласовите съобщения в текст</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Включено, продължително натискане върху гласово съобщение предлага да го преобразуваш. Нищо не се преобразува, ако не поискаш, и записът никога не напуска този телефон.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>За това е нужна програма, която това приложение не носи, от OpenRepos, инсталирана от теб: „Speech Note“ (около 40 MB за изтегляне, 104 MB инсталирана) и в нея моделът „Auto (WhisperCpp Small)“ (190 MB), който сам разпознава езика на всяко съобщение. Само на 64-битови телефони.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Провери</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Проверява се. Първия път може да отнеме половин минута.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Включено, до полето за съобщение има микрофон: задръж, за да запишеш, пусни, за да изпратиш – или докосни, за да записваш свободно, а второ докосване или седем секунди тишина изпращат. Изключено го няма.</translation>
     </message>
 </context>
 <context>
@@ -2257,18 +2285,6 @@
         <translation>%1 излезе</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 беше поканен</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 беше премахнат</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 беше блокиран</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 отказа поканата</translation>
     </message>
@@ -2487,6 +2503,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Гласът ти не беше изпратен</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 покани %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 премахна %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 блокира %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 отблокира %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 оттегли поканата за %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Преобразувай в текст</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Преобразуване в текст…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Разпознато автоматично, може да съдържа грешки</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Записване… %1 с. Докосни микрофона, за да изпратиш.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Нищо не беше казано, затова нищо не беше изпратено.</translation>
     </message>
 </context>
 <context>
@@ -3232,6 +3293,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Нищо не беше записано.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Това гласово съобщение няма файл.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Гласовото съобщение е твърде дълго за преобразуване.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Гласовото съобщение не можа да бъде изтеглено.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Гласовото съобщение не можа да бъде прочетено.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Това не е гласово съобщение, което може да се преобразува.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Гласовото съобщение не можа да бъде декодирано.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Преобразуването отне твърде дълго и беше спряно.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note не е инсталирана или услугата ѝ не се стартира.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note няма модел, който сам разпознава езика. Изтегли „Auto (WhisperCpp Small)“ в Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Гласовата услуга е заета. Опитай пак след малко.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Гласовата услуга отказа гласовото съобщение.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Гласовата услуга съобщи за грешка.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Всичко работи: гласовите съобщения могат да се преобразуват.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Не беше разпозната реч.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic няма право да комуникира с гласовата услуга. Преинсталирането на xmatic връща разрешението.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Гласовата услуга не отговаря.</translation>
     </message>
 </context>
 <context>

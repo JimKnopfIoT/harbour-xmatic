@@ -1383,6 +1383,10 @@
         <source>Reply in thread</source>
         <translation>Wieġeb fil-fjul</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Ikkonverti f’test</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1580,10 +1584,6 @@
         <translation>Messaġġi bil-vuċi</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Mixgħul, hemm mikrofonu ħdejn il-qasam tal-messaġġ: żommu biex tirrekordja, itilqu biex tibgħat. Mitfi, mhuwiex hemm.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Links tal-web li jistgħu jintmessu</translation>
     </message>
@@ -1682,6 +1682,34 @@
     <message>
         <source>Always</source>
         <translation>Dejjem</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Messaġġi bil-vuċi bħala test</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Ikkonverti l-messaġġi bil-vuċi f’test</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Mixgħul, pressjoni twila fuq messaġġ bil-vuċi toffri li tikkonvertih. Xejn ma jiġi kkonvertit jekk ma titlobx, u r-reġistrazzjoni qatt ma titlaq minn dan it-telefon.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Għal dan hemm bżonn programm li din l-app ma ġġibx magħha, minn OpenRepos, li tinstallah int: “Speech Note” (madwar 40 MB biex tniżżel, 104 MB installat) u fih il-mudell “Auto (WhisperCpp Small)” (190 MB), li jagħraf waħdu l-lingwa ta’ kull messaġġ. Biss fuq telefowns ta’ 64 bit.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Iċċekkja</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Qed jiċċekkja. L-ewwel darba jista’ jieħu nofs minuta.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Mixgħul, hemm mikrofonu ħdejn il-qasam tal-messaġġ: żommu biex tirrekordja, itilqu biex tibgħat – jew agħfsu biex tirrekordja mingħajr idejn, u t-tieni għafsa jew seba’ sekondi ta’ silenzju jibagħtu. Mitfi, mhuwiex hemm.</translation>
     </message>
 </context>
 <context>
@@ -2265,18 +2293,6 @@
         <translation>%1 telaq</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 ġie mistieden</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 tneħħa</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 ġie mblukkat</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 irrifjuta l-istedina</translation>
     </message>
@@ -2495,6 +2511,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Il-vot tiegħek ma ntbagħatx</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 stieden lil %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 neħħa lil %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 imblokka lil %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 neħħa l-imblokk ta’ %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 irtira l-istedina għal %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Ikkonverti f’test</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Qed jikkonverti f’test…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Magħruf awtomatikament, jista’ jkun fih żbalji</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Qed jirrekordja… %1 s. Agħfas il-mikrofonu biex tibgħat.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Ma ntqal xejn, allura ma ntbagħat xejn.</translation>
     </message>
 </context>
 <context>
@@ -3244,6 +3305,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Ma ġie rrekordjat xejn.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Dan il-messaġġ bil-vuċi m’għandux fajl.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Il-messaġġ bil-vuċi twil wisq biex jiġi kkonvertit.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Il-messaġġ bil-vuċi ma setax jitniżżel.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Il-messaġġ bil-vuċi ma setax jinqara.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Dan mhuwiex messaġġ bil-vuċi li jista’ jiġi kkonvertit.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Il-messaġġ bil-vuċi ma setax jiġi dekodifikat.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Il-konverżjoni ħadet wisq żmien u twaqqfet.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note mhux installat, jew is-servizz tiegħu ma jibdiex.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note m’għandux mudell li jagħraf waħdu l-lingwa. Niżżel “Auto (WhisperCpp Small)” f’Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Is-servizz tad-diskors okkupat. Erġa’ pprova ftit wara.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Is-servizz tad-diskors irrifjuta l-messaġġ bil-vuċi.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Is-servizz tad-diskors irrapporta żball.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Kollox jaħdem: il-messaġġi bil-vuċi jistgħu jiġu kkonvertiti.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Ma ntagħraf l-ebda diskors.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic ma jistax jitkellem mas-servizz tad-diskors. L-installazzjoni mill-ġdid ta’ xmatic tagħti lura l-permess.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Is-servizz tad-diskors ma jwieġibx.</translation>
     </message>
 </context>
 <context>

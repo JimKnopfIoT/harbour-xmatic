@@ -214,6 +214,15 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                 send(command, arguments);
             });
 
+    // Voice messages to text, on request: fetched through the page's own
+    // download path, nothing for the core. See src/voicetranscripts.cpp.
+    m_transcripts = new VoiceTranscripts(m_cacheDirectory + QStringLiteral("/transcribe"), this);
+    connect(m_transcripts, &VoiceTranscripts::mediaWanted, this,
+            [this](const QString &key, const QVariant &source, qint64 declaredSize) {
+                requestMedia(key, source, false, declaredSize);
+            });
+    connect(this, &MatrixBridge::mediaReady, m_transcripts, &VoiceTranscripts::mediaArrived);
+
     m_calls = new CallEngine(this);
 
     // The engine produces what has to be signalled and is fed what arrives;
@@ -600,6 +609,8 @@ void MatrixBridge::logout()
     // Nothing of what was typed and never sent outlives the account it was
     // meant for.
     m_drafts.clear();
+    // Nor what a voice message was heard to say.
+    m_transcripts->clear();
     send(QStringLiteral("logout"));
 }
 
@@ -1364,6 +1375,7 @@ void MatrixBridge::clearMediaCache()
     }
     QDir(m_cacheDirectory + QStringLiteral("/media")).removeRecursively();
     QDir(m_cacheDirectory + QStringLiteral("/voice")).removeRecursively();
+    QDir(m_cacheDirectory + QStringLiteral("/transcribe")).removeRecursively();
     m_media.clear();
 }
 

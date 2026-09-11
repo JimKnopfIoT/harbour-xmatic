@@ -1379,6 +1379,10 @@
         <source>Reply in thread</source>
         <translation>Vasta lõimes</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Teisenda tekstiks</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1574,10 +1578,6 @@
         <translation>Häälsõnumid</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Sees on sõnumivälja kõrval mikrofon: hoia all, et salvestada, lase lahti, et saata. Väljas seda pole.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Puudutatavad veebilingid</translation>
     </message>
@@ -1676,6 +1676,34 @@
     <message>
         <source>Always</source>
         <translation>Alati</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Häälsõnumid tekstina</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Teisenda häälsõnumid tekstiks</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Sees pakub häälsõnumile pikk vajutus selle teisendamist. Midagi ei teisendata ilma sinu soovita ja salvestis ei lahku kunagi sellest telefonist.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Selleks on vaja programmi, mida see rakendus kaasa ei too ja mille paigaldad ise OpenReposist: „Speech Note“ (umbes 40 MB allalaadimist, 104 MB paigaldatult) ja selles mudel „Auto (WhisperCpp Small)“ (190 MB), mis tunneb iga sõnumi keele ise ära. Ainult 64-bitistel telefonidel.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Kontrolli</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Kontrollimine käib. Esimesel korral võib see võtta pool minutit.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Sees on sõnumivälja kõrval mikrofon: hoia all, et salvestada, lase lahti, et saata – või puuduta, et salvestada käed vabad, ja teine puudutus või seitse sekundit vaikust saadab. Väljas seda pole.</translation>
     </message>
 </context>
 <context>
@@ -2257,18 +2285,6 @@
         <translation>%1 lahkus</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 kutsuti</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 eemaldati</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 keelati</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 keeldus kutsest</translation>
     </message>
@@ -2487,6 +2503,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Sinu häält ei saadetud</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 kutsus kasutaja %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 eemaldas kasutaja %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 keelas kasutaja %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 tühistas kasutaja %2 keelu</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 võttis tagasi kutse kasutajale %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Teisenda tekstiks</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Tekstiks teisendamine…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Automaatselt tuvastatud, võib sisaldada vigu</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Salvestan… %1 s. Saatmiseks puuduta mikrofoni.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Midagi ei öeldud, seega midagi ei saadetud.</translation>
     </message>
 </context>
 <context>
@@ -3232,6 +3293,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Midagi ei salvestatud.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Sellel häälsõnumil pole faili.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Häälsõnum on teisendamiseks liiga pikk.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Häälsõnumit ei õnnestunud alla laadida.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Häälsõnumit ei õnnestunud lugeda.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>See pole häälsõnum, mida saab teisendada.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Häälsõnumit ei õnnestunud dekodeerida.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Teisendamine võttis liiga kaua ja peatati.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note pole paigaldatud või selle teenus ei käivitu.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note’il pole mudelit, mis tunneks keele ise ära. Laadi Speech Note’is alla „Auto (WhisperCpp Small)“.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Kõneteenus on hõivatud. Proovi kohe uuesti.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Kõneteenus lükkas häälsõnumi tagasi.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Kõneteenus teatas veast.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Kõik töötab: häälsõnumeid saab teisendada.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Kõnet ei tuvastatud.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic ei tohi kõneteenusega suhelda. xmaticu uuesti paigaldamine taastab loa.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Kõneteenus ei vasta.</translation>
     </message>
 </context>
 <context>

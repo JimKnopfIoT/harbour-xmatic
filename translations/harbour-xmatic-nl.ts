@@ -1379,6 +1379,10 @@
         <source>Reply in thread</source>
         <translation>In draad antwoorden</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Omzetten naar tekst</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1574,10 +1578,6 @@
         <translation>Spraakberichten</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Aan staat er een microfoon naast het berichtveld: ingedrukt houden neemt op, loslaten verstuurt. Uit is hij er niet.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Aantikbare weblinks</translation>
     </message>
@@ -1676,6 +1676,34 @@
     <message>
         <source>Always</source>
         <translation>Altijd</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Spraakberichten als tekst</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Spraakberichten omzetten naar tekst</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Aan biedt lang drukken op een spraakbericht aan om het om te zetten. Er wordt niets omgezet als je er niet om vraagt, en de opname verlaat deze telefoon nooit.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Hiervoor is een programma nodig dat deze app niet meebrengt en dat je zelf uit OpenRepos installeert: “Speech Note” (ongeveer 40 MB downloaden, 104 MB geïnstalleerd) en daarin het model “Auto (WhisperCpp Small)” (190 MB), dat de taal van elk bericht zelf herkent. Alleen op 64-bit-telefoons.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Controleren</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Bezig met controleren. De eerste keer kan dat een halve minuut duren.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Aan staat er een microfoon naast het berichtveld: ingedrukt houden neemt op, loslaten verstuurt – of tik erop om handsfree op te nemen, en een tweede tik of zeven seconden stilte verstuurt. Uit is hij er niet.</translation>
     </message>
 </context>
 <context>
@@ -2257,18 +2285,6 @@
         <translation>%1 is vertrokken</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 is uitgenodigd</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 is verwijderd</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 is verbannen</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 heeft de uitnodiging geweigerd</translation>
     </message>
@@ -2487,6 +2503,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Je stem is niet verzonden</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 heeft %2 uitgenodigd</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 heeft %2 verwijderd</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 heeft %2 verbannen</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 heeft de verbanning van %2 opgeheven</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 heeft de uitnodiging voor %2 ingetrokken</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Omzetten naar tekst</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Bezig met omzetten naar tekst…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Automatisch herkend, kan fouten bevatten</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Opnemen… %1 s. Tik op de microfoon om te versturen.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Er is niets gezegd, dus er is niets verstuurd.</translation>
     </message>
 </context>
 <context>
@@ -3232,6 +3293,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Er is niets opgenomen.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Dit spraakbericht heeft geen bestand.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Het spraakbericht is te lang om om te zetten.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Het spraakbericht kon niet worden gedownload.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Het spraakbericht kon niet worden gelezen.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Dit is geen spraakbericht dat kan worden omgezet.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Het spraakbericht kon niet worden gedecodeerd.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Het omzetten duurde te lang en is gestopt.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note is niet geïnstalleerd, of de dienst ervan start niet.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note heeft geen model dat de taal zelf herkent. Download “Auto (WhisperCpp Small)” in Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>De spraakdienst is bezig. Probeer het zo meteen opnieuw.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>De spraakdienst heeft het spraakbericht geweigerd.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>De spraakdienst meldde een fout.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Alles werkt: spraakberichten kunnen worden omgezet.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Er is geen spraak herkend.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic mag niet met de spraakdienst praten. Door xmatic opnieuw te installeren komt de toestemming terug.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>De spraakdienst antwoordt niet.</translation>
     </message>
 </context>
 <context>

@@ -1377,6 +1377,10 @@
         <source>Reply</source>
         <translation>پاسخ</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>تبدیل به متن</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1563,10 +1567,6 @@
         <translation>پیام‌های صوتی</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>روشن، کنار کادر پیام یک میکروفون هست: برای ضبط نگه‌دار، برای فرستادن رها کن. خاموش، آن‌جا نیست.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>پیوندهای وب قابل‌ضربه</translation>
     </message>
@@ -1673,6 +1673,34 @@
     <message>
         <source>Always</source>
         <translation>همیشه</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>پیام‌های صوتی به‌صورت متن</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>تبدیل پیام‌های صوتی به متن</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>روشن، فشار طولانی روی یک پیام صوتی پیشنهاد تبدیل آن را می‌دهد. تا خودت نخواهی چیزی تبدیل نمی‌شود، و ضبط هرگز این گوشی را ترک نمی‌کند.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>برای این کار برنامه‌ای لازم است که این اپ همراه ندارد، از OpenRepos، که خودت نصبش می‌کنی: «Speech Note» (حدود 40 مگابایت دانلود، 104 مگابایت پس از نصب) و درون آن مدل «Auto (WhisperCpp Small)» (190 مگابایت)، که زبان هر پیام را خودش تشخیص می‌دهد. فقط روی گوشی‌های 64 بیتی.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>بررسی</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>در حال بررسی. بار اول ممکن است نیم دقیقه طول بکشد.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>روشن، کنار کادر پیام یک میکروفون هست: برای ضبط نگه‌دار، برای فرستادن رها کن – یا برای ضبط بدون دست رویش بزن، و ضربهٔ دوم یا هفت ثانیه سکوت می‌فرستد. خاموش، آن‌جا نیست.</translation>
     </message>
 </context>
 <context>
@@ -2277,18 +2305,6 @@
         <translation>%1 ترک کرد</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 دعوت شد</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 برداشته شد</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 محروم شد</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 دعوت را رد کرد</translation>
     </message>
@@ -2483,6 +2499,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>رأی تو فرستاده نشد</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 کاربر %2 را دعوت کرد</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 کاربر %2 را حذف کرد</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 کاربر %2 را محروم کرد</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 محرومیت %2 را برداشت</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 دعوت %2 را پس گرفت</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>تبدیل به متن</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>در حال تبدیل به متن…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>به‌طور خودکار تشخیص داده شد، ممکن است اشتباه داشته باشد</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>در حال ضبط… %1 ثانیه. برای فرستادن روی میکروفون بزن.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>چیزی گفته نشد، پس چیزی فرستاده نشد.</translation>
     </message>
 </context>
 <context>
@@ -3226,6 +3287,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>چیزی ضبط نشد.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>این پیام صوتی فایلی ندارد.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>پیام صوتی برای تبدیل خیلی طولانی است.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>پیام صوتی دانلود نشد.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>پیام صوتی خوانده نشد.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>این پیام صوتی‌ای نیست که بتوان تبدیلش کرد.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>پیام صوتی رمزگشایی نشد.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>تبدیل بیش از حد طول کشید و متوقف شد.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>برنامهٔ Speech Note نصب نیست، یا سرویسش راه نمی‌افتد.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>برنامهٔ Speech Note مدلی ندارد که زبان را خودش تشخیص دهد. «Auto (WhisperCpp Small)» را در Speech Note دانلود کن.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>سرویس گفتار مشغول است. کمی بعد دوباره امتحان کن.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>سرویس گفتار پیام صوتی را رد کرد.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>سرویس گفتار خطایی گزارش داد.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>همه‌چیز کار می‌کند: پیام‌های صوتی را می‌توان تبدیل کرد.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>هیچ گفتاری تشخیص داده نشد.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic اجازه ندارد با سرویس گفتار صحبت کند. نصب دوبارهٔ xmatic این اجازه را برمی‌گرداند.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>سرویس گفتار پاسخ نمی‌دهد.</translation>
     </message>
 </context>
 <context>

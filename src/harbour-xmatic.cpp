@@ -23,6 +23,7 @@
 #include "emojistore.h"
 #include "instancelock.h"
 #include "pushwake.h"
+#include "voicedecode.h"
 #include "languagesettings.h"
 #include "matrixbridge.h"
 #include "outgoingimage.h"
@@ -61,6 +62,12 @@ int main(int argc, char *argv[])
     // 0600 on everything this process creates. `restrict_store` runs once, and
     // SQLite's -wal and -shm are written after it.
     umask(S_IRWXG | S_IRWXO);
+
+    // One received voice message decoded, then gone: before Qt, before the
+    // store, never the instance lock. See src/voicedecode.cpp.
+    if (qEnvironmentVariableIsSet(XMATIC_VOICE_DECODE_ENV)) {
+        return runVoiceDecode();
+    }
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 

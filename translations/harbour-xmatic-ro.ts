@@ -1381,6 +1381,10 @@
         <source>Reply in thread</source>
         <translation>Răspunde în fir</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Transformă în text</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1577,10 +1581,6 @@
         <translation>Mesaje vocale</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Activat, lângă câmpul de mesaj este un microfon: ține apăsat pentru a înregistra, dă drumul pentru a trimite. Dezactivat, nu este acolo.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Legături web apăsabile</translation>
     </message>
@@ -1679,6 +1679,34 @@
     <message>
         <source>Always</source>
         <translation>Întotdeauna</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Mesaje vocale ca text</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Transformă mesajele vocale în text</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Activat, o apăsare lungă pe un mesaj vocal oferă să îl transformi. Nimic nu este transformat dacă nu ceri, iar înregistrarea nu părăsește niciodată acest telefon.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Pentru asta e nevoie de un program pe care această aplicație nu îl aduce, din OpenRepos, instalat de tine: „Speech Note” (circa 40 MB de descărcat, 104 MB instalat) și în el modelul „Auto (WhisperCpp Small)” (190 MB), care recunoaște singur limba fiecărui mesaj. Doar pe telefoane pe 64 de biți.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Verifică</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Se verifică. Prima dată poate dura o jumătate de minut.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Activat, lângă câmpul de mesaj este un microfon: ține apăsat pentru a înregistra, dă drumul pentru a trimite – sau atinge-l pentru a înregistra fără mâini, iar o a doua atingere sau șapte secunde de liniște trimit. Dezactivat, nu este acolo.</translation>
     </message>
 </context>
 <context>
@@ -2261,18 +2289,6 @@
         <translation>%1 a plecat</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 a fost invitat</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 a fost eliminat</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 a fost interzis</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 a refuzat invitația</translation>
     </message>
@@ -2491,6 +2507,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Votul tău nu a fost trimis</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 a invitat pe %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 a eliminat pe %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 a interzis accesul pentru %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 a ridicat interdicția pentru %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 a retras invitația pentru %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Transformă în text</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Se transformă în text…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Recunoscut automat, poate conține greșeli</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Se înregistrează… %1 s. Atinge microfonul pentru a trimite.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Nu s-a spus nimic, așa că nu s-a trimis nimic.</translation>
     </message>
 </context>
 <context>
@@ -3238,6 +3299,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Nu s-a înregistrat nimic.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Acest mesaj vocal nu are fișier.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Mesajul vocal este prea lung pentru a fi transformat.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Mesajul vocal nu a putut fi descărcat.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Mesajul vocal nu a putut fi citit.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Acesta nu este un mesaj vocal care poate fi transformat.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Mesajul vocal nu a putut fi decodat.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Transformarea a durat prea mult și a fost oprită.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note nu este instalat sau serviciul său nu pornește.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note nu are niciun model care să recunoască singur limba. Descarcă „Auto (WhisperCpp Small)” în Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Serviciul de vorbire este ocupat. Încearcă din nou peste o clipă.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Serviciul de vorbire a refuzat mesajul vocal.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Serviciul de vorbire a raportat o eroare.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Totul funcționează: mesajele vocale pot fi transformate.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Nu a fost recunoscută nicio vorbire.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic nu are voie să comunice cu serviciul de vorbire. Reinstalarea xmatic readuce permisiunea.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Serviciul de vorbire nu răspunde.</translation>
     </message>
 </context>
 <context>

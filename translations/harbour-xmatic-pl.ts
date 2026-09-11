@@ -1381,6 +1381,10 @@
         <source>Reply in thread</source>
         <translation>Odpowiedz w wątku</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Zamień na tekst</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1577,10 +1581,6 @@
         <translation>Wiadomości głosowe</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Włączone, obok pola wiadomości jest mikrofon: przytrzymaj, aby nagrać, puść, aby wysłać. Wyłączone, nie ma go.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Klikalne odnośniki internetowe</translation>
     </message>
@@ -1679,6 +1679,34 @@
     <message>
         <source>Always</source>
         <translation>Zawsze</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Wiadomości głosowe jako tekst</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Zamieniaj wiadomości głosowe na tekst</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Włączone, długie przytrzymanie wiadomości głosowej proponuje jej zamianę. Nic nie jest zamieniane, jeśli o to nie poprosisz, a nagranie nigdy nie opuszcza tego telefonu.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Potrzebny jest do tego program, którego ta aplikacja nie zawiera, z OpenRepos, instalowany przez ciebie: „Speech Note” (około 40 MB do pobrania, 104 MB po instalacji), a w nim model „Auto (WhisperCpp Small)” (190 MB), który sam rozpoznaje język każdej wiadomości. Tylko na telefonach 64-bitowych.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Sprawdź</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Sprawdzanie. Za pierwszym razem może to potrwać pół minuty.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Włączone, obok pola wiadomości jest mikrofon: przytrzymaj, aby nagrać, puść, aby wysłać – albo dotknij, aby nagrywać bez trzymania, a drugie dotknięcie lub siedem sekund ciszy wysyła. Wyłączone, nie ma go.</translation>
     </message>
 </context>
 <context>
@@ -2261,18 +2289,6 @@
         <translation>%1 wyszedł</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 został zaproszony</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 został usunięty</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 został zbanowany</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 odrzucił zaproszenie</translation>
     </message>
@@ -2491,6 +2507,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Twój głos nie został wysłany</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 zaprosił %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 usunął %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 zbanował %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 odbanował %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 wycofał zaproszenie dla %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Zamień na tekst</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Zamiana na tekst…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Rozpoznano automatycznie, może zawierać błędy</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Nagrywanie… %1 s. Dotknij mikrofonu, aby wysłać.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Nic nie powiedziano, więc nic nie wysłano.</translation>
     </message>
 </context>
 <context>
@@ -3238,6 +3299,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Nic nie zostało nagrane.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Ta wiadomość głosowa nie ma pliku.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Wiadomość głosowa jest za długa, aby ją zamienić.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Nie udało się pobrać wiadomości głosowej.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Nie udało się odczytać wiadomości głosowej.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>To nie jest wiadomość głosowa, którą można zamienić.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Nie udało się zdekodować wiadomości głosowej.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Zamiana trwała zbyt długo i została przerwana.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note nie jest zainstalowany albo jego usługa się nie uruchamia.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note nie ma modelu, który sam rozpoznaje język. Pobierz „Auto (WhisperCpp Small)” w Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Usługa mowy jest zajęta. Spróbuj ponownie za chwilę.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Usługa mowy odrzuciła wiadomość głosową.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Usługa mowy zgłosiła błąd.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Wszystko działa: wiadomości głosowe można zamieniać.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Nie rozpoznano mowy.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic nie może rozmawiać z usługą mowy. Ponowna instalacja xmatic przywraca uprawnienie.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Usługa mowy nie odpowiada.</translation>
     </message>
 </context>
 <context>

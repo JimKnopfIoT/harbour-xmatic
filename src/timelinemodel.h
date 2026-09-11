@@ -32,6 +32,8 @@ public:
         SenderAvatarRole,
         SystemRole,
         NameRole,
+        /// The reason a moderator gave for a removal or a ban. Null elsewhere.
+        ReasonRole,
         OwnRole,
         TimestampRole,
         EditedRole,

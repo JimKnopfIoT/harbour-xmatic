@@ -1383,6 +1383,10 @@
         <source>Reply in thread</source>
         <translation>Odgovori v niti</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Pretvori v besedilo</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1580,10 +1584,6 @@
         <translation>Glasovna sporočila</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Vklopljeno je ob polju za sporočilo mikrofon: pridrži za snemanje, spusti za pošiljanje. Izklopljeno ga ni.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Povezave, ki se jih da tapniti</translation>
     </message>
@@ -1682,6 +1682,34 @@
     <message>
         <source>Always</source>
         <translation>Vedno</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Glasovna sporočila kot besedilo</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Pretvarjaj glasovna sporočila v besedilo</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Vklopljeno dolg pritisk na glasovno sporočilo ponudi njegovo pretvorbo. Nič se ne pretvori, če tega ne zahtevaš, in posnetek nikoli ne zapusti tega telefona.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Za to je potreben program, ki ga ta aplikacija nima, iz OpenRepos, ki ga namestiš sam: »Speech Note« (približno 40 MB za prenos, 104 MB nameščen) in v njem model »Auto (WhisperCpp Small)« (190 MB), ki sam prepozna jezik vsakega sporočila. Samo na 64-bitnih telefonih.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Preveri</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Preverjanje. Prvič lahko traja pol minute.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Vklopljeno je ob polju za sporočilo mikrofon: pridrži za snemanje, spusti za pošiljanje – ali ga tapni za prostoročno snemanje, drugi dotik ali sedem sekund tišine pa pošlje. Izklopljeno ga ni.</translation>
     </message>
 </context>
 <context>
@@ -2265,18 +2293,6 @@
         <translation>%1 je odšel</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 je bil povabljen</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 je bil odstranjen</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 je bil izobčen</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 je zavrnil povabilo</translation>
     </message>
@@ -2495,6 +2511,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Tvoj glas ni bil poslan</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 je povabil %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 je odstranil %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 je izobčil %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 je preklical izobčenje za %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 je preklical povabilo za %2</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Pretvori v besedilo</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Pretvarjanje v besedilo…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Prepoznano samodejno, lahko vsebuje napake</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Snemanje… %1 s. Tapni mikrofon za pošiljanje.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Nič ni bilo izrečeno, zato ni bilo nič poslano.</translation>
     </message>
 </context>
 <context>
@@ -3244,6 +3305,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Nič ni bilo posneto.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>To glasovno sporočilo nima datoteke.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Glasovno sporočilo je predolgo za pretvorbo.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Glasovnega sporočila ni bilo mogoče prenesti.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Glasovnega sporočila ni bilo mogoče prebrati.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>To ni glasovno sporočilo, ki bi ga bilo mogoče pretvoriti.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Glasovnega sporočila ni bilo mogoče dekodirati.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Pretvorba je trajala predolgo in je bila ustavljena.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note ni nameščen ali pa se njegova storitev ne zažene.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note nima modela, ki bi sam prepoznal jezik. V Speech Note prenesi »Auto (WhisperCpp Small)«.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Govorna storitev je zasedena. Poskusi znova čez trenutek.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Govorna storitev je zavrnila glasovno sporočilo.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Govorna storitev je sporočila napako.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Vse deluje: glasovna sporočila je mogoče pretvoriti.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Govor ni bil prepoznan.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic ne sme komunicirati z govorno storitvijo. Ponovna namestitev xmatic vrne dovoljenje.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Govorna storitev se ne odziva.</translation>
     </message>
 </context>
 <context>

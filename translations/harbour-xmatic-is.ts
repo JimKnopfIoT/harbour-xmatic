@@ -1379,6 +1379,10 @@
         <source>Reply in thread</source>
         <translation>Svara í þræðinum</translation>
     </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Breyta í texta</translation>
+    </message>
 </context>
 <context>
     <name>MoveToSpacePage</name>
@@ -1574,10 +1578,6 @@
         <translation>Talskilaboð</translation>
     </message>
     <message>
-        <source>On, a microphone sits next to the message field: hold it to record, let go to send. Off, it is not there.</source>
-        <translation>Kveikt situr hljóðnemi við hliðina á skilaboðareitnum: haltu inni til að taka upp, slepptu til að senda. Slökkt er hann ekki þar.</translation>
-    </message>
-    <message>
         <source>Tappable web links</source>
         <translation>Veftenglar sem má snerta</translation>
     </message>
@@ -1676,6 +1676,34 @@
     <message>
         <source>Always</source>
         <translation>Alltaf</translation>
+    </message>
+    <message>
+        <source>Voice messages as text</source>
+        <translation>Raddskilaboð sem texti</translation>
+    </message>
+    <message>
+        <source>Convert voice messages to text</source>
+        <translation>Breyta raddskilaboðum í texta</translation>
+    </message>
+    <message>
+        <source>On, a long press on a voice message offers to convert it. Nothing is converted unless you ask, and the recording never leaves this phone.</source>
+        <translation>Kveikt býður langt ýtt á raddskilaboð upp á að breyta þeim. Engu er breytt nema þú biðjir um það, og upptakan fer aldrei af þessum síma.</translation>
+    </message>
+    <message>
+        <source>This needs a program this app does not bring, from OpenRepos, installed by you: &quot;Speech Note&quot; (about 40 MB to download, 104 MB installed), and in it the model &quot;Auto (WhisperCpp Small)&quot; (190 MB), which recognises the language of each message by itself. Only on 64-bit phones.</source>
+        <translation>Til þess þarf forrit sem þetta app hefur ekki með sér, frá OpenRepos, sem þú setur upp: „Speech Note“ (um 40 MB að sækja, 104 MB uppsett) og í því líkanið „Auto (WhisperCpp Small)“ (190 MB), sem ber sjálft kennsl á tungumál hverra skilaboða. Aðeins á 64 bita símum.</translation>
+    </message>
+    <message>
+        <source>Check</source>
+        <translation>Athuga</translation>
+    </message>
+    <message>
+        <source>Checking. The first time can take half a minute.</source>
+        <translation>Athuga. Í fyrsta skipti getur það tekið hálfa mínútu.</translation>
+    </message>
+    <message>
+        <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
+        <translation>Kveikt situr hljóðnemi við hliðina á skilaboðareitnum: haltu inni til að taka upp, slepptu til að senda – eða ýttu á hann til að taka upp handfrjálst, og annað ýtt eða sjö sekúndna þögn sendir. Slökkt er hann ekki þar.</translation>
     </message>
 </context>
 <context>
@@ -2257,18 +2285,6 @@
         <translation>%1 fór</translation>
     </message>
     <message>
-        <source>%1 was invited</source>
-        <translation>%1 var boðinn</translation>
-    </message>
-    <message>
-        <source>%1 was removed</source>
-        <translation>%1 var fjarlægður</translation>
-    </message>
-    <message>
-        <source>%1 was banned</source>
-        <translation>%1 var bannaður</translation>
-    </message>
-    <message>
         <source>%1 declined the invitation</source>
         <translation>%1 hafnaði boðinu</translation>
     </message>
@@ -2487,6 +2503,51 @@
     <message>
         <source>Your vote was not sent</source>
         <translation>Atkvæði þitt var ekki sent</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 bauð %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 fjarlægði %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 bannaði %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 aflétti banni á %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 dró boðið til %2 til baka</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Breyta í texta</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Breyti í texta…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Greint sjálfvirkt, getur innihaldið villur</translation>
+    </message>
+    <message>
+        <source>Recording… %1 s. Tap the microphone to send.</source>
+        <translation>Tek upp… %1 s. Ýttu á hljóðnemann til að senda.</translation>
+    </message>
+    <message>
+        <source>Nothing was said, so nothing was sent.</source>
+        <translation>Ekkert var sagt, svo ekkert var sent.</translation>
     </message>
 </context>
 <context>
@@ -3232,6 +3293,73 @@
     <message>
         <source>Nothing was recorded.</source>
         <translation>Ekkert var tekið upp.</translation>
+    </message>
+</context>
+<context>
+    <name>VoiceTranscripts</name>
+    <message>
+        <source>This voice message has no file.</source>
+        <translation>Þessi raddskilaboð hafa enga skrá.</translation>
+    </message>
+    <message>
+        <source>The voice message is too long to convert.</source>
+        <translation>Raddskilaboðin eru of löng til að breyta þeim.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be downloaded.</source>
+        <translation>Ekki tókst að sækja raddskilaboðin.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be read.</source>
+        <translation>Ekki tókst að lesa raddskilaboðin.</translation>
+    </message>
+    <message>
+        <source>This is not a voice message that can be converted.</source>
+        <translation>Þetta eru ekki raddskilaboð sem hægt er að breyta.</translation>
+    </message>
+    <message>
+        <source>The voice message could not be decoded.</source>
+        <translation>Ekki tókst að afkóða raddskilaboðin.</translation>
+    </message>
+    <message>
+        <source>Converting took too long and was stopped.</source>
+        <translation>Umbreytingin tók of langan tíma og var stöðvuð.</translation>
+    </message>
+    <message>
+        <source>Speech Note is not installed, or its service does not start.</source>
+        <translation>Speech Note er ekki uppsett, eða þjónusta þess ræsist ekki.</translation>
+    </message>
+    <message>
+        <source>Speech Note has no model that recognises the language by itself. Download &quot;Auto (WhisperCpp Small)&quot; in Speech Note.</source>
+        <translation>Speech Note hefur ekkert líkan sem ber sjálft kennsl á tungumálið. Sæktu „Auto (WhisperCpp Small)“ í Speech Note.</translation>
+    </message>
+    <message>
+        <source>The speech service is busy. Try again in a moment.</source>
+        <translation>Talþjónustan er upptekin. Reyndu aftur eftir smástund.</translation>
+    </message>
+    <message>
+        <source>The speech service refused the voice message.</source>
+        <translation>Talþjónustan hafnaði raddskilaboðunum.</translation>
+    </message>
+    <message>
+        <source>The speech service reported an error.</source>
+        <translation>Talþjónustan tilkynnti villu.</translation>
+    </message>
+    <message>
+        <source>Everything works: voice messages can be converted.</source>
+        <translation>Allt virkar: hægt er að breyta raddskilaboðum.</translation>
+    </message>
+    <message>
+        <source>No speech was recognised.</source>
+        <translation>Ekkert tal var greint.</translation>
+    </message>
+    <message>
+        <source>xmatic may not talk to the speech service. Reinstalling xmatic puts the permission back.</source>
+        <translation>xmatic má ekki tala við talþjónustuna. Ef xmatic er sett upp aftur kemur heimildin til baka.</translation>
+    </message>
+    <message>
+        <source>The speech service does not answer.</source>
+        <translation>Talþjónustan svarar ekki.</translation>
     </message>
 </context>
 <context>
