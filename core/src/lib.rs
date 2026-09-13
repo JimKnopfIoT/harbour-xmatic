@@ -22,6 +22,7 @@ mod markup;
 mod recovery;
 mod roomlist;
 mod runtime;
+mod sdklog;
 mod search;
 mod session;
 mod text;
@@ -122,6 +123,7 @@ pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore 
             .ok()?;
 
         let sink = Arc::new(Sink::new());
+        sdklog::install(sink.clone());
         let commands = runtime::spawn(&runtime, paths, store_key, sink.clone());
 
         Some(Box::into_raw(Box::new(XmCore {

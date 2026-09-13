@@ -40,6 +40,11 @@ pub enum Command {
         store_key: Option<String>,
     },
 
+    /// Drop the part of the store the next sync rebuilds and restore again. The
+    /// way out of `unreadable`; session and crypto store stay.
+    #[serde(rename = "session.rebuildStore")]
+    SessionRebuildStore { id: u64 },
+
     /// Begin the OAuth authorization code flow. The reply carries the browser URL;
     /// completion follows as `session.changed` or `login.failed`.
     #[serde(rename = "login.start")]
@@ -915,6 +920,7 @@ impl Command {
     pub fn id(&self) -> u64 {
         match self {
             Command::SessionRestore { id, .. }
+            | Command::SessionRebuildStore { id }
             | Command::LoginStart { id, .. }
             | Command::LoginPassword { id, .. }
             | Command::LoginDeviceCode { id, .. }

@@ -3061,6 +3061,33 @@
     </message>
 </context>
 <context>
+    <name>StoreUnreadablePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Oħroġ u ħassar id-data lokali</translation>
+    </message>
+    <message>
+        <source>Local data unreadable</source>
+        <translation>Id-data lokali ma tistax tinqara</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix għal Sailfish OS</translation>
+    </message>
+    <message>
+        <source>xmatic could not read back part of the data it keeps on this device. Your account, this device and its encryption keys are not affected.</source>
+        <translation>xmatic ma setax jerġa&apos; jaqra parti mid-data li jżomm fuq dan l-apparat. Il-kont tiegħek, dan l-apparat u ċ-ċwievet tal-kriptaġġ tiegħu mhumiex affettwati.</translation>
+    </message>
+    <message>
+        <source>Rebuilding deletes the rooms and messages stored on this device and loads them again from your homeserver. This device and its keys stay; messages that were not sent yet are lost.</source>
+        <translation>Il-bini mill-ġdid iħassar il-kmamar u l-messaġġi maħżuna fuq dan l-apparat u jerġa&apos; jniżżilhom mis-server tad-dar tiegħek. Dan l-apparat u ċ-ċwievet tiegħu jibqgħu; il-messaġġi li għadhom ma ntbagħtux jintilfu.</translation>
+    </message>
+    <message>
+        <source>Rebuild local data</source>
+        <translation>Ibni mill-ġdid id-data lokali</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>

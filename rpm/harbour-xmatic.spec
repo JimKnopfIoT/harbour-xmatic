@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.32.0
+Version:    0.33.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -102,6 +102,9 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
+# The link handler, in a file of its own: it is NoDisplay, and it names the
+# schemes a Matrix link can arrive under.
+%{_datadir}/applications/%{name}-open-url.desktop
 # Not named after the package: the D-Bus name is Sailjail's, and the file has
 # to carry it. sailfish-share's own file trigger picks the new share method out
 # of the desktop file, so nothing has to be run here.
@@ -113,6 +116,19 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Sep 13 2026 harbour-xmatic contributors 0.33.0-1
+- A system line in a room - who joined, who was invited, who was removed -
+  carries the picture of whoever acted and the time it happened. The picture
+  opens that person's profile, the same as on a message.
+- A room link tapped in another app opens in xmatic. Only matrix: links and
+  matrix.to addresses are accepted; a room the account is not in asks first,
+  and a link that arrives before the session is up waits for it.
+- Local data that cannot be read back no longer ends the session. A page of
+  its own says so and offers to rebuild rooms and messages from the homeserver,
+  keeping this device and its keys; a sign-in over it would have cost both.
+- The Matrix library's own warnings and errors reach the system journal,
+  scrubbed of identifiers, and its errors the error log.
+
 * Fri Sep 11 2026 harbour-xmatic contributors 0.32.0-1
 - A voice message can be converted to text on request: a long press offers it
   where Privacy allows it, off by default. It needs an offline speech-to-text

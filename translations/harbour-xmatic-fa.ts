@@ -3046,6 +3046,33 @@
     </message>
 </context>
 <context>
+    <name>StoreUnreadablePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>خروج و حذف داده‌های محلی</translation>
+    </message>
+    <message>
+        <source>Local data unreadable</source>
+        <translation>داده‌های محلی خوانا نیستند</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix برای Sailfish OS</translation>
+    </message>
+    <message>
+        <source>xmatic could not read back part of the data it keeps on this device. Your account, this device and its encryption keys are not affected.</source>
+        <translation>xmatic نتوانست بخشی از داده‌هایی را که روی این دستگاه نگه می‌دارد دوباره بخواند. حساب تو، این دستگاه و کلیدهای رمزگذاری آن آسیبی ندیده‌اند.</translation>
+    </message>
+    <message>
+        <source>Rebuilding deletes the rooms and messages stored on this device and loads them again from your homeserver. This device and its keys stay; messages that were not sent yet are lost.</source>
+        <translation>بازسازی، اتاق‌ها و پیام‌های ذخیره‌شده روی این دستگاه را حذف می‌کند و آن‌ها را دوباره از کارساز خانگی‌ات بارگیری می‌کند. این دستگاه و کلیدهایش می‌مانند؛ پیام‌هایی که هنوز فرستاده نشده‌اند از دست می‌روند.</translation>
+    </message>
+    <message>
+        <source>Rebuild local data</source>
+        <translation>بازسازی داده‌های محلی</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Sent unencrypted</source>

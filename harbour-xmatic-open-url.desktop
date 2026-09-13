@@ -1,0 +1,39 @@
+[Desktop Entry]
+Type=Application
+# The link handler, in its own file so the launcher grid keeps one xmatic.
+NoDisplay=true
+Name=xmatic
+Icon=harbour-xmatic
+# Same application type as the main file, and for the same reason: the Rust
+# core's runtime does not survive being dlopened from a preforked process.
+X-Nemo-Application-Type=generic
+# The link, as the caller passes it. The placeholder is what makes it possible
+# at all: SailJail matches argv against the Exec line of the profile it runs
+# under, so the main file - whose Exec takes none - refuses any start carrying
+# one. Measured on the device with `sailjail -D`: this file prints the full
+# firejail line ending in the link, the main file prints nothing.
+Exec=harbour-xmatic %u
+# A Matrix link comes in two shapes, and only one has a scheme of its own.
+# `matrix:` is the specified one (MSC2312) and almost nobody sends it; what
+# people actually share is a matrix.to address, which is an ordinary https
+# link. There is no way to register for one host only - a desktop file knows
+# schemes, not hosts - so taking matrix.to means being offered for every web
+# address. xmatic then appears in the "open with" list for links it has nothing
+# to do with, and drops them: see AppService::requestLink.
+MimeType=x-scheme-handler/matrix;x-scheme-handler/https;
+
+[X-Sailjail]
+# Without this block the start goes through a compatibility mode that runs the
+# app on default permissions, and the user is asked about it - seen on the
+# device. With it, a start through a link is sandboxed exactly like a start
+# through the icon.
+#
+# The pair below is the whole reason this works: Sailjail derives the data
+# directory from these two names, not from the file name, so the app opens on
+# the same store either way.
+OrganizationName=org.xmatic
+ApplicationName=xmatic
+# The same list as the main file. A shorter one here would be a second, weaker
+# profile for the same application, and whichever one started it would decide
+# what it may do. See harbour-xmatic.desktop for why each entry is needed.
+Permissions=Internet;Audio;Microphone;Camera;Pictures;Documents;Downloads;Music;Videos;PublicDir;RemovableMedia;MediaIndexing;Sharing;Notifications;Secrets;UnifiedPush;XmaticSpeech

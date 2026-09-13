@@ -71,6 +71,29 @@ int main(int argc, char *argv[])
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
+    // What the link handler's desktop file passes as its %u. Taken as it stands
+    // and judged later: nothing here decides what it means, and nothing logs it
+    // - a matrix.to link carries a room address, often a user id.
+    QString startupLink;
+    for (int i = 1; i < argc; i++) {
+        const QString argument = QString::fromLocal8Bit(argv[i]);
+        if (!argument.startsWith(QLatin1Char('-'))) {
+            startupLink = argument;
+            break;
+        }
+    }
+
+    // Delivered, never opened here: this process has the handler's identity, and
+    // Sailjail grants rights by identity - no app files, no store key. See
+    // docs/PITFALLS.md.
+    if (!startupLink.isEmpty()) {
+        if (deliverLink(startupLink)) {
+            return 0;
+        }
+        qWarning("xmatic: the link could not be delivered");
+        return 1;
+    }
+
     const QString dataDirectory = ensureDirectory(QStandardPaths::AppDataLocation);
     // Without it the store, the session and the swept cache all become
     // relative to the working directory. Nothing to fall back to.

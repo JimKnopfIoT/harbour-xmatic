@@ -82,3 +82,27 @@ void raiseRunningInstance()
     // fire-and-forget message can still sit in the queue when the connection goes.
     bus.call(activate, QDBus::Block, 2000);
 }
+
+bool deliverLink(const QString &link)
+{
+    QDBusConnection bus = QDBusConnection::sessionBus();
+    if (!bus.isConnected()) {
+        return false;
+    }
+
+    // No check whether the name is owned, unlike the hand-over above: here an
+    // unowned name is the interesting case. The call then activates the service
+    // file, which starts the app under its own profile - with its own files and
+    // its own store key, neither of which this process has.
+    QDBusMessage open =
+        QDBusMessage::createMethodCall(QStringLiteral("org.xmatic.xmatic"),
+                                       QStringLiteral("/org/xmatic/xmatic"),
+                                       QStringLiteral("org.xmatic.xmatic"),
+                                       QStringLiteral("openUrl"));
+    open.setArguments({ link });
+
+    // Long enough for a cold start: the app has to come up, take its lock and
+    // claim the name before it can answer.
+    const QDBusMessage reply = bus.call(open, QDBus::Block, 30000);
+    return reply.type() != QDBusMessage::ErrorMessage;
+}

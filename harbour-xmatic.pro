@@ -173,6 +173,12 @@ pushservice.files = org.unifiedpush.Connector.xmatic.service
 pushservice.path = /usr/share/dbus-1/services
 INSTALLS += pushservice
 
+# The link handler. Its own file so the launcher grid keeps one xmatic; the app
+# itself is started against the main desktop file, see the file for why.
+urlhandler.files = harbour-xmatic-open-url.desktop
+urlhandler.path = /usr/share/applications
+INSTALLS += urlhandler
+
 # The sandbox's leave to talk to the offline speech service, for a voice message
 # converted to text on request. Sailjail reads permissions from this directory only.
 speechpermission.files = XmaticSpeech.permission
@@ -239,6 +245,7 @@ DISTFILES += \
     LICENSE \
     README.md \
     harbour-xmatic.desktop \
+    harbour-xmatic-open-url.desktop \
     XmaticSpeech.permission \
     data/voice-check.opus \
     rpm/harbour-xmatic.spec \

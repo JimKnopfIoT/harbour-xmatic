@@ -427,6 +427,12 @@ void MatrixBridge::restoreSession()
     send(QStringLiteral("session.restore"));
 }
 
+void MatrixBridge::rebuildLocalData()
+{
+    setLastError(QString());
+    send(QStringLiteral("session.rebuildStore"));
+}
+
 /// Sailfish 4's Gecko cannot render the MAS sign-in pages - measured on 4.6,
 /// and the reason the device-code grant exists. Unreadable release: assume it works.
 bool MatrixBridge::browserLoginReliable() const
@@ -3179,6 +3185,17 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
         emit loginFailed(error);
     } else if (name == QLatin1String("login.aborted")) {
         setLoginRunning(false);
+    } else if (name == QLatin1String("core.log")) {
+        // The SDK's own words, scrubbed by the core. Errors go to the log page too:
+        // the last line of a failure is rarely its cause.
+        const QString message = data.value(QStringLiteral("message")).toString();
+        const QString target = data.value(QStringLiteral("target")).toString();
+        const bool error = data.value(QStringLiteral("level")).toString() == QLatin1String("error");
+        qWarning("xmatic: sdk %s %s: %s", error ? "error" : "warning", qPrintable(target),
+                 qPrintable(message));
+        if (error) {
+            noteError(target, message);
+        }
     } else if (name == QLatin1String("session.warning")) {
         setLastError(data.value(QStringLiteral("message")).toString());
     } else {
@@ -3372,6 +3389,13 @@ void MatrixBridge::applySession(const QJsonObject &data)
     const QString state = data.value(QStringLiteral("state")).toString();
     const QString user = data.value(QStringLiteral("userId")).toString();
     const QString device = data.value(QStringLiteral("deviceId")).toString();
+
+    // On every answer, not only on a change: a failed rebuild keeps the state.
+    if (state == QLatin1String("unreadable")) {
+        const QString reason = data.value(QStringLiteral("reason")).toString();
+        qWarning("xmatic: local data unreadable: %s", qPrintable(reason));
+        setLastError(reason);
+    }
 
     if (state == m_sessionState && user == m_userId && device == m_deviceId) {
         return;

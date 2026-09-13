@@ -75,6 +75,8 @@ pub fn scrub_ids(text: &str) -> String {
                         && label
                             .chars()
                             .all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_')
+                        // `_tcp` is a DNS label, `join_rules` a field name.
+                        && !label[1..].contains('_')
                 });
             // A name (last label is letters) or an address (all digits).
             let hostname = dotted
@@ -136,6 +138,13 @@ mod tests {
         assert_eq!(scrub_ids("token syt_YWxpY2U_abcdefgh_1234"), "token <id>");
         assert_eq!(scrub_ids("at /home/defaultuser/.local/share/x"), "at <id>");
         assert_eq!(scrub_ids("key AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"), "key <id>");
+    }
+
+    #[test]
+    fn a_field_path_is_not_a_host() {
+        assert_eq!(scrub_ids("in a store: base_info.join_rules.content"),
+                   "in a store: base_info.join_rules.content");
+        assert_eq!(scrub_ids("lookup _matrix-fed._tcp.server.tld failed"), "lookup <id> failed");
     }
 
     #[test]
