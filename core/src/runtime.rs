@@ -302,6 +302,7 @@ async fn handle(state: Arc<State>, command: Command) {
     let id = command.id();
     match command {
         Command::SessionRestore { store_key, .. } => restore_session(&state, id, store_key).await,
+        Command::SessionRebuildStore { .. } => rebuild_store(&state, id).await,
         Command::LoginStart { homeserver, .. } => start_login(&state, id, homeserver).await,
         Command::LoginPassword {
             homeserver,
@@ -1977,7 +1978,22 @@ async fn ensure_room_list(
     let mut rooms = state.rooms.lock().await;
     if rooms.is_none() {
         let client = state.client().await.ok_or_else(|| "not signed in".to_owned())?;
-        let handle = roomlist::start(&client, state.sink.clone()).await?;
+        // A store from before the connection was ours to choose may hold a position
+        // that outlived a rebuild; it moves on once, here.
+        if let Err(error) = session::migrate_sync_connection(&state.paths) {
+            state.sink.emit(event(
+                "core.log",
+                json!({
+                    "level": "warn",
+                    "target": "xmatic",
+                    "message": crate::text::scrub_ids(&format!(
+                        "could not record the sync connection: {error}"
+                    )),
+                }),
+            ));
+        }
+        let connection_id = session::sync_connection_id(&state.paths);
+        let handle = roomlist::start(&client, state.sink.clone(), connection_id).await?;
         *rooms = Some(handle);
     }
     Ok(rooms.as_ref().expect("just ensured").service())
@@ -2312,6 +2328,17 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
         .restore_session_with(stored.into_auth_session(), RoomLoadSettings::default())
         .await
     {
+        // A store that cannot be read back is not an ended session: account and
+        // crypto store are fine, and a login over them would cost the device.
+        if matches!(error, matrix_sdk::Error::StateStore(_)) {
+            let data = json!({
+                "state": "unreadable",
+                "reason": crate::text::scrub_ids(&error.to_string()),
+            });
+            state.sink.emit(reply_ok(id, data.clone()));
+            state.sink.emit(event("session.changed", data));
+            return;
+        }
         state
             .sink
             .emit(reply_error(id, format!("session no longer valid: {error}")));
@@ -2337,6 +2364,23 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
     let data = state.session_data().await;
     state.sink.emit(reply_ok(id, data.clone()));
     state.sink.emit(event("session.changed", data));
+}
+
+/// The way out of `unreadable`: drops what the next sync rebuilds, restores
+/// again. Refused while a client holds the store.
+async fn rebuild_store(state: &Arc<State>, id: u64) {
+    if state.client.lock().await.is_some() {
+        state.sink.emit(reply_error(id, "the local data is in use"));
+        return;
+    }
+    if let Err(error) = session::rebuild_store(&state.paths) {
+        state.sink.emit(reply_error(
+            id,
+            crate::text::scrub_ids(&format!("the local data could not be rebuilt: {error}")),
+        ));
+        return;
+    }
+    restore_session(state, id, None).await;
 }
 
 /// Clears the ground for a login that starts a new device. The cached client

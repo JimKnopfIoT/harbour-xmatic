@@ -52,6 +52,8 @@ Page {
     // The sender's picture and the gap it leaves. One number for picture, bubble
     // margin and text width - never read off the item, which is the width rule.
     readonly property real avatarSize: Theme.iconSizeMedium
+    // The same for a system line, where the picture only marks who acted.
+    readonly property real systemAvatarSize: Theme.iconSizeExtraSmall
 
     // Whether new messages should scroll the view along.
     property bool followTail: true
@@ -1419,14 +1421,19 @@ Page {
                                 : (model.kind === "date"
                                    ? dayLabel.height + Theme.paddingLarge
                                    : (isSystem
-                                      ? systemLabel.height + Theme.paddingLarge
+                                      ? Math.max(systemLabel.height,
+                                                 page.systemAvatarSize)
+                                        + Theme.paddingLarge
                                       : 0)))
                                // The gap the line sits in. Any row can carry it, so it is added to the row's
                                // own height rather than being a row of its own.
                                + (showMarker ? Theme.paddingLarge : 0)
 
                 // Only real messages react; dividers are not something to press.
-                enabled: model.kind === "message"
+                enabled: model.kind === "message" || row.isSystem
+                // Every entry of the menu is about a message; a system line would
+                // open it empty.
+                showMenuOnPressAndHold: model.kind === "message"
                 _showPress: false
 
                 // A growing height under an open menu is the menu, not new rows:
@@ -2603,18 +2610,70 @@ Page {
                           : ""
                 }
 
+                // Who acted. Fixed size and fixed left edge, so the line beside it
+                // never measures back.
+                Avatar {
+                    id: systemAvatar
+
+                    visible: row.isSystem
+                    anchors {
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                        verticalCenter: systemLabel.verticalCenter
+                    }
+                    size: page.systemAvatarSize
+                    source: model.senderAvatar || ""
+                    name: model.senderName || model.sender || ""
+
+                    // The same tap as on a message avatar. No press-and-hold: a
+                    // system line has no menu. The margin stops at the text, or it
+                    // grows a target over words it does not open.
+                    MouseArea {
+                        anchors {
+                            fill: parent
+                            margins: -Theme.paddingMedium
+                        }
+                        onClicked: pageStack.push(
+                                       Qt.resolvedUrl("MemberProfilePage.qml"),
+                                       { roomId: page.roomId, userId: model.sender })
+                    }
+                }
+
+                Label {
+                    id: systemTime
+
+                    visible: row.isSystem
+                    anchors {
+                        right: parent.right
+                        rightMargin: Theme.horizontalPageMargin
+                        verticalCenter: systemLabel.verticalCenter
+                    }
+                    font.pixelSize: Theme.fontSizeTiny
+                    color: Theme.secondaryColor
+                    textFormat: Text.PlainText
+                    text: row.isSystem
+                          ? Format.formatDate(new Date(model.timestamp), Formatter.TimeValue)
+                          : ""
+                }
+
                 Label {
                     id: systemLabel
 
                     visible: row.isSystem
                     anchors {
-                        horizontalCenter: parent.horizontalCenter
+                        left: parent.left
+                        leftMargin: Theme.horizontalPageMargin
+                                    + page.systemAvatarSize + Theme.paddingMedium
                         top: parent.top
                         topMargin: Theme.paddingMedium
                     }
                     // A system line carries two names and a reason; it wraps rather
                     // than fading away, and stops after three lines.
+                    // Between picture and time: both size themselves from their own
+                    // content, so reading the time's width closes no loop.
                     width: timelineView.width - 2 * Theme.horizontalPageMargin
+                           - page.systemAvatarSize - 2 * Theme.paddingMedium
+                           - systemTime.width
                     wrapMode: Text.Wrap
                     maximumLineCount: 3
                     elide: Text.ElideRight
@@ -2624,7 +2683,6 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraSmall
                     font.italic: true
                     color: Theme.secondaryColor
-                    horizontalAlignment: Text.AlignHCenter
                     text: row.isSystem ? row.systemText() : ""
                 }
             }

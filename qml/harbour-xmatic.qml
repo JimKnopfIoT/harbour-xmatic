@@ -7,6 +7,7 @@ import Sailfish.Share 1.0
 
 import "pages"
 import "pages/SecurityStatus.js" as SecurityStatus
+import "pages/MatrixLinks.js" as MatrixLinks
 
 ApplicationWindow {
     id: app
@@ -67,6 +68,11 @@ ApplicationWindow {
         if (state === "locked") {
             return Qt.resolvedUrl("pages/SessionLockedPage.qml")
         }
+        // Stored data that could not be read back: same reasoning, its page
+        // rebuilds what the next sync restores and keeps the device.
+        if (state === "unreadable") {
+            return Qt.resolvedUrl("pages/StoreUnreadablePage.qml")
+        }
         if (state !== "signed-in") {
             return Qt.resolvedUrl("pages/LoginPage.qml")
         }
@@ -81,6 +87,7 @@ ApplicationWindow {
     function propsFor(root) {
         return root === Qt.resolvedUrl("pages/LoginPage.qml")
                 || root === Qt.resolvedUrl("pages/SessionLockedPage.qml")
+                || root === Qt.resolvedUrl("pages/StoreUnreadablePage.qml")
                 || root === Qt.resolvedUrl("pages/StorageBlockedPage.qml") ? {} : { isHome: true }
     }
 
@@ -131,6 +138,10 @@ ApplicationWindow {
             if (!pageStack.busy) {
                 app.deliverShare()
                 app.maybeShowSecurity()
+                // Last, so a room asked for by a link comes to rest above the
+                // security page rather than under it: the link is what the user
+                // just tapped.
+                app.openPendingLinkPage()
             }
         }
     }
@@ -159,6 +170,41 @@ ApplicationWindow {
         if (!matrix.storageBlocked) {
             matrix.restoreSession()
         }
+        // A link the app was started for. It waits for the session the restore
+        // above is fetching - opening a room needs one.
+        app.startupLink = activation.takePendingLink()
+        if (app.startupLink.length > 0) {
+            startupLinkLife.restart()
+        }
+    }
+
+    /// The link this start was asked for, until there is a session to open it
+    /// in. There is no state to wait for by name - a restore answers `none`,
+    /// `locked`, `unreadable` or `signed-in`, and `none` is also what a start
+    /// without a session says - so the wait is bounded by time instead.
+    property string startupLink: ""
+
+    Timer {
+        id: startupLinkLife
+
+        // Long enough for a restore over a slow line, short enough that a link
+        // is never acted on after a login the user did for another reason.
+        interval: 30000
+        onTriggered: app.startupLink = ""
+    }
+
+    Connections {
+        target: matrix
+
+        onSessionChanged: {
+            if (app.startupLink.length === 0 || matrix.sessionState !== "signed-in") {
+                return
+            }
+            var link = app.startupLink
+            app.startupLink = ""
+            startupLinkLife.stop()
+            app.openMatrixLink(link)
+        }
     }
 
     // The notification tap and the launcher's hand-over. Neither carries an
@@ -171,6 +217,94 @@ ApplicationWindow {
         onNotifiedRoomRequested: {
             app.activate()
             app.openNotifiedRoom()
+        }
+
+        // A link tapped in another app. What it may be was narrowed in
+        // AppService; what it means is decided here, by the same reader the
+        // timeline's own links go through.
+        onLinkRequested: app.openMatrixLink(link)
+    }
+
+    /// A Matrix address from outside: shown, never acted on. A room the user is
+    /// in opens, one they are not in asks first, and a person leads to the
+    /// dialog that names the address - the same three answers a link inside a
+    /// conversation gets, decided in `RoomPage`.
+    function openMatrixLink(link) {
+        var target = MatrixLinks.parse(link)
+        if (!target) {
+            return
+        }
+        // Before a session there is nothing to open the link in - and a start the
+        // link itself woke is exactly that case: the app comes up because of it,
+        // long before the restore is through. So it waits, bounded by the timer,
+        // rather than being dropped.
+        if (matrix.sessionState !== "signed-in") {
+            app.startupLink = link
+            startupLinkLife.restart()
+            return
+        }
+        if (target.kind === "user") {
+            app.pushWhenSettled("pages/NewChatDialog.qml", { prefill: target.id })
+            return
+        }
+        app.pendingLinkAddress = target.id
+        matrix.resolveRoom(target.id)
+    }
+
+    /// The address a link from outside asked about, until the core has answered.
+    property string pendingLinkAddress: ""
+
+    /// What a link decided on, until the page stack will keep it. A session
+    /// coming up replaces the root page, and a push made while that runs is
+    /// thrown away with the page it was pushed onto - measured: the room was
+    /// resolved and the dialog pushed, and the user stood in the room list.
+    property var pendingLinkPage: null
+
+    function pushWhenSettled(url, properties) {
+        app.pendingLinkPage = { "url": url, "properties": properties }
+        app.openPendingLinkPage()
+    }
+
+    function openPendingLinkPage() {
+        if (!app.pendingLinkPage || pageStack.busy) {
+            // Retried from onBusyChanged, the same way the security page waits -
+            // a push during a transition is dropped silently.
+            return
+        }
+        var page = app.pendingLinkPage
+        app.pendingLinkPage = null
+        pageStack.push(Qt.resolvedUrl(page.url), page.properties)
+    }
+
+    Connections {
+        target: matrix
+
+        onRoomResolved: {
+            if (app.pendingLinkAddress.length === 0) {
+                return
+            }
+            app.pendingLinkAddress = ""
+            console.warn("xmatic: link room resolved, joined:", joined)
+            if (joined) {
+                app.pushWhenSettled("pages/RoomPage.qml",
+                                    { roomId: roomId, roomName: "" })
+                return
+            }
+            // Never from the link itself: a tap in a stranger's app must not put
+            // the user into a room, and the dialog is where that is decided.
+            app.pushWhenSettled("pages/JoinRoomDialog.qml", { prefill: address })
+        }
+
+        // Could not be looked up is not "does not exist": a cold start asks before
+        // the first sync is through. The user asked for it, so the dialog comes up.
+        onRoomResolveFailed: {
+            if (app.pendingLinkAddress.length === 0) {
+                return
+            }
+            var address = app.pendingLinkAddress
+            app.pendingLinkAddress = ""
+            console.warn("xmatic: link room could not be resolved")
+            app.pushWhenSettled("pages/JoinRoomDialog.qml", { prefill: address })
         }
     }
 

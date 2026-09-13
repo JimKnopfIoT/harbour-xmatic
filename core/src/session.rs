@@ -448,6 +448,67 @@ pub fn reset_store(paths: &Paths) -> Result<(), std::io::Error> {
     paths.prepare()
 }
 
+/// The sliding sync position lives in the crypto store, which a rebuild spares -
+/// so it outlives one. It hangs off the connection's name; see docs/PITFALLS.md.
+fn sync_connection_file(paths: &Paths) -> PathBuf {
+    paths.store.join(".sync-connection")
+}
+
+fn sync_generation(paths: &Paths) -> u32 {
+    std::fs::read_to_string(sync_connection_file(paths))
+        .ok()
+        .and_then(|text| text.trim().parse::<u32>().ok())
+        .unwrap_or(1)
+}
+
+/// The name this store syncs under. The first generation keeps the SDK's own
+/// name, so a store that never needed a rebuild syncs on as it always did.
+pub fn sync_connection_id(paths: &Paths) -> String {
+    match sync_generation(paths) {
+        1 => "room-list".to_owned(),
+        generation => format!("room-list-{generation}"),
+    }
+}
+
+/// Moves to the next connection, so the next sync starts from nothing.
+pub fn advance_sync_connection(paths: &Paths) -> Result<(), std::io::Error> {
+    let next = sync_generation(paths).saturating_add(1);
+    std::fs::write(sync_connection_file(paths), next.to_string())
+}
+
+/// A damaged store cannot be told from a healthy one, so every store older than
+/// this file moves on once and pays one full sync. A new one has nothing to carry.
+pub fn migrate_sync_connection(paths: &Paths) -> Result<(), std::io::Error> {
+    if sync_connection_file(paths).exists() {
+        return Ok(());
+    }
+    let generation = if paths.store.join("matrix-sdk-state.sqlite3").exists() {
+        2
+    } else {
+        1
+    };
+    std::fs::write(sync_connection_file(paths), generation.to_string())
+}
+
+/// Drops what the next sync rebuilds: rooms, timelines and the search built
+/// from them. Session, crypto store and the key marker stay - and because the
+/// position lives in the store that stays, the next sync is told to forget it.
+pub fn rebuild_store(paths: &Paths) -> Result<(), std::io::Error> {
+    for database in ["matrix-sdk-state.sqlite3", "matrix-sdk-event-cache.sqlite3"] {
+        for suffix in ["", "-wal", "-shm", "-journal"] {
+            match std::fs::remove_file(paths.store.join(format!("{database}{suffix}"))) {
+                Err(error) if error.kind() != std::io::ErrorKind::NotFound => return Err(error),
+                _ => {}
+            }
+        }
+    }
+    if paths.search_index.exists() {
+        std::fs::remove_dir_all(&paths.search_index)?;
+    }
+    paths.prepare()?;
+    advance_sync_connection(paths)
+}
+
 #[cfg(unix)]
 fn restrict_permissions(path: &Path) -> Result<(), std::io::Error> {
     use std::os::unix::fs::PermissionsExt;
@@ -511,6 +572,74 @@ mod tests {
         let key = a_key();
         assert!(store_plan(&paths, Some(&key)).expect("plan").is_some());
         assert!(paths.store.join(".encrypted").exists());
+    }
+
+    #[test]
+    fn a_rebuild_keeps_the_device() {
+        let sandbox = Sandbox::new("rebuild");
+        let paths = sandbox.paths();
+        std::fs::create_dir_all(&paths.store).expect("store");
+        let kept = [
+            ".encrypted",
+            "matrix-sdk-crypto.sqlite3",
+            "matrix-sdk-crypto.sqlite3-wal",
+            "matrix-sdk-media.sqlite3",
+        ];
+        let gone = [
+            "matrix-sdk-state.sqlite3",
+            "matrix-sdk-state.sqlite3-wal",
+            "matrix-sdk-state.sqlite3-shm",
+            "matrix-sdk-event-cache.sqlite3",
+        ];
+        for name in kept.iter().chain(gone.iter()) {
+            std::fs::write(paths.store.join(name), b"x").expect("file");
+        }
+        std::fs::write(&paths.session_file, b"x").expect("session");
+        std::fs::create_dir_all(paths.search_index.join("room")).expect("index");
+
+        rebuild_store(&paths).expect("rebuild");
+
+        for name in kept {
+            assert!(paths.store.join(name).exists(), "{name} must stay");
+        }
+        for name in gone {
+            assert!(!paths.store.join(name).exists(), "{name} must go");
+        }
+        assert!(paths.session_file.exists());
+        assert!(paths.search_index.exists() && !paths.search_index.join("room").exists());
+        // The position lives in the crypto store, which stayed - so the next sync
+        // runs under a name that has none.
+        assert_eq!(sync_connection_id(&paths), "room-list-2");
+        rebuild_store(&paths).expect("rebuild again");
+        assert_eq!(sync_connection_id(&paths), "room-list-3");
+    }
+
+    #[test]
+    fn a_store_that_was_never_rebuilt_keeps_the_sdks_own_connection() {
+        let sandbox = Sandbox::new("connection");
+        let paths = sandbox.paths();
+        std::fs::create_dir_all(&paths.store).expect("store");
+        assert_eq!(sync_connection_id(&paths), "room-list");
+    }
+
+    #[test]
+    fn an_existing_store_moves_on_once_and_a_new_one_does_not() {
+        let sandbox = Sandbox::new("migrate-existing");
+        let paths = sandbox.paths();
+        std::fs::create_dir_all(&paths.store).expect("store");
+        std::fs::write(paths.store.join("matrix-sdk-state.sqlite3"), b"x").expect("state");
+
+        migrate_sync_connection(&paths).expect("migrate");
+        assert_eq!(sync_connection_id(&paths), "room-list-2");
+        // Once, not on every start.
+        migrate_sync_connection(&paths).expect("migrate again");
+        assert_eq!(sync_connection_id(&paths), "room-list-2");
+
+        let fresh = Sandbox::new("migrate-fresh");
+        let fresh_paths = fresh.paths();
+        std::fs::create_dir_all(&fresh_paths.store).expect("store");
+        migrate_sync_connection(&fresh_paths).expect("migrate");
+        assert_eq!(sync_connection_id(&fresh_paths), "room-list");
     }
 
     #[test]

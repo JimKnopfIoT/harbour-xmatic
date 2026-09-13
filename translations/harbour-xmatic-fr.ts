@@ -3051,6 +3051,33 @@
     </message>
 </context>
 <context>
+    <name>StoreUnreadablePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Se déconnecter et supprimer les données locales</translation>
+    </message>
+    <message>
+        <source>Local data unreadable</source>
+        <translation>Données locales illisibles</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pour Sailfish OS</translation>
+    </message>
+    <message>
+        <source>xmatic could not read back part of the data it keeps on this device. Your account, this device and its encryption keys are not affected.</source>
+        <translation>xmatic n&apos;a pas pu relire une partie des données qu&apos;il conserve sur cet appareil. Ton compte, cet appareil et ses clés de chiffrement ne sont pas concernés.</translation>
+    </message>
+    <message>
+        <source>Rebuilding deletes the rooms and messages stored on this device and loads them again from your homeserver. This device and its keys stay; messages that were not sent yet are lost.</source>
+        <translation>La reconstruction supprime les salons et les messages stockés sur cet appareil et les recharge depuis ton serveur d&apos;accueil. Cet appareil et ses clés sont conservés ; les messages pas encore envoyés sont perdus.</translation>
+    </message>
+    <message>
+        <source>Rebuild local data</source>
+        <translation>Reconstruire les données locales</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>

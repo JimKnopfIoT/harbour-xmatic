@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.32.0"
+version = "0.33.0"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -90,6 +90,10 @@ reqwest = { version = "0.13", default-features = false, features = ["rustls", "j
 # compiling because the SDK happens to switch it on. A dependency on another
 # crate's feature choice is not a dependency.
 tokio = { version = "1", features = ["rt-multi-thread", "time", "sync"] }
+# The SDK's own warnings, forwarded scrubbed (sdklog.rs). Both already in the
+# tree through the SDK; `registry` only, no formatter.
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", default-features = false, features = ["registry", "std"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 futures-util = "0.3"

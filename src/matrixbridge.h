@@ -279,6 +279,10 @@ public:
     /// dialog - and retries the restore. Never touches the stored data.
     Q_INVOKABLE void retryUnlock();
 
+    /// Drops the stored rooms and messages and restores again, for a store that
+    /// could not be read back. Session and encryption keys stay.
+    Q_INVOKABLE void rebuildLocalData();
+
     /// Asks the secrets storage again from the blocked page. No session to restore
     /// yet: this only updates what the app knows, so the gate can open.
     Q_INVOKABLE void retryStoreKey();

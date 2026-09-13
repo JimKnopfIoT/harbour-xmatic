@@ -441,7 +441,11 @@ fn spawn_loading_state(room_list: &RoomList, sink: Arc<Sink>) -> JoinHandle<()> 
     })
 }
 
-pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, String> {
+pub async fn start(
+    client: &Client,
+    sink: Arc<Sink>,
+    connection_id: String,
+) -> Result<RoomListHandle, String> {
     // Asked once per start, next to the sync service rather than before it:
     // the answer is a diagnosis, not a gate.
     spawn_support_check(client.clone(), sink.clone());
@@ -450,6 +454,10 @@ pub async fn start(client: &Client, sink: Arc<Sink>) -> Result<RoomListHandle, S
     // until the app restarts.
     let sync = SyncService::builder(client.clone())
         .with_offline_mode()
+        // Not the SDK's default where a rebuild has happened: the position it would
+        // resume from lives in the crypto store, which a rebuild spares (see
+        // `session::sync_connection_id`).
+        .with_room_list_conn_id(connection_id)
         // Twenty, and the badge says "20+" from there. This multiplies by the rooms in
         // one request, and 200 shipped in 0.27.0 stopped large accounts updating.
         .with_room_list_timeline_limit(LIST_TIMELINE_LIMIT)

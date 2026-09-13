@@ -3056,6 +3056,33 @@
     </message>
 </context>
 <context>
+    <name>StoreUnreadablePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Atteikties un dzēst vietējos datus</translation>
+    </message>
+    <message>
+        <source>Local data unreadable</source>
+        <translation>Vietējos datus nevar nolasīt</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix priekš Sailfish OS</translation>
+    </message>
+    <message>
+        <source>xmatic could not read back part of the data it keeps on this device. Your account, this device and its encryption keys are not affected.</source>
+        <translation>xmatic neizdevās atkārtoti nolasīt daļu datu, ko tas glabā šajā ierīcē. Tavs konts, šī ierīce un tās šifrēšanas atslēgas nav skartas.</translation>
+    </message>
+    <message>
+        <source>Rebuilding deletes the rooms and messages stored on this device and loads them again from your homeserver. This device and its keys stay; messages that were not sent yet are lost.</source>
+        <translation>Pārbūve izdzēš šajā ierīcē saglabātās istabas un ziņas un ielādē tās no jauna no tava mājas servera. Šī ierīce un tās atslēgas paliek; vēl nenosūtītās ziņas tiek zaudētas.</translation>
+    </message>
+    <message>
+        <source>Rebuild local data</source>
+        <translation>Pārbūvēt vietējos datus</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
