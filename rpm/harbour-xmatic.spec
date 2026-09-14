@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.33.0
+Version:    0.33.2
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -116,13 +116,25 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Sep 14 2026 harbour-xmatic contributors 0.33.2-1
+- One stored entry that cannot be read any more no longer stops the app from
+  syncing. It used to fail every attempt the same way while the app treated it
+  as a lost network and retried for as long as it ran: the room list stopped
+  part way and the banner flickered. Such entries are now dropped - the rooms
+  and messages behind them come back from the homeserver - and where that is
+  not possible, the list says so instead of waiting forever.
+- A picture whose homeserver offers no preview is fetched in full instead of
+  staying blank. Servers with preview generation switched off refused every
+  preview, and the app took that for "no picture".
+
 * Sun Sep 13 2026 harbour-xmatic contributors 0.33.0-1
 - A system line in a room - who joined, who was invited, who was removed -
   carries the picture of whoever acted and the time it happened. The picture
   opens that person's profile, the same as on a message.
 - A room link tapped in another app opens in xmatic. Only matrix: links and
-  matrix.to addresses are accepted; a room the account is not in asks first,
-  and a link that arrives before the session is up waits for it.
+  matrix.to addresses are accepted; a room the account is not in asks first.
+
+* Fri Sep 11 2026 harbour-xmatic contributors 0.32.1-1
 - Local data that cannot be read back no longer ends the session. A page of
   its own says so and offers to rebuild rooms and messages from the homeserver,
   keeping this device and its keys; a sign-in over it would have cost both.

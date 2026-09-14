@@ -7,7 +7,7 @@ use std::time::Duration;
 use matrix_sdk::{
     attachment::{
         AttachmentConfig as RoomAttachmentConfig, AttachmentInfo, BaseAudioInfo, BaseFileInfo,
-        BaseImageInfo, BaseVideoInfo,
+        BaseImageInfo, BaseVideoInfo, Thumbnail,
     },
     media::{MediaFormat, MediaRequestParameters, MediaThumbnailSettings, UniqueKey},
     ruma::{
@@ -19,6 +19,8 @@ use matrix_sdk::{
     Client,
 };
 use matrix_sdk_ui::timeline::{AttachmentConfig, AttachmentSource, Timeline};
+
+use crate::protocol::MediaStill;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 
@@ -149,6 +151,31 @@ fn drop_legacy_names(directory: &Path) {
     });
 }
 
+/// The still the bridge wrote, as the SDK wants it. Anything missing or
+/// unreadable answers `None`: a video without a preview is what we had before,
+/// a send that fails over one is worse.
+fn read_still(still: &MediaStill) -> Option<Thumbnail> {
+    if still.is_empty() {
+        return None;
+    }
+    let data = std::fs::read(&still.path).ok()?;
+    let size = UInt::try_from(data.len() as u64).ok()?;
+    Some(Thumbnail {
+        data,
+        content_type: mime::IMAGE_JPEG,
+        width: UInt::try_from(still.width).ok()?,
+        height: UInt::try_from(still.height).ok()?,
+        size,
+    })
+}
+
+/// A refusal of the *thumbnail*, not of the media: the server has none and will
+/// make none. Anything else - the network, a rate limit, a server fault - is no
+/// reason to pull the original down instead.
+fn thumbnail_refused(status: Option<u16>) -> bool {
+    matches!(status, Some(400) | Some(404))
+}
+
 /// Downloads media and returns the path. Already downloaded files are reused,
 /// so the timeline can ask repeatedly while scrolling.
 pub async fn fetch(
@@ -173,7 +200,7 @@ pub async fn fetch(
         MediaFormat::File
     };
 
-    let request = MediaRequestParameters { source, format };
+    let request = MediaRequestParameters { source: source.clone(), format };
 
     std::fs::create_dir_all(cache_dir)
         .map_err(|error| format!("media cache unavailable: {error}"))?;
@@ -195,11 +222,28 @@ pub async fn fetch(
         .await
         .map_err(|_| "the download queue is closed".to_owned())?;
 
-    let bytes = client
-        .media()
-        .get_media_content(&request, false)
-        .await
-        .map_err(|error| format!("download failed: {error}"))?;
+    let bytes = match client.media().get_media_content(&request, false).await {
+        Ok(bytes) => bytes,
+        // A server with dynamic thumbnails switched off refuses the thumbnail, not
+        // the media. One more request against a blank picture that stays blank.
+        Err(error)
+            if thumbnail
+                && thumbnail_refused(
+                    error.as_client_api_error().map(|api| api.status_code.as_u16()),
+                ) =>
+        {
+            let original = MediaRequestParameters {
+                source,
+                format: MediaFormat::File,
+            };
+            client
+                .media()
+                .get_media_content(&original, false)
+                .await
+                .map_err(|error| format!("download failed: {error}"))?
+        }
+        Err(error) => return Err(format!("download failed: {error}")),
+    };
 
     // A ceiling before the bytes reach a decoder: the decoders on this old Qt are
     // the real target, and a hundred megabytes is past any genuine thumbnail.
@@ -238,6 +282,7 @@ fn attachment_info(
     size: usize,
     dimensions: Option<(u64, u64)>,
     voice: Option<u64>,
+    duration: Option<u64>,
 ) -> AttachmentInfo {
     let size = UInt::try_from(size as u64).ok();
     let (width, height) = match dimensions {
@@ -264,7 +309,7 @@ fn attachment_info(
             is_animated: None,
         }),
         mime::VIDEO => AttachmentInfo::Video(BaseVideoInfo {
-            duration: None,
+            duration: duration.map(Duration::from_millis),
             height,
             width,
             size,
@@ -287,6 +332,8 @@ pub async fn forward_file(
     path: &str,
     mime_type: &str,
     dimensions: Option<(u64, u64)>,
+    duration: Option<u64>,
+    still: &MediaStill,
 ) -> Result<(), String> {
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let room = client
@@ -306,7 +353,8 @@ pub async fn forward_file(
         .unwrap_or_else(|| "attachment".to_owned());
 
     let config = RoomAttachmentConfig::default()
-        .info(attachment_info(&mime, data.len(), dimensions, None));
+        .info(attachment_info(&mime, data.len(), dimensions, None, duration))
+        .thumbnail(read_still(still));
 
     room.send_attachment(filename, &mime, data, config)
         .await
@@ -351,6 +399,8 @@ pub async fn send(
     reply_to: &str,
     voice: Option<u64>,
     dimensions: Option<(u64, u64)>,
+    duration: Option<u64>,
+    still: &MediaStill,
 ) -> Result<(), String> {
     let mime: mime::Mime = mime_type
         .parse()
@@ -381,7 +431,8 @@ pub async fn send(
         .unwrap_or_else(|| "attachment".to_owned());
 
     let mut config = AttachmentConfig::default();
-    config.info = Some(attachment_info(&mime, size, dimensions, voice));
+    config.info = Some(attachment_info(&mime, size, dimensions, voice, duration));
+    config.thumbnail = read_still(still);
 
     let caption = caption.trim();
     if !caption.is_empty() {
@@ -449,6 +500,19 @@ mod tests {
         let mine = format!("mxc://example.org/{}", "c".repeat(200));
         let theirs = format!("{mine}x");
         assert_ne!(cache_name(&plain(&mine, false)), cache_name(&plain(&theirs, false)));
+    }
+
+    #[test]
+    fn only_a_refused_thumbnail_falls_back_to_the_original() {
+        // The server that has no thumbnail and will make none.
+        assert!(thumbnail_refused(Some(400)));
+        assert!(thumbnail_refused(Some(404)));
+        // A fault, a rate limit or no HTTP answer at all: asking for the whole
+        // file instead would turn a hiccup into a download.
+        assert!(!thumbnail_refused(Some(429)));
+        assert!(!thumbnail_refused(Some(500)));
+        assert!(!thumbnail_refused(Some(502)));
+        assert!(!thumbnail_refused(None));
     }
 
     #[test]

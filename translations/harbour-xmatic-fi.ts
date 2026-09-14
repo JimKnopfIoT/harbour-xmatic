@@ -338,6 +338,10 @@
         <source>Nothing here</source>
         <translation>Täällä ei ole mitään</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videot</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2129,6 +2133,14 @@
         <source>Verify user</source>
         <translation>Varmenna käyttäjä</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Paikalliset tiedot ovat vioittuneet</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Osaa tähän laitteeseen tallennetuista tiedoista ei voi enää lukea, eikä xmatic pystynyt korjaamaan sitä käytön aikana. Sulje sovellus ja käynnistä se uudelleen. Jos huoneita puuttuu vielä sen jälkeen, kirjaudu ulos ja takaisin sisään — viestisi säilyvät palvelimella.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3013,6 +3025,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Spacet, joiden jäsen olet, näkyvät täällä. Space kokoaa huoneita yhteen.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Paikalliset tiedot ovat vioittuneet</translation>
     </message>
 </context>
 <context>

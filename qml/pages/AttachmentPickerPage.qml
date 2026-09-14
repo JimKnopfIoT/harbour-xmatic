@@ -25,6 +25,9 @@ Dialog {
 
     /// The gallery's folder. Empty is every picture below the home folder.
     property string folder: ""
+    /// Which gallery the grid shows. One model per root type, so a film and a
+    /// photograph cannot stand in the same grid.
+    property string kind: "image"
 
     // The home folder is start and ceiling: below it are the only directories
     // the sandbox shows, above it nothing worth walking into.
@@ -106,10 +109,22 @@ Dialog {
             })
         }
         sources.append({ "name": qsTr("Downloads"), "path": StandardPaths.download })
+        // Its own entry rather than mixed in: the gallery model takes one root
+        // type, and films and photographs do not live in the same folders anyway.
+        sources.append({ "name": qsTr("Videos"), "path": "", "kind": "video" })
         dialog.folder = shown
     }
 
     Component.onCompleted: rebuildSources()
+
+    DocumentGalleryModel {
+        id: videos
+
+        rootType: DocumentGallery.Video
+        properties: ["url", "filePath", "fileName", "mimeType", "lastModified"]
+        sortProperties: ["-lastModified"]
+        autoUpdate: true
+    }
 
     DocumentGalleryModel {
         id: pictures
@@ -173,7 +188,10 @@ Dialog {
                 width: sourceName.implicitWidth + 2 * Theme.paddingLarge
                 height: strip.height
 
-                onClicked: dialog.folder = model.path
+                onClicked: {
+                    dialog.kind = model.kind ? model.kind : "image"
+                    dialog.folder = model.path
+                }
 
                 Label {
                     id: sourceName
@@ -243,7 +261,7 @@ Dialog {
         currentIndex: -1
         cellWidth: Math.floor(width / columns)
         cellHeight: cellWidth
-        model: pictures
+        model: dialog.kind === "video" ? videos : pictures
         clip: true
 
         PullDownMenu {

@@ -5843,7 +5843,7 @@ dependencies = [
 
 [[package]]
 name = "xmatic-core"
-version = "0.33.0"
+version = "0.33.2"
 dependencies = [
  "async-trait",
  "base64",
@@ -5857,7 +5857,9 @@ dependencies = [
  "oauth2",
  "oauth2-reqwest",
  "reqwest",
+ "rmp-serde",
  "ruma-html",
+ "rusqlite",
  "serde",
  "serde_json",
  "sha2",

@@ -600,9 +600,27 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
         // Whether the connection has been down since it was last up. Not set before
         // the first `Running`, so a normal start asks the server nothing extra.
         let mut was_down = false;
+        // Stopped because of a damaged store, not because anyone asked.
+        let mut halted = false;
 
         loop {
             sink.emit(event("sync.state", json!({ "state": name(&current) })));
+
+            // A row the store cannot decode fails every sync the same way, and the
+            // offline mode cannot know that: it retries for as long as the app runs.
+            // `storage.repair` is the way out, another attempt is not.
+            if crate::storehealth::damaged() {
+                if !halted {
+                    halted = true;
+                    sync.stop().await;
+                }
+                match states.next().await {
+                    Some(next) => current = next,
+                    None => break,
+                }
+                continue;
+            }
+            halted = false;
 
             match current {
                 SyncState::Running => {

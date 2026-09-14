@@ -1278,6 +1278,28 @@ pub async fn own_read_marker(client: &Client, room_id: &str) -> (Option<String>,
         return (None, None);
     };
 
+    // The one the badge is counted from, and the only one with a promise: the SDK
+    // keeps a receipt here *after* matching it to an event it has, and the ones it
+    // could not match go to `pending`. `m.fully_read` carries no such promise, so
+    // a jump that prefers it goes hunting - which is the lag, and the rooms that
+    // never jump at all.
+    let mut receipt = room
+        .read_receipts()
+        .latest_active
+        .map(|latest| latest.event_id.to_string());
+    if receipt.is_none() {
+        if let Some(user) = client.user_id() {
+            if let Ok(Some((event_id, _))) = room
+                .load_user_receipt(StoredReceiptType::Read, ReceiptThread::Unthreaded, user)
+                .await
+            {
+                receipt = Some(event_id.to_string());
+            }
+        }
+    }
+
+    // Second candidate only. This app writes it with every receipt and hardly
+    // anyone else writes it at all, so at best it says the same thing.
     let mut marker = None;
     if let Ok(Some(raw)) = room.account_data_static::<FullyReadEventContent>().await {
         if let Ok(content) = raw.deserialize() {
@@ -1285,19 +1307,9 @@ pub async fn own_read_marker(client: &Client, room_id: &str) -> (Option<String>,
         }
     }
 
-    let mut receipt = None;
-    if let Some(user) = client.user_id() {
-        if let Ok(Some((event_id, _))) = room
-            .load_user_receipt(StoredReceiptType::Read, ReceiptThread::Unthreaded, user)
-            .await
-        {
-            receipt = Some(event_id.to_string());
-        }
-    }
-
-    // Where only one of the two exists it is the marker, so a caller that
+    // Where only one of the two exists it is the anchor, so a caller that
     // knows nothing of the distinction still gets the one usable answer.
-    match (marker, receipt) {
+    match (receipt, marker) {
         (None, second) => (second, None),
         (first, second) if first == second => (first, None),
         (first, second) => (first, second),

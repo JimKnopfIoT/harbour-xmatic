@@ -337,6 +337,10 @@
         <source>Nothing here</source>
         <translation>این‌جا چیزی نیست</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>ویدیوها</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2126,6 +2130,14 @@
         <source>Account</source>
         <translation>حساب</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>داده‌های محلی آسیب‌دیده</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>بخشی از داده‌های ذخیره‌شده روی این دستگاه دیگر خوانده نمی‌شود و xmatic نتوانست آن را در حین اجرا تعمیر کند. برنامه را ببند و دوباره اجرا کن. اگر باز هم اتاق‌هایی کم بود، از حساب خارج شو و دوباره وارد شو — پیام‌های تو روی سرور می‌مانند.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3008,6 +3020,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Spaceهایی که عضوشان هستی این‌جا پدیدار می‌شوند. Space اتاق‌ها را کنار هم می‌گذارد.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>داده‌های محلی آسیب‌دیده</translation>
     </message>
 </context>
 <context>

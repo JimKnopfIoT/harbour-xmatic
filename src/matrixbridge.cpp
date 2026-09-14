@@ -13,6 +13,12 @@
 
 #include "imagefacts.h"
 #include "outgoingimage.h"
+#include "videostill.h"
+
+#include <QProcess>
+#include <QProcessEnvironment>
+
+
 #include <QJSValue>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -1825,6 +1831,83 @@ static void insertDimensions(QJsonObject &arguments, const QString &localPath,
     arguments.insert(QStringLiteral("height"), double(size.height()));
 }
 
+/// A frame out of a video, plus what the event has to declare about the film.
+/// A homeserver makes no preview of a video, so it travels with one or the
+/// receiver - and the sender - see a paper clip.
+static void applyVideoStill(QJsonObject &arguments, const VideoStill &still)
+{
+    if (still.path.isEmpty()) {
+        return;
+    }
+    QJsonObject thumbnail;
+    thumbnail.insert(QStringLiteral("path"), still.path);
+    thumbnail.insert(QStringLiteral("width"), double(still.width));
+    thumbnail.insert(QStringLiteral("height"), double(still.height));
+    arguments.insert(QStringLiteral("thumbnail"), thumbnail);
+}
+
+/// Decodes the frame on a thread of its own and sends the command once it is
+/// there. A video without a frame goes out as it did before - the send is never
+/// held back by a preview it could not get.
+void MatrixBridge::startVideoSend(const QJsonObject &arguments, const QString &path,
+                                  const QString &command)
+{
+    /// A healthy frame takes under a second; this bounds a file the decoder
+    /// cannot finish. Measured on the device: one video never came back at all.
+    const int Deadline = 10000;
+
+    const QString target = videoStillPath(path);
+    if (target.isEmpty()) {
+        send(command, arguments);
+        return;
+    }
+    pruneVideoStills();
+
+    QProcess *helper = new QProcess(this);
+    helper->setStandardOutputFile(QProcess::nullDevice());
+    helper->setStandardErrorFile(QProcess::nullDevice());
+
+    connect(helper, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+            this, [this, helper, arguments, command, target](int code, QProcess::ExitStatus status) {
+        QJsonObject full = arguments;
+        VideoStill still;
+        if (code == 0 && status == QProcess::NormalExit) {
+            still = readVideoStill(target);
+        }
+        if (still.path.isEmpty()) {
+            qWarning("xmatic: no frame could be taken from the video, "
+                     "sending it without a preview");
+        }
+        applyVideoStill(full, still);
+        send(command, full);
+        helper->deleteLater();
+    });
+
+    // Missing on an image that does not carry the thumbnailer, and then the
+    // video goes out as it always did. The sandbox is the usual silent one.
+    connect(helper, &QProcess::errorOccurred, this,
+            [this, helper, arguments, command](QProcess::ProcessError error) {
+        if (error != QProcess::FailedToStart) {
+            return;
+        }
+        qWarning("xmatic: the video thumbnailer is not available, "
+                 "sending the video without a preview");
+        send(command, arguments);
+        helper->deleteLater();
+    });
+
+    // The whole reason this is a process: a decoder that will not finish can be
+    // taken away, and the message goes without its preview.
+    QTimer::singleShot(Deadline, helper, [helper]() {
+        if (helper->state() != QProcess::NotRunning) {
+            qWarning("xmatic: the video's frame took too long, dropping the helper");
+            helper->kill();
+        }
+    });
+
+    helper->start(videoStillProgram(), videoStillArguments(path, target));
+}
+
 void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                              const QString &caption, const QString &replyTo,
                              qint64 voiceDuration, bool original)
@@ -1849,6 +1932,13 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
     arguments.insert(QStringLiteral("caption"), caption);
     arguments.insert(QStringLiteral("replyTo"), replyTo);
     insertDimensions(arguments, outgoing.path, outgoing.mimeType);
+    // A video's frame is decoded off this thread and the command goes when it is
+    // there: on the UI thread a file the decoders stumble over parks the whole
+    // interface. Measured on the device - main thread in a futex, no way back.
+    if (outgoing.mimeType.startsWith(QLatin1String("video/"))) {
+        startVideoSend(arguments, outgoing.path, QStringLiteral("timeline.sendMedia"));
+        return;
+    }
     if (voiceDuration > 0) {
         arguments.insert(QStringLiteral("voice"), true);
         arguments.insert(QStringLiteral("duration"), double(voiceDuration));
@@ -1886,6 +1976,10 @@ void MatrixBridge::forwardToRoom(const QString &roomId,
     arguments.insert(QStringLiteral("path"), outgoing.path);
     arguments.insert(QStringLiteral("mimeType"), outgoing.mimeType);
     insertDimensions(arguments, outgoing.path, outgoing.mimeType);
+    if (outgoing.mimeType.startsWith(QLatin1String("video/"))) {
+        startVideoSend(arguments, outgoing.path, QStringLiteral("room.forward"));
+        return;
+    }
     send(QStringLiteral("room.forward"), arguments);
 }
 
@@ -2311,6 +2405,25 @@ bool MatrixBridge::replyAccount(const QString &command, const QJsonObject &data)
             users.append(value.toString());
         }
         emit ignoredUsersReady(users);
+        return true;
+    }
+
+    if (command == QLatin1String("storage.repair")) {
+        const int dropped = data.value(QStringLiteral("dropped")).toInt();
+        qWarning("xmatic: repair dropped %d of %d stored rows (%d room(s), %d room key(s))",
+                 dropped,
+                 data.value(QStringLiteral("checked")).toInt(),
+                 data.value(QStringLiteral("rooms")).toInt(),
+                 data.value(QStringLiteral("roomKeys")).toInt());
+        // Only a repair that removed something fixed something. Zero leaves the
+        // line standing, because the sync is still stopped.
+        if (dropped > 0) {
+            m_repairTried = false;
+            if (m_storageDamaged) {
+                m_storageDamaged = false;
+                emit storageDamagedChanged();
+            }
+        }
         return true;
     }
 
@@ -3133,6 +3246,19 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
             m_profileName = displayName;
             m_profileAvatar = avatar;
             emit profileChanged();
+        }
+    } else if (name == QLatin1String("storage.damaged")) {
+        // A row nothing can decode fails every sync the same way. The core has
+        // stopped the retry loop; the repair is what gets the sync back.
+        qWarning("xmatic: local data damaged: %s",
+                 qPrintable(data.value(QStringLiteral("reason")).toString()));
+        if (!m_storageDamaged) {
+            m_storageDamaged = true;
+            emit storageDamagedChanged();
+        }
+        if (!m_repairTried) {
+            m_repairTried = true;
+            send(QStringLiteral("storage.repair"));
         }
     } else if (name == QLatin1String("sync.state")) {
         const QString state = data.value(QStringLiteral("state")).toString();

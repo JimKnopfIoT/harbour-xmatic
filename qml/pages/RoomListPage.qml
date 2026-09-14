@@ -90,6 +90,11 @@ Page {
                     if (!matrix.serverSupported) {
                         return qsTr("This homeserver is not supported")
                     }
+                    // Not "offline": waiting does not end this one, and the sync is
+                    // stopped on purpose rather than trying again.
+                    if (matrix.storageDamaged) {
+                        return qsTr("Local data damaged")
+                    }
                     // Rows held against rooms the server counts: an ungrown sync window and one
                     // page asked for look identical. Not while searching - filtered count.
                     var counted = searchField.text.length > 0
@@ -133,6 +138,18 @@ Page {
                 color: Theme.errorColor
                 visible: !matrix.serverSupported
                 text: qsTr("Your homeserver does not offer the sync this app needs (simplified sliding sync, MSC4186). Rooms cannot be loaded from it. A newer server version, or an account on a server that supports it, is required.")
+            }
+
+            // The repair runs by itself and clears this line; what is left here is
+            // the case where it could not, and then the list stays where it is.
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.errorColor
+                visible: matrix.storageDamaged
+                text: qsTr("Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.")
             }
 
             SearchField {

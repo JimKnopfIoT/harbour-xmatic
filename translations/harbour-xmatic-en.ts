@@ -338,6 +338,10 @@
         <source>Nothing here</source>
         <translation>Nothing here</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videos</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2129,6 +2133,14 @@
         <source>Verify user</source>
         <translation>Verify user</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Local data damaged</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3013,6 +3025,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Spaces you are a member of show up here. Spaces group rooms together.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Local data damaged</translation>
     </message>
 </context>
 <context>

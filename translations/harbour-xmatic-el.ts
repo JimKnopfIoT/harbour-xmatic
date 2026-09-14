@@ -338,6 +338,10 @@
         <source>Nothing here</source>
         <translation>Δεν υπάρχει τίποτα εδώ</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Βίντεο</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2129,6 +2133,14 @@
         <source>Verify user</source>
         <translation>Επαλήθευση χρήστη</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Κατεστραμμένα τοπικά δεδομένα</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Ένα μέρος των δεδομένων που είναι αποθηκευμένα σε αυτή τη συσκευή δεν μπορεί πλέον να διαβαστεί και το xmatic δεν μπόρεσε να το επιδιορθώσει ενώ έτρεχε. Κλείσε την εφαρμογή και ξεκίνησέ την ξανά. Αν εξακολουθούν να λείπουν δωμάτια, αποσυνδέσου και συνδέσου ξανά — τα μηνύματά σου παραμένουν στον διακομιστή.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3013,6 +3025,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Οι χώροι στους οποίους είσαι μέλος εμφανίζονται εδώ. Οι χώροι ομαδοποιούν δωμάτια.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Κατεστραμμένα τοπικά δεδομένα</translation>
     </message>
 </context>
 <context>

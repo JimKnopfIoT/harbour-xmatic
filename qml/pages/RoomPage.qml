@@ -336,7 +336,7 @@ Page {
                 console.warn("xmatic: read marker is the newest row ("
                              + idx + " of " + matrix.timeline.count
                              + "), staying at the end")
-                page.stayAtEnd()
+                page.stayAtEnd(true)
                 return
             }
             console.warn("xmatic: opening at the read marker, row " + idx
@@ -383,15 +383,18 @@ Page {
                      + matrix.timelineAtStart + " - staying at the end")
         page.unreadFromId = ""
         unreadRetry.stop()
-        page.stayAtEnd()
+        page.stayAtEnd(false)
     }
 
-    // The end, and everything that goes with being there: the newest rows are
-    // followed again and the room counts as read.
-    function stayAtEnd() {
+    // The end, and the newest rows followed again. `read` is false where the jump
+    // failed: marking read there moves the anchor the next attempt needs, so the
+    // failure would delete its own evidence and the room never jumps again.
+    function stayAtEnd(read) {
         page.followTail = true
         timelineView.positionViewAtEnd()
-        readTimer.restart()
+        if (read) {
+            readTimer.restart()
+        }
     }
 
     Timer {

@@ -338,6 +338,10 @@
         <source>Nothing here</source>
         <translation>Siin pole midagi</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videod</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2129,6 +2133,14 @@
         <source>Verify user</source>
         <translation>Kinnita kasutaja</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Kohalikud andmed on kahjustatud</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Osa selles seadmes hoitavatest andmetest ei ole enam loetav ja xmatic ei suutnud seda töö ajal parandada. Sulge rakendus ja käivita see uuesti. Kui ruume on ka pärast seda puudu, logi välja ja uuesti sisse — sinu sõnumid jäävad serverisse.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3013,6 +3025,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Ruumid, mille liige sa oled, ilmuvad siia. Ruumid rühmitavad tube.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Kohalikud andmed on kahjustatud</translation>
     </message>
 </context>
 <context>

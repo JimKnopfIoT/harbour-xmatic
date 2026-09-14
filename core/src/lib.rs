@@ -25,6 +25,7 @@ mod runtime;
 mod sdklog;
 mod search;
 mod session;
+mod storehealth;
 mod text;
 mod timeline;
 mod verification;

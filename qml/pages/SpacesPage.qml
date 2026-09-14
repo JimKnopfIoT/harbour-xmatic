@@ -70,10 +70,12 @@ Page {
 
         header: PageHeader {
             title: qsTr("Spaces")
-            // The core reconnects on its own; this only says that it is
-            // doing so instead of leaving a silently stale list.
-            description: matrix.syncState === "offline"
-                         ? qsTr("Offline — waiting for the network") : ""
+            // The core reconnects on its own and this only says so - except where
+            // the store is damaged, which no amount of waiting clears.
+            description: matrix.storageDamaged
+                         ? qsTr("Local data damaged")
+                         : (matrix.syncState === "offline"
+                            ? qsTr("Offline — waiting for the network") : "")
 
             // Same indicator as on the chat list; a user who starts here must
             // not have to know that the other page carries it.

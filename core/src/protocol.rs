@@ -27,6 +27,25 @@ impl<'de> Deserialize<'de> for Secret {
     }
 }
 
+/// A frame the bridge pulled out of a video, as a file plus its measurements.
+/// Without one the event carries no `thumbnail_url` and no client has a preview
+/// to draw - the sender's own included.
+#[derive(Debug, Default, Deserialize)]
+pub struct MediaStill {
+    #[serde(default)]
+    pub path: String,
+    #[serde(default)]
+    pub width: u64,
+    #[serde(default)]
+    pub height: u64,
+}
+
+impl MediaStill {
+    pub fn is_empty(&self) -> bool {
+        self.path.is_empty()
+    }
+}
+
 /// A command sent from the UI to the core.
 #[derive(Debug, Deserialize)]
 #[serde(tag = "cmd")]
@@ -295,6 +314,10 @@ pub enum Command {
         width: u64,
         #[serde(default)]
         height: u64,
+        /// A still out of a video. A video is the one kind the homeserver cannot
+        /// make a preview of, so it travels with one or it has none.
+        #[serde(default)]
+        thumbnail: MediaStill,
     },
 
     /// Send a copy of something to another room.
@@ -315,6 +338,9 @@ pub enum Command {
         width: u64,
         #[serde(default)]
         height: u64,
+        /// As above: a forward re-uploads, so it needs its own still.
+        #[serde(default)]
+        thumbnail: MediaStill,
     },
 
     /// Download an attachment and report where it was stored.
@@ -407,6 +433,11 @@ pub enum Command {
     /// disk - so the answer exists while signed out.
     #[serde(rename = "storage.status")]
     StorageStatus { id: u64 },
+
+    /// Drop the rows the stores can no longer decode and start the sync again.
+    /// One such row fails every sync; the reply counts what went.
+    #[serde(rename = "storage.repair")]
+    StorageRepair { id: u64 },
 
     /// What UnifiedPush looks like here. Needs no client and changes nothing; the
     /// page asks on every visit because a distributor can appear at any time.
@@ -983,6 +1014,7 @@ impl Command {
             | Command::VerificationMismatch { id }
             | Command::EncryptionStatus { id }
             | Command::StorageStatus { id }
+            | Command::StorageRepair { id }
             | Command::EncryptionRecover { id, .. }
             | Command::EncryptionEnableBackup { id }
             | Command::EncryptionFetchKeys { id, .. }

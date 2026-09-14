@@ -339,6 +339,10 @@
         <source>Nothing here</source>
         <translation>Здесь ничего нет</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Видео</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2132,6 +2136,14 @@
         <source>Verify user</source>
         <translation>Подтвердить пользователя</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Локальные данные повреждены</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Часть данных, сохранённых на этом устройстве, больше не читается, и xmatic не смог починить их на ходу. Закрой приложение и запусти его заново. Если комнат по-прежнему не хватает, выйди из аккаунта и войди снова — твои сообщения остаются на сервере.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3018,6 +3030,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Пространства, участником которых ты являешься, появляются здесь. Пространства объединяют комнаты.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Локальные данные повреждены</translation>
     </message>
 </context>
 <context>

@@ -50,6 +50,9 @@ class MatrixBridge : public QObject
     /// False when the homeserver does not advertise this app's sync. "Offline"
     /// then means "cannot work with this server", not "no network".
     Q_PROPERTY(bool serverSupported READ serverSupported NOTIFY serverSupportedChanged)
+    /// True while a row the store cannot decode is stopping the sync and the
+    /// automatic repair has not cleared it. "Offline" then never ends by itself.
+    Q_PROPERTY(bool storageDamaged READ storageDamaged NOTIFY storageDamagedChanged)
     /// Rooms the *server* counts, -1 until a sync answers. The window starts at
     /// twenty, so "fewer rooms than I have" has two causes; this tells them apart.
     Q_PROPERTY(int roomTotal READ roomTotal NOTIFY roomTotalChanged)
@@ -170,6 +173,7 @@ public:
     /// means the core noticed the network is gone and reconnects on its own.
     QString syncState() const { return m_syncState; }
     bool serverSupported() const { return m_serverSupported; }
+    bool storageDamaged() const { return m_storageDamaged; }
     int roomTotal() const { return m_roomTotal; }
     QString userId() const { return m_userId; }
     QString deviceId() const { return m_deviceId; }
@@ -693,6 +697,7 @@ signals:
     void sessionChanged();
     void syncStateChanged();
     void serverSupportedChanged();
+    void storageDamagedChanged();
     void roomTotalChanged();
     void busyChanged();
     void paginatingChanged();
@@ -930,12 +935,19 @@ private:
     /// damaged - the lists must not be written over in that state.
     bool m_privateListsReadable = false;
     bool m_legacyDropPending = false;
+    /// Decodes a video's frame off the UI thread, then sends `command`.
+    void startVideoSend(const QJsonObject &arguments, const QString &path,
+                        const QString &command);
     void sendPrivateList(const QString &list, const QStringList &values);
     void sendPrivateLists();
     int m_emojiRevision = 0;
     QString m_sessionState = QStringLiteral("none");
     QString m_syncState = QStringLiteral("idle");
     bool m_serverSupported = true;
+    bool m_storageDamaged = false;
+    /// One automatic repair per damage, not per run: a second round on damage
+    /// that is still there would be the flap this mechanism exists to stop.
+    bool m_repairTried = false;
     int m_roomTotal = -1;
     QString m_userId;
     QString m_deviceId;

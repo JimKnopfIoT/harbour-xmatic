@@ -338,6 +338,10 @@
         <source>Nothing here</source>
         <translation>Hér er ekkert</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Myndskeið</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2129,6 +2133,14 @@
         <source>Verify user</source>
         <translation>Staðfesta notanda</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Staðbundin gögn skemmd</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Hluti gagnanna sem geymd eru í þessu tæki er ekki lengur læsilegur og xmatic gat ekki lagað hann á meðan forritið keyrði. Lokaðu forritinu og ræstu það aftur. Ef spjallrými vantar enn eftir það skaltu skrá þig út og inn aftur — skilaboðin þín eru áfram á þjóninum.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3013,6 +3025,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Svæðin sem þú ert meðlimur í birtast hér. Svæði flokka herbergi saman.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Staðbundin gögn skemmd</translation>
     </message>
 </context>
 <context>

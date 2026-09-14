@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
         return runVoiceDecode();
     }
 
+
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 
     // What the link handler's desktop file passes as its %u. Taken as it stands
