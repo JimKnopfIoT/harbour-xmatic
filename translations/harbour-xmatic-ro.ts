@@ -339,6 +339,10 @@
         <source>Nothing here</source>
         <translation>Nu e nimic aici</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videoclipuri</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2132,6 +2136,14 @@
         <source>Verify user</source>
         <translation>Verifică utilizator</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Date locale deteriorate</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>O parte dintre datele stocate pe acest dispozitiv nu mai poate fi citită, iar xmatic nu a putut să o repare în timpul funcționării. Închide aplicația și pornește-o din nou. Dacă după aceea încă lipsesc camere, deconectează-te și conectează-te din nou — mesajele tale rămân pe server.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3018,6 +3030,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Spațiile în care ești membru apar aici. Spațiile grupează camere.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Date locale deteriorate</translation>
     </message>
 </context>
 <context>

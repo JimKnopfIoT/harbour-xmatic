@@ -337,6 +337,10 @@
         <source>Nothing here</source>
         <translation>Itt nincs semmi</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videók</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2126,6 +2130,14 @@
         <source>Verify user</source>
         <translation>Felhasználó ellenőrzése</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>A helyi adatok sérültek</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Az eszközön tárolt adatok egy része már nem olvasható, és az xmatic futás közben nem tudta megjavítani. Zárd be az alkalmazást, és indítsd el újra. Ha utána is hiányoznak szobák, jelentkezz ki, majd be újra — az üzeneteid a kiszolgálón maradnak.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3008,6 +3020,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Azok a terek jelennek meg itt, amelyeknek tagja vagy. A terek szobákat fognak össze.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>A helyi adatok sérültek</translation>
     </message>
 </context>
 <context>

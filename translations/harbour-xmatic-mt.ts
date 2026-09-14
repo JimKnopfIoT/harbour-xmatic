@@ -340,6 +340,10 @@
         <source>Nothing here</source>
         <translation>M&apos;hawn xejn</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Vidjows</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2135,6 +2139,14 @@
         <source>Verify user</source>
         <translation>Ivverifika utent</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Dejta lokali bil-ħsara</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Parti mid-dejta maħżuna fuq dan l-apparat ma tistax tinqara aktar, u xmatic ma setax isewwiha waqt li kien qed jaħdem. Agħlaq l-app u erġa&apos; ibdieha. Jekk wara jkun għad hemm kmamar neqsin, oħroġ mill-kont u erġa&apos; idħol — il-messaġġi tiegħek jibqgħu fuq is-server.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3023,6 +3035,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>L-ispazji li int membru tagħhom jidhru hawn. L-ispazji jiġbru kmamar flimkien.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Dejta lokali bil-ħsara</translation>
     </message>
 </context>
 <context>

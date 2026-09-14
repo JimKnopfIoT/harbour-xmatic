@@ -337,6 +337,10 @@
         <source>Nothing here</source>
         <translation>ここには何もありません</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>動画</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2126,6 +2130,14 @@
         <source>Account</source>
         <translation>アカウント</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>ローカルデータが壊れています</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>この端末に保存されたデータの一部が読み取れなくなり、xmatic は動作中に修復できませんでした。アプリを終了して起動し直してください。それでもルームが表示されない場合は、いったんサインアウトしてからサインインし直してください。メッセージはサーバーに残ります。</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3008,6 +3020,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>参加している Space がここに表示されます。Space はルームをまとめます。</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>ローカルデータが壊れています</translation>
     </message>
 </context>
 <context>

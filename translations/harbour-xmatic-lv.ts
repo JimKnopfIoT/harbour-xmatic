@@ -339,6 +339,10 @@
         <source>Nothing here</source>
         <translation>Šeit nekā nav</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videoklipi</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2132,6 +2136,14 @@
         <source>Verify user</source>
         <translation>Apstiprināt lietotāju</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Vietējie dati ir bojāti</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Daļu no šajā ierīcē saglabātajiem datiem vairs nevar nolasīt, un xmatic nespēja tos salabot darbības laikā. Aizver lietotni un palaid to no jauna. Ja pēc tam istabas joprojām trūkst, izraksties un pieraksties atkal — tavas ziņas paliek serverī.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3018,6 +3030,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Telpas, kuru dalībnieks esi, parādās šeit. Telpas grupē istabas.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Vietējie dati ir bojāti</translation>
     </message>
 </context>
 <context>

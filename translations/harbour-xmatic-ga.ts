@@ -339,6 +339,10 @@
         <source>Nothing here</source>
         <translation>Níl aon rud anseo</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Físeáin</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2132,6 +2136,14 @@
         <source>Verify user</source>
         <translation>Fíoraigh úsáideoir</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Sonraí áitiúla damáistithe</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Ní féidir cuid de na sonraí atá stóráilte ar an ngléas seo a léamh a thuilleadh, agus níorbh fhéidir le xmatic é a dheisiú agus é ag rith. Dún an feidhmchlár agus tosaigh arís é. Má tá seomraí ar iarraidh ina dhiaidh sin, logáil amach agus isteach arís — fanann do theachtaireachtaí ar an bhfreastalaí.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3018,6 +3030,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Taispeántar anseo na spásanna a bhfuil tú i do bhall díobh. Cuireann spásanna seomraí le chéile.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Sonraí áitiúla damáistithe</translation>
     </message>
 </context>
 <context>

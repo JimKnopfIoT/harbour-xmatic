@@ -342,6 +342,10 @@
         <source>Nothing here</source>
         <translation>لا شيء هنا</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>مقاطع الفيديو</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2141,6 +2145,14 @@
         <source>Account</source>
         <translation>الحساب</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>البيانات المحلية تالفة</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>جزء من البيانات المخزَّنة على هذا الجهاز لم يعد قابلاً للقراءة، ولم يتمكن xmatic من إصلاحه أثناء التشغيل. أغلق التطبيق ثم شغّله من جديد. إذا ظلت هناك غرف ناقصة بعد ذلك، سجّل الخروج ثم الدخول مرة أخرى — رسائلك تبقى على الخادم.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3033,6 +3045,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>تظهر هنا المساحات التي أنت عضو فيها. تجمع المساحة الغرف معًا.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>البيانات المحلية تالفة</translation>
     </message>
 </context>
 <context>

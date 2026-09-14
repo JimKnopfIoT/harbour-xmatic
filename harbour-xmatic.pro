@@ -51,6 +51,7 @@ SOURCES += \
     src/emojistore.cpp \
     src/emojiimageprovider.cpp \
     src/outgoingimage.cpp \
+    src/videostill.cpp \
     src/imagefacts.cpp \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
@@ -89,6 +90,7 @@ HEADERS += \
     src/voicedecode.h \
     src/voicetranscripts.h \
     src/outgoingimage.h \
+    src/videostill.h \
     src/imagefacts.h \
     src/secretskeeper.h \
     src/roomlistmodel.h \

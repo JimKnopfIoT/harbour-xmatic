@@ -49,7 +49,7 @@ ApplicationName=xmatic
 #
 # XmaticSpeech is this package's own file in /etc/sailjail/permissions: talking
 # to the offline speech service, to convert a voice message to text when asked.
-Permissions=Internet;Audio;Microphone;Camera;Pictures;Documents;Downloads;Music;Videos;PublicDir;RemovableMedia;MediaIndexing;Sharing;Notifications;Secrets;UnifiedPush;XmaticSpeech
+Permissions=Internet;Audio;Microphone;Camera;Pictures;Documents;Downloads;Music;Videos;PublicDir;RemovableMedia;MediaIndexing;Thumbnails;Sharing;Notifications;Secrets;UnifiedPush;XmaticSpeech
 
 # What the share dialog offers xmatic for. A link arrives as text/x-url and is
 # sent as a message; everything else arrives as a file and is uploaded like an

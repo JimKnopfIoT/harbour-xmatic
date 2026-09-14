@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.33.0"
+version = "0.33.2"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -118,6 +118,12 @@ base64 = "=0.22.1"
 # in the tree via the SDK and pinned to what the lock file resolved.
 sha2 = "=0.10.9"
 hex = "=0.4.3"
+# Reads the two SQLite stores directly to drop rows the SDK can no longer decode
+# (core/src/storehealth.rs) - the SDK has no API for that. Both come in through
+# matrix-sdk-sqlite already, pinned to what the lock file resolved, and the
+# bundled SQLite is shared: no second copy is compiled.
+rusqlite = { version = "=0.37.0", default-features = false }
+rmp-serde = "=1.3.1"
 
 [profile.release]
 lto = "thin"

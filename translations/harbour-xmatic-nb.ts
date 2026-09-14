@@ -338,6 +338,10 @@
         <source>Nothing here</source>
         <translation>Ingenting her</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videoer</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2129,6 +2133,14 @@
         <source>Verify user</source>
         <translation>Verifiser bruker</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Lokale data er skadet</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>En del av dataene som er lagret på denne enheten, kan ikke leses lenger, og xmatic klarte ikke å reparere dem mens appen kjørte. Lukk appen og start den på nytt. Mangler det fortsatt rom etterpå, logg ut og inn igjen — meldingene dine blir liggende på serveren.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3013,6 +3025,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Romgrupper du er medlem av vises her. Romgrupper samler rom sammen.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Lokale data er skadet</translation>
     </message>
 </context>
 <context>

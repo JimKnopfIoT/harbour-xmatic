@@ -23,7 +23,7 @@ use crate::profile;
 use crate::linkpreview;
 use crate::poll;
 use crate::private;
-use crate::protocol::{event, reply_error, reply_ok, Command, Secret};
+use crate::protocol::{event, reply_error, reply_ok, Command, MediaStill, Secret};
 use crate::media;
 use crate::members;
 use crate::mention;
@@ -31,6 +31,7 @@ use crate::recovery;
 use crate::roomlist::{self, RoomListHandle};
 use crate::session::{self, Paths, StoredSession};
 use crate::search;
+use crate::storehealth;
 use crate::timeline::{self, TimelineHandle};
 use crate::verification;
 
@@ -481,10 +482,12 @@ async fn handle(state: Arc<State>, command: Command) {
             duration,
             width,
             height,
+            thumbnail,
             ..
         } => {
             send_media(
                 &state, id, path, mime_type, caption, reply_to, voice, duration, width, height,
+                thumbnail,
             )
             .await
         }
@@ -501,8 +504,9 @@ async fn handle(state: Arc<State>, command: Command) {
             mime_type,
             width,
             height,
+            thumbnail,
             ..
-        } => forward(&state, id, room_id, body, path, mime_type, width, height).await,
+        } => forward(&state, id, room_id, body, path, mime_type, width, height, thumbnail).await,
         Command::RoomJoin { room_id, .. } => join_room(&state, id, room_id).await,
         Command::RoomFollowSuccessor { room_id, .. } => {
             follow_successor(&state, id, room_id).await
@@ -622,6 +626,7 @@ async fn handle(state: Arc<State>, command: Command) {
         }
         Command::EncryptionStatus { .. } => encryption_status(&state, id).await,
         Command::StorageStatus { .. } => storage_status(&state, id),
+        Command::StorageRepair { .. } => repair_storage(&state, id).await,
         Command::PushStatus { .. } => push_status(&state, id).await,
         Command::PushEnable { gateway, .. } => push_enable(&state, id, gateway).await,
         Command::PushDisable { endpoint, .. } => push_disable(&state, id, endpoint).await,
@@ -1273,6 +1278,60 @@ fn storage_status(state: &Arc<State>, id: u64) {
     ));
 }
 
+/// Walks every row of two SQLite files, so off the runtime's workers: there are
+/// two of them, and a large crypto store takes long enough to be noticed.
+async fn scrub_stores(state: &Arc<State>) -> Result<storehealth::Report, String> {
+    let paths = state.paths.clone();
+    let key = state.store_key();
+    tokio::task::spawn_blocking(move || storehealth::scrub(&paths, key.as_ref()))
+        .await
+        .map_err(|error| format!("the repair did not run: {error}"))?
+}
+
+/// Drops what the stores can no longer decode and lets the sync go on. Runs
+/// with the client open: the rows it removes are rows nothing could read.
+async fn repair_storage(state: &Arc<State>, id: u64) {
+    let report = match scrub_stores(state).await {
+        Ok(report) => report,
+        Err(error) => {
+            state
+                .sink
+                .emit(reply_error(id, crate::text::scrub_ids(&error)));
+            return;
+        }
+    };
+
+    // Only where something actually went: clearing the latch on a repair that
+    // found nothing puts the sync straight back into the loop it ended.
+    if report.dropped() > 0 {
+        storehealth::clear();
+        if let Some(handle) = state.rooms.lock().await.as_ref() {
+            handle.sync.start().await;
+        }
+    }
+    log(
+        state,
+        "warn",
+        format!(
+            "repair: {} of {} stored rows could not be decoded ({} room(s), {} room key(s)) and were dropped",
+            report.dropped(),
+            report.checked,
+            report.rooms,
+            report.room_keys
+        ),
+    );
+
+    state.sink.emit(reply_ok(
+        id,
+        json!({
+            "checked": report.checked,
+            "dropped": report.dropped(),
+            "rooms": report.rooms,
+            "roomKeys": report.room_keys,
+        }),
+    ));
+}
+
 async fn encryption_recover(state: &Arc<State>, id: u64, key: Secret) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
@@ -1766,6 +1825,7 @@ async fn send_media(
     duration: u64,
     width: u64,
     height: u64,
+    still: MediaStill,
 ) {
     // Cloned out of the guard: the attachment upload takes a while and must
     // not hold the lock.
@@ -1776,6 +1836,9 @@ async fn send_media(
         return;
     };
 
+    // One field, two lengths: a recording of one's own is a voice message, a
+    // video is a video. Which one it is the type says, not the number.
+    let length = if duration > 0 { Some(duration) } else { None };
     let voice = if voice { Some(duration) } else { None };
     let dimensions = dimensions(width, height);
     match media::send(
@@ -1786,6 +1849,8 @@ async fn send_media(
         &reply_to,
         voice,
         dimensions,
+        length,
+        &still,
     )
     .await
     {
@@ -1805,6 +1870,7 @@ async fn forward(
     mime_type: String,
     width: u64,
     height: u64,
+    still: MediaStill,
 ) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
@@ -1817,7 +1883,16 @@ async fn forward(
         } else {
             mime_type
         };
-        media::forward_file(&client, &room_id, &path, &mime, dimensions(width, height)).await
+        media::forward_file(
+            &client,
+            &room_id,
+            &path,
+            &mime,
+            dimensions(width, height),
+            None,
+            &still,
+        )
+        .await
     } else if !body.trim().is_empty() {
         media::forward_text(&client, &room_id, body).await
     } else {
@@ -1981,16 +2056,7 @@ async fn ensure_room_list(
         // A store from before the connection was ours to choose may hold a position
         // that outlived a rebuild; it moves on once, here.
         if let Err(error) = session::migrate_sync_connection(&state.paths) {
-            state.sink.emit(event(
-                "core.log",
-                json!({
-                    "level": "warn",
-                    "target": "xmatic",
-                    "message": crate::text::scrub_ids(&format!(
-                        "could not record the sync connection: {error}"
-                    )),
-                }),
-            ));
+            log(state, "warn", format!("could not record the sync connection: {error}"));
         }
         let connection_id = session::sync_connection_id(&state.paths);
         let handle = roomlist::start(&client, state.sink.clone(), connection_id).await?;
@@ -2264,7 +2330,30 @@ async fn remove_space_child(state: &Arc<State>, id: u64, space_id: String, room_
     }
 }
 
+/// A line of this core's own into the app's error log, scrubbed like the SDK's.
+fn log(state: &Arc<State>, level: &str, message: String) {
+    state.sink.emit(event(
+        "core.log",
+        json!({
+            "level": level,
+            "target": "xmatic",
+            "message": crate::text::scrub_ids(&message),
+        }),
+    ));
+}
+
 async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>) {
+    restore_stored_session(state, id, store_key, true).await
+}
+
+/// `repair` is spent on the first try: a store that is still unreadable after
+/// its damaged rows went is not a store one more round of deleting helps.
+async fn restore_stored_session(
+    state: &Arc<State>,
+    id: u64,
+    store_key: Option<String>,
+    repair: bool,
+) {
     // A key handed in with the command replaces the one from start - but only a
     // well-formed one: a garbled key must not become "no key".
     if let Some(mut encoded) = store_key {
@@ -2331,6 +2420,25 @@ async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>)
         // A store that cannot be read back is not an ended session: account and
         // crypto store are fine, and a login over them would cost the device.
         if matches!(error, matrix_sdk::Error::StateStore(_)) {
+            // One row is not the store. The client goes first, because the retry
+            // builds a second one over the same directory, then the rows nothing
+            // can decode go, then the restore gets its one second try.
+            drop(client);
+            if repair {
+                match scrub_stores(state).await {
+                    Ok(report) if report.dropped() > 0 => {
+                        log(state, "warn", format!(
+                            "dropped {} unreadable row(s) of {} from the local data",
+                            report.dropped(),
+                            report.checked
+                        ));
+                        Box::pin(restore_stored_session(state, id, None, false)).await;
+                        return;
+                    }
+                    Ok(_) => {}
+                    Err(error) => log(state, "warn", format!("the local data was not repaired: {error}")),
+                }
+            }
             let data = json!({
                 "state": "unreadable",
                 "reason": crate::text::scrub_ids(&error.to_string()),

@@ -81,6 +81,14 @@ impl<S: Subscriber> Layer<S> for SdkLog {
         let mut line = Line::default();
         record.record(&mut line);
         let text = scrub_ids(&format!("{}{}", line.message, line.fields));
+
+        // Before the de-duplication: a store failure that no retry can fix must
+        // not be swallowed because the line was seen or the budget is used up.
+        if crate::storehealth::note_sdk_failure(metadata.target(), &text) {
+            self.sink
+                .emit(event("storage.damaged", json!({ "reason": text })));
+        }
+
         {
             let Ok(mut seen) = self.seen.lock() else { return };
             if seen.len() >= MAX_LINES || !seen.insert(text.clone()) {

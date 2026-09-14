@@ -339,6 +339,10 @@
         <source>Nothing here</source>
         <translation>Ovdje nema ničega</translation>
     </message>
+    <message>
+        <source>Videos</source>
+        <translation>Videozapisi</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -2132,6 +2136,14 @@
         <source>Verify user</source>
         <translation>Provjeri korisnika</translation>
     </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Lokalni podaci su oštećeni</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
+        <translation>Dio podataka spremljenih na ovom uređaju više se ne može pročitati, a xmatic ih nije uspio popraviti tijekom rada. Zatvori aplikaciju i pokreni je ponovno. Ako sobe i nakon toga nedostaju, odjavi se i ponovno prijavi — tvoje poruke ostaju na poslužitelju.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
@@ -3018,6 +3030,10 @@
     <message>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>Prostori čiji si član pojavljuju se ovdje. Prostori grupiraju sobe.</translation>
+    </message>
+    <message>
+        <source>Local data damaged</source>
+        <translation>Lokalni podaci su oštećeni</translation>
     </message>
 </context>
 <context>
