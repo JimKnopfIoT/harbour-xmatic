@@ -401,6 +401,10 @@
         <source>the call could not be carried on</source>
         <translation>não foi possível continuar a chamada</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2138,8 +2142,8 @@
         <translation>Dados locais danificados</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Uma parte dos dados guardados neste dispositivo já não pode ser lida e o xmatic não conseguiu repará-la em funcionamento. Fecha a aplicação e abre-a de novo. Se depois continuarem a faltar salas, termina a sessão e inicia-a novamente — as tuas mensagens ficam no servidor.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Parte dos dados guardados neste dispositivo já não pode ser lida e o xmatic não conseguiu corrigi-la em funcionamento — por isso parou a sincronização em vez de voltar a encontrar a mesma linha. Fecha a aplicação e inicia-a de novo. Se ainda faltarem salas depois disso, terminar sessão e iniciá-la outra vez reconstrói os dados locais — mas também substitui as chaves deste dispositivo: verifica primeiro na página de cifragem se a cópia de segurança das chaves está ativada.</translation>
     </message>
 </context>
 <context>

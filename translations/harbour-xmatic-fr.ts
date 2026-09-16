@@ -401,6 +401,10 @@
         <source>the call could not be carried on</source>
         <translation>l’appel n’a pas pu se poursuivre</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2138,8 +2142,8 @@
         <translation>Données locales endommagées</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Une partie des données enregistrées sur cet appareil n&apos;est plus lisible et xmatic n&apos;a pas pu la réparer en cours d&apos;exécution. Ferme l&apos;application et relance-la. S&apos;il manque encore des salons ensuite, déconnecte-toi puis reconnecte-toi — tes messages restent sur le serveur.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Une partie des données enregistrées sur cet appareil n&apos;est plus lisible, et xmatic n&apos;a pas pu y remédier en cours d&apos;exécution — il a donc arrêté la synchronisation plutôt que de rencontrer à nouveau la même ligne. Ferme l&apos;application et relance-la. S&apos;il manque encore des salons ensuite, se déconnecter puis se reconnecter reconstruit les données locales — mais cela remplace les clés de cet appareil : vérifie d&apos;abord sur la page de chiffrement que la sauvegarde de clés est activée.</translation>
     </message>
 </context>
 <context>

@@ -1,5 +1,8 @@
 #include "callengine.h"
 
+#include <QTimer>
+#include <QVector>
+
 #include <QDateTime>
 #include <QFile>
 #include <QMetaObject>
@@ -64,7 +67,11 @@ QByteArray videoPipelineDescription()
                "queue name=camqueue leaky=downstream max-size-buffers=2 ! "
                "vp8enc deadline=1 threads=4 target-bitrate=%4 keyframe-max-dist=30 ! "
                "rtpvp8pay pt=96 ! "
-               "application/x-rtp,media=video,encoding-name=VP8,payload=96 ! sendrecv. "
+               // `clock-rate` is what RTP video runs at and belongs in the caps.
+               // It does *not* fix the refused video line below - measured - but
+               // leaving it out would be wrong on its own.
+               "application/x-rtp,media=video,encoding-name=VP8,payload=96,clock-rate=90000 ! "
+               "sendrecv. "
                // Self-view branch: leaky with a single buffer, because the
                // preview may fall behind but must never stall the encoder.
                "selftee. ! queue leaky=downstream max-size-buffers=1 ! "
@@ -198,6 +205,15 @@ void CallEngine::setStatus(const QString &status)
     }
     m_status = status;
     emit statusChanged();
+}
+
+void CallEngine::setFailure(const QString &failure)
+{
+    if (m_failure == failure) {
+        return;
+    }
+    m_failure = failure;
+    emit failureChanged();
 }
 
 void CallEngine::setState(const QString &state)
@@ -389,6 +405,11 @@ void CallEngine::pushCameraFrame(const QByteArray &data,
         gst_caps_unref(caps);
         m_cameraFormat = format;
         qInfo("xmatic: camera format %s, %dx%d", qPrintable(format), width, height);
+        // The offer waited for exactly this: now webrtcbin can describe the
+        // video line instead of refusing it.
+        if (m_offerDeferred) {
+            requestOffer();
+        }
     }
 
     GstBuffer *buffer = gst_buffer_new_allocate(nullptr, data.size(), nullptr);
@@ -408,6 +429,12 @@ void CallEngine::placeCall(const QString &roomId, bool withVideo)
     if (!m_available || roomId.isEmpty() || m_state != QLatin1String("idle")) {
         return;
     }
+
+    // A new call starts without the last one's reason: it is what holds the page
+    // open, so a stale one would keep the next call's page from closing.
+    setFailure(QString());
+    m_offerWaits = 0;
+    m_offerDeferred = false;
 
     // Without a camera the video branch produces no caps, the pipeline does not
     // start and no invitation goes out. Falling back to voice beats silence.
@@ -455,6 +482,7 @@ void CallEngine::onRemoteInvite(const QString &roomId,
         emit hangupReady(roomId, callId, freshId(QStringLiteral("p")));
         return;
     }
+    setFailure(QString());
 
     m_roomId = roomId;
     m_peer = sender;
@@ -465,6 +493,13 @@ void CallEngine::onRemoteInvite(const QString &roomId,
     // picks the action. The core has already applied the privacy setting.
     m_videoOffered = videoAllowed && CameraSource::isAvailable();
     m_videoRefused = videoOffered && !m_videoOffered;
+    // Which of the three decided it: the caller's offer, this device's privacy
+    // setting, or the camera. Without this the page just quietly says "Accept",
+    // and the pipeline then meets video nobody asked for.
+    qInfo("xmatic: incoming call offers video %d, allowed here %d, camera %d",
+          videoOffered ? 1 : 0,
+          videoAllowed ? 1 : 0,
+          CameraSource::isAvailable() ? 1 : 0);
     m_withVideo = false;
     m_pendingRemoteOffer = sdp;
     emit callChanged();
@@ -510,6 +545,32 @@ void CallEngine::acceptCall(bool withVideo)
     m_pendingRemoteOffer.clear();
 }
 
+void CallEngine::onAnsweredElsewhere(const QString &roomId, const QString &callId,
+                                     const QString &partyId)
+{
+    // Only while this device is still offering to answer, and only for the call
+    // it is ringing about. Our own answer carries our own party id and must not
+    // stop us.
+    if (m_state != QLatin1String("ringing") || callId != m_callId || roomId != m_roomId) {
+        return;
+    }
+    if (!partyId.isEmpty() && partyId == m_partyId) {
+        return;
+    }
+
+    qInfo("xmatic: the call was answered on another device");
+    setStatus(tr("answered on another device"));
+    tearDown();
+    m_remoteVideo.stop();
+    m_withVideo = false;
+    m_callId.clear();
+    m_roomId.clear();
+    m_peer.clear();
+    m_pendingRemoteOffer.clear();
+    setState(QStringLiteral("idle"));
+    emit callChanged();
+}
+
 void CallEngine::onRemoteAnswer(const QString &roomId,
                                const QString &sender,
                                const QString &callId,
@@ -550,6 +611,21 @@ void CallEngine::applyRemoteDescription(const QString &sdp, bool isOffer)
         return;
     }
 
+    // Which lines carry video, read before the description takes the message
+    // over: answering an offer we have no video pipeline for needs them below,
+    // and after `gst_webrtc_session_description_free` the message is gone.
+    QVector<guint> videoLines;
+    if (isOffer && !m_withVideo) {
+        const guint medias = gst_sdp_message_medias_len(message);
+        for (guint index = 0; index < medias; ++index) {
+            const GstSDPMedia *media = gst_sdp_message_get_media(message, index);
+            const gchar *kind = media ? gst_sdp_media_get_media(media) : nullptr;
+            if (kind && g_strcmp0(kind, "video") == 0) {
+                videoLines.append(index);
+            }
+        }
+    }
+
     GstWebRTCSessionDescription *description = gst_webrtc_session_description_new(
         isOffer ? GST_WEBRTC_SDP_TYPE_OFFER : GST_WEBRTC_SDP_TYPE_ANSWER,
         message);
@@ -559,6 +635,25 @@ void CallEngine::applyRemoteDescription(const QString &sdp, bool isOffer)
     gst_promise_interrupt(promise);
     gst_promise_unref(promise);
     gst_webrtc_session_description_free(description);
+
+    // Refuse their video line instead of leaving it dangling. Accepting a video
+    // call "without camera" builds the audio-only pipeline, so nothing takes
+    // from the transport webrtcbin starts for that line: measured on the device,
+    // `nicesrc: Internal data stream error` a second after the call went active,
+    // and `bundle-policy=max-bundle` takes the audio down with it. The whole
+    // call ended, which read as the other side refusing the answer.
+    for (guint index : videoLines) {
+        GstWebRTCRTPTransceiver *transceiver = nullptr;
+        g_signal_emit_by_name(m_webrtc, "get-transceiver", index, &transceiver);
+        if (!transceiver) {
+            continue;
+        }
+        g_object_set(transceiver,
+                     "direction",
+                     GST_WEBRTC_RTP_TRANSCEIVER_DIRECTION_INACTIVE,
+                     nullptr);
+        gst_object_unref(transceiver);
+    }
 
     if (isOffer) {
         // Now that their offer is known, ask for our answer.
@@ -691,15 +786,100 @@ void CallEngine::setMuted(bool muted)
     emit mutedChanged();
 }
 
-void CallEngine::negotiationNeeded(GstElement *webrtc, void *user)
+void CallEngine::negotiationNeeded(GstElement *, void *user)
 {
     auto *engine = static_cast<CallEngine *>(user);
     if (!engine->m_isCaller) {
         // The answering side negotiates from the remote offer, not on its own.
         return;
     }
-    GstPromise *promise = gst_promise_new_with_change_func(descriptionCreated, user, nullptr);
-    g_signal_emit_by_name(webrtc, "create-offer", nullptr, promise);
+
+    // The camera's first frame is what gives the appsrc its caps (see
+    // `pushCameraFrame`), so wait for it before describing the video line.
+    // A precaution, not the cure for `m=video 0` - that was our own reader
+    // (`offers_active_video`), and the offer's shape is the same either way.
+    if (engine->m_withVideo && engine->m_cameraFormat.isEmpty()) {
+        engine->m_offerDeferred = true;
+        // A camera that never delivers must not hold the call: after this the
+        // offer goes as it is, which is a voice call - degrade, not block.
+        QTimer::singleShot(3000, engine, [engine]() {
+            if (engine->m_offerDeferred) {
+                qWarning("xmatic: camera sent nothing in time, offering voice only");
+                engine->requestOffer();
+            }
+        });
+        return;
+    }
+    engine->requestOffer();
+}
+
+bool CallEngine::sendPadsReady() const
+{
+    if (!m_webrtc) {
+        return true;
+    }
+    bool ready = true;
+    GstIterator *pads = gst_element_iterate_sink_pads(m_webrtc);
+    GValue item = G_VALUE_INIT;
+    bool done = false;
+    while (!done) {
+        switch (gst_iterator_next(pads, &item)) {
+        case GST_ITERATOR_OK: {
+            auto *pad = GST_PAD(g_value_get_object(&item));
+            GstCaps *caps = pad ? gst_pad_get_current_caps(pad) : nullptr;
+            if (!caps) {
+                ready = false;
+                done = true;
+            } else {
+                gst_caps_unref(caps);
+            }
+            g_value_reset(&item);
+            break;
+        }
+        case GST_ITERATOR_RESYNC:
+            ready = true;
+            gst_iterator_resync(pads);
+            break;
+        default:
+            done = true;
+            break;
+        }
+    }
+    g_value_unset(&item);
+    gst_iterator_free(pads);
+    return ready;
+}
+
+void CallEngine::requestOffer()
+{
+    // Not after the call is over: the deferred path can fire from a timer, and
+    // by then the user may have hung up.
+    if (!m_webrtc || !m_isCaller || m_state == QLatin1String("idle")) {
+        m_offerDeferred = false;
+        return;
+    }
+
+    // The first frame is not enough: it still has to travel through the
+    // converter, the encoder and the payloader before webrtcbin's own pad knows
+    // what it carries. Same precaution as above, and the same caveat: it never
+    // was what made a video line read as refused.
+    if (m_withVideo && m_offerWaits < 30 && !sendPadsReady()) {
+        ++m_offerWaits;
+        m_offerDeferred = true;
+        QTimer::singleShot(100, this, [this]() {
+            if (m_offerDeferred) {
+                requestOffer();
+            }
+        });
+        return;
+    }
+    if (m_withVideo && !sendPadsReady()) {
+        qWarning("xmatic: the video branch never described itself, offering voice only");
+    }
+    m_offerDeferred = false;
+
+    GstPromise *promise = gst_promise_new_with_change_func(descriptionCreated, this, nullptr);
+    g_signal_emit_by_name(m_webrtc, "create-offer", nullptr, promise);
 }
 
 void CallEngine::descriptionCreated(GstPromise *promise, void *user)
@@ -741,6 +921,37 @@ void CallEngine::descriptionCreated(GstPromise *promise, void *user)
     const QString sdp = QString::fromUtf8(text);
     g_free(text);
     gst_webrtc_session_description_free(description);
+
+    // What we are about to send, media lines and their attributes only: no `c=`,
+    // no candidates, no fingerprints - those carry addresses and keys. This is
+    // the one place that can say why a video line comes out refused, and four
+    // measurements have already ruled out pipeline, transceiver, pad caps and
+    // timing.
+    {
+        QStringList shape;
+        const QStringList lines = sdp.split(QLatin1Char('\n'));
+        for (const QString &raw : lines) {
+            const QString line = raw.trimmed();
+            if (line.startsWith(QLatin1String("m="))) {
+                shape.append(line);
+                continue;
+            }
+            if (!line.startsWith(QLatin1String("a="))) {
+                continue;
+            }
+            if (line.startsWith(QLatin1String("a=candidate"))
+                || line.startsWith(QLatin1String("a=fingerprint"))
+                || line.startsWith(QLatin1String("a=ice-"))
+                || line.startsWith(QLatin1String("a=msid"))
+                || line.startsWith(QLatin1String("a=ssrc"))) {
+                continue;
+            }
+            shape.append(line);
+        }
+        qInfo("xmatic: local %s shape: %s",
+              isOffer ? "offer" : "answer",
+              qPrintable(shape.join(QStringLiteral(" | "))));
+    }
 
     QMetaObject::invokeMethod(engine,
                               "deliverLocalDescription",
@@ -807,9 +1018,31 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
     const bool isVideo = name && g_str_has_prefix(name, "video/");
     gst_caps_unref(caps);
 
-    // Dropped later than it should be - the stream has already been through
-    // decodebin. Refusing the video line in the SDP needs a device to test on.
+    // Video we did not ask for: the SDP answer refuses the line, but a pad can
+    // still arrive - a renegotiation, a client that ignores the refusal, or the
+    // refusal landing too late. Returning here leaves the pad unlinked, and the
+    // comment below says what that costs: `internal data stream error`, which
+    // takes the whole call down, audio included. Measured on the device, three
+    // times, always a second after the call went active. So it is drained
+    // instead of dropped: a fakesink is a destination, a missing link is not.
     if (isVideo && !engine->m_withVideo) {
+        GstElement *drain = gst_element_factory_make("fakesink", nullptr);
+        if (!drain) {
+            return;
+        }
+        g_object_set(drain, "sync", FALSE, "async", FALSE, nullptr);
+        gst_bin_add(GST_BIN(engine->m_pipeline), drain);
+        GstPad *sink = gst_element_get_static_pad(drain, "sink");
+        if (!sink || gst_pad_link(pad, sink) != GST_PAD_LINK_OK) {
+            if (sink) {
+                gst_object_unref(sink);
+            }
+            gst_bin_remove(GST_BIN(engine->m_pipeline), drain);
+            return;
+        }
+        gst_object_unref(sink);
+        gst_element_sync_state_with_parent(drain);
+        qInfo("xmatic: incoming video not asked for, drained");
         return;
     }
 
@@ -971,11 +1204,20 @@ int CallEngine::videoFrameArrived(void *sink, void *user)
 
 void CallEngine::deliverVideoFrame(const QImage &frame)
 {
+    // Frames are queued from the GStreamer thread, so one that was already in
+    // flight lands after `stop()` and starts the surface again - `active` stays
+    // true and the next call's page draws its video layout while ringing.
+    if (m_state == QLatin1String("idle")) {
+        return;
+    }
     m_remoteVideo.present(frame);
 }
 
 void CallEngine::deliverVideoYuv(const QByteArray &planes, int width, int height)
 {
+    if (m_state == QLatin1String("idle")) {
+        return;
+    }
     m_remoteVideo.presentYuv(planes, QSize(width, height));
 }
 
@@ -1149,6 +1391,7 @@ void CallEngine::markDisconnected()
     }
     qInfo("xmatic: call connection lost");
     setStatus(tr("the connection was lost"));
+    setFailure(tr("the connection was lost"));
     hangUp();
 }
 
@@ -1215,6 +1458,18 @@ void CallEngine::reportFailure(const QString &message)
 {
     qWarning("xmatic: call engine: %s", qPrintable(message));
     setStatus(message);
+    // The page pops itself on `idle`, so a reason set only here was never read.
+    // Kept apart from the status and cleared when a call starts.
+    setFailure(message);
+    // The other side is waiting on a call this device has just given up on.
+    // Every other way out of a call says so; this one said nothing.
+    if (!m_roomId.isEmpty() && !m_callId.isEmpty()) {
+        emit hangupReady(m_roomId, m_callId, m_partyId);
+    }
     tearDown();
+    // Without this the last frame stays "active", and the page keeps drawing the
+    // video layout - which hides both the reason and the way out.
+    m_remoteVideo.stop();
+    m_withVideo = false;
     setState(QStringLiteral("idle"));
 }

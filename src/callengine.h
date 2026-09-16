@@ -25,6 +25,9 @@ class CallEngine : public QObject
 
     Q_PROPERTY(bool available READ available CONSTANT)
     Q_PROPERTY(QString status READ status NOTIFY statusChanged)
+    /// Why a call ended badly. Apart from `status`, which carries running
+    /// commentary that a finished call must not be held up by.
+    Q_PROPERTY(QString failure READ failure NOTIFY failureChanged)
 
     /// One of "idle", "calling", "ringing", "connecting", "active".
     Q_PROPERTY(QString state READ state NOTIFY callChanged)
@@ -43,6 +46,7 @@ public:
 
     bool available() const { return m_available; }
     QString status() const { return m_status; }
+    QString failure() const { return m_failure; }
     QString state() const { return m_state; }
     QString roomId() const { return m_roomId; }
     QString peer() const { return m_peer; }
@@ -90,6 +94,11 @@ public:
                         const QString &sender,
                         const QString &callId,
                         const QString &sdp);
+    /// Another device of this account picked the call up. The party id says
+    /// which one, so this device can tell it apart from its own answer.
+    void onAnsweredElsewhere(const QString &roomId, const QString &callId,
+                             const QString &partyId);
+
     void onRemoteAnswer(const QString &roomId,
                         const QString &sender,
                         const QString &callId,
@@ -102,6 +111,7 @@ public:
 
 signals:
     void statusChanged();
+    void failureChanged();
     void callChanged();
     void mutedChanged();
 
@@ -156,6 +166,13 @@ private:
     void applyRemoteDescription(const QString &sdp, bool isOffer);
     void tearDown();
     void setStatus(const QString &status);
+    void setFailure(const QString &failure);
+    /// Asks webrtcbin for the offer. Called from the negotiation signal, or
+    /// later, once the camera has declared what it sends.
+    void requestOffer();
+    /// Whether every sink pad of webrtcbin has negotiated caps. Until the video
+    /// pad has them, an offer describes that line as refused.
+    bool sendPadsReady() const;
     void setState(const QString &state);
 
     GstElement *m_pipeline = nullptr;
@@ -174,6 +191,13 @@ private:
     bool m_videoRefused = false;
 
     QString m_status;
+    QString m_failure;
+    /// An offer that is waiting for the camera's first frame. Until one arrives
+    /// the appsrc has no caps, so webrtcbin writes the video line as refused.
+    bool m_offerDeferred = false;
+    /// How often the deferred offer has looked for caps. Bounded, so a
+    /// silent camera ends as a voice call rather than as nothing.
+    int m_offerWaits = 0;
     QString m_state = QStringLiteral("idle");
     QString m_roomId;
     QString m_peer;

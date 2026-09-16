@@ -49,72 +49,19 @@ pub fn safe_file_name(name: &str) -> String {
 pub fn scrub_ids(text: &str) -> String {
     text.split_whitespace()
         .map(|word| {
-            // Punctuation the sentence brought, including the colon a DNS
-            // error ends its host with. What is left is the candidate.
-            let trimmed = word.trim_matches(|c: char| "(),;:.\"'[]{}<>".contains(c));
-            if trimmed.is_empty() {
-                return word.to_owned();
-            }
-
-            let url = trimmed.contains("://");
-            // A sigil anywhere in the word. The server part is not required:
-            // `!room` and `@alice` name somebody just as well.
-            let matrix_id = trimmed
-                .chars()
-                .any(|c| matches!(c, '@' | '!' | '#' | '$' | '+'))
-                && trimmed.len() >= 3;
-            let path = trimmed.matches('/').count() >= 2;
-
-            // `host`, `host:port`, or an address. Split the port off first -
-            // a homeserver is addressed with one more often than without.
-            let host_part = trimmed.split(':').next().unwrap_or(trimmed);
-            let labels: Vec<&str> = host_part.split('.').collect();
-            let dotted = labels.len() >= 2
-                && labels.iter().all(|label| {
-                    !label.is_empty()
-                        && label
-                            .chars()
-                            .all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_')
-                        // `_tcp` is a DNS label, `join_rules` a field name.
-                        && !label[1..].contains('_')
-                });
-            // A name (last label is letters) or an address (all digits).
-            let hostname = dotted
-                && labels
-                    .last()
-                    .map(|last| {
-                        (last.len() >= 2 && last.chars().all(|c| c.is_ascii_alphabetic()))
-                            || last.chars().all(|c| c.is_ascii_digit())
-                    })
-                    .unwrap_or(false);
-
-            // `M_LIMIT_EXCEEDED` and its relatives: upper case, no identifier in them, and
-            // the one token worth keeping in a report.
-            let error_code = trimmed.len() >= 3
-                && trimmed
-                    .chars()
-                    .all(|c| c.is_ascii_uppercase() || c == '_' || c.is_ascii_digit())
-                && trimmed.contains('_');
-
-            let token = !error_code
-                && trimmed.len() > 12
-                && trimmed
-                    .split_once('_')
-                    .map(|(prefix, rest)| {
-                        prefix.len() <= 4
-                            && !prefix.is_empty()
-                            && prefix.chars().all(|c| c.is_ascii_alphabetic())
-                            && rest.len() >= 8
-                            && rest.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
-                    })
-                    .unwrap_or(false);
-            let blob = !error_code
-                && trimmed.len() >= 32
-                && trimmed.chars().all(|c| {
-                    c.is_ascii_alphanumeric() || matches!(c, '+' | '/' | '=' | '-' | '_' | '.')
-                });
-
-            if url || matrix_id || path || hostname || token || blob {
+            // Every part of the word, not only what trimming the ends leaves over.
+            // Rust's `Debug` writes a host as `Domain("example.org")`, and the
+            // brackets sat *inside* the word: the candidate failed every test,
+            // including the two length ones, and the host went into the journal.
+            // A field that names what it holds: eight upper-case letters are a word
+            // like any other until `device_id=` stands in front of them. Whole word,
+            // so the quotes around the value do not separate it from its name.
+            let named = word.contains("_id=") || word.contains("token=");
+            if named
+                || word
+                    .split(|c: char| "(),;:\"'[]{}<>".contains(c))
+                    .any(identifies_somebody)
+            {
                 "<id>".to_owned()
             } else {
                 word.to_owned()
@@ -122,6 +69,78 @@ pub fn scrub_ids(text: &str) -> String {
         })
         .collect::<Vec<_>>()
         .join(" ")
+}
+
+/// Whether one candidate out of a log line names a person, a room or a machine.
+/// Every class here was seen in an SDK error; `M_LIMIT_EXCEEDED` is the one
+/// token a report keeps.
+fn identifies_somebody(candidate: &str) -> bool {
+    // Punctuation the sentence brought, including the colon a DNS error ends
+    // its host with. What is left is the candidate.
+    let trimmed = candidate.trim_matches(|c: char| "(),;:.\"'[]{}<>".contains(c));
+    if trimmed.is_empty() {
+        return false;
+    }
+
+    let url = trimmed.contains("://");
+    // A sigil anywhere in the word. The server part is not required:
+    // `!room` and `@alice` name somebody just as well.
+    let matrix_id = trimmed
+        .chars()
+        .any(|c| matches!(c, '@' | '!' | '#' | '$' | '+'))
+        && trimmed.len() >= 3;
+    let path = trimmed.matches('/').count() >= 2;
+
+    // `host`, `host:port`, or an address. Split the port off first -
+    // a homeserver is addressed with one more often than without.
+    let host_part = trimmed.split(':').next().unwrap_or(trimmed);
+    let labels: Vec<&str> = host_part.split('.').collect();
+    let dotted = labels.len() >= 2
+        && labels.iter().all(|label| {
+            !label.is_empty()
+                && label
+                    .chars()
+                    .all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_')
+                // `_tcp` is a DNS label, `join_rules` a field name.
+                && !label[1..].contains('_')
+        });
+    // A name (last label is letters) or an address (all digits).
+    let hostname = dotted
+        && labels
+            .last()
+            .map(|last| {
+                (last.len() >= 2 && last.chars().all(|c| c.is_ascii_alphabetic()))
+                    || last.chars().all(|c| c.is_ascii_digit())
+            })
+            .unwrap_or(false);
+
+    // `M_LIMIT_EXCEEDED` and its relatives: upper case, no identifier in them, and
+    // the one token worth keeping in a report.
+    let error_code = trimmed.len() >= 3
+        && trimmed
+            .chars()
+            .all(|c| c.is_ascii_uppercase() || c == '_' || c.is_ascii_digit())
+        && trimmed.contains('_');
+
+    let token = !error_code
+        && trimmed.len() > 12
+        && trimmed
+            .split_once('_')
+            .map(|(prefix, rest)| {
+                prefix.len() <= 4
+                    && !prefix.is_empty()
+                    && prefix.chars().all(|c| c.is_ascii_alphabetic())
+                    && rest.len() >= 8
+                    && rest.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+            })
+            .unwrap_or(false);
+    let blob = !error_code
+        && trimmed.len() >= 32
+        && trimmed.chars().all(|c| {
+            c.is_ascii_alphanumeric() || matches!(c, '+' | '/' | '=' | '-' | '_' | '.')
+        });
+
+    url || matrix_id || path || hostname || token || blob
 }
 
 #[cfg(test)]
@@ -192,6 +211,32 @@ mod tests {
             assert_eq!(scrub_ids(probe), probe);
         }
         assert_eq!(scrub_ids("M_LIMIT_EXCEEDED, retrying"), "M_LIMIT_EXCEEDED, retrying");
+    }
+
+    /// Rust's `Debug` is the one formatting in the non-test code, and it puts
+    /// the host inside brackets rather than at the end of a word.
+    #[test]
+    fn the_scrubber_looks_inside_a_debug_line() {
+        // Measured, not assumed: the whole word goes, brackets and all.
+        assert_eq!(
+            scrub_ids("upload rejected: Url { host: Some(Domain(\"matrix.example.org\")), port: None }"),
+            "upload rejected: Url { host: <id> port: None }"
+        );
+        assert_eq!(
+            scrub_ids("reqwest::Error(Connect, \"dns error for chat.example.net\")"),
+            "reqwest::Error(Connect, \"dns error for <id>"
+        );
+        // The value is a plain word; the field name is what gives it away.
+        assert_eq!(
+            scrub_ids("session(device_id=\"ABCDEFGH\", user=@a:b.c)"),
+            "<id> <id>"
+        );
+        // The limit, stated rather than implied away: a name and its value split
+        // over two words are two words, and the value alone says nothing.
+        assert_eq!(
+            scrub_ids("device_id: \"ABCDEFGH\""),
+            "device_id: \"ABCDEFGH\""
+        );
     }
 
     #[test]

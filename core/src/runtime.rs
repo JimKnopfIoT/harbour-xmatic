@@ -350,7 +350,9 @@ async fn handle(state: Arc<State>, command: Command) {
         }
         Command::RoomResolve { address, .. } => resolve_room(&state, id, address).await,
         Command::TimelineClose { room_id, .. } => close_timeline(&state, id, room_id).await,
-        Command::TimelinePaginate { .. } => paginate_timeline(&state, id).await,
+        Command::TimelinePaginate { room_id, .. } => {
+            paginate_timeline(&state, id, room_id).await
+        }
         Command::TimelineSend { body, mentions, .. } => {
             send_message(&state, id, body, mentions).await
         }
@@ -483,11 +485,12 @@ async fn handle(state: Arc<State>, command: Command) {
             width,
             height,
             thumbnail,
+            room_id,
             ..
         } => {
             send_media(
                 &state, id, path, mime_type, caption, reply_to, voice, duration, width, height,
-                thumbnail,
+                thumbnail, room_id,
             )
             .await
         }
@@ -495,8 +498,9 @@ async fn handle(state: Arc<State>, command: Command) {
             source,
             thumbnail,
             size,
+            limit,
             ..
-        } => fetch_media(&state, id, source, thumbnail, size).await,
+        } => fetch_media(&state, id, source, thumbnail, size, limit).await,
         Command::RoomForward {
             room_id,
             body,
@@ -1280,10 +1284,13 @@ fn storage_status(state: &Arc<State>, id: u64) {
 
 /// Walks every row of two SQLite files, so off the runtime's workers: there are
 /// two of them, and a large crypto store takes long enough to be noticed.
-async fn scrub_stores(state: &Arc<State>) -> Result<storehealth::Report, String> {
+async fn scrub_stores(
+    state: &Arc<State>,
+    scope: storehealth::Scope,
+) -> Result<storehealth::Report, String> {
     let paths = state.paths.clone();
     let key = state.store_key();
-    tokio::task::spawn_blocking(move || storehealth::scrub(&paths, key.as_ref()))
+    tokio::task::spawn_blocking(move || storehealth::scrub(&paths, key.as_ref(), scope))
         .await
         .map_err(|error| format!("the repair did not run: {error}"))?
 }
@@ -1291,7 +1298,9 @@ async fn scrub_stores(state: &Arc<State>) -> Result<storehealth::Report, String>
 /// Drops what the stores can no longer decode and lets the sync go on. Runs
 /// with the client open: the rows it removes are rows nothing could read.
 async fn repair_storage(state: &Arc<State>, id: u64) {
-    let report = match scrub_stores(state).await {
+    // The store the latched line named, not both: the wide sweep let a defect in
+    // room data reach the room keys.
+    let report = match scrub_stores(state, storehealth::damage_scope()).await {
         Ok(report) => report,
         Err(error) => {
             state
@@ -1313,11 +1322,13 @@ async fn repair_storage(state: &Arc<State>, id: u64) {
         state,
         "warn",
         format!(
-            "repair: {} of {} stored rows could not be decoded ({} room(s), {} room key(s)) and were dropped",
+            "repair: {} of {} stored rows could not be decoded ({} room(s), {} room key(s), {} of them with no backup) \
+             and were put aside into the quarantine",
             report.dropped(),
             report.checked,
             report.rooms,
-            report.room_keys
+            report.room_keys,
+            report.room_keys_unsaved
         ),
     );
 
@@ -1328,6 +1339,10 @@ async fn repair_storage(state: &Arc<State>, id: u64) {
             "dropped": report.dropped(),
             "rooms": report.rooms,
             "roomKeys": report.room_keys,
+            // What the key backup had no copy of - the only part of this a user
+            // can lose, and what the journal alone used to carry.
+            "roomKeysUnsaved": report.room_keys_unsaved,
+            "kept": report.kept,
         }),
     ));
 }
@@ -1692,9 +1707,20 @@ async fn paginate_thread(state: &Arc<State>, id: u64) {
     }
 }
 
-async fn paginate_timeline(state: &Arc<State>, id: u64) {
-    let outcome = match state.timeline().await {
-        Some(handle) => handle.paginate().await,
+async fn paginate_timeline(state: &Arc<State>, id: u64, room_id: String) {
+    // Room and handle from the same guard: a switch while this was in flight
+    // otherwise paginated the room the user had just moved to, on behalf of the
+    // one they left - one uninvited history request per switch, against a server
+    // that may be rate-limiting.
+    let open = state
+        .timeline()
+        .await
+        .map(|handle| (handle.room_id.clone(), handle));
+    let outcome = match open {
+        Some((open_room, _)) if !room_id.is_empty() && open_room != room_id => {
+            Err("the room this was asked for is no longer open".to_owned())
+        }
+        Some((_, handle)) => handle.paginate().await,
         None => Err("no timeline is open".to_owned()),
     };
 
@@ -1826,15 +1852,32 @@ async fn send_media(
     width: u64,
     height: u64,
     still: MediaStill,
+    room_id: String,
 ) {
     // Cloned out of the guard: the attachment upload takes a while and must
-    // not hold the lock.
-    let timeline = state.timeline().await.map(|handle| handle.timeline());
+    // not hold the lock. The room is read from the same handle, under the same
+    // guard, so the check below and the send cannot be about two rooms.
+    let open = state
+        .timeline()
+        .await
+        .map(|handle| (handle.room_id.clone(), handle.timeline()));
 
-    let Some(timeline) = timeline else {
+    let Some((open_room, timeline)) = open else {
         state.sink.emit(reply_error(id, "no timeline is open"));
         return;
     };
+
+    // A video's still is decoded before the command is sent, which takes long
+    // enough for the user to be in another room by then. Sending into whatever
+    // is open would put a private video in the wrong conversation, and nothing
+    // takes that back - so this refuses rather than guesses.
+    if !room_id.is_empty() && room_id != open_room {
+        state.sink.emit(reply_error(
+            id,
+            "the room this attachment was meant for is no longer open",
+        ));
+        return;
+    }
 
     // One field, two lengths: a recording of one's own is a voice message, a
     // video is a video. Which one it is the type says, not the number.
@@ -1905,13 +1948,20 @@ async fn forward(
     }
 }
 
-async fn fetch_media(state: &Arc<State>, id: u64, source: Value, thumbnail: bool, size: u64) {
+async fn fetch_media(
+    state: &Arc<State>,
+    id: u64,
+    source: Value,
+    thumbnail: bool,
+    size: u64,
+    limit: u64,
+) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
 
-    match media::fetch(&client, &state.paths.media_cache, source, thumbnail, size).await {
+    match media::fetch(&client, &state.paths.media_cache, source, thumbnail, size, limit).await {
         Ok(path) => state.sink.emit(reply_ok(id, json!({ "path": path }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
@@ -2425,7 +2475,9 @@ async fn restore_stored_session(
             // can decode go, then the restore gets its one second try.
             drop(client);
             if repair {
-                match scrub_stores(state).await {
+                // `Error::StateStore` is what got here; the crypto store is not
+                // implicated and is not walked.
+                match scrub_stores(state, storehealth::Scope::State).await {
                     Ok(report) if report.dropped() > 0 => {
                         log(state, "warn", format!(
                             "dropped {} unreadable row(s) of {} from the local data",
@@ -2488,6 +2540,10 @@ async fn rebuild_store(state: &Arc<State>, id: u64) {
         ));
         return;
     }
+    // The damage was in what this just deleted. Left standing, the latch stops
+    // the sync over a store that no longer exists - and this is the way out the
+    // page offers, so it has to be one.
+    storehealth::clear();
     restore_session(state, id, None).await;
 }
 
@@ -2499,6 +2555,7 @@ async fn prepare_fresh_login(state: &Arc<State>) -> Result<(), String> {
             drop(state.client.lock().await.take());
             session::reset_store(&state.paths)
                 .map_err(|error| format!("could not clear old data: {error}"))?;
+            storehealth::clear();
         }
         session::LoadOutcome::Session(_) => {}
         // A locked session is a session. Logging in over it resets the store its key
@@ -3002,6 +3059,9 @@ async fn logout(state: &Arc<State>, id: u64) {
     roomlist::forget_name_requests();
     members::forget_asked();
     call::forget_state();
+    // The latch outlived the store it was about: it stops the sync, and the
+    // store the next sign-in builds is not the one that was damaged.
+    storehealth::clear();
     if let Err(error) = session::reset_store(&state.paths) {
         state.sink.emit(event(
             "session.warning",

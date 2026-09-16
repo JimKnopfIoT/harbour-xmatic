@@ -401,6 +401,10 @@
         <source>the call could not be carried on</source>
         <translation>the call could not be carried on</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2138,8 +2142,8 @@
         <translation>Local data damaged</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</translation>
     </message>
 </context>
 <context>

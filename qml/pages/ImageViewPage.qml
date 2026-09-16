@@ -44,7 +44,14 @@ Page {
 
         onMediaReady: {
             if (key === page.mediaKey) {
-                page.source = "file://" + path
+                // The file is here either way - "Save" and "Share" work from the
+                // pulley. It is only not handed to a decoder that would have to
+                // hold it whole.
+                if (matrix.mediaShowable(key)) {
+                    page.source = "file://" + path
+                } else {
+                    page.mediaFailed = true
+                }
             }
         }
     }

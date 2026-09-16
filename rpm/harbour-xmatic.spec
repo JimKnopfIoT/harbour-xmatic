@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.33.2
+Version:    0.34.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -95,8 +95,10 @@ strip %{buildroot}%{_bindir}/%{name}
 %files
 %defattr(-,root,root,-)
 %license LICENSE
-# The static Rust library carries three hundred and sixty-two crates into the
-# binary, ten of them weak-copyleft. A binary that carries them carries their
+# The static Rust library carries five hundred and seventy-seven crates into the
+# binary, eleven of them weak-copyleft. The figure is the one `tools/third-party.py`
+# reads out of `core/Cargo.lock`; it was two hundred crates out of date here while
+# the generated list beside it was right. A binary that carries them carries their
 # notices.
 %license THIRD-PARTY.md
 %{_bindir}/%{name}
@@ -116,6 +118,12 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Sep 16 2026 harbour-xmatic contributors 0.34.0-1
+- Video between two xmatic devices: port 0 under BUNDLE is not a refusal.
+- Call after a video call answerable again.
+- Jump to the read marker: waits while rows arrive, no longer marks read on failure.
+- Mute button and download size in the video player.
+
 * Mon Sep 14 2026 harbour-xmatic contributors 0.33.2-1
 - One stored entry that cannot be read any more no longer stops the app from
   syncing. It used to fail every attempt the same way while the app treated it
@@ -341,7 +349,7 @@ strip %{buildroot}%{_bindir}/%{name}
   cropped to a square out of the middle, which is where a photograph says the
   least, and it lay against the reply's text with no edge to separate it.
 
-* Sun Aug 31 2026 harbour-xmatic contributors 0.27.0-1
+* Mon Aug 31 2026 harbour-xmatic contributors 0.27.0-1
 - Messages can be searched, one conversation at a time, from the room's
   pull-down menu. The index lives on the device and is encrypted with the same
   key as the rest of the local storage; the query never leaves the phone. There

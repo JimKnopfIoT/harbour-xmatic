@@ -473,6 +473,17 @@ fn attribute(element: &ruma_html::ElementData, name: &str) -> Option<String> {
 /// Only http(s) with a host: an anchor hands the URL to whatever claims the
 /// scheme. Characters that cannot occur in a URL are rejected, not escaped.
 fn is_web_url(href: &str) -> bool {
+    // RFC 3986: a URI is ASCII. Everything else has to arrive percent-encoded or
+    // as punycode, and a sender who writes it directly is not being helpful.
+    // Measured, because a list of forbidden characters kept missing one: neither
+    // `is_control` (category Cc) nor the bidi set catches U+200B, U+00AD, U+FEFF,
+    // the tags block or a variation selector - all invisible, all drawn as
+    // nothing in the confirmation dialog, which is the only thing between the
+    // user and a link that says one host and goes to another. The same rule
+    // takes the cyrillic homograph with it.
+    if !href.is_ascii() {
+        return false;
+    }
     if href
         .chars()
         .any(|character| matches!(character, '"' | '\'' | '<' | '>' | '`') || character.is_control())
@@ -490,12 +501,43 @@ fn is_web_url(href: &str) -> bool {
         .find(|character| character == '/' || character == '?' || character == '#')
         .unwrap_or(rest.len());
     let host = &rest[..host_end];
-    !host.is_empty() && !host.contains(char::is_whitespace)
+    // `https://bank.example.com.pad…@evil.tld/`: everything before the `@` is a
+    // user name, and the part that decides sits far to the right, where a dialog
+    // wraps it out of sight. No web link in a message needs one.
+    !host.is_empty() && !host.contains(char::is_whitespace) && !host.contains('@')
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The display text is walked character by character and loses these; the
+    /// target was handed on whole. Same trick as the file name that ends `.exe`.
+    /// Invisible characters are not a list to keep up with: an address is ASCII.
+    #[test]
+    fn a_link_target_cannot_hide_characters() {
+        // Zero width, soft hyphen, byte order mark, tags block, variation selector.
+        for hidden in ['\u{200B}', '\u{00AD}', '\u{FEFF}', '\u{E0041}', '\u{FE0F}'] {
+            let href = format!("https://host.exa{hidden}mple/x");
+            assert!(!is_web_url(&href), "{hidden:?} passed");
+        }
+        // A homograph is not ASCII either, so the same rule takes it.
+        assert!(!is_web_url("https://\u{0430}pple.com/login"));
+        // And the user-info trick, where the deciding part sits far to the right.
+        assert!(!is_web_url(
+            "https://accounts.example.com.aaaaaaaaaaaaaaaaaaaaaaaaaaaa@evil.tld/"
+        ));
+        assert!(is_web_url("https://host.example/holiday.jpg"));
+    }
+
+    #[test]
+    fn a_link_target_cannot_be_written_backwards() {
+        assert!(!is_web_url("https://host.example/\u{202E}gnp.exe"));
+        assert!(!is_web_url("https://host.example/\u{200F}x"));
+        assert!(!is_web_url("https://\u{2066}host.example/x"));
+        // The ordinary address is untouched.
+        assert!(is_web_url("https://host.example/holiday.jpg"));
+    }
 
     #[test]
     fn plain_html_stays_on_the_plain_path() {

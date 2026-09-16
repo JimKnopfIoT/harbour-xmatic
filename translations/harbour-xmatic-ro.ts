@@ -402,6 +402,10 @@
         <source>the call could not be carried on</source>
         <translation>apelul nu a putut continua</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2141,8 +2145,8 @@
         <translation>Date locale deteriorate</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>O parte dintre datele stocate pe acest dispozitiv nu mai poate fi citită, iar xmatic nu a putut să o repare în timpul funcționării. Închide aplicația și pornește-o din nou. Dacă după aceea încă lipsesc camere, deconectează-te și conectează-te din nou — mesajele tale rămân pe server.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>O parte dintre datele stocate pe acest dispozitiv nu mai poate fi citită, iar xmatic nu a reușit să remedieze acest lucru în timpul funcționării — de aceea a oprit sincronizarea în loc să întâlnească din nou același rând. Închide aplicația și pornește-o din nou. Dacă după aceea tot lipsesc camere, deconectarea și reconectarea reconstruiesc datele locale — dar înlocuiesc și cheile acestui dispozitiv: verifică mai întâi pe pagina de criptare dacă backupul cheilor este activat.</translation>
     </message>
 </context>
 <context>
