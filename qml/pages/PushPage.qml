@@ -62,7 +62,14 @@ Page {
                 text: qsTr("Receive push notifications")
                 checked: settings.pushEnabled
                 automaticCheck: false
-                enabled: settings.pushGateway.trim().length > 0
+                // Switching *on* needs both halves - the line below promises that.
+                // Switching off must always be possible: a distributor that is
+                // uninstalled or merely not running right now would otherwise
+                // leave this on, unreachable, with the pusher still registered on
+                // the homeserver and the metadata still flowing.
+                enabled: settings.pushEnabled
+                         || (settings.pushGateway.trim().length > 0
+                             && page.distributors.length > 0)
                 onClicked: page.apply(!settings.pushEnabled)
             }
 

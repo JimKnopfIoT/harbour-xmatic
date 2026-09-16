@@ -402,6 +402,10 @@
         <source>the call could not be carried on</source>
         <translation>skambučio nepavyko tęsti</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2141,8 +2145,8 @@
         <translation>Vietiniai duomenys sugadinti</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Dalies šiame įrenginyje saugomų duomenų nebeįmanoma perskaityti, o xmatic nepavyko jų pataisyti veikiant. Užverk programėlę ir paleisk ją iš naujo. Jei kambarių vis dar trūksta, atsijunk ir prisijunk iš naujo — tavo žinutės lieka serveryje.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Dalies šiame įrenginyje saugomų duomenų nebegalima perskaityti, o xmatic nepavyko to sutvarkyti veikimo metu — todėl jis sustabdė sinchronizavimą, užuot vėl susidūręs su ta pačia eilute. Užverk programėlę ir paleisk ją iš naujo. Jei po to vis dar trūksta kambarių, atsijungimas ir prisijungimas iš naujo atkuria vietinius duomenis — bet taip pat pakeičia šio įrenginio raktus: pirmiausia šifravimo puslapyje patikrink, ar raktų atsarginė kopija įjungta.</translation>
     </message>
 </context>
 <context>

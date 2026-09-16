@@ -19,7 +19,12 @@ Page {
     onOrientationChanged: matrix.calls.setOrientation(orientation)
     Component.onCompleted: matrix.calls.setOrientation(orientation)
 
-    // Leaving the page while a call runs would strand it invisibly.
+    // Leaving the page while a call runs would strand it invisibly, so it goes as
+    // soon as the call is over - always. Holding it open to show why a call
+    // failed was tried and taken back: the page that stays is the page the *next*
+    // incoming call finds in its way (`onIncomingCall` only pushes when none is
+    // on top), and then a ringing phone cannot be answered at all. The reason is
+    // told by a notification instead, which needs nothing to be dismissed.
     Connections {
         target: matrix.calls
         onCallChanged: {
@@ -66,18 +71,19 @@ Page {
     // be out of the way of; in a voice call the middle is where they belong.
     readonly property bool videoMode: matrix.calls.remoteVideo.active
 
+    // No `visible` on this column: it carries the answer buttons, and a container
+    // that hides takes every entry with it - including the only way out of ringing.
     Column {
         anchors.centerIn: parent
         width: parent.width - 2 * Theme.horizontalPageMargin
         spacing: Theme.paddingLarge
-        visible: !page.videoMode
 
         Label {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: Theme.fontSizeLarge
             truncationMode: TruncationMode.Fade
-            visible: !matrix.calls.remoteVideo.active
+            visible: !page.videoMode
             textFormat: Text.PlainText
             text: matrix.calls.peer.length > 0 ? matrix.calls.peer : qsTr("Call")
         }
@@ -87,6 +93,7 @@ Page {
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.secondaryColor
+            visible: !page.videoMode
             text: {
                 switch (matrix.calls.state) {
                 case "calling": return qsTr("Ringing…")
@@ -94,7 +101,9 @@ Page {
                                        ? qsTr("Incoming video call") : qsTr("Incoming call")
                 case "connecting": return qsTr("Connecting…")
                 case "active": return qsTr("Connected")
-                default: return matrix.calls.status
+                default: return matrix.calls.failure.length > 0
+                                ? matrix.calls.failure
+                                : matrix.calls.status
                 }
             }
         }
@@ -104,7 +113,8 @@ Page {
         Label {
             x: Theme.horizontalPageMargin
             width: parent.width - 2 * Theme.horizontalPageMargin
-            visible: matrix.calls.state === "ringing" && matrix.calls.videoRefused
+            visible: !page.videoMode && matrix.calls.state === "ringing"
+                     && matrix.calls.videoRefused
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: Theme.fontSizeExtraSmall
@@ -150,6 +160,9 @@ Page {
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.buttonWidth
+                // The picture has its own hang-up in the lower left; ringing keeps
+                // this one whatever the video sink claims.
+                visible: !page.videoMode || matrix.calls.state === "ringing"
                 label: matrix.calls.state === "ringing" ? qsTr("Decline") : qsTr("Hang up")
                 onClicked: matrix.calls.hangUp()
             }
@@ -157,7 +170,7 @@ Page {
 
         IconButton {
             anchors.horizontalCenter: parent.horizontalCenter
-            visible: matrix.calls.state === "active"
+            visible: !page.videoMode && matrix.calls.state === "active"
             icon.source: matrix.calls.muted
                          ? "image://theme/icon-m-mic-mute"
                          : "image://theme/icon-m-mic"

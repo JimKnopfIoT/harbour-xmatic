@@ -38,6 +38,35 @@ fn room_of(client: &Client, room_id: &str) -> Result<Room, String> {
         .ok_or_else(|| "room is not known".to_owned())
 }
 
+/// Whether an SDP offers a video line that is actually live. Walks the section:
+/// a port of zero counts as refused only where no `a=bundle-only` follows before
+/// the next media line.
+fn offers_active_video(sdp: &str) -> bool {
+    let mut in_video = false;
+    let mut port_zero = false;
+    for line in sdp.lines() {
+        let line = line.trim_end_matches('\r');
+        if line.starts_with("m=") {
+            // The previous video section ended without `a=bundle-only`.
+            if in_video && !port_zero {
+                return true;
+            }
+            in_video = line.starts_with("m=video");
+            port_zero = in_video
+                && line
+                    .split_whitespace()
+                    .nth(1)
+                    .map(|port| port == "0")
+                    .unwrap_or(false);
+            continue;
+        }
+        if in_video && port_zero && line == "a=bundle-only" {
+            return true;
+        }
+    }
+    in_video && !port_zero
+}
+
 /// Rings the other side, offering the local session description.
 pub async fn invite(
     client: &Client,
@@ -337,16 +366,39 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                     return;
                 }
 
-                // Whether the offer carries video, so the UI can say what is offered and open
-                // the camera only on the user's choice. `m=video 0` is a declined line.
-                let offers_video = ev.content.offer.sdp.lines().any(|line| {
-                    line.starts_with("m=video")
-                        && line
-                            .split_whitespace()
-                            .nth(1)
-                            .map(|port| port != "0")
-                            .unwrap_or(false)
-                });
+                // Whether the offer carries video, so the UI can say what is offered and
+                // open the camera only on the user's choice.
+                //
+                // Port 0 alone does *not* mean declined. Under BUNDLE every media
+                // line after the first is written with port 0 plus `a=bundle-only`
+                // and runs over the first line's transport (RFC 9143) - which is
+                // exactly what `bundle-policy=max-bundle` makes webrtcbin do, so
+                // xmatic's own video offers looked declined to xmatic. Measured on
+                // the device: `m=video 0 … | a=bundle-only | a=sendrecv |
+                // a=rtpmap:96 VP8/90000`. Declined is port 0 *without* it.
+                let offers_video = offers_active_video(&ev.content.offer.sdp);
+
+                // The media lines of their offer, and nothing else: port and codec
+                // numbers, no addresses. Without this "no video offered" is a
+                // claim about a string nobody has seen.
+                let media_lines: Vec<&str> = ev
+                    .content
+                    .offer
+                    .sdp
+                    .lines()
+                    .filter(|line| line.starts_with("m="))
+                    .collect();
+                sink.emit(event(
+                    "core.log",
+                    json!({
+                        "level": "warn",
+                        "target": "xmatic",
+                        "message": format!(
+                            "incoming offer media lines: {}",
+                            media_lines.join(" | ")
+                        ),
+                    }),
+                ));
 
                 // How old the invitation is by the time this device rings.
                 // Says whether a late ring was made here or on the way.
@@ -373,7 +425,19 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
             let sink = sink.clone();
             async move {
                 let Some(ev) = ev.as_original() else { return };
+                // An answer from this account is another of its devices picking
+                // the call up - the party id says which one. Dropped outright,
+                // the phones that did not answer keep ringing, because nothing
+                // else tells them the call is taken.
                 if Some(&*ev.sender) == client.user_id() {
+                    sink.emit(event(
+                        "call.answeredElsewhere",
+                        json!({
+                            "roomId": room.room_id().as_str(),
+                            "callId": ev.content.call_id.as_str(),
+                            "partyId": ev.content.party_id.as_ref().map(|id| id.as_str()),
+                        }),
+                    ));
                     return;
                 }
                 sink.emit(event(
@@ -444,4 +508,39 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
             }
         }
     });
+}
+
+#[cfg(test)]
+mod video_offer_tests {
+    use super::offers_active_video;
+
+    #[test]
+    fn bundle_only_is_not_a_refusal() {
+        let sdp = "v=0\r\na=group:BUNDLE audio0 video1\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\na=mid:audio0\r\nm=video 0 UDP/TLS/RTP/SAVPF 96\r\na=bundle-only\r\na=sendrecv\r\na=rtpmap:96 VP8/90000\r\n";
+        assert!(offers_active_video(sdp));
+    }
+
+    #[test]
+    fn port_zero_alone_is_a_refusal() {
+        let sdp = "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\nm=video 0 UDP/TLS/RTP/SAVPF 96\r\na=inactive\r\n";
+        assert!(!offers_active_video(sdp));
+    }
+
+    #[test]
+    fn a_plain_port_offers_video() {
+        let sdp = "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\nm=video 9 UDP/TLS/RTP/SAVPF 96 97\r\na=sendrecv\r\n";
+        assert!(offers_active_video(sdp));
+    }
+
+    #[test]
+    fn a_voice_call_offers_none() {
+        let sdp = "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\na=sendrecv\r\n";
+        assert!(!offers_active_video(sdp));
+    }
+
+    #[test]
+    fn a_later_section_does_not_rescue_it() {
+        let sdp = "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\nm=video 0 UDP/TLS/RTP/SAVPF 96\r\nm=application 0 UDP/DTLS/SCTP webrtc-datachannel\r\na=bundle-only\r\n";
+        assert!(!offers_active_video(sdp));
+    }
 }

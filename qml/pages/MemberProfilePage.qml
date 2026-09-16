@@ -54,7 +54,11 @@ Page {
         }
         var key = page.userId + "/avatar-full"
         var known = matrix.mediaPath(key)
-        matrix.requestMedia(key, { "url": profile.avatar }, false)
+        // Full size, but an avatar's ceiling, not an attachment's: the same
+        // limit `requestAvatar` uses. Without it this path fetched a profile
+        // picture of up to a hundred megabytes on a tap.
+        matrix.requestMedia(key, { "url": profile.avatar }, false, 0,
+                            matrix.maximumAvatarBytes)
         pageStack.push(Qt.resolvedUrl("ImageViewPage.qml"), {
                            mediaKey: key,
                            source: known.length > 0 ? "file://" + known : "",

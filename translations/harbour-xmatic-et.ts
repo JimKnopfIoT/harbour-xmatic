@@ -401,6 +401,10 @@
         <source>the call could not be carried on</source>
         <translation>kõnet ei saanud jätkata</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2138,8 +2142,8 @@
         <translation>Kohalikud andmed on kahjustatud</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Osa selles seadmes hoitavatest andmetest ei ole enam loetav ja xmatic ei suutnud seda töö ajal parandada. Sulge rakendus ja käivita see uuesti. Kui ruume on ka pärast seda puudu, logi välja ja uuesti sisse — sinu sõnumid jäävad serverisse.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Osa selles seadmes salvestatud andmetest ei ole enam loetav ja xmatic ei suutnud seda töö käigus korda teha — seetõttu peatas ta sünkroonimise, selle asemel et sama reaga uuesti kohtuda. Sulge rakendus ja käivita see uuesti. Kui pärast seda on ikka tube puudu, ehitavad välja- ja uuesti sisselogimine kohalikud andmed uuesti üles — kuid need asendavad ka selle seadme võtmed: kontrolli enne krüptimislehel, kas võtmete varukoopia on sisse lülitatud.</translation>
     </message>
 </context>
 <context>

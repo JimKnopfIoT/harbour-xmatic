@@ -402,6 +402,10 @@
         <source>the call could not be carried on</source>
         <translation>nie udało się kontynuować połączenia</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2141,8 +2145,8 @@
         <translation>Dane lokalne uszkodzone</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Części danych zapisanych na tym urządzeniu nie da się już odczytać, a xmatic nie zdołał ich naprawić w trakcie działania. Zamknij aplikację i uruchom ją ponownie. Jeśli nadal będzie brakować pokoi, wyloguj się i zaloguj ponownie — twoje wiadomości zostają na serwerze.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Części danych zapisanych na tym urządzeniu nie da się już odczytać, a xmatic nie zdołał tego naprawić w trakcie działania — dlatego zatrzymał synchronizację, zamiast napotkać ten sam wiersz ponownie. Zamknij aplikację i uruchom ją ponownie. Jeśli potem nadal brakuje pokoi, wylogowanie i ponowne zalogowanie odbuduje dane lokalne — ale zastąpi też klucze tego urządzenia: sprawdź najpierw na stronie szyfrowania, czy kopia zapasowa kluczy jest włączona.</translation>
     </message>
 </context>
 <context>

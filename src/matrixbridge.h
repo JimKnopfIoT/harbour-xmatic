@@ -74,6 +74,9 @@ class MatrixBridge : public QObject
     /// True while the room's stored messages are being folded into the index.
     Q_PROPERTY(bool indexing READ indexing NOTIFY indexingChanged)
     Q_PROPERTY(QString lastError READ lastError NOTIFY lastErrorChanged)
+    /// What a profile picture may weigh, for the callers that fetch one
+    /// under their own key. From the core, not a second copy.
+    Q_PROPERTY(qint64 maximumAvatarBytes READ maximumAvatarBytes CONSTANT)
     /// Everything that failed in this run, newest first: `time`, `command`,
     /// `message`. `lastError` is one string and the next failure overwrites it.
     Q_PROPERTY(QVariantList errorLog READ errorLog NOTIFY errorLogChanged)
@@ -653,10 +656,17 @@ public:
     /// Downloads an attachment, answered by mediaReady(key, path). `declaredSize`
     /// lets the core refuse an outsized file before it is held in memory whole.
     Q_INVOKABLE void requestMedia(const QString &key, const QVariant &source, bool thumbnail,
-                                  qint64 declaredSize = 0);
+                                  qint64 declaredSize = 0, qint64 limitBytes = 0);
 
     /// The local path of an attachment that was already downloaded, or empty.
+    qint64 maximumAvatarBytes() const { return MAX_AVATAR_BYTES; }
+
     Q_INVOKABLE QString mediaPath(const QString &key) const { return m_media.value(key); }
+
+    /// Whether this file may be handed to an image decoder. False for a picture
+    /// whose header says it would not fit in memory: the file is there and can be
+    /// saved, forwarded and shared - it is only not drawn.
+    Q_INVOKABLE bool mediaShowable(const QString &key) const { return !m_oversized.contains(key); }
 
     /// Downloads a profile picture, keyed by its address. Separate from
     /// requestMedia: a bare MXC address, and always wanted as a thumbnail.
@@ -948,6 +958,18 @@ private:
     /// One automatic repair per damage, not per run: a second round on damage
     /// that is still there would be the flap this mechanism exists to stop.
     bool m_repairTried = false;
+    quint64 m_repairId = 0;
+    /// Whether the reply being handled is the pagination that is outstanding.
+    /// The id is cleared before the handlers run, and they still have to know.
+    bool m_paginateAnswered = false;
+    /// Video stills being decoded right now. A send is in flight from the moment
+    /// the picker closes, and its command only goes out when the helper is done.
+    int m_videoStillsRunning = 0;
+    /// A media wipe that had to wait for a send to finish. The files an upload
+    /// reads live in the same directories.
+    bool m_wipeDeferred = false;
+    /// Files that arrived but must not reach a decoder on this device.
+    QSet<QString> m_oversized;
     int m_roomTotal = -1;
     QString m_userId;
     QString m_deviceId;
@@ -987,8 +1009,10 @@ private:
     QString m_membersRoomId;
     /// Root event of the open thread, to drop late diffs after a switch.
     QString m_openThreadRoot;
-    /// The `timeline.open` that is waiting for its answer. Without it a failed
-    /// or lost open leaves the room on its spinner for good.
+    /// The `timeline.open` that is waiting for its answer: an older one's reply
+    /// would hand this room another's rights and read marker. Cleared on the
+    /// answer, on the error and by the watchdog - each of the latter two also
+    /// releases the spinner, because the filter drops what would have.
     quint64 m_openTimelineId = 0;
     /// Counts thread opens, so diffs of a previous open of the *same* thread
     /// can be told apart from this one's.
@@ -1088,6 +1112,11 @@ private:
     /// Lets go of everything a finished, failed or abandoned command was
     /// remembered by.
     void forgetRequest(quint64 id);
+    /// Whether an attachment is on its way out: the helper is decoding, or a
+    /// send command is waiting for its answer.
+    bool sendInFlight() const;
+    /// Removes the two directories an upload reads from, once nothing does.
+    void wipeOutgoingCopies();
 
     /// Which message a pending `timeline.readers` request is about.
     QHash<quint64, QString> m_readerRequests;

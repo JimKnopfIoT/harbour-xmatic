@@ -400,6 +400,10 @@
         <source>the call could not be carried on</source>
         <translation>تماس ادامه نیافت</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2135,8 +2139,8 @@
         <translation>داده‌های محلی آسیب‌دیده</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>بخشی از داده‌های ذخیره‌شده روی این دستگاه دیگر خوانده نمی‌شود و xmatic نتوانست آن را در حین اجرا تعمیر کند. برنامه را ببند و دوباره اجرا کن. اگر باز هم اتاق‌هایی کم بود، از حساب خارج شو و دوباره وارد شو — پیام‌های تو روی سرور می‌مانند.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>بخشی از داده‌های ذخیره‌شده روی این دستگاه دیگر خوانده نمی‌شود و xmatic نتوانست آن را در حین اجرا درست کند — به همین دلیل همگام‌سازی را متوقف کرد تا دوباره به همان ردیف برنخورد. برنامه را ببند و دوباره اجرا کن. اگر پس از آن هنوز اتاق‌هایی کم است، خروج و ورود دوباره داده‌های محلی را از نو می‌سازد — اما کلیدهای این دستگاه را هم جایگزین می‌کند: اول در صفحهٔ رمزگذاری بررسی کن که پشتیبان کلیدها روشن باشد.</translation>
     </message>
 </context>
 <context>

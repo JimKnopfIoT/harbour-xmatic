@@ -227,7 +227,14 @@ pub enum Command {
 
     /// Load a page of older events.
     #[serde(rename = "timeline.paginate")]
-    TimelinePaginate { id: u64 },
+    TimelinePaginate {
+        id: u64,
+        /// The room this was asked for. The core paginates whatever is open, and
+        /// a room switch while the request is in flight made the answer - and the
+        /// request itself - belong to the wrong conversation.
+        #[serde(rename = "roomId", default)]
+        room_id: String,
+    },
 
     /// Send a plain text message to the open room. `mentions` carries the user
     /// ids the picker collected, `@room` among them for the whole room.
@@ -318,6 +325,11 @@ pub enum Command {
         /// make a preview of, so it travels with one or it has none.
         #[serde(default)]
         thumbnail: MediaStill,
+        /// The room this was meant for. A video's still is decoded first, so the
+        /// command can arrive seconds after the picker closed - by which time the
+        /// open timeline may be another room's.
+        #[serde(rename = "roomId", default)]
+        room_id: String,
     },
 
     /// Send a copy of something to another room.
@@ -354,6 +366,11 @@ pub enum Command {
         /// gate that costs no download; what arrives is weighed as well.
         #[serde(default)]
         size: u64,
+        /// The most this particular fetch may weigh, zero for the general ceiling.
+        /// An avatar is not an attachment: it has no declared size to gate on and
+        /// is fetched on sight, so it needs a smaller one of its own.
+        #[serde(default)]
+        limit: u64,
     },
 
     /// Mark the open room read: the marker always, the receipt only where allowed.
@@ -980,7 +997,7 @@ impl Command {
             | Command::SpaceRemoveChild { id, .. }
             | Command::TimelineOpen { id, .. }
             | Command::TimelineClose { id, .. }
-            | Command::TimelinePaginate { id }
+            | Command::TimelinePaginate { id, .. }
             | Command::TimelineSend { id, .. }
             | Command::TimelineMarkRead { id, .. }
             | Command::TimelineReaders { id, .. }

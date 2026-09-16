@@ -36,7 +36,9 @@
 namespace {
 /// What a profile picture may weigh: past any thumbnail, below what one
 /// allocation costs. Weighed before the request and after the bytes arrive.
-const qint64 MaximumAvatarBytes = 10 * 1024 * 1024;
+/// The number itself lives in `core/src/media.rs` and reaches here through
+/// cbindgen - a second copy beside it is a second number to forget.
+const qint64 MaximumAvatarBytes = MAX_AVATAR_BYTES;
 
 
 /// Takes ownership of a string handed out by the core and releases it again.
@@ -403,6 +405,13 @@ void MatrixBridge::checkStalledCommands()
             m_paginateId = 0;
             emit paginatingChanged();
         }
+        // Same reason as the error path: an open whose answer never comes would
+        // otherwise leave the room on its spinner, and the id filter drops every
+        // older answer that could still have set it.
+        if (it.key() == m_openTimelineId) {
+            m_openTimelineId = 0;
+            setTimelineReady(true);
+        }
         if (it->command.startsWith(QLatin1String("login."))) {
             setLoginRunning(false);
         }
@@ -419,6 +428,10 @@ void MatrixBridge::checkStalledCommands()
     // Outside the loop, for the reason given inside it.
     for (const QString &key : lostMedia) {
         emit mediaFailed(key);
+    }
+    // A send that never answered still ends: the wipe it held up may go ahead.
+    if (m_wipeDeferred && !sendInFlight()) {
+        wipeOutgoingCopies();
     }
     if (!abandoned.isEmpty()) {
         qWarning("xmatic: gave up waiting for %d command(s): %s",
@@ -765,7 +778,7 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
         // *Not* bumped here: the same view carries on and the core keeps the
         // stream it has. Raising it silenced every diff until a restart.
         kept.insert(QStringLiteral("token"), QString::number(m_timelineGeneration));
-        send(QStringLiteral("timeline.open"), kept);
+        m_openTimelineId = send(QStringLiteral("timeline.open"), kept);
         return;
     }
 
@@ -797,6 +810,20 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
     m_openRoomId = roomId;
     m_timelineFocus = focus;
     setTimelineAtStart(false);
+    // A pagination still in flight belongs to the room being left. Left standing,
+    // its id kept "load older messages" greyed out here and its answer declared
+    // this room at its start.
+    if (m_paginateId != 0) {
+        m_paginateId = 0;
+        emit paginatingChanged();
+    }
+    // Rights belong to a room, and only a successful open writes them. Kept, they
+    // offer what this room's server refuses - or hide what it allows.
+    if (!m_roomPermissions.isEmpty() || !m_roomDirectPeer.isEmpty()) {
+        m_roomPermissions.clear();
+        m_roomDirectPeer.clear();
+        emit roomPermissionsChanged();
+    }
     emit openRoomChanged();
 
     QJsonObject arguments;
@@ -849,7 +876,11 @@ void MatrixBridge::loadOlder()
     }
 
     qInfo("xmatic: loading older messages, %d rows so far", m_timeline.count());
-    const quint64 id = send(QStringLiteral("timeline.paginate"));
+    QJsonObject arguments;
+    // The room as it is now: the core paginates what is open, and by the time
+    // this is answered that may be another one.
+    arguments.insert(QStringLiteral("roomId"), m_openRoomId);
+    const quint64 id = send(QStringLiteral("timeline.paginate"), arguments);
     if (id == 0) {
         return;
     }
@@ -1062,6 +1093,12 @@ void MatrixBridge::forgetRequest(quint64 id)
     m_readerRequests.remove(id);
     m_reactorRequests.remove(id);
     m_voiceSends.remove(id);
+    // A repair whose answer never came was not an attempt. Left set, the flag
+    // spends the only try of this run on nothing. The id stays: a late answer
+    // is matched by it, and `handleReply` is what clears it.
+    if (id != 0 && id == m_repairId) {
+        m_repairTried = false;
+    }
 }
 
 void MatrixBridge::markRoomRead(const QString &roomId)
@@ -1385,10 +1422,47 @@ void MatrixBridge::clearMediaCache()
     if (m_cacheDirectory.isEmpty()) {
         return;
     }
-    QDir(m_cacheDirectory + QStringLiteral("/media")).removeRecursively();
-    QDir(m_cacheDirectory + QStringLiteral("/voice")).removeRecursively();
-    QDir(m_cacheDirectory + QStringLiteral("/transcribe")).removeRecursively();
+    // Everything this app decrypts into. A wipe that leaves some of it behind is
+    // not one - but `outgoing` and `stills` are also what a running upload reads
+    // from, and the copy is handed to the core by path, not by content. Taking it
+    // mid-send loses the picture or its preview, which is why the prune beside
+    // them keeps a day. So: these three now, those two when nothing is sending.
+    for (const QString &directory : { QStringLiteral("media"),
+                                      QStringLiteral("voice"),
+                                      QStringLiteral("transcribe") }) {
+        QDir(m_cacheDirectory + QLatin1Char('/') + directory).removeRecursively();
+    }
     m_media.clear();
+    if (sendInFlight()) {
+        m_wipeDeferred = true;
+        return;
+    }
+    wipeOutgoingCopies();
+}
+
+bool MatrixBridge::sendInFlight() const
+{
+    if (m_videoStillsRunning > 0) {
+        return true;
+    }
+    for (const PendingCommand &entry : m_pending) {
+        if (entry.command == QLatin1String("timeline.sendMedia")
+            || entry.command == QLatin1String("room.forward")) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void MatrixBridge::wipeOutgoingCopies()
+{
+    m_wipeDeferred = false;
+    if (m_cacheDirectory.isEmpty()) {
+        return;
+    }
+    for (const QString &directory : { QStringLiteral("outgoing"), QStringLiteral("stills") }) {
+        QDir(m_cacheDirectory + QLatin1Char('/') + directory).removeRecursively();
+    }
 }
 
 bool MatrixBridge::callerAllowed(const QString &userId) const
@@ -1866,9 +1940,15 @@ void MatrixBridge::startVideoSend(const QJsonObject &arguments, const QString &p
     QProcess *helper = new QProcess(this);
     helper->setStandardOutputFile(QProcess::nullDevice());
     helper->setStandardErrorFile(QProcess::nullDevice());
+    // From here until the command goes out, an upload is in flight and the copy
+    // it will read lives in a directory the media wipe empties.
+    ++m_videoStillsRunning;
 
     connect(helper, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
             this, [this, helper, arguments, command, target](int code, QProcess::ExitStatus status) {
+        if (m_videoStillsRunning > 0) {
+            --m_videoStillsRunning;
+        }
         QJsonObject full = arguments;
         VideoStill still;
         if (code == 0 && status == QProcess::NormalExit) {
@@ -1931,6 +2011,9 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                                                  : outgoing.mimeType);
     arguments.insert(QStringLiteral("caption"), caption);
     arguments.insert(QStringLiteral("replyTo"), replyTo);
+    // The room as it is now, not as it will be when the command goes: a video's
+    // still is decoded first, and the core refuses a room that moved on.
+    arguments.insert(QStringLiteral("roomId"), m_openRoomId);
     insertDimensions(arguments, outgoing.path, outgoing.mimeType);
     // A video's frame is decoded off this thread and the command goes when it is
     // there: on the UI thread a file the decoders stumble over parks the whole
@@ -2070,7 +2153,7 @@ QString MatrixBridge::saveInto(QStandardPaths::StandardLocation location,
 }
 
 void MatrixBridge::requestMedia(const QString &key, const QVariant &source, bool thumbnail,
-                                qint64 declaredSize)
+                                qint64 declaredSize, qint64 limitBytes)
 {
     if (key.isEmpty() || !source.isValid()) {
         return;
@@ -2111,10 +2194,19 @@ void MatrixBridge::requestMedia(const QString &key, const QVariant &source, bool
     if (declaredSize > 0) {
         arguments.insert(QStringLiteral("size"), double(declaredSize));
     }
+    // What this one fetch may weigh, where the caller knows better than the
+    // general ceiling - a profile picture is not an attachment.
+    if (limitBytes > 0) {
+        arguments.insert(QStringLiteral("limit"), double(limitBytes));
+    }
 
-    const quint64 id = m_nextId;
-    m_mediaRequests.insert(id, key);
-    send(QStringLiteral("media.fetch"), arguments);
+    // The id `send` really used: with no core it answers 0 without advancing the
+    // counter, and the entry left behind under the guessed id blocked this key
+    // for the rest of the session.
+    const quint64 id = send(QStringLiteral("media.fetch"), arguments);
+    if (id != 0) {
+        m_mediaRequests.insert(id, key);
+    }
 }
 
 void MatrixBridge::requestAvatar(const QString &url)
@@ -2146,14 +2238,19 @@ void MatrixBridge::requestAvatar(const QString &url)
     QJsonObject arguments;
     arguments.insert(QStringLiteral("source"), source);
     arguments.insert(QStringLiteral("thumbnail"), true);
-    // An avatar declares no size in an event, so the pre-download gate had
-    // nothing to weigh. This is what one may cost.
-    arguments.insert(QStringLiteral("size"), double(MaximumAvatarBytes));
+    // An avatar declares no size in an event, so the pre-download gate has nothing
+    // to weigh. Handed over as `size` this was a claim about the file and passed
+    // the general ceiling every time; `limit` is what the fetch may actually cost,
+    // and the bytes that arrive are weighed against it.
+    arguments.insert(QStringLiteral("limit"), double(MaximumAvatarBytes));
 
-    const quint64 id = m_nextId;
-    m_mediaRequests.insert(id, url);
-    send(QStringLiteral("media.fetch"), arguments);
+    // The id `send` really used, for the reason given in `requestMedia`.
+    const quint64 id = send(QStringLiteral("media.fetch"), arguments);
+    if (id != 0) {
+        m_mediaRequests.insert(id, url);
+    }
 }
+
 void MatrixBridge::handleMessage(const QString &json)
 {
     const QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
@@ -2176,9 +2273,22 @@ void MatrixBridge::handleReply(const QJsonObject &message)
 {
     const quint64 id = static_cast<quint64>(message.value(QStringLiteral("id")).toDouble());
     const PendingCommand entry = m_pending.take(id);
-    const QString command = entry.command;
+    QString command = entry.command;
+    // A repair walks two SQLite files and can take longer than the stall watchdog
+    // waits - which drops the entry, and with it the name every branch below
+    // matches on. The id still says what this answer belongs to.
+    if (command.isEmpty() && id != 0 && id == m_repairId) {
+        command = QStringLiteral("storage.repair");
+    }
     emit busyChanged();
     updateStallWatch();
+
+    // A media wipe that had to wait for a send. The entry is already out of
+    // `m_pending`, so the command answering here does not count itself; the
+    // handlers below return early, so this cannot sit at the end.
+    if (m_wipeDeferred && !sendInFlight()) {
+        wipeOutgoingCopies();
+    }
 
     // The other half of the stall report: how long it took in the end. Slow and
     // broken look the same without it.
@@ -2189,8 +2299,10 @@ void MatrixBridge::handleReply(const QJsonObject &message)
     }
 
     // Released before anything else looks at the reply, so a handler that
-    // reacts to the result already sees the timeline as idle.
-    if (id != 0 && id == m_paginateId) {
+    // reacts to the result already sees the timeline as idle - and remembered,
+    // because the handler still has to tell whose answer this is.
+    m_paginateAnswered = (id != 0 && id == m_paginateId);
+    if (m_paginateAnswered) {
         m_paginateId = 0;
         emit paginatingChanged();
     }
@@ -2225,6 +2337,13 @@ void MatrixBridge::handleReply(const QJsonObject &message)
             || command == QLatin1String("thread.paginate")
             || command == QLatin1String("thread.send")) {
             emit threadFailed(error);
+        }
+        // A failed open answers nothing, and the id filter below drops every
+        // *older* answer - so without this the room keeps a spinner for good.
+        // The id goes first, because a newer open may already be in flight.
+        if (id != 0 && id == m_openTimelineId) {
+            m_openTimelineId = 0;
+            setTimelineReady(true);
         }
         // A failed media fetch has to say so, or the row keeps a spinner over a
         // download that will never arrive - refused oversized ones included.
@@ -2410,11 +2529,14 @@ bool MatrixBridge::replyAccount(const QString &command, const QJsonObject &data)
 
     if (command == QLatin1String("storage.repair")) {
         const int dropped = data.value(QStringLiteral("dropped")).toInt();
-        qWarning("xmatic: repair dropped %d of %d stored rows (%d room(s), %d room key(s))",
+        qWarning("xmatic: repair set aside %d of %d stored rows (%d room(s), %d room key(s), "
+                 "%d of them without a backup)",
                  dropped,
                  data.value(QStringLiteral("checked")).toInt(),
                  data.value(QStringLiteral("rooms")).toInt(),
-                 data.value(QStringLiteral("roomKeys")).toInt());
+                 data.value(QStringLiteral("roomKeys")).toInt(),
+                 data.value(QStringLiteral("roomKeysUnsaved")).toInt());
+        m_repairId = 0;
         // Only a repair that removed something fixed something. Zero leaves the
         // line standing, because the sync is still stopped.
         if (dropped > 0) {
@@ -2630,6 +2752,18 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
         const QString key = m_mediaRequests.take(id);
         const QString path = data.value(QStringLiteral("path")).toString();
         if (!key.isEmpty() && !path.isEmpty()) {
+            // The one place a file arrives. Measured from the header of what
+            // really came: the event's measurements are the sender's word and are
+            // often absent entirely. This bounds what a *decoder* is handed - so
+            // the file still arrives, and saving, forwarding and sharing it work.
+            // Refusing it here took those with it, over a file lying complete on
+            // the disk.
+            if (imageBeyondDecodeBudget(path)) {
+                qWarning("xmatic: a picture too large to decode on this device is not shown");
+                m_oversized.insert(key);
+            } else {
+                m_oversized.remove(key);
+            }
             m_media.insert(key, path);
             emit mediaReady(key, path);
         }
@@ -2736,6 +2870,13 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
     }
 
     if (command == QLatin1String("timeline.open")) {
+        // A slow server and a quick swipe put two opens in flight. The older
+        // answer would hand this room the other one's rights and send it to a
+        // read marker that means nothing here.
+        if (id != 0 && id != m_openTimelineId) {
+            qInfo("xmatic: a timeline answer for a room that is no longer open");
+            return true;
+        }
         m_openTimelineId = 0;
         setTimelineReady(true);
         // Permissions so menus ask instead of offering what the server will refuse.
@@ -2770,6 +2911,12 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
     }
 
     if (command == QLatin1String("timeline.paginate")) {
+        // Answered for the room that asked. Applied here, "reached start" took a
+        // room with a full history and declared it over.
+        if (!m_paginateAnswered) {
+            qInfo("xmatic: a pagination answer for a room that is no longer open");
+            return true;
+        }
         setTimelineAtStart(data.value(QStringLiteral("reachedStart")).toBool());
         // The model's count now, not the page's yield - those rows may still be in
         // the diff stream. Two equal counts is what a fruitless round looks like.
@@ -2879,6 +3026,13 @@ bool MatrixBridge::eventCall(const QString &name, const QJsonObject &data)
                                 data.value(QStringLiteral("sender")).toString(),
                                 data.value(QStringLiteral("callId")).toString(),
                                 data.value(QStringLiteral("sdp")).toString());
+    } else if (name == QLatin1String("call.answeredElsewhere")) {
+        // Another device of this account took the call. Without this every other
+        // phone on the account keeps ringing over a conversation that is already
+        // running somewhere else.
+        m_calls->onAnsweredElsewhere(data.value(QStringLiteral("roomId")).toString(),
+                                     data.value(QStringLiteral("callId")).toString(),
+                                     data.value(QStringLiteral("partyId")).toString());
     } else if (name == QLatin1String("call.answer")) {
         // Room and sender travel with the event and are checked in the engine:
         // a call id is public to everybody in the room.
@@ -3258,7 +3412,7 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
         }
         if (!m_repairTried) {
             m_repairTried = true;
-            send(QStringLiteral("storage.repair"));
+            m_repairId = send(QStringLiteral("storage.repair"));
         }
     } else if (name == QLatin1String("sync.state")) {
         const QString state = data.value(QStringLiteral("state")).toString();

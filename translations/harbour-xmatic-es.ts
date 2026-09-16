@@ -401,6 +401,10 @@
         <source>the call could not be carried on</source>
         <translation>la llamada no pudo continuar</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2138,8 +2142,8 @@
         <translation>Datos locales dañados</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Una parte de los datos guardados en este dispositivo ya no se puede leer, y xmatic no ha podido repararla en marcha. Cierra la aplicación y vuelve a abrirla. Si después siguen faltando salas, cierra la sesión y vuelve a iniciarla — tus mensajes se quedan en el servidor.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Parte de los datos guardados en este dispositivo ya no se puede leer, y xmatic no ha podido arreglarlo en marcha, así que ha detenido la sincronización en lugar de volver a encontrarse con la misma fila. Cierra la aplicación y vuelve a abrirla. Si después siguen faltando salas, cerrar sesión y volver a iniciarla reconstruye los datos locales, pero también sustituye las claves de este dispositivo: comprueba antes en la página de cifrado que la copia de seguridad de claves está activada.</translation>
     </message>
 </context>
 <context>

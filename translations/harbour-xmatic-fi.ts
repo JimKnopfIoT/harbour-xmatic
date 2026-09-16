@@ -401,6 +401,10 @@
         <source>the call could not be carried on</source>
         <translation>puhelua ei voitu jatkaa</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2138,8 +2142,8 @@
         <translation>Paikalliset tiedot ovat vioittuneet</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Osaa tähän laitteeseen tallennetuista tiedoista ei voi enää lukea, eikä xmatic pystynyt korjaamaan sitä käytön aikana. Sulje sovellus ja käynnistä se uudelleen. Jos huoneita puuttuu vielä sen jälkeen, kirjaudu ulos ja takaisin sisään — viestisi säilyvät palvelimella.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Osaa tähän laitteeseen tallennetuista tiedoista ei voi enää lukea, eikä xmatic saanut sitä korjattua käynnissä ollessaan — siksi se pysäytti synkronoinnin sen sijaan, että kohtaisi saman rivin uudelleen. Sulje sovellus ja käynnistä se uudelleen. Jos huoneita puuttuu vielä sen jälkeen, uloskirjautuminen ja sisäänkirjautuminen rakentavat paikalliset tiedot uudelleen — mutta ne myös korvaavat tämän laitteen avaimet: tarkista ensin salaussivulta, että avainten varmuuskopio on käytössä.</translation>
     </message>
 </context>
 <context>

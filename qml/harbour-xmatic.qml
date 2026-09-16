@@ -462,8 +462,31 @@ ApplicationWindow {
         }]
     }
 
+    // Why a call ended badly, once the page is gone. The page used to be held
+    // open for this and that was worse: an incoming call finds the old page in
+    // its way and cannot be answered. A banner needs nothing to be dismissed,
+    // and the text is the engine's own - already translated.
+    Notification {
+        id: callFailure
+
+        appName: "xmatic"
+        category: "x-nemo.messaging.im"
+        appIcon: "/usr/share/icons/hicolor/86x86/apps/harbour-xmatic.png"
+        isTransient: true
+    }
+
     Connections {
         target: matrix.calls
+
+        onFailureChanged: {
+            if (matrix.calls.failure.length === 0) {
+                return
+            }
+            callFailure.close()
+            callFailure.summary = matrix.calls.failure
+            callFailure.previewSummary = matrix.calls.failure
+            callFailure.publish()
+        }
 
         // A ringing phone has to be answerable from wherever the user is.
         onIncomingCall: {

@@ -13,6 +13,10 @@ Item {
     /// Set by the caller; the children anchor to this item.
     property real availableWidth: 0
 
+    /// Whether a tap opens the address. Decided by the caller, because it is the
+    /// same decision as for the link in the text - the card is a link too.
+    property bool tappable: true
+
     /// The core's answer, once it is in. Empty until then and empty for a page
     /// that has nothing to say — the card stays collapsed either way.
     property var preview: ({})
@@ -154,6 +158,7 @@ Item {
 
         MouseArea {
             anchors.fill: parent
+            enabled: card.tappable
             onClicked: card.activated(card.url)
         }
     }

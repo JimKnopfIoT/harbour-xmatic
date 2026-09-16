@@ -80,11 +80,20 @@ impl<S: Subscriber> Layer<S> for SdkLog {
         let metadata = record.metadata();
         let mut line = Line::default();
         record.record(&mut line);
-        let text = scrub_ids(&format!("{}{}", line.message, line.fields));
+        let raw = format!("{}{}", line.message, line.fields);
+
+        // Classified on the raw line, published scrubbed. The other way round the
+        // scrubber decided what the latch can see: it replaces a whole word as soon
+        // as any part of it looks like an identifier, and `tracing` writes a field
+        // as one word without spaces - so `CryptoStoreError(Decode(…host…))` became
+        // `<id>` and the latch never closed. Nothing identifying leaves here: `raw`
+        // is read and dropped, only `text` is emitted.
+        let damaged = crate::storehealth::note_sdk_failure(metadata.target(), &raw);
+        let text = scrub_ids(&raw);
 
         // Before the de-duplication: a store failure that no retry can fix must
         // not be swallowed because the line was seen or the budget is used up.
-        if crate::storehealth::note_sdk_failure(metadata.target(), &text) {
+        if damaged {
             self.sink
                 .emit(event("storage.damaged", json!({ "reason": text })));
         }

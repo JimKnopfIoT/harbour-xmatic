@@ -48,6 +48,10 @@ const MAX_CACHE_BYTES: u64 = 256 * 1024 * 1024;
 /// of files cannot cross the budget on their own.
 const SWEEP_EVERY: usize = 16;
 
+/// After this, a part file is not a download in flight but the remains of a
+/// killed process. The SDK gives one request a quarter of an hour at most.
+const ABANDONED_AFTER: Duration = Duration::from_secs(60 * 60);
+
 static SINCE_SWEEP: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
 
 /// Downloads in flight at once. One per row against a 429 is a queue this app
@@ -69,16 +73,25 @@ fn sweep_cache(directory: &std::path::Path) {
         if !data.is_file() {
             continue;
         }
+        let age = data.modified().unwrap_or(std::time::UNIX_EPOCH);
         // A download in flight is not a cache entry: taking it makes the rename
-        // that follows fail as "could not store media".
-        if entry
-            .file_name()
-            .to_string_lossy()
-            .contains(".part")
-        {
+        // that follows fail as "could not store media". One nothing is writing to
+        // any more is one - and skipped outright, as it was, it counted towards
+        // neither the budget nor any deletion: decrypted content of an encrypted
+        // room, up to a hundred megabytes a piece, that no sweep could ever reach.
+        if entry.file_name().to_string_lossy().contains(".part") {
+            let stale = age
+                .elapsed()
+                .map(|since| since > ABANDONED_AFTER)
+                .unwrap_or(false);
+            if stale {
+                let _ = std::fs::remove_file(entry.path());
+            } else {
+                // Not a candidate, but its bytes are on the disk all the same.
+                total = total.saturating_add(data.len());
+            }
             continue;
         }
-        let age = data.modified().unwrap_or(std::time::UNIX_EPOCH);
         total = total.saturating_add(data.len());
         files.push((age, data.len(), entry.path()));
     }
@@ -184,7 +197,12 @@ pub async fn fetch(
     source: Value,
     thumbnail: bool,
     declared: u64,
+    limit: u64,
 ) -> Result<String, String> {
+    // What this fetch may weigh. `MAX_AVATAR_BYTES` used to be named here in a
+    // comment and measured nowhere: the caller passed it as the *declared* size,
+    // which was then gated against the general ceiling and always passed.
+    let ceiling = if limit > 0 { limit.min(MAX_MEDIA_BYTES) } else { MAX_MEDIA_BYTES };
     // The parse error is not passed on: serde quotes the input, and the input is a
     // media address including the homeserver.
     let source: MediaSource = serde_json::from_value(source)
@@ -213,7 +231,7 @@ pub async fn fetch(
 
     // The event's own figure, before anything is asked for - the SDK has no way
     // to stream. A gate, not a guarantee: what arrives is weighed below.
-    check_size(declared, MAX_MEDIA_BYTES, "attachment")?;
+    check_size(declared, ceiling, "attachment")?;
 
     // Held for the request and released with it. A closed semaphore never
     // happens here - nothing closes it - so the error is mapped, not expected.
@@ -246,8 +264,9 @@ pub async fn fetch(
     };
 
     // A ceiling before the bytes reach a decoder: the decoders on this old Qt are
-    // the real target, and a hundred megabytes is past any genuine thumbnail.
-    check_size(bytes.len() as u64, MAX_MEDIA_BYTES, "attachment")?;
+    // the real target, and a hundred megabytes is past any genuine thumbnail. This
+    // is the half that counts - the figure above is a claim, this is the weight.
+    check_size(bytes.len() as u64, ceiling, "attachment")?;
 
     // Write beside the target and rename, so a cancelled download is never
     // mistaken for a complete file. The counter: the same media, asked twice.

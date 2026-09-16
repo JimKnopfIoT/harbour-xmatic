@@ -402,6 +402,10 @@
         <source>the call could not be carried on</source>
         <translation>hovor nemohl pokračovat</translation>
     </message>
+    <message>
+        <source>answered on another device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallPage</name>
@@ -2141,8 +2145,8 @@
         <translation>Poškozená místní data</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic could not repair it while running. Close the app and start it again. If rooms are still missing afterwards, sign out and sign in again — your messages stay on the server.</source>
-        <translation>Část dat uložených v tomto zařízení už nelze přečíst a xmatic je za běhu nedokázal opravit. Zavři aplikaci a spusť ji znovu. Pokud budou místnosti chybět i potom, odhlas se a znovu se přihlas — tvoje zprávy zůstanou na serveru.</translation>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Část dat uložených v tomto zařízení už nelze přečíst a xmatic to za běhu nedokázal napravit — proto zastavil synchronizaci, místo aby na stejný řádek narazil znovu. Zavři aplikaci a spusť ji znovu. Pokud pak stále chybí místnosti, odhlášení a opětovné přihlášení obnoví místní data — ale nahradí také klíče tohoto zařízení: nejdřív na stránce šifrování zkontroluj, že je záloha klíčů zapnutá.</translation>
     </message>
 </context>
 <context>

@@ -2,7 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 // The UI language. A page, not a ComboBox: a Silica context menu does not
-// scroll and holds about four rows in landscape, and this list has twenty-eight.
+// scroll and holds about four rows in landscape, and this list has thirty-two.
 Page {
     id: page
 

@@ -75,6 +75,9 @@ Page {
     // The audio item currently loaded into the player, and one waiting for its
     // download.
     property string playingId: ""
+    /// Videos chosen to open silent, by row id. Per video and per visit: it
+    /// answers "not this one, not now", not "never again".
+    property var mutedVideos: ({})
     property string pendingPlayKey: ""
     property bool pendingSaveIsImage: false
     property string pendingSaveName: ""
@@ -173,10 +176,16 @@ Page {
     // slice, and the more is unread the further back the marker sits.
     property int unreadPagesLeft: 0
     readonly property int unreadPageLimit: 8
-    /// How many rounds the search may wait for the first rows before it starts
-    /// paginating. At the retry timer's 700 ms that is about seven seconds.
+    /// How many rounds the search may wait while the rows are still arriving. At
+    /// the retry timer's 700 ms that is about seven seconds.
     property int unreadEmptyRounds: 0
     readonly property int unreadEmptyLimit: 10
+    /// Set where the search gave up: the page then sits at the end without the
+    /// reader having been there, and marking read would move the very marker the
+    /// next attempt needs - the failure would delete its own evidence.
+    property bool unreadJumpFailed: false
+    /// The count the last round saw, so "still filling" can be told from "done".
+    property int unreadLastCount: -1
 
     // Once per built timeline: coming back from a sub-page must not jump. A
     // rebuilt timeline is a different matter - the rows are new.
@@ -228,6 +237,8 @@ Page {
             page.unreadFromId = readMarker
             page.unreadPagesLeft = page.unreadPageLimit
             page.unreadEmptyRounds = page.unreadEmptyLimit
+            page.unreadLastCount = -1
+            page.unreadJumpFailed = false
             // The tail is let go before the search starts: a view that follows the newest
             // row marks the room read, which moves the marker being looked for.
             if (readMarker.length > 0) {
@@ -309,13 +320,26 @@ Page {
     // Leaving is the last moment to say the room was read, and it has to be taken
     // on `Deactivating` - a popped page never reaches `Inactive`.
     function markReadIfDue() {
-        if (invited || page.unreadFromId.length > 0) {
+        // The block from a failed jump only applies where there is something to
+        // scroll: a room that fits on one screen was seen whole, and holding it
+        // unread would be the reported complaint at a new place.
+        if (invited || page.unreadFromId.length > 0
+                || (page.unreadJumpFailed
+                    && timelineView.contentHeight > timelineView.height)) {
             return
         }
-        if (page.followTail || timelineView.atYEnd) {
+        // `atYEnd` is false while the list still coasts after a flick, so leaving
+        // right after scrolling to the newest message left the room unread - the
+        // second of waiting the field reported. The last half screen counts.
+        if (page.followTail || timelineView.atYEnd || page.nearTail) {
             matrix.markRead()
         }
     }
+
+    readonly property bool nearTail:
+        timelineView.contentHeight > 0
+        && timelineView.contentY + timelineView.height
+           >= timelineView.contentHeight - timelineView.height / 2
 
     // Opens where reading stopped, with the last read message at the top so the
     // line and the first unread are both in view. Bounded pagination.
@@ -347,9 +371,14 @@ Page {
             followCheck.restart()
             return
         }
-        // An empty model here means "not yet": the core answers `timeline.open` before
-        // the rows arrive. Bounded, so a room that never delivers cannot hold the view.
-        if (matrix.timeline.count === 0 && page.unreadEmptyRounds > 0) {
+        // The core answers `timeline.open` before the rows arrive, so the first look
+        // is too early. Wait while the model is still filling - "empty" was the wrong
+        // measure: one row ends it while the marker is still on its way, and a small
+        // room is then out of pages before it began. Bounded, so a room that never
+        // delivers cannot hold the view.
+        if (page.unreadEmptyRounds > 0
+                && matrix.timeline.count !== page.unreadLastCount) {
+            page.unreadLastCount = matrix.timeline.count
             page.unreadEmptyRounds--
             unreadRetry.restart()
             return
@@ -391,6 +420,7 @@ Page {
     // failure would delete its own evidence and the room never jumps again.
     function stayAtEnd(read) {
         page.followTail = true
+        page.unreadJumpFailed = !read
         timelineView.positionViewAtEnd()
         if (read) {
             readTimer.restart()
@@ -1275,6 +1305,13 @@ Page {
                 // than listed here: the WebP handler on this Qt reads a file but
                 // does not animate it, and a mark the viewer cannot honour is a lie.
                 // Only the mark is drawn here; it plays in the viewer, when asked.
+                /// The sender's own figure, where there is one. Not every client
+                /// declares it, and none is written rather than guessed.
+                readonly property string mediaSizeText:
+                    (row.isVideo || row.isFile || row.isAudio || row.isImage)
+                    && model.media && model.media.size > 0
+                    ? Format.formatFileSize(model.media.size) : ""
+
                 readonly property bool isAnimated: row.isImage
                         && page.animatableFormats.indexOf(
                             String(model.media.mimetype || "").toLowerCase()
@@ -1306,7 +1343,12 @@ Page {
                     if (/\)$/.test(address) && address.indexOf("(") < 0) {
                         address = address.slice(0, -1)
                     }
-                    return address
+                    // Through the same gate as the link in the text. The card is
+                    // a link too: it is tappable and it leads to the address it
+                    // shows. Without this, an address the text refused - not
+                    // ASCII, or a user name in front of the host - came back as a
+                    // card, and the homeserver was asked to fetch it as well.
+                    return page.safeHref(address)
                 }
                 // A poll draws itself; its fallback text would repeat the
                 // question and list the answers a second time.
@@ -1989,7 +2031,15 @@ Page {
                                         return ""
                                     }
                                     var known = matrix.mediaPath(model.id)
-                                    return known.length > 0 ? "file://" + known : ""
+                                    if (known.length === 0) {
+                                        return ""
+                                    }
+                                    // Measured from the file that arrived, not
+                                    // from what the sender declared. The file is
+                                    // there and can be saved; it is only too big
+                                    // to hand to a decoder on this device.
+                                    return matrix.mediaShowable(model.id)
+                                            ? "file://" + known : ""
                                 }
 
                                 Component.onCompleted: {
@@ -2018,6 +2068,33 @@ Page {
                                     visible: (row.isVideo || row.isAnimated)
                                              && attachment.source != ""
                                     source: "image://theme/icon-l-play?" + Theme.lightPrimaryColor
+                                }
+
+                                // Decided before opening: a video that turns out to be loud
+                                // should never get to play a note. Above the tap area, so it
+                                // answers for itself.
+                                IconButton {
+                                    // Left, as on the player: the same control belongs in
+                                    // the same corner in both places.
+                                    anchors {
+                                        left: parent.left
+                                        bottom: parent.bottom
+                                        margins: Theme.paddingSmall
+                                    }
+                                    z: 1
+                                    visible: row.isVideo && attachment.source != ""
+                                    opacity: 0.7
+                                    icon.source: page.mutedVideos[model.id] === true
+                                                 ? "image://theme/icon-m-speaker-mute"
+                                                 : "image://theme/icon-m-speaker"
+                                    onClicked: {
+                                        // Reassigned, not mutated in place, as with
+                                        // `failedMedia`: a binding is told nothing otherwise.
+                                        var chosen = page.mutedVideos
+                                        chosen[model.id] = chosen[model.id] !== true
+                                        page.mutedVideos = chosen
+                                        page.mutedVideosChanged()
+                                    }
                                 }
 
                                 Connections {
@@ -2257,6 +2334,9 @@ Page {
                             sourceComponent: LinkPreviewCard {
                                 availableWidth: bubbleColumn.maxTextWidth
                                 url: row.previewUrl
+                                // The same switch the link in the text obeys. Without
+                                // it "links stay plain text" left the card openable.
+                                tappable: settings.clickableLinks
                                 onActivated: page.followLink(link)
                             }
                         }
@@ -2497,6 +2577,8 @@ Page {
                                             + (model.sendState === "failed"
                                                ? qsTr("not sent") + " · " : "")
                                             + (model.edited === true ? qsTr("edited") + " · " : "")
+                                            + (row.mediaSizeText.length > 0
+                                               ? row.mediaSizeText + " · " : "")
                                             + Format.formatDate(new Date(model.timestamp), Formatter.TimeValue)
                                           : ""
                                 }
@@ -2722,6 +2804,9 @@ Page {
                 // one has just scrolled away from is worse than not being taken there.
                 page.unreadFromId = ""
                 unreadRetry.stop()
+                // Moved by hand, so where the list stands is where the reader put it -
+                // the block a failed jump left behind has done its job.
+                page.unreadJumpFailed = false
                 // Scrolling down to the newest message is the other moment
                 // something becomes read.
                 if (atYEnd) {
@@ -3300,13 +3385,16 @@ Page {
     }
 
     function openVideo(itemId, media) {
+        var silent = page.mutedVideos[itemId] === true
         var key = itemId + "/full"
         var known = matrix.mediaPath(key)
         matrix.requestMedia(key, media.source, false, media.size || 0)
         pageStack.push(Qt.resolvedUrl("VideoPage.qml"), {
                            mediaKey: key,
                            source: known.length > 0 ? "file://" + known : "",
-                           fileName: media.filename || ""
+                           fileName: media.filename || "",
+                           declaredSize: media.size || 0,
+                           startMuted: silent
                        })
     }
 
@@ -3574,7 +3662,20 @@ Page {
     /// A URL inside an href, where Qt decodes no entities: the ampersand has to
     /// stay itself. Anything that could end the attribute is refused.
     function safeHref(url) {
-        return /["'<>`\\\s]/.test(url) ? "" : url
+        if (/["'<>`\\\s]/.test(url)) {
+            return ""
+        }
+        // The same rule the core applies to a formatted link: an address is
+        // ASCII. Anything else is invisible, a homograph, or both — and this
+        // one is drawn from the plain body, which keeps its zero-width
+        // characters because an emoji sequence needs them.
+        if (/[^\x20-\x7e]/.test(url)) {
+            return ""
+        }
+        // Everything before an "@" in the authority is a user name; the host
+        // that decides sits behind it, past where the dialog wraps.
+        var authority = url.replace(/^https?:\/\//i, "").split(/[\/?#]/)[0]
+        return authority.indexOf("@") >= 0 ? "" : url
     }
 
     function linkifyBody(body) {

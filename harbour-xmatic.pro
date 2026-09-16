@@ -243,6 +243,14 @@ qmlcheck.depends =
 QMAKE_EXTRA_TARGETS += qmlcheck
 PRE_TARGETDEPS += qmlcheck
 
+# The link handler's sandbox profile must grant what the app's does. It said so
+# in a comment and was one entry short for two releases; the comment is now a
+# check that fails the build.
+desktopcheck.commands = python3 $$PWD/scripts/desktop-check.py $$PWD
+desktopcheck.depends =
+QMAKE_EXTRA_TARGETS += desktopcheck
+PRE_TARGETDEPS += desktopcheck
+
 DISTFILES += \
     LICENSE \
     README.md \
