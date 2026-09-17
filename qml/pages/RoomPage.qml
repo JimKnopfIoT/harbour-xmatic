@@ -138,6 +138,10 @@ Page {
             // The lock has to state the room's answer, not the caller's guess - not every
             // way in carries one, and the property defaults to encrypted.
             matrix.loadRoomInfo(roomId)
+        } else if (roomName.length === 0) {
+            // An invitation opens nothing: where the way in carried no name - a
+            // notification - this answer is the only thing that fills the header.
+            matrix.loadRoomInfo(roomId)
         }
     }
 
@@ -205,12 +209,17 @@ Page {
         // What the room says about itself against what the caller believed: encryption,
         // and the name where a notification tap arrived with the id alone.
         onRoomInfoReady: {
-            if (info.roomId === page.roomId) {
+            if (info.roomId !== page.roomId) {
+                return
+            }
+            // An invitation is stripped state: "not encrypted" read off it would open
+            // the padlock and take the recipient warning with it. The name is safe.
+            if (!page.invited) {
                 page.encrypted = info.encrypted === true
                 page.encryptionKnown = true
-                if (page.roomName.length === 0 && info.name.length > 0) {
-                    page.roomName = info.name
-                }
+            }
+            if (page.roomName.length === 0 && info.name.length > 0) {
+                page.roomName = info.name
             }
         }
 
@@ -1229,7 +1238,9 @@ Page {
                 bottom: composer.top
             }
             clip: true
-            model: matrix.timeline
+            // The model belongs to whichever room the core has open, and an
+            // invitation never opens one - bound, it shows the room visited before.
+            model: page.invited ? [] : matrix.timeline
             cacheBuffer: page.height
 
             // Air under the last message: the read mark's tap area reaches a finger's
@@ -2980,8 +2991,16 @@ Page {
                 text: qsTr("Accept invitation")
                 onClicked: {
                     matrix.joinRoom(page.roomId)
-                    page.invited = false
+                    // Open first: it empties the model, so the list never binds to
+                    // the previous room's rows.
                     matrix.openRoom(page.roomId)
+                    page.invited = false
+                    // The invitation's encryption answer came off stripped state: back
+                    // to the default, which counts as encrypted where that is safer.
+                    page.encrypted = true
+                    // Not through refreshRecipients: no status change follows, so
+                    // nothing else asks - and its stamp would throttle the real check.
+                    matrix.checkRecipients(page.roomId)
                 }
             }
 

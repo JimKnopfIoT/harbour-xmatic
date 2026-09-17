@@ -760,6 +760,11 @@ void MatrixBridge::removeRoomFromSpace(const QString &spaceId, const QString &ro
     send(QStringLiteral("space.removeChild"), arguments);
 }
 
+bool MatrixBridge::roomInvited(const QString &roomId) const
+{
+    return m_rooms.isInvite(roomId);
+}
+
 void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
 {
     if (roomId.isEmpty()) {

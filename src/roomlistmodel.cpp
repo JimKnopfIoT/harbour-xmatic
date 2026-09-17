@@ -47,6 +47,17 @@ void RoomListModel::recountUnread()
     emit unreadTotalsChanged();
 }
 
+bool RoomListModel::isInvite(const QString &roomId) const
+{
+    for (const QJsonObject &row : rows()) {
+        if (row.value(QStringLiteral("id")).toString() == roomId) {
+            return row.value(QStringLiteral("membership")).toString()
+                    == QLatin1String("invited");
+        }
+    }
+    return false;
+}
+
 QHash<int, QByteArray> RoomListModel::roleNames() const
 {
     QHash<int, QByteArray> names;
