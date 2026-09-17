@@ -46,6 +46,10 @@ public:
     /// does not always bring a diff, and the badge would stand.
     void clearUnread(const QString &roomId);
 
+    /// Whether a room is an invitation not yet accepted. A room the list does not
+    /// hold answers false: the ways in that ask carry no membership themselves.
+    bool isInvite(const QString &roomId) const;
+
     int unreadRooms() const { return m_unreadRooms; }
     int unreadMessages() const { return m_unreadMessages; }
     bool unreadCapped() const { return m_unreadCapped; }

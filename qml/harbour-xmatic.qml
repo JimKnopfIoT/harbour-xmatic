@@ -327,15 +327,18 @@ ApplicationWindow {
         if (current && current.objectName === "roomPage" && current.roomId === roomId) {
             return
         }
+        // An invitation is notified like a message but has no conversation: opened
+        // as a joined room it shows a failed timeline and no way to accept.
+        var invited = matrix.roomInvited(roomId)
         // Coming from another room, the new one takes its place: swiping back belongs
         // in the chat list, not in the room the notification pulled the user out of.
         if (current && current.objectName === "roomPage") {
             pageStack.replace(Qt.resolvedUrl("pages/RoomPage.qml"),
-                              { roomId: roomId, roomName: "" })
+                              { roomId: roomId, roomName: "", invited: invited })
             return
         }
         pageStack.push(Qt.resolvedUrl("pages/RoomPage.qml"),
-                       { roomId: roomId, roomName: "" })
+                       { roomId: roomId, roomName: "", invited: invited })
     }
 
     Notification {

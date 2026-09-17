@@ -375,6 +375,10 @@ public:
     /// Recomputed as unread counts change.
     Q_INVOKABLE QString spaceBadge(const QString &spaceId) const;
 
+    /// Whether a room is an invitation, for the ways into a room that carry no
+    /// membership of their own - a notification above all.
+    Q_INVOKABLE bool roomInvited(const QString &roomId) const;
+
     /// Opens a room's timeline, one at a time. `focus`: empty for live, "pinned",
     /// or an event id to show the history around it.
     Q_INVOKABLE void openRoom(const QString &roomId, const QString &focus = QString());

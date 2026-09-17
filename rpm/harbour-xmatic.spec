@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.34.0
+Version:    0.34.1
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -118,6 +118,10 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Sep 17 2026 harbour-xmatic contributors 0.34.1-1
+- An invitation no longer shows the conversation opened before it.
+- An invitation opened from a notification says it is one, and can be accepted.
+
 * Wed Sep 16 2026 harbour-xmatic contributors 0.34.0-1
 - Video between two xmatic devices: port 0 under BUNDLE is not a refusal.
 - Call after a video call answerable again.
