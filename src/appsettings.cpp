@@ -163,6 +163,23 @@ void AppSettings::setClickableLinks(bool enabled)
     emit clickableLinksChanged();
 }
 
+bool AppSettings::spaceInitials() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("ui/spaceInitials"), true).toBool();
+}
+
+void AppSettings::setSpaceInitials(bool enabled)
+{
+    if (enabled == spaceInitials()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("ui/spaceInitials"), enabled,
+          "the space initial setting");
+    emit spaceInitialsChanged();
+}
+
 bool AppSettings::pushEnabled() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

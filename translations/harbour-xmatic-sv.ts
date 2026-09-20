@@ -291,6 +291,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>På skickar retur-tangenten meddelandet; pilen bredvid fältet fungerar fortfarande. Radbrytning får du då genom att hålla in pilen, eller med skift och retur på ett fysiskt tangentbord. Av gör retur-tangenten en radbrytning och bara pilen skickar.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Märk space på bilden</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>På ritar chattlistan begynnelsebokstaven för rummets space över dess bild, i det spacets färg. Färgen ställs in i space-listan genom att hålla in spacet.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -403,7 +411,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>besvarat på en annan enhet</translation>
     </message>
 </context>
 <context>
@@ -2935,6 +2943,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Färg</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Automatisk färg</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Hämtad från spacet självt, en egen för varje</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3033,6 +3056,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Lokala data är skadade</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Färg</translation>
     </message>
 </context>
 <context>

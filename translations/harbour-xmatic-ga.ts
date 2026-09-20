@@ -292,6 +292,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Air, seolann eochair Enter an teachtaireacht; oibríonn an tsaighead in aice leis an réimse fós. Faightear briseadh líne ansin trí bhrú fada ar an tsaighead sin, nó le Shift agus Enter ar mhéarchlár crua-earraí. As, déanann eochair Enter briseadh líne agus ní sheolann ach an tsaighead.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Marcáil an spás ar an bpictiúr</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Air, tarraingíonn an liosta comhrá céadlitir spás an tseomra ar a phictiúr, i ndath an spáis sin. Socraítear an dath i liosta na spásanna, tríd an spás a choinneáil síos.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -404,7 +412,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>freagraíodh ar ghléas eile</translation>
     </message>
 </context>
 <context>
@@ -2939,6 +2947,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Dath</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Dath uathoibríoch</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Ón spás féin, ceann difriúil do gach ceann</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3038,6 +3061,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Sonraí áitiúla damáistithe</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Dath</translation>
     </message>
 </context>
 <context>

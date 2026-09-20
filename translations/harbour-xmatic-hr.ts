@@ -292,6 +292,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Uključeno, tipka Enter šalje poruku; strelica pokraj polja i dalje radi. Novi redak tada daje dugi pritisak na tu strelicu ili Shift i Enter na hardverskoj tipkovnici. Isključeno, tipka Enter radi novi redak i šalje samo strelica.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Označi prostor na slici</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Uključeno, popis razgovora crta početno slovo sobinog prostora preko njezine slike, u boji tog prostora. Boja se postavlja u popisu prostora, dugim pritiskom na prostor.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -404,7 +412,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>javljeno na drugom uređaju</translation>
     </message>
 </context>
 <context>
@@ -2939,6 +2947,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Boja</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Automatska boja</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Izvedena iz samog prostora, za svaki druga</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3038,6 +3061,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Lokalni podaci su oštećeni</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Boja</translation>
     </message>
 </context>
 <context>

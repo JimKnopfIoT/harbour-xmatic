@@ -291,6 +291,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Attivo, il tasto Invio invia il messaggio; la freccia accanto al campo continua a funzionare. Un a capo si ottiene allora tenendo premuta quella freccia, oppure con Maiusc e Invio su una tastiera fisica. Disattivato, il tasto Invio va a capo e invia solo la freccia.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Segna lo spazio sull&apos;immagine</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Attivo, l&apos;elenco delle chat disegna l&apos;iniziale dello spazio della stanza sulla sua immagine, nel colore di quello spazio. Il colore si imposta nell&apos;elenco degli spazi, tenendo premuto lo spazio.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -403,7 +411,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>risposto su un altro dispositivo</translation>
     </message>
 </context>
 <context>
@@ -2935,6 +2943,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Colore</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Colore automatico</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Ricavato dallo spazio stesso, diverso per ognuno</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3033,6 +3056,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Dati locali danneggiati</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Colore</translation>
     </message>
 </context>
 <context>

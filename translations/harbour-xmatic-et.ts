@@ -291,6 +291,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Sees saadab Enter-klahv sõnumi; välja kõrval olev nool töötab edasi. Reavahetuse annab siis noole all hoidmine või Shift ja Enter riistvaralisel klaviatuuril. Väljas teeb Enter-klahv reavahetuse ja saadab ainult nool.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Märgi ruum pildile</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Sees joonistab vestluste loend toa ruumi esitähe tema pildi peale, selle ruumi värviga. Värvi saab määrata ruumide loendis ruumi all hoides.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -403,7 +411,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>vastatud teises seadmes</translation>
     </message>
 </context>
 <context>
@@ -2935,6 +2943,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Värv</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Automaatne värv</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Tuletatud ruumist endast, igaühel erinev</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3033,6 +3056,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Kohalikud andmed on kahjustatud</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Värv</translation>
     </message>
 </context>
 <context>

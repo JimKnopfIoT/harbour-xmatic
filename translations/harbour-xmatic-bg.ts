@@ -291,6 +291,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Включено, клавишът Enter изпраща съобщението; стрелката до полето продължава да работи. Нов ред тогава се получава със задържане на тази стрелка или с Shift и Enter на хардуерна клавиатура. Изключено, клавишът Enter прави нов ред и изпраща само стрелката.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Отбелязване на пространството върху снимката</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Включено, списъкът с чатове изписва първата буква на пространството върху снимката на стаята, в цвета на това пространство. Цветът се задава в списъка с пространства чрез задържане върху пространството.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -403,7 +411,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>отговорено на друго устройство</translation>
     </message>
 </context>
 <context>
@@ -2935,6 +2943,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Цвят</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Автоматичен цвят</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Взет от самото пространство, различен за всяко</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3033,6 +3056,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Повредени локални данни</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Цвят</translation>
     </message>
 </context>
 <context>

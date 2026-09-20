@@ -291,6 +291,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Ενεργό, το πλήκτρο Enter στέλνει το μήνυμα· το βέλος δίπλα στο πεδίο εξακολουθεί να λειτουργεί. Αλλαγή γραμμής δίνει τότε το παρατεταμένο πάτημα του βέλους, ή Shift και Enter σε φυσικό πληκτρολόγιο. Ανενεργό, το πλήκτρο Enter αλλάζει γραμμή και στέλνει μόνο το βέλος.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Σήμανση του χώρου πάνω στην εικόνα</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Ενεργό, η λίστα συνομιλιών σχεδιάζει το αρχικό γράμμα του χώρου πάνω στην εικόνα του δωματίου, στο χρώμα του χώρου. Το χρώμα ορίζεται στη λίστα χώρων κρατώντας πατημένο τον χώρο.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -403,7 +411,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>απαντήθηκε σε άλλη συσκευή</translation>
     </message>
 </context>
 <context>
@@ -2935,6 +2943,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Χρώμα</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Αυτόματο χρώμα</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Προκύπτει από τον ίδιο τον χώρο, διαφορετικό για κάθε έναν</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3033,6 +3056,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Κατεστραμμένα τοπικά δεδομένα</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Χρώμα</translation>
     </message>
 </context>
 <context>

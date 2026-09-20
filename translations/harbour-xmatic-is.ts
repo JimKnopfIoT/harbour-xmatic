@@ -291,6 +291,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Kveikt sendir Enter-lykillinn skilaboðin; örin við hliðina á reitnum virkar áfram. Línuskil fást þá með því að halda inni örinni, eða með Shift og Enter á vélbúnaðarlyklaborði. Slökkt býr Enter-lykillinn til línuskil og aðeins örin sendir.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Merkja svæðið á myndinni</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Kveikt teiknar spjalllistinn upphafsstaf svæðis herbergisins yfir mynd þess, í lit þess svæðis. Liturinn er stilltur í svæðalistanum með því að halda inni á svæðinu.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -403,7 +411,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>svarað í öðru tæki</translation>
     </message>
 </context>
 <context>
@@ -2935,6 +2943,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Litur</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Sjálfvirkur litur</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Tekinn af svæðinu sjálfu, ólíkur fyrir hvert</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3033,6 +3056,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Staðbundin gögn skemmd</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Litur</translation>
     </message>
 </context>
 <context>

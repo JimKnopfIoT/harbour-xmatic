@@ -123,6 +123,16 @@ Page {
 
             menu: ContextMenu {
                 MenuItem {
+                    // The colour its initial is drawn in over the pictures in
+                    // the chat list.
+                    text: qsTr("Colour")
+                    onClicked: pageStack.push(Qt.resolvedUrl("SpaceColourPage.qml"), {
+                                                  spaceId: model.id,
+                                                  spaceName: model.name
+                                              })
+                }
+
+                MenuItem {
                     // Leaves and forgets the space. The rooms inside it are
                     // not touched — they stay in the chat list.
                     text: qsTr("Delete space")

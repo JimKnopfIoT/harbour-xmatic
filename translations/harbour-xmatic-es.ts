@@ -291,6 +291,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Activado, la tecla Intro envía el mensaje; la flecha junto al campo sigue funcionando. Un salto de línea se consigue entonces manteniendo pulsada esa flecha, o con Mayús e Intro en un teclado físico. Desactivado, la tecla Intro hace un salto de línea y solo envía la flecha.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Marcar el espacio en la imagen</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Activado, la lista de chats dibuja la inicial del espacio de la sala sobre su imagen, en el color de ese espacio. El color se ajusta en la lista de espacios manteniendo pulsado el espacio.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -403,7 +411,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>contestada en otro dispositivo</translation>
     </message>
 </context>
 <context>
@@ -2935,6 +2943,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Color</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Color automático</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Tomado del propio espacio, distinto para cada uno</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3033,6 +3056,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Datos locales dañados</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Color</translation>
     </message>
 </context>
 <context>

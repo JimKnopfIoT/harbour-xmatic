@@ -292,6 +292,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Zapnuté, kláves Enter odošle správu; šípka vedľa poľa funguje ďalej. Nový riadok potom vznikne podržaním tejto šípky alebo Shiftom a Enterom na hardvérovej klávesnici. Vypnuté, kláves Enter vloží nový riadok a odosiela len šípka.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Označiť priestor na obrázku</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Zapnuté, zoznam četov vykreslí počiatočné písmeno priestoru miestnosti cez jej obrázok, farbou daného priestoru. Farbu nastavíš v zozname priestorov podržaním priestoru.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -404,7 +412,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>prijaté na inom zariadení</translation>
     </message>
 </context>
 <context>
@@ -2939,6 +2947,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Farba</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Automatická farba</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Odvodená zo samotného priestoru, pre každý iná</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3038,6 +3061,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Poškodené lokálne údaje</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Farba</translation>
     </message>
 </context>
 <context>

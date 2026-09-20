@@ -169,6 +169,10 @@ Page {
         delegate: RoomDelegate {
             id: roomEntry
 
+            // The one list where rooms from different spaces stand next to each
+            // other, so the one list where the letter says something.
+            showSpaceMarker: true
+
             onClicked: pageStack.push(Qt.resolvedUrl("RoomPage.qml"), {
                                           roomId: model.id,
                                           roomName: model.name,

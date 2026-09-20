@@ -290,6 +290,14 @@
         <source>Remove the emoji pack</source>
         <translation>絵文字パックを削除</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>画像に Space を示す</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>オンにすると、チャット一覧がルームの Space の頭文字をその画像の上に、その Space の色で描きます。色は Space 一覧で Space を長押しして設定します。</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -402,7 +410,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>別の端末で応答しました</translation>
     </message>
 </context>
 <context>
@@ -2931,6 +2939,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>色</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>自動の色</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Space 自体から決まり、Space ごとに異なります</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3028,6 +3051,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>ローカルデータが壊れています</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>色</translation>
     </message>
 </context>
 <context>

@@ -23,6 +23,7 @@
 #include "callengine.h"
 #include "linkpreviews.h"
 #include "pollactions.h"
+#include "spacemarkers.h"
 #include "voicetranscripts.h"
 #include "voicerecorder.h"
 #include "timelinemodel.h"
@@ -94,6 +95,7 @@ class MatrixBridge : public QObject
     Q_PROPERTY(bool unreadCapped READ unreadCapped NOTIFY unreadTotalsChanged)
     Q_PROPERTY(QObject *spaces READ spaces CONSTANT)
     Q_PROPERTY(QObject *spaceRooms READ spaceRooms CONSTANT)
+    Q_PROPERTY(QObject *spaceMarkers READ spaceMarkers CONSTANT)
     /// Whether a notification may carry the message itself. Off by default: the
     /// banner also lands on the lock screen.
     Q_PROPERTY(int spaceCounts READ spaceCounts NOTIFY spaceCountsChanged)
@@ -223,6 +225,7 @@ public:
     bool unreadCapped() const { return m_rooms.unreadCapped(); }
     QObject *spaces() { return &m_spaces; }
     QObject *spaceRooms() { return &m_spaceRooms; }
+    QObject *spaceMarkers() { return m_spaceMarkers; }
     int spaceCounts() const { return m_spaceCountsRevision; }
     QObject *timeline() { return &m_timeline; }
     QObject *threadTimeline() { return &m_threadTimeline; }
@@ -1003,6 +1006,7 @@ private:
     VoiceRecorder *m_recorder = nullptr;
     CallEngine *m_calls = nullptr;
     PollActions *m_polls = nullptr;
+    SpaceMarkers *m_spaceMarkers = nullptr;
     LinkPreviews *m_linkPreviews = nullptr;
     Mentions *m_mentions = nullptr;
     VoiceTranscripts *m_transcripts = nullptr;

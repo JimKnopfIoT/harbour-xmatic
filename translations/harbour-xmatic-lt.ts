@@ -292,6 +292,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Įjungta, Enter klavišas išsiunčia žinutę; rodyklė šalia lauko veikia toliau. Naują eilutę tada duoda ilgas rodyklės paspaudimas arba Shift ir Enter fizinėje klaviatūroje. Išjungta, Enter klavišas daro naują eilutę ir siunčia tik rodyklė.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Žymėti erdvę ant paveikslėlio</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Įjungus pokalbių sąrašas ant kambario paveikslėlio piešia jo erdvės pirmąją raidę tos erdvės spalva. Spalva nustatoma erdvių sąraše, palaikius erdvę.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -404,7 +412,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>atsiliepta kitame įrenginyje</translation>
     </message>
 </context>
 <context>
@@ -2939,6 +2947,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Spalva</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Automatinė spalva</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Išvesta iš pačios erdvės, kiekvienai kita</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3038,6 +3061,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Vietiniai duomenys sugadinti</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Spalva</translation>
     </message>
 </context>
 <context>

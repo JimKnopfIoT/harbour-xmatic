@@ -26,6 +26,9 @@ class AppSettings : public QObject
                NOTIFY jumpToReadMarkerChanged)
     Q_PROPERTY(bool clickableLinks READ clickableLinks WRITE setClickableLinks
                NOTIFY clickableLinksChanged)
+    /// Whether a room's space is marked over its picture in the chat list.
+    Q_PROPERTY(bool spaceInitials READ spaceInitials WRITE setSpaceInitials
+               NOTIFY spaceInitialsChanged)
     /// "never", "unencrypted" or "always": when the homeserver may be asked
     /// what a linked page says about itself. Off: the server learns every link.
     Q_PROPERTY(QString linkPreviews READ linkPreviews WRITE setLinkPreviews
@@ -129,6 +132,11 @@ public:
     QString mediaWipe() const;
     void setMediaWipe(const QString &when);
 
+    /// Whether the chat list draws the initial of a room's space over its
+    /// picture. On: it costs nothing where a room is in no space.
+    bool spaceInitials() const;
+    void setSpaceInitials(bool enabled);
+
     /// Whether a link in a message can be tapped.
     bool clickableLinks() const;
     bool pushEnabled() const;
@@ -189,6 +197,7 @@ signals:
     void showReadStatusChanged();
     void jumpToReadMarkerChanged();
     void clickableLinksChanged();
+    void spaceInitialsChanged();
     void linkPreviewsChanged();
     void pushChanged();
     void voiceMessagesChanged();

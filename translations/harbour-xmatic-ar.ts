@@ -295,6 +295,14 @@
         <source>Remove the emoji pack</source>
         <translation>إزالة حزمة الإيموجي</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>إظهار المساحة على الصورة</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>عند التفعيل، تُرسم أول حروف اسم المساحة فوق صورة الغرفة في قائمة المحادثات، بلون تلك المساحة. يُضبط اللون من قائمة المساحات بالضغط المطوّل على المساحة.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -407,7 +415,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>تمت الإجابة على جهاز آخر</translation>
     </message>
 </context>
 <context>
@@ -2951,6 +2959,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>اللون</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>لون تلقائي</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>مأخوذ من المساحة نفسها، ولكل مساحة لون مختلف</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3053,6 +3076,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>البيانات المحلية تالفة</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>اللون</translation>
     </message>
 </context>
 <context>

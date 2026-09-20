@@ -291,72 +291,82 @@
         <translation>चालू: कक्ष में जाते ही तुम अपने आखिरी पढ़े संदेश पर पहुँचते हो, नए उसके नीचे रहते हैं। बंद: कक्ष सबसे नए संदेश पर खुलता है, और जहाँ तुमने छोड़ा था उसकी रेखा ऊपर स्क्रॉल करने पर मिलती है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="253"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="255"/>
+        <source>Mark the space on the picture</source>
+        <translation>चित्र पर Space दिखाएँ</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="256"/>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>चालू होने पर चैट सूची कक्ष के Space का पहला अक्षर उसके चित्र पर उसी Space के रंग में बनाती है। रंग Space सूची में Space को दबाकर रखने से तय होता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="263"/>
         <source>Send with the return key</source>
         <translation>एंटर कुंजी से भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="261"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="271"/>
         <source>Hide the keyboard after sending</source>
         <translation>भेजने के बाद कीबोर्ड छिपाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="262"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="272"/>
         <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
         <translation>चालू होने पर संदेश जाते ही कीबोर्ड बंद हो जाता है और बातचीत फिर पूरी दिखती है। बंद होने पर वह अगले संदेश के लिए खुला रहता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="272"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="282"/>
         <source>Off, a reaction is drawn as the character it is - always right and free. On, xmatic looks for a picture of your own for it in %1, named after its code points (1f44d.svg). Nothing is shipped and nothing is downloaded. Weigh it up: a picture file is opened by an image decoder, which is where an app of this kind is most exposed.</source>
         <translation>बंद होने पर प्रतिक्रिया उसी अक्षर के रूप में खींची जाती है जो वह है — हमेशा सही और मुफ़्त। चालू होने पर xmatic उसके लिए तुम्हारा अपना चित्र %1 में खोजता है, जिसका नाम उसके कोड पॉइंट पर होता है (1f44d.svg)। कुछ भी साथ नहीं आता और कुछ भी डाउनलोड नहीं होता। तौलो: चित्र फ़ाइल को एक इमेज डिकोडर खोलता है, और वहीं इस तरह का ऐप सबसे असुरक्षित होता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="297"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="307"/>
         <source>Read in an emoji pack</source>
         <translation>इमोजी पैक पढ़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="310"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="320"/>
         <source>No pictures read in yet - emoji stay the characters they are, in black and white.</source>
         <translation>अभी तक कोई तस्वीर नहीं पढ़ी गई - इमोजी वही अक्षर रहते हैं, श्वेत-श्याम।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="320"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="330"/>
         <source>Pictures ready: %1</source>
         <translation>तैयार तस्वीरें: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="360"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="370"/>
         <source>Remove the emoji pack</source>
         <translation>इमोजी पैक हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="330"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="340"/>
         <source>Reading the pictures…</source>
         <translation>चित्र पढ़े जा रहे हैं…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="254"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="264"/>
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>चालू होने पर एंटर कुंजी संदेश भेजती है; फ़ील्ड के बगल का तीर भी काम करता रहता है। नई पंक्ति तब उस तीर को देर तक दबाने से मिलती है, या हार्डवेयर कीबोर्ड पर शिफ़्ट और एंटर से। बंद होने पर एंटर कुंजी नई पंक्ति बनाती है और केवल तीर भेजता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="269"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="279"/>
         <source>Reactions as pictures (emoji)</source>
         <translation>प्रतिक्रियाएँ चित्रों के रूप में (इमोजी)</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="286"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="296"/>
         <source>Unpack the pack anywhere in your own folders - Downloads or Public, say. This opens at your home folder; tap through to the pack, and the folder holding the pictures is read in as soon as you tap it. They have to lie directly in it, not in subfolders. Reading runs in the background and copies them into xmatic&apos;s own storage, so your folder is not needed afterwards.</source>
         <translation>पैक को अपने किसी भी फ़ोल्डर में खोलो - जैसे Downloads या Public। यह तुम्हारे होम फ़ोल्डर में खुलता है; टैप करते हुए पैक तक जाओ, और तस्वीरों वाला फ़ोल्डर टैप करते ही पढ़ लिया जाता है। तस्वीरें सीधे उसी में होनी चाहिए, उपफ़ोल्डरों में नहीं। पढ़ना पृष्ठभूमि में चलता है और उन्हें xmatic के अपने भंडार में कॉपी करता है, इसलिए बाद में तुम्हारे फ़ोल्डर की ज़रूरत नहीं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="340"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="350"/>
         <source>%1 taken over, %2 refused</source>
         <translation>%1 लिए गए, %2 अस्वीकृत</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="351"/>
+        <location filename="../qml/pages/AppearancePage.qml" line="361"/>
         <source>The pictures have changed since they were read in and are not shown.</source>
         <translation>पढ़ने के बाद चित्र बदल गए हैं और दिखाए नहीं जा रहे।</translation>
     </message>
@@ -472,7 +482,7 @@
     <message>
         <location filename="../src/callengine.cpp" line="562"/>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>दूसरे उपकरण पर उत्तर दिया गया</translation>
     </message>
     <message>
         <location filename="../src/callengine.cpp" line="600"/>
@@ -1321,106 +1331,106 @@
         <translation>प्रोटोकॉल कोर शुरू नहीं हो सका।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="333"/>
+        <location filename="../src/matrixbridge.cpp" line="337"/>
         <source>The protocol core is not available.</source>
         <translation>प्रोटोकॉल कोर उपलब्ध नहीं है।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="561"/>
-        <location filename="../src/matrixbridge.cpp" line="600"/>
-        <location filename="../src/matrixbridge.cpp" line="616"/>
+        <location filename="../src/matrixbridge.cpp" line="565"/>
+        <location filename="../src/matrixbridge.cpp" line="604"/>
+        <location filename="../src/matrixbridge.cpp" line="620"/>
         <source>Enter a homeserver first.</source>
         <translation>पहले कोई होमसर्वर दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="582"/>
+        <location filename="../src/matrixbridge.cpp" line="586"/>
         <source>Enter username and password first.</source>
         <translation>पहले उपयोगकर्ता नाम और पासवर्ड दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1531"/>
-        <location filename="../src/matrixbridge.cpp" line="1546"/>
+        <location filename="../src/matrixbridge.cpp" line="1535"/>
+        <location filename="../src/matrixbridge.cpp" line="1550"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>सहेजी सूचियाँ अभी पढ़ी नहीं जा सकतीं।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1785"/>
+        <location filename="../src/matrixbridge.cpp" line="1789"/>
         <source>Enter a push gateway first.</source>
         <translation>पहले एक पुश गेटवे दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1813"/>
+        <location filename="../src/matrixbridge.cpp" line="1817"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2126"/>
-        <location filename="../src/matrixbridge.cpp" line="2154"/>
+        <location filename="../src/matrixbridge.cpp" line="2130"/>
+        <location filename="../src/matrixbridge.cpp" line="2158"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2438"/>
+        <location filename="../src/matrixbridge.cpp" line="2442"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2481"/>
+        <location filename="../src/matrixbridge.cpp" line="2485"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2501"/>
+        <location filename="../src/matrixbridge.cpp" line="2505"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3382"/>
+        <location filename="../src/matrixbridge.cpp" line="3386"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3718"/>
+        <location filename="../src/matrixbridge.cpp" line="3723"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3721"/>
+        <location filename="../src/matrixbridge.cpp" line="3726"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3724"/>
+        <location filename="../src/matrixbridge.cpp" line="3729"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3727"/>
+        <location filename="../src/matrixbridge.cpp" line="3732"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3730"/>
+        <location filename="../src/matrixbridge.cpp" line="3735"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3733"/>
+        <location filename="../src/matrixbridge.cpp" line="3738"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3733"/>
+        <location filename="../src/matrixbridge.cpp" line="3738"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3736"/>
+        <location filename="../src/matrixbridge.cpp" line="3741"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3739"/>
+        <location filename="../src/matrixbridge.cpp" line="3744"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -2282,17 +2292,17 @@
 <context>
     <name>RoomDelegate</name>
     <message>
-        <location filename="../qml/pages/RoomDelegate.qml" line="137"/>
+        <location filename="../qml/pages/RoomDelegate.qml" line="170"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomDelegate.qml" line="139"/>
+        <location filename="../qml/pages/RoomDelegate.qml" line="172"/>
         <source>Replaced by a new room</source>
         <translation>नए कक्ष से बदला गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomDelegate.qml" line="141"/>
+        <location filename="../qml/pages/RoomDelegate.qml" line="174"/>
         <source>Space</source>
         <translation>Space</translation>
     </message>
@@ -2554,7 +2564,7 @@
     </message>
     <message>
         <location filename="../qml/pages/RoomListPage.qml" line="86"/>
-        <location filename="../qml/pages/RoomListPage.qml" line="242"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="246"/>
         <source>Rooms</source>
         <translation>कक्ष</translation>
     </message>
@@ -2594,77 +2604,77 @@
         <translation>कक्ष खोजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="183"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="187"/>
         <source>Mark as read</source>
         <translation>पढ़ा हुआ चिह्नित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="190"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="194"/>
         <source>Remove from favourites</source>
         <translation>पसंदीदा से हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="190"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="194"/>
         <source>Favourite</source>
         <translation>पसंदीदा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="198"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="202"/>
         <source>Normal priority</source>
         <translation>सामान्य प्राथमिकता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="198"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="202"/>
         <source>Low priority</source>
         <translation>कम प्राथमिकता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="205"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="209"/>
         <source>Unmute</source>
         <translation>मौन हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="205"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="209"/>
         <source>Mute</source>
         <translation>मौन करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="213"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="217"/>
         <source>Decline invitation</source>
         <translation>निमंत्रण अस्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="213"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="217"/>
         <source>Leave room</source>
         <translation>कक्ष छोड़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="222"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="226"/>
         <source>No rooms</source>
         <translation>कोई कक्ष नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
         <source>Rooms you join show up here once the first sync is through.</source>
         <translation>पहला सिंक पूरा होते ही तुम्हारे जुड़े कक्ष यहाँ दिखते हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="228"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="232"/>
         <source>About xmatic</source>
         <translation>xmatic के बारे में</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="249"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="253"/>
         <source>Make start page</source>
         <translation>शुरुआती पृष्ठ बनाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="255"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="259"/>
         <source>Account</source>
         <translation>खाता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="239"/>
         <source>Verify user</source>
         <translation>उपयोगकर्ता सत्यापित करें</translation>
     </message>
@@ -3647,6 +3657,24 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <location filename="../qml/pages/SpaceColourPage.qml" line="34"/>
+        <source>Colour</source>
+        <translation>रंग</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SpaceColourPage.qml" line="79"/>
+        <source>Automatic colour</source>
+        <translation>स्वचालित रंग</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SpaceColourPage.qml" line="80"/>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Space से ही लिया गया, हर एक के लिए अलग</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <location filename="../qml/pages/SpacePage.qml" line="73"/>
@@ -3757,16 +3785,21 @@
     </message>
     <message>
         <location filename="../qml/pages/SpacesPage.qml" line="128"/>
+        <source>Colour</source>
+        <translation>रंग</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SpacesPage.qml" line="138"/>
         <source>Delete space</source>
         <translation>Space मिटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SpacesPage.qml" line="136"/>
+        <location filename="../qml/pages/SpacesPage.qml" line="146"/>
         <source>No spaces</source>
         <translation>कोई Space नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SpacesPage.qml" line="137"/>
+        <location filename="../qml/pages/SpacesPage.qml" line="147"/>
         <source>Spaces you are a member of show up here. Spaces group rooms together.</source>
         <translation>जिन Spaces के तुम सदस्य हो वे यहाँ दिखते हैं। Spaces कक्षों को एक साथ रखते हैं।</translation>
     </message>
