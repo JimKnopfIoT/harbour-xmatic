@@ -10,6 +10,19 @@ ListItem {
     // ordinary rooms.
     property string trailingText: ""
 
+    // Whether the space a room hangs in is marked over its picture. Only the
+    // chat list wants it: inside a space every row would carry the same letter.
+    property bool showSpaceMarker: false
+
+    // Asked per row and re-asked on the module's revision - the map arrives as
+    // a whole, not as a diff. Null where the room is in no named space.
+    readonly property var spaceMarker: (showSpaceMarker && settings.spaceInitials)
+                                       ? (matrix.spaceMarkers.revision,
+                                          matrix.spaceMarkers.markerFor(model.id))
+                                       : null
+    readonly property color spaceFill: (spaceMarker && spaceMarker.letter)
+                                       ? spaceMarker.colour : "transparent"
+
     // Silica's relative timepoint gives no year, which reads as "this year" for a
     // conversation that stopped in 2025. Anything older is written out.
     readonly property string activityText: {
@@ -36,6 +49,26 @@ ListItem {
         size: Theme.iconSizeMedium
         source: model.avatar || ""
         name: model.name
+    }
+
+    // The space, as one initial in the space's colour. In the lower right of the
+    // picture, never centred: a room without a picture already shows an initial
+    // there. The outline is what keeps it readable over a photograph.
+    Label {
+        anchors {
+            right: roomAvatar.right
+            bottom: roomAvatar.bottom
+            bottomMargin: -Theme.paddingSmall
+        }
+        visible: text.length > 0
+        text: (roomItem.spaceMarker && roomItem.spaceMarker.letter) || ""
+        textFormat: Text.PlainText
+        font.pixelSize: Math.round(roomAvatar.size * 0.6)
+        font.bold: true
+        color: Qt.rgba(roomItem.spaceFill.r, roomItem.spaceFill.g,
+                       roomItem.spaceFill.b, 0.75)
+        style: Text.Outline
+        styleColor: (roomItem.spaceMarker && roomItem.spaceMarker.outline) || "transparent"
     }
 
     Column {

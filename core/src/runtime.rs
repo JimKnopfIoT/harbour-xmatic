@@ -2117,7 +2117,12 @@ async fn ensure_room_list(
 
 async fn start_room_list(state: &Arc<State>, id: u64) {
     match ensure_room_list(state).await {
-        Ok(_) => state.sink.emit(reply_ok(id, json!({ "running": true }))),
+        Ok(_) => {
+            // The chat list draws a room's space over its picture, so the map
+            // must not wait for the space page to be opened.
+            emit_space_children_soon(state);
+            state.sink.emit(reply_ok(id, json!({ "running": true })));
+        }
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }

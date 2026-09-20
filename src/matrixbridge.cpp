@@ -207,6 +207,10 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                 send(command, arguments);
             });
 
+    // Which space a room hangs in, as one letter over its picture. Fed from the
+    // same payload as the badges, otherwise its own. See src/spacemarkers.cpp.
+    m_spaceMarkers = new SpaceMarkers(this);
+
     // Same shape: asks through the bridge, remembers on its own. src/linkpreviews.cpp.
     m_linkPreviews = new LinkPreviews(this);
     connect(m_linkPreviews, &LinkPreviews::commandReady, this,
@@ -3639,6 +3643,7 @@ void MatrixBridge::updateSpaceChildren(const QJsonObject &spaces)
         m_spaceSubspaces.insert(it.key(),
                                 entry.value(QStringLiteral("subspaces")).toInt());
     }
+    m_spaceMarkers->update(spaces);
     bumpSpaceCounts();
 }
 

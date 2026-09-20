@@ -55,6 +55,7 @@ SOURCES += \
     src/imagefacts.cpp \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
+    src/spacemarkers.cpp \
     src/linkpreviews.cpp \
     src/mentions.cpp \
     src/voicedecode.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     src/languagesettings.h \
     src/matrixbridge.h \
     src/pollactions.h \
+    src/spacemarkers.h \
     src/linkpreviews.h \
     src/mentions.h \
     src/voicedecode.h \
@@ -270,6 +272,7 @@ DISTFILES += \
     qml/pages/RoomDelegate.qml \
     qml/pages/SpacesPage.qml \
     qml/pages/SpacePage.qml \
+    qml/pages/SpaceColourPage.qml \
     qml/pages/CreateSpaceDialog.qml \
     qml/pages/AddToSpacePage.qml \
     qml/pages/MoveToSpacePage.qml \

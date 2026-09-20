@@ -291,6 +291,14 @@
         <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
         <translation>Ligado, a tecla Enter envia a mensagem; a seta ao lado do campo continua a funcionar. Uma quebra de linha obtém-se então mantendo essa seta premida, ou com Shift e Enter num teclado físico. Desligado, a tecla Enter faz uma quebra de linha e só a seta envia.</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>Marcar o espaço na imagem</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>Ligado, a lista de conversas desenha a inicial do espaço da sala sobre a imagem dela, na cor desse espaço. A cor define-se na lista de espaços, mantendo o espaço premido.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -403,7 +411,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>atendida noutro dispositivo</translation>
     </message>
 </context>
 <context>
@@ -2935,6 +2943,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>Cor</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>Cor automática</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>Tirada do próprio espaço, diferente para cada um</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3033,6 +3056,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>Dados locais danificados</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>Cor</translation>
     </message>
 </context>
 <context>

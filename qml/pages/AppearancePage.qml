@@ -249,6 +249,16 @@ Page {
                 onClicked: settings.jumpToReadMarker = !settings.jumpToReadMarker
             }
 
+            // Where a room is in no space nothing is drawn, so this only
+            // matters to somebody who sorts rooms into spaces.
+            TextSwitch {
+                text: qsTr("Mark the space on the picture")
+                description: qsTr("On, the chat list draws the initial of a room's space over its picture, in that space's colour. The colour is set in the space list, by holding the space.")
+                checked: settings.spaceInitials
+                automaticCheck: false
+                onClicked: settings.spaceInitials = !settings.spaceInitials
+            }
+
             TextSwitch {
                 text: qsTr("Send with the return key")
                 description: qsTr("On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.")

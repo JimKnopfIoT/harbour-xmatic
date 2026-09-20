@@ -290,6 +290,14 @@
         <source>Remove the emoji pack</source>
         <translation>برداشتن بستهٔ اموجی</translation>
     </message>
+    <message>
+        <source>Mark the space on the picture</source>
+        <translation>نشان دادن Space روی تصویر</translation>
+    </message>
+    <message>
+        <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
+        <translation>روشن، فهرست گفتگوها نخستین حرف Space اتاق را روی تصویر آن می‌کشد، به رنگ همان Space. رنگ را در فهرست Spaceها با نگه داشتن Space تنظیم می‌کنی.</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -402,7 +410,7 @@
     </message>
     <message>
         <source>answered on another device</source>
-        <translation type="unfinished"></translation>
+        <translation>روی دستگاه دیگری پاسخ داده شد</translation>
     </message>
 </context>
 <context>
@@ -2931,6 +2939,21 @@
     </message>
 </context>
 <context>
+    <name>SpaceColourPage</name>
+    <message>
+        <source>Colour</source>
+        <translation>رنگ</translation>
+    </message>
+    <message>
+        <source>Automatic colour</source>
+        <translation>رنگ خودکار</translation>
+    </message>
+    <message>
+        <source>Taken from the space itself, a different one for each</source>
+        <translation>برگرفته از خود Space، برای هر کدام رنگی دیگر</translation>
+    </message>
+</context>
+<context>
     <name>SpacePage</name>
     <message>
         <source>Space</source>
@@ -3028,6 +3051,10 @@
     <message>
         <source>Local data damaged</source>
         <translation>داده‌های محلی آسیب‌دیده</translation>
+    </message>
+    <message>
+        <source>Colour</source>
+        <translation>رنگ</translation>
     </message>
 </context>
 <context>

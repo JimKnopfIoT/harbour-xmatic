@@ -424,7 +424,7 @@ fn spawn_support_check(client: Client, sink: Arc<Sink>) {
 
 /// The server's own room count, so a short list can say "20 of 412". The list
 /// range only grows past twenty once the service reaches `Running`.
-fn spawn_loading_state(room_list: &RoomList, sink: Arc<Sink>) -> JoinHandle<()> {
+fn spawn_loading_state(room_list: &RoomList, client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
     let mut states = room_list.loading_state();
     tokio::spawn(async move {
         while let Some(state) = states.next().await {
@@ -437,6 +437,13 @@ fn spawn_loading_state(room_list: &RoomList, sink: Arc<Sink>) -> JoinHandle<()> 
                 } => maximum_number_of_rooms,
             };
             sink.emit(event("roomlist.total", json!({ "total": total })));
+
+            // Rooms a sync has just brought can be children of a space, and the chat
+            // list marks them long before anyone opens the space page. This state
+            // changes only when the room count does, so the walk stays rare.
+            if matches!(state, RoomListLoadingState::Loaded { .. }) {
+                sink.emit(event("spaces.children", space_children_map(&client).await));
+            }
         }
     })
 }
@@ -478,7 +485,7 @@ pub async fn start(
 
     // Subscribed before the list is moved into the task below; the subscriber
     // keeps receiving as long as that task holds the list alive.
-    let loading = spawn_loading_state(&room_list, sink.clone());
+    let loading = spawn_loading_state(&room_list, client.clone(), sink.clone());
 
     let (filters, mut filter_updates) = mpsc::unbounded_channel::<String>();
     // The dynamic adapter starts at one page and grows only when asked, and only
@@ -940,8 +947,9 @@ async fn read_child_ids(space: &matrix_sdk::Room) -> Vec<OwnedRoomId> {
         .unwrap_or_default()
 }
 
-/// Each joined space with its member rooms and how many children are spaces.
-/// The front end sums the unread counts, so the badge stays live.
+/// Each joined space with its member rooms, how many children are spaces and
+/// its name. The front end sums the unread counts, so the badge stays live;
+/// the name carries the initial the chat list draws over a room's picture.
 pub async fn space_children_map(client: &Client) -> Value {
     let mut spaces = serde_json::Map::new();
 
@@ -962,9 +970,16 @@ pub async fn space_children_map(client: &Client) -> Value {
             }
         }
 
+        // Empty where no sync has named the space yet: an id's sigil is not a
+        // name, and a marker drawn from one would say nothing.
+        let name = room
+            .cached_display_name()
+            .map(|name| strip_bidi(&name.to_string()))
+            .unwrap_or_default();
+
         spaces.insert(
             room.room_id().as_str().to_owned(),
-            json!({ "rooms": rooms, "subspaces": subspaces }),
+            json!({ "rooms": rooms, "subspaces": subspaces, "name": name }),
         );
     }
 
