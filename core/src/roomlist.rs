@@ -114,11 +114,11 @@ impl RoomListHandle {
 
 /// The room's own avatar, or the single hero's picture for a direct chat.
 /// With two or more heroes the room is a group and any face would be arbitrary.
-fn room_avatar(item: &RoomListItem) -> Option<String> {
-    if let Some(url) = item.avatar_url() {
+pub(crate) fn room_avatar(room: &matrix_sdk::Room) -> Option<String> {
+    if let Some(url) = room.avatar_url() {
         return Some(url.to_string());
     }
-    let heroes = item.heroes();
+    let heroes = room.heroes();
     match heroes.as_slice() {
         [hero] => hero.avatar_url.as_ref().map(|url| url.to_string()),
         _ => None,

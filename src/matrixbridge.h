@@ -23,6 +23,7 @@
 #include "callengine.h"
 #include "linkpreviews.h"
 #include "pollactions.h"
+#include "roomsettings.h"
 #include "spacemarkers.h"
 #include "voicetranscripts.h"
 #include "voicerecorder.h"
@@ -105,6 +106,7 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *calls READ calls CONSTANT)
     Q_PROPERTY(QObject *polls READ polls CONSTANT)
     Q_PROPERTY(QObject *linkPreviews READ linkPreviews CONSTANT)
+    Q_PROPERTY(QObject *roomSettings READ roomSettings CONSTANT)
     Q_PROPERTY(QObject *mentions READ mentions CONSTANT)
     Q_PROPERTY(QObject *transcripts READ transcripts CONSTANT)
     Q_PROPERTY(QString openRoomId READ openRoomId NOTIFY openRoomChanged)
@@ -140,7 +142,7 @@ class MatrixBridge : public QObject
     /// line stays orange long enough that testers paste the key twice.
     Q_PROPERTY(bool recoverySettling READ recoverySettling NOTIFY encryptionChanged)
     /// What the user may do in the open room: `pin`, `invite`, `redactOthers`,
-    /// `topic`, `name`, plus `direct` — the room's kind, which qualifies
+    /// `topic`, `name`, `avatar`, plus `direct` — the room's kind, which qualifies
     /// `redactOthers`. A missing entry is "not answered yet", so menus show;
     /// the two that gate deleting someone else's message are read strictly.
     Q_PROPERTY(QVariantMap roomPermissions READ roomPermissions NOTIFY roomPermissionsChanged)
@@ -233,6 +235,7 @@ public:
     QObject *calls() { return m_calls; }
     QObject *polls() { return m_polls; }
     QObject *linkPreviews() { return m_linkPreviews; }
+    QObject *roomSettings() { return m_roomSettings; }
     QObject *mentions() { return m_mentions; }
     QObject *transcripts() { return m_transcripts; }
     QString openRoomId() const { return m_openRoomId; }
@@ -1008,6 +1011,7 @@ private:
     PollActions *m_polls = nullptr;
     SpaceMarkers *m_spaceMarkers = nullptr;
     LinkPreviews *m_linkPreviews = nullptr;
+    RoomSettings *m_roomSettings = nullptr;
     Mentions *m_mentions = nullptr;
     VoiceTranscripts *m_transcripts = nullptr;
     TimelineModel m_timeline;

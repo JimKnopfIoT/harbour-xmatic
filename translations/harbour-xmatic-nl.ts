@@ -2026,6 +2026,10 @@
         <source>Room ID copied</source>
         <translation>Kamer-ID gekopieerd</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Kamer bewerken</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2572,6 +2576,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Er is niets gezegd, dus er is niets verstuurd.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Ook op het andere netwerk wijzigen?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>De brug geeft de wijziging door. Iedereen in de chat daar ziet haar, ook mensen die geen Matrix gebruiken.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Wijzigen</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>De naam kon niet worden gewijzigd: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Het onderwerp kon niet worden gewijzigd: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>De afbeelding kon niet worden gewijzigd: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Kamer bewerken</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Met je rol in deze kamer mag je de naam, het onderwerp of de afbeelding niet wijzigen.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Deze kamer is via een brug verbonden met een ander netwerk. De brug geeft een nieuwe naam, een nieuw onderwerp of een nieuwe afbeelding meestal door, en daar verandert het voor iedereen in de chat, ook voor mensen die geen Matrix gebruiken.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Deze chat is via een brug verbonden met een ander netwerk. Daar horen naam en afbeelding bij het contact: de brug geeft meestal niets door en kan een hier ingestelde naam overschrijven zodra het contact de eigen naam wijzigt. Welke contactnaam de brug toont, hangt af van haar eigen configuratie.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Naam, onderwerp en afbeelding horen bij de kamer: iedereen erin ziet de wijziging.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Brug naar</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Afbeelding</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Afbeelding wijzigen</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Afbeelding instellen</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Afbeelding verwijderen</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Naam en onderwerp</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Naam</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Geen naam ingesteld</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Zonder naam wordt de kamer getoond onder de namen van haar leden.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Onderwerp</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Geen onderwerp ingesteld</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Opslaan</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Opslaan…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Opgeslagen</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Er kon niet worden gecontroleerd of deze kamer via een brug met een ander netwerk is verbonden. Zo ja, dan kan de wijziging daar voor iedereen in de chat gelden.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Toch wijzigen?</translation>
     </message>
 </context>
 <context>

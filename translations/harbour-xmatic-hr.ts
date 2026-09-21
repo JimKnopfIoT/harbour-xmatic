@@ -2029,6 +2029,10 @@
         <source>Room ID copied</source>
         <translation>ID sobe kopiran</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Uredi sobu</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2576,6 +2580,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Ništa nije rečeno, pa ništa nije poslano.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Promijeniti i u drugoj mreži?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Most prosljeđuje promjenu. Vide je svi u tamošnjem razgovoru, uključujući one koji ne koriste Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Promijeni</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Naziv nije moguće promijeniti: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Temu nije moguće promijeniti: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Sliku nije moguće promijeniti: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Uredi sobu</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Tvoja uloga u ovoj sobi ne dopušta mijenjanje njezina naziva, teme ili slike.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Ova je soba mostom povezana s drugom mrežom. Most obično prosljeđuje novi naziv, temu ili sliku, i ondje se to mijenja za sve u razgovoru, uključujući one koji ne koriste Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Ovaj je razgovor mostom povezan s drugom mrežom. Ondje naziv i slika pripadaju kontaktu: most obično ništa ne prosljeđuje i može prebrisati ovdje postavljeni naziv kad god kontakt promijeni svoj. Koje ime kontakta most prikazuje, određuje njegova vlastita konfiguracija.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Naziv, tema i slika pripadaju sobi: promjenu vide svi u njoj.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Most prema</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Slika</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Promijeni sliku</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Postavi sliku</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Ukloni sliku</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Naziv i tema</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Naziv</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Naziv nije postavljen</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Bez naziva soba se prikazuje pod imenima svojih članova.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Tema</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Tema nije postavljena</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Spremi</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Spremanje…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Spremljeno</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Nije bilo moguće provjeriti je li ova soba mostom povezana s drugom mrežom. Ako jest, promjena ondje može vrijediti za sve u razgovoru.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Ipak promijeniti?</translation>
     </message>
 </context>
 <context>

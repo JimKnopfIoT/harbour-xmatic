@@ -2026,6 +2026,10 @@
         <source>Room ID copied</source>
         <translation>Room ID copied</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Edit room</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2572,6 +2576,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nothing was said, so nothing was sent.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Change it on the other network as well?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Change</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>The name could not be changed: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>The topic could not be changed: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>The picture could not be changed: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Edit room</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Your role in this room does not allow changing its name, topic or picture.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Name, topic and picture belong to the room: everyone in it sees the change.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Bridged to</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Picture</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Change picture</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Set picture</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Remove picture</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Name and topic</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>No name set</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Without a name, the room is shown under the names of its members.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Topic</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>No topic set</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Save</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Saving…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Saved</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Change it anyway?</translation>
     </message>
 </context>
 <context>

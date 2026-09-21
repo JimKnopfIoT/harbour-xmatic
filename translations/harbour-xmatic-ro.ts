@@ -2029,6 +2029,10 @@
         <source>Room ID copied</source>
         <translation>ID cameră copiat</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Editează camera</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2576,6 +2580,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nu s-a spus nimic, așa că nu s-a trimis nimic.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Schimbi și în cealaltă rețea?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Puntea transmite schimbarea mai departe. O văd toți cei din chatul de acolo, inclusiv oamenii care nu folosesc Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Schimbă</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Numele nu a putut fi schimbat: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Subiectul nu a putut fi schimbat: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Imaginea nu a putut fi schimbată: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Editează camera</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Rolul tău în această cameră nu îți permite să îi schimbi numele, subiectul sau imaginea.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Această cameră este legată printr-o punte de o altă rețea. De obicei, puntea transmite mai departe un nume, un subiect sau o imagine nouă, iar acolo se schimbă pentru toți cei din chat, inclusiv pentru oamenii care nu folosesc Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Acest chat este legat printr-o punte de o altă rețea. Acolo, numele și imaginea aparțin contactului: de obicei puntea nu transmite nimic și poate suprascrie un nume setat aici oricând contactul și-l schimbă pe al său. Ce nume de contact arată puntea depinde de propria ei configurație.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Numele, subiectul și imaginea aparțin camerei: toți cei din ea văd schimbarea.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Punte către</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Imagine</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Schimbă imaginea</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Setează o imagine</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Elimină imaginea</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Nume și subiect</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nume</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Niciun nume setat</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Fără nume, camera este afișată cu numele membrilor ei.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Subiect</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Niciun subiect setat</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Salvează</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Se salvează…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Salvat</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Nu s-a putut verifica dacă această cameră este legată printr-o punte de o altă rețea. Dacă este, schimbarea se poate aplica acolo tuturor celor din chat.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Schimbi totuși?</translation>
     </message>
 </context>
 <context>

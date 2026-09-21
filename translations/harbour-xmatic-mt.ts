@@ -2032,6 +2032,10 @@
         <source>Room ID copied</source>
         <translation>L-ID tal-kamra ġie kkupjat</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Editja l-kamra</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2580,6 +2584,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Ma ntqal xejn, allura ma ntbagħat xejn.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Tibdlu wkoll fin-netwerk l-ieħor?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Il-pont jgħaddi l-bidla &apos;l quddiem. Kulħadd fiċ-chat hemmhekk jaraha, anki nies li ma jużawx Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Ibdel</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>L-isem ma setax jinbidel: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Is-suġġett ma setax jinbidel: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Ir-ritratt ma setax jinbidel: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Editja l-kamra</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Ir-rwol tiegħek f&apos;din il-kamra ma jħallikx tibdel l-isem, is-suġġett jew ir-ritratt tagħha.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Din il-kamra hija marbuta ma&apos; netwerk ieħor permezz ta&apos; pont. Normalment il-pont jgħaddi &apos;l quddiem isem, suġġett jew ritratt ġdid, u hemmhekk jinbidel għal kulħadd fiċ-chat, anki għal nies li ma jużawx Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Dan iċ-chat huwa marbut ma&apos; netwerk ieħor permezz ta&apos; pont. Hemmhekk l-isem u r-ritratt huma tal-kuntatt: normalment il-pont ma jgħaddi xejn &apos;l quddiem, u jista&apos; jikteb fuq isem issettjat hawn kull meta l-kuntatt jibdel tiegħu. Liema isem tal-kuntatt juri l-pont jiddependi mill-konfigurazzjoni tiegħu stess.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>L-isem, is-suġġett u r-ritratt huma tal-kamra: kulħadd fiha jara l-bidla.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Pont lejn</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Ritratt</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Ibdel ir-ritratt</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Issettja ritratt</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Neħħi r-ritratt</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Isem u suġġett</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Isem</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>L-ebda isem issettjat</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Mingħajr isem, il-kamra tintwera taħt l-ismijiet tal-membri tagħha.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Suġġett</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>L-ebda suġġett issettjat</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Issejvja</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Qed jiġi ssejvjat…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Issejvjat</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Ma setax jiġi ċċekkjat jekk din il-kamra hijiex marbuta ma&apos; netwerk ieħor permezz ta&apos; pont. Jekk hi, il-bidla tista&apos; tapplika hemmhekk għal kulħadd fiċ-chat.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Tibdlu xorta?</translation>
     </message>
 </context>
 <context>

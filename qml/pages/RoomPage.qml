@@ -3784,6 +3784,15 @@ Page {
         onNothingHeard: page.showNotice(qsTr("Nothing was said, so nothing was sent."))
     }
 
+    Connections {
+        target: matrix.roomSettings
+        onSaved: {
+            if (roomId === page.roomId && shownName.length > 0) {
+                page.roomName = shownName
+            }
+        }
+    }
+
     // A refused poll command has no row to mark, so the page says it.
     Connections {
         target: matrix.polls

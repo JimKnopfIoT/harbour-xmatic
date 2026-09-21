@@ -87,6 +87,25 @@ Page {
     }
 
     Connections {
+        target: matrix.roomSettings
+        onSaved: {
+            if (roomId !== page.roomId) {
+                return
+            }
+            var info = JSON.parse(JSON.stringify(page.info))
+            if (field === "topic") {
+                info.topic = value
+            } else if (field === "avatar") {
+                info.avatar = value
+            }
+            page.info = info
+            if (shownName.length > 0) {
+                page.roomName = shownName
+            }
+        }
+    }
+
+    Connections {
         target: matrix
         onRoomInfoReady: {
             if (info.roomId !== page.roomId) {
@@ -110,11 +129,21 @@ Page {
         VerticalScrollDecorator {}
 
         PullDownMenu {
-            // Deliberately the only entry: leaving is the one action here that
-            // must not sit between the taps that merely inspect the room.
+            // Edit last: the shortest tug must not leave.
             MenuItem {
                 text: qsTr("Leave room")
                 onClicked: page.confirmLeave()
+            }
+            MenuItem {
+                text: qsTr("Edit room")
+                visible: !page.invited
+                         && (matrix.roomPermissions.name === true
+                             || matrix.roomPermissions.topic === true
+                             || matrix.roomPermissions.avatar === true)
+                onClicked: pageStack.push(Qt.resolvedUrl("RoomSettingsPage.qml"), {
+                                              roomId: page.roomId,
+                                              roomName: page.displayName
+                                          })
             }
         }
 

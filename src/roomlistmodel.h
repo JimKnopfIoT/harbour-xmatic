@@ -42,6 +42,8 @@ public:
     /// Writes a room's notification mode into its row: the mode is a push rule,
     /// which the SDK's room list does not count as a notable change.
     void setNotifyMode(const QString &roomId, const QString &mode);
+    /// For changes no diff is promised for.
+    void setFields(const QString &roomId, const QJsonObject &fields);
     /// Clears a room's counters after it was marked read from the list: a receipt
     /// does not always bring a diff, and the badge would stand.
     void clearUnread(const QString &roomId);

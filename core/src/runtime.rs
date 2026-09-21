@@ -22,6 +22,7 @@ use crate::login;
 use crate::profile;
 use crate::linkpreview;
 use crate::poll;
+use crate::roomsettings;
 use crate::private;
 use crate::protocol::{event, reply_error, reply_ok, Command, MediaStill, Secret};
 use crate::media;
@@ -466,6 +467,14 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::TimelineReact { event_id, key, .. } => react(&state, id, event_id, key).await,
         Command::LinkPreview { url, .. } => {
             linkpreview::handle(state.client().await, &state.sink, id, url).await
+        }
+        // core/src/roomsettings.rs.
+        Command::RoomSettingsLoad { .. }
+        | Command::RoomSettingsSetName { .. }
+        | Command::RoomSettingsSetTopic { .. }
+        | Command::RoomSettingsSetAvatar { .. }
+        | Command::RoomSettingsRemoveAvatar { .. } => {
+            roomsettings::handle(command, state.client().await, &state.sink).await
         }
         // Routed, not handled: the poll rules live in core/src/poll.rs.
         Command::PollStart { .. } | Command::PollVote { .. } | Command::PollEnd { .. } => {

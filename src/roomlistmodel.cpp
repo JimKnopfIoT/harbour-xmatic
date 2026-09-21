@@ -102,6 +102,32 @@ void RoomListModel::setNotifyMode(const QString &roomId, const QString &mode)
     }
 }
 
+void RoomListModel::setFields(const QString &roomId, const QJsonObject &fields)
+{
+    for (int i = 0; i < rows().count(); ++i) {
+        QJsonObject row = rows().at(i);
+        if (row.value(QStringLiteral("id")).toString() != roomId) {
+            continue;
+        }
+        bool changed = false;
+        for (auto it = fields.constBegin(); it != fields.constEnd(); ++it) {
+            if (row.value(it.key()) != it.value()) {
+                row.insert(it.key(), it.value());
+                changed = true;
+            }
+        }
+        if (!changed) {
+            return;
+        }
+        QJsonObject operation;
+        operation.insert(QStringLiteral("op"), QStringLiteral("set"));
+        operation.insert(QStringLiteral("index"), i);
+        operation.insert(QStringLiteral("value"), row);
+        applyOperations(QJsonArray { operation });
+        return;
+    }
+}
+
 void RoomListModel::clearUnread(const QString &roomId)
 {
     for (int i = 0; i < rows().count(); ++i) {

@@ -55,6 +55,7 @@ SOURCES += \
     src/imagefacts.cpp \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
+    src/roomsettings.cpp \
     src/spacemarkers.cpp \
     src/linkpreviews.cpp \
     src/mentions.cpp \
@@ -86,6 +87,7 @@ HEADERS += \
     src/languagesettings.h \
     src/matrixbridge.h \
     src/pollactions.h \
+    src/roomsettings.h \
     src/spacemarkers.h \
     src/linkpreviews.h \
     src/mentions.h \
@@ -286,6 +288,7 @@ DISTFILES += \
     qml/pages/AttachmentPickerPage.qml \
     qml/pages/ModeTab.qml \
     qml/pages/RoomInfoPage.qml \
+    qml/pages/RoomSettingsPage.qml \
     qml/pages/SearchPage.qml \
     qml/pages/ShieldGlossaryPage.qml \
     qml/pages/AppearancePage.qml \

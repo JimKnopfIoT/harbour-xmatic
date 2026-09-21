@@ -2026,6 +2026,10 @@
         <source>Room ID copied</source>
         <translation>Toa ID kopeeritud</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Muuda tuba</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2572,6 +2576,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Midagi ei öeldud, seega midagi ei saadetud.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Kas muuta ka teises võrgus?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Sild annab muudatuse edasi. Seda näevad kõik sealses vestluses, ka need, kes Matrixit ei kasuta.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Muuda</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Nime ei õnnestunud muuta: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Teemat ei õnnestunud muuta: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Pilti ei õnnestunud muuta: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Muuda tuba</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Sinu roll selles toas ei luba muuta selle nime, teemat ega pilti.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>See tuba on sillaga ühendatud teise võrguga. Sild annab uue nime, teema või pildi tavaliselt edasi ja seal muutub see kõigile vestluses, ka neile, kes Matrixit ei kasuta.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>See vestlus on sillaga ühendatud teise võrguga. Seal kuuluvad nimi ja pilt kontaktile: sild ei anna tavaliselt midagi edasi ja võib siin määratud nime üle kirjutada, kui kontakt oma nime muudab. Millist kontakti nime sild näitab, määrab tema enda seadistus.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Nimi, teema ja pilt kuuluvad toale: muudatust näevad kõik, kes seal on.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Sild võrku</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Pilt</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Muuda pilti</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Määra pilt</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Eemalda pilt</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Nimi ja teema</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Nime pole määratud</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Ilma nimeta näidatakse tuba selle liikmete nimedega.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Teema</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Teemat pole määratud</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Salvesta</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Salvestamine…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Salvestatud</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Ei õnnestunud kontrollida, kas see tuba on sillaga ühendatud teise võrguga. Kui on, võib muudatus seal kehtida kõigile vestluses.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Kas muuta ikkagi?</translation>
     </message>
 </context>
 <context>

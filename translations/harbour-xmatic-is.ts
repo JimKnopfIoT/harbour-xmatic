@@ -2026,6 +2026,10 @@
         <source>Room ID copied</source>
         <translation>Auðkenni herbergis afritað</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Breyta herbergi</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2572,6 +2576,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Ekkert var sagt, svo ekkert var sent.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Breyta líka á hinu netinu?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Brúin sendir breytinguna áfram. Allir í spjallinu þar sjá hana, líka þeir sem nota ekki Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Breyta</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Ekki tókst að breyta nafninu: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Ekki tókst að breyta umræðuefninu: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Ekki tókst að breyta myndinni: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Breyta herbergi</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Hlutverk þitt í þessu herbergi leyfir ekki að breyta nafni þess, umræðuefni eða mynd.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Þetta herbergi er tengt öðru neti með brú. Brúin sendir yfirleitt nýtt nafn, umræðuefni eða mynd áfram, og þar breytist það hjá öllum í spjallinu, líka hjá þeim sem nota ekki Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Þetta spjall er tengt öðru neti með brú. Þar tilheyra nafn og mynd tengiliðnum: brúin sendir yfirleitt ekkert áfram og getur skrifað yfir nafn sem sett er hér hvenær sem tengiliðurinn breytir sínu. Hvaða tengiliðanafn brúin sýnir ræðst af hennar eigin stillingum.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Nafn, umræðuefni og mynd tilheyra herberginu: allir í því sjá breytinguna.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Brú til</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Mynd</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Skipta um mynd</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Setja mynd</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Fjarlægja mynd</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Nafn og umræðuefni</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nafn</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Ekkert nafn sett</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Án nafns er herbergið sýnt undir nöfnum meðlima þess.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Umræðuefni</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Ekkert umræðuefni sett</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Vista</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Vistar…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Vistað</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Ekki tókst að athuga hvort þetta herbergi er tengt öðru neti með brú. Ef svo er gæti breytingin gilt þar fyrir alla í spjallinu.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Breyta samt?</translation>
     </message>
 </context>
 <context>

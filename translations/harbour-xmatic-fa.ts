@@ -2023,6 +2023,10 @@
         <source>Room ID copied</source>
         <translation>شناسهٔ اتاق رونوشت شد</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>ویرایش اتاق</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2568,6 +2572,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>چیزی گفته نشد، پس چیزی فرستاده نشد.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>در شبکهٔ دیگر هم تغییر کند؟</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>پل این تغییر را به آن‌جا منتقل می‌کند. همه در گفت‌وگوی آن‌جا آن را می‌بینند، حتی کسانی که از Matrix استفاده نمی‌کنند.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>تغییر</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>تغییر نام ممکن نشد: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>تغییر موضوع ممکن نشد: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>تغییر تصویر ممکن نشد: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>ویرایش اتاق</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>نقش تو در این اتاق اجازهٔ تغییر نام، موضوع یا تصویر آن را نمی‌دهد.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>این اتاق از طریق یک پل به شبکهٔ دیگری وصل است. پل معمولاً نام، موضوع یا تصویر تازه را به آن‌جا منتقل می‌کند و در آن‌جا برای همه در گفت‌وگو تغییر می‌کند، حتی برای کسانی که از Matrix استفاده نمی‌کنند.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>این گفت‌وگو از طریق یک پل به شبکهٔ دیگری وصل است. در آن‌جا نام و تصویر متعلق به مخاطب است: پل معمولاً چیزی منتقل نمی‌کند و ممکن است هر بار که مخاطب نام خود را تغییر دهد، نامی را که این‌جا تنظیم شده بازنویسی کند. این‌که پل کدام نام مخاطب را نشان دهد، به پیکربندی خود آن بستگی دارد.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>نام، موضوع و تصویر متعلق به اتاق است: همهٔ کسانی که در آن هستند تغییر را می‌بینند.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>پل به</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>تصویر</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>تغییر تصویر</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>تنظیم تصویر</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>برداشتن تصویر</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>نام و موضوع</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>نام</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>نامی تنظیم نشده</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>بدون نام، اتاق با نام اعضایش نمایش داده می‌شود.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>موضوع</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>موضوعی تنظیم نشده</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>ذخیره</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>در حال ذخیره…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>ذخیره شد</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>بررسی نشد که آیا این اتاق از طریق یک پل به شبکهٔ دیگری وصل است یا نه. اگر باشد، ممکن است تغییر در آن‌جا برای همه در گفت‌وگو اعمال شود.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>با این حال تغییر کند؟</translation>
     </message>
 </context>
 <context>

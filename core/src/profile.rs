@@ -39,8 +39,8 @@ pub async fn set_display_name(client: &Client, name: &str) -> Result<(), String>
         .map_err(|error| format!("could not change the name: {error}"))
 }
 
-/// Uploads a picture from disk and makes it the avatar.
-pub async fn set_avatar(client: &Client, path: &str) -> Result<Value, String> {
+/// An avatar picture from disk: size-checked, typed by extension.
+pub async fn read_picture(path: &str) -> Result<(mime::Mime, Vec<u8>), String> {
     // Asked before it is read, like an attachment: the upload API takes the bytes,
     // so an outsized file would already be in memory.
     crate::media::check_size(
@@ -59,6 +59,12 @@ pub async fn set_avatar(client: &Client, path: &str) -> Result<Value, String> {
         Some(ext) if ext == "webp" => "image/webp".parse().expect("static mime is valid"),
         _ => mime::IMAGE_JPEG,
     };
+    Ok((mime, data))
+}
+
+/// Uploads a picture from disk and makes it the avatar.
+pub async fn set_avatar(client: &Client, path: &str) -> Result<Value, String> {
+    let (mime, data) = read_picture(path).await?;
 
     let url = client
         .account()

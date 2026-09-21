@@ -2026,6 +2026,10 @@
         <source>Room ID copied</source>
         <translation>Huoneen tunnus kopioitu</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Muokkaa huonetta</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2572,6 +2576,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Mitään ei sanottu, joten mitään ei lähetetty.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Muutetaanko myös toisessa verkossa?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Silta välittää muutoksen eteenpäin. Kaikki siellä olevassa keskustelussa näkevät sen, myös ne, jotka eivät käytä Matrixia.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Muuta</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Nimeä ei voitu muuttaa: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Aihetta ei voitu muuttaa: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Kuvaa ei voitu muuttaa: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Muokkaa huonetta</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Roolisi tässä huoneessa ei salli sen nimen, aiheen tai kuvan muuttamista.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Tämä huone on yhdistetty sillalla toiseen verkkoon. Silta välittää uuden nimen, aiheen tai kuvan yleensä eteenpäin, ja siellä se muuttuu kaikille keskustelussa, myös niille, jotka eivät käytä Matrixia.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Tämä keskustelu on yhdistetty sillalla toiseen verkkoon. Siellä nimi ja kuva kuuluvat yhteyshenkilölle: silta ei yleensä välitä mitään eteenpäin, ja se voi korvata täällä asetetun nimen aina, kun yhteyshenkilö vaihtaa omansa. Se, minkä yhteystietonimen silta näyttää, määräytyy sillan omista asetuksista.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Nimi, aihe ja kuva kuuluvat huoneelle: kaikki huoneessa olevat näkevät muutoksen.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Silta verkkoon</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Kuva</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Vaihda kuva</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Aseta kuva</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Poista kuva</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Nimi ja aihe</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Nimeä ei ole asetettu</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Ilman nimeä huone näytetään sen jäsenten nimillä.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Aihe</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Aihetta ei ole asetettu</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Tallennetaan…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Tallennettu</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Ei voitu tarkistaa, onko tämä huone yhdistetty sillalla toiseen verkkoon. Jos on, muutos voi koskea siellä kaikkia keskustelussa.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Muutetaanko silti?</translation>
     </message>
 </context>
 <context>

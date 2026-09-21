@@ -218,6 +218,18 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                 send(command, arguments);
             });
 
+    // Needs the command's id. src/roomsettings.cpp.
+    m_roomSettings = new RoomSettings(this);
+    connect(m_roomSettings, &RoomSettings::commandReady, this,
+            [this](const QString &command, const QJsonObject &arguments) {
+                m_roomSettings->sent(send(command, arguments), command, arguments);
+            });
+    connect(m_roomSettings, &RoomSettings::rowChanged, this,
+            [this](const QString &roomId, const QJsonObject &fields) {
+                m_rooms.setFields(roomId, fields);
+                m_spaceRooms.setFields(roomId, fields);
+            });
+
     // Third of the same shape: the bridge routes, mention rules live in the
     // core and the picker's state in src/mentions.cpp.
     m_mentions = new Mentions(this);
@@ -2398,6 +2410,10 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (command == QLatin1String("mention.candidates")) {
             return;
         }
+        // Shown on the page, not in the banner.
+        if (m_roomSettings->reportFailure(id, error)) {
+            return;
+        }
         const bool tokenRotated = error.contains(QLatin1String("M_UNKNOWN_TOKEN"));
         if (tokenRotated || wasMedia) {
             qWarning("xmatic: %s failed: %s", qPrintable(command),
@@ -2579,6 +2595,9 @@ bool MatrixBridge::replyAccount(const QString &command, const QJsonObject &data)
 /// Replies about rooms and spaces.
 bool MatrixBridge::replyRoom(quint64 id, const QString &command, const QJsonObject &data)
 {
+    if (m_roomSettings->deliver(id, data)) {
+        return true;
+    }
 
     if (command == QLatin1String("space.hierarchy")) {
         const QString spaceId = m_hierarchyRequests.take(id);

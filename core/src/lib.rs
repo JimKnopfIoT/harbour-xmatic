@@ -16,6 +16,7 @@ mod mention;
 mod profile;
 mod push;
 mod poll;
+mod roomsettings;
 mod private;
 mod protocol;
 mod markup;
