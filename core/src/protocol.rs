@@ -732,6 +732,47 @@ pub enum Command {
     #[serde(rename = "link.preview")]
     LinkPreview { id: u64, url: String },
 
+    /// Name, topic, picture, permissions and bridge of a room.
+    #[serde(rename = "roomSettings.load")]
+    RoomSettingsLoad {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
+    /// Set the room's name; empty removes it.
+    #[serde(rename = "roomSettings.setName")]
+    RoomSettingsSetName {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        name: String,
+    },
+
+    /// Set the room's topic; empty removes it.
+    #[serde(rename = "roomSettings.setTopic")]
+    RoomSettingsSetTopic {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        topic: String,
+    },
+
+    #[serde(rename = "roomSettings.setAvatar")]
+    RoomSettingsSetAvatar {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        path: String,
+    },
+
+    #[serde(rename = "roomSettings.removeAvatar")]
+    RoomSettingsRemoveAvatar {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
     /// Put a poll into the open room.
     #[serde(rename = "poll.start")]
     PollStart {
@@ -1043,6 +1084,11 @@ impl Command {
             | Command::RoomSetLowPriority { id, .. }
             | Command::TimelinePin { id, .. }
             | Command::LinkPreview { id, .. }
+            | Command::RoomSettingsLoad { id, .. }
+            | Command::RoomSettingsSetName { id, .. }
+            | Command::RoomSettingsSetTopic { id, .. }
+            | Command::RoomSettingsSetAvatar { id, .. }
+            | Command::RoomSettingsRemoveAvatar { id, .. }
             | Command::PollStart { id, .. }
             | Command::PollVote { id, .. }
             | Command::PollEnd { id, .. }

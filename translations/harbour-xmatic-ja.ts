@@ -2023,6 +2023,10 @@
         <source>Room ID copied</source>
         <translation>ルーム ID をコピーしました</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>ルームを編集</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2568,6 +2572,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>何も話されなかったため、何も送信されませんでした。</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>相手側のネットワークでも変更しますか？</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>ブリッジが変更を転送します。向こうのチャットにいる全員に表示されます。Matrix を使っていない人も含みます。</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>変更する</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>名前を変更できませんでした: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>トピックを変更できませんでした: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>画像を変更できませんでした: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>ルームを編集</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>このルームでのあなたの役割では、名前・トピック・画像を変更できません。</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>このルームはブリッジで別のネットワークとつながっています。ブリッジは通常、新しい名前・トピック・画像を転送し、向こうではチャットの全員に対して変わります。Matrix を使っていない人も含みます。</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>このチャットはブリッジで別のネットワークとつながっています。向こうでは名前と画像は連絡先のものです。ブリッジは通常何も転送せず、連絡先が自分の名前を変えるたびに、ここで設定した名前を上書きすることがあります。ブリッジがどの連絡先名を表示するかは、ブリッジ自体の設定で決まります。</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>名前・トピック・画像はルームに属します。変更はルームの全員に表示されます。</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>ブリッジ先</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>画像</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>画像を変更</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>画像を設定</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>画像を削除</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>名前とトピック</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>名前は設定されていません</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>名前がない場合、ルームはメンバーの名前で表示されます。</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>トピック</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>トピックは設定されていません</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>保存中…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>保存しました</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>このルームがブリッジで別のネットワークとつながっているか確認できませんでした。つながっている場合、変更は向こうのチャットの全員に適用されることがあります。</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>それでも変更しますか？</translation>
     </message>
 </context>
 <context>

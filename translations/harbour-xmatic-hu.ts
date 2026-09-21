@@ -2023,6 +2023,10 @@
         <source>Room ID copied</source>
         <translation>Szobaazonosító másolva</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Szoba szerkesztése</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2568,6 +2572,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Semmi sem hangzott el, így semmi sem lett elküldve.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>A másik hálózaton is módosítod?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>A híd továbbítja a változást. Az ottani csevegésben mindenki látja, azok is, akik nem használják a Matrixot.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Módosítás</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>A nevet nem sikerült módosítani: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>A témát nem sikerült módosítani: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>A képet nem sikerült módosítani: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Szoba szerkesztése</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>A szerepköröd ebben a szobában nem teszi lehetővé a név, a téma vagy a kép módosítását.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Ez a szoba híddal kapcsolódik egy másik hálózathoz. A híd általában továbbítja az új nevet, témát vagy képet, és ott mindenkinek megváltozik a csevegésben, azoknak is, akik nem használják a Matrixot.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Ez a csevegés híddal kapcsolódik egy másik hálózathoz. Ott a név és a kép a partneré: a híd általában semmit sem továbbít, és felülírhatja az itt beállított nevet, amikor a partner megváltoztatja a sajátját. Hogy a híd melyik partnernevet mutatja, azt a saját beállításai határozzák meg.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>A név, a téma és a kép a szobához tartozik: a változást mindenki látja, aki benne van.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Hídon át</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Kép</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Kép cseréje</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Kép beállítása</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Kép eltávolítása</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Név és téma</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Név</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Nincs név megadva</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Név nélkül a szoba a tagjai nevével jelenik meg.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Téma</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Nincs téma megadva</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Mentés</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Mentés…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Mentve</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Nem sikerült ellenőrizni, hogy ez a szoba híddal kapcsolódik-e egy másik hálózathoz. Ha igen, a változás ott a csevegésben mindenkire vonatkozhat.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Mégis módosítod?</translation>
     </message>
 </context>
 <context>

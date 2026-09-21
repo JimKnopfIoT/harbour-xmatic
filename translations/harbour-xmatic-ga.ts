@@ -2029,6 +2029,10 @@
         <source>Room ID copied</source>
         <translation>Cóipeáladh aitheantas an tseomra</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Cuir an seomra in eagar</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2576,6 +2580,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Níor dúradh aon rud, mar sin níor seoladh aon rud.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>É a athrú ar an líonra eile freisin?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Seolann an droichead an t-athrú ar aghaidh. Feiceann gach duine sa chomhrá ansin é, fiú daoine nach n-úsáideann Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Athraigh</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Níorbh fhéidir an t-ainm a athrú: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Níorbh fhéidir an t-ábhar a athrú: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Níorbh fhéidir an pictiúr a athrú: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Cuir an seomra in eagar</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Ní cheadaíonn do ról sa seomra seo a ainm, a ábhar ná a phictiúr a athrú.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Tá an seomra seo ceangailte le líonra eile trí dhroichead. De ghnáth seolann an droichead ainm, ábhar nó pictiúr nua ar aghaidh, agus athraíonn sé ansin do gach duine sa chomhrá, fiú do dhaoine nach n-úsáideann Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Tá an comhrá seo ceangailte le líonra eile trí dhroichead. Ansin baineann an t-ainm agus an pictiúr leis an teagmhálaí: de ghnáth ní sheolann an droichead aon rud ar aghaidh, agus is féidir leis ainm a socraíodh anseo a fhorscríobh aon uair a athraíonn an teagmhálaí a ainm féin. Is í cumraíocht an droichid féin a shocraíonn cén t-ainm teagmhálaí a thaispeánann sé.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Baineann an t-ainm, an t-ábhar agus an pictiúr leis an seomra: feiceann gach duine ann an t-athrú.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Droichead chuig</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Pictiúr</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Athraigh an pictiúr</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Socraigh pictiúr</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Bain an pictiúr</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Ainm agus ábhar</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Ainm</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Níl aon ainm socraithe</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Gan ainm, taispeántar an seomra faoi ainmneacha a bhall.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Ábhar</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Níl aon ábhar socraithe</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Sábháil</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Á shábháil…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Sábháilte</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Níorbh fhéidir a sheiceáil an bhfuil an seomra seo ceangailte le líonra eile trí dhroichead. Má tá, d&apos;fhéadfadh an t-athrú feidhm a bheith aige ansin do gach duine sa chomhrá.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>É a athrú mar sin féin?</translation>
     </message>
 </context>
 <context>

@@ -2029,6 +2029,10 @@
         <source>Room ID copied</source>
         <translation>Istabas ID nokopēts</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Rediģēt istabu</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2576,6 +2580,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nekas netika pateikts, tāpēc nekas netika nosūtīts.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Mainīt arī otrā tīklā?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Tilts nodod izmaiņas tālāk. Tās redz visi tur esošajā tērzēšanā, arī tie, kas neizmanto Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Mainīt</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Nosaukumu neizdevās mainīt: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Tematu neizdevās mainīt: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Attēlu neizdevās mainīt: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Rediģēt istabu</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Tava loma šajā istabā neļauj mainīt tās nosaukumu, tematu vai attēlu.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Šī istaba ar tiltu ir savienota ar citu tīklu. Tilts parasti nodod tālāk jaunu nosaukumu, tematu vai attēlu, un tur tas mainās visiem tērzēšanā, arī tiem, kas neizmanto Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Šī tērzēšana ar tiltu ir savienota ar citu tīklu. Tur vārds un attēls pieder kontaktam: tilts parasti neko nenodod tālāk un var pārrakstīt šeit iestatītu nosaukumu, tiklīdz kontakts maina savu vārdu. Kādu kontakta vārdu tilts rāda, nosaka tā paša konfigurācija.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Nosaukums, temats un attēls pieder istabai: izmaiņas redz visi, kas tajā ir.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Tilts uz</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Attēls</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Mainīt attēlu</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Iestatīt attēlu</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Noņemt attēlu</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Nosaukums un temats</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nosaukums</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Nosaukums nav iestatīts</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Bez nosaukuma istaba tiek rādīta ar tās dalībnieku vārdiem.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Temats</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Temats nav iestatīts</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Saglabāt</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Saglabā…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Saglabāts</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Neizdevās pārbaudīt, vai šī istaba ar tiltu ir savienota ar citu tīklu. Ja ir, izmaiņas tur var attiekties uz visiem tērzēšanā.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Tomēr mainīt?</translation>
     </message>
 </context>
 <context>

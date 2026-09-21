@@ -2026,6 +2026,10 @@
         <source>Room ID copied</source>
         <translation>Identifiant du salon copié</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Modifier le salon</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2572,6 +2576,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Rien n’a été dit, donc rien n’a été envoyé.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Modifier aussi sur l&apos;autre réseau ?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>La passerelle transmet la modification. Tout le monde dans la discussion là-bas la voit, y compris les personnes qui n&apos;utilisent pas Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Modifier</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Le nom n&apos;a pas pu être modifié : %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Le sujet n&apos;a pas pu être modifié : %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>L&apos;image n&apos;a pas pu être modifiée : %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Modifier le salon</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Ton rôle dans ce salon ne te permet pas d&apos;en modifier le nom, le sujet ou l&apos;image.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Ce salon est relié à un autre réseau par une passerelle. La passerelle transmet en général un nouveau nom, sujet ou image, et là-bas cela change pour tout le monde dans la discussion, y compris pour les personnes qui n&apos;utilisent pas Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Cette discussion est reliée à un autre réseau par une passerelle. Là-bas, le nom et l&apos;image appartiennent au contact : la passerelle ne transmet en général rien, et elle peut écraser un nom défini ici dès que le contact change le sien. Le nom de contact qu&apos;affiche la passerelle dépend de sa propre configuration.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Le nom, le sujet et l&apos;image appartiennent au salon : tout le monde dedans voit la modification.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Passerelle vers</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Image</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Changer l&apos;image</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Définir une image</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Retirer l&apos;image</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Nom et sujet</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Aucun nom défini</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Sans nom, le salon s&apos;affiche sous les noms de ses membres.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Sujet</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Aucun sujet défini</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Enregistrement…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Enregistré</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Impossible de vérifier si ce salon est relié à un autre réseau par une passerelle. Si c&apos;est le cas, la modification peut s&apos;y appliquer à tout le monde dans la discussion.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Modifier quand même ?</translation>
     </message>
 </context>
 <context>

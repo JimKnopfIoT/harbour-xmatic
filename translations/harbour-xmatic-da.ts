@@ -2026,6 +2026,10 @@
         <source>Room ID copied</source>
         <translation>Rum-ID kopieret</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Rediger rummet</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2572,6 +2576,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Der blev ikke sagt noget, så der blev ikke sendt noget.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Skal det også ændres på det andet netværk?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Broen sender ændringen videre. Alle i chatten dér ser den, også dem, der ikke bruger Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Ændr</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Navnet kunne ikke ændres: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Emnet kunne ikke ændres: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Billedet kunne ikke ændres: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Rediger rummet</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Din rolle i dette rum tillader ikke, at du ændrer dets navn, emne eller billede.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Dette rum er forbundet med et andet netværk via en bro. Broen sender som regel et nyt navn, emne eller billede videre, og dér ændres det for alle i chatten, også for dem, der ikke bruger Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Denne chat er forbundet med et andet netværk via en bro. Dér hører navn og billede til kontakten: broen sender som regel intet videre, og den kan overskrive et navn, der er sat her, når kontakten ændrer sit. Hvilket kontaktnavn broen viser, afgøres af dens egen konfiguration.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Navn, emne og billede hører til rummet: alle i det ser ændringen.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Bro til</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Billede</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Skift billede</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Vælg billede</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Fjern billede</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Navn og emne</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Navn</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Intet navn angivet</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Uden navn vises rummet under medlemmernes navne.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Emne</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Intet emne angivet</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Gem</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Gemmer…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Gemt</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Det kunne ikke kontrolleres, om dette rum er forbundet med et andet netværk via en bro. Hvis det er, kan ændringen gælde for alle i chatten dér.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Ændr alligevel?</translation>
     </message>
 </context>
 <context>

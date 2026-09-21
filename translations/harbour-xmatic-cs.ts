@@ -2029,6 +2029,10 @@
         <source>Room ID copied</source>
         <translation>ID místnosti zkopírováno</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Upravit místnost</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2576,6 +2580,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nic nebylo řečeno, takže nic nebylo odesláno.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>Změnit to i v druhé síti?</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>Most změnu předá dál. Uvidí ji všichni v tamním chatu, i lidé, kteří Matrix nepoužívají.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Změnit</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>Název se nepodařilo změnit: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>Téma se nepodařilo změnit: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>Obrázek se nepodařilo změnit: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>Upravit místnost</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>Tvoje role v této místnosti neumožňuje měnit její název, téma ani obrázek.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>Tato místnost je mostem propojená s jinou sítí. Most nový název, téma nebo obrázek obvykle předá dál a tam se změní pro všechny v chatu, i pro lidi, kteří Matrix nepoužívají.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>Tento chat je mostem propojený s jinou sítí. Tam název a obrázek patří kontaktu: most obvykle nic nepředává a může název nastavený zde přepsat, kdykoli kontakt změní svůj. Jaké jméno kontaktu most zobrazuje, určuje jeho vlastní konfigurace.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>Název, téma a obrázek patří místnosti: změnu uvidí všichni v ní.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>Most do</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>Obrázek</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>Změnit obrázek</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>Nastavit obrázek</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>Odebrat obrázek</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>Název a téma</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Název</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Název není nastaven</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>Bez názvu se místnost zobrazuje pod jmény svých členů.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>Téma</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>Téma není nastaveno</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Uložit</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>Ukládání…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>Uloženo</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>Nepodařilo se ověřit, zda je tato místnost mostem propojená s jinou sítí. Pokud ano, změna tam může platit pro všechny v chatu.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>Přesto změnit?</translation>
     </message>
 </context>
 <context>

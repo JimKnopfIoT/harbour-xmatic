@@ -262,6 +262,7 @@ pub async fn room_permissions(client: &Client, room: &Room) -> Value {
         "direct": two_party,
         "topic": levels.user_can_send_state(own, StateEventType::RoomTopic),
         "name": levels.user_can_send_state(own, StateEventType::RoomName),
+        "avatar": levels.user_can_send_state(own, StateEventType::RoomAvatar),
     })
 }
 

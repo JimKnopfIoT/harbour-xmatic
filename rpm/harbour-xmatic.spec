@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.35.0
+Version:    0.36.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -118,6 +118,13 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Sep 21 2026 harbour-xmatic contributors 0.36.0-1
+- A room's name, topic and picture can be changed: "Edit room" in the room
+  info's pull-down, offered where the power levels allow it.
+- A bridged room says what a change does there: a group passes it on to the
+  other network after asking; a bridged direct chat says the bridge owns the
+  name.
+
 * Sun Sep 20 2026 harbour-xmatic contributors 0.35.0-1
 - The chat list marks which space a room belongs to: the space's initial over
   the room's picture, in that space's own colour.

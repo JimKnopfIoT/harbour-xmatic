@@ -2038,6 +2038,10 @@
         <source>Room ID copied</source>
         <translation>نُسخ معرّف الغرفة</translation>
     </message>
+    <message>
+        <source>Edit room</source>
+        <translation>تعديل الغرفة</translation>
+    </message>
 </context>
 <context>
     <name>RoomListPage</name>
@@ -2588,6 +2592,117 @@
     <message>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>لم يُقل شيء، لذا لم يُرسل شيء.</translation>
+    </message>
+</context>
+<context>
+    <name>RoomSettingsPage</name>
+    <message>
+        <source>Change it on the other network as well?</source>
+        <translation>هل تريد التغيير في الشبكة الأخرى أيضًا؟</translation>
+    </message>
+    <message>
+        <source>The bridge passes the change on. Everyone in the chat there sees it, including people who do not use Matrix.</source>
+        <translation>ينقل الجسر التغيير إلى هناك. يراه كل من في المحادثة هناك، بمن فيهم من لا يستخدمون Matrix.</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>تغيير</translation>
+    </message>
+    <message>
+        <source>The name could not be changed: %1</source>
+        <translation>تعذّر تغيير الاسم: %1</translation>
+    </message>
+    <message>
+        <source>The topic could not be changed: %1</source>
+        <translation>تعذّر تغيير الموضوع: %1</translation>
+    </message>
+    <message>
+        <source>The picture could not be changed: %1</source>
+        <translation>تعذّر تغيير الصورة: %1</translation>
+    </message>
+    <message>
+        <source>Edit room</source>
+        <translation>تعديل الغرفة</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow changing its name, topic or picture.</source>
+        <translation>لا يسمح لك دورك في هذه الغرفة بتغيير اسمها أو موضوعها أو صورتها.</translation>
+    </message>
+    <message>
+        <source>This room is bridged to another network. The bridge usually passes a new name, topic or picture on, and there it changes for everyone in the chat, including people who do not use Matrix.</source>
+        <translation>هذه الغرفة موصولة بشبكة أخرى عبر جسر. عادةً ينقل الجسر الاسم أو الموضوع أو الصورة الجديدة إلى هناك، فيتغير لكل من في المحادثة، بمن فيهم من لا يستخدمون Matrix.</translation>
+    </message>
+    <message>
+        <source>This chat is bridged to another network. There, name and picture belong to the contact: the bridge usually passes nothing on, and it can overwrite a name set here whenever the contact changes theirs. Which contact name the bridge shows is part of its own configuration.</source>
+        <translation>هذه المحادثة موصولة بشبكة أخرى عبر جسر. هناك يخص الاسم والصورة جهة الاتصال: عادةً لا ينقل الجسر شيئًا، وقد يستبدل اسمًا عُيِّن هنا كلما غيّرت جهة الاتصال اسمها. أما اسم جهة الاتصال الذي يعرضه الجسر فتحدده إعداداته الخاصة.</translation>
+    </message>
+    <message>
+        <source>Name, topic and picture belong to the room: everyone in it sees the change.</source>
+        <translation>الاسم والموضوع والصورة تخص الغرفة: يرى التغيير كل من فيها.</translation>
+    </message>
+    <message>
+        <source>Bridged to</source>
+        <translation>جسر إلى</translation>
+    </message>
+    <message>
+        <source>Picture</source>
+        <translation>صورة</translation>
+    </message>
+    <message>
+        <source>Change picture</source>
+        <translation>تغيير الصورة</translation>
+    </message>
+    <message>
+        <source>Set picture</source>
+        <translation>تعيين صورة</translation>
+    </message>
+    <message>
+        <source>Remove picture</source>
+        <translation>إزالة الصورة</translation>
+    </message>
+    <message>
+        <source>Name and topic</source>
+        <translation>الاسم والموضوع</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>الاسم</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>لم يُعيَّن اسم</translation>
+    </message>
+    <message>
+        <source>Without a name, the room is shown under the names of its members.</source>
+        <translation>من دون اسم، تُعرض الغرفة بأسماء أعضائها.</translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation>الموضوع</translation>
+    </message>
+    <message>
+        <source>No topic set</source>
+        <translation>لم يُعيَّن موضوع</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>حفظ</translation>
+    </message>
+    <message>
+        <source>Saving…</source>
+        <translation>جارٍ الحفظ…</translation>
+    </message>
+    <message>
+        <source>Saved</source>
+        <translation>تم الحفظ</translation>
+    </message>
+    <message>
+        <source>Whether this room is bridged to another network could not be checked. If it is, the change may apply there for everyone in the chat.</source>
+        <translation>تعذّر التحقق مما إذا كانت هذه الغرفة موصولة بشبكة أخرى عبر جسر. إن كانت كذلك، فقد يسري التغيير هناك على كل من في المحادثة.</translation>
+    </message>
+    <message>
+        <source>Change it anyway?</source>
+        <translation>هل تريد التغيير على أي حال؟</translation>
     </message>
 </context>
 <context>
