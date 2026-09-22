@@ -2581,6 +2581,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nekas netika pateikts, tāpēc nekas netika nosūtīts.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Saglabāts galerijā</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Neizdevās saglabāt</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Saglabāts mapē Lejupielādes</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3481,6 +3493,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Šo pielikumu neizdevās ielādēt</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Saglabāts mapē Lejupielādes</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Neizdevās saglabāt</translation>
     </message>
 </context>
 <context>

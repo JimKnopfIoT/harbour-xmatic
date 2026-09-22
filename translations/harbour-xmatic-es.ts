@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>No se dijo nada, así que no se envió nada.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Guardado en la galería</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>No se pudo guardar</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Guardado en Descargas</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>No se ha podido cargar este adjunto</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Guardado en Descargas</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>No se pudo guardar</translation>
     </message>
 </context>
 <context>

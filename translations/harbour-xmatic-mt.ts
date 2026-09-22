@@ -2585,6 +2585,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Ma ntqal xejn, allura ma ntbagħat xejn.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Issejvjat fil-gallerija</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Ma setax jiġi ssejvjat</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Issejvjat f&apos;Niżżlin</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3487,6 +3499,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Dan l-anness ma setax jitniżżel</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Issejvjat f&apos;Niżżlin</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Ma setax jiġi ssejvjat</translation>
     </message>
 </context>
 <context>

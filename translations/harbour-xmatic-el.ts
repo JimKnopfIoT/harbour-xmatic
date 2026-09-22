@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Δεν ειπώθηκε τίποτα, οπότε δεν στάλθηκε τίποτα.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Αποθηκεύτηκε στη συλλογή</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Η αποθήκευση απέτυχε</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Αποθηκεύτηκε στις Λήψεις</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Αυτό το συνημμένο δεν φορτώθηκε</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Αποθηκεύτηκε στις Λήψεις</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Η αποθήκευση απέτυχε</translation>
     </message>
 </context>
 <context>

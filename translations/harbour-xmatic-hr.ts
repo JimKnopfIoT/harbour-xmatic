@@ -2581,6 +2581,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Ništa nije rečeno, pa ništa nije poslano.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Spremljeno u galeriju</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Spremanje nije uspjelo</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Spremljeno u Preuzimanja</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3481,6 +3493,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Ovaj privitak nije bilo moguće učitati</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Spremljeno u Preuzimanja</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Spremanje nije uspjelo</translation>
     </message>
 </context>
 <context>

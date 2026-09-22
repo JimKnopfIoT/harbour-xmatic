@@ -2573,6 +2573,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>چیزی گفته نشد، پس چیزی فرستاده نشد.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>در نگارخانه ذخیره شد</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>ذخیره نشد</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>در بارگیری‌ها ذخیره شد</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3469,6 +3481,14 @@
     <message>
         <source>Save</source>
         <translation>ذخیره</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>در بارگیری‌ها ذخیره شد</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>ذخیره نشد</translation>
     </message>
 </context>
 <context>

@@ -2581,6 +2581,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Níor dúradh aon rud, mar sin níor seoladh aon rud.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Sábháilte sa ghailearaí</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Níorbh fhéidir é a shábháil</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Sábháilte in Íoslódálacha</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3481,6 +3493,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Níorbh fhéidir an ceangaltán seo a lódáil</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Sábháilte in Íoslódálacha</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Níorbh fhéidir é a shábháil</translation>
     </message>
 </context>
 <context>

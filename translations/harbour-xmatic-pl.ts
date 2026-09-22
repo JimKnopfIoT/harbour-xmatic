@@ -2581,6 +2581,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nic nie powiedziano, więc nic nie wysłano.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Zapisano w galerii</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nie udało się zapisać</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Zapisano w folderze Pobrane</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3481,6 +3493,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Nie udało się wczytać tego załącznika</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Zapisano w folderze Pobrane</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nie udało się zapisać</translation>
     </message>
 </context>
 <context>

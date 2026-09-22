@@ -2581,6 +2581,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Ничего не было сказано, поэтому ничего не отправлено.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Сохранено в галерею</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Не удалось сохранить</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Сохранено в «Загрузки»</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3481,6 +3493,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Это вложение не удалось загрузить</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Сохранено в «Загрузки»</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Не удалось сохранить</translation>
     </message>
 </context>
 <context>

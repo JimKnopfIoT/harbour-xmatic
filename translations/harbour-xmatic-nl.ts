@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Er is niets gezegd, dus er is niets verstuurd.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>In galerij opgeslagen</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Opslaan mislukt</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>In Downloads opgeslagen</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Deze bijlage kon niet geladen worden</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>In Downloads opgeslagen</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Opslaan mislukt</translation>
     </message>
 </context>
 <context>

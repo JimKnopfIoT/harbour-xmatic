@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Нищо не беше казано, затова нищо не беше изпратено.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Запазено в галерията</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Неуспешно запазване</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Запазено в „Изтегляния“</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Тази прикачена файл не можа да се зареди</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Запазено в „Изтегляния“</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Неуспешно запазване</translation>
     </message>
 </context>
 <context>
