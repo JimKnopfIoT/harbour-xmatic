@@ -2593,6 +2593,14 @@
         <source>Saved to Downloads</source>
         <translation>Salvat în Descărcări</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Afișează mai puțin</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Afișează mai mult</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

@@ -2593,6 +2593,14 @@
         <source>Saved to Downloads</source>
         <translation>Сохранено в «Загрузки»</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Свернуть</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Показать больше</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

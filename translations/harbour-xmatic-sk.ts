@@ -2593,6 +2593,14 @@
         <source>Saved to Downloads</source>
         <translation>Uložené do priečinka Stiahnuté</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Zobraziť menej</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Zobraziť viac</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

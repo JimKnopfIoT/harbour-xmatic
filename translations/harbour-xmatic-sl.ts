@@ -2597,6 +2597,14 @@
         <source>Saved to Downloads</source>
         <translation>Shranjeno v Prenose</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Prikaži manj</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Prikaži več</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

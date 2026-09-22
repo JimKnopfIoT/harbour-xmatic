@@ -2589,6 +2589,14 @@
         <source>Saved to Downloads</source>
         <translation>Vistað í Niðurhal</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Sýna minna</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Sýna meira</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

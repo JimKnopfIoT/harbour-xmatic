@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.36.1
+Version:    0.36.2
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -118,6 +118,12 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Sep 22 2026 harbour-xmatic contributors 0.36.2-1
+- A message longer than a screen is folded to three lines, with "Show more".
+- A message taller than the screen opens its actions as a page: the menu went
+  black there.
+- A draft longer than three screens goes out as a text file.
+
 * Tue Sep 22 2026 harbour-xmatic contributors 0.36.1-1
 - "Save" on the video page works: its pull-down had nothing to hang from.
 - Saving an attachment says where it went, or that it could not be saved.

@@ -2589,6 +2589,14 @@
         <source>Saved to Downloads</source>
         <translation>Tallennettu Lataukset-kansioon</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Näytä vähemmän</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Näytä lisää</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

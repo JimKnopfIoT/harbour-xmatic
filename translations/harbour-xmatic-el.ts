@@ -2589,6 +2589,14 @@
         <source>Saved to Downloads</source>
         <translation>Αποθηκεύτηκε στις Λήψεις</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Εμφάνιση λιγότερων</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Εμφάνιση περισσότερων</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

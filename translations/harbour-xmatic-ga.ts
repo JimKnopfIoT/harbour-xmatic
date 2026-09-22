@@ -2593,6 +2593,14 @@
         <source>Saved to Downloads</source>
         <translation>Sábháilte in Íoslódálacha</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Taispeáin níos lú</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Taispeáin níos mó</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

@@ -2589,6 +2589,14 @@
         <source>Saved to Downloads</source>
         <translation>Salvato in Scaricati</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Mostra di meno</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Mostra di più</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

@@ -2593,6 +2593,14 @@
         <source>Saved to Downloads</source>
         <translation>Zapisano w folderze Pobrane</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Pokaż mniej</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Pokaż więcej</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

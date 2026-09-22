@@ -2597,6 +2597,14 @@
         <source>Saved to Downloads</source>
         <translation>Issejvjat f&apos;Niżżlin</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Uri inqas</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Uri aktar</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
