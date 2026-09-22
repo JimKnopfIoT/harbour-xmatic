@@ -256,10 +256,6 @@
         <translation>Abrir a sala onde paraste de ler</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ligado: ao entrar, chegas à tua última mensagem lida e as novas ficam por baixo. Desligado: a sala abre na mensagem mais recente e a linha que marca onde paraste encontra-se subindo.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Carregar um pacote de emojis</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Ligado, a lista de conversas desenha a inicial do espaço da sala sobre a imagem dela, na cor desse espaço. A cor define-se na lista de espaços, mantendo o espaço premido.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ligado: ao entrares numa sala vais para a tua última mensagem lida, com as novas por baixo, e para o sítio onde estavas se saíste da sala a meio do histórico. Esse sítio fica guardado até fechares a aplicação. Desligado: a sala abre na mensagem mais recente e a linha que marca onde paraste encontra-se subindo.</translation>
     </message>
 </context>
 <context>

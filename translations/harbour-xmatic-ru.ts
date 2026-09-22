@@ -257,10 +257,6 @@
         <translation>Открывать комнату там, где ты остановился</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Включено: при входе ты попадаешь на последнее прочитанное сообщение, новые — под ним. Выключено: комната открывается на самом новом сообщении, а черту, отмечающую, где ты остановился, найдёшь, прокрутив вверх.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Загрузить набор эмодзи</translation>
     </message>
@@ -299,6 +295,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Включено — список чатов рисует первую букву пространства комнаты поверх её картинки, цветом этого пространства. Цвет задаётся в списке пространств долгим нажатием на пространство.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Включено: при входе в комнату ты попадаешь на последнее прочитанное сообщение, новые — под ним, и обратно туда, где ты был, если вышел из комнаты посреди истории. Это место помнится, пока приложение не закрыто. Выключено: комната открывается на самом новом сообщении, а линию, отмечающую место остановки, найдёшь, прокрутив вверх.</translation>
     </message>
 </context>
 <context>

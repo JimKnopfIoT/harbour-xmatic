@@ -256,10 +256,6 @@
         <translation>Άνοιγμα του δωματίου εκεί που σταμάτησες να διαβάζεις</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ενεργό: μπαίνοντας βρίσκεσαι στο τελευταίο μήνυμα που διάβασες, τα νέα είναι από κάτω. Ανενεργό: το δωμάτιο ανοίγει στο νεότερο μήνυμα και τη γραμμή που δείχνει πού σταμάτησες τη βρίσκεις κάνοντας κύλιση προς τα πάνω.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Φόρτωση πακέτου emoji</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Ενεργό, η λίστα συνομιλιών σχεδιάζει το αρχικό γράμμα του χώρου πάνω στην εικόνα του δωματίου, στο χρώμα του χώρου. Το χρώμα ορίζεται στη λίστα χώρων κρατώντας πατημένο τον χώρο.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ενεργό: μπαίνοντας σε ένα δωμάτιο βρίσκεσαι στο τελευταίο μήνυμα που διάβασες, με τα νέα από κάτω — και πίσω στο σημείο όπου ήσουν, αν έφυγες από το δωμάτιο στη μέση του ιστορικού. Το σημείο κρατιέται μέχρι να κλείσει η εφαρμογή. Ανενεργό: το δωμάτιο ανοίγει στο νεότερο μήνυμα και τη γραμμή που δείχνει πού σταμάτησες τη βρίσκεις κάνοντας κύλιση προς τα πάνω.</translation>
     </message>
 </context>
 <context>

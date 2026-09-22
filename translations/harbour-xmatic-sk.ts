@@ -257,10 +257,6 @@
         <translation>Otvoriť miestnosť tam, kde si prestal čítať</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Zapnuté: po vstupe sa ocitneš pri poslednej prečítanej správe, nové sú pod ňou. Vypnuté: miestnosť sa otvorí pri najnovšej správe a čiaru, ktorá označuje, kde si skončil, nájdeš posunutím nahor.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Načítať balíček emoji</translation>
     </message>
@@ -299,6 +295,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Zapnuté, zoznam četov vykreslí počiatočné písmeno priestoru miestnosti cez jej obrázok, farbou daného priestoru. Farbu nastavíš v zozname priestorov podržaním priestoru.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Zapnuté: po vstupe do miestnosti sa dostaneš k svojej poslednej prečítanej správe, nové sú pod ňou — a späť na miesto, kde si bol, ak si miestnosť opustil uprostred histórie. Toto miesto sa pamätá, kým aplikáciu nezavrieš. Vypnuté: miestnosť sa otvorí pri najnovšej správe a čiaru označujúcu, kde si skončil, nájdeš posunutím nahor.</translation>
     </message>
 </context>
 <context>

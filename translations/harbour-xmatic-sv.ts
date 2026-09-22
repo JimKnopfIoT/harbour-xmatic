@@ -256,10 +256,6 @@
         <translation>Öppna rummet där du slutade läsa</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>På: när du går in hamnar du vid det senaste meddelandet du läste, de nya står under. Av: rummet öppnas vid det nyaste meddelandet, och linjen som visar var du slutade hittar du genom att rulla uppåt.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Läs in ett emojipaket</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>På ritar chattlistan begynnelsebokstaven för rummets space över dess bild, i det spacets färg. Färgen ställs in i space-listan genom att hålla in spacet.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>På: när du går in i ett rum hamnar du vid ditt senast lästa meddelande med de nya under — och tillbaka på platsen du var på om du lämnade rummet mitt i historiken. Platsen sparas tills appen stängs. Av: rummet öppnas vid det senaste meddelandet och linjen som visar var du slutade hittar du genom att rulla uppåt.</translation>
     </message>
 </context>
 <context>

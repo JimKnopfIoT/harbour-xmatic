@@ -256,10 +256,6 @@
         <translation>Abrir la sala donde dejaste de leer</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Activado: al entrar llegas a tu último mensaje leído, los nuevos quedan debajo. Desactivado: la sala se abre en el mensaje más reciente y la línea que marca dónde lo dejaste la encuentras subiendo.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Cargar un paquete de emojis</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Activado, la lista de chats dibuja la inicial del espacio de la sala sobre su imagen, en el color de ese espacio. El color se ajusta en la lista de espacios manteniendo pulsado el espacio.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Activado: al entrar en una sala llegas a tu último mensaje leído, con los nuevos debajo, y al punto en el que estabas si dejaste la sala en mitad de su historial. Ese punto se conserva hasta que cierres la aplicación. Desactivado: la sala se abre en su mensaje más reciente y la línea que marca dónde lo dejaste se encuentra subiendo.</translation>
     </message>
 </context>
 <context>

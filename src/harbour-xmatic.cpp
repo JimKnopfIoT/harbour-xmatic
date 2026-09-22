@@ -25,6 +25,7 @@
 #include "pushwake.h"
 #include "voicedecode.h"
 #include "languagesettings.h"
+#include "readingpositions.h"
 #include "matrixbridge.h"
 #include "outgoingimage.h"
 #include "secretskeeper.h"
@@ -159,6 +160,10 @@ int main(int argc, char *argv[])
 
     LanguageSettings language;
 
+    // Where the reader stood in each room. Memory only: it ends with the app,
+    // the way the same feature does in other clients.
+    ReadingPositions positions;
+
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     // After createView(): it installs libsailfishapp's device-locale translator,
     // and the one installed last is asked first.
@@ -170,6 +175,13 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty(QStringLiteral("appearance"), &appearance);
     view->rootContext()->setContextProperty(QStringLiteral("language"), &language);
     view->rootContext()->setContextProperty(QStringLiteral("emojiSet"), &emojiSet);
+    view->rootContext()->setContextProperty(QStringLiteral("positions"), &positions);
+    // A sign-out ends every room this knew about; the ids must not outlive it.
+    QObject::connect(&bridge, &MatrixBridge::sessionChanged, &positions, [&bridge, &positions]() {
+        if (bridge.sessionState() != QLatin1String("signed-in")) {
+            positions.clear();
+        }
+    });
     // Takes ownership; the store outlives it, being on the stack of main().
     view->engine()->addImageProvider(QStringLiteral("xmatic-emoji"),
                                      new EmojiImageProvider(&emojiStore));

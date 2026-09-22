@@ -255,10 +255,6 @@
         <translation>A szoba ott nyíljon meg, ahol abbahagytad az olvasást</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Bekapcsolva: belépéskor az utolsó elolvasott üzenetednél kötsz ki, az újak alatta vannak. Kikapcsolva: a szoba a legújabb üzenetnél nyílik meg, és a vonalat, amely jelzi, hol hagytad abba, felfelé görgetve találod meg.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Emodzsicsomag beolvasása</translation>
     </message>
@@ -297,6 +293,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Bekapcsolva a csevegéslista a szoba terének kezdőbetűjét rajzolja a képére, az adott tér színével. A szín a terek listájában állítható be, a tér nyomva tartásával.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Bekapcsolva: egy szobába belépve az utoljára olvasott üzenetednél kötsz ki, az újak alatta vannak — és oda, ahol jártál, ha a szobát az előzmények közepén hagytad el. Ez a hely az alkalmazás bezárásáig megmarad. Kikapcsolva: a szoba a legújabb üzenetnél nyílik meg, és az olvasás helyét jelölő vonalat felfelé görgetve találod meg.</translation>
     </message>
 </context>
 <context>

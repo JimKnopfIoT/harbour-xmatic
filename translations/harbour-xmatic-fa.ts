@@ -231,10 +231,6 @@
         <translation>باز کردن اتاق در جایی که خواندن را رها کردی</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>روشن، با ورود به اتاق به آخرین پیام خوانده‌شده می‌روی و پیام‌های تازه زیر آن می‌آیند. خاموش، اتاق روی تازه‌ترین پیام باز می‌شود و خطِ نشانهٔ جای توقف را با پیمایش به بالا می‌یابی.</translation>
-    </message>
-    <message>
         <source>Send with the return key</source>
         <translation>ارسال با کلید Enter</translation>
     </message>
@@ -297,6 +293,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>روشن، فهرست گفتگوها نخستین حرف Space اتاق را روی تصویر آن می‌کشد، به رنگ همان Space. رنگ را در فهرست Spaceها با نگه داشتن Space تنظیم می‌کنی.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>روشن: با ورود به یک اتاق به آخرین پیام خوانده‌شده‌ات می‌رسی و پیام‌های تازه زیر آن هستند — و اگر اتاق را در میانهٔ تاریخچه ترک کرده باشی، به همان جا بازمی‌گردی. این جایگاه تا بسته شدن برنامه نگه داشته می‌شود. خاموش: اتاق روی تازه‌ترین پیام باز می‌شود و خطی که نشان می‌دهد کجا متوقف شده‌ای را با پیمایش به بالا می‌یابی.</translation>
     </message>
 </context>
 <context>

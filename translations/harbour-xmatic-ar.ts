@@ -236,10 +236,6 @@
         <translation>افتح الغرفة عند موضع توقّف قراءتك</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>عند التشغيل، يأخذك دخول الغرفة إلى آخر رسالة قرأتها والرسائل الجديدة أسفلها. عند الإيقاف، تُفتح الغرفة على أحدث رسالة ويُعثر على الخط الذي يعلّم موضع توقّفك بالتمرير إلى الأعلى.</translation>
-    </message>
-    <message>
         <source>Send with the return key</source>
         <translation>الإرسال بمفتاح Enter</translation>
     </message>
@@ -302,6 +298,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>عند التفعيل، تُرسم أول حروف اسم المساحة فوق صورة الغرفة في قائمة المحادثات، بلون تلك المساحة. يُضبط اللون من قائمة المساحات بالضغط المطوّل على المساحة.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>مُفعَّل: عند دخول غرفة تصل إلى آخر رسالة قرأتها، والرسائل الجديدة تحتها — وتعود إلى الموضع الذي كنت فيه إن غادرت الغرفة في منتصف سجلّها. يُحفَظ هذا الموضع حتى إغلاق التطبيق. معطَّل: تُفتح الغرفة عند أحدث رسالة، وتجد الخط الذي يحدّد موضع توقّفك بالتمرير إلى الأعلى.</translation>
     </message>
 </context>
 <context>

@@ -55,6 +55,7 @@ SOURCES += \
     src/imagefacts.cpp \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
+    src/readingpositions.cpp \
     src/roomsettings.cpp \
     src/spacemarkers.cpp \
     src/linkpreviews.cpp \
@@ -87,6 +88,7 @@ HEADERS += \
     src/languagesettings.h \
     src/matrixbridge.h \
     src/pollactions.h \
+    src/readingpositions.h \
     src/roomsettings.h \
     src/spacemarkers.h \
     src/linkpreviews.h \

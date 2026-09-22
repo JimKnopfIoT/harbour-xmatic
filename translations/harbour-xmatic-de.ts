@@ -256,10 +256,6 @@
         <translation>Raum dort öffnen, wo du aufgehört hast zu lesen</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>An: Beim Betreten landest du bei deiner zuletzt gelesenen Nachricht, die neuen stehen darunter. Aus: Der Raum öffnet bei der neuesten Nachricht, und die Linie, die deinen Lesestand markiert, findest du beim Hochscrollen.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Emoji-Paket einlesen</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>An, zeichnet die Chatliste den Anfangsbuchstaben des Space über das Bild des Raums, in der Farbe des Space. Die Farbe stellst du in der Space-Liste ein, indem du den Space gedrückt hältst.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ein: Beim Betreten eines Raums landest du bei deiner zuletzt gelesenen Nachricht, die neuen stehen darunter — und wieder an der Stelle, an der du warst, wenn du den Raum mitten in der Historie verlassen hast. Diese Stelle bleibt gemerkt, bis die App geschlossen wird. Aus: Der Raum öffnet bei der neuesten Nachricht, und die Linie, die deinen Lesestand markiert, findest du durch Hochscrollen.</translation>
     </message>
 </context>
 <context>
