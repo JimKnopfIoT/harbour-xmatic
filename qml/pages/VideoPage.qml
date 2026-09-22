@@ -20,6 +20,8 @@ Page {
     /// Chosen on the still before the page opened, so a loud video never plays
     /// a note. Only the initial state - the button on the page takes over.
     property bool startMuted: false
+    /// Where the last save went; empty when it failed.
+    property string savedTo: ""
 
     readonly property bool loading: page.source.length === 0 && !page.mediaFailed
     /// What `media::fetch` refuses outright. A larger figure is not information
@@ -44,20 +46,37 @@ Page {
         }
     }
 
-    Video {
-        id: player
-
+    // The pulley needs a flickable to hang from; the page alone gives it none.
+    SilicaFlickable {
         anchors.fill: parent
-        source: page.source
-        autoPlay: true
-        muted: page.startMuted
-        fillMode: VideoOutput.PreserveAspectFit
+        contentHeight: height
 
-        MouseArea {
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Save")
+                enabled: page.source.length > 0
+                onClicked: {
+                    page.savedTo = matrix.saveToDownloads(page.source, page.fileName)
+                    savedBanner.restart()
+                }
+            }
+        }
+
+        Video {
+            id: player
+
             anchors.fill: parent
-            onClicked: player.playbackState === MediaPlayer.PlayingState
-                       ? player.pause()
-                       : player.play()
+            source: page.source
+            autoPlay: true
+            muted: page.startMuted
+            fillMode: VideoOutput.PreserveAspectFit
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: player.playbackState === MediaPlayer.PlayingState
+                           ? player.pause()
+                           : player.play()
+            }
         }
     }
 
@@ -150,11 +169,41 @@ Page {
         onClicked: player.muted = !player.muted
     }
 
-    PullDownMenu {
-        MenuItem {
-            text: qsTr("Save")
-            enabled: page.source.length > 0
-            onClicked: matrix.saveToDownloads(page.source, page.fileName)
+    Rectangle {
+        id: savedNotice
+
+        anchors {
+            top: parent.top
+            topMargin: Theme.itemSizeLarge
+            horizontalCenter: parent.horizontalCenter
+        }
+        width: noticeLabel.width + 2 * Theme.paddingLarge
+        height: noticeLabel.height + 2 * Theme.paddingMedium
+        radius: Theme.paddingMedium
+        color: Theme.rgba(Theme.highlightDimmerColor, 0.9)
+        opacity: 0
+
+        Label {
+            id: noticeLabel
+
+            anchors.centerIn: parent
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.primaryColor
+            text: page.savedTo.length > 0 ? qsTr("Saved to Downloads") : qsTr("Could not save")
+        }
+
+        Behavior on opacity { FadeAnimation { } }
+    }
+
+    Timer {
+        id: savedBanner
+
+        interval: 2500
+        onTriggered: savedNotice.opacity = 0
+        onRunningChanged: {
+            if (running) {
+                savedNotice.opacity = 1
+            }
         }
     }
 }

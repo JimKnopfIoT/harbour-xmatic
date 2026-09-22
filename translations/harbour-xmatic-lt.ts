@@ -2581,6 +2581,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nieko nepasakyta, todėl nieko neišsiųsta.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Įrašyta į galeriją</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nepavyko įrašyti</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Įrašyta į aplanką „Atsisiuntimai“</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3481,6 +3493,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Šio priedo nepavyko įkelti</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Įrašyta į aplanką „Atsisiuntimai“</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nepavyko įrašyti</translation>
     </message>
 </context>
 <context>

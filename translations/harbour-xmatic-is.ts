@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Ekkert var sagt, svo ekkert var sent.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Vistað í myndasafn</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Ekki tókst að vista</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Vistað í Niðurhal</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Ekki tókst að hlaða þetta viðhengi</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Vistað í Niðurhal</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Ekki tókst að vista</translation>
     </message>
 </context>
 <context>

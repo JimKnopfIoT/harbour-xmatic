@@ -2573,6 +2573,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>何も話されなかったため、何も送信されませんでした。</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>ギャラリーに保存しました</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>保存できませんでした</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>ダウンロードに保存しました</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3469,6 +3481,14 @@
     <message>
         <source>Save</source>
         <translation>保存</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>ダウンロードに保存しました</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>保存できませんでした</translation>
     </message>
 </context>
 <context>

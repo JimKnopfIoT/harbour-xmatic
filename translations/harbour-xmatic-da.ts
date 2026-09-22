@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Der blev ikke sagt noget, så der blev ikke sendt noget.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Gemt i galleriet</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Kunne ikke gemmes</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Gemt i Downloads</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Denne vedhæftning kunne ikke indlæses</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Gemt i Downloads</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Kunne ikke gemmes</translation>
     </message>
 </context>
 <context>

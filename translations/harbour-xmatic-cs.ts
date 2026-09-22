@@ -2581,6 +2581,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nic nebylo řečeno, takže nic nebylo odesláno.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Uloženo do galerie</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nepodařilo se uložit</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Uloženo do složky Stažené</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3481,6 +3493,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Tuto přílohu se nepodařilo načíst</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Uloženo do složky Stažené</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nepodařilo se uložit</translation>
     </message>
 </context>
 <context>

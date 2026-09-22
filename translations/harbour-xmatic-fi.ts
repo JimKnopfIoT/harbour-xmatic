@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Mitään ei sanottu, joten mitään ei lähetetty.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Tallennettu galleriaan</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Tallennus ei onnistunut</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Tallennettu Lataukset-kansioon</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Tätä liitettä ei voitu ladata</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Tallennettu Lataukset-kansioon</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Tallennus ei onnistunut</translation>
     </message>
 </context>
 <context>

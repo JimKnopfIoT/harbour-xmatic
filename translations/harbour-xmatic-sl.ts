@@ -2585,6 +2585,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nič ni bilo izrečeno, zato ni bilo nič poslano.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Shranjeno v galerijo</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Shranjevanje ni uspelo</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Shranjeno v Prenose</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3487,6 +3499,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Te priloge ni bilo mogoče naložiti</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Shranjeno v Prenose</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Shranjevanje ni uspelo</translation>
     </message>
 </context>
 <context>

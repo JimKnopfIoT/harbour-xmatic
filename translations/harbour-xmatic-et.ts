@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Midagi ei öeldud, seega midagi ei saadetud.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Galeriisse salvestatud</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Salvestamine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Salvestatud kausta Allalaadimised</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Seda manust ei õnnestunud laadida</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Salvestatud kausta Allalaadimised</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Salvestamine ebaõnnestus</translation>
     </message>
 </context>
 <context>

@@ -837,11 +837,7 @@ Page {
                 return
             }
             page.pendingSaveKey = ""
-            if (page.pendingSaveIsImage) {
-                matrix.saveToPictures(path, page.pendingSaveName)
-            } else {
-                matrix.saveToDownloads(path, page.pendingSaveName)
-            }
+            page.storeTo(path, page.pendingSaveName, page.pendingSaveIsImage)
         }
     }
 
@@ -3735,10 +3731,17 @@ Page {
     }
 
     function storeFile(path, item) {
-        if (item.msgtype === "m.image") {
-            matrix.saveToPictures(path, item.media ? item.media.filename : "")
+        var name = item.media ? item.media.filename : ""
+        page.storeTo(path, name, item.msgtype === "m.image")
+    }
+
+    function storeTo(path, name, isImage) {
+        if (isImage) {
+            page.showNotice(matrix.saveToPictures(path, name).length > 0
+                            ? qsTr("Saved to gallery") : qsTr("Could not save"))
         } else {
-            matrix.saveToDownloads(path, item.media ? item.media.filename : "")
+            page.showNotice(matrix.saveToDownloads(path, name).length > 0
+                            ? qsTr("Saved to Downloads") : qsTr("Could not save"))
         }
     }
 

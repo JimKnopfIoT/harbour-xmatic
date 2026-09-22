@@ -2581,6 +2581,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Nu s-a spus nimic, așa că nu s-a trimis nimic.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Salvat în galerie</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nu s-a putut salva</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Salvat în Descărcări</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3481,6 +3493,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Acest atașament nu a putut fi încărcat</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Salvat în Descărcări</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nu s-a putut salva</translation>
     </message>
 </context>
 <context>

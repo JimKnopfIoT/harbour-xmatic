@@ -2573,6 +2573,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Semmi sem hangzott el, így semmi sem lett elküldve.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Mentve a galériába</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nem sikerült menteni</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Mentve a Letöltések mappába</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3469,6 +3481,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Ezt a mellékletet nem sikerült betölteni</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Mentve a Letöltések mappába</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Nem sikerült menteni</translation>
     </message>
 </context>
 <context>

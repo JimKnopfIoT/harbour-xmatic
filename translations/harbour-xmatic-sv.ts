@@ -2577,6 +2577,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>Inget sades, så inget skickades.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>Sparad i galleriet</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Kunde inte spara</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Sparad i Hämtningar</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3475,6 +3487,14 @@
     <message>
         <source>This attachment could not be loaded</source>
         <translation>Den här bilagan kunde inte läsas in</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>Sparad i Hämtningar</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>Kunde inte spara</translation>
     </message>
 </context>
 <context>

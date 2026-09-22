@@ -2593,6 +2593,18 @@
         <source>Nothing was said, so nothing was sent.</source>
         <translation>لم يُقل شيء، لذا لم يُرسل شيء.</translation>
     </message>
+    <message>
+        <source>Saved to gallery</source>
+        <translation>حُفظ في المعرض</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>تعذّر الحفظ</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>حُفظ في التنزيلات</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3499,6 +3511,14 @@
     <message>
         <source>Save</source>
         <translation>حفظ</translation>
+    </message>
+    <message>
+        <source>Saved to Downloads</source>
+        <translation>حُفظ في التنزيلات</translation>
+    </message>
+    <message>
+        <source>Could not save</source>
+        <translation>تعذّر الحفظ</translation>
     </message>
 </context>
 <context>
