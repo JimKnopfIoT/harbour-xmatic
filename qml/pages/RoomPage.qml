@@ -243,6 +243,22 @@ Page {
             if (!settings.jumpToReadMarker) {
                 return
             }
+            // Where the reader stood when this room was last left, for as long as the app
+            // runs. Only ever set away from the end, so the unread search keeps that case.
+            var kept = positions.recall(page.roomId)
+            if (kept.eventId) {
+                // The line still has to say where the new messages start, and nothing
+                // else will look for it on this path: where the marker names no event,
+                // the receipt does. The unread search does the same, one step later.
+                if (page.markerEventId.length === 0) {
+                    page.markerEventId = page.unreadFallbackId
+                }
+                page.jumpToEvent(kept.eventId, ListView.Beginning, kept.offset)
+                // The live view is back - that is what this signal says - but the page
+                // itself may still be coming up, and `jumpToEvent` waits for `Active`.
+                page.tryJump()
+                return
+            }
             page.unreadFromId = readMarker
             page.unreadPagesLeft = page.unreadPageLimit
             page.unreadEmptyRounds = page.unreadEmptyLimit
@@ -493,6 +509,7 @@ Page {
             }
             if (status === PageStatus.Deactivating) {
                 page.keepAnchor()
+                page.keepReadingPosition()
             }
         }
 
@@ -700,12 +717,77 @@ Page {
         }
     }
 
+    /// The row a restored reading position sits on, held by event id while the list
+    /// re-estimates its height: one positioning lands on the geometry of that frame,
+    /// and delegates coming into being move everything under them.
+    property string holdEventId: ""
+    property real holdOffset: 0
+
+    function holdPosition() {
+        if (page.holdEventId.length === 0 || page.restoringAnchor) {
+            return
+        }
+        // A hand on the list outranks the hold, the same way it outranks the anchor.
+        if ((timelineView.moving || timelineView.dragging)
+                && page.status === PageStatus.Active) {
+            page.holdEventId = ""
+            return
+        }
+        // By id, never by index: a pagination inserts older rows above and every
+        // index moves with it.
+        var idx = matrix.timeline.indexOfEvent(page.holdEventId)
+        if (idx < 0) {
+            return
+        }
+        page.restoringAnchor = true
+        timelineView.positionViewAtIndex(idx, ListView.Beginning)
+        timelineView.contentY += page.holdOffset
+        page.restoringAnchor = false
+    }
+
+    // Long enough to outlast the re-estimating, short enough not to refuse a scroll.
+    Timer {
+        id: holdRelease
+
+        interval: 1500
+        onTriggered: page.holdEventId = ""
+    }
+
+    /// Where a jump puts its target, and how far it is then shifted.
+    property int jumpAlign: ListView.Center
+    property real jumpOffset: 0
+
+    /// The topmost visible row, kept by event id for as long as the app runs: a
+    /// room left in the middle of its history opens there again. The end is not
+    /// kept - a room opens there anyway, and the unread logic owns that case.
+    function keepReadingPosition() {
+        // A jump that has not landed yet is not a position; what is held stays held.
+        if (page.invited || page.roomId.length === 0 || page.jumpTargetId.length > 0) {
+            return
+        }
+        if (page.followTail || timelineView.atYEnd) {
+            positions.forget(page.roomId)
+            return
+        }
+        var probeY = timelineView.contentY + 1
+        var item = timelineView.itemAt(timelineView.width / 2, probeY)
+        // A row that is still on its way to the server has no id to come back to.
+        if (!item || !item.rowEventId || item.rowEventId.length === 0) {
+            return
+        }
+        positions.remember(page.roomId, item.rowEventId, timelineView.contentY - item.y)
+    }
+
     // Scrolls to a message, loading older history until it shows up. Called by
     // the pinned overview before it pops back, and by tapping a quote.
-    function jumpToEvent(eventId) {
+    function jumpToEvent(eventId, align, offset) {
         if (!eventId || eventId.length === 0) {
             return
         }
+        // A quote lands in the middle of the view; a reading position goes back under
+        // the top edge, where it stood.
+        jumpAlign = align === undefined ? ListView.Center : align
+        jumpOffset = offset === undefined ? 0 : offset
         jumpTargetId = eventId
         jumpPagesLeft = 10
         jumpWaitsLeft = jumpWaitLimit
@@ -740,10 +822,19 @@ Page {
         }
         var idx = matrix.timeline.indexOfEvent(jumpTargetId)
         if (idx >= 0) {
+            var landed = jumpTargetId
             jumpTargetId = ""
             jumpRetry.stop()
             followTail = false
-            timelineView.positionViewAtIndex(idx, ListView.Center)
+            timelineView.positionViewAtIndex(idx, jumpAlign)
+            timelineView.contentY += jumpOffset
+            // A restored reading position is held for a moment; a jump the user asked
+            // for is a single act and keeps none.
+            if (jumpAlign === ListView.Beginning) {
+                page.holdEventId = landed
+                page.holdOffset = jumpOffset
+                holdRelease.restart()
+            }
             return
         }
         if (jumpPagesLeft > 0 && !matrix.timelineAtStart) {
@@ -2741,8 +2832,10 @@ Page {
                         topMargin: row.contentHeight
                                    - Math.round(Theme.paddingLarge / 2)
                     }
-                    height: 1
-                    color: Theme.rgba(Theme.highlightColor, 0.6)
+                    // Two device pixels in the full colour: it is the one thing that says
+                    // where the new messages start, and at one faint pixel it was missed.
+                    height: Math.max(2, Math.round(2 * Theme.pixelRatio))
+                    color: Theme.highlightColor
                 }
 
                 Label {
@@ -2857,7 +2950,8 @@ Page {
 
                 interval: 120
                 onTriggered: {
-                    if (page.wasAtEnd && page.jumpTargetId.length === 0) {
+                    if (page.wasAtEnd && page.jumpTargetId.length === 0
+                            && page.holdEventId.length === 0) {
                         timelineView.positionViewAtEnd()
                         page.followTail = true
                     }
@@ -2899,6 +2993,7 @@ Page {
                 if (page.keptIndex >= 0) {
                     page.restoreAnchor()
                 }
+                page.holdPosition()
                 // An open menu grows the content by its own height, which is not
                 // new content: following the tail takes the pressed row off the top.
                 if (page.openMenus > 0) {
@@ -2929,6 +3024,7 @@ Page {
                 // stood at the end" and undo the very jump the room was opened for.
                 if (page.status !== PageStatus.Active
                         || page.jumpTargetId.length > 0
+                        || page.holdEventId.length > 0
                         || page.unreadFromId.length > 0
                         || unreadRetry.running || followCheck.running) {
                     return

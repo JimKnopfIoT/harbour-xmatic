@@ -243,7 +243,7 @@ Page {
             // something is unread. What differs is where the room opens.
             TextSwitch {
                 text: qsTr("Open a room where you stopped reading")
-                description: qsTr("On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.")
+                description: qsTr("On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.")
                 checked: settings.jumpToReadMarker
                 automaticCheck: false
                 onClicked: settings.jumpToReadMarker = !settings.jumpToReadMarker

@@ -231,10 +231,6 @@
         <translation>読み終えた位置からルームを開く</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>オンのとき、ルームを開くと最後に読んだメッセージへ移動し、新しいメッセージはその下に並びます。オフのときは最新のメッセージが表示され、読み終えた位置を示す線は上へスクロールすると見つかります。</translation>
-    </message>
-    <message>
         <source>Send with the return key</source>
         <translation>Enter キーで送信</translation>
     </message>
@@ -297,6 +293,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>オンにすると、チャット一覧がルームの Space の頭文字をその画像の上に、その Space の色で描きます。色は Space 一覧で Space を長押しして設定します。</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>オン: 部屋に入ると最後に読んだメッセージに移動し、新しいものはその下に並びます。履歴の途中で部屋を離れた場合は、その位置に戻ります。位置はアプリを閉じるまで保持されます。オフ: 部屋は最新のメッセージで開き、読み終えた位置を示す線は上にスクロールして探します。</translation>
     </message>
 </context>
 <context>

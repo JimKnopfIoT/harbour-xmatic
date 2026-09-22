@@ -285,11 +285,6 @@
         <translation>打开房间时回到上次读到的地方</translation>
     </message>
     <message>
-        <location filename="../qml/pages/AppearancePage.qml" line="246"/>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>开启：进入房间时会回到你最后读过的消息，新消息在它下面。关闭：房间从最新的消息打开，标记你读到哪里的横线需要向上滚动才能看到。</translation>
-    </message>
-    <message>
         <location filename="../qml/pages/AppearancePage.qml" line="255"/>
         <source>Mark the space on the picture</source>
         <translation>在头像上标记 Space</translation>
@@ -343,6 +338,11 @@
         <location filename="../qml/pages/AppearancePage.qml" line="340"/>
         <source>Reading the pictures…</source>
         <translation>正在读取图片…</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/AppearancePage.qml" line="246"/>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>开启：进入房间时会回到你最后读过的消息，新消息在其下方；如果你是在历史记录中途离开房间的，则回到当时所在的位置。该位置会保留到应用关闭为止。关闭：房间从最新消息打开，标记阅读位置的横线需要向上滚动查找。</translation>
     </message>
     <message>
         <location filename="../qml/pages/AppearancePage.qml" line="264"/>
@@ -2684,547 +2684,547 @@
 <context>
     <name>RoomPage</name>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="565"/>
+        <location filename="../qml/pages/RoomPage.qml" line="582"/>
         <source>Really decline this invitation?</source>
         <translation>确定要拒绝这个邀请吗？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="566"/>
+        <location filename="../qml/pages/RoomPage.qml" line="583"/>
         <source>Really leave this room?</source>
         <translation>确定要离开这个聊天室吗？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="569"/>
+        <location filename="../qml/pages/RoomPage.qml" line="586"/>
         <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
         <translation>之后邀请就没有了。只有别人再次邀请你，你才能进去。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="570"/>
+        <location filename="../qml/pages/RoomPage.qml" line="587"/>
         <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
         <translation>聊天室会被离开并遗忘。它从聊天列表中消失，再进去需要新的邀请或公开地址。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="571"/>
+        <location filename="../qml/pages/RoomPage.qml" line="588"/>
         <source>Decline</source>
         <translation>拒接</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="571"/>
+        <location filename="../qml/pages/RoomPage.qml" line="588"/>
         <source>Leave</source>
         <translation>离开</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="579"/>
+        <location filename="../qml/pages/RoomPage.qml" line="596"/>
         <source>Declining</source>
         <translation>正在拒绝</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="579"/>
+        <location filename="../qml/pages/RoomPage.qml" line="596"/>
         <source>Leaving room</source>
         <translation>正在离开聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="683"/>
+        <location filename="../qml/pages/RoomPage.qml" line="700"/>
         <source>The sender did not share the key: they consider this device insecure. Verify this device.</source>
         <translation>发送者没有共享密钥：他认为此设备不安全。请验证此设备。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="685"/>
+        <location filename="../qml/pages/RoomPage.qml" line="702"/>
         <source>The sender could not deliver the key to this device.</source>
         <translation>发送者无法把密钥送到此设备。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="687"/>
+        <location filename="../qml/pages/RoomPage.qml" line="704"/>
         <source>The sender&apos;s identity has changed since you verified them, so the key was withheld.</source>
         <translation>发送者的身份自你验证以来已经改变，因此密钥被扣下了。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="689"/>
+        <location filename="../qml/pages/RoomPage.qml" line="706"/>
         <source>The sender&apos;s device is not signed by its owner.</source>
         <translation>发送者的设备没有被其所有者签名。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="691"/>
+        <location filename="../qml/pages/RoomPage.qml" line="708"/>
         <source>The sender&apos;s device is unknown here.</source>
         <translation>此处不认识发送者的设备。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="693"/>
+        <location filename="../qml/pages/RoomPage.qml" line="710"/>
         <source>Sent before you joined the room.</source>
         <translation>在你加入聊天室之前发送。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="695"/>
+        <location filename="../qml/pages/RoomPage.qml" line="712"/>
         <source>Older than this device, and there is no key backup.</source>
         <translation>比此设备更早，而且没有密钥备份。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="697"/>
+        <location filename="../qml/pages/RoomPage.qml" line="714"/>
         <source>Older than this device. Verify this device to read it.</source>
         <translation>比此设备更早。验证此设备才能读取。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="699"/>
+        <location filename="../qml/pages/RoomPage.qml" line="716"/>
         <source>Cannot be decrypted — this device is missing the key</source>
         <translation>无法解密——此设备缺少密钥</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="906"/>
+        <location filename="../qml/pages/RoomPage.qml" line="997"/>
         <source>Decline invitation</source>
         <translation>拒绝邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="906"/>
+        <location filename="../qml/pages/RoomPage.qml" line="997"/>
         <source>Leave room</source>
         <translation>离开聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="911"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1002"/>
         <source>Call</source>
         <translation>通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="923"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1014"/>
         <source>Video call</source>
         <translation>视频通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="933"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1024"/>
         <source>Back to the call</source>
         <translation>返回通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="941"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1032"/>
         <source>Go to the new room</source>
         <translation>前往新聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="942"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1033"/>
         <source>Join the new room</source>
         <translation>加入新聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1002"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1093"/>
         <source>Load older messages</source>
         <translation>加载更早的消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="980"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1071"/>
         <source>Room info</source>
         <translation>聊天室信息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="667"/>
+        <location filename="../qml/pages/RoomPage.qml" line="684"/>
         <source>Discarding</source>
         <translation>正在丢弃</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="667"/>
+        <location filename="../qml/pages/RoomPage.qml" line="684"/>
         <source>Deleting</source>
         <translation>正在删除</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="953"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1044"/>
         <source>Copy room link</source>
         <translation>复制房间链接</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="961"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1052"/>
         <source>Verify contact</source>
         <translation>验证联系人</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="991"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1082"/>
         <source>Search messages</source>
         <translation>搜索消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1103"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1194"/>
         <source>Offline — waiting for the network</source>
         <translation>离线——正在等待网络</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1104"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1195"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1150"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1241"/>
         <source>This room has been replaced</source>
         <translation>此聊天室已被取代</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1164"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1255"/>
         <source>Switching to the new room…</source>
         <translation>正在切换到新聊天室…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1166"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1257"/>
         <source>Tap to open the new room</source>
         <translation>点按以打开新聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1167"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1258"/>
         <source>Tap to join the new room</source>
         <translation>点按以加入新聊天室</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/pages/RoomPage.qml" line="1223"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1314"/>
         <source>%n pinned message(s)</source>
         <translation>
             <numerusform>%n 条置顶消息</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1268"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1359"/>
         <source>Beginning of the conversation</source>
         <translation>会话的开头</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1430"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1521"/>
         <source>Call</source>
         <comment>timeline system line, a noun</comment>
         <translation>通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1431"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1522"/>
         <source>%1 joined</source>
         <translation>%1 加入了</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1432"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1523"/>
         <source>%1 left</source>
         <translation>%1 离开了</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1438"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1529"/>
         <source>%1 declined the invitation</source>
         <translation>%1 拒绝了邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1439"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1530"/>
         <source>%1 asked to join</source>
         <translation>%1 请求加入</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1440"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1531"/>
         <source>%1 changed membership</source>
         <translation>%1 更改了成员身份</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1441"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1532"/>
         <source>%1 changed their profile</source>
         <translation>%1 修改了个人资料</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1626"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1717"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1663"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1754"/>
         <source>Reply</source>
         <translation>回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1582"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1673"/>
         <source>Reply in thread</source>
         <translation>在话题中回复</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1610"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1701"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1634"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1725"/>
         <source>Forward</source>
         <translation>转发</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1645"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1736"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1567"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1658"/>
         <source>Pin</source>
         <translation>置顶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1653"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1744"/>
         <source>React</source>
         <translation>回应</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1602"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1693"/>
         <source>Send again</source>
         <translation>重新发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="972"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1063"/>
         <source>New poll</source>
         <translation>新投票</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1433"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1524"/>
         <source>%1 invited %2</source>
         <translation>%1 邀请了 %2</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1434"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1525"/>
         <source>%1 removed %2</source>
         <translation>%1 移出了 %2</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1435"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1526"/>
         <source>%1 banned %2</source>
         <translation>%1 封禁了 %2</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1436"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1527"/>
         <source>%1 unbanned %2</source>
         <translation>%1 解封了 %2</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1437"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1528"/>
         <source>%1 withdrew the invitation for %2</source>
         <translation>%1 撤回了对 %2 的邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1446"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1537"/>
         <source>%1: %2</source>
         <comment>system line and the reason given for it</comment>
         <translation>%1：%2</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1558"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1649"/>
         <source>Discard</source>
         <translation>丢弃</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1558"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1649"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1616"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1707"/>
         <source>Convert to text</source>
         <translation>转换为文字</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1671"/>
+        <location filename="../qml/pages/RoomPage.qml" line="1762"/>
         <source>More…</source>
         <translation>更多…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="1993"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2084"/>
         <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
         <translation>无法加载被引用的消息：它已不存在，或者你无权查看。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2194"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2285"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2234"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2325"/>
         <source>Converting to text…</source>
         <translation>正在转换为文字…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2254"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2345"/>
         <source>Recognised automatically, may contain mistakes</source>
         <translation>自动识别，可能有错误</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2337"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2428"/>
         <source>Message deleted</source>
         <translation>消息已删除</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2342"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2433"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2362"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2453"/>
         <source>Show less</source>
         <translation>收起</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2362"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2453"/>
         <source>Show more</source>
         <translation>显示更多</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2434"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2525"/>
         <source>What do these marks mean?</source>
         <translation>这些标记是什么意思？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2459"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2550"/>
         <source>Thread · %1</source>
         <translation>话题 · %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2460"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2551"/>
         <source>In thread</source>
         <translation>在话题中</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2511"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2602"/>
         <source>This reaction hides text and was not sent</source>
         <translation>该回应隐藏了文字，未发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2644"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2735"/>
         <source>not sent</source>
         <translation>未发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2645"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2736"/>
         <source>edited</source>
         <translation>已编辑</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2957"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3053"/>
         <source>The conversation could not be loaded</source>
         <translation>无法加载对话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2958"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3054"/>
         <source>No messages</source>
         <translation>没有消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2985"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3081"/>
         <source>Room link copied</source>
         <translation>房间链接已复制</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3046"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3142"/>
         <source>Accept invitation</source>
         <translation>接受邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3093"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3189"/>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>正在录音… %1 秒。点击麦克风即可发送。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3095"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3191"/>
         <source>Recording… %1 s</source>
         <translation>正在录音… %1 秒</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3124"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3220"/>
         <source>Reply to %1</source>
         <translation>回复 %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3147"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3243"/>
         <source>Editing message</source>
         <translation>正在编辑消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3174"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3270"/>
         <source>New text</source>
         <translation>新文本</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3174"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3270"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3213"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3309"/>
         <source>Select files</source>
         <translation>选择文件</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3700"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3796"/>
         <source>Sent unencrypted</source>
         <translation>以明文发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3701"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3797"/>
         <source>Not sent by the account it names</source>
         <translation>并非署名的账号发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3702"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3798"/>
         <source>The sender&apos;s keys changed</source>
         <translation>发送者的密钥已更改</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3704"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3800"/>
         <source>From an unverified device</source>
         <translation>来自未验证的设备</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3705"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3801"/>
         <source>From an unverified person</source>
         <translation>来自未验证的人</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3706"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3802"/>
         <source>Authenticity not confirmed</source>
         <translation>真实性未确认</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3721"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3817"/>
         <source>Open this address?</source>
         <translation>打开此地址？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3723"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3819"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3841"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3937"/>
         <source>Saved to gallery</source>
         <translation>已保存到相册</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3841"/>
-        <location filename="../qml/pages/RoomPage.qml" line="3844"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3937"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3940"/>
         <source>Could not save</source>
         <translation>无法保存</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3844"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3940"/>
         <source>Saved to Downloads</source>
         <translation>已保存到下载</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3887"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3983"/>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>没有说话，因此没有发送任何内容。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3904"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4000"/>
         <source>Voting failed</source>
         <translation>投票失败</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3906"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4002"/>
         <source>The poll could not be ended</source>
         <translation>无法结束投票</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3908"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4004"/>
         <source>The poll could not be sent</source>
         <translation>无法发送投票</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3911"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4007"/>
         <source>Your vote was not sent</source>
         <translation>你的票未发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="762"/>
+        <location filename="../qml/pages/RoomPage.qml" line="853"/>
         <source>That message is not in the loaded history</source>
         <translation>该消息不在已加载的历史记录中</translation>
     </message>

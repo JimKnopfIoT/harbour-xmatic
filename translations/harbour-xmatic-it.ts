@@ -256,10 +256,6 @@
         <translation>Apri la stanza dove hai smesso di leggere</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Attivo: entrando arrivi al tuo ultimo messaggio letto, i nuovi stanno sotto. Disattivo: la stanza si apre sul messaggio più recente e la linea che segna dove ti sei fermato la trovi scorrendo verso l&apos;alto.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Carica un pacchetto di emoji</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Attivo, l&apos;elenco delle chat disegna l&apos;iniziale dello spazio della stanza sulla sua immagine, nel colore di quello spazio. Il colore si imposta nell&apos;elenco degli spazi, tenendo premuto lo spazio.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Attivo: entrando in una stanza arrivi all&apos;ultimo messaggio letto, con i nuovi sotto, e al punto in cui eri se hai lasciato la stanza in mezzo alla sua cronologia. Quel punto resta memorizzato finché non chiudi l&apos;applicazione. Disattivato: la stanza si apre sul messaggio più recente e la linea che segna dove ti sei fermato si trova scorrendo verso l&apos;alto.</translation>
     </message>
 </context>
 <context>

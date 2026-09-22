@@ -257,10 +257,6 @@
         <translation>Oscail seomra san áit ar stad tú de bheith ag léamh</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ar siúl: agus tú ag dul isteach, tagann tú chuig an teachtaireacht dheireanach a léigh tú, agus bíonn na cinn nua faoina bun. As: osclaítear an seomra ag an teachtaireacht is nuaí, agus gheobhaidh tú an líne a mharcálann an áit ar stad tú trí scrollú suas.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Léigh isteach pacáiste emoji</translation>
     </message>
@@ -299,6 +295,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Air, tarraingíonn an liosta comhrá céadlitir spás an tseomra ar a phictiúr, i ndath an spáis sin. Socraítear an dath i liosta na spásanna, tríd an spás a choinneáil síos.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ar siúl: agus tú ag dul isteach i seomra, tagann tú chuig an teachtaireacht dheireanach a léigh tú, na cinn nua faoina bun — agus ar ais san áit a raibh tú má d&apos;fhág tú an seomra i lár na staire. Coinnítear an áit sin go dtí go ndúnfar an feidhmchlár. As: osclaítear an seomra ag an teachtaireacht is nuaí, agus aimsíonn tú an líne a mharcálann cá stop tú trí scrollú suas.</translation>
     </message>
 </context>
 <context>

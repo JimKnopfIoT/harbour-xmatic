@@ -257,10 +257,6 @@
         <translation>Atverti kambarį ten, kur baigei skaityti</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Įjungta: įėjęs atsiduri ties paskutine perskaityta žinute, naujosios lieka po ja. Išjungta: kambarys atveriamas ties naujausia žinute, o brūkšnį, žymintį kur sustojai, rasi slinkdamas aukštyn.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Įkelti jaustukų paketą</translation>
     </message>
@@ -299,6 +295,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Įjungus pokalbių sąrašas ant kambario paveikslėlio piešia jo erdvės pirmąją raidę tos erdvės spalva. Spalva nustatoma erdvių sąraše, palaikius erdvę.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Įjungta: įėjęs į kambarį atsiduri ties paskutine perskaityta žinute, naujos – po ja, ir grįžti į tą vietą, kurioje buvai, jei kambarį palikai istorijos viduryje. Ta vieta įsimenama, kol programėlė uždaroma. Išjungta: kambarys atsiveria ties naujausia žinute, o liniją, žyminčią kur sustojai, rasi slinkdamas aukštyn.</translation>
     </message>
 </context>
 <context>

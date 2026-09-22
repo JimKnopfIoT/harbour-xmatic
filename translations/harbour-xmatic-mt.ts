@@ -258,10 +258,6 @@
         <translation>Iftaħ il-kamra fejn waqaft taqra</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Mixgħul: meta tidħol tasal fl-aħħar messaġġ li qrajt, u l-ġodda jkunu taħtu. Mitfi: il-kamra tinfetaħ fl-aktar messaġġ riċenti, u l-linja li timmarka fejn waqaft issibha billi tiskrollja &apos;l fuq.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Aqra pakkett ta&apos; emoji</translation>
     </message>
@@ -300,6 +296,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Mixgħul, il-lista taċ-chats tpinġi l-ewwel ittra tal-ispazju tal-kamra fuq ir-ritratt tagħha, bil-kulur ta&apos; dak l-ispazju. Il-kulur jitqiegħed fil-lista tal-ispazji, billi żżomm l-ispazju.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Mixgħul: meta tidħol f&apos;kamra tasal fl-aħħar messaġġ li qrajt, bil-ġodda taħtu — u lura fil-post fejn kont jekk ħallejt il-kamra f&apos;nofs l-istorja tagħha. Dak il-post jinżamm sakemm tagħlaq l-applikazzjoni. Mitfi: il-kamra tinfetaħ fl-aktar messaġġ riċenti u l-linja li timmarka fejn waqaft issibha billi tiskrollja &apos;l fuq.</translation>
     </message>
 </context>
 <context>

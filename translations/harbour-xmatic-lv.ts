@@ -257,10 +257,6 @@
         <translation>Atvērt istabu tur, kur beidzi lasīt</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ieslēgts: ienākot nonāc pie savas pēdējās izlasītās ziņas, jaunās ir zem tās. Izslēgts: istaba atveras pie jaunākās ziņas, un līniju, kas iezīmē, kur apstājies, atradīsi ritinot uz augšu.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Ielasīt emocijzīmju paku</translation>
     </message>
@@ -299,6 +295,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Ieslēgts, sarunu saraksts uz istabas attēla zīmē tās telpas pirmo burtu attiecīgās telpas krāsā. Krāsu iestata telpu sarakstā, turot telpu nospiestu.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ieslēgts: ieejot istabā, nonāc pie pēdējās izlasītās ziņas, jaunās ir zem tās — un atpakaļ tajā vietā, kur biji, ja pameti istabu vēstures vidū. Šī vieta tiek paturēta, līdz lietotne tiek aizvērta. Izslēgts: istaba atveras pie jaunākās ziņas, un līniju, kas iezīmē lasīšanas vietu, atradīsi, ritinot uz augšu.</translation>
     </message>
 </context>
 <context>

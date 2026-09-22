@@ -256,10 +256,6 @@
         <translation>Ouvrir le salon là où tu t&apos;es arrêté de lire</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Activé : en entrant, tu arrives à ton dernier message lu, les nouveaux sont en dessous. Désactivé : le salon s&apos;ouvre sur le message le plus récent et la ligne qui marque où tu t&apos;es arrêté se trouve en remontant.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Charger un pack d&apos;emojis</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Activé, la liste des discussions dessine l&apos;initiale de l&apos;espace du salon sur son image, dans la couleur de cet espace. La couleur se règle dans la liste des espaces, en maintenant l&apos;espace appuyé.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Activé : en entrant dans un salon, tu arrives à ton dernier message lu, les nouveaux en dessous — et à l&apos;endroit où tu étais si tu as quitté le salon au milieu de son historique. Cet endroit est retenu jusqu&apos;à la fermeture de l&apos;application. Désactivé : le salon s&apos;ouvre sur son message le plus récent et la ligne qui marque où tu t&apos;es arrêté se trouve en remontant.</translation>
     </message>
 </context>
 <context>

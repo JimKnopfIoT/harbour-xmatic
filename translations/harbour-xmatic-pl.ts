@@ -257,10 +257,6 @@
         <translation>Otwieraj pokój tam, gdzie skończyłeś czytać</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Włączone: po wejściu trafiasz na ostatnią przeczytaną wiadomość, nowe są pod nią. Wyłączone: pokój otwiera się na najnowszej wiadomości, a kreskę oznaczającą miejsce, w którym skończyłeś, znajdziesz przewijając w górę.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Wczytaj paczkę emoji</translation>
     </message>
@@ -299,6 +295,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Włączone, lista rozmów rysuje pierwszą literę przestrzeni pokoju na jego obrazku, w kolorze tej przestrzeni. Kolor ustawisz na liście przestrzeni, przytrzymując przestrzeń.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Włączone: po wejściu do pokoju trafiasz na ostatnią przeczytaną wiadomość, nowe są poniżej — i wracasz w miejsce, w którym byłeś, jeśli opuściłeś pokój w środku historii. To miejsce jest pamiętane do zamknięcia aplikacji. Wyłączone: pokój otwiera się na najnowszej wiadomości, a linię oznaczającą miejsce przerwania znajdziesz, przewijając w górę.</translation>
     </message>
 </context>
 <context>

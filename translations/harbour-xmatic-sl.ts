@@ -258,10 +258,6 @@
         <translation>Sobo odpri tam, kjer si nehal brati</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Vklopljeno: ob vstopu pristaneš pri zadnjem prebranem sporočilu, nova so pod njim. Izklopljeno: soba se odpre pri najnovejšem sporočilu, črto, ki označuje, kje si končal, pa najdeš z drsenjem navzgor.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Naloži paket emodžijev</translation>
     </message>
@@ -300,6 +296,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Vklopljeno seznam klepetov nariše začetnico prostora sobe čez njeno sliko, v barvi tega prostora. Barvo nastaviš v seznamu prostorov s pridržanjem prostora.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Vklopljeno: ob vstopu v sobo pristaneš pri svojem zadnjem prebranem sporočilu, nova so pod njim — in nazaj na mestu, kjer si bil, če si sobo zapustil sredi zgodovine. To mesto se ohrani, dokler ne zapreš aplikacije. Izklopljeno: soba se odpre pri najnovejšem sporočilu, črto, ki označuje, kje si ostal, pa najdeš z drsenjem navzgor.</translation>
     </message>
 </context>
 <context>

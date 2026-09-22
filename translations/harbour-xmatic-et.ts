@@ -256,10 +256,6 @@
         <translation>Ava tuba sealt, kus lugemise pooleli jätsid</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Sees: sisenedes satud oma viimasena loetud sõnumi juurde, uued jäävad selle alla. Väljas: tuba avaneb uusima sõnumi juures ja joone, mis näitab, kuhu jäid, leiad üles kerides.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Loe emoji-pakk sisse</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Sees joonistab vestluste loend toa ruumi esitähe tema pildi peale, selle ruumi värviga. Värvi saab määrata ruumide loendis ruumi all hoides.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Sees: tuppa sisenedes satud viimati loetud sõnumi juurde, uued on selle all — ja tagasi kohta, kus olid, kui lahkusid toast keset ajalugu. See koht jääb meelde, kuni rakendus suletakse. Väljas: tuba avaneb uusima sõnumi juures ja lugemiskohta tähistava joone leiad üles kerides.</translation>
     </message>
 </context>
 <context>

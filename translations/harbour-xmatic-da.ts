@@ -256,10 +256,6 @@
         <translation>Åbn rummet, hvor du holdt op med at læse</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Til: når du går ind, lander du ved din sidst læste besked, og de nye står under den. Fra: rummet åbner ved den nyeste besked, og linjen, der viser hvor du slap, finder du ved at rulle op.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Indlæs en emojipakke</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Til tegner chatlisten forbogstavet på rummets space over dets billede, i det pågældende spaces farve. Farven sættes i space-listen ved at holde på space&apos;et.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Til: når du går ind i et rum, lander du ved din senest læste besked med de nye nedenunder — og tilbage det sted, du var, hvis du forlod rummet midt i historikken. Stedet huskes, indtil appen lukkes. Fra: rummet åbner ved den nyeste besked, og linjen, der markerer hvor du stoppede, finder du ved at rulle op.</translation>
     </message>
 </context>
 <context>

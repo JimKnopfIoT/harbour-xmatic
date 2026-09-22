@@ -256,10 +256,6 @@
         <translation>Стаята се отваря там, докъдето си чел</translation>
     </message>
     <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Включено: при влизане попадаш на последното си прочетено съобщение, новите са под него. Изключено: стаята се отваря при най-новото съобщение, а линията, показваща докъде си стигнал, намираш с превъртане нагоре.</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Зареждане на пакет с емоджита</translation>
     </message>
@@ -298,6 +294,10 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Включено, списъкът с чатове изписва първата буква на пространството върху снимката на стаята, в цвета на това пространство. Цветът се задава в списъка с пространства чрез задържане върху пространството.</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Включено: при влизане в стая попадаш на последното си прочетено съобщение, новите са под него — и обратно на мястото, на което си бил, ако си напуснал стаята насред историята. Това място се помни, докато приложението не бъде затворено. Изключено: стаята се отваря при най-новото съобщение, а линията, която отбелязва докъде си стигнал, намираш, като превъртиш нагоре.</translation>
     </message>
 </context>
 <context>
