@@ -2585,6 +2585,14 @@
         <source>Saved to Downloads</source>
         <translation>در بارگیری‌ها ذخیره شد</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>نمایش کمتر</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>نمایش بیشتر</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

@@ -2585,6 +2585,14 @@
         <source>Saved to Downloads</source>
         <translation>Mentve a Letöltések mappába</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Kevesebb megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Több megjelenítése</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

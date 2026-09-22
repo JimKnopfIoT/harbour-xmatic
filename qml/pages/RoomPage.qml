@@ -1461,6 +1461,48 @@ Page {
                             // missing size is the common case, and `media::fetch` weighs what arrives.
                             && (model.media.size || 0) <= 100 * 1024 * 1024)
 
+                // Taller than the page: Silica's menu renders the row into one texture, and past
+                // the GPU's limit that texture is black. Such a row gets the actions as a page.
+                readonly property bool tall: contentHeight > page.height
+                // Folded to three lines, past a page of text, until opened.
+                readonly property bool expanded: page.expandedRevision >= 0
+                                                 && !!page.expandedRows[model.id]
+                readonly property bool longBody: bodyFull.implicitHeight > page.height
+
+                function holdMenu() {
+                    if (row.tall) {
+                        row.showActions()
+                    } else {
+                        row.openMenu()
+                    }
+                }
+
+                function showActions() {
+                    pageStack.push(Qt.resolvedUrl("MessageActionsPage.qml"), {
+                                       roomPage: page,
+                                       eventId: model.eventId || "",
+                                       txnId: model.txnId || "",
+                                       unsent: model.sendState === "failed",
+                                       body: model.body || "",
+                                       senderName: model.senderName || "",
+                                       isOwn: row.isOwn,
+                                       canDelete: row.isOwn || row.canDeleteForOther,
+                                       editable: model.editable === true,
+                                       isImage: row.isImage,
+                                       canSave: row.isFile || row.isImage,
+                                       canTranscribe: row.canTranscribe
+                                                      && row.transcriptState !== "working"
+                                                      && row.transcriptState !== "done",
+                                       // Copied out, not handed over: the model row is gone once it leaves the
+                                       // cache.
+                                       item: {
+                                           "id": model.id,
+                                           "msgtype": model.msgtype,
+                                           "media": model.media
+                                       }
+                                   })
+                }
+
                 readonly property bool hasPreview: sanePicture
                                                    && (isImage
                                                        || (isVideo && !!model.media.thumbnailSource))
@@ -1485,7 +1527,12 @@ Page {
                 enabled: model.kind === "message" || row.isSystem
                 // Every entry of the menu is about a message; a system line would
                 // open it empty.
-                showMenuOnPressAndHold: model.kind === "message"
+                showMenuOnPressAndHold: model.kind === "message" && !row.tall
+                onPressAndHold: {
+                    if (model.kind === "message" && row.tall) {
+                        row.showActions()
+                    }
+                }
                 _showPress: false
 
                 // A growing height under an open menu is the menu, not new rows:
@@ -1623,29 +1670,7 @@ Page {
                     MenuItem {
                         text: qsTr("More…")
                         visible: page.isLandscape
-                        onClicked: pageStack.push(Qt.resolvedUrl("MessageActionsPage.qml"), {
-                                                      roomPage: page,
-                                                      eventId: model.eventId || "",
-                                                      txnId: model.txnId || "",
-                                                      unsent: model.sendState === "failed",
-                                                      body: model.body || "",
-                                                      senderName: model.senderName || "",
-                                                      isOwn: row.isOwn,
-                                                      canDelete: row.isOwn || row.canDeleteForOther,
-                                                      editable: model.editable === true,
-                                                      isImage: row.isImage,
-                                                      canSave: row.isFile || row.isImage,
-                                                      canTranscribe: row.canTranscribe
-                                                                     && row.transcriptState !== "working"
-                                                                     && row.transcriptState !== "done",
-                                                      // Copied out, not handed over: the model row is gone once it leaves the
-                                                      // cache.
-                                                      item: {
-                                                          "id": model.id,
-                                                          "msgtype": model.msgtype,
-                                                          "media": model.media
-                                                      }
-                                                  })
+                        onClicked: row.showActions()
                     }
                 }
 
@@ -1674,7 +1699,7 @@ Page {
                         onClicked: pageStack.push(
                                        Qt.resolvedUrl("MemberProfilePage.qml"),
                                        { roomId: page.roomId, userId: model.sender })
-                        onPressAndHold: row.openMenu()
+                        onPressAndHold: row.holdMenu()
                     }
                 }
 
@@ -1988,7 +2013,7 @@ Page {
                                 onClicked: page.jumpToEvent(model.replyTo.eventId)
                                 // The long press still belongs to the message, not to the
                                 // quote — otherwise this corner of the bubble has no menu.
-                                onPressAndHold: row.openMenu()
+                                onPressAndHold: row.holdMenu()
                             }
                         }
 
@@ -2129,7 +2154,7 @@ Page {
                                                ? page.openVideo(model.id, model.media)
                                                : page.openImage(model.id, model.media)
                                     // The delegate's own menu still has to be reachable.
-                                    onPressAndHold: row.openMenu()
+                                    onPressAndHold: row.holdMenu()
                                 }
 
                             }
@@ -2214,7 +2239,7 @@ Page {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onPressAndHold: row.openMenu()
+                                onPressAndHold: row.holdMenu()
                             }
                         }
 
@@ -2255,6 +2280,19 @@ Page {
                                 font.italic: bodyLabel.font.italic
                                 text: bodyLabel.text
                             }
+                            // The unfolded height, at the label's own width. Short text cannot fill a page.
+                            Label {
+                                id: bodyFull
+
+                                visible: false
+                                width: bodyLabel.width
+                                wrapMode: Text.Wrap
+                                textFormat: bodyLabel.textFormat
+                                font.pixelSize: bodyLabel.font.pixelSize
+                                text: bodyLabel.text.length > 40 ? bodyLabel.text : ""
+                            }
+                            maximumLineCount: row.longBody && !row.expanded ? 3 : 1000000
+                            elide: row.longBody && !row.expanded ? Text.ElideRight : Text.ElideNone
                             // Plain text on purpose: a body is untrusted and AutoText renders anything
                             // HTML-shaped, `<img>` included. StyledText only after linkifyBody escaped it.
                             textFormat: row.richBody.length > 0
@@ -2285,7 +2323,7 @@ Page {
                                     }
                                     page.openImage(model.id, model.media)
                                 }
-                                onPressAndHold: row.openMenu()
+                                onPressAndHold: row.holdMenu()
                             }
 
                             text: {
@@ -2310,6 +2348,27 @@ Page {
                                     return row.richBody
                                 }
                                 return model.body || ""
+                            }
+                        }
+
+                        Label {
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+                            visible: bodyLabel.visible && row.longBody
+                            width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
+                            font.pixelSize: Theme.fontSizeExtraSmall
+                            color: foldArea.pressed ? Theme.secondaryHighlightColor
+                                                    : Theme.highlightColor
+                            textFormat: Text.PlainText
+                            text: row.expanded ? qsTr("Show less") : qsTr("Show more")
+
+                            MouseArea {
+                                id: foldArea
+                                anchors {
+                                    fill: parent
+                                    margins: -Theme.paddingSmall
+                                }
+                                onClicked: page.toggleExpanded(model.id)
+                                onPressAndHold: row.holdMenu()
                             }
                         }
 
@@ -2416,7 +2475,7 @@ Page {
                                                                 : model.threadRoot,
                                                    encrypted: page.encrypted
                                                })
-                                onPressAndHold: row.openMenu()
+                                onPressAndHold: row.holdMenu()
                             }
                         }
 
@@ -3276,6 +3335,15 @@ Page {
             page.cancelEdit()
             return
         }
+        // Past three pages a bubble is a document: it goes as one.
+        if (page.beyondThreePages(messageComposer.text)
+                && matrix.sendTextAsFile(messageComposer.text, page.replyingEventId)) {
+            messageComposer.clearField()
+            messageComposer.clearMentions()
+            page.clearReplyState()
+            page.afterSend()
+            return
+        }
         var mentions = messageComposer.mentionIds()
         if (page.replyingEventId.length > 0) {
             matrix.replyToMessage(page.replyingEventId, messageComposer.text, mentions)
@@ -3288,6 +3356,38 @@ Page {
         messageComposer.clearField()
         messageComposer.clearMentions()
         page.afterSend()
+    }
+
+    /// Laid out as an upright bubble would be, measured in screen heights.
+    function beyondThreePages(text) {
+        draftMeasure.text = text
+        var beyond = draftMeasure.implicitHeight > 3 * Screen.height
+        draftMeasure.text = ""
+        return beyond
+    }
+
+    Label {
+        id: draftMeasure
+
+        visible: false
+        width: Screen.width * 0.82 - 2 * Theme.paddingMedium
+        wrapMode: Text.Wrap
+        textFormat: Text.PlainText
+        font.pixelSize: Theme.fontSizeSmall
+    }
+
+    /// Long messages start folded; this remembers which are open. Keyed by row id,
+    /// since a delegate that scrolls away forgets.
+    property var expandedRows: ({})
+    property int expandedRevision: 0
+
+    function toggleExpanded(rowId) {
+        if (page.expandedRows[rowId]) {
+            delete page.expandedRows[rowId]
+        } else {
+            page.expandedRows[rowId] = true
+        }
+        page.expandedRevision++
     }
 
     /// An attachment through the same gate a typed message goes through. What

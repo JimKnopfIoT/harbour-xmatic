@@ -2605,6 +2605,14 @@
         <source>Saved to Downloads</source>
         <translation>حُفظ في التنزيلات</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>عرض أقل</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>عرض المزيد</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

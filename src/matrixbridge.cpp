@@ -5,6 +5,7 @@
 #include "appsettings.h"
 #include "secretskeeper.h"
 
+#include <QDateTime>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -295,6 +296,7 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     // downloaded attachments.
     m_voiceDirectory = cacheDirectory + QStringLiteral("/voice");
     m_recorder = new VoiceRecorder(m_voiceDirectory, this);
+    m_textDirectory = cacheDirectory + QStringLiteral("/text");
     connect(m_recorder, &VoiceRecorder::finished, this, [this](const QString &path,
                                                                const QString &mimeType,
                                                                qint64 duration) {
@@ -1113,7 +1115,7 @@ void MatrixBridge::forgetRequest(quint64 id)
     m_removeRequests.remove(id);
     m_readerRequests.remove(id);
     m_reactorRequests.remove(id);
-    m_voiceSends.remove(id);
+    m_throwawaySends.remove(id);
     // A repair whose answer never came was not an attempt. Left set, the flag
     // spends the only try of this run on nothing. The id stays: a late answer
     // is matched by it, and `handleReply` is what clears it.
@@ -2009,6 +2011,30 @@ void MatrixBridge::startVideoSend(const QJsonObject &arguments, const QString &p
     helper->start(videoStillProgram(), videoStillArguments(path, target));
 }
 
+bool MatrixBridge::sendTextAsFile(const QString &text, const QString &replyTo)
+{
+    if (!QDir().mkpath(m_textDirectory)) {
+        return false;
+    }
+    // The name is what the other side sees; the time keeps two of them apart.
+    const QString stem = m_textDirectory + QStringLiteral("/message-")
+            + QDateTime::currentDateTime().toString(QStringLiteral("yyyyMMdd-HHmmss"));
+    QString path = stem + QStringLiteral(".txt");
+    for (int n = 2; QFile::exists(path); ++n) {
+        path = stem + QStringLiteral("-%1.txt").arg(n);
+    }
+    QFile file(path);
+    const QByteArray bytes = text.toUtf8();
+    if (!file.open(QIODevice::WriteOnly) || file.write(bytes) != bytes.size()) {
+        file.close();
+        QFile::remove(path);
+        return false;
+    }
+    file.close();
+    sendMedia(path, QStringLiteral("text/plain"), QString(), replyTo);
+    return true;
+}
+
 void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                              const QString &caption, const QString &replyTo,
                              qint64 voiceDuration, bool original)
@@ -2048,10 +2074,11 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
         arguments.insert(QStringLiteral("duration"), double(voiceDuration));
     }
     const quint64 id = send(QStringLiteral("timeline.sendMedia"), arguments);
-    // A recording of one's own is not a document the user keeps: it goes as
-    // soon as it is out.
-    if (!m_voiceDirectory.isEmpty() && local.startsWith(m_voiceDirectory)) {
-        m_voiceSends.insert(id, local);
+    // A recording or a text file of one's own is not a document the user keeps:
+    // it goes as soon as it is out.
+    if ((!m_voiceDirectory.isEmpty() && local.startsWith(m_voiceDirectory))
+            || (!m_textDirectory.isEmpty() && local.startsWith(m_textDirectory))) {
+        m_throwawaySends.insert(id, local);
     }
 }
 
@@ -2870,9 +2897,9 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
     }
 
     if (command == QLatin1String("timeline.sendMedia")) {
-        const QString recording = m_voiceSends.take(id);
-        if (!recording.isEmpty()) {
-            QFile::remove(recording);
+        const QString throwaway = m_throwawaySends.take(id);
+        if (!throwaway.isEmpty()) {
+            QFile::remove(throwaway);
         }
         return false;
     }

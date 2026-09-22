@@ -2589,6 +2589,14 @@
         <source>Saved to Downloads</source>
         <translation>Запазено в „Изтегляния“</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Покажи по-малко</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Покажи още</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

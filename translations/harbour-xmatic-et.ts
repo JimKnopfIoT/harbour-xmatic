@@ -2589,6 +2589,14 @@
         <source>Saved to Downloads</source>
         <translation>Salvestatud kausta Allalaadimised</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Näita vähem</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Näita rohkem</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

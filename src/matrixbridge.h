@@ -663,6 +663,10 @@ public:
                                qint64 voiceDuration = 0,
                                bool original = false);
 
+    /// A draft too long for a bubble, sent as a text file. False where the file
+    /// could not be written; the caller then sends it as a message.
+    Q_INVOKABLE bool sendTextAsFile(const QString &text, const QString &replyTo = QString());
+
     /// Downloads an attachment, answered by mediaReady(key, path). `declaredSize`
     /// lets the core refuse an outsized file before it is held in memory whole.
     Q_INVOKABLE void requestMedia(const QString &key, const QVariant &source, bool thumbnail,
@@ -1135,9 +1139,10 @@ private:
     /// Which message and key a pending `timeline.reactors` request is about.
     /// The core answers with both, so this only says the request was ours.
     QSet<quint64> m_reactorRequests;
-    /// Recordings waiting for their send to come back, so they can go.
-    QHash<quint64, QString> m_voiceSends;
+    /// Recordings and text files waiting for their send to come back, so they can go.
+    QHash<quint64, QString> m_throwawaySends;
     QString m_voiceDirectory;
+    QString m_textDirectory;
 
     quint64 m_nextId = 1;
 

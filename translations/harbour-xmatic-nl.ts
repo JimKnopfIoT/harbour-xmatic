@@ -2589,6 +2589,14 @@
         <source>Saved to Downloads</source>
         <translation>In Downloads opgeslagen</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Minder tonen</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Meer tonen</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

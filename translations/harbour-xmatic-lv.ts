@@ -2593,6 +2593,14 @@
         <source>Saved to Downloads</source>
         <translation>Saglabāts mapē Lejupielādes</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Rādīt mazāk</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Rādīt vairāk</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>

@@ -2593,6 +2593,14 @@
         <source>Saved to Downloads</source>
         <translation>Spremljeno u Preuzimanja</translation>
     </message>
+    <message>
+        <source>Show less</source>
+        <translation>Prikaži manje</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Prikaži više</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
