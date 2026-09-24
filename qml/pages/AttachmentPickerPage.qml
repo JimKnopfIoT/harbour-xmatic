@@ -20,6 +20,11 @@ Dialog {
     /// picker: a dialog cannot push a page and pop itself in one breath.
     property bool otherFilesWanted: false
 
+    /// Whether the caller holds a draft, and whether the pull-down's entry for it
+    /// was tapped. The text itself never comes here.
+    property bool draftText: false
+    property bool textFileWanted: false
+
     /// "gallery" or "files".
     property string mode: "gallery"
 
@@ -37,7 +42,7 @@ Dialog {
     readonly property bool canGoUp: dialog.directory !== dialog.root
                                     && dialog.directory.length > dialog.root.length
 
-    canAccept: picked.length > 0 || otherFilesWanted
+    canAccept: picked.length > 0 || otherFilesWanted || textFileWanted
 
     function up() {
         if (!dialog.canGoUp) {
@@ -76,6 +81,11 @@ Dialog {
 
     function askForOtherFiles() {
         dialog.otherFilesWanted = true
+        dialog.accept()
+    }
+
+    function askForTextFile() {
+        dialog.textFileWanted = true
         dialog.accept()
     }
 
@@ -266,6 +276,12 @@ Dialog {
 
         PullDownMenu {
             MenuItem {
+                text: qsTr("Send text as a file")
+                visible: dialog.draftText
+                onClicked: dialog.askForTextFile()
+            }
+
+            MenuItem {
                 text: qsTr("Other files")
                 onClicked: dialog.askForOtherFiles()
             }
@@ -301,6 +317,12 @@ Dialog {
         clip: true
 
         PullDownMenu {
+            MenuItem {
+                text: qsTr("Send text as a file")
+                visible: dialog.draftText
+                onClicked: dialog.askForTextFile()
+            }
+
             MenuItem {
                 text: qsTr("Other files")
                 onClicked: dialog.askForOtherFiles()

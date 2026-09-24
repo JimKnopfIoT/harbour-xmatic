@@ -350,6 +350,10 @@
         <source>Videos</source>
         <translation>Videot</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Lähetä teksti tiedostona</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1496,6 +1500,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Kuva</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Ääniviesti</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Tiedosto</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Sijainti</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Kysely: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Kysely</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Salattu viesti</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2597,6 +2636,10 @@
         <source>Show more</source>
         <translation>Näytä lisää</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Tekstiä ei voitu kirjoittaa tiedostoksi</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3091,6 +3134,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Johdettu spacesta itsestään, jokaiselle eri</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Space-merkintä huoneen kuvassa on kytketty pois kohdasta Tili, Ulkoasu. Niin kauan kuin se on pois, tätä väriä ei piirretä mihinkään.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3504,6 +3551,10 @@
         <source>Could not save</source>
         <translation>Tallennus ei onnistunut</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Välitä</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3581,30 +3632,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Kuva</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Ääniviesti</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Tiedosto</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Sijainti</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Salattu viesti</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3630,14 +3657,6 @@
     <message>
         <source>New message</source>
         <translation>Uusi viesti</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Kysely: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Kysely</translation>
     </message>
 </context>
 </TS>

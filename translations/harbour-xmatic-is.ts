@@ -350,6 +350,10 @@
         <source>Videos</source>
         <translation>Myndskeið</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Senda textann sem skrá</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1496,6 +1500,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Mynd</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Myndskeið</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Raddskilaboð</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Skrá</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Staðsetning</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Könnun: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Könnun</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Dulkóðuð skilaboð</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2597,6 +2636,10 @@
         <source>Show more</source>
         <translation>Sýna meira</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Ekki tókst að skrifa textann sem skrá</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3091,6 +3134,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Tekinn af svæðinu sjálfu, ólíkur fyrir hvert</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Merking Space á mynd spjallrásar er slökkt undir Reikningur, Útlit. Á meðan slökkt er á henni er þessi litur hvergi teiknaður.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3504,6 +3551,10 @@
         <source>Could not save</source>
         <translation>Ekki tókst að vista</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Áframsenda</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3581,30 +3632,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Mynd</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Myndskeið</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Raddskilaboð</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Skrá</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Staðsetning</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Dulkóðuð skilaboð</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3630,14 +3657,6 @@
     <message>
         <source>New message</source>
         <translation>Ný skilaboð</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Könnun: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Könnun</translation>
     </message>
 </context>
 </TS>

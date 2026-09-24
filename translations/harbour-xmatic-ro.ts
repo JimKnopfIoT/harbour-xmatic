@@ -351,6 +351,10 @@
         <source>Videos</source>
         <translation>Videoclipuri</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Trimite textul ca fișier</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1499,6 +1503,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Imagine</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Mesaj vocal</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fișier</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Locație</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Sondaj: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Sondaj</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Mesaj criptat</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2601,6 +2640,10 @@
         <source>Show more</source>
         <translation>Afișează mai mult</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Textul nu a putut fi scris ca fișier</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3095,6 +3138,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Luată din spațiul însuși, alta pentru fiecare</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Marcarea Space pe imaginea camerei este dezactivată în Cont, Aspect. Cât timp este dezactivată, această culoare nu este desenată nicăieri.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3510,6 +3557,10 @@
         <source>Could not save</source>
         <translation>Nu s-a putut salva</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Redirecționează</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3587,30 +3638,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Imagine</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Mesaj vocal</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Fișier</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Locație</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Mesaj criptat</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3638,14 +3665,6 @@
     <message>
         <source>New message</source>
         <translation>Mesaj nou</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Sondaj: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Sondaj</translation>
     </message>
 </context>
 </TS>

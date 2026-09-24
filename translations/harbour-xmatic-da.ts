@@ -350,6 +350,10 @@
         <source>Videos</source>
         <translation>Videoer</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Send teksten som en fil</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1496,6 +1500,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Billede</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Talebesked</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fil</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Placering</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Afstemning: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Afstemning</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Krypteret besked</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2597,6 +2636,10 @@
         <source>Show more</source>
         <translation>Vis mere</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Teksten kunne ikke skrives som en fil</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3091,6 +3134,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Taget fra selve space&apos;et, forskellig for hvert enkelt</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Markeringen af Space på rummets billede er slået fra under Konto, Udseende. Så længe den er slået fra, tegnes denne farve ingen steder.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3504,6 +3551,10 @@
         <source>Could not save</source>
         <translation>Kunne ikke gemmes</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Videresend</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3581,30 +3632,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Billede</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Talebesked</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Fil</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Placering</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Krypteret besked</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3630,14 +3657,6 @@
     <message>
         <source>New message</source>
         <translation>Ny besked</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Afstemning: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Afstemning</translation>
     </message>
 </context>
 </TS>

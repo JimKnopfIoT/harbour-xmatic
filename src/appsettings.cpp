@@ -166,7 +166,9 @@ void AppSettings::setClickableLinks(bool enabled)
 bool AppSettings::spaceInitials() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("ui/spaceInitials"), true).toBool();
+    // Off by default: a letter over every picture was asked for by one user and
+    // not wanted by others, and it says nothing to whoever keeps no spaces.
+    return settings.value(QStringLiteral("ui/spaceInitials"), false).toBool();
 }
 
 void AppSettings::setSpaceInitials(bool enabled)

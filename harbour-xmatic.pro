@@ -315,6 +315,7 @@ DISTFILES += \
     qml/pages/LanguagePage.qml \
     qml/pages/Formatting.js \
     qml/pages/MatrixLinks.js \
+    qml/pages/Preview.js \
     qml/pages/ConfirmDialog.qml \
     qml/pages/ImageViewPage.qml \
     qml/pages/ForwardPage.qml \
@@ -342,5 +343,5 @@ DISTFILES += \
     qml/pages/SendMediaPage.qml
 
 lupdate_only {
-    SOURCES += qml/*.qml qml/cover/*.qml qml/pages/*.qml
+    SOURCES += qml/*.qml qml/cover/*.qml qml/pages/*.qml qml/pages/*.js
 }

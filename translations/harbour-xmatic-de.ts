@@ -350,6 +350,10 @@
         <source>Videos</source>
         <translation>Videos</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Text als Datei senden</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1496,6 +1500,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Bild</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Sprachnachricht</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Datei</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Standort</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Umfrage: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Umfrage</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Verschlüsselte Nachricht</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2597,6 +2636,10 @@
         <source>Show more</source>
         <translation>Mehr anzeigen</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Der Text ließ sich nicht als Datei schreiben</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3091,6 +3134,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Aus dem Space selbst abgeleitet, für jeden eine andere</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Die Space-Marke auf dem Raumbild ist unter Konto, Darstellung abgeschaltet. Solange sie aus ist, wird diese Farbe nirgends gezeichnet.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3504,6 +3551,10 @@
         <source>Could not save</source>
         <translation>Speichern fehlgeschlagen</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Weiterleiten</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3596,30 +3647,6 @@
         </translation>
     </message>
     <message>
-        <source>Picture</source>
-        <translation>Bild</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Sprachnachricht</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Datei</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Standort</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Verschlüsselte Nachricht</translation>
-    </message>
-    <message>
         <source>Incoming video call</source>
         <translation>Eingehender Videoanruf</translation>
     </message>
@@ -3630,14 +3657,6 @@
     <message>
         <source>New message</source>
         <translation>Neue Nachricht</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Umfrage: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Umfrage</translation>
     </message>
 </context>
 </TS>

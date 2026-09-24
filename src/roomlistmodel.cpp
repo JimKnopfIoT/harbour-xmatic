@@ -75,6 +75,10 @@ QHash<int, QByteArray> RoomListModel::roleNames() const
     names.insert(FavouriteRole, "favourite");
     names.insert(LowPriorityRole, "lowPriority");
     names.insert(TombstonedRole, "tombstoned");
+    // The last event of the room, as the core reduced it: a kind every list
+    // names in its own words, and the text for the two kinds that have one.
+    names.insert(PreviewKindRole, "previewKind");
+    names.insert(PreviewTextRole, "previewText");
     return names;
 }
 

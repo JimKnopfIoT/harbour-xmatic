@@ -25,7 +25,8 @@ repository.
   clear, red is missing. Where something is not green they come up once after
   starting, with the action that fits and "later" always available
 * Room list over Simplified Sliding Sync: search, unread counts, favourites,
-  low priority, mute
+  low priority, mute. Each row carries the last message and when it arrived;
+  a picture, a voice message or a poll is named by what it is
 * Timeline in encrypted rooms: send, reply, edit, delete, paginate. A message
   that could not be sent can be sent again or discarded
 * Reactions, sent and shown, grouped by character with a count; the picker's
