@@ -350,6 +350,10 @@
         <source>Videos</source>
         <translation>Video&apos;s</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Tekst als bestand versturen</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1496,6 +1500,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Afbeelding</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Spraakbericht</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Bestand</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Locatie</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Peiling: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Peiling</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Versleuteld bericht</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2597,6 +2636,10 @@
         <source>Show more</source>
         <translation>Meer tonen</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>De tekst kon niet als bestand worden weggeschreven</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3091,6 +3134,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Afgeleid van de Space zelf, voor elke Space een andere</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Het markeren van de Space op de afbeelding van de kamer staat uit onder Account, Weergave. Zolang het uit staat, wordt deze kleur nergens getekend.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3504,6 +3551,10 @@
         <source>Could not save</source>
         <translation>Opslaan mislukt</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Doorsturen</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3581,30 +3632,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Afbeelding</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Spraakbericht</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Bestand</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Locatie</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Versleuteld bericht</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3630,14 +3657,6 @@
     <message>
         <source>New message</source>
         <translation>Nieuw bericht</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Peiling: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Peiling</translation>
     </message>
 </context>
 </TS>

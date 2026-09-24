@@ -354,6 +354,10 @@
         <source>Videos</source>
         <translation>مقاطع الفيديو</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>إرسال النص كملف</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1508,6 +1512,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>صورة</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>فيديو</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>رسالة صوتية</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>ملف</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>موقع</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>استطلاع: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>استطلاع</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>رسالة مُعمّاة</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2613,6 +2652,10 @@
         <source>Show more</source>
         <translation>عرض المزيد</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>تعذّر كتابة النص كملف</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3107,6 +3150,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>مأخوذ من المساحة نفسها، ولكل مساحة لون مختلف</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>وضع علامة الـ Space على صورة الغرفة مُعطَّل في الحساب، المظهر. وما دام مُعطَّلًا، لن يُرسم هذا اللون في أي مكان.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3528,6 +3575,10 @@
         <source>Could not save</source>
         <translation>تعذّر الحفظ</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>إعادة توجيه</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3606,30 +3657,6 @@
 <context>
     <name>harbour-xmatic</name>
     <message>
-        <source>Picture</source>
-        <translation>صورة</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>فيديو</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>رسالة صوتية</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>ملف</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>موقع</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>رسالة مُعمّاة</translation>
-    </message>
-    <message>
         <source>Incoming call</source>
         <translation>مكالمة واردة</translation>
     </message>
@@ -3662,14 +3689,6 @@
             <numerusform>%n رسالة جديدة</numerusform>
             <numerusform>%n رسالة جديدة</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>استطلاع: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>استطلاع</translation>
     </message>
 </context>
 </TS>

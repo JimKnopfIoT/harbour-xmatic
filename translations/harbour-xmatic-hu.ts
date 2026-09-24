@@ -349,6 +349,10 @@
         <source>Videos</source>
         <translation>Videók</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Szöveg küldése fájlként</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1493,6 +1497,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Kép</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Videó</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Hangüzenet</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fájl</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Helyzet</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Szavazás: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Szavazás</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Titkosított üzenet</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2593,6 +2632,10 @@
         <source>Show more</source>
         <translation>Több megjelenítése</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>A szöveget nem sikerült fájlba írni</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3087,6 +3130,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Magából a térből származik, mindegyiké más</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>A Space jelölése a szoba képén ki van kapcsolva a(z) Fiók, Megjelenés alatt. Amíg ki van kapcsolva, ez a szín sehol nem jelenik meg.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3498,6 +3545,10 @@
         <source>Could not save</source>
         <translation>Nem sikerült menteni</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Továbbítás</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3575,30 +3626,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Kép</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Videó</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Hangüzenet</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Fájl</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Helyzet</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Titkosított üzenet</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3622,14 +3649,6 @@
     <message>
         <source>New message</source>
         <translation>Új üzenet</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Szavazás: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Szavazás</translation>
     </message>
 </context>
 </TS>

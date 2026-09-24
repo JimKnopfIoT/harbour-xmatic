@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.37.0
+Version:    0.38.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -118,6 +118,21 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Sep 24 2026 harbour-xmatic contributors 0.38.0-1
+- The chat list shows the last message in each room, under the name, with the
+  time of it beside the name. A picture, a voice message or a poll is named by
+  what it is; a message still waiting for its key says so.
+- The initial of a room's space is no longer drawn over its picture unless it
+  is switched on under Account, Appearance. It was wanted by some and not by
+  others; whoever had it on keeps it.
+- A long message is no longer turned into a text file by itself. It goes out as
+  a message and arrives folded to three lines with "Show more"; sending it as a
+  .txt is an offer now - a long press on the attachment clip, or an entry in
+  the attachment picker.
+- Forwarding an attachment sends the file instead of its name. A forwarded
+  video used to arrive as a text message reading "clip.mp4"; audio and
+  documents went the same way. The video page can forward as well.
+
 * Tue Sep 22 2026 harbour-xmatic contributors 0.37.0-1
 - A room opens again where you were reading it: leave it in the middle of its
   history and it comes back to that place, for as long as the app runs. It

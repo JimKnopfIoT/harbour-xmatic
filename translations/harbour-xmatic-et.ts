@@ -350,6 +350,10 @@
         <source>Videos</source>
         <translation>Videod</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Saada tekst failina</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1496,6 +1500,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Pilt</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Häälsõnum</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fail</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Asukoht</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Küsitlus: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Küsitlus</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Krüptitud sõnum</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2597,6 +2636,10 @@
         <source>Show more</source>
         <translation>Näita rohkem</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Teksti ei õnnestunud failina kirjutada</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3091,6 +3134,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Tuletatud ruumist endast, igaühel erinev</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Space&apos;i märkimine toa pildil on välja lülitatud jaotises Konto, Välimus. Kuni see on väljas, ei joonistata seda värvi kusagil.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3504,6 +3551,10 @@
         <source>Could not save</source>
         <translation>Salvestamine ebaõnnestus</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Edasta</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3581,30 +3632,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Pilt</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Häälsõnum</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Fail</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Asukoht</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Krüptitud sõnum</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3630,14 +3657,6 @@
     <message>
         <source>New message</source>
         <translation>Uus sõnum</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Küsitlus: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Küsitlus</translation>
     </message>
 </context>
 </TS>

@@ -351,6 +351,10 @@
         <source>Videos</source>
         <translation>Filmy</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Wyślij tekst jako plik</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1499,6 +1503,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Obraz</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Wideo</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Wiadomość głosowa</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Plik</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Lokalizacja</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Ankieta: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Ankieta</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Zaszyfrowana wiadomość</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2601,6 +2640,10 @@
         <source>Show more</source>
         <translation>Pokaż więcej</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Nie udało się zapisać tekstu jako pliku</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3095,6 +3138,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Wzięty z samej przestrzeni, dla każdej inny</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Oznaczanie Space na obrazku pokoju jest wyłączone w Konto, Wygląd. Dopóki jest wyłączone, ten kolor nigdzie się nie pojawia.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3510,6 +3557,10 @@
         <source>Could not save</source>
         <translation>Nie udało się zapisać</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Przekaż</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3587,30 +3638,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Obraz</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Wideo</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Wiadomość głosowa</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Plik</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Lokalizacja</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Zaszyfrowana wiadomość</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3638,14 +3665,6 @@
     <message>
         <source>New message</source>
         <translation>Nowa wiadomość</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Ankieta: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Ankieta</translation>
     </message>
 </context>
 </TS>

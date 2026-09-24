@@ -350,6 +350,10 @@
         <source>Videos</source>
         <translation>Видеа</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Изпращане на текста като файл</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1496,6 +1500,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Изображение</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Видео</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Гласово съобщение</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Файл</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Местоположение</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Анкета: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Анкета</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Шифровано съобщение</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2597,6 +2636,10 @@
         <source>Show more</source>
         <translation>Покажи още</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Текстът не можа да бъде записан като файл</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3091,6 +3134,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Взет от самото пространство, различен за всяко</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Отбелязването на Space върху картинката на стаята е изключено в Профил, Изглед. Докато е изключено, този цвят не се показва никъде.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3504,6 +3551,10 @@
         <source>Could not save</source>
         <translation>Неуспешно запазване</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Препрати</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3581,30 +3632,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Изображение</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Видео</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Гласово съобщение</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Файл</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Местоположение</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Шифровано съобщение</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3630,14 +3657,6 @@
     <message>
         <source>New message</source>
         <translation>Ново съобщение</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Анкета: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Анкета</translation>
     </message>
 </context>
 </TS>

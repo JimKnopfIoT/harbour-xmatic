@@ -13,6 +13,8 @@ Page {
     /// turns for the life of the page over something that is not coming.
     property bool mediaFailed: false
     property string fileName: ""
+    /// The event's own type. Forwarding without it sends the film as a plain file.
+    property string mimeType: ""
     /// The event's own figure, shown while the download runs. Zero where the
     /// sender declared none - and a claim either way, so it is only shown while
     /// it is inside what the core would actually fetch.
@@ -52,6 +54,15 @@ Page {
         contentHeight: height
 
         PullDownMenu {
+            MenuItem {
+                text: qsTr("Forward")
+                enabled: page.source.length > 0
+                onClicked: pageStack.push(Qt.resolvedUrl("ForwardPage.qml"), {
+                                              path: page.source,
+                                              mimeType: page.mimeType
+                                          })
+            }
+
             MenuItem {
                 text: qsTr("Save")
                 enabled: page.source.length > 0

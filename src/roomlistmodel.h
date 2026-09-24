@@ -33,6 +33,8 @@ public:
         FavouriteRole,
         LowPriorityRole,
         TombstonedRole,
+        PreviewKindRole,
+        PreviewTextRole,
     };
 
     explicit RoomListModel(QObject *parent = nullptr);

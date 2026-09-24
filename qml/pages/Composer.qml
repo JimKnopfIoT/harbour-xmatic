@@ -35,6 +35,9 @@ Column {
 
     signal submitted()
     signal attachRequested()
+    /// The draft as a .txt: the long press on the clip, the short way to the
+    /// entry the picker's pull-down carries.
+    signal textFileRequested()
     signal emojiRequested()
     /// A recording is on its way: the conversation should follow its tail again.
     signal recordingStopped()
@@ -393,6 +396,10 @@ Column {
         IconButton {
             id: attachButton
 
+            /// This press asked for the draft as a file. Silica sends `clicked` after
+            /// `pressAndHold` as well, and the picker would open on top of the send.
+            property bool held: false
+
             anchors {
                 // Held against the arrow even while the microphone stands in its place:
                 // both own that slot, never both at once, so the clip does not move.
@@ -405,7 +412,20 @@ Column {
             // The same step down as the face at the other end. Both are offers; the send
             // arrow is the action and brightens by itself once there is something to send.
             icon.opacity: Theme.opacityLow
-            onClicked: composer.attachRequested()
+            onPressed: held = false
+            onPressAndHold: {
+                if (messageField.text.trim().length > 0
+                        || messageField.inputMethodComposing) {
+                    held = true
+                    composer.textFileRequested()
+                }
+            }
+            onClicked: {
+                if (held) {
+                    return
+                }
+                composer.attachRequested()
+            }
         }
 
         IconButton {

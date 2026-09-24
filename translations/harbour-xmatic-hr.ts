@@ -351,6 +351,10 @@
         <source>Videos</source>
         <translation>Videozapisi</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Pošalji tekst kao datoteku</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1499,6 +1503,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Slika</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Videozapis</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Glasovna poruka</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Datoteka</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Lokacija</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Anketa: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Anketa</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Šifrirana poruka</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2601,6 +2640,10 @@
         <source>Show more</source>
         <translation>Prikaži više</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Tekst se nije mogao zapisati kao datoteka</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3095,6 +3138,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Izvedena iz samog prostora, za svaki druga</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Označavanje Spacea na slici sobe isključeno je u Račun, Izgled. Dok je isključeno, ova se boja nigdje ne prikazuje.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3510,6 +3557,10 @@
         <source>Could not save</source>
         <translation>Spremanje nije uspjelo</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Proslijedi</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3587,30 +3638,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Slika</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Videozapis</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Glasovna poruka</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Datoteka</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Lokacija</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Šifrirana poruka</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3638,14 +3665,6 @@
     <message>
         <source>New message</source>
         <translation>Nova poruka</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Anketa: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Anketa</translation>
     </message>
 </context>
 </TS>

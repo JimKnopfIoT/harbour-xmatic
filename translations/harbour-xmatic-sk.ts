@@ -351,6 +351,10 @@
         <source>Videos</source>
         <translation>Videá</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Odoslať text ako súbor</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1499,6 +1503,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Obrázok</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Hlasová správa</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Súbor</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Poloha</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Anketa: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Anketa</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Šifrovaná správa</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2601,6 +2640,10 @@
         <source>Show more</source>
         <translation>Zobraziť viac</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Text sa nepodarilo zapísať ako súbor</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3095,6 +3138,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Odvodená zo samotného priestoru, pre každý iná</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Označenie Space na obrázku miestnosti je vypnuté v Účet, Vzhľad. Kým je vypnuté, táto farba sa nikde nevykresľuje.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3510,6 +3557,10 @@
         <source>Could not save</source>
         <translation>Nepodarilo sa uložiť</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Preposlať</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3587,30 +3638,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Obrázok</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Hlasová správa</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Súbor</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Poloha</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Šifrovaná správa</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3638,14 +3665,6 @@
     <message>
         <source>New message</source>
         <translation>Nová správa</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Anketa: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Anketa</translation>
     </message>
 </context>
 </TS>

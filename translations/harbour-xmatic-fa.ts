@@ -349,6 +349,10 @@
         <source>Videos</source>
         <translation>ویدیوها</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>ارسال متن به‌صورت فایل</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1493,6 +1497,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>تصویر</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>ویدیو</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>پیام صوتی</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>پرونده</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>موقعیت</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>نظرسنجی: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>نظرسنجی</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>پیام رمزگذاری‌شده</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2593,6 +2632,10 @@
         <source>Show more</source>
         <translation>نمایش بیشتر</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>نوشتن متن به‌صورت فایل ممکن نشد</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3087,6 +3130,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>برگرفته از خود Space، برای هر کدام رنگی دیگر</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>نشان‌گذاری Space روی تصویر اتاق در حساب، ظاهر خاموش است. تا وقتی روشن نشود، این رنگ هیچ‌جا کشیده نمی‌شود.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3498,6 +3545,10 @@
         <source>Could not save</source>
         <translation>ذخیره نشد</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>هدایت</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3576,30 +3627,6 @@
 <context>
     <name>harbour-xmatic</name>
     <message>
-        <source>Picture</source>
-        <translation>تصویر</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>ویدیو</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>پیام صوتی</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>پرونده</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>موقعیت</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>پیام رمزگذاری‌شده</translation>
-    </message>
-    <message>
         <source>Incoming call</source>
         <translation>تماس ورودی</translation>
     </message>
@@ -3622,14 +3649,6 @@
         <translation>
             <numerusform>%n پیام تازه</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>نظرسنجی: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>نظرسنجی</translation>
     </message>
 </context>
 </TS>

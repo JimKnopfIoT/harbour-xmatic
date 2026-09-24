@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+import "Preview.js" as Preview
+
 // One row of a room list, shared by three views. The width flows one way only
 // - from the list down - or Qt breaks the loop by zeroing a height.
 ListItem {
@@ -35,6 +37,11 @@ ListItem {
                                  ? Formatter.TimepointRelative
                                  : Formatter.DateMedium)
     }
+
+    // What was last said in the room, in one line. Empty where the core has no
+    // event for it yet, or where the row stands for something else entirely.
+    readonly property string previewLine: Preview.line(model.previewKind || "",
+                                                       model.previewText || "")
 
     contentHeight: Theme.itemSizeMedium
 
@@ -72,16 +79,24 @@ ListItem {
     }
 
     Column {
+        id: infoColumn
+
         anchors {
             left: roomAvatar.right
             leftMargin: Theme.paddingMedium
-            right: unreadBadge.left
-            rightMargin: Theme.paddingMedium
+            right: parent.right
+            // The room for the two things standing to the right, whichever is
+            // wider. Read from them, never the other way round.
+            rightMargin: Theme.horizontalPageMargin + Theme.paddingMedium
+                         + Math.max(activityLabel.visible ? activityLabel.width : 0,
+                                    unreadBadge.visible ? unreadBadge.width : 0)
             verticalCenter: parent.verticalCenter
         }
         spacing: Theme.paddingSmall
 
         Row {
+            id: nameRow
+
             width: parent.width
             spacing: Theme.paddingSmall
 
@@ -160,20 +175,41 @@ ListItem {
         }
 
         Label {
+            id: previewLabel
+
             width: parent.width
             font.pixelSize: Theme.fontSizeExtraSmall
             color: roomItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
             truncationMode: TruncationMode.Fade
-            // An upgraded room takes no new messages, so its last activity says the least
-            // of anything that could stand here - and a dead room looks like a quiet one.
+            textFormat: Text.PlainText
+            // What the row is, before what was said in it: an invitation has no
+            // conversation yet, and an upgraded room takes no new messages.
             text: model.membership === "invited"
                   ? qsTr("Invitation")
                   : (model.tombstoned === true
                      ? qsTr("Replaced by a new room")
                      : (model.space
                         ? qsTr("Space")
-                        : roomItem.activityText))
+                        : roomItem.previewLine))
         }
+    }
+
+    // When something was last said, on the line the name is on.
+    Label {
+        id: activityLabel
+
+        anchors {
+            right: parent.right
+            rightMargin: Theme.horizontalPageMargin
+        }
+        // Placed, not anchored: the row it belongs to is a child of the column
+        // beside it, and QML anchors reach parents and siblings only.
+        y: infoColumn.y + nameRow.y + Math.round((nameRow.height - height) / 2)
+        visible: text.length > 0
+        text: roomItem.activityText
+        textFormat: Text.PlainText
+        font.pixelSize: Theme.fontSizeExtraSmall
+        color: roomItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
     }
 
     // Unread indicator: mentions are what actually needs attention, so they get
@@ -184,8 +220,9 @@ ListItem {
         anchors {
             right: parent.right
             rightMargin: Theme.horizontalPageMargin
-            verticalCenter: parent.verticalCenter
         }
+        y: infoColumn.y + previewLabel.y
+           + Math.round((previewLabel.height - height) / 2)
         visible: model.unread > 0 || model.mentions > 0
         // Sized from the number so pill and digits grow together: the fixed-height
         // form kept the count near the smallest font and read as a speck.

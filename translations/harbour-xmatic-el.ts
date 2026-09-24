@@ -350,6 +350,10 @@
         <source>Videos</source>
         <translation>Βίντεο</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>Αποστολή κειμένου ως αρχείο</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1496,6 +1500,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>Εικόνα</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Βίντεο</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Φωνητικό μήνυμα</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Αρχείο</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Τοποθεσία</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>Δημοσκόπηση: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>Δημοσκόπηση</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>Κρυπτογραφημένο μήνυμα</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2597,6 +2636,10 @@
         <source>Show more</source>
         <translation>Εμφάνιση περισσότερων</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>Το κείμενο δεν μπόρεσε να γραφτεί ως αρχείο</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3091,6 +3134,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Προκύπτει από τον ίδιο τον χώρο, διαφορετικό για κάθε έναν</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>Η σήμανση του Space πάνω στην εικόνα του δωματίου είναι απενεργοποιημένη στο Λογαριασμός, Εμφάνιση. Όσο είναι ανενεργή, αυτό το χρώμα δεν σχεδιάζεται πουθενά.</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3504,6 +3551,10 @@
         <source>Could not save</source>
         <translation>Η αποθήκευση απέτυχε</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>Προώθηση</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3581,30 +3632,6 @@
 </context>
 <context>
     <name>harbour-xmatic</name>
-    <message>
-        <source>Picture</source>
-        <translation>Εικόνα</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Βίντεο</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Φωνητικό μήνυμα</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Αρχείο</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Τοποθεσία</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>Κρυπτογραφημένο μήνυμα</translation>
-    </message>
     <message numerus="yes">
         <source>%n mention(s)</source>
         <translation>
@@ -3630,14 +3657,6 @@
     <message>
         <source>New message</source>
         <translation>Νέο μήνυμα</translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>Δημοσκόπηση: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>Δημοσκόπηση</translation>
     </message>
 </context>
 </TS>

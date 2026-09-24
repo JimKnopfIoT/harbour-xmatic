@@ -8,6 +8,7 @@ import Sailfish.Share 1.0
 import "pages"
 import "pages/SecurityStatus.js" as SecurityStatus
 import "pages/MatrixLinks.js" as MatrixLinks
+import "pages/Preview.js" as Preview
 
 ApplicationWindow {
     id: app
@@ -143,22 +144,6 @@ ApplicationWindow {
                 // just tapped.
                 app.openPendingLinkPage()
             }
-        }
-    }
-
-    // One line for a notification body from the core's preview fields.
-    function previewLine(kind, text) {
-        switch (kind) {
-        case "text": return text
-        case "emote": return "* " + text
-        case "image": return qsTr("Picture")
-        case "video": return qsTr("Video")
-        case "audio": return qsTr("Voice message")
-        case "file": return qsTr("File")
-        case "location": return qsTr("Location")
-        case "poll": return text.length > 0 ? qsTr("Poll: %1").arg(text) : qsTr("Poll")
-        case "encrypted": return qsTr("Encrypted message")
-        default: return ""
         }
     }
 
@@ -574,7 +559,7 @@ ApplicationWindow {
                                    ? roomName : qsTr("New message")
             // The count is the default, the message only where the user allowed it.
             // Non-text events are named by kind, and an undecryptable one says so.
-            var preview = settings.notificationPreview ? app.previewLine(previewKind, previewText) : ""
+            var preview = settings.notificationPreview ? Preview.line(previewKind, previewText) : ""
             notification.body = preview.length > 0 ? preview
                     : mentions > 0
                       ? qsTr("%n mention(s)", "", mentions)

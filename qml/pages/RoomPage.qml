@@ -552,6 +552,8 @@ Page {
                     submitMedia(action)
                 } else if (action.kind === "otherFiles") {
                     pageStack.push(multiContentPicker)
+                } else if (action.kind === "textFile") {
+                    sendTextFile()
                 } else if (action.kind === "react") {
                     // These three push a page of their own. From the actions page, after its pop
                     // had started, `push()` handed nothing back and the picker never appeared.
@@ -1723,11 +1725,20 @@ Page {
 
                     MenuItem {
                         text: qsTr("Forward")
-                        visible: (model.body || "").length > 0 && !row.isImage
+                        // An attachment goes as the file, never as its name: hung off the body
+                        // alone, this forwarded a video as the sentence "clip.mp4".
+                        visible: (row.isFile || row.isImage
+                                  || (model.body || "").length > 0)
                                  && !page.isLandscape
-                        onClicked: pageStack.push(Qt.resolvedUrl("ForwardPage.qml"), {
-                                                      body: model.body
-                                                  })
+                        onClicked: {
+                            if (row.isFile || row.isImage) {
+                                page.forwardAttachment(model)
+                                return
+                            }
+                            pageStack.push(Qt.resolvedUrl("ForwardPage.qml"), {
+                                               body: model.body
+                                           })
+                        }
                     }
 
 
@@ -3271,6 +3282,7 @@ Page {
 
                     onSubmitted: page.submit()
                     onAttachRequested: pageStack.push(picturePicker)
+                    onTextFileRequested: page.sendTextFile()
                     onEmojiRequested: page.pickEmoji()
                     onRecordingStopped: page.followTail = true
                 }
@@ -3285,9 +3297,16 @@ Page {
         id: picturePicker
 
         AttachmentPickerPage {
+            // Only whether there is one: the text stays on this page.
+            draftText: messageComposer.text.trim().length > 0
+
             onAccepted: {
                 // Handed to the room, never pushed from here: a dialog that is
                 // popping does not hand back the page it would push.
+                if (textFileWanted) {
+                    page.pendingAction = { "kind": "textFile" }
+                    return
+                }
                 if (otherFilesWanted) {
                     page.pendingAction = { "kind": "otherFiles" }
                     return
@@ -3431,15 +3450,6 @@ Page {
             page.cancelEdit()
             return
         }
-        // Past three pages a bubble is a document: it goes as one.
-        if (page.beyondThreePages(messageComposer.text)
-                && matrix.sendTextAsFile(messageComposer.text, page.replyingEventId)) {
-            messageComposer.clearField()
-            messageComposer.clearMentions()
-            page.clearReplyState()
-            page.afterSend()
-            return
-        }
         var mentions = messageComposer.mentionIds()
         if (page.replyingEventId.length > 0) {
             matrix.replyToMessage(page.replyingEventId, messageComposer.text, mentions)
@@ -3454,22 +3464,32 @@ Page {
         page.afterSend()
     }
 
-    /// Laid out as an upright bubble would be, measured in screen heights.
-    function beyondThreePages(text) {
-        draftMeasure.text = text
-        var beyond = draftMeasure.implicitHeight > 3 * Screen.height
-        draftMeasure.text = ""
-        return beyond
+    /// The draft as a .txt attachment, asked for in the attachment picker. Through
+    /// the same gate a typed message goes through: a file reaches the same recipients.
+    function sendTextFile() {
+        Qt.inputMethod.commit()
+        if (messageComposer.text.trim().length === 0) {
+            return
+        }
+        var pending = Composing.pendingUnverified(page.unverifiedUsers, matrix)
+        if (pending.length > 0) {
+            var dialog = pageStack.push(Qt.resolvedUrl("UnverifiedRecipientsDialog.qml"),
+                                        { users: pending })
+            dialog.accepted.connect(page.doSendTextFile)
+            return
+        }
+        page.doSendTextFile()
     }
 
-    Label {
-        id: draftMeasure
-
-        visible: false
-        width: Screen.width * 0.82 - 2 * Theme.paddingMedium
-        wrapMode: Text.Wrap
-        textFormat: Text.PlainText
-        font.pixelSize: Theme.fontSizeSmall
+    function doSendTextFile() {
+        if (!matrix.sendTextAsFile(messageComposer.text, page.replyingEventId)) {
+            page.showNotice(qsTr("The text could not be written as a file"))
+            return
+        }
+        messageComposer.clearField()
+        messageComposer.clearMentions()
+        page.clearReplyState()
+        page.afterSend()
     }
 
     /// Long messages start folded; this remembers which are open. Keyed by row id,
@@ -3604,6 +3624,7 @@ Page {
                            mediaKey: key,
                            source: known.length > 0 ? "file://" + known : "",
                            fileName: media.filename || "",
+                           mimeType: media.mimetype || "",
                            declaredSize: media.size || 0,
                            startMuted: silent
                        })

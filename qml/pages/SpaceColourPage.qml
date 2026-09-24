@@ -35,6 +35,18 @@ Page {
                 description: page.spaceName
             }
 
+            // The colour is drawn nowhere else, so a switched-off mark makes this
+            // whole page look broken rather than inactive.
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: !settings.spaceInitials
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryHighlightColor
+                text: qsTr("Marking the space on a room's picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.")
+            }
+
             // The row as the chat list draws it, so the choice is made against
             // what it will look like rather than against a swatch.
             Item {

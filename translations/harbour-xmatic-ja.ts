@@ -349,6 +349,10 @@
         <source>Videos</source>
         <translation>動画</translation>
     </message>
+    <message>
+        <source>Send text as a file</source>
+        <translation>テキストをファイルとして送信</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -1493,6 +1497,41 @@
     </message>
 </context>
 <context>
+    <name>Preview</name>
+    <message>
+        <source>Picture</source>
+        <translation>画像</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>動画</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>ボイスメッセージ</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>ファイル</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>位置情報</translation>
+    </message>
+    <message>
+        <source>Poll: %1</source>
+        <translation>アンケート: %1</translation>
+    </message>
+    <message>
+        <source>Poll</source>
+        <translation>アンケート</translation>
+    </message>
+    <message>
+        <source>Encrypted message</source>
+        <translation>暗号化されたメッセージ</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyPage</name>
     <message>
         <source>Privacy</source>
@@ -2593,6 +2632,10 @@
         <source>Show more</source>
         <translation>もっと見る</translation>
     </message>
+    <message>
+        <source>The text could not be written as a file</source>
+        <translation>テキストをファイルとして書き込めませんでした</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3087,6 +3130,10 @@
         <source>Taken from the space itself, a different one for each</source>
         <translation>Space 自体から決まり、Space ごとに異なります</translation>
     </message>
+    <message>
+        <source>Marking the space on a room&apos;s picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.</source>
+        <translation>部屋の画像への Space の表示は、アカウント の 表示 でオフになっています。オフの間、この色はどこにも描画されません。</translation>
+    </message>
 </context>
 <context>
     <name>SpacePage</name>
@@ -3498,6 +3545,10 @@
         <source>Could not save</source>
         <translation>保存できませんでした</translation>
     </message>
+    <message>
+        <source>Forward</source>
+        <translation>転送</translation>
+    </message>
 </context>
 <context>
     <name>VoiceRecorder</name>
@@ -3576,30 +3627,6 @@
 <context>
     <name>harbour-xmatic</name>
     <message>
-        <source>Picture</source>
-        <translation>画像</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>動画</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>ボイスメッセージ</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>ファイル</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>位置情報</translation>
-    </message>
-    <message>
-        <source>Encrypted message</source>
-        <translation>暗号化されたメッセージ</translation>
-    </message>
-    <message>
         <source>Incoming call</source>
         <translation>着信</translation>
     </message>
@@ -3622,14 +3649,6 @@
         <translation>
             <numerusform>新着メッセージ %n 件</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Poll: %1</source>
-        <translation>アンケート: %1</translation>
-    </message>
-    <message>
-        <source>Poll</source>
-        <translation>アンケート</translation>
     </message>
 </context>
 </TS>
