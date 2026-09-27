@@ -1340,101 +1340,101 @@
         <translation>协议内核不可用。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="579"/>
-        <location filename="../src/matrixbridge.cpp" line="618"/>
-        <location filename="../src/matrixbridge.cpp" line="634"/>
+        <location filename="../src/matrixbridge.cpp" line="583"/>
+        <location filename="../src/matrixbridge.cpp" line="622"/>
+        <location filename="../src/matrixbridge.cpp" line="638"/>
         <source>Enter a homeserver first.</source>
         <translation>请先输入主服务器。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="600"/>
+        <location filename="../src/matrixbridge.cpp" line="604"/>
         <source>Enter username and password first.</source>
         <translation>请先输入用户名和密码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1549"/>
-        <location filename="../src/matrixbridge.cpp" line="1564"/>
+        <location filename="../src/matrixbridge.cpp" line="1553"/>
+        <location filename="../src/matrixbridge.cpp" line="1568"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>暂时无法读取已保存的名单。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1803"/>
+        <location filename="../src/matrixbridge.cpp" line="1808"/>
         <source>Enter a push gateway first.</source>
         <translation>请先填写推送网关。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1831"/>
+        <location filename="../src/matrixbridge.cpp" line="1836"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2169"/>
-        <location filename="../src/matrixbridge.cpp" line="2197"/>
+        <location filename="../src/matrixbridge.cpp" line="2174"/>
+        <location filename="../src/matrixbridge.cpp" line="2202"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2485"/>
+        <location filename="../src/matrixbridge.cpp" line="2494"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2528"/>
+        <location filename="../src/matrixbridge.cpp" line="2537"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2548"/>
+        <location filename="../src/matrixbridge.cpp" line="2557"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3432"/>
+        <location filename="../src/matrixbridge.cpp" line="3441"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3769"/>
+        <location filename="../src/matrixbridge.cpp" line="3778"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3772"/>
+        <location filename="../src/matrixbridge.cpp" line="3781"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3775"/>
+        <location filename="../src/matrixbridge.cpp" line="3784"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3778"/>
+        <location filename="../src/matrixbridge.cpp" line="3787"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3781"/>
+        <location filename="../src/matrixbridge.cpp" line="3790"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3784"/>
+        <location filename="../src/matrixbridge.cpp" line="3793"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3784"/>
+        <location filename="../src/matrixbridge.cpp" line="3793"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3787"/>
+        <location filename="../src/matrixbridge.cpp" line="3796"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3790"/>
+        <location filename="../src/matrixbridge.cpp" line="3799"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -1636,42 +1636,42 @@
         <translation>发送私聊消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="429"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="430"/>
         <source>Mention</source>
         <translation>提及</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="440"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="441"/>
         <source>Verify</source>
         <translation>验证</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="453"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="454"/>
         <source>Withdraw verification</source>
         <translation>撤回验证</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="467"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="468"/>
         <source>Forbid calls</source>
         <translation>禁止通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="467"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="468"/>
         <source>Allow calls</source>
         <translation>允许通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="483"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="484"/>
         <source>Stop ignoring</source>
         <translation>取消忽略</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="483"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="484"/>
         <source>Ignore</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="488"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="489"/>
         <source>Ignoring</source>
         <translation>正在忽略</translation>
     </message>

@@ -67,6 +67,8 @@ class MatrixBridge : public QObject
     /// a picture stuck in a retry greyed out the verify buttons for a minute.
     Q_PROPERTY(bool encryptionBusy READ encryptionBusy NOTIFY busyChanged)
     Q_PROPERTY(bool paginating READ paginating NOTIFY paginatingChanged)
+    /// A direct chat is being looked up or created; a second tap would make a second room.
+    Q_PROPERTY(bool startingDirectChat READ startingDirectChat NOTIFY startingDirectChatChanged)
     Q_PROPERTY(QObject *searchResults READ searchResults CONSTANT)
     /// Its own flag for the reason `paginating` is one: on the global `busy` the
     /// search box greyed out whenever anything else waited on a slow server.
@@ -194,6 +196,7 @@ public:
     /// A request for older messages is in flight. Separate from `busy`, which an
     /// avatar thumbnail also sets - that made the timeline controls dead.
     bool paginating() const { return m_paginateId != 0; }
+    bool startingDirectChat() const { return m_directChatId != 0; }
     QObject *searchResults() { return &m_searchResults; }
     bool searching() const { return m_searchRequest != 0; }
     bool searchHasMore() const { return m_searchHasMore; }
@@ -725,6 +728,7 @@ signals:
     void roomTotalChanged();
     void busyChanged();
     void paginatingChanged();
+    void startingDirectChatChanged();
     void searchingChanged();
     void searchHasMoreChanged();
     void indexingChanged();
@@ -1159,6 +1163,8 @@ private:
     QHash<quint64, PendingCommand> m_pending;
     /// Id of the pagination in flight, 0 when there is none.
     quint64 m_paginateId = 0;
+    /// Id of the `room.directChat` in flight, 0 when there is none.
+    quint64 m_directChatId = 0;
     /// Runs only while something is pending; see checkStalledCommands.
     QTimer *m_stallWatch = nullptr;
     QElapsedTimer m_uptime;
