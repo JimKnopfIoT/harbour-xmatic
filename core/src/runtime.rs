@@ -124,6 +124,8 @@ struct State {
     /// The same for `open_thread`, and deliberately not `opening`: a thread
     /// that is slow to build must not hold up a room switch.
     opening_thread: Mutex<()>,
+    /// Serialises `direct_chat`: a second tap waits and finds the first room.
+    opening_direct: Mutex<()>,
     /// Every room that currently needs a sliding-sync subscription. See
     /// `Subscriptions` — they have to be requested together or not at all.
     subscriptions: Mutex<Subscriptions>,
@@ -264,6 +266,7 @@ pub fn spawn(
         thread: Mutex::new(None),
         opening: Mutex::new(()),
         opening_thread: Mutex::new(()),
+        opening_direct: Mutex::new(()),
         subscriptions: Mutex::new(Subscriptions::default()),
         directory: Mutex::new(None),
         observers: Mutex::new(Vec::new()),
@@ -2041,6 +2044,7 @@ async fn direct_chat(state: &Arc<State>, id: u64, user_id: String) {
         return;
     };
 
+    let _serial = state.opening_direct.lock().await;
     match timeline::direct_chat(&client, &user_id).await {
         Ok(room_id) => state
             .sink

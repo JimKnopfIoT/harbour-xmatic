@@ -423,6 +423,10 @@ void MatrixBridge::checkStalledCommands()
             m_paginateId = 0;
             emit paginatingChanged();
         }
+        if (it.key() == m_directChatId) {
+            m_directChatId = 0;
+            emit startingDirectChatChanged();
+        }
         // Same reason as the error path: an open whose answer never comes would
         // otherwise leave the room on its spinner, and the id filter drops every
         // older answer that could still have set it.
@@ -1743,13 +1747,14 @@ void MatrixBridge::inviteToRoom(const QString &roomId, const QString &userId)
 
 void MatrixBridge::startDirectChat(const QString &userId)
 {
-    if (userId.trimmed().isEmpty()) {
+    if (userId.trimmed().isEmpty() || m_directChatId != 0) {
         return;
     }
     setLastError(QString());
     QJsonObject arguments;
     arguments.insert(QStringLiteral("userId"), userId.trimmed());
-    send(QStringLiteral("room.directChat"), arguments);
+    m_directChatId = send(QStringLiteral("room.directChat"), arguments);
+    emit startingDirectChatChanged();
 }
 
 void MatrixBridge::acceptVerification()
@@ -2353,6 +2358,10 @@ void MatrixBridge::handleReply(const QJsonObject &message)
     if (m_paginateAnswered) {
         m_paginateId = 0;
         emit paginatingChanged();
+    }
+    if (id != 0 && id == m_directChatId) {
+        m_directChatId = 0;
+        emit startingDirectChatChanged();
     }
 
     if (!message.value(QStringLiteral("ok")).toBool()) {

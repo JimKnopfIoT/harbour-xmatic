@@ -420,6 +420,7 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: actions.buttonWidth
                     label: qsTr("Send direct message")
+                    enabled: !matrix.startingDirectChat
                     onClicked: matrix.startDirectChat(page.userId)
                 }
 

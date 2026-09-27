@@ -11,7 +11,7 @@ Dialog {
     /// Filled in when a tapped link brought the user here.
     property string prefill: ""
 
-    canAccept: userField.text.trim().length > 3
+    canAccept: userField.text.trim().length > 3 && !matrix.startingDirectChat
 
     onAccepted: matrix.startDirectChat(userField.text)
 

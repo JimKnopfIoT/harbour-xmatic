@@ -21,6 +21,8 @@ use matrix_sdk::{
                 encryption::RoomEncryptionEventContent,
                 message::{FormattedBody, MessageFormat, MessageType, RoomMessageEventContent},
             },
+            direct::{DirectEventContent, DirectUserIdentifier},
+            room::member::MembershipState,
             InitialStateEvent, StateEventContentChange,
         },
         EventId, OwnedEventId, OwnedServerName, OwnedUserId, RoomId, RoomOrAliasId, ServerName,
@@ -1777,10 +1779,9 @@ pub async fn direct_chat(client: &Client, user_id: &str) -> Result<String, Strin
     let user = UserId::parse(user_id.trim())
         .map_err(|_| "not a user identifier — expected @name:server".to_owned())?;
 
-    // A second direct room with the same person would split the conversation,
-    // so an existing one wins.
-    if let Some(room) = client.get_dm_room(&user) {
-        return Ok(room.room_id().as_str().to_owned());
+    // A second direct room would split the conversation, so an existing one wins.
+    if let Some(room_id) = existing_direct_room(client, &user).await? {
+        return Ok(room_id);
     }
 
     let mut request = create_room::v3::Request::new();
@@ -1800,6 +1801,45 @@ pub async fn direct_chat(client: &Client, user_id: &str) -> Result<String, Strin
         .map_err(|error| format!("could not start the chat: {error}"))?;
 
     Ok(room.room_id().as_str().to_owned())
+}
+
+/// A joined direct room with `user`, looked up in the server's `m.direct`:
+/// the store's copy lags a sync behind a room created seconds ago.
+async fn existing_direct_room(client: &Client, user: &UserId) -> Result<Option<String>, String> {
+    if let Some(room) = client.get_dm_room(user) {
+        return Ok(Some(room.room_id().as_str().to_owned()));
+    }
+    // Unanswered means unknown, never "none": a guess here creates a room.
+    let raw = client
+        .account()
+        .fetch_account_data_static::<DirectEventContent>()
+        .await
+        .map_err(|error| format!("could not look up existing chats: {}", scrub_ids(&error.to_string())))?;
+    let Some(raw) = raw else { return Ok(None) };
+    let content = raw
+        .deserialize()
+        .map_err(|_| "could not read the list of direct chats".to_owned())?;
+    let Some(rooms) = content.get(<&DirectUserIdentifier>::from(user)) else {
+        return Ok(None);
+    };
+    for room_id in rooms {
+        let Some(room) = client.get_room(room_id) else { continue };
+        if room.state() != matrix_sdk::RoomState::Joined {
+            continue;
+        }
+        // Unknown membership counts as present: the room may predate its sync.
+        let gone = matches!(
+            room.get_member_no_sync(user).await,
+            Ok(Some(member)) if matches!(
+                member.membership(),
+                MembershipState::Leave | MembershipState::Ban
+            )
+        );
+        if !gone {
+            return Ok(Some(room_id.as_str().to_owned()));
+        }
+    }
+    Ok(None)
 }
 
 /// Throws away the outbound group session so the next message re-shares its

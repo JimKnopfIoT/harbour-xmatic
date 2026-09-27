@@ -1342,101 +1342,101 @@
         <translation>प्रोटोकॉल कोर उपलब्ध नहीं है।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="579"/>
-        <location filename="../src/matrixbridge.cpp" line="618"/>
-        <location filename="../src/matrixbridge.cpp" line="634"/>
+        <location filename="../src/matrixbridge.cpp" line="583"/>
+        <location filename="../src/matrixbridge.cpp" line="622"/>
+        <location filename="../src/matrixbridge.cpp" line="638"/>
         <source>Enter a homeserver first.</source>
         <translation>पहले कोई होमसर्वर दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="600"/>
+        <location filename="../src/matrixbridge.cpp" line="604"/>
         <source>Enter username and password first.</source>
         <translation>पहले उपयोगकर्ता नाम और पासवर्ड दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1549"/>
-        <location filename="../src/matrixbridge.cpp" line="1564"/>
+        <location filename="../src/matrixbridge.cpp" line="1553"/>
+        <location filename="../src/matrixbridge.cpp" line="1568"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>सहेजी सूचियाँ अभी पढ़ी नहीं जा सकतीं।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1803"/>
+        <location filename="../src/matrixbridge.cpp" line="1808"/>
         <source>Enter a push gateway first.</source>
         <translation>पहले एक पुश गेटवे दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1831"/>
+        <location filename="../src/matrixbridge.cpp" line="1836"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2169"/>
-        <location filename="../src/matrixbridge.cpp" line="2197"/>
+        <location filename="../src/matrixbridge.cpp" line="2174"/>
+        <location filename="../src/matrixbridge.cpp" line="2202"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2485"/>
+        <location filename="../src/matrixbridge.cpp" line="2494"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2528"/>
+        <location filename="../src/matrixbridge.cpp" line="2537"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2548"/>
+        <location filename="../src/matrixbridge.cpp" line="2557"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3432"/>
+        <location filename="../src/matrixbridge.cpp" line="3441"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3769"/>
+        <location filename="../src/matrixbridge.cpp" line="3778"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3772"/>
+        <location filename="../src/matrixbridge.cpp" line="3781"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3775"/>
+        <location filename="../src/matrixbridge.cpp" line="3784"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3778"/>
+        <location filename="../src/matrixbridge.cpp" line="3787"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3781"/>
+        <location filename="../src/matrixbridge.cpp" line="3790"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3784"/>
+        <location filename="../src/matrixbridge.cpp" line="3793"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3784"/>
+        <location filename="../src/matrixbridge.cpp" line="3793"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3787"/>
+        <location filename="../src/matrixbridge.cpp" line="3796"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3790"/>
+        <location filename="../src/matrixbridge.cpp" line="3799"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -1638,42 +1638,42 @@
         <translation>सीधा संदेश भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="429"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="430"/>
         <source>Mention</source>
         <translation>उल्लेख करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="440"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="441"/>
         <source>Verify</source>
         <translation>सत्यापित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="453"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="454"/>
         <source>Withdraw verification</source>
         <translation>सत्यापन वापस लें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="467"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="468"/>
         <source>Forbid calls</source>
         <translation>कॉल मना करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="467"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="468"/>
         <source>Allow calls</source>
         <translation>कॉल की अनुमति दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="483"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="484"/>
         <source>Stop ignoring</source>
         <translation>अनदेखा करना बंद करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="483"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="484"/>
         <source>Ignore</source>
         <translation>अनदेखा करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="488"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="489"/>
         <source>Ignoring</source>
         <translation>अनदेखा किया जा रहा है</translation>
     </message>
