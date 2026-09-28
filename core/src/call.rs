@@ -7,7 +7,7 @@ use std::time::{Duration, Instant};
 
 use matrix_sdk::{
     ruma::{
-        api::client::voip::get_turn_server_info,
+        api::{client::voip::get_turn_server_info, error::FromHttpResponseError},
         events::{
             call::{
                 answer::{CallAnswerEventContent, SyncCallAnswerEvent},
@@ -20,7 +20,7 @@ use matrix_sdk::{
         },
         MilliSecondsSinceUnixEpoch, OwnedVoipId, RoomId, UInt, VoipVersionId,
     },
-    Client, Room, RoomMemberships,
+    Client, HttpError, Room, RoomMemberships,
 };
 use serde_json::{json, Value};
 
@@ -204,10 +204,12 @@ pub async fn hangup(
 /// Credentials for the homeserver's TURN server: without a relay two devices
 /// behind NAT negotiate happily and then hear nothing.
 pub async fn turn_servers(client: &Client) -> Result<Value, String> {
-    let response = client
-        .send(get_turn_server_info::v3::Request::new())
-        .await
-        .map_err(|error| format!("no relay available: {error}"))?;
+    let response = match client.send(get_turn_server_info::v3::Request::new()).await {
+        Ok(response) => response,
+        // No TURN configured: Synapse answers `{}`, others 404 or unrecognized.
+        Err(error) if no_relay_configured(&error) => return Ok(json!({ "uris": [] })),
+        Err(error) => return Err(format!("no relay available: {error}")),
+    };
 
     Ok(json!({
         "username": response.username,
@@ -215,6 +217,18 @@ pub async fn turn_servers(client: &Client) -> Result<Value, String> {
         "uris": response.uris,
         "ttl": response.ttl.as_secs(),
     }))
+}
+
+fn no_relay_configured(error: &HttpError) -> bool {
+    if error.is_endpoint_not_implemented() {
+        return true;
+    }
+    if let HttpError::Api(inner) = error {
+        if matches!(**inner, FromHttpResponseError::Deserialization(_)) {
+            return true;
+        }
+    }
+    error.as_client_api_error().map(|api| api.status_code.as_u16()) == Some(404)
 }
 
 /// Who may make this phone ring, enforced here before anything is emitted -
@@ -542,5 +556,52 @@ mod video_offer_tests {
     fn a_later_section_does_not_rescue_it() {
         let sdp = "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\nm=video 0 UDP/TLS/RTP/SAVPF 96\r\nm=application 0 UDP/DTLS/SCTP webrtc-datachannel\r\na=bundle-only\r\n";
         assert!(!offers_active_video(sdp));
+    }
+}
+
+#[cfg(test)]
+mod relay_tests {
+    use super::no_relay_configured;
+    use matrix_sdk::ruma::api::{client::voip::get_turn_server_info, IncomingResponse};
+    use matrix_sdk::ruma::exports::http;
+    use matrix_sdk::{HttpError, RumaApiError};
+
+    fn answer(status: u16, body: &str) -> Option<HttpError> {
+        let response = http::Response::builder()
+            .status(status)
+            .body(body.as_bytes().to_vec())
+            .unwrap();
+        get_turn_server_info::v3::Response::try_from_http_response(response)
+            .err()
+            .map(|error| HttpError::from(error.map(RumaApiError::MatrixError)))
+    }
+
+    #[test]
+    fn an_empty_object_is_no_relay() {
+        let error = answer(200, "{}").expect("ruma rejects {}");
+        assert!(error.to_string().contains("missing field `username`"));
+        assert!(no_relay_configured(&error));
+    }
+
+    #[test]
+    fn not_found_and_unrecognized_are_no_relay() {
+        let not_found = answer(404, r#"{"errcode":"M_NOT_FOUND","error":"x"}"#).unwrap();
+        assert!(no_relay_configured(&not_found));
+        let unknown = answer(404, r#"{"errcode":"M_UNRECOGNIZED","error":"x"}"#).unwrap();
+        assert!(no_relay_configured(&unknown));
+    }
+
+    #[test]
+    fn a_server_fault_stays_an_error() {
+        let fault = answer(500, r#"{"errcode":"M_UNKNOWN","error":"x"}"#).unwrap();
+        assert!(!no_relay_configured(&fault));
+        let limited = answer(429, r#"{"errcode":"M_LIMIT_EXCEEDED","error":"x"}"#).unwrap();
+        assert!(!no_relay_configured(&limited));
+    }
+
+    #[test]
+    fn a_configured_relay_parses() {
+        let body = r#"{"username":"u","password":"p","uris":["turn:t:3478"],"ttl":86400}"#;
+        assert!(answer(200, body).is_none());
     }
 }

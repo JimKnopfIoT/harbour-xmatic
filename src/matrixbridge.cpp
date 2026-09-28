@@ -2446,6 +2446,10 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (command == QLatin1String("mention.candidates")) {
             return;
         }
+        // Asked on sign-in, not by the user; the call page is where it matters.
+        if (command == QLatin1String("call.turnServers")) {
+            return;
+        }
         // Shown on the page, not in the banner.
         if (m_roomSettings->reportFailure(id, error)) {
             return;
