@@ -969,6 +969,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Locația este dezactivată sau nepermisă.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Poziția nu a putut fi determinată.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Încă nicio poziție. Afară merge de obicei mai repede.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Acest dispozitiv nu oferă localizare.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Locație</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Locație în timp real</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Locația în timp real s-a încheiat</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Se așteaptă prima poziție</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Actualizat %1, până la %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Oprește partajarea</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1762,6 +1808,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Activat, lângă câmpul de mesaj este un microfon: ține apăsat pentru a înregistra, dă drumul pentru a trimite – sau atinge-l pentru a înregistra fără mâini, iar o a doua atingere sau șapte secunde de liniște trimit. Dezactivat, nu este acolo.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Locație</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Partajează-ți locația</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Activat, meniul derulant al unei camere oferă trimiterea poziției tale, o dată sau în timp real pentru o vreme. Nimic nu se trimite dacă nu alegi acolo.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Hărți pentru locații</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Bucățile de hartă vin de la OpenStreetMap. Serverul său află adresa ta IP și aproximativ unde se află locația; într-o cameră criptată, acesta e conținut pe care altfel nu îl vede niciodată. Fără hartă se afișează coordonatele.</translation>
     </message>
 </context>
 <context>
@@ -2644,6 +2710,10 @@
         <source>The text could not be written as a file</source>
         <translation>Textul nu a putut fi scris ca fișier</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Partajează locația</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3052,6 +3122,61 @@
     <message>
         <source>Need help?</source>
         <translation>Ai nevoie de ajutor?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Partajează locația</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Se caută poziția ta…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Încearcă din nou</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Trimite această poziție</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Locație în timp real</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Poziția ta merge în această cameră când te miști, cât timp aplicația e deschisă, până expiră timpul sau o oprești. Cu aplicația închisă, ceilalți văd ultima poziție până la sfârșitul timpului.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Pentru</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 oră</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Partajează locația în timp real</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Îți partajezi locația în timp real până la %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Oprește partajarea</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 ore</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 zi</translation>
     </message>
 </context>
 <context>

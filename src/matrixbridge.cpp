@@ -159,6 +159,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
         // the media setting says about the files.
         m_linkPreviews->clear();
         m_mentions->clear();
+        m_locations->clear();
+        m_locations->forgetLive();
         if (m_settings->mediaWipe() != QLatin1String("never")) {
             clearMediaCache();
         }
@@ -206,6 +208,13 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     connect(m_polls, &PollActions::commandReady, this,
             [this](const QString &command, const QJsonObject &arguments) {
                 send(command, arguments);
+            });
+
+    // Position source, live shares, maps and both privacy gates. src/locationactions.cpp.
+    m_locations = new LocationActions(m_settings, this);
+    connect(m_locations, &LocationActions::commandReady, this,
+            [this](const QString &command, const QJsonObject &arguments) {
+                m_locations->sent(send(command, arguments), command, arguments);
             });
 
     // Which space a room hangs in, as one letter over its picture. Fed from the
@@ -1446,6 +1455,7 @@ bool MatrixBridge::shareableFile(const QString &path) const
 void MatrixBridge::clearMediaCache()
 {
     m_linkPreviews->clear();
+    m_locations->clear();
     if (m_cacheDirectory.isEmpty()) {
         return;
     }
@@ -2379,6 +2389,8 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (command.startsWith(QLatin1String("poll."))) {
             m_polls->reportFailure(command);
         }
+        const bool locationQuiet = command.startsWith(QLatin1String("location."))
+                && m_locations->reportFailure(id, command);
         if (id == m_indexRequest && m_indexRequest != 0) {
             m_indexRequest = 0;
             emit indexingChanged();
@@ -2448,6 +2460,9 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         }
         // Asked on sign-in, not by the user; the call page is where it matters.
         if (command == QLatin1String("call.turnServers")) {
+            return;
+        }
+        if (locationQuiet) {
             return;
         }
         // Shown on the page, not in the banner.
@@ -2814,6 +2829,10 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
     if (command == QLatin1String("link.preview")) {
         m_linkPreviews->deliver(data);
         return true;
+    }
+
+    if (command.startsWith(QLatin1String("location."))) {
+        return m_locations->deliver(id, command, data);
     }
 
     if (command == QLatin1String("media.fetch")) {

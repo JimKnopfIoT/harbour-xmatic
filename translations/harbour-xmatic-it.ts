@@ -967,6 +967,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>La posizione è disattivata o non consentita.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Non è stato possibile determinare la posizione.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Ancora nessuna posizione. All&apos;aperto di solito è più veloce.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Questo dispositivo non offre la localizzazione.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Posizione</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Posizione in tempo reale</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Posizione in tempo reale terminata</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>In attesa della prima posizione</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Aggiornata %1, fino alle %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Interrompi condivisione</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1759,6 +1805,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Attivato, accanto al campo del messaggio c’è un microfono: tieni premuto per registrare, rilascia per inviare – oppure toccalo per registrare a mani libere, e un secondo tocco o sette secondi di silenzio inviano. Disattivato, non c’è.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Posizione</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Condividi la tua posizione</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Attivo, il menu a discesa di una stanza offre di inviare la tua posizione, una volta o in tempo reale per un po&apos;. Non viene inviato nulla se non lo scegli lì.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Mappe per le posizioni</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>I pezzi di mappa provengono da OpenStreetMap. Il suo server viene a sapere il tuo indirizzo IP e più o meno dove si trova la posizione; in una stanza cifrata è un contenuto che altrimenti non vedrebbe mai. Senza mappa vengono mostrate le coordinate.</translation>
     </message>
 </context>
 <context>
@@ -2640,6 +2706,10 @@
         <source>The text could not be written as a file</source>
         <translation>Impossibile scrivere il testo come file</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Condividi posizione</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3048,6 +3118,61 @@
     <message>
         <source>Need help?</source>
         <translation>Ti serve aiuto?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Condividi posizione</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Ricerca della tua posizione…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Riprova</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Invia questa posizione</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Posizione in tempo reale</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>La tua posizione va in questa stanza quando ti sposti, finché l&apos;app è aperta, fino allo scadere del tempo o finché non la interrompi. Con l&apos;app chiusa, gli altri vedono l&apos;ultima posizione fino alla fine del tempo.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Per</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 ora</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Condividi posizione in tempo reale</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Stai condividendo la tua posizione in tempo reale fino alle %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Interrompi condivisione</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 ore</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 giorno</translation>
     </message>
 </context>
 <context>

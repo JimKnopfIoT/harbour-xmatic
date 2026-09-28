@@ -967,6 +967,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Standort ist ausgeschaltet oder nicht erlaubt.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Die Position konnte nicht bestimmt werden.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Noch keine Position. Im Freien geht es meist schneller.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Dieses Gerät bietet keine Ortung.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Standort</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Live-Standort</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Live-Standort beendet</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Warte auf die erste Position</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Aktualisiert %1, bis %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Teilen beenden</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign-in did not work</source>
@@ -1759,6 +1805,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>An sitzt ein Mikrofon neben dem Eingabefeld: gedrückt halten nimmt auf, loslassen sendet – oder antippen nimmt freihändig auf, und ein zweiter Tipp oder sieben Sekunden Stille senden. Aus ist es nicht da.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Standort</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Deinen Standort teilen</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>An bietet das Pull-down-Menü eines Raums an, deine Position zu senden, einmal oder eine Zeit lang live. Gesendet wird nur, was du dort auswählst.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Karten für Standorte</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Kartenteile kommen von OpenStreetMap. Dessen Server erfährt deine IP-Adresse und ungefähr, wo der Standort liegt; in einem verschlüsselten Raum ist das Inhalt, den er sonst nie sieht. Ohne Karte werden die Koordinaten angezeigt.</translation>
     </message>
 </context>
 <context>
@@ -2640,6 +2706,10 @@
         <source>The text could not be written as a file</source>
         <translation>Der Text ließ sich nicht als Datei schreiben</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Standort teilen</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3048,6 +3118,61 @@
     <message>
         <source>Need help?</source>
         <translation>Brauchst du Hilfe?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Standort teilen</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Deine Position wird bestimmt…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Erneut versuchen</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Diese Position senden</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Live-Standort</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Deine Position geht an diesen Raum, wenn du dich bewegst, solange die App offen ist, bis die Zeit um ist oder du es beendest. Ist die App geschlossen, sehen die anderen bis zum Ende der Zeit die letzte Position.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Für</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 Stunde</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Live-Standort teilen</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Du teilst deinen Live-Standort bis %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Teilen beenden</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 Stunden</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 Tag</translation>
     </message>
 </context>
 <context>

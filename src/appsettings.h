@@ -33,6 +33,13 @@ class AppSettings : public QObject
     /// what a linked page says about itself. Off: the server learns every link.
     Q_PROPERTY(QString linkPreviews READ linkPreviews WRITE setLinkPreviews
                NOTIFY linkPreviewsChanged)
+    /// Whether this phone may send its position, once or live. Off by default.
+    Q_PROPERTY(bool locationSharing READ locationSharing WRITE setLocationSharing
+               NOTIFY locationSharingChanged)
+    /// "never", "unencrypted" or "always": when map tiles are fetched from OSM,
+    /// which learns this phone's address and roughly where the point lies.
+    Q_PROPERTY(QString locationMaps READ locationMaps WRITE setLocationMaps
+               NOTIFY locationMapsChanged)
     /// Whether push was turned on. Stored rather than derived: a registration
     /// survives a restart, and the next start has to know one was made.
     Q_PROPERTY(bool pushEnabled READ pushEnabled WRITE setPushEnabled
@@ -148,6 +155,11 @@ public:
     QString linkPreviews() const;
     void setLinkPreviews(const QString &policy);
 
+    bool locationSharing() const;
+    void setLocationSharing(bool enabled);
+    QString locationMaps() const;
+    void setLocationMaps(const QString &policy);
+
     /// Whether the microphone sits next to the message field. On, but it is one
     /// hold away from a recording and not everybody wants that in reach.
     bool voiceMessages() const;
@@ -199,6 +211,8 @@ signals:
     void clickableLinksChanged();
     void spaceInitialsChanged();
     void linkPreviewsChanged();
+    void locationSharingChanged();
+    void locationMapsChanged();
     void pushChanged();
     void voiceMessagesChanged();
     void voiceTranscriptsChanged();

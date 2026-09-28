@@ -21,6 +21,7 @@ use crate::directory;
 use crate::login;
 use crate::profile;
 use crate::linkpreview;
+use crate::location;
 use crate::poll;
 use crate::roomsettings;
 use crate::private;
@@ -483,6 +484,16 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::PollStart { .. } | Command::PollVote { .. } | Command::PollEnd { .. } => {
             let timeline = state.timeline().await.map(|handle| handle.timeline());
             poll::handle(command, timeline, &state.sink).await
+        }
+        // Routed, not handled: core/src/location.rs.
+        Command::LocationSend { .. }
+        | Command::LocationLiveStart { .. }
+        | Command::LocationBeacon { .. }
+        | Command::LocationLiveStop { .. }
+        | Command::LocationTiles { .. } => {
+            let timeline = state.timeline().await.map(|handle| handle.timeline());
+            let tiles = state.paths.media_cache.join("tiles");
+            location::handle(command, state.client().await, timeline, tiles, &state.sink).await
         }
         Command::TimelineRedact {
             event_id, txn_id, ..

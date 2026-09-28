@@ -967,6 +967,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Staðsetning er óvirk eða ekki leyfð.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Ekki tókst að ákvarða staðsetninguna.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Engin staðsetning enn. Utandyra gengur það yfirleitt hraðar.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Þetta tæki býður ekki upp á staðsetningu.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Staðsetning</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Rauntímastaðsetning</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Rauntímastaðsetningu lokið</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Bíð eftir fyrstu staðsetningu</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Uppfært %1, til %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Hætta að deila</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1759,6 +1805,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Kveikt situr hljóðnemi við hliðina á skilaboðareitnum: haltu inni til að taka upp, slepptu til að senda – eða ýttu á hann til að taka upp handfrjálst, og annað ýtt eða sjö sekúndna þögn sendir. Slökkt er hann ekki þar.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Staðsetning</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Deila staðsetningu þinni</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Ef kveikt, býður fellivalmynd spjallrásar upp á að senda staðsetninguna þína, einu sinni eða í rauntíma um stund. Ekkert er sent nema þú veljir það þar.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Kort fyrir staðsetningar</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Kortahlutar koma frá OpenStreetMap. Þjónn þess fær að vita IP-töluna þína og nokkurn veginn hvar staðsetningin er; í dulritaðri spjallrás er það efni sem hann sér annars aldrei. Án korts eru hnitin sýnd.</translation>
     </message>
 </context>
 <context>
@@ -2640,6 +2706,10 @@
         <source>The text could not be written as a file</source>
         <translation>Ekki tókst að skrifa textann sem skrá</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Deila staðsetningu</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3048,6 +3118,61 @@
     <message>
         <source>Need help?</source>
         <translation>Þarftu hjálp?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Deila staðsetningu</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Finn staðsetninguna þína…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Reyna aftur</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Senda þessa staðsetningu</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Rauntímastaðsetning</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Staðsetningin þín fer í þessa spjallrás þegar þú hreyfir þig, meðan forritið er opið, þar til tíminn er liðinn eða þú hættir. Þegar forritið er lokað sjá hinir síðustu staðsetningu þar til tímanum lýkur.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Í</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 klukkustund</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Deila rauntímastaðsetningu</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Þú deilir rauntímastaðsetningu til %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Hætta að deila</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 klukkustundir</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 dagur</translation>
     </message>
 </context>
 <context>

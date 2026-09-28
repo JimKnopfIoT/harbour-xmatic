@@ -1067,6 +1067,16 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("CreatePollDialog.qml"))
             }
 
+            // Only where Privacy allows sending the position at all.
+            MenuItem {
+                text: qsTr("Share location")
+                visible: !page.invited && settings.locationSharing
+                onClicked: pageStack.push(Qt.resolvedUrl("ShareLocationPage.qml"), {
+                                              roomId: page.roomId,
+                                              encrypted: page.encrypted || !page.encryptionKnown
+                                          })
+            }
+
             // Everything about the room rather than the conversation lives one page
             // further in - this menu had grown to ten entries.
             MenuItem {
@@ -1422,7 +1432,8 @@ Page {
                 // The first web address in the text, where the setting allows a
                 // preview here. Empty means no card - and no question to the server.
                 readonly property string previewUrl: {
-                    if (model.kind !== "message" || !!model.media || row.isPoll) {
+                    if (model.kind !== "message" || !!model.media || row.isPoll
+                            || row.isLocation) {
                         return ""
                     }
                     // Unknown counts as encrypted: the failure direction of this
@@ -1453,6 +1464,8 @@ Page {
                 // A poll draws itself; its fallback text would repeat the
                 // question and list the answers a second time.
                 readonly property bool isPoll: model.kind === "message" && !!model.poll
+                // A location draws itself; its fallback is a geo: URI.
+                readonly property bool isLocation: model.kind === "message" && !!model.location
                 readonly property bool isOwn: model.own === true
                 // A sent message of someone else's, where the room allows it.
                 readonly property bool canDeleteForOther: !row.isOwn
@@ -2367,7 +2380,7 @@ Page {
                                             bubbleColumn.maxTextWidth)
                             // A picture or a voice message shows itself; its
                             // caption is the one thing that still needs a line.
-                            visible: !row.isPoll
+                            visible: !row.isPoll && !row.isLocation
                                      && ((!row.hasPreview && !row.isAudio)
                                          || row.hasCaption)
 
@@ -2488,6 +2501,21 @@ Page {
                                 own: row.isOwn
                                 // Not before the server has it: an echo has no id to vote on.
                                 pending: model.pending === true
+                            }
+                        }
+
+                        // A location or a live share. Width handed in, as for the poll.
+                        Loader {
+                            anchors.right: bubbleColumn.holdRight ? parent.right : undefined
+                            active: row.isLocation
+                            visible: active
+                            sourceComponent: LocationBlock {
+                                availableWidth: bubbleColumn.maxTextWidth
+                                location: model.location
+                                own: row.isOwn
+                                roomId: page.roomId
+                                encrypted: page.encrypted || !page.encryptionKnown
+                                onActivated: page.followLink(link)
                             }
                         }
 

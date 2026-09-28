@@ -8,7 +8,7 @@ TARGET = harbour-xmatic
 
 CONFIG += sailfishapp sailfishapp_i18n c++11
 
-QT += network dbus multimedia concurrent
+QT += network dbus multimedia concurrent positioning
 
 # The media half of a call: Matrix carries only the signalling.
 #
@@ -55,6 +55,7 @@ SOURCES += \
     src/imagefacts.cpp \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
+    src/locationactions.cpp \
     src/readingpositions.cpp \
     src/roomsettings.cpp \
     src/spacemarkers.cpp \
@@ -88,6 +89,7 @@ HEADERS += \
     src/languagesettings.h \
     src/matrixbridge.h \
     src/pollactions.h \
+    src/locationactions.h \
     src/readingpositions.h \
     src/roomsettings.h \
     src/spacemarkers.h \
@@ -283,6 +285,8 @@ DISTFILES += \
     qml/pages/RoomPage.qml \
     qml/pages/Composer.qml \
     qml/pages/PollBlock.qml \
+    qml/pages/LocationBlock.qml \
+    qml/pages/ShareLocationPage.qml \
     qml/pages/LinkPreviewCard.qml \
     qml/pages/CreatePollDialog.qml \
     qml/pages/Composing.js \

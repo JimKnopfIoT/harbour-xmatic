@@ -969,6 +969,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Геолокация выключена или не разрешена.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Не удалось определить местоположение.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Местоположения пока нет. На улице обычно быстрее.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Это устройство не поддерживает определение местоположения.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Местоположение</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Трансляция местоположения</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Трансляция местоположения завершена</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Ожидание первой позиции</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Обновлено %1, до %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Остановить</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1762,6 +1808,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Включено — рядом с полем сообщения микрофон: держи, чтобы записать, отпусти, чтобы отправить, — или нажми для записи без рук, и второе нажатие или семь секунд тишины отправят. Выключено — его нет.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Местоположение</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Делиться местоположением</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Если включено, выпадающее меню комнаты предлагает отправить твоё местоположение, один раз или в реальном времени на какое-то время. Ничего не отправляется, пока ты не выберешь это там.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Карты для местоположений</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Фрагменты карты загружаются с OpenStreetMap. Его сервер узнаёт твой IP-адрес и примерно, где находится точка; в зашифрованной комнате это содержимое, которое он иначе никогда не видит. Без карты показываются координаты.</translation>
     </message>
 </context>
 <context>
@@ -2644,6 +2710,10 @@
         <source>The text could not be written as a file</source>
         <translation>Не удалось записать текст в файл</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Поделиться местоположением</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3052,6 +3122,61 @@
     <message>
         <source>Need help?</source>
         <translation>Нужна помощь?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Поделиться местоположением</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Определение твоего местоположения…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Повторить</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Отправить это местоположение</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Трансляция местоположения</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Твоё местоположение уходит в эту комнату, когда ты перемещаешься, пока приложение открыто, до окончания времени или пока ты не остановишь. Когда приложение закрыто, остальные видят последнюю позицию до конца времени.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>На</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 час</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Транслировать местоположение</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Ты транслируешь местоположение до %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Остановить</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 часов</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 день</translation>
     </message>
 </context>
 <context>

@@ -27,6 +27,8 @@ public:
         /// The poll's question, answers and - unless it is undisclosed and still
         /// running - the counts. Null for every other row.
         PollRole,
+        /// Point, and for a live share its window. Null for every other row.
+        LocationRole,
         SenderRole,
         SenderNameRole,
         SenderAvatarRole,
