@@ -967,6 +967,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Asukoht on välja lülitatud või pole lubatud.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Asukohta ei õnnestunud määrata.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Asukohta veel pole. Õues läheb tavaliselt kiiremini.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>See seade ei paku asukoha määramist.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Asukoht</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Reaalajas asukoht</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Reaalajas asukoht lõppes</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Ootan esimest asukohta</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Uuendatud %1, kuni %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Lõpeta jagamine</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1759,6 +1805,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Sees on sõnumivälja kõrval mikrofon: hoia all, et salvestada, lase lahti, et saata – või puuduta, et salvestada käed vabad, ja teine puudutus või seitse sekundit vaikust saadab. Väljas seda pole.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Asukoht</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Jaga oma asukohta</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Sisse lülitatuna pakub ruumi rippmenüü sinu asukoha saatmist, ühe korra või mõnda aega reaalajas. Midagi ei saadeta, kui sa seda seal ei vali.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Kaardid asukohtadele</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Kaardi tükid tulevad OpenStreetMapist. Selle server saab teada sinu IP-aadressi ja umbes, kus asukoht on; krüpteeritud ruumis on see sisu, mida ta muidu kunagi ei näe. Ilma kaardita näidatakse koordinaate.</translation>
     </message>
 </context>
 <context>
@@ -2640,6 +2706,10 @@
         <source>The text could not be written as a file</source>
         <translation>Teksti ei õnnestunud failina kirjutada</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Jaga asukohta</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3048,6 +3118,61 @@
     <message>
         <source>Need help?</source>
         <translation>Vajad abi?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Jaga asukohta</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Otsin sinu asukohta…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Proovi uuesti</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Saada see asukoht</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Reaalajas asukoht</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Sinu asukoht läheb sellesse ruumi, kui liigud, kuni rakendus on avatud, kuni aeg saab läbi või sa lõpetad. Kui rakendus on suletud, näevad teised viimast asukohta aja lõpuni.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Kestus</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 tund</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Jaga reaalajas asukohta</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Jagad oma reaalajas asukohta kuni %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Lõpeta jagamine</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 tundi</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 päev</translation>
     </message>
 </context>
 <context>

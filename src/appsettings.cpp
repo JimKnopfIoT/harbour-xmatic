@@ -412,6 +412,43 @@ void AppSettings::setLinkPreviews(const QString &policy)
     emit linkPreviewsChanged();
 }
 
+bool AppSettings::locationSharing() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("privacy/locationSharing"), false).toBool();
+}
+
+void AppSettings::setLocationSharing(bool enabled)
+{
+    if (enabled == locationSharing()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/locationSharing"), enabled, "the location setting");
+    emit locationSharingChanged();
+}
+
+QString AppSettings::locationMaps() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    const QString value = settings.value(QStringLiteral("privacy/locationMaps"),
+                                         QStringLiteral("never")).toString();
+    if (value == QLatin1String("unencrypted") || value == QLatin1String("always")) {
+        return value;
+    }
+    return QStringLiteral("never");
+}
+
+void AppSettings::setLocationMaps(const QString &policy)
+{
+    if (policy == locationMaps()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/locationMaps"), policy, "the map setting");
+    emit locationMapsChanged();
+}
+
 QString AppSettings::callPolicy() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

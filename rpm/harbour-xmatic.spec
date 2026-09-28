@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.38.2
+Version:    0.39.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -60,6 +60,7 @@ BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(Qt5DBus)
 BuildRequires: pkgconfig(Qt5Multimedia)
+BuildRequires: pkgconfig(Qt5Positioning)
 BuildRequires: pkgconfig(sailfishsecrets)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-sdp-1.0)
@@ -118,6 +119,13 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Sep 28 2026 harbour-xmatic contributors 0.39.0-1
+- Locations. A room's pull-down menu sends your position once, or shares it
+  live for an hour, six hours or a day. Received locations show their
+  coordinates; a map from OpenStreetMap is shown where you allow it. Both are
+  off by default, under Account, Privacy.
+- Adding an answer to a new poll no longer clears the answers already typed.
+
 * Mon Sep 28 2026 harbour-xmatic contributors 0.38.2-1
 - A homeserver without a TURN relay no longer puts "no relay available:
   deserialization failed" on the account page. That answer is read as "no

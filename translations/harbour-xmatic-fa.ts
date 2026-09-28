@@ -965,6 +965,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>موقعیت مکانی خاموش است یا اجازه داده نشده است.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>موقعیت تعیین نشد.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>هنوز موقعیتی نیست. در فضای باز معمولاً سریع‌تر است.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>این دستگاه موقعیت‌یابی ارائه نمی‌دهد.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>موقعیت مکانی</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>موقعیت زنده</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>موقعیت زنده پایان یافت</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>در انتظار اولین موقعیت</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>به‌روزرسانی %1، تا %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>توقف اشتراک‌گذاری</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1756,6 +1802,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>روشن، کنار کادر پیام یک میکروفون هست: برای ضبط نگه‌دار، برای فرستادن رها کن – یا برای ضبط بدون دست رویش بزن، و ضربهٔ دوم یا هفت ثانیه سکوت می‌فرستد. خاموش، آن‌جا نیست.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>موقعیت مکانی</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>اشتراک‌گذاری موقعیت تو</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>اگر روشن باشد، منوی کشویی اتاق ارسال موقعیت تو را پیشنهاد می‌دهد، یک بار یا به‌صورت زنده برای مدتی. تا وقتی آنجا انتخاب نکنی چیزی فرستاده نمی‌شود.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>نقشه برای موقعیت‌ها</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>تکه‌های نقشه از OpenStreetMap می‌آیند. سرور آن نشانی IP تو و تقریباً محل موقعیت را می‌فهمد؛ در اتاق رمزگذاری‌شده این محتوایی است که در غیر این صورت هرگز نمی‌بیند. بدون نقشه، مختصات نمایش داده می‌شود.</translation>
     </message>
 </context>
 <context>
@@ -2636,6 +2702,10 @@
         <source>The text could not be written as a file</source>
         <translation>نوشتن متن به‌صورت فایل ممکن نشد</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>اشتراک‌گذاری موقعیت</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3044,6 +3114,61 @@
     <message>
         <source>Need help?</source>
         <translation>کمک می‌خواهی؟</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>اشتراک‌گذاری موقعیت</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>در حال یافتن موقعیت تو…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>دوباره تلاش کن</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>ارسال این موقعیت</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>موقعیت زنده</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>وقتی جابه‌جا می‌شوی، تا زمانی که برنامه باز است، تا پایان زمان یا تا وقتی که متوقفش کنی، موقعیت تو به این اتاق فرستاده می‌شود. وقتی برنامه بسته است، دیگران تا پایان زمان آخرین موقعیت را می‌بینند.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>مدت</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>۱ ساعت</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>اشتراک‌گذاری موقعیت زنده</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>تا %1 موقعیت زنده‌ات را به اشتراک می‌گذاری.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>توقف اشتراک‌گذاری</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>۶ ساعت</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>۱ روز</translation>
     </message>
 </context>
 <context>

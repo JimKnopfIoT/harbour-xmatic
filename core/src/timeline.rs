@@ -1053,6 +1053,17 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
                 "",
                 String::new(),
             ),
+            // A live share is one row; its positions aggregate onto it.
+            MsgLikeKind::LiveLocation(state) => (
+                "message",
+                state.description().map(strip_bidi).unwrap_or_default(),
+                "m.beacon_info".to_owned(),
+                false,
+                None,
+                None,
+                "",
+                String::new(),
+            ),
             _ => ("other", String::new(), String::new(), false, None, None, "", String::new()),
         },
         // Only m.call.invite / m.rtc.notification surface as timeline items;
@@ -1158,6 +1169,19 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
         _ => None,
     };
 
+    // Null for everything that is not a location. See core/src/location.rs.
+    let location = match event.content() {
+        TimelineItemContent::MsgLike(content) => match &content.kind {
+            MsgLikeKind::Message(message) => match message.msgtype() {
+                MessageType::Location(inner) => crate::location::from_message(inner),
+                _ => Value::Null,
+            },
+            MsgLikeKind::LiveLocation(state) => crate::location::from_live(state),
+            _ => Value::Null,
+        },
+        _ => Value::Null,
+    };
+
     json!({
         "id": id,
         "eventId": event.event_id().map(|id| id.as_str()),
@@ -1180,6 +1204,7 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
         "msgtype": msgtype,
         // Null for everything that is not a poll.
         "poll": poll,
+        "location": location,
         "media": media,
         "caption": caption,
         "replyTo": reply,

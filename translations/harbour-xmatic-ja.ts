@@ -965,6 +965,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>位置情報がオフになっているか、許可されていません。</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>位置を特定できませんでした。</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>まだ位置がありません。屋外の方が通常は速く見つかります。</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>このデバイスは位置情報を提供していません。</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>位置情報</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>ライブ位置情報</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>ライブ位置情報は終了しました</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>最初の位置を待っています</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>更新 %1、%2 まで</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>共有を停止</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1756,6 +1802,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>オンのとき、メッセージ欄の横にマイクが並びます: 押している間に録音し、離すと送信します。タップするとハンズフリーで録音し、もう一度タップするか 7 秒間無音が続くと送信します。オフのときは表示されません。</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>位置情報</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>位置情報を共有する</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>オンにすると、ルームのプルダウンメニューから位置を一度だけ、またはしばらくの間ライブで送信できます。そこで選ばない限り何も送信されません。</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>位置情報の地図</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>地図の画像は OpenStreetMap から取得されます。そのサーバーはあなたの IP アドレスと、位置のおおよその場所を知ることになります。暗号化されたルームでは、本来見ることのない内容です。地図がない場合は座標が表示されます。</translation>
     </message>
 </context>
 <context>
@@ -2636,6 +2702,10 @@
         <source>The text could not be written as a file</source>
         <translation>テキストをファイルとして書き込めませんでした</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>位置情報を共有</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3044,6 +3114,61 @@
     <message>
         <source>Need help?</source>
         <translation>助けが必要ですか？</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>位置情報を共有</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>位置を取得しています…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>再試行</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>この位置を送信</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>ライブ位置情報</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>移動すると、アプリが開いている間、時間が終わるか停止するまで、あなたの位置がこのルームに送られます。アプリが閉じている間は、他の人には時間の終わりまで最後の位置が表示されます。</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>期間</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1時間</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>ライブ位置情報を共有</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>%1 までライブ位置情報を共有しています。</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>共有を停止</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6時間</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1日</translation>
     </message>
 </context>
 <context>

@@ -969,6 +969,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Poloha je vypnutá alebo nie je povolená.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Polohu sa nepodarilo určiť.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Zatiaľ žiadna poloha. Vonku to zvyčajne ide rýchlejšie.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Toto zariadenie neponúka určovanie polohy.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Poloha</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Živá poloha</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Živá poloha ukončená</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Čakám na prvú polohu</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Aktualizované %1, do %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Ukončiť zdieľanie</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1762,6 +1808,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Zapnuté je vedľa poľa správy mikrofón: podrž pre nahrávanie, pusti pre odoslanie – alebo ťukni pre nahrávanie bez držania a druhé ťuknutie alebo sedem sekúnd ticha odošle. Vypnuté tam nie je.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Poloha</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Zdieľať svoju polohu</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Keď je zapnuté, rozbaľovacia ponuka miestnosti ponúka odoslanie tvojej polohy, raz alebo naživo na nejaký čas. Nič sa neodošle, ak to tam nezvolíš.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Mapy pre polohy</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Časti mapy pochádzajú z OpenStreetMap. Jeho server sa dozvie tvoju IP adresu a približne, kde poloha leží; v šifrovanej miestnosti je to obsah, ktorý inak nikdy nevidí. Bez mapy sa zobrazia súradnice.</translation>
     </message>
 </context>
 <context>
@@ -2644,6 +2710,10 @@
         <source>The text could not be written as a file</source>
         <translation>Text sa nepodarilo zapísať ako súbor</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Zdieľať polohu</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3052,6 +3122,61 @@
     <message>
         <source>Need help?</source>
         <translation>Potrebuješ pomoc?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Zdieľať polohu</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Zisťujem tvoju polohu…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Skúsiť znova</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Odoslať túto polohu</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Živá poloha</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Tvoja poloha ide do tejto miestnosti, keď sa pohybuješ, kým je aplikácia otvorená, kým neuplynie čas alebo ju nezastavíš. Keď je aplikácia zatvorená, ostatní vidia poslednú polohu až do konca času.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Na</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 hodinu</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Zdieľať živú polohu</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Zdieľaš živú polohu do %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Ukončiť zdieľanie</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 hodín</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 deň</translation>
     </message>
 </context>
 <context>

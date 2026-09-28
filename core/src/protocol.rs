@@ -805,6 +805,55 @@ pub enum Command {
         text: String,
     },
 
+    /// Send a one-off location into the open room.
+    #[serde(rename = "location.send")]
+    LocationSend {
+        id: u64,
+        lat: f64,
+        lon: f64,
+        #[serde(default)]
+        accuracy: Option<f64>,
+    },
+
+    /// Start a live location share in a room, for `durationMs`.
+    #[serde(rename = "location.liveStart")]
+    LocationLiveStart {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "durationMs")]
+        duration_ms: u64,
+    },
+
+    /// One position of a running live share.
+    #[serde(rename = "location.beacon")]
+    LocationBeacon {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        lat: f64,
+        lon: f64,
+        #[serde(default)]
+        accuracy: Option<f64>,
+    },
+
+    /// End the own live share in a room.
+    #[serde(rename = "location.liveStop")]
+    LocationLiveStop {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
+    /// The map tiles around a point; `key` is echoed so the card finds its answer.
+    #[serde(rename = "location.tiles")]
+    LocationTiles {
+        id: u64,
+        key: String,
+        lat: f64,
+        lon: f64,
+    },
+
     /// Search a public directory; an empty pattern lists the popular rooms.
     /// Without `server` the own homeserver, with it that one over federation.
     #[serde(rename = "directory.search")]
@@ -1092,6 +1141,11 @@ impl Command {
             | Command::PollStart { id, .. }
             | Command::PollVote { id, .. }
             | Command::PollEnd { id, .. }
+            | Command::LocationSend { id, .. }
+            | Command::LocationLiveStart { id, .. }
+            | Command::LocationBeacon { id, .. }
+            | Command::LocationLiveStop { id, .. }
+            | Command::LocationTiles { id, .. }
             | Command::DirectorySearch { id, .. }
             | Command::DirectoryLoadMore { id }
             | Command::DirectoryStop { id }

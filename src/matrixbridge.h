@@ -23,6 +23,7 @@
 #include "callengine.h"
 #include "linkpreviews.h"
 #include "pollactions.h"
+#include "locationactions.h"
 #include "roomsettings.h"
 #include "spacemarkers.h"
 #include "voicetranscripts.h"
@@ -107,6 +108,7 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *recorder READ recorder CONSTANT)
     Q_PROPERTY(QObject *calls READ calls CONSTANT)
     Q_PROPERTY(QObject *polls READ polls CONSTANT)
+    Q_PROPERTY(QObject *locations READ locations CONSTANT)
     Q_PROPERTY(QObject *linkPreviews READ linkPreviews CONSTANT)
     Q_PROPERTY(QObject *roomSettings READ roomSettings CONSTANT)
     Q_PROPERTY(QObject *mentions READ mentions CONSTANT)
@@ -237,6 +239,7 @@ public:
     QObject *recorder() { return m_recorder; }
     QObject *calls() { return m_calls; }
     QObject *polls() { return m_polls; }
+    QObject *locations() { return m_locations; }
     QObject *linkPreviews() { return m_linkPreviews; }
     QObject *roomSettings() { return m_roomSettings; }
     QObject *mentions() { return m_mentions; }
@@ -1017,6 +1020,7 @@ private:
     VoiceRecorder *m_recorder = nullptr;
     CallEngine *m_calls = nullptr;
     PollActions *m_polls = nullptr;
+    LocationActions *m_locations = nullptr;
     SpaceMarkers *m_spaceMarkers = nullptr;
     LinkPreviews *m_linkPreviews = nullptr;
     RoomSettings *m_roomSettings = nullptr;

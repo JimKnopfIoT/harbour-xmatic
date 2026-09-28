@@ -967,6 +967,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Sijainti on pois päältä tai sitä ei ole sallittu.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Sijaintia ei voitu määrittää.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Ei vielä sijaintia. Ulkona se löytyy yleensä nopeammin.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Tämä laite ei tarjoa paikannusta.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Sijainti</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Reaaliaikainen sijainti</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Reaaliaikainen sijainti päättyi</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Odotetaan ensimmäistä sijaintia</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Päivitetty %1, voimassa %2 asti</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Lopeta jakaminen</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1759,6 +1805,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Päällä viestikentän vieressä on mikrofoni: pidä pohjassa nauhoittaaksesi, päästä irti lähettääksesi – tai napauta nauhoittaaksesi kädet vapaina, jolloin toinen napautus tai seitsemän sekunnin hiljaisuus lähettää. Pois päältä sitä ei ole.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Sijainti</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Jaa sijaintisi</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Kun päällä, huoneen alasvetovalikko tarjoaa sijaintisi lähettämistä kerran tai reaaliaikaisesti hetken ajan. Mitään ei lähetetä, ellet valitse sitä siellä.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Kartat sijainneille</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Karttapalat tulevat OpenStreetMapista. Sen palvelin saa tietää IP-osoitteesi ja suunnilleen, missä sijainti on; salatussa huoneessa se on sisältöä, jota se ei muuten koskaan näe. Ilman karttaa näytetään koordinaatit.</translation>
     </message>
 </context>
 <context>
@@ -2640,6 +2706,10 @@
         <source>The text could not be written as a file</source>
         <translation>Tekstiä ei voitu kirjoittaa tiedostoksi</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Jaa sijainti</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3048,6 +3118,61 @@
     <message>
         <source>Need help?</source>
         <translation>Tarvitsetko apua?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Jaa sijainti</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Haetaan sijaintiasi…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Yritä uudelleen</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Lähetä tämä sijainti</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Reaaliaikainen sijainti</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Sijaintisi lähtee tähän huoneeseen, kun liikut, niin kauan kuin sovellus on auki, kunnes aika loppuu tai lopetat jakamisen. Kun sovellus on suljettu, muut näkevät viimeisimmän sijainnin ajan loppuun asti.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Kesto</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 tunti</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Jaa reaaliaikainen sijainti</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Jaat reaaliaikaista sijaintiasi %1 asti.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Lopeta jakaminen</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 tuntia</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 päivä</translation>
     </message>
 </context>
 <context>

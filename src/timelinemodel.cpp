@@ -116,6 +116,7 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(FormattedRole, "formatted");
     names.insert(MsgTypeRole, "msgtype");
     names.insert(PollRole, "poll");
+    names.insert(LocationRole, "location");
     names.insert(SenderRole, "sender");
     names.insert(SenderNameRole, "senderName");
     names.insert(SenderAvatarRole, "senderAvatar");

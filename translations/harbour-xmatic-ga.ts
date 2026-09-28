@@ -969,6 +969,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Tá an suíomh múchta nó níl sé ceadaithe.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Níorbh fhéidir an suíomh a chinneadh.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Níl suíomh ann fós. Amuigh faoin aer is gnách go mbíonn sé níos tapúla.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Ní thairgeann an gléas seo suíomhú.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Suíomh</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Suíomh beo</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Suíomh beo críochnaithe</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Ag fanacht leis an gcéad suíomh</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Nuashonraithe %1, go dtí %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Stop ag comhroinnt</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1762,6 +1808,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Lasta, tá micreafón in aice leis an réimse teachtaireachta: coinnigh síos chun taifeadadh, scaoil chun seoladh – nó tapáil é chun taifeadadh gan lámha, agus seolann an dara tapáil nó seacht soicind ciúnais é. Múchta, níl sé ann.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Suíomh</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Comhroinn do shuíomh</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Nuair atá sé ar siúl, tairgeann roghchlár anuas seomra do shuíomh a sheoladh, uair amháin nó beo ar feadh tamaill. Ní sheoltar aon rud mura roghnaíonn tú é ansin.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Léarscáileanna do shuímh</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Tagann píosaí léarscáile ó OpenStreetMap. Faigheann a fhreastalaí amach do sheoladh IP agus thart ar cá bhfuil an suíomh; i seomra criptithe is ábhar é sin nach bhfeiceann sé riamh ar shlí eile. Gan léarscáil taispeántar na comhordanáidí.</translation>
     </message>
 </context>
 <context>
@@ -2644,6 +2710,10 @@
         <source>The text could not be written as a file</source>
         <translation>Níorbh fhéidir an téacs a scríobh mar chomhad</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Comhroinn suíomh</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3052,6 +3122,61 @@
     <message>
         <source>Need help?</source>
         <translation>An bhfuil cabhair uait?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Comhroinn suíomh</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Do shuíomh á aimsiú…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Bain triail eile as</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Seol an suíomh seo</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Suíomh beo</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Téann do shuíomh chuig an seomra seo nuair a bhogann tú, fad atá an aip oscailte, go dtí go mbíonn an t-am istigh nó go stopann tú é. Nuair a bhíonn an aip dúnta, feiceann na daoine eile an suíomh deireanach go deireadh an ama.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Ar feadh</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 uair an chloig</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Comhroinn suíomh beo</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Tá do shuíomh beo á chomhroinnt agat go dtí %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Stop ag comhroinnt</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 huaire an chloig</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 lá</translation>
     </message>
 </context>
 <context>

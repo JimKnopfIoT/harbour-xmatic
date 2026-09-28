@@ -179,6 +179,47 @@ Page {
             }
 
             SectionHeader {
+                text: qsTr("Location")
+            }
+
+            TextSwitch {
+                text: qsTr("Share your location")
+                description: qsTr("On, a room's pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.")
+                checked: settings.locationSharing
+                automaticCheck: false
+                onClicked: settings.locationSharing = !settings.locationSharing
+            }
+
+            // Off by default and said why: the tile server, not the homeserver,
+            // is asked - and learns this phone's address and where the point lies.
+            ComboBox {
+                width: parent.width
+                label: qsTr("Maps for locations")
+                description: qsTr("Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.")
+                currentIndex: {
+                    switch (settings.locationMaps) {
+                    case "unencrypted": return 1
+                    case "always": return 2
+                    default: return 0
+                    }
+                }
+
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("Never") }
+                    MenuItem { text: qsTr("Only in unencrypted rooms") }
+                    MenuItem { text: qsTr("Always") }
+                }
+
+                onCurrentIndexChanged: {
+                    switch (currentIndex) {
+                    case 1: settings.locationMaps = "unencrypted"; break
+                    case 2: settings.locationMaps = "always"; break
+                    default: settings.locationMaps = "never"; break
+                    }
+                }
+            }
+
+            SectionHeader {
                 text: qsTr("Voice messages as text")
             }
 

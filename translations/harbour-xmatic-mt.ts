@@ -971,6 +971,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Il-post huwa mitfi jew mhux permess.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Il-pożizzjoni ma setgħetx tiġi determinata.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Għad m&apos;hemmx pożizzjoni. Barra normalment tiġi aktar malajr.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Dan it-tagħmir ma joffrix pożizzjonament.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Post</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Post live</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Il-post live spiċċa</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Qed nistenna l-ewwel pożizzjoni</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Aġġornat %1, sa %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Waqqaf il-qsim</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1765,6 +1811,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Mixgħul, hemm mikrofonu ħdejn il-qasam tal-messaġġ: żommu biex tirrekordja, itilqu biex tibgħat – jew agħfsu biex tirrekordja mingħajr idejn, u t-tieni għafsa jew seba’ sekondi ta’ silenzju jibagħtu. Mitfi, mhuwiex hemm.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Post</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Aqsam il-post tiegħek</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Mixgħul, il-menu li jinġibed &apos;l isfel ta&apos; kamra joffri li tibgħat il-pożizzjoni tiegħek, darba jew live għal ftit żmien. Xejn ma jintbagħat sakemm ma tagħżlux hemmhekk.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Mapep għall-postijiet</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Il-biċċiet tal-mappa jiġu minn OpenStreetMap. Is-server tiegħu jsir jaf l-indirizz IP tiegħek u bejn wieħed u ieħor fejn jinsab il-post; f&apos;kamra kriptata dak huwa kontenut li inkella qatt ma jara. Mingħajr mappa jintwerew il-koordinati.</translation>
     </message>
 </context>
 <context>
@@ -2648,6 +2714,10 @@
         <source>The text could not be written as a file</source>
         <translation>It-test ma setax jinkiteb bħala fajl</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Aqsam il-post</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3056,6 +3126,61 @@
     <message>
         <source>Need help?</source>
         <translation>Għandek bżonn għajnuna?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Aqsam il-post</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Qed insib il-pożizzjoni tiegħek…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Erġa&apos; pprova</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Ibgħat din il-pożizzjoni</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Post live</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Il-pożizzjoni tiegħek tmur f&apos;din il-kamra meta tiċċaqlaq, sakemm l-app tkun miftuħa, sakemm jgħaddi l-ħin jew twaqqafha. Meta l-app tkun magħluqa, l-oħrajn jaraw l-aħħar pożizzjoni sa tmiem il-ħin.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Għal</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>Siegħa</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Aqsam il-post live</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Qed taqsam il-post live tiegħek sa %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Waqqaf il-qsim</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 sigħat</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>Ġurnata</translation>
     </message>
 </context>
 <context>

@@ -975,6 +975,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>الموقع مُعطّل أو غير مسموح به.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>تعذّر تحديد الموقع.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>لا يوجد موقع بعد. في الهواء الطلق يكون عادةً أسرع.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>هذا الجهاز لا يوفّر تحديد الموقع.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>الموقع</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>الموقع المباشر</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>انتهى الموقع المباشر</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>في انتظار أول موقع</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>حُدِّث %1، حتى %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>إيقاف المشاركة</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1771,6 +1817,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>عند التشغيل، يوجد ميكروفون بجوار حقل الرسالة: اضغط مطوّلًا للتسجيل وأفلِت للإرسال، أو المسه للتسجيل دون استخدام اليدين، وتُرسِل لمسة ثانية أو سبع ثوانٍ من الصمت. عند الإيقاف، لا وجود له.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>الموقع</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>مشاركة موقعك</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>عند التفعيل، تعرض القائمة المنسدلة للغرفة إرسال موقعك، مرة واحدة أو مباشرةً لبعض الوقت. لا يُرسل شيء ما لم تختره هناك.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>خرائط للمواقع</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>تأتي أجزاء الخريطة من OpenStreetMap. يعرف خادمه عنوان IP الخاص بك ومكان الموقع تقريبًا؛ وفي غرفة مشفّرة هذا محتوى لا يراه أبدًا بطريقة أخرى. بدون خريطة تُعرض الإحداثيات.</translation>
     </message>
 </context>
 <context>
@@ -2656,6 +2722,10 @@
         <source>The text could not be written as a file</source>
         <translation>تعذّر كتابة النص كملف</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>مشاركة الموقع</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3064,6 +3134,61 @@
     <message>
         <source>Need help?</source>
         <translation>تحتاج مساعدة؟</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>مشاركة الموقع</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>جارٍ تحديد موقعك…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>حاول مجددًا</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>إرسال هذا الموقع</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>الموقع المباشر</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>يُرسَل موقعك إلى هذه الغرفة عندما تتحرك، ما دام التطبيق مفتوحًا، حتى ينتهي الوقت أو توقفه. عندما يكون التطبيق مغلقًا، يرى الآخرون آخر موقع حتى نهاية الوقت.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>المدة</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>ساعة واحدة</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>مشاركة الموقع المباشر</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>أنت تشارك موقعك المباشر حتى %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>إيقاف المشاركة</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 ساعات</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>يوم واحد</translation>
     </message>
 </context>
 <context>

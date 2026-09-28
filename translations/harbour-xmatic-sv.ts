@@ -967,6 +967,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Plats är avstängd eller inte tillåten.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Positionen kunde inte bestämmas.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Ingen position än. Utomhus går det oftast snabbare.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Den här enheten erbjuder ingen positionering.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Plats</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Liveplats</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Liveplats avslutad</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Väntar på första positionen</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Uppdaterad %1, till %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Sluta dela</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1759,6 +1805,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>På sitter en mikrofon bredvid meddelandefältet: håll in för att spela in, släpp för att skicka – eller tryck för att spela in handsfree, så skickar ett andra tryck eller sju sekunders tystnad. Av finns den inte.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Plats</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Dela din plats</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>På erbjuder ett rums rullgardinsmeny att skicka din position, en gång eller live en stund. Inget skickas om du inte väljer det där.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Kartor för platser</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Kartbitarna kommer från OpenStreetMap. Dess server får veta din IP-adress och ungefär var platsen ligger; i ett krypterat rum är det innehåll den annars aldrig ser. Utan karta visas koordinaterna.</translation>
     </message>
 </context>
 <context>
@@ -2640,6 +2706,10 @@
         <source>The text could not be written as a file</source>
         <translation>Texten kunde inte skrivas som en fil</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Dela plats</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3048,6 +3118,61 @@
     <message>
         <source>Need help?</source>
         <translation>Behöver du hjälp?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Dela plats</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Hämtar din position…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Försök igen</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Skicka den här positionen</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Liveplats</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Din position skickas till det här rummet när du rör dig, medan appen är öppen, tills tiden är ute eller du avslutar. När appen är stängd ser de andra den senaste positionen tills tiden är slut.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>I</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 timme</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Dela liveplats</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Du delar din liveplats till %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Sluta dela</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 timmar</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 dag</translation>
     </message>
 </context>
 <context>

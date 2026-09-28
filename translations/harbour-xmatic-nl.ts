@@ -967,6 +967,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Locatie staat uit of is niet toegestaan.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>De positie kon niet worden bepaald.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Nog geen positie. Buiten gaat het meestal sneller.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Dit apparaat biedt geen plaatsbepaling.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Locatie</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Live locatie</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Live locatie beëindigd</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Wachten op de eerste positie</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Bijgewerkt %1, tot %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Delen stoppen</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1759,6 +1805,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Aan staat er een microfoon naast het berichtveld: ingedrukt houden neemt op, loslaten verstuurt – of tik erop om handsfree op te nemen, en een tweede tik of zeven seconden stilte verstuurt. Uit is hij er niet.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Locatie</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Je locatie delen</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Aan biedt het uittrekmenu van een ruimte aan om je positie te versturen, eenmalig of een tijdje live. Er wordt niets verstuurd tenzij je het daar kiest.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Kaarten voor locaties</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Kaartstukken komen van OpenStreetMap. Diens server leert je IP-adres kennen en ongeveer waar de locatie ligt; in een versleutelde ruimte is dat inhoud die hij anders nooit ziet. Zonder kaart worden de coördinaten getoond.</translation>
     </message>
 </context>
 <context>
@@ -2640,6 +2706,10 @@
         <source>The text could not be written as a file</source>
         <translation>De tekst kon niet als bestand worden weggeschreven</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Locatie delen</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3048,6 +3118,61 @@
     <message>
         <source>Need help?</source>
         <translation>Hulp nodig?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Locatie delen</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Je positie wordt bepaald…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Opnieuw proberen</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Deze positie versturen</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Live locatie</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Je positie gaat naar deze ruimte als je beweegt, zolang de app open is, tot de tijd om is of je stopt. Als de app gesloten is, zien de anderen de laatste positie tot het einde van de tijd.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Voor</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 uur</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Live locatie delen</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Je deelt je live locatie tot %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Delen stoppen</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 uur</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 dag</translation>
     </message>
 </context>
 <context>

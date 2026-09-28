@@ -9,6 +9,7 @@ mod call;
 mod compose;
 mod directory;
 mod linkpreview;
+mod location;
 mod login;
 mod media;
 mod members;

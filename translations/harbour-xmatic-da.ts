@@ -967,6 +967,52 @@
     </message>
 </context>
 <context>
+    <name>LocationActions</name>
+    <message>
+        <source>Location is switched off or not allowed.</source>
+        <translation>Placering er slået fra eller ikke tilladt.</translation>
+    </message>
+    <message>
+        <source>The position could not be determined.</source>
+        <translation>Positionen kunne ikke bestemmes.</translation>
+    </message>
+    <message>
+        <source>No position yet. Outdoors it usually comes faster.</source>
+        <translation>Ingen position endnu. Udendørs går det som regel hurtigere.</translation>
+    </message>
+    <message>
+        <source>This device offers no positioning.</source>
+        <translation>Denne enhed tilbyder ingen positionering.</translation>
+    </message>
+</context>
+<context>
+    <name>LocationBlock</name>
+    <message>
+        <source>Location</source>
+        <translation>Placering</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Liveplacering</translation>
+    </message>
+    <message>
+        <source>Live location ended</source>
+        <translation>Liveplacering afsluttet</translation>
+    </message>
+    <message>
+        <source>Waiting for the first position</source>
+        <translation>Venter på den første position</translation>
+    </message>
+    <message>
+        <source>Updated %1, until %2</source>
+        <translation>Opdateret %1, indtil %2</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Stop deling</translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <source>Sign in</source>
@@ -1759,6 +1805,26 @@
     <message>
         <source>On, a microphone sits next to the message field: hold it to record, let go to send - or tap it to record hands-free, and a second tap or seven seconds of silence sends. Off, it is not there.</source>
         <translation>Slået til sidder der en mikrofon ved siden af beskedfeltet: hold den nede for at optage, slip for at sende – eller tryk for at optage håndfrit, og et tryk til eller syv sekunders stilhed sender. Slået fra er den der ikke.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Placering</translation>
+    </message>
+    <message>
+        <source>Share your location</source>
+        <translation>Del din placering</translation>
+    </message>
+    <message>
+        <source>On, a room&apos;s pull-down menu offers to send your position, once or live for a while. Nothing is sent unless you choose it there.</source>
+        <translation>Til tilbyder et rums rullemenu at sende din position, én gang eller live i et stykke tid. Der sendes intet, medmindre du vælger det dér.</translation>
+    </message>
+    <message>
+        <source>Maps for locations</source>
+        <translation>Kort til placeringer</translation>
+    </message>
+    <message>
+        <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
+        <translation>Kortstykkerne kommer fra OpenStreetMap. Dens server får din IP-adresse at vide og omtrent, hvor placeringen ligger; i et krypteret rum er det indhold, den ellers aldrig ser. Uden kort vises koordinaterne.</translation>
     </message>
 </context>
 <context>
@@ -2640,6 +2706,10 @@
         <source>The text could not be written as a file</source>
         <translation>Teksten kunne ikke skrives som en fil</translation>
     </message>
+    <message>
+        <source>Share location</source>
+        <translation>Del placering</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3048,6 +3118,61 @@
     <message>
         <source>Need help?</source>
         <translation>Brug for hjælp?</translation>
+    </message>
+</context>
+<context>
+    <name>ShareLocationPage</name>
+    <message>
+        <source>Share location</source>
+        <translation>Del placering</translation>
+    </message>
+    <message>
+        <source>Finding your position…</source>
+        <translation>Finder din position…</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Prøv igen</translation>
+    </message>
+    <message>
+        <source>Send this position</source>
+        <translation>Send denne position</translation>
+    </message>
+    <message>
+        <source>Live location</source>
+        <translation>Liveplacering</translation>
+    </message>
+    <message>
+        <source>Your position goes to this room when you move, while the app is open, until the time is up or you stop it. When the app is closed, the others see the last position until the end of the time.</source>
+        <translation>Din position sendes til dette rum, når du bevæger dig, mens appen er åben, indtil tiden er gået, eller du stopper. Når appen er lukket, ser de andre den seneste position indtil tidens udløb.</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Varighed</translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation>1 time</translation>
+    </message>
+    <message>
+        <source>Share live location</source>
+        <translation>Del liveplacering</translation>
+    </message>
+    <message>
+        <source>Sharing your live location until %1.</source>
+        <translation>Du deler din liveplacering indtil %1.</translation>
+    </message>
+    <message>
+        <source>Stop sharing</source>
+        <translation>Stop deling</translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation>6 timer</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 dag</translation>
     </message>
 </context>
 <context>

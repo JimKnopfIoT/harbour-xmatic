@@ -11,7 +11,16 @@ Dialog {
     /// Twenty is the spec's ceiling; two is what makes a poll a poll.
     readonly property int maxAnswers: 20
 
-    property int answerCount: 3
+    // A model, not a number: a repeater on a count rebuilds every field when it
+    // changes, and the answers already typed go with them.
+    ListModel {
+        id: answerModel
+
+        ListElement { placeholder: true }
+        ListElement { placeholder: true }
+        ListElement { placeholder: true }
+    }
+    readonly property int answerCount: answerModel.count
     /// Recounted whenever a field changes - `canAccept` needs it live.
     property int filledAnswers: 0
 
@@ -78,7 +87,7 @@ Dialog {
             Repeater {
                 id: answerRepeater
 
-                model: dialog.answerCount
+                model: answerModel
 
                 TextField {
                     width: content.width
@@ -95,7 +104,7 @@ Dialog {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Add answer")
                 enabled: dialog.answerCount < dialog.maxAnswers
-                onClicked: dialog.answerCount++
+                onClicked: answerModel.append({ placeholder: true })
             }
 
             TextSwitch {
