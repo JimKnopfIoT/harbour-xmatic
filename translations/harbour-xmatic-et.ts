@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Fotot ei õnnestunud salvestada.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Fotot ei õnnestunud teha.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Kaamera pole saadaval.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Kaamerat kasutab kõne.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Hoia galeriis</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Muidu kustutatakse foto pärast saatmist.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Uuesti</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Kasuta</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Kaardi tükid tulevad OpenStreetMapist. Selle server saab teada sinu IP-aadressi ja umbes, kus asukoht on; krüpteeritud ruumis on see sisu, mida ta muidu kunagi ei näe. Ilma kaardita näidatakse koordinaate.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Kaamera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Otsepilt manuste valijas</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Sees: kaamera ruut näitab, mida kaamera näeb, kuni valija on avatud. Väljas: kaamera käivitub alles siis, kui ruutu puudutad.</translation>
     </message>
 </context>
 <context>

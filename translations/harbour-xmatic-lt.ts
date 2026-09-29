@@ -471,6 +471,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Nuotraukos išsaugoti nepavyko.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Nuotraukos padaryti nepavyko.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Kamera nepasiekiama.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Kamerą naudoja skambutis.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Palikti galerijoje</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Kitaip nuotrauka ištrinama ją išsiuntus.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Iš naujo</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Naudoti</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1828,6 +1863,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Žemėlapio dalys gaunamos iš OpenStreetMap. Jo serveris sužino tavo IP adresą ir apytiksliai, kur yra vieta; šifruotame kambaryje tai turinys, kurio jis kitaip niekada nemato. Be žemėlapio rodomos koordinatės.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Kamera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Tiesioginis vaizdas priedų parinkiklyje</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Įjungta: kameros langelis rodo, ką mato kamera, kol parinkiklis atviras. Išjungta: kamera įsijungia tik tada, kai paliesi langelį.</translation>
     </message>
 </context>
 <context>

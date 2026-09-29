@@ -471,6 +471,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Fotografia nu a putut fi salvată.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Fotografia nu a putut fi făcută.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Camera nu este disponibilă.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Camera este folosită de apel.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Păstrează în galerie</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Altfel fotografia este ștearsă după trimitere.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Refă</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Folosește</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1828,6 +1863,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Bucățile de hartă vin de la OpenStreetMap. Serverul său află adresa ta IP și aproximativ unde se află locația; într-o cameră criptată, acesta e conținut pe care altfel nu îl vede niciodată. Fără hartă se afișează coordonatele.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Cameră</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Imagine live în selectorul de atașamente</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Activat, căsuța camerei arată ce vede camera cât timp selectorul e deschis. Dezactivat, camera pornește abia când atingi căsuța.</translation>
     </message>
 </context>
 <context>

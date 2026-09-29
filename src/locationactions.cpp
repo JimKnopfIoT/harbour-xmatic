@@ -31,7 +31,7 @@ LocationActions::LocationActions(AppSettings *settings, QObject *parent)
     if (m_settings) {
         connect(m_settings, &AppSettings::locationSharingChanged, this, [this]() {
             if (!m_settings->locationSharing()) {
-                for (const QString &room : m_live.keys()) {
+                for (const QString &room : m_live.keys() + m_starting.values()) {
                     stopLive(room);
                 }
             }
@@ -177,12 +177,24 @@ void LocationActions::stopLive(const QString &roomId)
     if (roomId.isEmpty()) {
         return;
     }
+    // A start in flight is stopped on its answer; sent now, the stop could
+    // overtake it in the core and find nothing.
+    bool pending = false;
+    for (auto it = m_starting.constBegin(); it != m_starting.constEnd(); ++it) {
+        if (it.value() == roomId) {
+            m_cancelled.insert(it.key());
+            pending = true;
+        }
+    }
     // Gone here at once: the positions stop now, whatever the server answers.
     if (m_live.remove(roomId) > 0) {
         m_lastSentAt.remove(roomId);
         m_lastSentTime.remove(roomId);
         emit liveChanged();
         updateTracking();
+    }
+    if (pending) {
+        return;
     }
     QJsonObject arguments;
     arguments.insert(QStringLiteral("roomId"), roomId);
@@ -291,9 +303,11 @@ void LocationActions::sent(quint64 id, const QString &command, const QJsonObject
     if (id == 0) {
         return;
     }
-    if (command == QLatin1String("location.liveStart")
-        || command == QLatin1String("location.beacon")) {
-        m_roomOf.insert(id, arguments.value(QStringLiteral("roomId")).toString());
+    const QString room = arguments.value(QStringLiteral("roomId")).toString();
+    if (command == QLatin1String("location.liveStart")) {
+        m_starting.insert(id, room);
+    } else if (command == QLatin1String("location.beacon")) {
+        m_roomOf.insert(id, room);
     }
 }
 
@@ -312,10 +326,19 @@ bool LocationActions::deliver(quint64 id, const QString &command, const QJsonObj
         return true;
     }
     if (command == QLatin1String("location.liveStart")) {
-        m_roomOf.remove(id);
+        m_starting.remove(id);
+        const bool cancelled = m_cancelled.remove(id);
+        const bool dropped = m_dropped.remove(id);
         const QString room = data.value(QStringLiteral("roomId")).toString();
         const qint64 until = static_cast<qint64>(data.value(QStringLiteral("until")).toDouble());
-        if (room.isEmpty() || until <= QDateTime::currentMSecsSinceEpoch()) {
+        if (room.isEmpty() || until <= QDateTime::currentMSecsSinceEpoch() || dropped) {
+            return true;
+        }
+        // Stopped or switched off while it started: it ends now.
+        if (cancelled || !m_settings || !m_settings->locationSharing()) {
+            QJsonObject arguments;
+            arguments.insert(QStringLiteral("roomId"), room);
+            emit commandReady(QStringLiteral("location.liveStop"), arguments);
             return true;
         }
         m_live.insert(room, until);
@@ -335,11 +358,16 @@ bool LocationActions::deliver(quint64 id, const QString &command, const QJsonObj
 
 bool LocationActions::reportFailure(quint64 id, const QString &command)
 {
-    const QString room = m_roomOf.take(id);
     if (command == QLatin1String("location.liveStart")) {
+        const QString room = m_starting.take(id);
+        const bool quiet = m_cancelled.remove(id) | m_dropped.remove(id);
+        if (quiet) {
+            return true;
+        }
         emit liveFailed(room);
         return false;
     }
+    const QString room = m_roomOf.take(id);
     // Periodic and nobody's errand; the journal keeps it, the next fix tries again.
     if (command == QLatin1String("location.beacon")) {
         m_lastSentTime.remove(room);
@@ -357,6 +385,11 @@ void LocationActions::clear()
 
 void LocationActions::forgetLive()
 {
+    // Answers still due belong to the account that is gone.
+    for (auto it = m_starting.constBegin(); it != m_starting.constEnd(); ++it) {
+        m_dropped.insert(it.key());
+    }
+    m_cancelled.clear();
     if (m_live.isEmpty()) {
         return;
     }

@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Ekki tókst að vista myndina.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Ekki tókst að taka myndina.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Myndavélin er ekki tiltæk.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Símtalið er að nota myndavélina.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Geyma í myndasafni</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Annars er myndinni eytt þegar hún hefur verið send.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Taka aftur</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Nota</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Kortahlutar koma frá OpenStreetMap. Þjónn þess fær að vita IP-töluna þína og nokkurn veginn hvar staðsetningin er; í dulritaðri spjallrás er það efni sem hann sér annars aldrei. Án korts eru hnitin sýnd.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Myndavél</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Lifandi mynd í viðhengjavali</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Kveikt: myndavélarreiturinn sýnir það sem myndavélin sér á meðan valið er opið. Slökkt: myndavélin fer fyrst í gang þegar þú ýtir á reitinn.</translation>
     </message>
 </context>
 <context>

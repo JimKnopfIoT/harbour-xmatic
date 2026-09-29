@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>La photo n’a pas pu être enregistrée.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>La photo n’a pas pu être prise.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>L’appareil photo n’est pas disponible.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>L’appareil photo est utilisé par l’appel.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Garder dans la galerie</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Sinon, la photo est supprimée une fois envoyée.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Reprendre</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Utiliser</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1826,6 +1861,18 @@
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Les morceaux de carte viennent d&apos;OpenStreetMap. Son serveur apprend ton adresse IP et à peu près où se trouve la position ; dans un salon chiffré, c&apos;est un contenu qu&apos;il ne voit jamais autrement. Sans carte, les coordonnées sont affichées.</translation>
     </message>
+    <message>
+        <source>Camera</source>
+        <translation>Appareil photo</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Image en direct dans le sélecteur de pièces jointes</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Activé, la case de l’appareil photo montre ce que voit la caméra tant que le sélecteur est ouvert. Désactivé, la caméra ne démarre que lorsque tu touches la case.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2660,7 +2707,7 @@
     <message>
         <source>%1: %2</source>
         <comment>system line and the reason given for it</comment>
-        <translation>%1 : %2</translation>
+        <translation>%1&#xa0;: %2</translation>
     </message>
     <message>
         <source>Convert to text</source>

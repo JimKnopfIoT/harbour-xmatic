@@ -40,6 +40,13 @@ class AppSettings : public QObject
     /// which learns this phone's address and roughly where the point lies.
     Q_PROPERTY(QString locationMaps READ locationMaps WRITE setLocationMaps
                NOTIFY locationMapsChanged)
+    /// Whether the picker's camera cell shows the live picture. Off: the camera
+    /// would run whenever the picker is open, for a PDF as much as for a photo.
+    Q_PROPERTY(bool cameraLivePreview READ cameraLivePreview WRITE setCameraLivePreview
+               NOTIFY cameraChanged)
+    /// "auto", "on" or "off", and the thirds grid: the photo page's own choices.
+    Q_PROPERTY(QString cameraFlash READ cameraFlash WRITE setCameraFlash NOTIFY cameraChanged)
+    Q_PROPERTY(bool cameraGrid READ cameraGrid WRITE setCameraGrid NOTIFY cameraChanged)
     /// Whether push was turned on. Stored rather than derived: a registration
     /// survives a restart, and the next start has to know one was made.
     Q_PROPERTY(bool pushEnabled READ pushEnabled WRITE setPushEnabled
@@ -160,6 +167,13 @@ public:
     QString locationMaps() const;
     void setLocationMaps(const QString &policy);
 
+    bool cameraLivePreview() const;
+    void setCameraLivePreview(bool enabled);
+    QString cameraFlash() const;
+    void setCameraFlash(const QString &mode);
+    bool cameraGrid() const;
+    void setCameraGrid(bool enabled);
+
     /// Whether the microphone sits next to the message field. On, but it is one
     /// hold away from a recording and not everybody wants that in reach.
     bool voiceMessages() const;
@@ -213,6 +227,7 @@ signals:
     void linkPreviewsChanged();
     void locationSharingChanged();
     void locationMapsChanged();
+    void cameraChanged();
     void pushChanged();
     void voiceMessagesChanged();
     void voiceTranscriptsChanged();

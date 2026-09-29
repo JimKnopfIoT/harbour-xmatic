@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>The photo could not be saved.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>The photo could not be taken.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>The camera is not available.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>The camera is in use by the call.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Keep in the gallery</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Otherwise the photo is deleted once it is sent.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Retake</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Use</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Camera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Live picture in the attachment picker</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</translation>
     </message>
 </context>
 <context>

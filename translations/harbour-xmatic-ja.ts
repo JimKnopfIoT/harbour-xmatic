@@ -469,6 +469,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>写真を保存できませんでした。</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>写真を撮影できませんでした。</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>カメラを使用できません。</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>カメラは通話で使用中です。</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>ギャラリーに残す</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>残さない場合、送信後に写真は削除されます。</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>撮り直す</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>使う</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1822,6 +1857,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>地図の画像は OpenStreetMap から取得されます。そのサーバーはあなたの IP アドレスと、位置のおおよその場所を知ることになります。暗号化されたルームでは、本来見ることのない内容です。地図がない場合は座標が表示されます。</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>カメラ</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>添付ファイル選択でのライブ映像</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>オン: 選択画面を開いている間、カメラのマスにカメラの映像を表示します。オフ: マスをタップしたときだけカメラが動きます。</translation>
     </message>
 </context>
 <context>

@@ -471,6 +471,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Fotku se nepodařilo uložit.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Fotku se nepodařilo pořídit.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Fotoaparát není dostupný.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Fotoaparát používá hovor.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Ponechat v galerii</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Jinak se fotka po odeslání smaže.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Znovu</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Použít</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1828,6 +1863,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Části mapy pocházejí z OpenStreetMap. Jeho server se dozví tvou IP adresu a přibližně, kde poloha leží; v šifrované místnosti je to obsah, který jinak nikdy nevidí. Bez mapy se zobrazí souřadnice.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Fotoaparát</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Živý obraz ve výběru příloh</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Zapnuto: dlaždice fotoaparátu ukazuje, co fotoaparát vidí, dokud je výběr otevřený. Vypnuto: fotoaparát se spustí až po klepnutí na dlaždici.</translation>
     </message>
 </context>
 <context>

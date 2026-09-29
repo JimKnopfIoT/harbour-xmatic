@@ -2,15 +2,20 @@
 //! position comes from the Qt side; this module sends, reads rows and fetches
 //! map tiles. Coordinates are never logged, not even rounded.
 
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, LazyLock};
-use std::time::{Duration, SystemTime};
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::{Arc, LazyLock, Mutex};
+use std::time::Duration;
 
+use matrix_sdk::config::RequestConfig;
+use matrix_sdk::ruma::events::beacon::BeaconEventContent;
+use matrix_sdk::ruma::events::beacon_info::BeaconInfoEventContent;
 use matrix_sdk::ruma::events::location::AssetType;
 use matrix_sdk::ruma::events::room::message::{
     LocationMessageEventContent, MessageType, RoomMessageEventContent,
 };
-use matrix_sdk::ruma::{MilliSecondsSinceUnixEpoch, RoomId};
+use matrix_sdk::ruma::{MilliSecondsSinceUnixEpoch, OwnedEventId, OwnedUserId, RoomId};
 use matrix_sdk::Client;
 use matrix_sdk_ui::timeline::{LiveLocationState, Timeline};
 use serde_json::{json, Value};
@@ -35,6 +40,9 @@ const LIVE_MAX_MS: u64 = 24 * 3600 * 1000;
 /// Description texts are a stranger's words in a card.
 const DESCRIPTION_CHARS: usize = 200;
 
+/// A beacon holds the room's lane; a stop waits behind it, so keep it short.
+const BEACON_RETRIES: usize = 2;
+
 /// Two lanes to the tile server: a room full of locations must not become a burst.
 static TILE_LANES: LazyLock<tokio::sync::Semaphore> =
     LazyLock::new(|| tokio::sync::Semaphore::new(2));
@@ -50,6 +58,25 @@ static HTTP: LazyLock<reqwest::Client> = LazyLock::new(|| {
         .build()
         .unwrap_or_default()
 });
+
+/// A share this run started: its event and content, not the store's copy,
+/// which only a later sync brings.
+struct Share {
+    user: OwnedUserId,
+    event_id: OwnedEventId,
+    content: BeaconInfoEventContent,
+}
+
+/// Per room: start, stop and beacon run one at a time, in arrival order.
+type Lane = Arc<tokio::sync::Mutex<Option<Share>>>;
+static LANES: LazyLock<Mutex<HashMap<String, Lane>>> = LazyLock::new(Default::default);
+
+fn lane(room_id: &str) -> Lane {
+    let mut lanes = LANES.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    lanes.entry(room_id.to_owned()).or_default().clone()
+}
+
+static PARTIAL: AtomicU64 = AtomicU64::new(0);
 
 /// A point as `geo:` carries it. Anything outside the globe is refused, so a
 /// row never draws a marker at NaN.
@@ -200,14 +227,24 @@ async fn live_start(client: Option<Client>, room_id: &str, duration_ms: u64) -> 
         return Err("the sharing time is out of range".to_owned());
     }
     let room = joined_room(client, room_id)?;
-    room.start_live_location_share(duration_ms, None)
+    let lane = lane(room_id);
+    let mut share = lane.lock().await;
+    let user = room.own_user_id().to_owned();
+    let content = BeaconInfoEventContent::new(None, Duration::from_millis(duration_ms), true, None);
+    let response = room
+        .send_state_event_for_key(&user, content.clone())
         .await
         .map_err(|error| format!("live location could not be started: {error}"))?;
-    let until = SystemTime::now()
-        .duration_since(SystemTime::UNIX_EPOCH)
-        .map(|now| now.as_millis() as u64 + duration_ms)
-        .unwrap_or(0);
+    let until = u64::from(content.ts.get()).saturating_add(duration_ms);
+    *share = Some(Share { user, event_id: response.event_id, content });
     Ok(json!({ "roomId": room_id, "until": until }))
+}
+
+/// The share this run started in the room, while it runs and for this account.
+fn current<'a>(share: &'a Option<Share>, room: &matrix_sdk::Room) -> Option<&'a Share> {
+    share
+        .as_ref()
+        .filter(|share| share.user == room.own_user_id() && share.content.is_live())
 }
 
 async fn beacon(
@@ -219,8 +256,16 @@ async fn beacon(
 ) -> Result<Value, String> {
     let point = Point::new(lat, lon, accuracy).ok_or_else(|| "not a position".to_owned())?;
     let room = joined_room(client, room_id)?;
+    // Held across the send: a stop behind it lands after this point, never before.
+    let lane = lane(room_id);
+    let share = lane.lock().await;
+    let Some(share) = current(&share, &room) else {
+        return Err("no live share runs in this room".to_owned());
+    };
+    let content = BeaconEventContent::new(share.event_id.clone(), point.geo_uri(), None);
     // The error names no coordinates: it goes to the journal.
-    room.send_location_beacon(point.geo_uri())
+    room.send(content)
+        .with_request_config(RequestConfig::new().retry_limit(BEACON_RETRIES))
         .await
         .map(|_| json!({ "roomId": room_id }))
         .map_err(|error| format!("the live location update was not sent: {error}"))
@@ -228,10 +273,27 @@ async fn beacon(
 
 async fn live_stop(client: Option<Client>, room_id: &str) -> Result<Value, String> {
     let room = joined_room(client, room_id)?;
-    room.stop_live_location_share()
-        .await
-        .map(|_| json!({ "roomId": room_id }))
-        .map_err(|error| format!("live location could not be stopped: {error}"))
+    let lane = lane(room_id);
+    let mut share = lane.lock().await;
+    let result = match current(&share, &room) {
+        Some(running) => {
+            let mut content = running.content.clone();
+            content.stop();
+            room.send_state_event_for_key(&running.user, content)
+                .await
+                .map(|_| ())
+                .map_err(|error| error.to_string())
+        }
+        // Left over from before a restart: only the store knows it.
+        None => room.stop_live_location_share().await.map(|_| ()).map_err(|error| error.to_string()),
+    };
+    match result {
+        Ok(()) => {
+            *share = None;
+            Ok(json!({ "roomId": room_id }))
+        }
+        Err(error) => Err(format!("live location could not be stopped: {error}")),
+    }
 }
 
 /// Where a point lies on the map at `zoom`, in map pixels (Web Mercator).
@@ -331,9 +393,20 @@ async fn tile_file(dir: &Path, zoom: u32, x: u32, y: u32) -> Option<PathBuf> {
     }
     let parent = path.parent()?;
     std::fs::create_dir_all(parent).ok()?;
-    let partial = path.with_extension("part");
-    std::fs::write(&partial, &bytes).ok()?;
-    std::fs::rename(&partial, &path).ok()?;
+    // Own name per fetch: two cards may want the same tile at once.
+    let partial = path.with_extension(format!(
+        "{}.{}.part",
+        std::process::id(),
+        PARTIAL.fetch_add(1, Ordering::Relaxed)
+    ));
+    if std::fs::write(&partial, &bytes).is_err() {
+        let _ = std::fs::remove_file(&partial);
+        return None;
+    }
+    if std::fs::rename(&partial, &path).is_err() {
+        let _ = std::fs::remove_file(&partial);
+        return fresh(&path).then_some(path);
+    }
     Some(path)
 }
 

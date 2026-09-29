@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>De foto kon niet worden opgeslagen.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>De foto kon niet worden gemaakt.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>De camera is niet beschikbaar.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>De camera wordt door het gesprek gebruikt.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>In de galerij bewaren</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Anders wordt de foto na het versturen verwijderd.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Opnieuw</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Gebruiken</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Kaartstukken komen van OpenStreetMap. Diens server leert je IP-adres kennen en ongeveer waar de locatie ligt; in een versleutelde ruimte is dat inhoud die hij anders nooit ziet. Zonder kaart worden de coördinaten getoond.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Camera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Live beeld in de bijlagekiezer</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Aan: het cameravak toont wat de camera ziet zolang de kiezer open is. Uit: de camera start pas als je op het vak tikt.</translation>
     </message>
 </context>
 <context>

@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Снимката не можа да бъде запазена.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Снимката не можа да бъде направена.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Камерата не е налична.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Камерата се използва от разговора.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Запази в галерията</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Иначе снимката се изтрива след изпращане.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Отново</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Използвай</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Частите от картата идват от OpenStreetMap. Неговият сървър научава IP адреса ти и приблизително къде е местоположението; в шифрована стая това е съдържание, което иначе никога не вижда. Без карта се показват координатите.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Камера</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Картина на живо в избора на прикачени файлове</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Включено: полето на камерата показва какво вижда камерата, докато изборът е отворен. Изключено: камерата се включва едва когато докоснеш полето.</translation>
     </message>
 </context>
 <context>

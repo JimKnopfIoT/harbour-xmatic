@@ -31,7 +31,8 @@ Column {
                                      ? matrix.locations.mapKey(location.lat, location.lon) : ""
     readonly property real mapScale: hasMap ? width / mapData.width : 1
 
-    signal activated(string link)
+    /// `map`: the card's map for the confirmation page, or null.
+    signal activated(string link, var map)
 
     width: availableWidth
     spacing: Theme.paddingSmall
@@ -136,7 +137,7 @@ Column {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: block.activated(block.osmLink())
+            onClicked: block.activated(block.osmLink(), block.mapData)
         }
     }
 
@@ -144,7 +145,7 @@ Column {
         width: block.width
         height: texts.height + Theme.paddingSmall
         enabled: block.hasPoint
-        onClicked: block.activated(block.osmLink())
+        onClicked: block.activated(block.osmLink(), block.hasMap ? block.mapData : null)
 
         Column {
             id: texts

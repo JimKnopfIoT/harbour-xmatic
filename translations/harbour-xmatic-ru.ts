@@ -471,6 +471,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Не удалось сохранить фото.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Не удалось сделать фото.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Камера недоступна.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Камера занята звонком.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Оставить в галерее</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Иначе фото удаляется после отправки.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Переснять</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Использовать</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1828,6 +1863,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Фрагменты карты загружаются с OpenStreetMap. Его сервер узнаёт твой IP-адрес и примерно, где находится точка; в зашифрованной комнате это содержимое, которое он иначе никогда не видит. Без карты показываются координаты.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Камера</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Живое изображение в выборе вложений</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Включено: плитка камеры показывает, что видит камера, пока выбор открыт. Выключено: камера включается, только когда ты нажмёшь на плитку.</translation>
     </message>
 </context>
 <context>

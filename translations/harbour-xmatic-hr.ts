@@ -471,6 +471,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Fotografiju nije bilo moguće spremiti.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Fotografiju nije bilo moguće snimiti.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Kamera nije dostupna.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Kameru koristi poziv.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Zadrži u galeriji</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Inače se fotografija briše nakon slanja.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Ponovno</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Koristi</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1828,6 +1863,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Dijelovi karte dolaze s OpenStreetMapa. Njegov poslužitelj saznaje tvoju IP adresu i otprilike gdje je lokacija; u šifriranoj sobi to je sadržaj koji inače nikad ne vidi. Bez karte prikazuju se koordinate.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Kamera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Slika uživo u odabiru privitaka</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Uključeno: pločica kamere prikazuje što kamera vidi dok je odabir otvoren. Isključeno: kamera se pokreće tek kad dodirneš pločicu.</translation>
     </message>
 </context>
 <context>

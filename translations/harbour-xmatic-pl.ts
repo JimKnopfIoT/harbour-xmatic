@@ -471,6 +471,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Nie udało się zapisać zdjęcia.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Nie udało się zrobić zdjęcia.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Aparat jest niedostępny.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Aparat jest używany przez połączenie.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Zachowaj w galerii</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>W przeciwnym razie zdjęcie zostanie usunięte po wysłaniu.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Powtórz</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Użyj</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1828,6 +1863,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Fragmenty mapy pochodzą z OpenStreetMap. Jego serwer poznaje twój adres IP i mniej więcej miejsce lokalizacji; w zaszyfrowanym pokoju to treść, której inaczej nigdy by nie zobaczył. Bez mapy wyświetlane są współrzędne.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Aparat</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Obraz na żywo w wyborze załączników</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Włączone: kafelek aparatu pokazuje obraz z aparatu, dopóki wybór jest otwarty. Wyłączone: aparat włącza się dopiero po dotknięciu kafelka.</translation>
     </message>
 </context>
 <context>
