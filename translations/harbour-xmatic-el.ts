@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Δεν ήταν δυνατή η αποθήκευση της φωτογραφίας.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Δεν ήταν δυνατή η λήψη της φωτογραφίας.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Η κάμερα δεν είναι διαθέσιμη.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Η κάμερα χρησιμοποιείται από την κλήση.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Κράτα στη συλλογή</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Αλλιώς η φωτογραφία διαγράφεται μόλις σταλεί.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Ξανά</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Χρήση</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Τα κομμάτια του χάρτη προέρχονται από το OpenStreetMap. Ο διακομιστής του μαθαίνει τη διεύθυνση IP σου και περίπου πού βρίσκεται η τοποθεσία· σε κρυπτογραφημένο δωμάτιο αυτό είναι περιεχόμενο που αλλιώς δεν βλέπει ποτέ. Χωρίς χάρτη εμφανίζονται οι συντεταγμένες.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Κάμερα</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Ζωντανή εικόνα στην επιλογή συνημμένων</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Ενεργό: το πλαίσιο της κάμερας δείχνει ό,τι βλέπει η κάμερα όσο η επιλογή είναι ανοιχτή. Ανενεργό: η κάμερα ξεκινά μόνο όταν πατήσεις το πλαίσιο.</translation>
     </message>
 </context>
 <context>

@@ -92,8 +92,12 @@ private:
     /// Room → where and when the last beacon went out.
     QHash<QString, QGeoCoordinate> m_lastSentAt;
     QHash<QString, qint64> m_lastSentTime;
-    /// Commands in flight that name a room.
+    /// Beacons in flight → their room.
     QHash<quint64, QString> m_roomOf;
+    /// Starts in flight → their room; stopped or signed out before the answer.
+    QHash<quint64, QString> m_starting;
+    QSet<quint64> m_cancelled;
+    QSet<quint64> m_dropped;
     QTimer m_expiry;
 
     QHash<QString, QVariantMap> m_maps;

@@ -474,6 +474,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>تعذّر حفظ الصورة.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>تعذّر التقاط الصورة.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>الكاميرا غير متاحة.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>المكالمة تستخدم الكاميرا.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>احتفظ بها في المعرض</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>وإلا تُحذف الصورة بعد إرسالها.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>إعادة الالتقاط</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>استخدام</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1837,6 +1872,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>تأتي أجزاء الخريطة من OpenStreetMap. يعرف خادمه عنوان IP الخاص بك ومكان الموقع تقريبًا؛ وفي غرفة مشفّرة هذا محتوى لا يراه أبدًا بطريقة أخرى. بدون خريطة تُعرض الإحداثيات.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>الكاميرا</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>صورة حية في منتقي المرفقات</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>عند التشغيل، يعرض مربع الكاميرا ما تراه الكاميرا طالما المنتقي مفتوح. عند الإيقاف، لا تعمل الكاميرا إلا عندما تلمس المربع.</translation>
     </message>
 </context>
 <context>

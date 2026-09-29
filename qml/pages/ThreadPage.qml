@@ -117,7 +117,8 @@ Page {
             var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), {
                                             question: qsTr("Open this address?"),
                                             subject: link,
-                                            acceptLabel: qsTr("Open")
+                                            acceptLabel: qsTr("Open"),
+                                            plainCancel: true
                                         })
             dialog.accepted.connect(function() { Qt.openUrlExternally(link) })
             return

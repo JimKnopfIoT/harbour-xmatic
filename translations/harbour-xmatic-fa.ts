@@ -469,6 +469,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>عکس ذخیره نشد.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>عکس گرفته نشد.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>دوربین در دسترس نیست.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>دوربین در حال استفاده توسط تماس است.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>نگه‌داشتن در گالری</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>در غیر این صورت عکس پس از ارسال حذف می‌شود.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>گرفتن دوباره</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>استفاده</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1822,6 +1857,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>تکه‌های نقشه از OpenStreetMap می‌آیند. سرور آن نشانی IP تو و تقریباً محل موقعیت را می‌فهمد؛ در اتاق رمزگذاری‌شده این محتوایی است که در غیر این صورت هرگز نمی‌بیند. بدون نقشه، مختصات نمایش داده می‌شود.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>دوربین</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>تصویر زنده در انتخابگر پیوست</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>روشن: خانهٔ دوربین تا وقتی انتخابگر باز است آنچه دوربین می‌بیند را نشان می‌دهد. خاموش: دوربین فقط وقتی روی خانه بزنی روشن می‌شود.</translation>
     </message>
 </context>
 <context>

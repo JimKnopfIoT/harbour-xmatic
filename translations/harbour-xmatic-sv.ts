@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Fotot kunde inte sparas.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Fotot kunde inte tas.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Kameran är inte tillgänglig.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Kameran används av samtalet.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Behåll i galleriet</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Annars raderas fotot när det har skickats.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Ta om</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Använd</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Kartbitarna kommer från OpenStreetMap. Dess server får veta din IP-adress och ungefär var platsen ligger; i ett krypterat rum är det innehåll den annars aldrig ser. Utan karta visas koordinaterna.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Kamera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Livebild i bilageväljaren</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>På: kamerarutan visar vad kameran ser medan väljaren är öppen. Av: kameran startar först när du trycker på rutan.</translation>
     </message>
 </context>
 <context>

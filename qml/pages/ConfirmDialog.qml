@@ -14,6 +14,14 @@ Dialog {
     property string explanation
     // The accept label. Says the deed ("Leave"), never "OK".
     property string acceptLabel
+    // The platform's "Cancel" instead of "Keep": nothing is kept by not opening a link.
+    property bool plainCancel: false
+    // Optional content under the text, e.g. the map behind a location link.
+    property url extraSource
+    property var extraProperties: ({})
+    readonly property bool hasExtra: extraSource.toString().length > 0
+    /// Landscape with extra content: the subject takes one small line.
+    readonly property bool compact: isLandscape && hasExtra
 
     allowedOrientations: Orientation.All
 
@@ -33,7 +41,12 @@ Dialog {
 
             DialogHeader {
                 acceptText: dialog.acceptLabel
-                cancelText: qsTr("Keep")
+                // Set once, not bound: left alone it keeps the platform's own text.
+                Component.onCompleted: {
+                    if (!dialog.plainCancel) {
+                        cancelText = qsTr("Keep")
+                    }
+                }
             }
 
             Label {
@@ -42,6 +55,8 @@ Dialog {
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.secondaryColor
+                // Under a map the header and the address say it already.
+                visible: !dialog.hasExtra
                 textFormat: Text.PlainText
                 text: dialog.question
             }
@@ -51,8 +66,9 @@ Dialog {
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeLarge
+                wrapMode: dialog.compact ? Text.NoWrap : Text.Wrap
+                truncationMode: dialog.compact ? TruncationMode.Fade : TruncationMode.None
+                font.pixelSize: dialog.compact ? Theme.fontSizeSmall : Theme.fontSizeLarge
                 color: Theme.highlightColor
                 textFormat: Text.PlainText
                 text: dialog.subject
@@ -67,6 +83,21 @@ Dialog {
                 visible: dialog.explanation.length > 0
                 textFormat: Text.PlainText
                 text: dialog.explanation
+            }
+
+            // The rest of the page; in landscape at least a usable area, and the page scrolls.
+            Loader {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                height: active ? Math.max(dialog.height - y - Theme.paddingLarge,
+                                          Theme.itemSizeHuge * 2) : 0
+                active: dialog.hasExtra
+                visible: active
+                Component.onCompleted: {
+                    if (active) {
+                        setSource(dialog.extraSource, dialog.extraProperties)
+                    }
+                }
             }
         }
     }

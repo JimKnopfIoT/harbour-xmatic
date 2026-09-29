@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 import Sailfish.Gallery 1.0
 import QtDocGallery 5.0
 import Qt.labs.folderlistmodel 2.1
+import QtMultimedia 5.6
 
 // Two ways to the same thing, side by side: the gallery, divided by folder,
 // and the file system from the home folder down. The platform offers each of
@@ -87,6 +88,36 @@ Dialog {
     function askForTextFile() {
         dialog.textFileWanted = true
         dialog.accept()
+    }
+
+    /// A photo from the camera page, taken in once this dialog is on top again.
+    property string pendingShot: ""
+
+    function openCamera() {
+        var camera = pageStack.push(Qt.resolvedUrl("CameraCapturePage.qml"))
+        if (camera) {
+            camera.taken.connect(function (path) { dialog.pendingShot = path })
+        }
+    }
+
+    // Straight on to sending, as a taken photo is what was wanted.
+    onStatusChanged: {
+        if (status === PageStatus.Active && dialog.pendingShot.length > 0) {
+            var shot = dialog.pendingShot
+            dialog.pendingShot = ""
+            if (dialog.indexOfPath(shot) < 0) {
+                dialog.toggle(shot, "image/jpeg")
+            }
+            acceptLater.start()
+        }
+    }
+
+    // Not inside the status change: accepting changes the status again.
+    Timer {
+        id: acceptLater
+
+        interval: 0
+        onTriggered: dialog.accept()
     }
 
     // The folders that exist, not the ones we imagine: the strip is built from
@@ -271,7 +302,10 @@ Dialog {
         currentIndex: -1
         cellWidth: Math.floor(width / columns)
         cellHeight: cellWidth
-        model: dialog.kind === "video" ? videos : pictures
+        // The camera takes the first cell of the picture grid.
+        readonly property int offset: dialog.kind === "video" ? 0 : 1
+        readonly property var gallery: dialog.kind === "video" ? videos : pictures
+        model: gallery.count + offset
         clip: true
 
         PullDownMenu {
@@ -287,12 +321,62 @@ Dialog {
             }
         }
 
-        delegate: ThumbnailImage {
-            source: model.url
-            size: grid.cellWidth
-            // The platform's own selection look comes with the component.
-            selected: dialog.indexOfPath(model.filePath) >= 0
-            onClicked: dialog.toggle(model.filePath, model.mimeType)
+        delegate: Item {
+            id: cell
+
+            readonly property bool isCamera: index < grid.offset
+            readonly property var entry: isCamera ? null : grid.gallery.get(index - grid.offset)
+
+            width: grid.cellWidth
+            height: grid.cellHeight
+
+            ThumbnailImage {
+                visible: !cell.isCamera
+                source: cell.entry ? cell.entry.url : ""
+                size: grid.cellWidth
+                // The platform's own selection look comes with the component.
+                selected: !!cell.entry && dialog.indexOfPath(cell.entry.filePath) >= 0
+                onClicked: dialog.toggle(cell.entry.filePath, cell.entry.mimeType)
+            }
+
+            BackgroundItem {
+                anchors.fill: parent
+                visible: cell.isCamera
+                onClicked: dialog.openCamera()
+
+                // Only where the user turned it on, and only while someone looks.
+                // Portrait only: the viewfinder is not turned with the page.
+                Loader {
+                    anchors.fill: parent
+                    active: cell.isCamera && settings.cameraLivePreview && dialog.isPortrait
+                    clip: true
+
+                    sourceComponent: Item {
+                        Camera {
+                            id: tileCamera
+
+                            captureMode: Camera.CaptureStillImage
+                            cameraState: dialog.status === PageStatus.Active
+                                         && Qt.application.active
+                                         && dialog.mode === "gallery"
+                                         && matrix.calls.state === "idle"
+                                         ? Camera.ActiveState : Camera.UnloadedState
+                        }
+
+                        VideoOutput {
+                            anchors.fill: parent
+                            source: tileCamera
+                            fillMode: VideoOutput.PreserveAspectCrop
+                        }
+                    }
+                }
+
+                Image {
+                    anchors.centerIn: parent
+                    source: "image://theme/icon-m-camera?"
+                            + (parent.highlighted ? Theme.highlightColor : Theme.primaryColor)
+                }
+            }
         }
 
         ViewPlaceholder {

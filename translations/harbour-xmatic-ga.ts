@@ -471,6 +471,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Níorbh fhéidir an grianghraf a shábháil.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Níorbh fhéidir an grianghraf a ghlacadh.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Níl an ceamara ar fáil.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Tá an glao ag úsáid an cheamara.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Coinnigh sa ghailearaí</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Mura gcoinníonn, scriostar an grianghraf nuair a sheoltar é.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Arís</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Úsáid</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1828,6 +1863,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Tagann píosaí léarscáile ó OpenStreetMap. Faigheann a fhreastalaí amach do sheoladh IP agus thart ar cá bhfuil an suíomh; i seomra criptithe is ábhar é sin nach bhfeiceann sé riamh ar shlí eile. Gan léarscáil taispeántar na comhordanáidí.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Ceamara</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Pictiúr beo sa roghnóir ceangaltán</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Air: taispeánann cill an cheamara a bhfeiceann an ceamara fad atá an roghnóir oscailte. As: ní thosaíonn an ceamara go dtí go mbrúnn tú an chill.</translation>
     </message>
 </context>
 <context>

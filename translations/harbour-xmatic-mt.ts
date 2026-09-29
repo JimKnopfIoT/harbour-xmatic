@@ -472,6 +472,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Ir-ritratt ma setax jiġi ssejvjat.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Ir-ritratt ma setax jittieħed.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Il-kamera mhix disponibbli.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Il-kamera qed tintuża mis-sejħa.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Żomm fil-gallerija</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Inkella r-ritratt jitħassar ladarba jintbagħat.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Erġa’ ħu</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Uża</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1831,6 +1866,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Il-biċċiet tal-mappa jiġu minn OpenStreetMap. Is-server tiegħu jsir jaf l-indirizz IP tiegħek u bejn wieħed u ieħor fejn jinsab il-post; f&apos;kamra kriptata dak huwa kontenut li inkella qatt ma jara. Mingħajr mappa jintwerew il-koordinati.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Kamera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Stampa diretta fl-għażla tal-annessi</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Mixgħul: il-kaxxa tal-kamera turi dak li tara l-kamera sakemm l-għażla tkun miftuħa. Mitfi: il-kamera tibda biss meta tagħfas il-kaxxa.</translation>
     </message>
 </context>
 <context>

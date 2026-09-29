@@ -56,6 +56,7 @@ SOURCES += \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
     src/locationactions.cpp \
+    src/camerashots.cpp \
     src/readingpositions.cpp \
     src/roomsettings.cpp \
     src/spacemarkers.cpp \
@@ -90,6 +91,7 @@ HEADERS += \
     src/matrixbridge.h \
     src/pollactions.h \
     src/locationactions.h \
+    src/camerashots.h \
     src/readingpositions.h \
     src/roomsettings.h \
     src/spacemarkers.h \
@@ -286,6 +288,8 @@ DISTFILES += \
     qml/pages/Composer.qml \
     qml/pages/PollBlock.qml \
     qml/pages/LocationBlock.qml \
+    qml/pages/LocationMap.qml \
+    qml/pages/CameraCapturePage.qml \
     qml/pages/ShareLocationPage.qml \
     qml/pages/LinkPreviewCard.qml \
     qml/pages/CreatePollDialog.qml \

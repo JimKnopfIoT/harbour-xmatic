@@ -306,6 +306,8 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     m_voiceDirectory = cacheDirectory + QStringLiteral("/voice");
     m_recorder = new VoiceRecorder(m_voiceDirectory, this);
     m_textDirectory = cacheDirectory + QStringLiteral("/text");
+    // Photos taken in the picker. src/camerashots.cpp.
+    m_cameraShots = new CameraShots(cacheDirectory + QStringLiteral("/camera"), this);
     connect(m_recorder, &VoiceRecorder::finished, this, [this](const QString &path,
                                                                const QString &mimeType,
                                                                qint64 duration) {
@@ -2092,7 +2094,8 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
     // A recording or a text file of one's own is not a document the user keeps:
     // it goes as soon as it is out.
     if ((!m_voiceDirectory.isEmpty() && local.startsWith(m_voiceDirectory))
-            || (!m_textDirectory.isEmpty() && local.startsWith(m_textDirectory))) {
+            || (!m_textDirectory.isEmpty() && local.startsWith(m_textDirectory))
+            || m_cameraShots->owns(local)) {
         m_throwawaySends.insert(id, local);
     }
 }

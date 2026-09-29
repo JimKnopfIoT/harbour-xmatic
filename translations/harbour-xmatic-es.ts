@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>No se pudo guardar la foto.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>No se pudo hacer la foto.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>La cámara no está disponible.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>La llamada está usando la cámara.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Guardar en la galería</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Si no, la foto se borra al enviarla.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Repetir</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Usar</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Los fragmentos de mapa vienen de OpenStreetMap. Su servidor conoce tu dirección IP y aproximadamente dónde está la ubicación; en una sala cifrada, es contenido que de otro modo nunca vería. Sin mapa se muestran las coordenadas.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Cámara</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Imagen en directo en el selector de adjuntos</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Activado, la casilla de la cámara muestra lo que ve la cámara mientras el selector está abierto. Desactivado, la cámara solo se enciende cuando tocas la casilla.</translation>
     </message>
 </context>
 <context>

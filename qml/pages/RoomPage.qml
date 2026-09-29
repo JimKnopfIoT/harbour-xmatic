@@ -2515,7 +2515,7 @@ Page {
                                 own: row.isOwn
                                 roomId: page.roomId
                                 encrypted: page.encrypted || !page.encryptionKnown
-                                onActivated: page.followLink(link)
+                                onActivated: page.followLink(link, map)
                             }
                         }
 
@@ -3421,6 +3421,10 @@ Page {
                     },
                     afterCancel: function (text) {
                         messageComposer.text = text
+                        // A photo taken for this send goes with it; gallery files are not ours.
+                        for (var i = 0; i < picked.length; i++) {
+                            matrix.cameraShots.discard(picked[i].path)
+                        }
                     }
                 })
                 return
@@ -3854,7 +3858,8 @@ Page {
 
     // A tapped link. A Matrix address is answered inside the app; anything
     // else is a web address and goes where it always went.
-    function followLink(link) {
+    // `map`: a location card's cached map, shown under the address.
+    function followLink(link, map) {
         var target = MatrixLinks.decide(link)
         if (target.kind === "none") {
             return
@@ -3862,11 +3867,17 @@ Page {
         if (target.kind === "web") {
             // The address before it is opened: what a link says and where it
             // goes are two strings a stranger writes.
-            var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), {
-                                            question: qsTr("Open this address?"),
-                                            subject: link,
-                                            acceptLabel: qsTr("Open")
-                                        })
+            var properties = {
+                question: qsTr("Open this address?"),
+                subject: link,
+                acceptLabel: qsTr("Open"),
+                plainCancel: true
+            }
+            if (map && map.available === true) {
+                properties.extraSource = Qt.resolvedUrl("LocationMap.qml")
+                properties.extraProperties = { mapData: map }
+            }
+            var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), properties)
             dialog.accepted.connect(function() { Qt.openUrlExternally(link) })
             return
         }

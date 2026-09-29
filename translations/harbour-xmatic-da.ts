@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Billedet kunne ikke gemmes.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Billedet kunne ikke tages.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Kameraet er ikke tilgængeligt.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Kameraet bruges af opkaldet.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Behold i galleriet</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Ellers slettes billedet, når det er sendt.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Tag igen</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Brug</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Kortstykkerne kommer fra OpenStreetMap. Dens server får din IP-adresse at vide og omtrent, hvor placeringen ligger; i et krypteret rum er det indhold, den ellers aldrig ser. Uden kort vises koordinaterne.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Kamera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Livebillede i vedhæftningsvælgeren</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Til: kamerafeltet viser, hvad kameraet ser, mens vælgeren er åben. Fra: kameraet starter først, når du trykker på feltet.</translation>
     </message>
 </context>
 <context>

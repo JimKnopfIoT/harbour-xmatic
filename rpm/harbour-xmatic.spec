@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.39.0
+Version:    0.40.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -25,6 +25,8 @@ Requires:   sailfish-components-pickers-qt5
 Requires:   sailfish-components-gallery-qt5
 Requires:   qt5-qtdocgallery
 Requires:   qt5-qtdeclarative-import-folderlistmodel
+# The photo page reads the device's rotation for the picture's orientation.
+Requires:   qt5-qtdeclarative-import-sensors
 Requires:   sailfish-content-graphics
 Requires:   nemo-qml-plugin-notifications-qt5
 # Calls load these at run time rather than linking them, so they have to be
@@ -119,6 +121,23 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Sep 29 2026 harbour-xmatic contributors 0.40.0-1
+- The attachment picker's first cell opens the camera: flash (auto, on,
+  off), a thirds grid, tap to focus, pinch to zoom. The photo goes straight
+  to sending; keep it in the gallery if you like, otherwise it is deleted
+  once sent or when the send is called off. The cell can show the live
+  picture, under Privacy; off by default, since the camera would then run
+  whenever the picker is open.
+- Tapping a location's map shows that map again under the address, filling
+  the page and zoomable with two fingers or a double tap until street names
+  are large. Nothing more is fetched for it.
+- Stopping a live location share, or switching sharing off, while it is
+  still starting now ends it; before, it could keep running. The first live
+  position goes out at once, and stopping right after starting no longer
+  fails.
+- Opening a link asks with a plain Cancel instead of "Keep". Under a map the
+  question is gone, and in landscape the address takes one small line.
+
 * Mon Sep 28 2026 harbour-xmatic contributors 0.39.0-1
 - Locations. A room's pull-down menu sends your position once, or shares it
   live for an hour, six hours or a day. Received locations show their

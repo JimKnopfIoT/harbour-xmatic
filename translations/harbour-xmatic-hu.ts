@@ -469,6 +469,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>A fotót nem sikerült menteni.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>A fotót nem sikerült elkészíteni.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>A kamera nem érhető el.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>A kamerát a hívás használja.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Megtartás a galériában</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Különben a fotó küldés után törlődik.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Újra</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Használat</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1822,6 +1857,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>A térképdarabok az OpenStreetMaptől jönnek. A szervere megtudja az IP-címedet és nagyjából azt, hol van a hely; titkosított szobában ez olyan tartalom, amelyet egyébként soha nem lát. Térkép nélkül a koordináták jelennek meg.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Kamera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Élőkép a mellékletválasztóban</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Be: a kamera csempéje mutatja, amit a kamera lát, amíg a választó nyitva van. Ki: a kamera csak akkor indul el, ha a csempére koppintasz.</translation>
     </message>
 </context>
 <context>

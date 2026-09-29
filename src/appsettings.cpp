@@ -428,6 +428,60 @@ void AppSettings::setLocationSharing(bool enabled)
     emit locationSharingChanged();
 }
 
+bool AppSettings::cameraLivePreview() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("privacy/cameraLivePreview"), false).toBool();
+}
+
+void AppSettings::setCameraLivePreview(bool enabled)
+{
+    if (enabled == cameraLivePreview()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("privacy/cameraLivePreview"), enabled,
+          "the camera preview setting");
+    emit cameraChanged();
+}
+
+QString AppSettings::cameraFlash() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    const QString value = settings.value(QStringLiteral("camera/flash"),
+                                         QStringLiteral("auto")).toString();
+    if (value == QLatin1String("on") || value == QLatin1String("off")) {
+        return value;
+    }
+    return QStringLiteral("auto");
+}
+
+void AppSettings::setCameraFlash(const QString &mode)
+{
+    if (mode == cameraFlash()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("camera/flash"), mode, "the flash setting");
+    emit cameraChanged();
+}
+
+bool AppSettings::cameraGrid() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("camera/grid"), false).toBool();
+}
+
+void AppSettings::setCameraGrid(bool enabled)
+{
+    if (enabled == cameraGrid()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("camera/grid"), enabled, "the grid setting");
+    emit cameraChanged();
+}
+
 QString AppSettings::locationMaps() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

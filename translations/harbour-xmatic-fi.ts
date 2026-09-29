@@ -470,6 +470,41 @@
     </message>
 </context>
 <context>
+    <name>CameraCapturePage</name>
+    <message>
+        <source>The photo could not be saved.</source>
+        <translation>Kuvaa ei voitu tallentaa.</translation>
+    </message>
+    <message>
+        <source>The photo could not be taken.</source>
+        <translation>Kuvaa ei voitu ottaa.</translation>
+    </message>
+    <message>
+        <source>The camera is not available.</source>
+        <translation>Kamera ei ole käytettävissä.</translation>
+    </message>
+    <message>
+        <source>The camera is in use by the call.</source>
+        <translation>Puhelu käyttää kameraa.</translation>
+    </message>
+    <message>
+        <source>Keep in the gallery</source>
+        <translation>Säilytä galleriassa</translation>
+    </message>
+    <message>
+        <source>Otherwise the photo is deleted once it is sent.</source>
+        <translation>Muuten kuva poistetaan, kun se on lähetetty.</translation>
+    </message>
+    <message>
+        <source>Retake</source>
+        <translation>Ota uudelleen</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Käytä</translation>
+    </message>
+</context>
+<context>
     <name>ColorField</name>
     <message>
         <source>Hex code</source>
@@ -1825,6 +1860,18 @@
     <message>
         <source>Map pieces come from OpenStreetMap. Its server learns your IP address and roughly where the location lies; in an encrypted room that is content it otherwise never sees. Without a map the coordinates are shown.</source>
         <translation>Karttapalat tulevat OpenStreetMapista. Sen palvelin saa tietää IP-osoitteesi ja suunnilleen, missä sijainti on; salatussa huoneessa se on sisältöä, jota se ei muuten koskaan näe. Ilman karttaa näytetään koordinaatit.</translation>
+    </message>
+    <message>
+        <source>Camera</source>
+        <translation>Kamera</translation>
+    </message>
+    <message>
+        <source>Live picture in the attachment picker</source>
+        <translation>Livekuva liitteen valinnassa</translation>
+    </message>
+    <message>
+        <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
+        <translation>Päällä kameraruutu näyttää, mitä kamera näkee, kun valinta on auki. Pois päältä kamera käynnistyy vasta, kun napautat ruutua.</translation>
     </message>
 </context>
 <context>

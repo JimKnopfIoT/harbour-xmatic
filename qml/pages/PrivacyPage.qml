@@ -220,6 +220,19 @@ Page {
             }
 
             SectionHeader {
+                text: qsTr("Camera")
+            }
+
+            // Off: a live cell would run the camera whenever the picker is open.
+            TextSwitch {
+                text: qsTr("Live picture in the attachment picker")
+                description: qsTr("On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.")
+                checked: settings.cameraLivePreview
+                automaticCheck: false
+                onClicked: settings.cameraLivePreview = !settings.cameraLivePreview
+            }
+
+            SectionHeader {
                 text: qsTr("Voice messages as text")
             }
 
