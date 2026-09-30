@@ -53,9 +53,11 @@ const REASON_CHARS: usize = 200;
 /// How many events one backwards pagination asks for.
 const PAGE_SIZE: u16 = 30;
 
-/// Below this many items, "complete" is not believed - see `paginate`. One
-/// page: fewer events than a single request returns, yet "that is all".
-const SUSPICIOUSLY_SHORT: usize = PAGE_SIZE as usize;
+/// What a backwards pagination came to.
+pub enum Paginated {
+    More,
+    Start,
+}
 
 /// An open timeline and the task streaming its updates.
 pub struct TimelineHandle {
@@ -65,9 +67,6 @@ pub struct TimelineHandle {
     pinned: bool,
     timeline: Arc<matrix_sdk_ui::timeline::Timeline>,
     task: tokio::task::JoinHandle<()>,
-    /// Whether the one permitted cache reset was already used. Without it the room
-    /// is cleared on every pagination that legitimately reports a short room.
-    retried_from_end: AtomicBool,
     /// The thread this view is focused on, or empty for a room view.
     thread_root: String,
     /// Whether this timeline was built tracking other people's receipts. Part
@@ -126,11 +125,11 @@ impl TimelineHandle {
 
     /// Loads older events, answers whether the room's start was reached. Never how
     /// many rows: `paginate_backwards` returns before they arrive as diffs.
-    pub async fn paginate(&self) -> Result<bool, String> {
+    pub async fn paginate(&self) -> Result<Paginated, String> {
         // The pinned view has no history behind it and the SDK answers every
         // pagination on it with `NotSupported`. That is "all of them", not an error.
         if self.pinned {
-            return Ok(true);
+            return Ok(Paginated::Start);
         }
 
         let reached_start = self
@@ -138,34 +137,7 @@ impl TimelineHandle {
             .paginate_backwards(PAGE_SIZE)
             .await
             .map_err(|error| format!("could not load older messages: {error}"))?;
-
-        if !reached_start || !self.live {
-            return Ok(reached_start);
-        }
-
-        // The SDK reports "start of the timeline" whenever its cache has events but
-        // no gap - a room joined while running. Drop the cache once and retry.
-        if self.timeline.items().await.len() >= SUSPICIOUSLY_SHORT
-            || self.retried_from_end.swap(true, Ordering::SeqCst)
-        {
-            return Ok(true);
-        }
-
-        let (cache, _handles) = self
-            .timeline
-            .room()
-            .event_cache()
-            .await
-            .map_err(|error| format!("could not reach the room cache: {error}"))?;
-        cache
-            .clear()
-            .await
-            .map_err(|error| format!("could not clear the room cache: {error}"))?;
-
-        self.timeline
-            .paginate_backwards(PAGE_SIZE)
-            .await
-            .map_err(|error| format!("could not load older messages: {error}"))
+        Ok(if reached_start { Paginated::Start } else { Paginated::More })
     }
 
     /// Sends a message the caller has already built: the mention module fills in
@@ -189,6 +161,7 @@ impl TimelineHandle {
         self.timeline
             .send_reply(content.into(), id)
             .await
+            .map(|_| ())
             .map_err(|error| format!("could not reply: {error}"))
     }
 
@@ -256,28 +229,6 @@ impl TimelineHandle {
             .map_err(|error| format!("could not react: {error}"))
     }
 
-    /// Puts a parked message back in the queue - the SDK stops after an error it
-    /// cannot recover from. Only for a message that never reached the server.
-    pub async fn retry(&self, txn_id: &str) -> Result<(), String> {
-        if txn_id.is_empty() {
-            return Err("not a queued message".to_owned());
-        }
-        let wanted = TimelineEventItemId::TransactionId(txn_id.into());
-        // Walked rather than looked up: the SDK offers `item_by_event_id`, and
-        // a queued message is precisely the one without an event id.
-        let items = self.timeline.items().await;
-        let handle = items
-            .iter()
-            .filter_map(|item| item.as_event())
-            .find(|event| event.identifier() == wanted)
-            .and_then(|event| event.local_echo_send_handle())
-            .ok_or_else(|| "this message is no longer queued".to_owned())?;
-        handle
-            .unwedge()
-            .await
-            .map_err(|error| format!("could not send it again: {}", scrub_ids(&error.to_string())))
-    }
-
     /// Redacts a sent message, or aborts a queued one: the first leaves a deleted
     /// row, the second makes the row disappear.
     pub async fn redact(&self, event_id: &str, txn_id: &str) -> Result<(), String> {
@@ -298,6 +249,10 @@ impl TimelineHandle {
     /// Marks the room read: the receipt others see and the fully-read marker, in
     /// one request. Answers whether anything was sent at all.
     pub async fn mark_read(&self, receipt: bool) -> Result<bool, String> {
+        // A slice's last event is not where reading stands.
+        if !self.live {
+            return Ok(false);
+        }
         let Some(event_id) = self.timeline.latest_event_id().await else {
             return Ok(false);
         };
@@ -1119,6 +1074,11 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
                     "sendKey": key,
                     "count": senders.len(),
                     "mine": own.map(|user| senders.contains_key(user)).unwrap_or(false),
+                    // Own reaction the queue gave up.
+                    "failed": own
+                        .and_then(|user| senders.get(user))
+                        .and_then(|info| info.send_state.as_ref())
+                        .is_some_and(|state| matches!(state, EventSendState::SendingFailed { .. })),
                 })
             })
             .collect::<Vec<Value>>(),
@@ -1224,6 +1184,9 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
         "timestamp": u64::from(event.timestamp().get()),
         "pending": event.send_state().is_some(),
         "sendState": send_state(event),
+        // Own edit and deletion while queued: shown before they are sent.
+        "editState": state_name(event.edit_send_state()),
+        "redactionState": state_name(event.redaction_send_state()),
         "sendError": send_error(event),
         "threadRoot": thread_root,
         "threadCount": thread_count,
@@ -1262,7 +1225,11 @@ fn send_error(event: &EventTimelineItem) -> Option<Value> {
 }
 
 fn send_state(event: &EventTimelineItem) -> &'static str {
-    match event.send_state() {
+    state_name(event.send_state())
+}
+
+fn state_name(state: Option<&EventSendState>) -> &'static str {
+    match state {
         None | Some(EventSendState::Sent { .. }) => "",
         Some(EventSendState::NotSentYet { .. }) => "sending",
         Some(EventSendState::SendingFailed { .. }) => "failed",
@@ -1317,7 +1284,7 @@ pub async fn own_read_marker(client: &Client, room_id: &str) -> (Option<String>,
     if receipt.is_none() {
         if let Some(user) = client.user_id() {
             if let Ok(Some((event_id, _))) = room
-                .load_user_receipt(StoredReceiptType::Read, ReceiptThread::Unthreaded, user)
+                .load_user_receipt(StoredReceiptType::Read, &ReceiptThread::Unthreaded, user)
                 .await
             {
                 receipt = Some(event_id.to_string());
@@ -1591,7 +1558,6 @@ pub async fn open(
         pinned: focus == "pinned",
         timeline,
         task,
-        retried_from_end: AtomicBool::new(false),
         thread_root: String::new(),
         receipts,
         tasks: detail_tasks,
@@ -1707,7 +1673,6 @@ pub async fn open_thread(
         pinned: false,
         timeline,
         task,
-        retried_from_end: AtomicBool::new(true),
         thread_root: root.to_owned(),
         receipts: false,
         tasks: detail_tasks,

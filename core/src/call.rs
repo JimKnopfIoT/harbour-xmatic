@@ -562,14 +562,14 @@ mod video_offer_tests {
 #[cfg(test)]
 mod relay_tests {
     use super::no_relay_configured;
-    use matrix_sdk::ruma::api::{client::voip::get_turn_server_info, IncomingResponse};
+    use matrix_sdk::ruma::api::{client::voip::get_turn_server_info, IncomingResponseExt};
     use matrix_sdk::ruma::exports::http;
     use matrix_sdk::{HttpError, RumaApiError};
 
     fn answer(status: u16, body: &str) -> Option<HttpError> {
         let response = http::Response::builder()
             .status(status)
-            .body(body.as_bytes().to_vec())
+            .body(body.as_bytes())
             .unwrap();
         get_turn_server_info::v3::Response::try_from_http_response(response)
             .err()

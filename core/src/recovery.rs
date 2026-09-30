@@ -54,6 +54,17 @@ pub fn watch(client: &Client, sink: Arc<Sink>) -> JoinHandle<()> {
                 break;
             }
 
+            // A burst settles into one status: each asks the server.
+            let settle = tokio::time::sleep(std::time::Duration::from_millis(500));
+            tokio::pin!(settle);
+            loop {
+                tokio::select! {
+                    _ = &mut settle => break,
+                    next = backups.next() => if next.is_none() { return },
+                    next = recovery.next() => if next.is_none() { return },
+                }
+            }
+
             // The whole status rather than the one value that changed: the page reads them
             // together, and a field costs nothing next to a to-device round trip.
             sink.emit(event("encryption.changed", status(&client).await));
@@ -77,11 +88,11 @@ pub async fn status(client: &Client) -> Value {
         "backup": backup_state_name(encryption.backups().state()),
         "backupEnabled": encryption.backups().are_enabled().await,
         "backupOnServer": exists_on_server,
+        // `null` until the crypto machine answers.
         "crossSigned": encryption
             .cross_signing_status()
             .await
-            .map(|status| status.is_complete())
-            .unwrap_or(false),
+            .map(|status| status.is_complete()),
     })
 }
 

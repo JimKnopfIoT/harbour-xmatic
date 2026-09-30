@@ -1,7 +1,7 @@
 # Third-party notices
 
 harbour-xmatic itself is Apache-2.0 (see `LICENSE`). The application
-binary links a static Rust library that compiles 577 further crates into
+binary links a static Rust library that compiles 569 further crates into
 it, and it bundles SQLite. Their terms are listed here because a binary
 that carries them has to carry their notices too.
 
@@ -19,13 +19,12 @@ address above, and no file of theirs has been changed for this project.
 
 - as_variant 1.3.0 — MPL-2.0
 - async-rx 0.2.1 — MPL-2.0
-- bitmaps 3.2.1 — MPL-2.0+
 - eyeball 0.8.8 — MPL-2.0
-- eyeball-im 0.8.0 — MPL-2.0
-- eyeball-im-util 0.10.0 — MPL-2.0
+- eyeball-im 0.9.1 — MPL-2.0
+- eyeball-im-util 0.11.0 — MPL-2.0
 - htmlescape 0.3.1 — Apache-2.0 / MIT / MPL-2.0
-- imbl 6.1.0 — MPL-2.0+
-- imbl-sized-chunks 0.1.3 — MPL-2.0+
+- imbl 7.0.2 — MPL-2.0+
+- imbl-sized-chunks 0.2.0 — MPL-2.0+
 - readlock 0.1.11 — MPL-2.0
 - readlock-tokio 0.1.6 — MPL-2.0
 
@@ -52,10 +51,8 @@ linking the device's library. SQLite itself is in the public domain.
 | android_system_properties | 0.1.5 | MIT/Apache-2.0 |
 | anyhow | 1.0.104 | MIT OR Apache-2.0 |
 | anymap2 | 0.13.0 | MIT/Apache-2.0 |
-| aquamarine | 0.6.0 | MIT |
 | arc-swap | 1.9.2 | MIT OR Apache-2.0 |
 | archery | 1.2.2 | MIT |
-| arrayref | 0.3.9 | BSD-2-Clause |
 | arrayvec | 0.7.8 | MIT OR Apache-2.0 |
 | as_variant | 1.3.0 | MPL-2.0 |
 | assign | 1.1.1 | MIT |
@@ -65,7 +62,6 @@ linking the device's library. SQLite itself is in the public domain.
 | async-executor | 1.14.0 | Apache-2.0 OR MIT |
 | async-io | 2.6.0 | Apache-2.0 OR MIT |
 | async-lock | 3.4.2 | Apache-2.0 OR MIT |
-| async-once-cell | 0.5.4 | MIT OR Apache-2.0 |
 | async-process | 2.5.0 | Apache-2.0 OR MIT |
 | async-recursion | 1.1.1 | MIT OR Apache-2.0 |
 | async-rx | 0.2.1 | MPL-2.0 |
@@ -73,43 +69,44 @@ linking the device's library. SQLite itself is in the public domain.
 | async-stream | 0.3.6 | MIT |
 | async-stream-impl | 0.3.6 | MIT |
 | async-task | 4.7.1 | Apache-2.0 OR MIT |
-| async-trait | 0.1.91 | MIT OR Apache-2.0 |
+| async-trait | 0.1.92 | MIT OR Apache-2.0 |
 | async_cell | 0.2.3 | MIT |
 | atomic-waker | 1.1.2 | Apache-2.0 OR MIT |
 | autocfg | 1.5.1 | Apache-2.0 OR MIT |
-| aws-lc-rs | 1.17.3 | ISC AND (Apache-2.0 OR ISC) |
-| aws-lc-sys | 0.43.0 | ISC AND (Apache-2.0 OR ISC) AND Apache-2.0 AND MIT AND BSD-3-Clause AND (Apache-2.0 OR ISC OR MIT) AND (Apache-2.0 OR ISC OR MIT-0) |
+| aws-lc-rs | 1.18.1 | ISC AND (Apache-2.0 OR ISC) |
+| aws-lc-sys | 0.45.0 | ISC AND (Apache-2.0 OR ISC) AND Apache-2.0 AND MIT AND BSD-3-Clause AND (Apache-2.0 OR ISC OR MIT) AND (Apache-2.0 OR ISC OR MIT-0) |
 | axum | 0.8.9 | MIT |
 | axum-core | 0.5.6 | MIT |
 | backon | 1.6.0 | Apache-2.0 |
 | base16ct | 0.2.0 | Apache-2.0 OR MIT |
+| base16ct | 1.0.0 | Apache-2.0 OR MIT |
 | base64 | 0.22.1 | MIT OR Apache-2.0 |
+| base64 | 0.23.1 | MIT OR Apache-2.0 |
 | base64ct | 1.8.3 | Apache-2.0 OR MIT |
 | binstring | 0.1.7 | MIT |
-| bitflags | 2.13.1 | MIT OR Apache-2.0 |
-| bitmaps | 3.2.1 | MPL-2.0+ |
+| bitflags | 2.13.2 | MIT OR Apache-2.0 |
 | bitpacking | 0.9.3 | MIT |
 | blake2b_simd | 1.0.5 | MIT |
-| blake3 | 1.8.5 | CC0-1.0 OR Apache-2.0 OR Apache-2.0 WITH LLVM-exception |
+| blake3 | 1.8.7 | CC0-1.0 OR Apache-2.0 OR Apache-2.0 WITH LLVM-exception |
 | block-buffer | 0.10.4 | MIT OR Apache-2.0 |
 | block-buffer | 0.12.1 | MIT OR Apache-2.0 |
-| block-padding | 0.3.3 | MIT OR Apache-2.0 |
+| block-padding | 0.4.2 | MIT OR Apache-2.0 |
 | blocking | 1.7.0 | Apache-2.0 OR MIT |
 | bon | 3.10.0 | MIT OR Apache-2.0 |
 | bon-macros | 3.10.0 | MIT OR Apache-2.0 |
 | bs58 | 0.5.1 | MIT/Apache-2.0 |
 | bumpalo | 3.20.3 | MIT OR Apache-2.0 |
+| bytemuck | 1.25.2 | Zlib OR Apache-2.0 OR MIT |
 | byteorder | 1.5.0 | Unlicense OR MIT |
 | bytes | 1.12.1 | MIT |
-| bytesize | 2.4.2 | Apache-2.0 |
-| cbc | 0.1.2 | MIT OR Apache-2.0 |
+| bytesize | 2.7.0 | Apache-2.0 |
+| cbc | 0.2.1 | MIT OR Apache-2.0 |
 | cc | 1.3.0 | MIT OR Apache-2.0 |
 | census | 0.4.2 | MIT |
 | cfg-if | 1.0.4 | MIT OR Apache-2.0 |
 | cfg_aliases | 0.2.2 | MIT |
-| chacha20 | 0.10.1 | MIT OR Apache-2.0 |
-| chacha20 | 0.9.1 | Apache-2.0 OR MIT |
-| chacha20poly1305 | 0.10.1 | Apache-2.0 OR MIT |
+| chacha20 | 0.10.2 | MIT OR Apache-2.0 |
+| chacha20poly1305 | 0.11.0 | Apache-2.0 OR MIT |
 | chrono | 0.4.45 | MIT OR Apache-2.0 |
 | cipher | 0.4.4 | MIT OR Apache-2.0 |
 | cipher | 0.5.2 | MIT OR Apache-2.0 |
@@ -142,7 +139,7 @@ linking the device's library. SQLite itself is in the public domain.
 | ctr | 0.10.1 | MIT OR Apache-2.0 |
 | ctr | 0.9.2 | MIT OR Apache-2.0 |
 | ctutils | 0.4.2 | Apache-2.0 OR MIT |
-| curve25519-dalek | 4.1.3 | BSD-3-Clause |
+| curve25519-dalek | 5.0.0 | BSD-3-Clause |
 | curve25519-dalek-derive | 0.1.1 | MIT/Apache-2.0 |
 | darling | 0.24.1 | MIT |
 | darling_core | 0.24.1 | MIT |
@@ -169,74 +166,75 @@ linking the device's library. SQLite itself is in the public domain.
 | dunce | 1.0.5 | CC0-1.0 OR MIT-0 OR Apache-2.0 |
 | ecdsa | 0.16.9 | Apache-2.0 OR MIT |
 | ece-native | 0.4.0 | MIT OR Apache-2.0 |
-| ed25519 | 2.2.3 | Apache-2.0 OR MIT |
+| ed25519 | 3.0.0 | Apache-2.0 OR MIT |
 | ed25519-compact | 2.4.2 | MIT |
-| ed25519-dalek | 2.2.0 | BSD-3-Clause |
+| ed25519-dalek | 3.0.0 | BSD-3-Clause |
 | either | 1.16.0 | MIT OR Apache-2.0 |
 | elliptic-curve | 0.13.8 | Apache-2.0 OR MIT |
-| emojis | 0.8.2 | (MIT OR Apache-2.0) AND Unicode-3.0 |
+| emojis | 0.9.0 | (MIT OR Apache-2.0) AND Unicode-3.0 |
 | endi | 1.1.1 | MIT |
 | enumflags2 | 0.7.12 | MIT OR Apache-2.0 |
 | enumflags2_derive | 0.7.12 | MIT OR Apache-2.0 |
 | equivalent | 1.0.2 | Apache-2.0 OR MIT |
 | erased-serde | 0.4.10 | MIT OR Apache-2.0 |
 | errno | 0.3.14 | MIT OR Apache-2.0 |
-| event-listener | 5.4.1 | Apache-2.0 OR MIT |
+| event-listener | 5.4.2 | Apache-2.0 OR MIT |
 | event-listener-strategy | 0.5.4 | Apache-2.0 OR MIT |
 | eyeball | 0.8.8 | MPL-2.0 |
-| eyeball-im | 0.8.0 | MPL-2.0 |
-| eyeball-im-util | 0.10.0 | MPL-2.0 |
+| eyeball-im | 0.9.1 | MPL-2.0 |
+| eyeball-im-util | 0.11.0 | MPL-2.0 |
 | fallible-iterator | 0.3.0 | MIT/Apache-2.0 |
 | fallible-streaming-iterator | 0.1.9 | MIT/Apache-2.0 |
 | fancy_constructor | 2.1.0 | MIT OR Apache-2.0 |
 | fastdivide | 0.4.2 | zlib-acknowledgement OR MIT |
 | fastrand | 2.5.0 | Apache-2.0 OR MIT |
 | ff | 0.13.1 | MIT/Apache-2.0 |
-| fiat-crypto | 0.2.9 | MIT OR Apache-2.0 OR BSD-1-Clause |
+| fiat-crypto | 0.3.0 | MIT OR Apache-2.0 OR BSD-1-Clause |
 | find-msvc-tools | 0.1.9 | MIT OR Apache-2.0 |
 | flate2 | 1.1.9 | MIT OR Apache-2.0 |
 | fnv | 1.0.7 | Apache-2.0 / MIT |
-| foldhash | 0.1.5 | Zlib |
 | foldhash | 0.2.0 | Zlib |
 | form_urlencoded | 1.2.2 | MIT OR Apache-2.0 |
 | fs4 | 0.13.1 | MIT OR Apache-2.0 |
 | fs_extra | 1.3.0 | MIT |
-| futures-channel | 0.3.33 | MIT OR Apache-2.0 |
-| futures-core | 0.3.33 | MIT OR Apache-2.0 |
-| futures-executor | 0.3.33 | MIT OR Apache-2.0 |
-| futures-io | 0.3.33 | MIT OR Apache-2.0 |
+| futures-channel | 0.3.34 | MIT OR Apache-2.0 |
+| futures-core | 0.3.34 | MIT OR Apache-2.0 |
+| futures-executor | 0.3.34 | MIT OR Apache-2.0 |
+| futures-io | 0.3.34 | MIT OR Apache-2.0 |
 | futures-lite | 2.6.1 | Apache-2.0 OR MIT |
-| futures-macro | 0.3.33 | MIT OR Apache-2.0 |
-| futures-sink | 0.3.33 | MIT OR Apache-2.0 |
-| futures-task | 0.3.33 | MIT OR Apache-2.0 |
-| futures-util | 0.3.33 | MIT OR Apache-2.0 |
+| futures-macro | 0.3.34 | MIT OR Apache-2.0 |
+| futures-sink | 0.3.34 | MIT OR Apache-2.0 |
+| futures-task | 0.3.34 | MIT OR Apache-2.0 |
+| futures-util | 0.3.34 | MIT OR Apache-2.0 |
 | fuzzy-matcher | 0.3.7 | MIT |
 | generator | 0.8.9 | MIT/Apache-2.0 |
 | generic-array | 0.14.7 | MIT |
 | getrandom | 0.2.17 | MIT OR Apache-2.0 |
-| getrandom | 0.3.4 | MIT OR Apache-2.0 |
 | getrandom | 0.4.3 | MIT OR Apache-2.0 |
 | ghash | 0.5.1 | Apache-2.0 OR MIT |
 | ghash | 0.6.0 | Apache-2.0 OR MIT |
 | gloo-timers | 0.3.0 | MIT OR Apache-2.0 |
-| gloo-utils | 0.2.0 | MIT OR Apache-2.0 |
+| gloo-timers | 0.4.0 | MIT OR Apache-2.0 |
+| gloo-utils | 0.3.0 | MIT OR Apache-2.0 |
 | group | 0.13.0 | MIT/Apache-2.0 |
 | growable-bloom-filter | 2.1.1 | MIT |
-| h2 | 0.4.15 | MIT |
-| hashbrown | 0.15.5 | MIT OR Apache-2.0 |
+| h2 | 0.4.19 | MIT |
 | hashbrown | 0.16.1 | MIT OR Apache-2.0 |
 | hashbrown | 0.17.1 | MIT OR Apache-2.0 |
-| hashlink | 0.10.0 | MIT OR Apache-2.0 |
+| hashlink | 0.12.2 | MIT OR Apache-2.0 |
 | hermit-abi | 0.5.2 | MIT OR Apache-2.0 |
 | hex | 0.4.3 | MIT OR Apache-2.0 |
 | hkdf | 0.12.4 | MIT OR Apache-2.0 |
+| hkdf | 0.13.0 | MIT OR Apache-2.0 |
 | hmac | 0.12.1 | MIT OR Apache-2.0 |
+| hmac | 0.13.0 | MIT OR Apache-2.0 |
 | hmac-sha1-compact | 1.1.7 | ISC |
 | hmac-sha256 | 1.1.14 | ISC |
 | hmac-sha512 | 1.1.12 | ISC |
+| hpke | 0.14.1 | MIT/Apache-2.0 |
 | html5ever | 0.39.0 | MIT OR Apache-2.0 |
 | htmlescape | 0.3.1 | Apache-2.0 / MIT / MPL-2.0 |
-| http | 1.4.2 | MIT OR Apache-2.0 |
+| http | 1.5.0 | MIT OR Apache-2.0 |
 | http-body | 1.1.0 | MIT |
 | http-body-util | 0.1.4 | MIT |
 | httparse | 1.10.1 | MIT OR Apache-2.0 |
@@ -257,25 +255,23 @@ linking the device's library. SQLite itself is in the public domain.
 | ident_case | 1.0.1 | MIT/Apache-2.0 |
 | idna | 1.1.0 | MIT OR Apache-2.0 |
 | idna_adapter | 1.2.2 | Apache-2.0 OR MIT |
-| imbl | 6.1.0 | MPL-2.0+ |
-| imbl-sized-chunks | 0.1.3 | MPL-2.0+ |
+| imbl | 7.0.2 | MPL-2.0+ |
+| imbl-sized-chunks | 0.2.0 | MPL-2.0+ |
 | impartial-ord | 1.0.6 | MIT |
-| include_dir | 0.7.4 | MIT |
-| include_dir_macros | 0.7.4 | MIT |
-| indexmap | 2.14.0 | Apache-2.0 OR MIT |
+| indexmap | 2.14.2 | Apache-2.0 OR MIT |
 | inout | 0.1.4 | MIT OR Apache-2.0 |
 | inout | 0.2.2 | MIT OR Apache-2.0 |
 | inventory | 0.3.24 | MIT OR Apache-2.0 |
 | ipnet | 2.12.0 | MIT OR Apache-2.0 |
-| itertools | 0.10.5 | MIT/Apache-2.0 |
 | itertools | 0.14.0 | MIT OR Apache-2.0 |
+| itertools | 0.15.0 | MIT OR Apache-2.0 |
 | itoa | 1.0.18 | MIT OR Apache-2.0 |
 | jni | 0.22.4 | MIT OR Apache-2.0 |
 | jni-macros | 0.22.4 | MIT OR Apache-2.0 |
 | jni-sys | 0.4.1 | MIT OR Apache-2.0 |
 | jni-sys-macros | 0.4.1 | MIT OR Apache-2.0 |
 | jobserver | 0.1.35 | MIT OR Apache-2.0 |
-| js-sys | 0.3.103 | MIT OR Apache-2.0 |
+| js-sys | 0.3.106 | MIT OR Apache-2.0 |
 | js_int | 0.2.2 | MIT |
 | js_option | 0.2.0 | MIT |
 | jwt-simple | 0.12.17 | ISC |
@@ -287,7 +283,7 @@ linking the device's library. SQLite itself is in the public domain.
 | levenshtein_automata | 0.2.1 | MIT |
 | libc | 0.2.189 | MIT OR Apache-2.0 |
 | libm | 0.2.16 | MIT |
-| libsqlite3-sys | 0.35.0 | MIT |
+| libsqlite3-sys | 0.38.2 | MIT |
 | linux-raw-sys | 0.12.1 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
 | litemap | 0.8.2 | Unicode-3.0 |
 | lock_api | 0.4.14 | MIT OR Apache-2.0 |
@@ -306,15 +302,15 @@ linking the device's library. SQLite itself is in the public domain.
 | matchit | 0.8.4 | MIT AND BSD-3-Clause |
 | matrix-pickle | 0.2.3 | Apache-2.0 |
 | matrix-pickle-derive | 0.2.3 | Apache-2.0 |
-| matrix-sdk | 0.18.0 | Apache-2.0 |
-| matrix-sdk-base | 0.18.0 | Apache-2.0 |
-| matrix-sdk-common | 0.18.0 | Apache-2.0 |
-| matrix-sdk-crypto | 0.18.0 | Apache-2.0 |
-| matrix-sdk-indexeddb | 0.18.0 | Apache-2.0 |
-| matrix-sdk-search | 0.18.0 | Apache-2.0 |
-| matrix-sdk-sqlite | 0.18.0 | Apache-2.0 |
-| matrix-sdk-store-encryption | 0.18.0 | Apache-2.0 |
-| matrix-sdk-ui | 0.18.0 | Apache-2.0 |
+| matrix-sdk | 0.19.1 | Apache-2.0 |
+| matrix-sdk-base | 0.19.1 | Apache-2.0 |
+| matrix-sdk-common | 0.19.1 | Apache-2.0 |
+| matrix-sdk-crypto | 0.19.1 | Apache-2.0 |
+| matrix-sdk-indexeddb | 0.19.1 | Apache-2.0 |
+| matrix-sdk-search | 0.19.1 | Apache-2.0 |
+| matrix-sdk-sqlite | 0.19.1 | Apache-2.0 |
+| matrix-sdk-store-encryption | 0.19.1 | Apache-2.0 |
+| matrix-sdk-ui | 0.19.1 | Apache-2.0 |
 | matrix_indexed_db_futures | 0.7.0 | MIT |
 | matrix_indexed_db_futures_macros_internal | 1.0.0 | MIT |
 | measure_time | 0.9.0 | MIT |
@@ -352,7 +348,7 @@ linking the device's library. SQLite itself is in the public domain.
 | parking | 2.2.1 | Apache-2.0 OR MIT |
 | parking_lot | 0.12.5 | MIT OR Apache-2.0 |
 | parking_lot_core | 0.9.12 | MIT OR Apache-2.0 |
-| pbkdf2 | 0.12.2 | MIT OR Apache-2.0 |
+| pbkdf2 | 0.13.0 | MIT OR Apache-2.0 |
 | pem-rfc7468 | 0.7.0 | Apache-2.0 OR MIT |
 | percent-encoding | 2.3.2 | MIT OR Apache-2.0 |
 | phf | 0.13.1 | MIT |
@@ -366,7 +362,7 @@ linking the device's library. SQLite itself is in the public domain.
 | pkcs8 | 0.11.0 | Apache-2.0 OR MIT |
 | pkg-config | 0.3.33 | MIT OR Apache-2.0 |
 | polling | 3.11.0 | Apache-2.0 OR MIT |
-| poly1305 | 0.8.0 | Apache-2.0 OR MIT |
+| poly1305 | 0.9.1 | Apache-2.0 OR MIT |
 | polyval | 0.6.2 | Apache-2.0 OR MIT |
 | polyval | 0.7.3 | Apache-2.0 OR MIT |
 | potential_utf | 0.1.5 | Unicode-3.0 |
@@ -376,8 +372,6 @@ linking the device's library. SQLite itself is in the public domain.
 | prettyplease | 0.3.0 | MIT OR Apache-2.0 |
 | primeorder | 0.13.6 | Apache-2.0 OR MIT |
 | proc-macro-crate | 3.5.0 | MIT OR Apache-2.0 |
-| proc-macro-error-attr2 | 2.0.0 | MIT OR Apache-2.0 |
-| proc-macro-error2 | 2.0.1 | MIT OR Apache-2.0 |
 | proc-macro2 | 1.0.107 | MIT OR Apache-2.0 |
 | prost | 0.14.4 | Apache-2.0 |
 | prost-derive | 0.14.4 | Apache-2.0 |
@@ -385,13 +379,10 @@ linking the device's library. SQLite itself is in the public domain.
 | quinn-proto | 0.11.16 | MIT OR Apache-2.0 |
 | quinn-udp | 0.5.15 | MIT OR Apache-2.0 |
 | quote | 1.0.47 | MIT OR Apache-2.0 |
-| r-efi | 5.3.0 | MIT OR Apache-2.0 OR LGPL-2.1-or-later |
 | r-efi | 6.0.0 | MIT OR Apache-2.0 OR LGPL-2.1-or-later |
 | rand | 0.10.2 | MIT OR Apache-2.0 |
 | rand | 0.8.7 | MIT OR Apache-2.0 |
-| rand | 0.9.5 | MIT OR Apache-2.0 |
 | rand_chacha | 0.3.1 | MIT OR Apache-2.0 |
-| rand_chacha | 0.9.0 | MIT OR Apache-2.0 |
 | rand_core | 0.10.1 | MIT OR Apache-2.0 |
 | rand_core | 0.6.4 | MIT OR Apache-2.0 |
 | rand_core | 0.9.5 | MIT OR Apache-2.0 |
@@ -405,32 +396,33 @@ linking the device's library. SQLite itself is in the public domain.
 | regex | 1.13.1 | MIT OR Apache-2.0 |
 | regex-automata | 0.4.16 | MIT OR Apache-2.0 |
 | regex-syntax | 0.8.11 | MIT OR Apache-2.0 |
-| reqwest | 0.13.4 | MIT OR Apache-2.0 |
+| reqwest | 0.13.5 | MIT OR Apache-2.0 |
 | rfc6979 | 0.4.0 | Apache-2.0 OR MIT |
 | ring | 0.17.14 | Apache-2.0 AND ISC |
 | rmp | 0.8.15 | MIT |
 | rmp-serde | 1.3.1 | MIT |
 | rsa | 0.9.10 | MIT OR Apache-2.0 |
-| ruma | 0.16.0 | MIT |
-| ruma-client-api | 0.24.0 | MIT |
-| ruma-common | 0.19.0 | MIT |
-| ruma-events | 0.34.0 | MIT |
-| ruma-html | 0.8.0 | MIT |
+| ruma | 0.17.0 | MIT |
+| ruma-client-api | 0.25.0 | MIT |
+| ruma-common | 0.20.0 | MIT |
+| ruma-events | 0.35.0 | MIT |
+| ruma-html | 0.9.0 | MIT |
 | ruma-identifiers-validation | 0.12.1 | MIT |
-| ruma-macros | 0.19.0 | MIT |
-| rusqlite | 0.37.0 | MIT |
+| ruma-macros | 0.20.0 | MIT |
+| rusqlite | 0.40.2 | MIT |
 | rust-stemmers | 1.2.0 | MIT/BSD-3-Clause |
 | rustc-hash | 2.1.3 | Apache-2.0 OR MIT |
 | rustc_version | 0.4.1 | MIT OR Apache-2.0 |
 | rustix | 1.1.4 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
-| rustls | 0.23.42 | Apache-2.0 OR ISC OR MIT |
+| rustls | 0.23.45 | Apache-2.0 OR ISC OR MIT |
 | rustls-native-certs | 0.8.4 | Apache-2.0 OR ISC OR MIT |
 | rustls-pki-types | 1.15.1 | MIT OR Apache-2.0 |
 | rustls-platform-verifier | 0.7.0 | MIT OR Apache-2.0 |
 | rustls-platform-verifier-android | 0.1.1 | MIT OR Apache-2.0 |
-| rustls-webpki | 0.103.13 | ISC |
+| rustls-webpki | 0.103.15 | ISC |
 | rustversion | 1.0.23 | MIT OR Apache-2.0 |
 | ryu | 1.0.23 | Apache-2.0 OR BSL-1.0 |
+| safe_arch | 0.7.4 | Zlib OR Apache-2.0 OR MIT |
 | same-file | 1.0.6 | Unlicense/MIT |
 | schannel | 0.1.29 | MIT |
 | scoped-tls | 1.0.1 | MIT/Apache-2.0 |
@@ -451,7 +443,9 @@ linking the device's library. SQLite itself is in the public domain.
 | serde_repr | 0.1.21 | MIT OR Apache-2.0 |
 | serde_spanned | 1.1.1 | MIT OR Apache-2.0 |
 | serde_urlencoded | 0.7.1 | MIT/Apache-2.0 |
+| serdect | 0.4.3 | Apache-2.0 OR MIT |
 | sha2 | 0.10.9 | MIT OR Apache-2.0 |
+| sha2 | 0.11.0 | MIT OR Apache-2.0 |
 | shake | 0.1.0 | MIT OR Apache-2.0 |
 | sharded-slab | 0.1.7 | MIT |
 | shlex | 2.0.1 | MIT OR Apache-2.0 |
@@ -481,7 +475,7 @@ linking the device's library. SQLite itself is in the public domain.
 | syn | 3.0.3 | MIT OR Apache-2.0 |
 | sync_wrapper | 1.0.2 | Apache-2.0 |
 | synstructure | 0.13.2 | MIT |
-| tantivy | 0.26.1 | MIT |
+| tantivy | 0.26.2 | MIT |
 | tantivy-bitpacker | 0.10.0 | MIT |
 | tantivy-columnar | 0.7.0 | MIT |
 | tantivy-common | 0.11.0 | MIT |
@@ -493,11 +487,11 @@ linking the device's library. SQLite itself is in the public domain.
 | tempfile | 3.27.0 | MIT OR Apache-2.0 |
 | tendril | 0.5.1 | MIT OR Apache-2.0 |
 | thiserror | 1.0.69 | MIT OR Apache-2.0 |
-| thiserror | 2.0.19 | MIT OR Apache-2.0 |
+| thiserror | 2.0.21 | MIT OR Apache-2.0 |
 | thiserror-impl | 1.0.69 | MIT OR Apache-2.0 |
-| thiserror-impl | 2.0.19 | MIT OR Apache-2.0 |
+| thiserror-impl | 2.0.21 | MIT OR Apache-2.0 |
 | thread_local | 1.1.10 | MIT OR Apache-2.0 |
-| time | 0.3.54 | MIT OR Apache-2.0 |
+| time | 0.3.55 | MIT OR Apache-2.0 |
 | time-core | 0.1.9 | MIT OR Apache-2.0 |
 | time-macros | 0.2.32 | MIT OR Apache-2.0 |
 | tinystr | 0.8.3 | Unicode-3.0 |
@@ -528,7 +522,7 @@ linking the device's library. SQLite itself is in the public domain.
 | typetag-impl | 0.2.23 | MIT OR Apache-2.0 |
 | typewit | 1.15.2 | Zlib |
 | uds_windows | 1.2.1 | MIT |
-| ulid | 1.2.1 | MIT |
+| ulid | 3.0.0 | MIT |
 | unicode-ident | 1.0.24 | (MIT OR Apache-2.0) AND Unicode-3.0 |
 | unicode-normalization | 0.1.25 | MIT OR Apache-2.0 |
 | unicode-segmentation | 1.13.3 | MIT OR Apache-2.0 |
@@ -539,32 +533,30 @@ linking the device's library. SQLite itself is in the public domain.
 | universal-hash | 0.6.1 | MIT OR Apache-2.0 |
 | untrusted | 0.9.0 | ISC |
 | url | 2.5.8 | MIT OR Apache-2.0 |
-| urlencoding | 2.1.3 | MIT |
 | utf8-ranges | 1.0.5 | Unlicense/MIT |
 | utf8_iter | 1.0.4 | Apache-2.0 OR MIT |
-| uuid | 1.24.0 | Apache-2.0 OR MIT |
+| uuid | 1.26.1 | Apache-2.0 OR MIT |
 | valuable | 0.1.1 | MIT |
 | vcpkg | 0.2.15 | MIT/Apache-2.0 |
 | version_check | 0.9.5 | MIT/Apache-2.0 |
-| vodozemac | 0.10.0 | Apache-2.0 |
+| vodozemac | 0.11.0 | Apache-2.0 |
 | walkdir | 2.5.0 | Unlicense/MIT |
 | want | 0.3.1 | MIT |
 | wasi | 0.11.1+wasi-snapshot-preview1 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
-| wasip2 | 1.0.4+wasi-0.2.12 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
 | wasix | 0.13.2 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
-| wasm-bindgen | 0.2.126 | MIT OR Apache-2.0 |
-| wasm-bindgen-futures | 0.4.76 | MIT OR Apache-2.0 |
-| wasm-bindgen-macro | 0.2.126 | MIT OR Apache-2.0 |
-| wasm-bindgen-macro-support | 0.2.126 | MIT OR Apache-2.0 |
-| wasm-bindgen-shared | 0.2.126 | MIT OR Apache-2.0 |
+| wasm-bindgen | 0.2.129 | MIT OR Apache-2.0 |
+| wasm-bindgen-futures | 0.4.79 | MIT OR Apache-2.0 |
+| wasm-bindgen-macro | 0.2.129 | MIT OR Apache-2.0 |
+| wasm-bindgen-macro-support | 0.2.129 | MIT OR Apache-2.0 |
+| wasm-bindgen-shared | 0.2.129 | MIT OR Apache-2.0 |
 | wasm-streams | 0.5.0 | MIT OR Apache-2.0 |
 | wasm_evt_listener | 0.1.0 | MIT |
 | web-push-native | 0.4.0 | MIT OR Apache-2.0 |
-| web-sys | 0.3.103 | MIT OR Apache-2.0 |
+| web-sys | 0.3.106 | MIT OR Apache-2.0 |
 | web-time | 1.1.0 | MIT OR Apache-2.0 |
 | web_atoms | 0.2.5 | MIT OR Apache-2.0 |
 | webpki-root-certs | 1.0.9 | CDLA-Permissive-2.0 |
-| webpki-roots | 1.0.9 | CDLA-Permissive-2.0 |
+| wide | 0.7.33 | Zlib OR Apache-2.0 OR MIT |
 | wildmatch | 2.6.1 | MIT |
 | winapi | 0.3.9 | MIT/Apache-2.0 |
 | winapi-i686-pc-windows-gnu | 0.4.0 | MIT/Apache-2.0 |
@@ -589,9 +581,8 @@ linking the device's library. SQLite itself is in the public domain.
 | windows_x86_64_gnullvm | 0.52.6 | MIT OR Apache-2.0 |
 | windows_x86_64_msvc | 0.52.6 | MIT OR Apache-2.0 |
 | winnow | 1.0.4 | MIT |
-| wit-bindgen | 0.57.1 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
 | writeable | 0.6.3 | Unicode-3.0 |
-| x25519-dalek | 2.0.1 | BSD-3-Clause |
+| x25519-dalek | 3.0.0 | BSD-3-Clause |
 | xxhash-rust | 0.8.18 | BSL-1.0 |
 | yoke | 0.8.3 | Unicode-3.0 |
 | yoke-derive | 0.8.2 | Unicode-3.0 |

@@ -532,6 +532,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Извън мрежата — чака се връзка</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>няма връзка</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1706,10 +1710,6 @@
         <translation>Показвай статуса на четене на другите</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Изключено не се извлича нищо за това кой какво е прочел, което поддържа разговора и по-плавен. Включено твоите съобщения показват колко души са ги прочели.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Гласови съобщения</translation>
     </message>
@@ -1872,6 +1872,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Включено: полето на камерата показва какво вижда камерата, докато изборът е отворен. Изключено: камерата се включва едва когато докоснеш полето.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Изключено не се следи и не се показва кой какво е прочел, което поддържа разговора и по-плавен. Включено твоите съобщения показват колко души са ги прочели.</translation>
     </message>
 </context>
 <context>
@@ -2757,6 +2761,30 @@
         <source>Share location</source>
         <translation>Сподели местоположение</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>изтриването не е изпратено</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>редакцията не е изпратена</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Не се получи. Опитай отново след малко.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Обратно към най-новите съобщения</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Местоположението на живо не можа да бъде стартирано</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Вече не чака да бъде изпратено.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3137,6 +3165,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Съобщение не можа да бъде изпратено.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Редакция не можа да бъде изпратена.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Изтриване не можа да бъде изпратено. За всички останали съобщението все още е там.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Реакция не можа да бъде изпратена.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Глас в анкета не можа да бъде изпратен.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Промяна не можа да бъде изпратена.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Потвърден от теб човек има нова самоличност. Оттегли потвърждението в профила му и изпрати отново.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Това устройство първо трябва да бъде потвърдено.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Някои устройства в тази стая не са потвърдени.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Всичко, изпратено след това в тази стая, чака зад него.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Изпрати отново</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Отхвърли</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Анкета не можа да бъде изпратена.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3165,6 +3248,60 @@
     <message>
         <source>Need help?</source>
         <translation>Нуждаеш ли се от помощ?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Излез и изтрий локалните данни</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Нужна е по-нова версия</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix за Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Опитай отново</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Сесията ти е записана във формат, който тази версия не познава, най-вероятно от по-нова версия на xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Ако преди е била инсталирана по-нова версия на xmatic, след повторното ѝ инсталиране всичко ще се отвори както преди. Излизането от профила пък изтрива данните и ключовете на това устройство.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Излез и изтрий локалните данни</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Няма връзка</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix за Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Домашният ти сървър не можа да бъде достигнат. Сесията ти е все още активна и на това устройство нищо не се е променило.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic продължава да опитва сам. Не влизай отново: това би създало ново устройство и ключовете към шифрованата ти история биха се загубили.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Опитай отново</translation>
     </message>
 </context>
 <context>

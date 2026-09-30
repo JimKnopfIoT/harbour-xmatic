@@ -96,8 +96,11 @@ Page {
                                             "lat": page.position.lat,
                                             "lon": page.position.lon,
                                             "accuracy": page.position.accuracy,
-                                            "live": false
+                                            "live": false,
+                                            "self": true
                                         } : null
+                avatarSource: matrix.profileAvatar
+                avatarName: matrix.profileName
                 encrypted: page.encrypted
             }
 

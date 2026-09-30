@@ -532,6 +532,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Sin conexión — esperando a la red</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>sin conexión</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1706,10 +1710,6 @@
         <translation>Mostrar el estado de lectura de otros</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Desactivado, no se obtiene nada sobre quién ha leído qué, lo que además mantiene la conversación más fluida. Activado, tus mensajes indican cuántas personas los han leído.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Mensajes de voz</translation>
     </message>
@@ -1872,6 +1872,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Activado, la casilla de la cámara muestra lo que ve la cámara mientras el selector está abierto. Desactivado, la cámara solo se enciende cuando tocas la casilla.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Desactivado, no se sigue ni se muestra quién ha leído qué, lo que además mantiene la conversación más fluida. Activado, tus mensajes indican cuántas personas los han leído.</translation>
     </message>
 </context>
 <context>
@@ -2757,6 +2761,30 @@
         <source>Share location</source>
         <translation>Compartir ubicación</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>borrado no enviado</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>edición no enviada</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>No ha funcionado. Vuelve a intentarlo en un momento.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Volver a los mensajes más recientes</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>No se pudo iniciar la ubicación en tiempo real</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Ya no está esperando a enviarse.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3137,6 +3165,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>No se pudo enviar un mensaje.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>No se pudo enviar una edición.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>No se pudo enviar un borrado. El mensaje sigue ahí para todos los demás.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>No se pudo enviar una reacción.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>No se pudo enviar un voto de encuesta.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>No se pudo enviar un cambio.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Una persona que verificaste tiene una identidad nueva. Retira la verificación en su perfil y vuelve a enviar.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Primero hay que verificar este dispositivo.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Algunos dispositivos de esta sala no están verificados.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Todo lo enviado después en esta sala espera detrás.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Enviar de nuevo</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Descartar</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>No se pudo enviar una encuesta.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3165,6 +3248,60 @@
     <message>
         <source>Need help?</source>
         <translation>¿Necesitas ayuda?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Cerrar sesión y borrar los datos locales</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Se necesita una versión más reciente</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix para Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Reintentar</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Tu sesión se guardó en un formato que esta versión no conoce, muy probablemente por una versión más reciente de xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Si antes había instalada una versión más reciente de xmatic, al volver a instalarla todo se abrirá como antes. Cerrar sesión, en cambio, borra los datos y las claves de este dispositivo.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Cerrar sesión y borrar los datos locales</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Sin conexión</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix para Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>No se pudo contactar con tu servidor doméstico. Sigues con la sesión iniciada y no ha cambiado nada en este dispositivo.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic sigue intentándolo por su cuenta. No vuelvas a iniciar sesión: eso crearía un dispositivo nuevo y te costaría las claves de tu historial cifrado.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Reintentar</translation>
     </message>
 </context>
 <context>

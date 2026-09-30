@@ -193,6 +193,9 @@ pub enum Command {
         /// of the view it has just left. Same device as `thread.open`.
         #[serde(default)]
         token: String,
+        /// Build the live timeline anew even when it is open: aggregations recomputed.
+        #[serde(default)]
+        rebuild: bool,
     },
 
     /// Resolve a room address to a room id, and report whether this account
@@ -274,14 +277,6 @@ pub enum Command {
         #[serde(rename = "eventId")]
         event_id: String,
         key: String,
-    },
-
-    /// Put a message the send queue parked back in line.
-    #[serde(rename = "timeline.retry")]
-    TimelineRetry {
-        id: u64,
-        #[serde(rename = "txnId")]
-        txn_id: String,
     },
 
     #[serde(rename = "timeline.redact")]
@@ -805,6 +800,34 @@ pub enum Command {
         text: String,
     },
 
+    /// The requests a room's send queue parked, first the one blocking the rest.
+    #[serde(rename = "queue.stuck")]
+    QueueStuck {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
+    /// Send a parked request again.
+    #[serde(rename = "queue.retry")]
+    QueueRetry {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "txnId")]
+        txn_id: String,
+    },
+
+    /// Take a parked request out of the queue.
+    #[serde(rename = "queue.discard")]
+    QueueDiscard {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "txnId")]
+        txn_id: String,
+    },
+
     /// Send a one-off location into the open room.
     #[serde(rename = "location.send")]
     LocationSend {
@@ -1099,7 +1122,6 @@ impl Command {
             | Command::TimelineReply { id, .. }
             | Command::TimelineEdit { id, .. }
             | Command::TimelineRedact { id, .. }
-            | Command::TimelineRetry { id, .. }
             | Command::TimelineReact { id, .. }
             | Command::TimelineSendMedia { id, .. }
             | Command::MediaFetch { id, .. }
@@ -1141,6 +1163,9 @@ impl Command {
             | Command::PollStart { id, .. }
             | Command::PollVote { id, .. }
             | Command::PollEnd { id, .. }
+            | Command::QueueStuck { id, .. }
+            | Command::QueueRetry { id, .. }
+            | Command::QueueDiscard { id, .. }
             | Command::LocationSend { id, .. }
             | Command::LocationLiveStart { id, .. }
             | Command::LocationBeacon { id, .. }

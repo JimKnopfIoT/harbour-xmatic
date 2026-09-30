@@ -205,6 +205,8 @@ Column {
             id: votesLabel
 
             anchors.left: parent.left
+            // Withheld by the core while hidden.
+            visible: !block.hidden
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
             // Votes, not people: with several answers allowed one person casts more

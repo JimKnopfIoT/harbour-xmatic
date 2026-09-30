@@ -136,7 +136,8 @@ Item {
                 visible: text.length > 0
                 wrapMode: Text.Wrap
                 maximumLineCount: 2
-                truncationMode: TruncationMode.Fade
+                // Elide: Fade on a wrapped, capped label loops.
+                truncationMode: TruncationMode.Elide
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.primaryColor
@@ -148,7 +149,8 @@ Item {
                 visible: text.length > 0
                 wrapMode: Text.Wrap
                 maximumLineCount: 2
-                truncationMode: TruncationMode.Fade
+                // Elide: Fade on a wrapped, capped label loops.
+                truncationMode: TruncationMode.Elide
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor

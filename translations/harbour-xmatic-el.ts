@@ -532,6 +532,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Εκτός σύνδεσης — αναμονή για δίκτυο</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>χωρίς σύνδεση</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1706,10 +1710,6 @@
         <translation>Εμφάνιση κατάστασης ανάγνωσης των άλλων</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Απενεργοποιημένο δεν ανακτάται τίποτα για το ποιος διάβασε τι, κάτι που κρατά και τη συνομιλία πιο ομαλή. Ενεργοποιημένο, τα δικά σου μηνύματα δείχνουν πόσοι τα διάβασαν.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Φωνητικά μηνύματα</translation>
     </message>
@@ -1872,6 +1872,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Ενεργό: το πλαίσιο της κάμερας δείχνει ό,τι βλέπει η κάμερα όσο η επιλογή είναι ανοιχτή. Ανενεργό: η κάμερα ξεκινά μόνο όταν πατήσεις το πλαίσιο.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Απενεργοποιημένο, δεν καταγράφεται ούτε εμφανίζεται ποιος διάβασε τι, κάτι που κρατά και τη συνομιλία πιο ομαλή. Ενεργοποιημένο, τα δικά σου μηνύματα δείχνουν πόσοι τα διάβασαν.</translation>
     </message>
 </context>
 <context>
@@ -2757,6 +2761,30 @@
         <source>Share location</source>
         <translation>Κοινοποίηση τοποθεσίας</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>η διαγραφή δεν στάλθηκε</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>η επεξεργασία δεν στάλθηκε</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Δεν πέτυχε. Δοκίμασε ξανά σε λίγο.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Επιστροφή στα πιο πρόσφατα μηνύματα</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Δεν ήταν δυνατή η έναρξη της ζωντανής τοποθεσίας</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Δεν περιμένει πια να σταλεί.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3137,6 +3165,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Δεν ήταν δυνατή η αποστολή ενός μηνύματος.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Δεν ήταν δυνατή η αποστολή μιας επεξεργασίας.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Δεν ήταν δυνατή η αποστολή μιας διαγραφής. Για όλους τους άλλους το μήνυμα είναι ακόμη εκεί.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Δεν ήταν δυνατή η αποστολή μιας αντίδρασης.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Δεν ήταν δυνατή η αποστολή μιας ψήφου δημοσκόπησης.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Δεν ήταν δυνατή η αποστολή μιας αλλαγής.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Κάποιο άτομο που επαλήθευσες έχει νέα ταυτότητα. Ανακάλεσε την επαλήθευση στο προφίλ του και στείλε ξανά.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Αυτή η συσκευή πρέπει πρώτα να επαληθευτεί.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Ορισμένες συσκευές σε αυτό το δωμάτιο δεν είναι επαληθευμένες.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Ό,τι στάλθηκε μετά σε αυτό το δωμάτιο περιμένει πίσω του.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Αποστολή ξανά</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Απόρριψη</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Δεν ήταν δυνατή η αποστολή μιας δημοσκόπησης.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3165,6 +3248,60 @@
     <message>
         <source>Need help?</source>
         <translation>Χρειάζεσαι βοήθεια;</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Αποσύνδεση και διαγραφή τοπικών δεδομένων</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Απαιτείται νεότερη έκδοση</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix για Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Δοκίμασε ξανά</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Η συνεδρία σου αποθηκεύτηκε σε μορφή που αυτή η έκδοση δεν γνωρίζει, πιθανότατα από νεότερη έκδοση του xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Αν πριν ήταν εγκατεστημένη νεότερη έκδοση του xmatic, με την επανεγκατάστασή της όλα θα ανοίξουν όπως πριν. Η αποσύνδεση αντίθετα διαγράφει τα δεδομένα και τα κλειδιά αυτής της συσκευής.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Αποσύνδεση και διαγραφή τοπικών δεδομένων</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Χωρίς σύνδεση</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix για Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Δεν ήταν δυνατή η σύνδεση με τον οικείο διακομιστή σου. Η συνεδρία σου παραμένει ενεργή και τίποτα δεν άλλαξε σε αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>Το xmatic συνεχίζει να προσπαθεί μόνο του. Μη συνδεθείς ξανά: θα δημιουργούνταν νέα συσκευή και θα χάνονταν τα κλειδιά του κρυπτογραφημένου ιστορικού σου.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Δοκίμασε ξανά</translation>
     </message>
 </context>
 <context>

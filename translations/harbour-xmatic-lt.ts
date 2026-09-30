@@ -533,6 +533,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Neprisijungta — laukiama tinklo</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>nėra ryšio</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1709,10 +1713,6 @@
         <translation>Rodyti kitų skaitymo būseną</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Išjungus nieko nesiunčiama apie tai, kas ką perskaitė, todėl pokalbis lieka sklandesnis. Įjungus tavo žinutės rodo, kiek žmonių jas perskaitė.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Balso žinutės</translation>
     </message>
@@ -1875,6 +1875,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Įjungta: kameros langelis rodo, ką mato kamera, kol parinkiklis atviras. Išjungta: kamera įsijungia tik tada, kai paliesi langelį.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Išjungus nesekama ir nerodoma, kas ką perskaitė, todėl pokalbis lieka sklandesnis. Įjungus tavo žinutės rodo, kiek žmonių jas perskaitė.</translation>
     </message>
 </context>
 <context>
@@ -2761,6 +2765,30 @@
         <source>Share location</source>
         <translation>Bendrinti vietą</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>ištrynimas neišsiųstas</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>pataisymas neišsiųstas</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Nepavyko. Pabandyk dar kartą po akimirkos.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Grįžti prie naujausių žinučių</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Nepavyko pradėti tiesioginės vietos</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Tai nebelaukia išsiuntimo.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3141,6 +3169,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Nepavyko išsiųsti žinutės.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Nepavyko išsiųsti pataisymo.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Nepavyko išsiųsti ištrynimo. Visiems kitiems žinutė vis dar matoma.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Nepavyko išsiųsti reakcijos.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Nepavyko išsiųsti balso apklausoje.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Nepavyko išsiųsti pakeitimo.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Asmuo, kurį patvirtinai, turi naują tapatybę. Atšauk patvirtinimą šio asmens profilyje ir tada išsiųsk dar kartą.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Pirmiausia reikia patvirtinti šį įrenginį.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Kai kurie šio kambario įrenginiai nepatvirtinti.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Viskas, kas po jo išsiųsta šiame kambaryje, laukia už jo.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Siųsti dar kartą</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Atmesti</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Nepavyko išsiųsti apklausos.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3169,6 +3252,60 @@
     <message>
         <source>Need help?</source>
         <translation>Reikia pagalbos?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Atsijungti ir ištrinti vietinius duomenis</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Reikia naujesnės versijos</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix skirta Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Bandyti dar kartą</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Tavo seansas įrašytas formatu, kurio ši versija nepažįsta, greičiausiai naujesnės xmatic versijos.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Jei anksčiau buvo įdiegta naujesnė xmatic versija, ją vėl įdiegus viskas atsidarys kaip anksčiau. Atsijungus ištrinami šio įrenginio duomenys ir raktai.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Atsijungti ir ištrinti vietinius duomenis</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Nėra ryšio</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix skirta Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Nepavyko pasiekti tavo namų serverio. Tavo seansas tebegalioja, ir šiame įrenginyje niekas nepasikeitė.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic ir toliau bando pats. Neprisijunk iš naujo: tai sukurtų naują įrenginį ir būtų prarasti tavo šifruotos istorijos raktai.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Bandyti dar kartą</translation>
     </message>
 </context>
 <context>

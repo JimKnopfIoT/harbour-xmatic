@@ -532,6 +532,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Võrguühenduseta — ootan võrku</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>ühendus puudub</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1706,10 +1710,6 @@
         <translation>Näita teiste lugemise olekut</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Väljas ei tooda midagi selle kohta, kes mida luges, mis hoiab vestluse ka sujuvamana. Sees näitavad su enda sõnumid, kui paljud on neid lugenud.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Häälsõnumid</translation>
     </message>
@@ -1872,6 +1872,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Sees: kaamera ruut näitab, mida kaamera näeb, kuni valija on avatud. Väljas: kaamera käivitub alles siis, kui ruutu puudutad.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Väljas ei jälgita ega näidata, kes mida luges, mis hoiab vestluse ka sujuvamana. Sees näitavad su enda sõnumid, kui paljud on neid lugenud.</translation>
     </message>
 </context>
 <context>
@@ -2757,6 +2761,30 @@
         <source>Share location</source>
         <translation>Jaga asukohta</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>kustutamine saatmata</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>muutmine saatmata</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>See ei õnnestunud. Proovi hetke pärast uuesti.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Tagasi uusimate sõnumite juurde</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Reaalajas asukohta ei õnnestunud alustada</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>See ei oota enam saatmist.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3137,6 +3165,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Sõnumit ei õnnestunud saata.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Sõnumi muutmist ei õnnestunud saata.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Kustutamist ei õnnestunud saata. Kõigi teiste jaoks on sõnum endiselt alles.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Reaktsiooni ei õnnestunud saata.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Hääletuse häält ei õnnestunud saata.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Muudatust ei õnnestunud saata.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Isikul, keda oled kinnitanud, on uus identiteet. Võta kinnitus tema profiilil tagasi ja saada siis uuesti.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>See seade tuleb kõigepealt kinnitada.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Mõned selle toa seadmed pole kinnitatud.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Kõik, mis saadeti selles toas pärast seda, ootab selle taga.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Saada uuesti</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Loobu</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Küsitlust ei õnnestunud saata.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3165,6 +3248,60 @@
     <message>
         <source>Need help?</source>
         <translation>Vajad abi?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Logi välja ja kustuta kohalikud andmed</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Vaja on uuemat versiooni</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS-ile</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Proovi uuesti</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Sinu seanss salvestati vormingus, mida see versioon ei tunne, tõenäoliselt xmaticu uuema versiooni poolt.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Kui varem oli paigaldatud xmaticu uuem versioon, avaneb selle uuesti paigaldamisel kõik nagu varem. Väljalogimine kustutab seevastu selle seadme andmed ja võtmed.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Logi välja ja kustuta kohalikud andmed</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Ühendus puudub</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS-ile</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Sinu koduserveriga ei saadud ühendust. Oled endiselt sisse logitud ja selles seadmes pole midagi muutunud.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic proovib ise edasi. Ära logi uuesti sisse: see looks uue seadme ja sinu krüptitud ajaloo võtmed läheksid kaotsi.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Proovi uuesti</translation>
     </message>
 </context>
 <context>

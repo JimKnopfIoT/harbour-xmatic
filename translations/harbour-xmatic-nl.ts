@@ -532,6 +532,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Offline — wachten op het netwerk</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>geen verbinding</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1706,10 +1710,6 @@
         <translation>Leesstatus van anderen tonen</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Uit wordt er niets opgehaald over wie wat gelezen heeft, wat het gesprek ook soepeler houdt. Aan vermelden je eigen berichten hoeveel mensen ze gelezen hebben.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Spraakberichten</translation>
     </message>
@@ -1872,6 +1872,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Aan: het cameravak toont wat de camera ziet zolang de kiezer open is. Uit: de camera start pas als je op het vak tikt.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Uit wordt niet bijgehouden of getoond wie wat gelezen heeft, wat het gesprek ook soepeler houdt. Aan vermelden je eigen berichten hoeveel mensen ze gelezen hebben.</translation>
     </message>
 </context>
 <context>
@@ -2757,6 +2761,30 @@
         <source>Share location</source>
         <translation>Locatie delen</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>verwijdering niet verzonden</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>bewerking niet verzonden</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Dat lukte niet. Probeer het zo meteen opnieuw.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Terug naar de nieuwste berichten</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Live locatie kon niet worden gestart</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Het wacht niet meer om verzonden te worden.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3137,6 +3165,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Een bericht kon niet worden verzonden.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Een bewerking kon niet worden verzonden.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Een verwijdering kon niet worden verzonden. Voor alle anderen staat het bericht er nog.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Een reactie kon niet worden verzonden.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Een stem in een peiling kon niet worden verzonden.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Een wijziging kon niet worden verzonden.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Iemand die je hebt geverifieerd heeft een nieuwe identiteit. Trek de verificatie in op diens profiel en verzend daarna opnieuw.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Dit apparaat moet eerst worden geverifieerd.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Sommige apparaten in deze kamer zijn niet geverifieerd.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Alles wat daarna in deze kamer is verzonden, wacht erachter.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Opnieuw versturen</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Weggooien</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Een peiling kon niet worden verzonden.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3165,6 +3248,60 @@
     <message>
         <source>Need help?</source>
         <translation>Hulp nodig?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Afmelden en lokale gegevens verwijderen</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Nieuwere versie nodig</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix voor Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Opnieuw proberen</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Je sessie is opgeslagen in een indeling die deze versie niet kent, waarschijnlijk door een nieuwere versie van xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Als er eerder een nieuwere versie van xmatic geïnstalleerd was, opent na opnieuw installeren alles zoals voorheen. Afmelden verwijdert in plaats daarvan de gegevens en sleutels op dit apparaat.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Afmelden en lokale gegevens verwijderen</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Geen verbinding</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix voor Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Je homeserver kon niet worden bereikt. Je bent nog steeds aangemeld en er is niets veranderd op dit apparaat.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic blijft het zelf proberen. Meld je niet opnieuw aan: dan ontstaat er een nieuw apparaat en ben je de sleutels van je versleutelde geschiedenis kwijt.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Opnieuw proberen</translation>
     </message>
 </context>
 <context>

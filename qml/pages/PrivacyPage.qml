@@ -119,7 +119,7 @@ Page {
 
             TextSwitch {
                 text: qsTr("Show others' read status")
-                description: qsTr("Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.")
+                description: qsTr("Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.")
                 checked: settings.showReadStatus
                 automaticCheck: false
                 onClicked: settings.showReadStatus = !settings.showReadStatus

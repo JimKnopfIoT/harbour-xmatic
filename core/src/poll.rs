@@ -688,10 +688,11 @@ pub fn payload(view: &PollView, own: Option<&UserId>) -> Value {
         "hidden": hidden,
         "maxSelections": view.max_selections.max(1),
         // Votes and people who cast them: with several selections the two differ.
-        "votes": total,
-        "voters": voters.len(),
+        // Withheld while hidden.
+        "votes": if hidden { Value::Null } else { json!(total) },
+        "voters": if hidden { Value::Null } else { json!(voters.len()) },
         // False where the count is a floor - a server read that hit its bound.
-        "complete": view.complete,
+        "complete": if hidden { Value::Null } else { json!(view.complete) },
         // Our own selection travels even for a hidden poll - it is ours.
         "mine": mine,
         "answers": answers,
@@ -849,6 +850,8 @@ mod tests {
         assert_eq!(running["hidden"], json!(true));
         assert_eq!(running["answers"][0]["count"], Value::Null);
         assert_eq!(running["answers"][0]["share"], Value::Null);
+        assert_eq!(running["votes"], Value::Null);
+        assert_eq!(running["voters"], Value::Null);
 
         let ended = payload(&view(true, true), None);
         assert_eq!(ended["hidden"], json!(false));

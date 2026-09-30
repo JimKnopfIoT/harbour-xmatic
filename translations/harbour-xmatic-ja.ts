@@ -531,6 +531,10 @@
         <source>Offline — waiting for the network</source>
         <translation>オフライン - ネットワークを待っています</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>接続なし</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1687,10 +1691,6 @@
         <translation>他の人の既読を表示</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>オフのとき、誰が何を読んだかは取得せず、会話も軽くなります。オンのときは自分のメッセージに何人が読んだか表示されます。</translation>
-    </message>
-    <message>
         <source>Load pictures automatically</source>
         <translation>画像を自動で読み込む</translation>
     </message>
@@ -1869,6 +1869,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>オン: 選択画面を開いている間、カメラのマスにカメラの映像を表示します。オフ: マスをタップしたときだけカメラが動きます。</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>オフのとき、誰が何を読んだかは記録も表示もせず、会話も軽くなります。オンのときは自分のメッセージに何人が読んだか表示されます。</translation>
     </message>
 </context>
 <context>
@@ -2753,6 +2757,30 @@
         <source>Share location</source>
         <translation>位置情報を共有</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>削除未送信</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>編集未送信</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>うまくいきませんでした。少ししてからもう一度お試しください。</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>最新のメッセージに戻る</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>ライブ位置情報を開始できませんでした</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>送信待ちではなくなりました。</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3133,6 +3161,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>メッセージを送信できませんでした。</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>編集を送信できませんでした。</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>削除を送信できませんでした。ほかの全員にはメッセージがまだ表示されています。</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>リアクションを送信できませんでした。</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>投票を送信できませんでした。</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>変更を送信できませんでした。</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>検証済みの相手の ID が変わりました。その人のプロフィールで検証を取り消してから、もう一度送信してください。</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>まずこのデバイスを検証する必要があります。</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>このルームには未検証のデバイスがあります。</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>このルームでそれ以降に送信したものは、すべてその後ろで待機しています。</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>再送信</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>破棄</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>アンケートを送信できませんでした。</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3161,6 +3244,60 @@
     <message>
         <source>Need help?</source>
         <translation>助けが必要ですか？</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>サインアウトしてローカルデータを削除</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>新しいバージョンが必要です</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Sailfish OS のための Matrix</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>再試行</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>セッションはこのバージョンが知らない形式で保存されています。おそらく xmatic の新しいバージョンによるものです。</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>以前に xmatic の新しいバージョンがインストールされていた場合は、それを再インストールすればすべて以前どおり開きます。代わりにサインアウトすると、このデバイスのデータと鍵が削除されます。</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>サインアウトしてローカルデータを削除</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>接続なし</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Sailfish OS のための Matrix</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>ホームサーバーに接続できませんでした。サインインしたままで、このデバイス上では何も変わっていません。</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic は自動で再試行を続けます。サインインし直さないでください。新しいデバイスが作られ、暗号化された履歴の鍵が失われます。</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>再試行</translation>
     </message>
 </context>
 <context>

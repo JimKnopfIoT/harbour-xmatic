@@ -41,6 +41,21 @@ QString outgoingDirectory()
     return directory.absoluteFilePath(QStringLiteral("outgoing"));
 }
 
+/// EXIF or XMP in the head of a JPEG or PNG.
+bool carriesMetadata(const QString &path)
+{
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)) {
+        // Unknown counts as carrying.
+        return true;
+    }
+    const QByteArray head = file.read(256 * 1024);
+    return head.contains(QByteArrayLiteral("Exif\0\0"))
+            || head.contains(QByteArrayLiteral("http://ns.adobe.com/xap/"))
+            || head.contains(QByteArrayLiteral("eXIf"))
+            || head.contains(QByteArrayLiteral("iTXtXML:com.adobe.xmp"));
+}
+
 /// Sailfish puts them in their own folder, and that is the only honest signal:
 /// a screenshot carries nothing in the file that says what it is.
 bool looksLikeScreenshot(const QString &path)
@@ -152,8 +167,8 @@ OutgoingImage prepareOutgoingImage(const QString &path, const QString &mimeType,
         return untouched;
     }
 
-    // A copy that is not smaller has cost the user quality for nothing.
-    if (encoded.size() >= info.size()) {
+    // Not smaller: the original goes, unless it carries metadata.
+    if (encoded.size() >= info.size() && !carriesMetadata(path)) {
         return untouched;
     }
 

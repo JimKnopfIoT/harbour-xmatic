@@ -61,6 +61,9 @@ public:
     bool deliver(quint64 id, const QString &command, const QJsonObject &data);
     /// A refusal; true when it must not reach the banner.
     bool reportFailure(quint64 id, const QString &command);
+
+    /// Watchdog gave up on `id`: a started share is stopped, after the start.
+    void abandon(quint64 id);
     /// Sign-out and media wipe: the tiles are gone, so are the paths to them.
     void clear();
     /// Sign-out: the shares belonged to the account that is gone.

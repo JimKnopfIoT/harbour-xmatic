@@ -23,6 +23,7 @@
 #include "callengine.h"
 #include "linkpreviews.h"
 #include "pollactions.h"
+#include "sendqueueactions.h"
 #include "locationactions.h"
 #include "camerashots.h"
 #include "roomsettings.h"
@@ -109,6 +110,9 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *recorder READ recorder CONSTANT)
     Q_PROPERTY(QObject *calls READ calls CONSTANT)
     Q_PROPERTY(QObject *polls READ polls CONSTANT)
+    Q_PROPERTY(QObject *sendQueue READ sendQueue CONSTANT)
+    /// Empty for live, "pinned", or the event id of a slice.
+    Q_PROPERTY(QString timelineFocus READ timelineFocus NOTIFY timelineFocusChanged)
     Q_PROPERTY(QObject *locations READ locations CONSTANT)
     Q_PROPERTY(QObject *cameraShots READ cameraShots CONSTANT)
     Q_PROPERTY(QObject *linkPreviews READ linkPreviews CONSTANT)
@@ -241,6 +245,8 @@ public:
     QObject *recorder() { return m_recorder; }
     QObject *calls() { return m_calls; }
     QObject *polls() { return m_polls; }
+    QObject *sendQueue() { return m_sendQueue; }
+    QString timelineFocus() const { return m_timelineFocus; }
     QObject *locations() { return m_locations; }
     QObject *cameraShots() { return m_cameraShots; }
     QObject *linkPreviews() { return m_linkPreviews; }
@@ -755,6 +761,7 @@ signals:
     /// not failures — the push rules said this one is not to be shown.
     void pushNotificationFailed(const QString &reason);
     void openRoomChanged();
+    void timelineFocusChanged();
     void pinnedChanged();
     void tombstoneChanged();
     void timelineAtStartChanged();
@@ -1023,6 +1030,7 @@ private:
     VoiceRecorder *m_recorder = nullptr;
     CallEngine *m_calls = nullptr;
     PollActions *m_polls = nullptr;
+    SendQueueActions *m_sendQueue = nullptr;
     LocationActions *m_locations = nullptr;
     CameraShots *m_cameraShots = nullptr;
     SpaceMarkers *m_spaceMarkers = nullptr;
@@ -1064,6 +1072,10 @@ private:
     QString m_visibleRoomId;
     /// Empty for the live view; "pinned" or an event id for a focused one.
     QString m_timelineFocus;
+    /// One open that builds the live timeline anew.
+    bool m_rebuildTimeline = false;
+    /// A rebuild asked for while a thread was open, for this room.
+    QString m_rebuildAfterThread;
     QStringList m_pinnedEventIds;
     QString m_pinnedPreview;
     QString m_successorRoomId;

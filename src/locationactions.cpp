@@ -376,6 +376,27 @@ bool LocationActions::reportFailure(quint64 id, const QString &command)
     return false;
 }
 
+void LocationActions::abandon(quint64 id)
+{
+    m_roomOf.remove(id);
+    if (!m_starting.contains(id)) {
+        return;
+    }
+    const QString room = m_starting.take(id);
+    const bool dropped = m_dropped.remove(id);
+    const bool cancelled = m_cancelled.remove(id);
+    // Signed out meanwhile: not this account's share.
+    if (dropped || room.isEmpty()) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), room);
+    emit commandReady(QStringLiteral("location.liveStop"), arguments);
+    if (!cancelled) {
+        emit liveFailed(room);
+    }
+}
+
 void LocationActions::clear()
 {
     m_maps.clear();

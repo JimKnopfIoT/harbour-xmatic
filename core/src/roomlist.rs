@@ -118,9 +118,15 @@ pub(crate) fn room_avatar(room: &matrix_sdk::Room) -> Option<String> {
     if let Some(url) = room.avatar_url() {
         return Some(url.to_string());
     }
-    let heroes = room.heroes();
-    match heroes.as_slice() {
-        [hero] => hero.avatar_url.as_ref().map(|url| url.to_string()),
+    // `Room::heroes` is async; the diff encoder is not.
+    let info = room.clone_info();
+    let service = info.service_members();
+    let mut heroes = info
+        .heroes()
+        .iter()
+        .filter(|hero| service.is_none_or(|members| !members.contains(&hero.user_id)));
+    match (heroes.next(), heroes.next()) {
+        (Some(hero), None) => hero.avatar_url.as_ref().map(|url| url.to_string()),
         _ => None,
     }
 }
@@ -531,8 +537,7 @@ pub async fn start(
     })
 }
 
-/// Puts a room's send queue back to work: the SDK disables it after any failed
-/// send and leaves recoverable messages sitting. Announced by `subscribe_errors`.
+/// Re-enables the queue after a recoverable failure; reports a parked request.
 fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
     /// Long enough not to wake into a network that is still gone, short enough to
     /// be over before anyone reaches for the app menu.
@@ -566,8 +571,11 @@ fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> 
             }
             previous = Some(now);
 
-            // Unrecoverable failures too: the SDK wedges the message but disables the
-            // room's queue just the same, stranding every other message behind it.
+            // Parked: blocks the room until resent or discarded.
+            if !failure.is_recoverable {
+                sink.emit(event("send.stuck", json!({ "roomId": failure.room_id.as_str() })));
+                continue;
+            }
             sink.emit(event(
                 "send.queue",
                 json!({

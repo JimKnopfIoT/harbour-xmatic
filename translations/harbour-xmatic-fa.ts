@@ -531,6 +531,10 @@
         <source>Offline — waiting for the network</source>
         <translation>برون‌خط - در انتظار شبکه</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>بدون اتصال</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1687,10 +1691,6 @@
         <translation>نمایش وضعیت خواندن دیگران</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>خاموش، چیزی دربارهٔ اینکه چه کسی چه چیزی خوانده گرفته نمی‌شود و گفت‌وگو هم روان‌تر می‌ماند. روشن، پیام‌های خودت می‌گویند چند نفر آن‌ها را خوانده‌اند.</translation>
-    </message>
-    <message>
         <source>Load pictures automatically</source>
         <translation>بارگیری خودکار تصویرها</translation>
     </message>
@@ -1869,6 +1869,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>روشن: خانهٔ دوربین تا وقتی انتخابگر باز است آنچه دوربین می‌بیند را نشان می‌دهد. خاموش: دوربین فقط وقتی روی خانه بزنی روشن می‌شود.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>خاموش، اینکه چه کسی چه چیزی خوانده نه دنبال می‌شود و نه نشان داده می‌شود و گفت‌وگو هم روان‌تر می‌ماند. روشن، پیام‌های خودت می‌گویند چند نفر آن‌ها را خوانده‌اند.</translation>
     </message>
 </context>
 <context>
@@ -2753,6 +2757,30 @@
         <source>Share location</source>
         <translation>اشتراک‌گذاری موقعیت</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>حذف فرستاده نشد</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>ویرایش فرستاده نشد</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>نشد. کمی بعد دوباره امتحان کن.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>بازگشت به تازه‌ترین پیام‌ها</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>موقعیت زنده شروع نشد</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>دیگر در انتظار فرستادن نیست.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3133,6 +3161,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>یک پیام فرستاده نشد.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>یک ویرایش فرستاده نشد.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>یک حذف فرستاده نشد. پیام هنوز برای همهٔ دیگران هست.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>یک واکنش فرستاده نشد.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>یک رأی نظرسنجی فرستاده نشد.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>یک تغییر فرستاده نشد.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>کسی که تأییدش کرده‌ای هویت تازه‌ای دارد. تأیید را در نمایهٔ او پس بگیر و بعد دوباره بفرست.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>این دستگاه باید اول تأیید شود.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>برخی دستگاه‌های این اتاق تأیید نشده‌اند.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>هر چه بعد از آن در این اتاق فرستاده شده، پشت آن منتظر است.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>ارسال دوباره</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>دورانداختن</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>یک نظرسنجی فرستاده نشد.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3161,6 +3244,60 @@
     <message>
         <source>Need help?</source>
         <translation>کمک می‌خواهی؟</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>خروج و حذف داده‌های محلی</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>نسخهٔ جدیدتری لازم است</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix برای Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>دوباره تلاش کن</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>نشست تو در قالبی ذخیره شده که این نسخه نمی‌شناسد، به احتمال زیاد با نسخهٔ جدیدتری از xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>اگر پیش‌تر نسخهٔ جدیدتری از xmatic نصب بوده، با نصب دوباره‌اش همه‌چیز مثل قبل باز می‌شود. بیرون رفتن از حساب در عوض داده‌ها و کلیدهای این دستگاه را حذف می‌کند.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>خروج و حذف داده‌های محلی</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>بدون اتصال</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix برای Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>کارساز خانگی‌ات در دسترس نبود. هنوز وارد حسابت هستی و روی این دستگاه چیزی تغییر نکرده است.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic خودش به تلاش ادامه می‌دهد. دوباره وارد نشو: این کار دستگاه تازه‌ای می‌سازد و کلیدهای تاریخچهٔ رمزگذاری‌شده‌ات از دست می‌روند.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>دوباره تلاش کن</translation>
     </message>
 </context>
 <context>

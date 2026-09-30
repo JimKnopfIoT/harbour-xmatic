@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.40.0
+Version:    0.41.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -98,11 +98,10 @@ strip %{buildroot}%{_bindir}/%{name}
 %files
 %defattr(-,root,root,-)
 %license LICENSE
-# The static Rust library carries five hundred and seventy-seven crates into the
-# binary, eleven of them weak-copyleft. The figure is the one `tools/third-party.py`
-# reads out of `core/Cargo.lock`; it was two hundred crates out of date here while
-# the generated list beside it was right. A binary that carries them carries their
-# notices.
+# The static Rust library carries every crate in THIRD-PARTY.md into the binary;
+# `tools/third-party.py` generates it from `core/Cargo.lock`. No count here: a
+# copied figure went out of date twice while the generated list stayed right.
+# A binary that carries them carries their notices.
 %license THIRD-PARTY.md
 %{_bindir}/%{name}
 %{_datadir}/%{name}
@@ -121,6 +120,45 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Sep 30 2026 harbour-xmatic contributors 0.41.0-1
+- Built on matrix-rust-sdk 0.19. The local data is converted on the first
+  start and cannot be read by 0.40 or older afterwards: going back needs a
+  backup of the app's data taken before updating. From this version on, a
+  session file written by a later version is named as such instead of
+  asking for a key.
+- Starting without a network no longer shows the sign-in page over a valid
+  session. The app opens as usual; where the server has to be asked first it
+  says "No connection" and keeps trying. Signing in again there would have
+  started a new device.
+- A connection that drops while the session is renewed no longer signs you
+  out, and the security page no longer asks for the recovery key when the
+  server merely could not be asked.
+- Something the server refuses - a message, an edit, a deletion, a reaction -
+  no longer silently holds up everything sent after it in that room. The room
+  shows what is stuck and why, with "Send again" and "Discard". A refused
+  deletion is marked as not sent instead of looking done.
+- Search: a hit further back than the loaded history opens the conversation
+  around it, with "Back to the latest messages" to return. Results no longer
+  stop early, and polls are found.
+- A live location share whose start got no answer within two minutes is
+  stopped, and the room says so.
+- Drafts sent as a text file, photos from the camera cell and decoded voice
+  messages no longer stay behind after a failed send or a crash, and go with
+  "Delete downloaded media".
+- With "Load pictures" off, the picture in a quote is not fetched either.
+- A JPEG or PNG photo whose smaller copy would not be smaller no longer goes
+  out with its EXIF or XMP data (the place it was taken): the copy goes
+  instead. Sending at original resolution still sends the file as it is.
+- Known limit of this SDK version: a room joined while the app runs can show
+  its history as complete too early, and older messages there cannot be
+  loaded. The earlier workaround has no safe equivalent in matrix-rust-sdk
+  0.19; another client shows the older history meanwhile.
+- A poll that has not ended and hides its results no longer shows how many
+  votes it has.
+- A location the sender shares of themselves shows their picture on the
+  map instead of a plain dot.
+- Updated network libraries (TLS and HTTP/2 fixes).
+
 * Tue Sep 29 2026 harbour-xmatic contributors 0.40.0-1
 - The attachment picker's first cell opens the camera: flash (auto, on,
   off), a thirds grid, tap to focus, pinch to zoom. The photo goes straight

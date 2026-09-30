@@ -142,6 +142,11 @@ pub fn from_message(content: &LocationMessageEventContent) -> Value {
         Some(point) => {
             let mut value = point_json(&point);
             value["live"] = json!(false);
+            // The sender's own position; absent means that too (MSC3488).
+            value["self"] = json!(content
+                .asset
+                .as_ref()
+                .is_none_or(|asset| asset.type_ == AssetType::Self_));
             value
         }
         None => Value::Null,
@@ -157,6 +162,7 @@ pub fn from_live(state: &LiveLocationState) -> Value {
     let started = u64::from(state.ts().get());
     json!({
         "live": true,
+        "self": state.asset_type() == AssetType::Self_,
         "active": state.is_live(),
         "lat": point.map(|point| point.lat),
         "lon": point.map(|point| point.lon),

@@ -533,6 +533,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Нет сети — ожидание подключения</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>нет соединения</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1709,10 +1713,6 @@
         <translation>Показывать статус прочтения других</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Выключено — ничего не запрашивается о том, кто что прочитал, и разговор остаётся более плавным. Включено — твои сообщения показывают, сколько человек их прочитали.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Голосовые сообщения</translation>
     </message>
@@ -1875,6 +1875,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Включено: плитка камеры показывает, что видит камера, пока выбор открыт. Выключено: камера включается, только когда ты нажмёшь на плитку.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Выключено — никто не отслеживает и не показывает, кто что прочитал, и разговор остаётся более плавным. Включено — твои сообщения показывают, сколько человек их прочитали.</translation>
     </message>
 </context>
 <context>
@@ -2761,6 +2765,30 @@
         <source>Share location</source>
         <translation>Поделиться местоположением</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>удаление не отправлено</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>правка не отправлена</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Не получилось. Попробуй ещё раз чуть позже.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Вернуться к последним сообщениям</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Не удалось начать трансляцию местоположения</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Это больше не ждёт отправки.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3141,6 +3169,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Не удалось отправить сообщение.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Не удалось отправить правку.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Не удалось отправить удаление. Для всех остальных сообщение по-прежнему на месте.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Не удалось отправить реакцию.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Не удалось отправить голос в опросе.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Не удалось отправить изменение.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>У подтверждённого тобой человека новая идентичность. Отзови подтверждение в его профиле и отправь снова.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Сначала нужно подтвердить это устройство.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Некоторые устройства в этой комнате не подтверждены.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Всё, что отправлено в этой комнате после него, ждёт за ним.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Отправить снова</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Отменить</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Не удалось отправить опрос.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3169,6 +3252,60 @@
     <message>
         <source>Need help?</source>
         <translation>Нужна помощь?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Выйти и удалить локальные данные</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Нужна более новая версия</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix для Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Повторить</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Твоя сессия сохранена в формате, который эта версия не знает, скорее всего более новой версией xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Если раньше была установлена более новая версия xmatic, после её повторной установки всё откроется как прежде. Выход же удалит данные и ключи этого устройства.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Выйти и удалить локальные данные</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Нет соединения</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix для Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Не удалось связаться с твоим домашним сервером. Сессия по-прежнему активна, и на этом устройстве ничего не изменилось.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic продолжает пытаться сам. Не входи заново: это создаст новое устройство, и ключи к твоей зашифрованной истории будут потеряны.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Повторить</translation>
     </message>
 </context>
 <context>

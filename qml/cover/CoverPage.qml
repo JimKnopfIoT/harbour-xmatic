@@ -47,7 +47,8 @@ CoverBackground {
             // Only while there is no session: the cover sits on the home screen, and the
             // account's identifier is nobody's business there.
             visible: matrix.sessionState !== "signed-in"
-            text: matrix.busy ? qsTr("signing in…") : qsTr("not signed in")
+            text: matrix.sessionState === "offline" ? qsTr("no connection")
+                : matrix.busy ? qsTr("signing in…") : qsTr("not signed in")
         }
 
         // That nothing is arriving - reported from the field. This app has no

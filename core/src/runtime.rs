@@ -24,6 +24,7 @@ use crate::linkpreview;
 use crate::location;
 use crate::poll;
 use crate::roomsettings;
+use crate::sendqueue;
 use crate::private;
 use crate::protocol::{event, reply_error, reply_ok, Command, MediaStill, Secret};
 use crate::media;
@@ -127,6 +128,10 @@ struct State {
     opening_thread: Mutex<()>,
     /// Serialises `direct_chat`: a second tap waits and finds the first room.
     opening_direct: Mutex<()>,
+    /// Serialises `session.restore`: one client per store.
+    restoring: Mutex<()>,
+    /// Serialises `persist`: one temporary file.
+    persisting: Mutex<()>,
     /// Every room that currently needs a sliding-sync subscription. See
     /// `Subscriptions` — they have to be requested together or not at all.
     subscriptions: Mutex<Subscriptions>,
@@ -142,7 +147,7 @@ struct State {
 }
 
 /// The rooms needing a sliding-sync subscription, by what wants them.
-/// `subscribe_to_rooms` is not additive - a call forgets every earlier one.
+/// `set_room_subscriptions` is not additive - a call forgets every earlier one.
 #[derive(Default)]
 struct Subscriptions {
     /// The room whose conversation is on screen.
@@ -185,6 +190,15 @@ impl State {
         self.timeline.lock().await.clone()
     }
 
+    /// Live only: a send on a slice takes the slice's thread.
+    async fn sendable_timeline(&self) -> Result<Arc<TimelineHandle>, String> {
+        match self.timeline().await {
+            Some(handle) if handle.is_live() => Ok(handle),
+            Some(_) => Err("not in the live conversation; nothing is sent from here".to_owned()),
+            None => Err("no timeline is open".to_owned()),
+        }
+    }
+
     async fn thread(&self) -> Option<Arc<TimelineHandle>> {
         self.thread.lock().await.clone()
     }
@@ -217,7 +231,7 @@ impl State {
         };
 
         let borrowed: Vec<&RoomId> = wanted.iter().map(|room| room.as_ref()).collect();
-        service.subscribe_to_rooms(&borrowed).await;
+        service.set_room_subscriptions(&borrowed).await;
     }
 
     /// Describes the current session for a reply or an event.
@@ -268,6 +282,8 @@ pub fn spawn(
         opening: Mutex::new(()),
         opening_thread: Mutex::new(()),
         opening_direct: Mutex::new(()),
+        restoring: Mutex::new(()),
+        persisting: Mutex::new(()),
         subscriptions: Mutex::new(Subscriptions::default()),
         directory: Mutex::new(None),
         observers: Mutex::new(Vec::new()),
@@ -348,8 +364,9 @@ async fn handle(state: Arc<State>, command: Command) {
             focus,
             receipts,
             token,
+            rebuild,
             ..
-        } => open_timeline(&state, id, room_id, focus, receipts, token).await,
+        } => open_timeline(&state, id, room_id, focus, receipts, token, rebuild).await,
         Command::RoomMarkRead { room_id, receipt, .. } => {
             mark_room_read(&state, id, room_id, receipt).await
         }
@@ -467,7 +484,6 @@ async fn handle(state: Arc<State>, command: Command) {
             reply_message(&state, id, event_id, body, mentions).await
         }
         Command::TimelineEdit { event_id, body, .. } => edit_message(&state, id, event_id, body).await,
-        Command::TimelineRetry { txn_id, .. } => retry_message(&state, id, txn_id).await,
         Command::TimelineReact { event_id, key, .. } => react(&state, id, event_id, key).await,
         Command::LinkPreview { url, .. } => {
             linkpreview::handle(state.client().await, &state.sink, id, url).await
@@ -481,9 +497,18 @@ async fn handle(state: Arc<State>, command: Command) {
             roomsettings::handle(command, state.client().await, &state.sink).await
         }
         // Routed, not handled: the poll rules live in core/src/poll.rs.
-        Command::PollStart { .. } | Command::PollVote { .. } | Command::PollEnd { .. } => {
+        // A new poll could take a slice's thread; vote and end carry their relation.
+        Command::PollStart { .. } => match state.sendable_timeline().await {
+            Ok(handle) => poll::handle(command, Some(handle.timeline()), &state.sink).await,
+            Err(message) => state.sink.emit(reply_error(id, message)),
+        },
+        Command::PollVote { .. } | Command::PollEnd { .. } => {
             let timeline = state.timeline().await.map(|handle| handle.timeline());
             poll::handle(command, timeline, &state.sink).await
+        }
+        // Routed, not handled: core/src/sendqueue.rs.
+        Command::QueueStuck { .. } | Command::QueueRetry { .. } | Command::QueueDiscard { .. } => {
+            sendqueue::handle(command, state.client().await, &state.sink).await
         }
         // Routed, not handled: core/src/location.rs.
         Command::LocationSend { .. }
@@ -491,7 +516,13 @@ async fn handle(state: Arc<State>, command: Command) {
         | Command::LocationBeacon { .. }
         | Command::LocationLiveStop { .. }
         | Command::LocationTiles { .. } => {
-            let timeline = state.timeline().await.map(|handle| handle.timeline());
+            // A one-off location goes through the timeline: refused in a slice.
+            let sendable = state.sendable_timeline().await;
+            if let (Command::LocationSend { .. }, Err(message)) = (&command, &sendable) {
+                state.sink.emit(reply_error(id, message.clone()));
+                return;
+            }
+            let timeline = sendable.ok().map(|handle| handle.timeline());
             let tiles = state.paths.media_cache.join("tiles");
             location::handle(command, state.client().await, timeline, tiles, &state.sink).await
         }
@@ -976,10 +1007,9 @@ async fn search_room(
     // the front end saying something unhelpful.
     let limit = limit.clamp(1, SEARCH_PAGE_MAX);
     match search::room(&client, &room_id, &query, limit, offset).await {
-        Ok(rows) => {
-            // "Fewer than asked for" is how the caller knows to stop; the row count alone
-            // cannot tell a short page from one whose events would not load.
-            let more = rows.len() >= limit;
+        Ok((rows, hits)) => {
+            // Counted in hits: an unloadable hit is still a hit.
+            let more = hits >= limit;
             state.sink.emit(reply_ok(
                 id,
                 json!({ "rows": rows, "offset": offset, "more": more }),
@@ -1500,6 +1530,7 @@ async fn open_timeline(
     focus: String,
     receipts: bool,
     token: String,
+    rebuild: bool,
 ) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
@@ -1533,6 +1564,7 @@ async fn open_timeline(
             // changed one has to rebuild even for the room already open.
             if previous.room_id() == room_id
                 && focus.is_empty()
+                && !rebuild
                 && previous.is_live()
                 && previous.tracks_receipts() == receipts
             {
@@ -1723,9 +1755,10 @@ async fn paginate_thread(state: &Arc<State>, id: u64) {
     };
 
     match outcome {
-        Ok(reached_start) => state
-            .sink
-            .emit(reply_ok(id, json!({ "reachedStart": reached_start }))),
+        Ok(paginated) => state.sink.emit(reply_ok(
+            id,
+            json!({ "reachedStart": matches!(paginated, timeline::Paginated::Start) }),
+        )),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
@@ -1748,9 +1781,12 @@ async fn paginate_timeline(state: &Arc<State>, id: u64, room_id: String) {
     };
 
     match outcome {
-        Ok(reached_start) => state
-            .sink
-            .emit(reply_ok(id, json!({ "reachedStart": reached_start }))),
+        Ok(paginated) => state.sink.emit(reply_ok(
+            id,
+            json!({
+                "reachedStart": matches!(paginated, timeline::Paginated::Start),
+            }),
+        )),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
@@ -1761,12 +1797,12 @@ async fn send_message(state: &Arc<State>, id: u64, body: String, mentions: Vec<S
         return;
     }
 
-    let outcome = match state.timeline().await {
-        Some(handle) => {
+    let outcome = match state.sendable_timeline().await {
+        Ok(handle) => {
             let content = mention_content(state, handle.room_id(), body, &mentions).await;
             handle.send_content(content).await
         }
-        None => Err("no timeline is open".to_owned()),
+        Err(message) => Err(message),
     };
 
     match outcome {
@@ -1787,12 +1823,12 @@ async fn reply_message(
         return;
     }
 
-    let outcome = match state.timeline().await {
-        Some(handle) => {
+    let outcome = match state.sendable_timeline().await {
+        Ok(handle) => {
             let content = mention_content(state, handle.room_id(), body, &mentions).await;
             handle.reply_content(&event_id, content).await
         }
-        None => Err("no timeline is open".to_owned()),
+        Err(message) => Err(message),
     };
 
     match outcome {
@@ -1825,17 +1861,6 @@ async fn react(state: &Arc<State>, id: u64, event_id: String, key: String) {
     };
     match outcome {
         Ok(()) => state.sink.emit(reply_ok(id, json!({ "reacted": true }))),
-        Err(message) => state.sink.emit(reply_error(id, message)),
-    }
-}
-
-async fn retry_message(state: &Arc<State>, id: u64, txn_id: String) {
-    let outcome = match state.timeline().await {
-        Some(handle) => handle.retry(&txn_id).await,
-        None => Err("no timeline is open".to_owned()),
-    };
-    match outcome {
-        Ok(()) => state.sink.emit(reply_ok(id, json!({ "queued": true }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
@@ -1880,14 +1905,12 @@ async fn send_media(
     // Cloned out of the guard: the attachment upload takes a while and must
     // not hold the lock. The room is read from the same handle, under the same
     // guard, so the check below and the send cannot be about two rooms.
-    let open = state
-        .timeline()
-        .await
-        .map(|handle| (handle.room_id.clone(), handle.timeline()));
-
-    let Some((open_room, timeline)) = open else {
-        state.sink.emit(reply_error(id, "no timeline is open"));
-        return;
+    let (open_room, timeline) = match state.sendable_timeline().await {
+        Ok(handle) => (handle.room_id.clone(), handle.timeline()),
+        Err(message) => {
+            state.sink.emit(reply_error(id, message));
+            return;
+        }
     };
 
     // A video's still is decoded before the command is sent, which takes long
@@ -2422,6 +2445,16 @@ fn log(state: &Arc<State>, level: &str, message: String) {
 }
 
 async fn restore_session(state: &Arc<State>, id: u64, store_key: Option<String>) {
+    let _restoring = state.restoring.lock().await;
+    // Lost the race to a successful restore: that client stays.
+    if state.client.lock().await.is_some() {
+        if let Some(mut key) = store_key {
+            use zeroize::Zeroize;
+            key.zeroize();
+        }
+        state.sink.emit(reply_ok(id, state.session_data().await));
+        return;
+    }
     restore_stored_session(state, id, store_key, true).await
 }
 
@@ -2462,9 +2495,17 @@ async fn restore_stored_session(
             state.sink.emit(event("session.changed", data));
             return;
         }
+        // Unknown format, not a wrong key: no reset offered.
+        session::LoadOutcome::Newer => {
+            let data = json!({ "state": "newer" });
+            state.sink.emit(reply_ok(id, data.clone()));
+            state.sink.emit(event("session.changed", data));
+            return;
+        }
     };
 
     let homeserver = stored.homeserver().to_owned();
+    let homeserver_url = stored.homeserver_url().map(str::to_owned);
 
     // An encrypted store without its key is the same locked state — opening
     // it anyway would surface as decryption garbage three layers further down.
@@ -2475,18 +2516,33 @@ async fn restore_stored_session(
         return;
     }
 
-    let client = match session::build_client(&homeserver, &state.paths, key.as_ref()).await {
+    // Kept address: no network. Older files: discovery once.
+    let target = match &homeserver_url {
+        Some(url) => session::Target::Resolved(url),
+        None => session::Target::Discover(&homeserver),
+    };
+    let client = match session::build_client_at(target, &state.paths, key.as_ref()).await {
         Ok(client) => client,
-        Err(error) => {
-            state
-                .sink
-                .emit(reply_error(id, error));
+        // Never an error: the front end would show the login page.
+        Err(session::BuildFailure::Unreachable(reason)) => {
+            let data = json!({ "state": "offline", "reason": reason });
+            state.sink.emit(reply_ok(id, data.clone()));
+            state.sink.emit(event("session.changed", data));
+            return;
+        }
+        Err(failure @ session::BuildFailure::Store(_)) => {
+            let data = json!({ "state": "unreadable", "reason": failure.to_string() });
+            state.sink.emit(reply_ok(id, data.clone()));
+            state.sink.emit(event("session.changed", data));
+            return;
+        }
+        Err(session::BuildFailure::Refused(reason)) => {
+            state.sink.emit(reply_error(id, reason));
             return;
         }
     };
 
-    // Before the token reaches the client: the stored server goes through
-    // discovery on every start, and a `.well-known` moved to http exposes it.
+    // Before the token reaches the client: https only.
     if let Err(message) = require_https(&client) {
         state.sink.emit(reply_error(id, message));
         return;
@@ -2528,9 +2584,13 @@ async fn restore_stored_session(
             state.sink.emit(event("session.changed", data));
             return;
         }
-        state
-            .sink
-            .emit(reply_error(id, format!("session no longer valid: {error}")));
+        // Local failure: the data, not the session.
+        let data = json!({
+            "state": "unreadable",
+            "reason": crate::text::scrub_ids(&error.to_string()),
+        });
+        state.sink.emit(reply_ok(id, data.clone()));
+        state.sink.emit(event("session.changed", data));
         return;
     }
 
@@ -2558,16 +2618,20 @@ async fn restore_stored_session(
 /// The way out of `unreadable`: drops what the next sync rebuilds, restores
 /// again. Refused while a client holds the store.
 async fn rebuild_store(state: &Arc<State>, id: u64) {
-    if state.client.lock().await.is_some() {
-        state.sink.emit(reply_error(id, "the local data is in use"));
-        return;
-    }
-    if let Err(error) = session::rebuild_store(&state.paths) {
-        state.sink.emit(reply_error(
-            id,
-            crate::text::scrub_ids(&format!("the local data could not be rebuilt: {error}")),
-        ));
-        return;
+    {
+        // Released before the restore below.
+        let _restoring = state.restoring.lock().await;
+        if state.client.lock().await.is_some() {
+            state.sink.emit(reply_error(id, "the local data is in use"));
+            return;
+        }
+        if let Err(error) = session::rebuild_store(&state.paths) {
+            state.sink.emit(reply_error(
+                id,
+                crate::text::scrub_ids(&format!("the local data could not be rebuilt: {error}")),
+            ));
+            return;
+        }
     }
     // The damage was in what this just deleted. Left standing, the latch stops
     // the sync over a store that no longer exists - and this is the way out the
@@ -2594,6 +2658,9 @@ async fn prepare_fresh_login(state: &Arc<State>) -> Result<(), String> {
                 "a session is stored but its key is not available; unlock or sign out first"
                     .to_owned(),
             );
+        }
+        session::LoadOutcome::Newer => {
+            return Err("a session is stored by a newer version of the app".to_owned());
         }
     }
     state
@@ -2886,10 +2953,12 @@ async fn start_device_login(state: &Arc<State>, id: u64, homeserver: String) {
 async fn persist(state: &Arc<State>, client: &Client, homeserver: String) {
     // Whichever auth API owns the session: OAuth for browser and device code, the
     // Matrix API for the password login. Only tokens are stored.
+    let _persisting = state.persisting.lock().await;
+    let url = client.homeserver().to_string();
     let stored = if let Some(oauth_session) = client.oauth().full_session() {
-        StoredSession::from_oauth(homeserver, &oauth_session)
+        StoredSession::from_oauth(homeserver, url, &oauth_session)
     } else if let Some(matrix_session) = client.matrix_auth().session() {
-        StoredSession::from_matrix(homeserver, matrix_session)
+        StoredSession::from_matrix(homeserver, url, matrix_session)
     } else {
         state.sink.emit(event(
             "session.warning",
@@ -2925,13 +2994,19 @@ fn watch_session(
                     persist(&state, &client, homeserver.clone()).await;
                 }
                 Ok(SessionChange::UnknownToken(_)) => {
-                    // The refresh token is gone for good. Say so, and stop everything still
-                    // talking to a server that has thrown this session away.
-                    session_expired(&state).await;
-                    state.sink.emit(event(
-                        "session.expired",
-                        json!({ "message": "the session has expired, please sign in again" }),
-                    ));
+                    if !session_ended(&client).await {
+                        log(&state, "warn", "a token refresh failed; the session is kept".to_owned());
+                        continue;
+                    }
+                    // Gone for good. Own task: the teardown aborts every observer, this one too.
+                    let teardown = state.clone();
+                    tokio::spawn(async move {
+                        session_expired(&teardown).await;
+                        teardown.sink.emit(event(
+                            "session.expired",
+                            json!({ "message": "the session has expired, please sign in again" }),
+                        ));
+                    });
                     // Nothing more can arrive on this subscription, and this task's clone is the
                     // last thing keeping the old client alive.
                     break;
@@ -2943,6 +3018,24 @@ fn watch_session(
             }
         }
     })
+}
+
+/// Whether `UnknownToken` ended the session. The SDK reports every failed
+/// password-login refresh as one, so it asks once more.
+async fn session_ended(client: &Client) -> bool {
+    if client.oauth().full_session().is_some() {
+        return true;
+    }
+    match client.refresh_access_token().await {
+        Ok(()) => false,
+        // No refresh token: the access token was the session.
+        Err(matrix_sdk::RefreshTokenError::RefreshTokenRequired) => true,
+        Err(matrix_sdk::RefreshTokenError::MatrixAuth(error)) => matches!(
+            error.client_api_error_kind(),
+            Some(matrix_sdk::ruma::api::error::ErrorKind::UnknownToken(_))
+        ),
+        Err(_) => false,
+    }
 }
 
 async fn registration_url(state: &Arc<State>, id: u64, homeserver: String) {
@@ -3026,6 +3119,8 @@ async fn session_expired(state: &Arc<State>) {
 }
 
 async fn logout(state: &Arc<State>, id: u64) {
+    // A restore would build a client over the deleted store.
+    let _restoring = state.restoring.lock().await;
     // First, because everything below assumes nothing else is holding the
     // client - the store is deleted at the end of this function.
     stop_observers(state).await;

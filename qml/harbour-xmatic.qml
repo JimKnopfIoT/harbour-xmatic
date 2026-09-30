@@ -74,6 +74,13 @@ ApplicationWindow {
         if (state === "unreadable") {
             return Qt.resolvedUrl("pages/StoreUnreadablePage.qml")
         }
+        // Offline is still a session: a login here would start a new device.
+        if (state === "offline") {
+            return Qt.resolvedUrl("pages/SessionOfflinePage.qml")
+        }
+        if (state === "newer") {
+            return Qt.resolvedUrl("pages/SessionNewerPage.qml")
+        }
         if (state !== "signed-in") {
             return Qt.resolvedUrl("pages/LoginPage.qml")
         }
@@ -89,6 +96,8 @@ ApplicationWindow {
         return root === Qt.resolvedUrl("pages/LoginPage.qml")
                 || root === Qt.resolvedUrl("pages/SessionLockedPage.qml")
                 || root === Qt.resolvedUrl("pages/StoreUnreadablePage.qml")
+                || root === Qt.resolvedUrl("pages/SessionOfflinePage.qml")
+                || root === Qt.resolvedUrl("pages/SessionNewerPage.qml")
                 || root === Qt.resolvedUrl("pages/StorageBlockedPage.qml") ? {} : { isHome: true }
     }
 
