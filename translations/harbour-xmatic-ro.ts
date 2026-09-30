@@ -533,6 +533,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Deconectat — se așteaptă rețeaua</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>fără conexiune</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1709,10 +1713,6 @@
         <translation>Arată starea de citire a celorlalți</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Dezactivat nu se preia nimic despre cine ce a citit, ceea ce păstrează conversația mai fluidă. Activat, mesajele tale arată câți oameni le-au citit.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Mesaje vocale</translation>
     </message>
@@ -1875,6 +1875,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Activat, căsuța camerei arată ce vede camera cât timp selectorul e deschis. Dezactivat, camera pornește abia când atingi căsuța.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Dezactivat, nu se urmărește și nu se afișează cine ce a citit, ceea ce păstrează conversația mai fluidă. Activat, mesajele tale arată câți oameni le-au citit.</translation>
     </message>
 </context>
 <context>
@@ -2761,6 +2765,30 @@
         <source>Share location</source>
         <translation>Partajează locația</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>ștergere netrimisă</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>editare netrimisă</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Nu a mers. Încearcă din nou peste o clipă.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Înapoi la cele mai noi mesaje</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Locația în timp real nu a putut fi pornită</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Nu mai așteaptă să fie trimis.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3141,6 +3169,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Un mesaj nu a putut fi trimis.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>O editare nu a putut fi trimisă.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>O ștergere nu a putut fi trimisă. Pentru toți ceilalți, mesajul este încă acolo.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>O reacție nu a putut fi trimisă.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Un vot într-un sondaj nu a putut fi trimis.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>O modificare nu a putut fi trimisă.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>O persoană pe care ai verificat-o are o identitate nouă. Retrage verificarea din profilul ei, apoi trimite din nou.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Mai întâi trebuie verificat acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Unele dispozitive din această cameră nu sunt verificate.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Tot ce a fost trimis după ea în această cameră așteaptă în spatele ei.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Trimite din nou</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Renunță</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Un sondaj nu a putut fi trimis.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3169,6 +3252,60 @@
     <message>
         <source>Need help?</source>
         <translation>Ai nevoie de ajutor?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Deconectează-te și șterge datele locale</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Este necesară o versiune mai nouă</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pentru Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Încearcă din nou</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Sesiunea ta a fost salvată într-un format pe care această versiune nu îl cunoaște, cel mai probabil de o versiune mai nouă a xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Dacă înainte era instalată o versiune mai nouă a xmatic, după reinstalarea ei totul se va deschide ca înainte. Deconectarea, în schimb, șterge datele și cheile acestui dispozitiv.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Deconectează-te și șterge datele locale</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Fără conexiune</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pentru Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Serverul tău de domiciliu nu a putut fi contactat. Sesiunea ta este încă activă și nimic nu s-a schimbat pe acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic continuă să încerce singur. Nu te autentifica din nou: asta ar crea un dispozitiv nou și s-ar pierde cheile istoricului tău criptat.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Încearcă din nou</translation>
     </message>
 </context>
 <context>

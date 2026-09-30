@@ -534,6 +534,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Offline — qed jistenna n-netwerk</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>l-ebda konnessjoni</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1712,10 +1716,6 @@
         <translation>Uri l-istat tal-qari ta&apos; oħrajn</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Mitfi, ma jinġieb xejn dwar min qara xiex, li jżomm ukoll il-konversazzjoni aktar bla xkiel. Mixgħul, il-messaġġi tiegħek juru kemm-il persuna qrathom.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Messaġġi bil-vuċi</translation>
     </message>
@@ -1878,6 +1878,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Mixgħul: il-kaxxa tal-kamera turi dak li tara l-kamera sakemm l-għażla tkun miftuħa. Mitfi: il-kamera tibda biss meta tagħfas il-kaxxa.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Mitfi, la jiġi segwit u lanqas muri min qara xiex, li jżomm ukoll il-konversazzjoni aktar bla xkiel. Mixgħul, il-messaġġi tiegħek juru kemm-il persuna qrathom.</translation>
     </message>
 </context>
 <context>
@@ -2765,6 +2769,30 @@
         <source>Share location</source>
         <translation>Aqsam il-post</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>tħassir mhux mibgħut</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>editjar mhux mibgħut</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Ma ħadimx. Erġa&apos; pprova ftit wara.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Lura għall-aħħar messaġġi</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Il-post live ma setax jinbeda</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>M&apos;għadux qed jistenna li jintbagħat.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3145,6 +3173,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Messaġġ ma setax jintbagħat.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Editjar ma setax jintbagħat.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Tħassir ma setax jintbagħat. Għal kulħadd ieħor il-messaġġ għadu hemm.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Reazzjoni ma setgħetx tintbagħat.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Vot f&apos;stħarriġ ma setax jintbagħat.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Bidla ma setgħetx tintbagħat.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Persuna li vverifikajt għandha identità ġdida. Irtira l-verifika fuq il-profil tagħha, imbagħad erġa&apos; ibgħat.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Dan l-apparat irid jiġi vverifikat l-ewwel.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Xi apparati f&apos;din il-kamra mhumiex ivverifikati.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Kull ma ntbagħat wara f&apos;din il-kamra qed jistenna warajh.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Ibgħat mill-ġdid</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Warrab</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Stħarriġ ma setax jintbagħat.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3173,6 +3256,60 @@
     <message>
         <source>Need help?</source>
         <translation>Għandek bżonn għajnuna?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Oħroġ u ħassar id-data lokali</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Hija meħtieġa verżjoni aktar ġdida</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix għal Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Erġa&apos; pprova</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Is-sessjoni tiegħek ġiet issejvjata f&apos;format li din il-verżjoni ma tafx, probabbilment minn verżjoni aktar ġdida ta&apos; xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Jekk qabel kienet installata verżjoni aktar ġdida ta&apos; xmatic, meta terġa&apos; tinstallaha kollox jinfetaħ bħal qabel. Jekk minflok toħroġ, titħassar id-data u ċ-ċwievet ta&apos; dan l-apparat.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Oħroġ u ħassar id-data lokali</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>L-ebda konnessjoni</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix għal Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Is-server tad-dar tiegħek ma setax jintlaħaq. Is-sessjoni tiegħek għadha attiva, u xejn ma nbidel fuq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic jibqa&apos; jipprova waħdu. Terġax tidħol mill-ġdid: dan joħloq apparat ġdid u jintilfu ċ-ċwievet tal-istorja kriptata tiegħek.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Erġa&apos; pprova</translation>
     </message>
 </context>
 <context>

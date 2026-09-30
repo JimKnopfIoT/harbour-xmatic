@@ -536,6 +536,10 @@
         <source>Offline — waiting for the network</source>
         <translation>غير متصل - في انتظار الشبكة</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>لا اتصال</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1702,10 +1706,6 @@
         <translation>إظهار حالة قراءة الآخرين</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>عند الإيقاف، لا يُجلب شيء عمّن قرأ ماذا، وهذا يبقي المحادثة أسلس. عند التشغيل، تقول رسائلك كم شخصًا قرأها.</translation>
-    </message>
-    <message>
         <source>Load pictures automatically</source>
         <translation>تحميل الصور تلقائيًا</translation>
     </message>
@@ -1884,6 +1884,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>عند التشغيل، يعرض مربع الكاميرا ما تراه الكاميرا طالما المنتقي مفتوح. عند الإيقاف، لا تعمل الكاميرا إلا عندما تلمس المربع.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>عند الإيقاف، لا يُتتبَّع ولا يُعرض من قرأ ماذا، وهذا يبقي المحادثة أسلس. عند التشغيل، تقول رسائلك كم شخصًا قرأها.</translation>
     </message>
 </context>
 <context>
@@ -2773,6 +2777,30 @@
         <source>Share location</source>
         <translation>مشاركة الموقع</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>لم يُرسل الحذف</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>لم يُرسل التعديل</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>لم ينجح ذلك. حاول مجددًا بعد قليل.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>العودة إلى أحدث الرسائل</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>تعذّر بدء مشاركة الموقع المباشر</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>لم يعد بانتظار الإرسال.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3153,6 +3181,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>تعذّر إرسال رسالة.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>تعذّر إرسال تعديل.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>تعذّر إرسال حذف. ما زالت الرسالة موجودة لدى الجميع.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>تعذّر إرسال تفاعل.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>تعذّر إرسال صوت في استطلاع.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>تعذّر إرسال تغيير.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>شخص تحققتَ منه صارت له هوية جديدة. اسحب التحقق من ملفه الشخصي، ثم أرسل مجددًا.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>يجب التحقق من هذا الجهاز أولًا.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>بعض الأجهزة في هذه الغرفة غير متحقق منها.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>كل ما أُرسل بعده في هذه الغرفة ينتظر خلفه.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>إرسال مجددًا</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>إسقاط</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>تعذّر إرسال استطلاع.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3181,6 +3264,60 @@
     <message>
         <source>Need help?</source>
         <translation>تحتاج مساعدة؟</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>تسجيل الخروج وحذف البيانات المحلية</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>يلزم إصدار أحدث</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>‏Matrix لنظام Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>حاول مجددًا</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>حُفظت جلستك بصيغة لا يعرفها هذا الإصدار، على الأرجح بإصدار أحدث من xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>إن كان إصدار أحدث من xmatic مثبّتًا من قبل، فستُفتح كل الأشياء كما كانت بعد تثبيته مجددًا. أما تسجيل الخروج فيحذف بيانات هذا الجهاز ومفاتيحه.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>تسجيل الخروج وحذف البيانات المحلية</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>لا اتصال</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>‏Matrix لنظام Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>تعذّر الوصول إلى خادمك المنزلي. ما زالت جلستك قائمة، ولم يتغير شيء على هذا الجهاز.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>يواصل xmatic المحاولة من تلقاء نفسه. لا تسجّل الدخول من جديد: فذلك سينشئ جهازًا جديدًا وتضيع مفاتيح سجلّك المعمّى.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>حاول مجددًا</translation>
     </message>
 </context>
 <context>

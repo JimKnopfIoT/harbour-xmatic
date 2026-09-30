@@ -41,6 +41,10 @@ public:
         EditedRole,
         PendingRole,
         SendStateRole,
+        /// Our own edit or deletion of the row, while the queue holds it:
+        /// "", "sending" or "failed".
+        EditStateRole,
+        RedactionStateRole,
         ThreadRootRole,
         ThreadCountRole,
         UtdCauseRole,
@@ -63,6 +67,9 @@ public:
     /// Row of the event with this id, or -1. Lets the view jump to a pinned
     /// message that is already loaded.
     Q_INVOKABLE int indexOfEvent(const QString &eventId) const;
+
+    /// Oldest loaded timestamp, 0 if none.
+    Q_INVOKABLE double oldestTimestamp() const;
 
     /// The poll as the core vouches for it after checking who ended it.
     void setPoll(const QString &eventId, const QJsonValue &poll);

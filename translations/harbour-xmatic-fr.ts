@@ -532,6 +532,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Hors ligne — en attente du réseau</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>pas de connexion</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1706,10 +1710,6 @@
         <translation>Afficher le statut de lecture des autres</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Désactivé, rien n&apos;est récupéré sur qui a lu quoi, ce qui garde aussi la conversation plus fluide. Activé, tes propres messages indiquent combien de personnes les ont lus.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Messages vocaux</translation>
     </message>
@@ -1872,6 +1872,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Activé, la case de l’appareil photo montre ce que voit la caméra tant que le sélecteur est ouvert. Désactivé, la caméra ne démarre que lorsque tu touches la case.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Désactivé, qui a lu quoi n&apos;est ni suivi ni affiché, ce qui garde aussi la conversation plus fluide. Activé, tes propres messages indiquent combien de personnes les ont lus.</translation>
     </message>
 </context>
 <context>
@@ -2757,6 +2761,30 @@
         <source>Share location</source>
         <translation>Partager la position</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>suppression non envoyée</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>modification non envoyée</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Ça n&apos;a pas marché. Réessaie dans un instant.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Revenir aux derniers messages</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Impossible de démarrer la position en direct</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Ce n&apos;est plus en attente d&apos;envoi.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3137,6 +3165,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Un message n&apos;a pas pu être envoyé.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Une modification n&apos;a pas pu être envoyée.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Une suppression n&apos;a pas pu être envoyée. Le message est toujours là pour tous les autres.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Une réaction n&apos;a pas pu être envoyée.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Un vote de sondage n&apos;a pas pu être envoyé.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Un changement n&apos;a pas pu être envoyé.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Une personne que tu as vérifiée a une nouvelle identité. Retire la vérification dans son profil, puis renvoie.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Cet appareil doit d&apos;abord être vérifié.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Certains appareils de ce salon ne sont pas vérifiés.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Tout ce qui a été envoyé après dans ce salon attend derrière.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Renvoyer</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Abandonner</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Un sondage n&apos;a pas pu être envoyé.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3165,6 +3248,60 @@
     <message>
         <source>Need help?</source>
         <translation>Besoin d&apos;aide ?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Se déconnecter et supprimer les données locales</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Version plus récente requise</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pour Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Réessayer</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Ta session a été enregistrée dans un format que cette version ne connaît pas, très probablement par une version plus récente de xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Si une version plus récente de xmatic était installée auparavant, la réinstaller rouvre tout comme avant. Se déconnecter supprime en revanche les données et les clés de cet appareil.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Se déconnecter et supprimer les données locales</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Pas de connexion</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pour Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Ton serveur d&apos;accueil n&apos;a pas pu être joint. Ta session est toujours active, et rien n&apos;a changé sur cet appareil.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic continue d&apos;essayer tout seul. Ne te reconnecte pas&#xa0;: cela créerait un nouvel appareil et coûterait les clés de ton historique chiffré.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Réessayer</translation>
     </message>
 </context>
 <context>

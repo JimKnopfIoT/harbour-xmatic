@@ -11,7 +11,6 @@ use matrix_sdk::{
     },
     media::{MediaFormat, MediaRequestParameters, MediaThumbnailSettings, UniqueKey},
     ruma::{
-        api::client::media::get_media_config,
         events::room::message::{RoomMessageEventContent, TextMessageEventContent},
         events::room::MediaSource,
         EventId, RoomId, UInt,
@@ -403,9 +402,9 @@ pub async fn forward_text(client: &Client, room_id: &str, body: String) -> Resul
 
 /// The server's maximum upload size in bytes, if it discloses one.
 async fn upload_limit(client: &Client) -> Option<u64> {
-    let request = get_media_config::v3::Request::new();
-    let response = client.send(request).await.ok()?;
-    Some(u64::from(response.upload_size))
+    // Authenticated endpoint where supported; cached.
+    let size = client.load_or_fetch_max_upload_size().await.ok()?;
+    Some(u64::from(size))
 }
 
 /// Sends a file as an attachment, shown at once as a local echo. `caption` and

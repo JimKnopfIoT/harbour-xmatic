@@ -210,6 +210,25 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
                 send(command, arguments);
             });
 
+    // What the open room's send queue parked. src/sendqueueactions.cpp.
+    m_sendQueue = new SendQueueActions(this);
+    connect(m_sendQueue, &SendQueueActions::commandReady, this,
+            [this](const QString &command, const QJsonObject &arguments) {
+                send(command, arguments);
+            });
+    connect(m_sendQueue, &SendQueueActions::reloadRequested, this, [this]() {
+        if (m_openRoomId.isEmpty() || !m_timelineFocus.isEmpty()) {
+            return;
+        }
+        // A rebuild closes the thread: deferred until it is closed anyway.
+        if (!m_openThreadRoot.isEmpty()) {
+            m_rebuildAfterThread = m_openRoomId;
+            return;
+        }
+        m_rebuildTimeline = true;
+        openRoom(m_openRoomId);
+    });
+
     // Position source, live shares, maps and both privacy gates. src/locationactions.cpp.
     m_locations = new LocationActions(m_settings, this);
     connect(m_locations, &LocationActions::commandReady, this,
@@ -250,6 +269,10 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
 
     // Voice messages to text, on request: fetched through the page's own
     // download path, nothing for the core. See src/voicetranscripts.cpp.
+    // Crash leftover: plaintext of an encrypted room.
+    if (!m_cacheDirectory.isEmpty()) {
+        QDir(m_cacheDirectory + QStringLiteral("/transcribe")).removeRecursively();
+    }
     m_transcripts = new VoiceTranscripts(m_cacheDirectory + QStringLiteral("/transcribe"), this);
     connect(m_transcripts, &VoiceTranscripts::mediaWanted, this,
             [this](const QString &key, const QVariant &source, qint64 declaredSize) {
@@ -306,6 +329,10 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     m_voiceDirectory = cacheDirectory + QStringLiteral("/voice");
     m_recorder = new VoiceRecorder(m_voiceDirectory, this);
     m_textDirectory = cacheDirectory + QStringLiteral("/text");
+    // Crash or failed-send leftovers: plaintext.
+    if (!cacheDirectory.isEmpty()) {
+        QDir(m_textDirectory).removeRecursively();
+    }
     // Photos taken in the picker. src/camerashots.cpp.
     m_cameraShots = new CameraShots(cacheDirectory + QStringLiteral("/camera"), this);
     connect(m_recorder, &VoiceRecorder::finished, this, [this](const QString &path,
@@ -422,6 +449,8 @@ void MatrixBridge::checkStalledCommands()
     static const qint64 giveUp = 120000;
     QStringList abandoned;
     QStringList lostMedia;
+    QList<quint64> lostLocations;
+    bool lostQueue = false;
     for (auto it = m_pending.begin(); it != m_pending.end();) {
         if (now - it->sentAt < giveUp) {
             ++it;
@@ -448,6 +477,22 @@ void MatrixBridge::checkStalledCommands()
         if (it->command.startsWith(QLatin1String("login."))) {
             setLoginRunning(false);
         }
+        // Flags only an answer clears.
+        if (it.key() == m_searchRequest) {
+            m_searchRequest = 0;
+            emit searchingChanged();
+        }
+        if (it.key() == m_indexRequest) {
+            m_indexRequest = 0;
+            emit indexingChanged();
+        }
+        // Both send: after the loop, a send inserts into m_pending.
+        if (it->command.startsWith(QLatin1String("location."))) {
+            lostLocations.append(it.key());
+        }
+        if (it->command.startsWith(QLatin1String("queue."))) {
+            lostQueue = true;
+        }
         // Everything the answer would have cleared - a lost `media.fetch` kept its
         // key and refused that picture for good. Collected, not emitted: rehash.
         if (m_mediaRequests.contains(it.key())) {
@@ -461,6 +506,13 @@ void MatrixBridge::checkStalledCommands()
     // Outside the loop, for the reason given inside it.
     for (const QString &key : lostMedia) {
         emit mediaFailed(key);
+    }
+    for (quint64 id : lostLocations) {
+        m_locations->abandon(id);
+    }
+    // Lifts the banner's buttons.
+    if (lostQueue) {
+        m_sendQueue->reportUnanswered();
     }
     // A send that never answered still ends: the wipe it held up may go ahead.
     if (m_wipeDeferred && !sendInFlight()) {
@@ -805,7 +857,8 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
         return;
     }
 
-    if (roomId == m_openRoomId && focus.isEmpty() && m_timelineFocus.isEmpty()) {
+    if (roomId == m_openRoomId && focus.isEmpty() && m_timelineFocus.isEmpty()
+        && !m_rebuildTimeline) {
         // Already subscribed, rows kept. Asked anyway and without clearing: the core
         // answers `rebuilt: false` with where reading stopped, which a fresh page needs.
         qInfo("xmatic: room already open, %d rows kept", m_timeline.count());
@@ -846,7 +899,11 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
         m_media.clear();
     }
     m_openRoomId = roomId;
-    m_timelineFocus = focus;
+    m_sendQueue->setRoom(roomId);
+    if (m_timelineFocus != focus) {
+        m_timelineFocus = focus;
+        emit timelineFocusChanged();
+    }
     setTimelineAtStart(false);
     // A pagination still in flight belongs to the room being left. Left standing,
     // its id kept "load older messages" greyed out here and its answer declared
@@ -872,6 +929,10 @@ void MatrixBridge::openRoom(const QString &roomId, const QString &focus)
     arguments.insert(QStringLiteral("receipts"),
                      m_settings && m_settings->showReadStatus());
     arguments.insert(QStringLiteral("token"), QString::number(++m_timelineGeneration));
+    if (m_rebuildTimeline) {
+        arguments.insert(QStringLiteral("rebuild"), true);
+        m_rebuildTimeline = false;
+    }
     m_openTimelineId = send(QStringLiteral("timeline.open"), arguments);
 
     // Pull this room's keys out of the backup too: messages older than this
@@ -888,7 +949,11 @@ void MatrixBridge::closeRoom()
     }
     const QString closing = m_openRoomId;
     m_openRoomId.clear();
-    m_timelineFocus.clear();
+    m_sendQueue->setRoom(QString());
+    if (!m_timelineFocus.isEmpty()) {
+        m_timelineFocus.clear();
+        emit timelineFocusChanged();
+    }
     if (!m_pinnedEventIds.isEmpty()) {
         m_pinnedEventIds.clear();
         m_pinnedPreview.clear();
@@ -957,6 +1022,17 @@ void MatrixBridge::closeThread()
     m_openThreadRoot.clear();
     m_threadTimeline.clear();
     send(QStringLiteral("thread.close"), arguments);
+    if (!m_rebuildAfterThread.isEmpty()) {
+        const QString room = m_rebuildAfterThread;
+        m_rebuildAfterThread.clear();
+        // Next turn: this may run inside `openRoom`.
+        QTimer::singleShot(0, this, [this, room]() {
+            if (room == m_openRoomId && m_timelineFocus.isEmpty() && m_openThreadRoot.isEmpty()) {
+                m_rebuildTimeline = true;
+                openRoom(room);
+            }
+        });
+    }
 }
 
 /// The picked mentions as the core takes them. Never the names: those are
@@ -1409,6 +1485,10 @@ void MatrixBridge::sendMessage(const QString &body, const QStringList &mentions)
 
 void MatrixBridge::markRead()
 {
+    // Not from a slice or the pinned view; the core refuses too.
+    if (!m_timelineFocus.isEmpty()) {
+        return;
+    }
     // The privacy switch governs the receipt others see, not the fully-read
     // marker: holding that back hid nothing and cost the position the room opens at.
     QJsonObject arguments;
@@ -1499,7 +1579,9 @@ void MatrixBridge::wipeOutgoingCopies()
     if (m_cacheDirectory.isEmpty()) {
         return;
     }
-    for (const QString &directory : { QStringLiteral("outgoing"), QStringLiteral("stills") }) {
+    // `text`, `camera`: read by a running upload.
+    for (const QString &directory : { QStringLiteral("outgoing"), QStringLiteral("stills"),
+                                      QStringLiteral("text"), QStringLiteral("camera") }) {
         QDir(m_cacheDirectory + QLatin1Char('/') + directory).removeRecursively();
     }
 }
@@ -1905,19 +1987,20 @@ void MatrixBridge::toggleReaction(const QString &eventId, const QString &key)
     send(QStringLiteral("timeline.react"), arguments);
 }
 
+/// Row and banner: one action, the queue module.
 void MatrixBridge::retryMessage(const QString &txnId)
 {
-    if (txnId.isEmpty()) {
-        return;
-    }
-    QJsonObject arguments;
-    arguments.insert(QStringLiteral("txnId"), txnId);
-    send(QStringLiteral("timeline.retry"), arguments);
+    m_sendQueue->retry(txnId);
 }
 
 void MatrixBridge::deleteMessage(const QString &eventId, const QString &txnId)
 {
     if (eventId.isEmpty() && txnId.isEmpty()) {
+        return;
+    }
+    // Never sent: out of the queue.
+    if (eventId.isEmpty()) {
+        m_sendQueue->discard(txnId);
         return;
     }
     QJsonObject arguments;
@@ -2012,6 +2095,10 @@ void MatrixBridge::startVideoSend(const QJsonObject &arguments, const QString &p
         }
         qWarning("xmatic: the video thumbnailer is not available, "
                  "sending the video without a preview");
+        // No `finished` for a process that never started.
+        if (m_videoStillsRunning > 0) {
+            --m_videoStillsRunning;
+        }
         send(command, arguments);
         helper->deleteLater();
     });
@@ -2392,6 +2479,12 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (command.startsWith(QLatin1String("poll."))) {
             m_polls->reportFailure(command);
         }
+        if (command == QLatin1String("queue.retry") || command == QLatin1String("queue.discard")) {
+            m_sendQueue->reportFailure(error);
+        }
+        if (command == QLatin1String("queue.stuck")) {
+            m_sendQueue->reportUnanswered();
+        }
         const bool locationQuiet = command.startsWith(QLatin1String("location."))
                 && m_locations->reportFailure(id, command);
         if (id == m_indexRequest && m_indexRequest != 0) {
@@ -2500,6 +2593,14 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         return;
     }
     if (replyTimeline(id, command, data)) {
+        return;
+    }
+    if (command == QLatin1String("queue.stuck")) {
+        m_sendQueue->reportStuck(data);
+        return;
+    }
+    if (command == QLatin1String("queue.retry") || command == QLatin1String("queue.discard")) {
+        m_sendQueue->reportDone(data);
         return;
     }
     if (command == QLatin1String("push.notify")) {
@@ -3324,6 +3425,8 @@ bool MatrixBridge::eventTimeline(const QString &name, const QJsonObject &data)
             qWarning("xmatic: thread could not be loaded: %s", qPrintable(message));
             emit threadFailed(message);
         }
+    } else if (name == QLatin1String("send.stuck")) {
+        m_sendQueue->reportRoomStuck(data.value(QStringLiteral("roomId")).toString());
     } else if (name == QLatin1String("poll.voteFailed")) {
         if (data.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
             m_polls->reportVoteFailed(data.value(QStringLiteral("eventId")).toString());
@@ -3538,6 +3641,7 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
             bumpSpaceCounts();
             m_timeline.clear();
             m_openRoomId.clear();
+            m_sendQueue->setRoom(QString());
             emit openRoomChanged();
             m_directory.clear();
             if (!m_profileName.isEmpty() || !m_profileAvatar.isEmpty()) {
@@ -3767,9 +3871,18 @@ void MatrixBridge::applySession(const QJsonObject &data)
         qWarning("xmatic: local data unreadable: %s", qPrintable(reason));
         setLastError(reason);
     }
+    if (state == QLatin1String("offline")) {
+        const QString reason = data.value(QStringLiteral("reason")).toString();
+        qWarning("xmatic: homeserver not reached at start: %s", qPrintable(reason));
+        setLastError(reason);
+    }
 
     if (state == m_sessionState && user == m_userId && device == m_deviceId) {
         return;
+    }
+    // The reason belonged to the page that goes.
+    if (m_sessionState == QLatin1String("offline") && state == QLatin1String("signed-in")) {
+        setLastError(QString());
     }
 
     m_sessionState = state;

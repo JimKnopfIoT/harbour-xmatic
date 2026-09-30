@@ -92,6 +92,16 @@ Page {
     // all - roughly ten seconds, after which the room is plainly not coming.
     property int jumpWaitsLeft: 0
     readonly property int jumpWaitLimit: 15
+    // A jump may open a slice: search hit yes, restored position no.
+    property bool jumpMayFocus: true
+    // Target time, where known: far beyond the loaded history opens a slice.
+    property double jumpTimestamp: 0
+    // A slice around one message instead of the live conversation. Empty: live.
+    property string focusedEventId: ""
+    // Writing actions return to live first.
+    readonly property bool inSlice: focusedEventId.length > 0
+    // Set by "Back to the latest messages": open at the end.
+    property bool returningToEnd: false
 
     // Recipients with unverified devices, from `checkRecipients`. Drives the
     // pre-send warning; each entry is { userId, name, devices }.
@@ -229,6 +239,13 @@ Page {
             if (page.jumpTargetId.length > 0) {
                 page.tryJump()
             }
+            if (page.returningToEnd) {
+                page.returningToEnd = false
+                page.unreadHandled = true
+                page.followTail = true
+                timelineView.positionViewAtEnd()
+                return
+            }
             if (rebuilt) {
                 page.unreadHandled = false
             }
@@ -253,7 +270,7 @@ Page {
                 if (page.markerEventId.length === 0) {
                     page.markerEventId = page.unreadFallbackId
                 }
-                page.jumpToEvent(kept.eventId, ListView.Beginning, kept.offset)
+                page.jumpToEvent(kept.eventId, ListView.Beginning, kept.offset, 0, false)
                 // The live view is back - that is what this signal says - but the page
                 // itself may still be coming up, and `jumpToEvent` waits for `Active`.
                 page.tryJump()
@@ -312,6 +329,10 @@ Page {
         onInsertRequested: {
             if (roomId !== page.roomId || page.invited) {
                 return
+            }
+            // The composer lives in the live conversation only.
+            if (page.inSlice) {
+                page.backToLive()
             }
             if (page.status === PageStatus.Active) {
                 messageComposer.insertMention(userId, displayName)
@@ -526,8 +547,12 @@ Page {
 
         if (status === PageStatus.Active && !invited) {
             // Coming back from the pinned view, the shared timeline has to show live
-            // events again. On a live timeline this is a no-op.
-            matrix.openRoom(roomId)
+            // events again - or the slice this page was showing. Otherwise a no-op.
+            if (page.focusedEventId.length === 0) {
+                matrix.openRoom(roomId)
+            } else if (matrix.timelineFocus !== page.focusedEventId) {
+                matrix.openRoom(roomId, page.focusedEventId)
+            }
             // Not marked read outright: the view may open at the first unread message, and
             // everything below it is unread until the user gets there.
             readTimer.restart()
@@ -764,7 +789,9 @@ Page {
     /// kept - a room opens there anyway, and the unread logic owns that case.
     function keepReadingPosition() {
         // A jump that has not landed yet is not a position; what is held stays held.
-        if (page.invited || page.roomId.length === 0 || page.jumpTargetId.length > 0) {
+        // Nor is a place in a slice: coming back, the room opens live.
+        if (page.invited || page.roomId.length === 0 || page.jumpTargetId.length > 0
+                || page.focusedEventId.length > 0) {
             return
         }
         if (page.followTail || timelineView.atYEnd) {
@@ -782,10 +809,14 @@ Page {
 
     // Scrolls to a message, loading older history until it shows up. Called by
     // the pinned overview before it pops back, and by tapping a quote.
-    function jumpToEvent(eventId, align, offset) {
+    function jumpToEvent(eventId, align, offset, timestamp, mayFocus) {
         if (!eventId || eventId.length === 0) {
             return
         }
+        jumpTimestamp = timestamp || 0
+        jumpMayFocus = mayFocus !== false
+        // A new jump beats a pending return to the end.
+        returningToEnd = false
         // A quote lands in the middle of the view; a reading position goes back under
         // the top edge, where it stood.
         jumpAlign = align === undefined ? ListView.Center : align
@@ -820,6 +851,10 @@ Page {
             }
             jumpTargetId = ""
             jumpRetry.stop()
+            // Slice not built: say so; the button leads back.
+            if (inSlice) {
+                showNotice(qsTr("That message is not in the loaded history"))
+            }
             return
         }
         var idx = matrix.timeline.indexOfEvent(jumpTargetId)
@@ -839,6 +874,18 @@ Page {
             }
             return
         }
+        // Far beyond the loaded history: one slice instead of many pages.
+        var oldest = matrix.timeline.oldestTimestamp()
+        if (jumpMayFocus && jumpTimestamp > 0 && oldest > 0
+                && jumpTimestamp < oldest - 24 * 3600 * 1000) {
+            openFocused(jumpTargetId)
+            return
+        }
+        // From a slice: the next slice, no paging.
+        if (jumpMayFocus && inSlice) {
+            openFocused(jumpTargetId)
+            return
+        }
         if (jumpPagesLeft > 0 && !matrix.timelineAtStart) {
             // Only one request at a time; the timer brings us back either way.
             if (!matrix.paginating) {
@@ -850,9 +897,42 @@ Page {
             jumpRetry.restart()
             return
         }
+        var missed = jumpTargetId
         jumpTargetId = ""
         jumpRetry.stop()
+        // Pages ran out: a slice, once per target.
+        if (jumpMayFocus && missed !== focusedEventId) {
+            openFocused(missed)
+            return
+        }
         showNotice(qsTr("That message is not in the loaded history"))
+    }
+
+    // The message in a slice; the jump waits for the model as for live.
+    function openFocused(eventId) {
+        focusedEventId = eventId
+        followTail = false
+        jumpTargetId = eventId
+        jumpAlign = ListView.Center
+        jumpOffset = 0
+        jumpPagesLeft = 0
+        jumpWaitsLeft = jumpWaitLimit
+        jumpMayFocus = false
+        matrix.openRoom(roomId, eventId)
+        jumpRetry.restart()
+    }
+
+    // Back from the slice to the conversation as it is now.
+    function backToLive() {
+        // A kept row index belongs to the slice.
+        keptIndex = -1
+        focusedEventId = ""
+        jumpTargetId = ""
+        jumpRetry.stop()
+        followTail = true
+        returningToEnd = true
+        positions.forget(roomId)
+        matrix.openRoom(roomId)
     }
 
     Timer {
@@ -1064,17 +1144,27 @@ Page {
             MenuItem {
                 text: qsTr("New poll")
                 visible: !page.invited
-                onClicked: pageStack.push(Qt.resolvedUrl("CreatePollDialog.qml"))
+                onClicked: {
+                    if (page.inSlice) {
+                        page.backToLive()
+                    }
+                    pageStack.push(Qt.resolvedUrl("CreatePollDialog.qml"))
+                }
             }
 
             // Only where Privacy allows sending the position at all.
             MenuItem {
                 text: qsTr("Share location")
                 visible: !page.invited && settings.locationSharing
-                onClicked: pageStack.push(Qt.resolvedUrl("ShareLocationPage.qml"), {
-                                              roomId: page.roomId,
-                                              encrypted: page.encrypted || !page.encryptionKnown
-                                          })
+                onClicked: {
+                    if (page.inSlice) {
+                        page.backToLive()
+                    }
+                    pageStack.push(Qt.resolvedUrl("ShareLocationPage.qml"), {
+                                       roomId: page.roomId,
+                                       encrypted: page.encrypted || !page.encryptionKnown
+                                   })
+                }
             }
 
             // Everything about the room rather than the conversation lives one page
@@ -1327,13 +1417,24 @@ Page {
             }
         }
 
+        SendQueueBanner {
+            id: sendQueueBanner
+
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: pinnedBanner.bottom
+            }
+            visible: !page.invited && head !== null
+        }
+
         SilicaListView {
             id: timelineView
 
             anchors {
                 left: parent.left
                 right: parent.right
-                top: pinnedBanner.bottom
+                top: sendQueueBanner.bottom
                 bottom: composer.top
             }
             clip: true
@@ -1593,7 +1694,8 @@ Page {
                                        senderName: model.senderName || "",
                                        isOwn: row.isOwn,
                                        canDelete: row.isOwn || row.canDeleteForOther,
-                                       editable: model.editable === true,
+                                       // Not in the live view an edit needs.
+                                       editable: model.editable === true && !page.inSlice,
                                        isImage: row.isImage,
                                        canSave: row.isFile || row.isImage,
                                        canTranscribe: row.canTranscribe
@@ -1759,6 +1861,7 @@ Page {
                     MenuItem {
                         text: qsTr("Edit")
                         visible: row.isOwn && model.editable === true && !page.isLandscape
+                                 && !page.inSlice
                         onClicked: page.beginEdit(model.eventId, model.body)
                     }
 
@@ -2020,6 +2123,9 @@ Page {
                                         var known = matrix.mediaPath(mediaKey)
                                         if (known.length > 0) {
                                             source = "file://" + known
+                                        } else if (!settings.autoLoadMedia) {
+                                            // "Load pictures: off" covers quotes.
+                                            return
                                         } else if (quotedMedia.thumbnailSource) {
                                             matrix.requestMedia(mediaKey, quotedMedia.thumbnailSource, false,
                                                                 quotedMedia.size || 0)
@@ -2513,6 +2619,8 @@ Page {
                                 availableWidth: bubbleColumn.maxTextWidth
                                 location: model.location
                                 own: row.isOwn
+                                avatarSource: model.senderAvatar || ""
+                                avatarName: model.senderName || model.sender || ""
                                 roomId: page.roomId
                                 encrypted: page.encrypted || !page.encryptionKnown
                                 onActivated: page.followLink(link, map)
@@ -2655,7 +2763,10 @@ Page {
                                             radius: Theme.paddingSmall
                                             // Ours is the one worth telling
                                             // apart; the rest carry the bubble.
-                                            color: modelData.mine
+                                            // Own reaction the queue gave up; a tap withdraws it.
+                                            color: modelData.failed
+                                                   ? Theme.rgba(Theme.errorColor, 0.35)
+                                                   : modelData.mine
                                                    ? Theme.rgba(Theme.highlightColor, 0.35)
                                                    : Theme.rgba(Theme.secondaryColor, 0.15)
                                         }
@@ -2765,6 +2876,8 @@ Page {
                                     font.pixelSize: Theme.fontSizeTiny
                                     // A message that did not get out is the one thing in this line worth a colour.
                                     color: model.sendState === "failed"
+                                           || model.editState === "failed"
+                                           || model.redactionState === "failed"
                                            ? Theme.errorColor : Theme.secondaryColor
                                     // Only messages carry a timestamp; the shared delegate instantiates this
                                     // label for every row regardless.
@@ -2772,6 +2885,11 @@ Page {
                                           ? (matrix.pinnedEventIds.indexOf(model.eventId) >= 0 ? "📌 " : "")
                                             + (model.sendState === "failed"
                                                ? qsTr("not sent") + " · " : "")
+                                            // Edit or deletion not sent; the banner has the way out.
+                                            + (model.redactionState === "failed"
+                                               ? qsTr("deletion not sent") + " · " : "")
+                                            + (model.editState === "failed"
+                                               ? qsTr("edit not sent") + " · " : "")
                                             + (model.edited === true ? qsTr("edited") + " · " : "")
                                             + (row.mediaSizeText.length > 0
                                                ? row.mediaSizeText + " · " : "")
@@ -3171,6 +3289,8 @@ Page {
             }
             height: page.invited
                     ? joinButton.height + 2 * Theme.paddingLarge
+                    : page.focusedEventId.length > 0
+                    ? liveButton.height + 2 * Theme.paddingLarge
                     : composerColumn.height + Theme.paddingSmall
 
             Button {
@@ -3194,10 +3314,20 @@ Page {
                 }
             }
 
+            // No sending in a slice: the send would take its thread.
+            Button {
+                id: liveButton
+
+                visible: !page.invited && page.focusedEventId.length > 0
+                anchors.centerIn: parent
+                text: qsTr("Back to the latest messages")
+                onClicked: page.backToLive()
+            }
+
             Column {
                 id: composerColumn
 
-                visible: !page.invited
+                visible: !page.invited && page.focusedEventId.length === 0
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -3601,6 +3731,10 @@ Page {
     }
 
     function beginReply(eventId, sender, body) {
+        // Written from live: a slice would take the thread.
+        if (inSlice) {
+            backToLive()
+        }
         page.replyingEventId = eventId
         page.replyingTo = sender && sender.length > 0 ? sender : body
         // Kept separately from replyingTo: the send page shows sender and text
@@ -4065,6 +4199,24 @@ Page {
             }
         }
         onVoteFailed: page.showNotice(qsTr("Your vote was not sent"))
+    }
+
+    Connections {
+        target: matrix.sendQueue
+        // "No longer queued": sent or removed, not a failure.
+        onFailed: page.showNotice(message.indexOf("no longer queued") >= 0
+                                  ? qsTr("It is no longer waiting to be sent.")
+                                  : qsTr("That did not work. Try again in a moment."))
+    }
+
+    // Start failed or unanswered: stopped, and said.
+    Connections {
+        target: matrix.locations
+        onLiveFailed: {
+            if (roomId === page.roomId) {
+                page.showNotice(qsTr("Live location could not be started"))
+            }
+        }
     }
 
     // Said out loud when a jump gives up.

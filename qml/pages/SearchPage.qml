@@ -129,7 +129,7 @@ Page {
                     return candidate.objectName === "roomPage"
                 })
                 if (room && room.jumpToEvent) {
-                    room.jumpToEvent(model.eventId)
+                    room.jumpToEvent(model.eventId, undefined, undefined, model.timestamp)
                     pageStack.pop(room)
                     return
                 }

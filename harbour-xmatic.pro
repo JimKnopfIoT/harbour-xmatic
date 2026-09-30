@@ -55,6 +55,7 @@ SOURCES += \
     src/imagefacts.cpp \
     src/matrixbridge.cpp \
     src/pollactions.cpp \
+    src/sendqueueactions.cpp \
     src/locationactions.cpp \
     src/camerashots.cpp \
     src/readingpositions.cpp \
@@ -90,6 +91,7 @@ HEADERS += \
     src/languagesettings.h \
     src/matrixbridge.h \
     src/pollactions.h \
+    src/sendqueueactions.h \
     src/locationactions.h \
     src/camerashots.h \
     src/readingpositions.h \
@@ -274,7 +276,10 @@ DISTFILES += \
     qml/cover/CoverPage.qml \
     qml/pages/AccountPage.qml \
     qml/pages/LoginPage.qml \
+    qml/pages/SendQueueBanner.qml \
     qml/pages/SessionLockedPage.qml \
+    qml/pages/SessionNewerPage.qml \
+    qml/pages/SessionOfflinePage.qml \
     qml/pages/AboutPage.qml \
     qml/pages/RoomListPage.qml \
     qml/pages/RoomDelegate.qml \

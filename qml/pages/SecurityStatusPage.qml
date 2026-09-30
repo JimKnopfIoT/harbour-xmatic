@@ -96,7 +96,7 @@ Page {
             // device settles it in a minute; the recovery key has to be at hand.
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: SecurityStatus.crossSigningLevel(matrix) !== SecurityStatus.GREEN
+                visible: SecurityStatus.actionable(SecurityStatus.crossSigningLevel(matrix))
                 label: qsTr("Verify this device")
                 enabled: !matrix.encryptionBusy
                 onClicked: {
@@ -108,9 +108,9 @@ Page {
             // The recovery key, below it: it settles more but asks for more.
             WrapButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: SecurityStatus.backupLevel(matrix) !== SecurityStatus.GREEN
-                         || SecurityStatus.recoveryLevel(matrix) !== SecurityStatus.GREEN
-                         || SecurityStatus.crossSigningLevel(matrix) !== SecurityStatus.GREEN
+                visible: SecurityStatus.actionable(SecurityStatus.backupLevel(matrix))
+                         || SecurityStatus.actionable(SecurityStatus.recoveryLevel(matrix))
+                         || SecurityStatus.actionable(SecurityStatus.crossSigningLevel(matrix))
                 // What the button offers has to match what is missing: a backup with no
                 // recovery set up is a real state, and "enter your key" points at nothing.
                 label: matrix.encryptionStatus.backupOnServer

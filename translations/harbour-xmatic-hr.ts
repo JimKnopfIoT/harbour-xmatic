@@ -533,6 +533,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Bez veze — čeka se mreža</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>nema veze</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1709,10 +1713,6 @@
         <translation>Prikaži status čitanja drugih</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Isključeno se ništa ne dohvaća o tome tko je što pročitao, što razgovor drži i tečnijim. Uključeno tvoje poruke pokazuju koliko ih je ljudi pročitalo.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Glasovne poruke</translation>
     </message>
@@ -1875,6 +1875,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Uključeno: pločica kamere prikazuje što kamera vidi dok je odabir otvoren. Isključeno: kamera se pokreće tek kad dodirneš pločicu.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Isključeno se ne prati i ne prikazuje tko je što pročitao, što razgovor drži i tečnijim. Uključeno tvoje poruke pokazuju koliko ih je ljudi pročitalo.</translation>
     </message>
 </context>
 <context>
@@ -2761,6 +2765,30 @@
         <source>Share location</source>
         <translation>Podijeli lokaciju</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>brisanje nije poslano</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>uređivanje nije poslano</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Nije uspjelo. Pokušaj ponovno za trenutak.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Natrag na najnovije poruke</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Lokaciju uživo nije bilo moguće pokrenuti</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>To više ne čeka na slanje.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3141,6 +3169,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Poruku nije bilo moguće poslati.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Uređivanje nije bilo moguće poslati.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Brisanje nije bilo moguće poslati. Za sve ostale poruka je i dalje tu.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Reakciju nije bilo moguće poslati.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Glas u anketi nije bilo moguće poslati.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Promjenu nije bilo moguće poslati.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Osoba koju imaš provjerenu ima novi identitet. Povuci provjeru na njezinu profilu, a zatim pošalji ponovno.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Ovaj uređaj najprije treba provjeriti.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Neki uređaji u ovoj sobi nisu provjereni.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Sve što je u ovoj sobi poslano nakon toga čeka iza toga.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Pošalji ponovno</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Odbaci</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Anketu nije bilo moguće poslati.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3169,6 +3252,60 @@
     <message>
         <source>Need help?</source>
         <translation>Trebaš pomoć?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Odjavi se i obriši lokalne podatke</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Potrebna je novija verzija</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix za Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Pokušaj ponovno</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Tvoja je sesija spremljena u formatu koji ova verzija ne poznaje, najvjerojatnije novijom verzijom xmatica.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Ako je prije bila instalirana novija verzija xmatica, nakon ponovne instalacije sve će se otvoriti kao prije. Odjava umjesto toga briše podatke i ključeve ovog uređaja.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Odjavi se i obriši lokalne podatke</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Nema veze</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix za Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Tvoj matični poslužitelj nije bio dostupan. Tvoja sesija i dalje vrijedi i na ovom se uređaju ništa nije promijenilo.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic nastavlja pokušavati sam. Nemoj se ponovno prijaviti: time bi nastao novi uređaj i izgubili bi se ključevi tvoje šifrirane povijesti.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Pokušaj ponovno</translation>
     </message>
 </context>
 <context>

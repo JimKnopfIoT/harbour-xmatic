@@ -531,6 +531,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Kapcsolat nélkül — várakozás a hálózatra</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>nincs kapcsolat</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1703,10 +1707,6 @@
         <translation>Mások olvasási állapotának mutatása</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Kikapcsolva semmi sem töltődik le arról, ki mit olvasott, ami a beszélgetést is gördülékenyebben tartja. Bekapcsolva a saját üzeneteid mutatják, hányan olvasták őket.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Hangüzenetek</translation>
     </message>
@@ -1869,6 +1869,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Be: a kamera csempéje mutatja, amit a kamera lát, amíg a választó nyitva van. Ki: a kamera csak akkor indul el, ha a csempére koppintasz.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Kikapcsolva nem követjük és nem mutatjuk, ki mit olvasott, ami a beszélgetést is gördülékenyebben tartja. Bekapcsolva a saját üzeneteid mutatják, hányan olvasták őket.</translation>
     </message>
 </context>
 <context>
@@ -2753,6 +2757,30 @@
         <source>Share location</source>
         <translation>Hely megosztása</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>a törlés nincs elküldve</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>a szerkesztés nincs elküldve</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Nem sikerült. Próbáld újra egy pillanat múlva.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Vissza a legújabb üzenetekhez</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Az élő hely megosztását nem sikerült elindítani</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Már nem vár elküldésre.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3133,6 +3161,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Egy üzenetet nem sikerült elküldeni.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Egy szerkesztést nem sikerült elküldeni.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Egy törlést nem sikerült elküldeni. Mindenki más számára az üzenet még ott van.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Egy reakciót nem sikerült elküldeni.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Egy szavazatot nem sikerült elküldeni.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Egy módosítást nem sikerült elküldeni.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Valaki, akit ellenőriztél, új identitást kapott. Vond vissza az ellenőrzést a profilján, majd küldd el újra.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Ezt az eszközt előbb ellenőrizni kell.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>A szoba néhány eszköze nincs ellenőrizve.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Minden, ami utána lett elküldve ebben a szobában, mögötte vár.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Küldés újra</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Elvetés</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Egy szavazást nem sikerült elküldeni.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3161,6 +3244,60 @@
     <message>
         <source>Need help?</source>
         <translation>Segítségre van szükséged?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Kijelentkezés és a helyi adatok törlése</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Újabb verzió szükséges</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS-re</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Újra</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>A munkameneted olyan formátumban lett mentve, amelyet ez a verzió nem ismer, valószínűleg az xmatic egy újabb verziója mentette.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Ha korábban az xmatic egy újabb verziója volt telepítve, annak újratelepítése után minden úgy nyílik meg, mint korábban. A kijelentkezés viszont törli ennek az eszköznek az adatait és kulcsait.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Kijelentkezés és a helyi adatok törlése</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Nincs kapcsolat</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix Sailfish OS-re</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Az otthoni kiszolgálód nem volt elérhető. Továbbra is be vagy jelentkezve, és ezen az eszközön semmi sem változott.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>Az xmatic magától tovább próbálkozik. Ne jelentkezz be újra: az új eszközt hozna létre, és elvesznének a titkosított előzményeid kulcsai.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Újra</translation>
     </message>
 </context>
 <context>

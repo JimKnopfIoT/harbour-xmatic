@@ -4,13 +4,12 @@
 use matrix_sdk::Client;
 use serde_json::{json, Value};
 
-/// The user's display name and avatar URL, as the server reports them.
+/// Own display name and avatar; offline, the stored ones.
 pub async fn get(client: &Client) -> Result<Value, String> {
-    let profile = client
-        .account()
-        .fetch_user_profile()
-        .await
-        .map_err(|error| format!("profile unavailable: {error}"))?;
+    let profile = match client.account().fetch_user_profile().await {
+        Ok(profile) => profile,
+        Err(error) => return stored(client).await.ok_or_else(|| format!("profile unavailable: {error}")),
+    };
 
     // The response is a generic field map since profiles became extensible;
     // the two classic fields are all this client shows.
@@ -26,6 +25,20 @@ pub async fn get(client: &Client) -> Result<Value, String> {
         "displayName": field("displayname"),
         "avatarUrl": field("avatar_url"),
     }))
+}
+
+/// From the own member entry of a joined room.
+async fn stored(client: &Client) -> Option<Value> {
+    let own = client.user_id()?.to_owned();
+    for room in client.joined_rooms() {
+        if let Ok(Some(member)) = room.get_member_no_sync(&own).await {
+            return Some(json!({
+                "displayName": member.display_name().unwrap_or_default(),
+                "avatarUrl": member.avatar_url().map(|url| url.to_string()).unwrap_or_default(),
+            }));
+        }
+    }
+    None
 }
 
 /// Changes the display name. An empty name removes it.

@@ -532,6 +532,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Ótengt — bíð eftir netinu</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>engin tenging</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1706,10 +1710,6 @@
         <translation>Sýna lesstöðu annarra</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Slökkt er ekkert sótt um hver hefur lesið hvað, sem heldur samtalinu líka mýkra. Kveikt sýna eigin skilaboð hversu margir hafa lesið þau.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Talskilaboð</translation>
     </message>
@@ -1872,6 +1872,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Kveikt: myndavélarreiturinn sýnir það sem myndavélin sér á meðan valið er opið. Slökkt: myndavélin fer fyrst í gang þegar þú ýtir á reitinn.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Slökkt er hvorki fylgst með né sýnt hver hefur lesið hvað, sem heldur samtalinu líka mýkra. Kveikt sýna eigin skilaboð hversu margir hafa lesið þau.</translation>
     </message>
 </context>
 <context>
@@ -2757,6 +2761,30 @@
         <source>Share location</source>
         <translation>Deila staðsetningu</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>eyðing ekki send</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>breyting ekki send</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Þetta tókst ekki. Reyndu aftur eftir augnablik.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Aftur í nýjustu skilaboðin</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Ekki tókst að hefja rauntímastaðsetningu</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Það bíður ekki lengur eftir að verða sent.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3137,6 +3165,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Ekki tókst að senda skilaboð.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Ekki tókst að senda breytingu á skilaboðum.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Ekki tókst að senda eyðingu. Skilaboðin eru enn til staðar hjá öllum öðrum.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Ekki tókst að senda viðbragð.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Ekki tókst að senda atkvæði í könnun.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Ekki tókst að senda breytingu.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Manneskja sem þú hefur staðfest er með nýtt auðkenni. Afturkallaðu staðfestinguna á notandasniði hennar og sendu svo aftur.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Það þarf fyrst að staðfesta þetta tæki.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Sum tæki í þessu herbergi eru ekki staðfest.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Allt sem sent var á eftir því í þessu herbergi bíður fyrir aftan það.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Senda aftur</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Henda</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Ekki tókst að senda könnun.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3165,6 +3248,60 @@
     <message>
         <source>Need help?</source>
         <translation>Þarftu hjálp?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Skrá út og eyða staðbundnum gögnum</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Nýrri útgáfu þarf</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix fyrir Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Reyna aftur</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Lotan þín var vistuð á sniði sem þessi útgáfa þekkir ekki, líklega af nýrri útgáfu af xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Ef nýrri útgáfa af xmatic var uppsett áður opnast allt eins og áður þegar hún er sett upp aftur. Ef þú skráir þig út í staðinn eyðast gögn og lyklar á þessu tæki.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Skrá út og eyða staðbundnum gögnum</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Engin tenging</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix fyrir Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Ekki náðist í heimaþjóninn þinn. Innskráningin þín er enn virk og ekkert hefur breyst á þessu tæki.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic heldur áfram að reyna sjálft. Ekki skrá þig inn aftur: það myndi búa til nýtt tæki og kosta lyklana að dulkóðaða ferlinum þínum.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Reyna aftur</translation>
     </message>
 </context>
 <context>

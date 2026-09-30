@@ -80,27 +80,34 @@ impl Paths {
 pub enum StoredSession {
     OAuth {
         homeserver: String,
+        /// Resolved address: restore without network. Absent in older files.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        homeserver_url: Option<String>,
         client_id: String,
         user: UserSession,
     },
     Matrix {
         homeserver: String,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        homeserver_url: Option<String>,
         matrix: MatrixSession,
     },
 }
 
 impl StoredSession {
-    pub fn from_oauth(homeserver: String, session: &OAuthSession) -> Self {
+    pub fn from_oauth(homeserver: String, homeserver_url: String, session: &OAuthSession) -> Self {
         Self::OAuth {
             homeserver,
+            homeserver_url: Some(homeserver_url),
             client_id: session.client_id.as_str().to_owned(),
             user: session.user.clone(),
         }
     }
 
-    pub fn from_matrix(homeserver: String, session: MatrixSession) -> Self {
+    pub fn from_matrix(homeserver: String, homeserver_url: String, session: MatrixSession) -> Self {
         Self::Matrix {
             homeserver,
+            homeserver_url: Some(homeserver_url),
             matrix: session,
         }
     }
@@ -108,6 +115,14 @@ impl StoredSession {
     pub fn homeserver(&self) -> &str {
         match self {
             Self::OAuth { homeserver, .. } | Self::Matrix { homeserver, .. } => homeserver,
+        }
+    }
+
+    pub fn homeserver_url(&self) -> Option<&str> {
+        match self {
+            Self::OAuth { homeserver_url, .. } | Self::Matrix { homeserver_url, .. } => {
+                homeserver_url.as_deref()
+            }
         }
     }
 
@@ -209,6 +224,32 @@ fn store_plan<'a>(paths: &Paths, key: Option<&'a StoreKey>) -> Result<Option<&'a
     Ok(Some(key))
 }
 
+/// A name to discover, or an address already resolved (no network).
+pub enum Target<'a> {
+    Discover(&'a str),
+    Resolved(&'a str),
+}
+
+/// Why no client: only `Store` is about the data.
+pub enum BuildFailure {
+    /// `store_plan` refused.
+    Refused(String),
+    /// The local stores did not open.
+    Store(String),
+    /// Everything else: discovery, the network, an unparsable address.
+    Unreachable(String),
+}
+
+impl std::fmt::Display for BuildFailure {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Refused(message) => f.write_str(message),
+            Self::Store(message) => write!(f, "the local data could not be opened: {message}"),
+            Self::Unreachable(message) => write!(f, "homeserver unreachable: {message}"),
+        }
+    }
+}
+
 /// Builds a client for `server` - server name or full URL. `store_plan`
 /// decides the store; a new one is never created without a key.
 pub async fn build_client(
@@ -216,9 +257,19 @@ pub async fn build_client(
     paths: &Paths,
     key: Option<&StoreKey>,
 ) -> Result<Client, String> {
-    let store_key = store_plan(paths, key)?;
+    build_client_at(Target::Discover(server), paths, key)
+        .await
+        .map_err(|failure| failure.to_string())
+}
+
+pub async fn build_client_at(
+    target: Target<'_>,
+    paths: &Paths,
+    key: Option<&StoreKey>,
+) -> Result<Client, BuildFailure> {
+    let store_key = store_plan(paths, key).map_err(BuildFailure::Refused)?;
     let store_config =
-        SqliteStoreConfig::new(&paths.store).key(store_key.map(|key| &**key));
+        SqliteStoreConfig::new(&paths.store).key(store_key.map(|key| key.as_slice()));
 
     // Search index follows the store's decision, password is the key in
     // base64: same directory, same key, so deriving one buys nothing.
@@ -230,9 +281,12 @@ pub async fn build_client(
         None => SearchIndexStoreKind::UnencryptedDirectory(paths.search_index.clone()),
     };
 
-    let client = Client::builder()
+    let builder = match target {
+        Target::Discover(server) => Client::builder().server_name_or_homeserver_url(server),
+        Target::Resolved(url) => Client::builder().homeserver_url(url),
+    };
+    let client = builder
         .search_index_store(search_store)
-        .server_name_or_homeserver_url(server)
         // The homeserver stays what discovery decided. The SDK would otherwise
         // take `well_known` from the login answer, unchecked, http included.
         .respect_login_well_known(false)
@@ -253,10 +307,12 @@ pub async fn build_client(
         })
         .build()
         .await
-        // Phrased here, not at five call sites - and the refusal above needs a
-        // message no caller can prefix into a wrong claim.
         .map_err(|error| {
-            format!("homeserver unreachable: {}", crate::text::scrub_ids(&error.to_string()))
+            let message = crate::text::scrub_ids(&error.to_string());
+            match error {
+                matrix_sdk::ClientBuildError::SqliteStore(_) => BuildFailure::Store(message),
+                _ => BuildFailure::Unreachable(message),
+            }
         });
 
     // The SDK creates its databases with the process umask. They hold the
@@ -380,6 +436,8 @@ pub enum LoadOutcome {
     Session(StoredSession),
     /// An encrypted session that the available key (if any) does not open.
     Locked,
+    /// Envelope in an unknown format, most likely from a newer build.
+    Newer,
 }
 
 /// Reads the stored session. Both shapes load whatever key is at hand; a
@@ -411,8 +469,11 @@ pub fn load(path: &Path, key: Option<&StoreKey>) -> LoadOutcome {
         Ok(bytes) => bytes,
         Err(_) => return LoadOutcome::Locked,
     };
-    let Ok(cipher) = StoreCipher::import_with_key(&**key, &decoded_cipher) else {
-        return LoadOutcome::Locked;
+    // Wrong key: decryption fails. Unknown shape: fails before.
+    let cipher = match StoreCipher::import_with_key(key.as_slice(), &decoded_cipher) {
+        Ok(cipher) => cipher,
+        Err(matrix_sdk_store_encryption::Error::Deserialization(_)) => return LoadOutcome::Newer,
+        Err(_) => return LoadOutcome::Locked,
     };
     let decoded_data = match engine.decode(envelope.encrypted.data) {
         Ok(bytes) => bytes,
@@ -420,6 +481,7 @@ pub fn load(path: &Path, key: Option<&StoreKey>) -> LoadOutcome {
     };
     match cipher.decrypt_value(&decoded_data) {
         Ok(session) => LoadOutcome::Session(session),
+        Err(matrix_sdk_store_encryption::Error::Version(..)) => LoadOutcome::Newer,
         Err(_) => LoadOutcome::Locked,
     }
 }
@@ -480,14 +542,32 @@ pub fn advance_sync_connection(paths: &Paths) -> Result<(), std::io::Error> {
 /// this file moves on once and pays one full sync. A new one has nothing to carry.
 pub fn migrate_sync_connection(paths: &Paths) -> Result<(), std::io::Error> {
     if sync_connection_file(paths).exists() {
-        return Ok(());
-    }
-    let generation = if paths.store.join("matrix-sdk-state.sqlite3").exists() {
-        2
+        if sync_epoch(paths) < SYNC_EPOCH {
+            advance_sync_connection(paths)?;
+        }
     } else {
-        1
-    };
-    std::fs::write(sync_connection_file(paths), generation.to_string())
+        let generation = if paths.store.join("matrix-sdk-state.sqlite3").exists() {
+            2
+        } else {
+            1
+        };
+        std::fs::write(sync_connection_file(paths), generation.to_string())?;
+    }
+    std::fs::write(sync_epoch_file(paths), SYNC_EPOCH.to_string())
+}
+
+/// Raised when an SDK update empties the event cache under a kept position.
+const SYNC_EPOCH: u32 = 2;
+
+fn sync_epoch_file(paths: &Paths) -> PathBuf {
+    paths.store.join(".sync-epoch")
+}
+
+fn sync_epoch(paths: &Paths) -> u32 {
+    std::fs::read_to_string(sync_epoch_file(paths))
+        .ok()
+        .and_then(|text| text.trim().parse::<u32>().ok())
+        .unwrap_or(1)
 }
 
 /// Drops what the next sync rebuilds: rooms, timelines and the search built
@@ -643,6 +723,19 @@ mod tests {
     }
 
     #[test]
+    fn a_connection_from_before_the_epoch_moves_on_once() {
+        let sandbox = Sandbox::new("epoch");
+        let paths = sandbox.paths();
+        std::fs::create_dir_all(&paths.store).expect("store");
+        std::fs::write(paths.store.join(".sync-connection"), b"2").expect("connection");
+
+        migrate_sync_connection(&paths).expect("migrate");
+        assert_eq!(sync_connection_id(&paths), "room-list-3");
+        migrate_sync_connection(&paths).expect("migrate again");
+        assert_eq!(sync_connection_id(&paths), "room-list-3");
+    }
+
+    #[test]
     fn an_existing_plaintext_store_keeps_opening_in_the_clear() {
         let sandbox = Sandbox::new("legacy");
         let paths = sandbox.paths();
@@ -676,5 +769,76 @@ mod tests {
         // content - the shape a failed look has.
         std::fs::create_dir_all(&paths.session_file).expect("dir");
         assert!(matches!(load(&paths.session_file, None), LoadOutcome::Locked));
+    }
+
+    fn a_matrix_session() -> MatrixSession {
+        serde_json::from_value(serde_json::json!({
+            "user_id": "@someone:example.org",
+            "device_id": "DEVICE",
+            "access_token": "access",
+            "refresh_token": "refresh",
+        }))
+        .expect("session")
+    }
+
+    #[test]
+    fn a_session_file_without_the_resolved_address_still_loads() {
+        let sandbox = Sandbox::new("no-url");
+        let paths = sandbox.paths();
+        let old = serde_json::json!({
+            "homeserver": "example.org",
+            "matrix": serde_json::to_value(a_matrix_session()).expect("json"),
+        });
+        std::fs::write(&paths.session_file, old.to_string()).expect("write");
+        let LoadOutcome::Session(stored) = load(&paths.session_file, None) else {
+            panic!("an old session file must load");
+        };
+        assert_eq!(stored.homeserver(), "example.org");
+        assert_eq!(stored.homeserver_url(), None);
+    }
+
+    #[test]
+    fn the_resolved_address_survives_the_encrypted_round_trip() {
+        let sandbox = Sandbox::new("url");
+        let paths = sandbox.paths();
+        let key = a_key();
+        let stored = StoredSession::from_matrix(
+            "example.org".to_owned(),
+            "https://matrix.example.org/".to_owned(),
+            a_matrix_session(),
+        );
+        store(&stored, &paths.session_file, Some(&key)).expect("store");
+        let LoadOutcome::Session(loaded) = load(&paths.session_file, Some(&key)) else {
+            panic!("the session must load under its key");
+        };
+        assert_eq!(loaded.homeserver_url(), Some("https://matrix.example.org/"));
+    }
+
+    #[test]
+    fn a_wrong_key_is_locked_and_an_unknown_format_is_newer() {
+        let sandbox = Sandbox::new("newer");
+        let paths = sandbox.paths();
+        let key = a_key();
+        let stored = StoredSession::from_matrix(
+            "example.org".to_owned(),
+            "https://matrix.example.org/".to_owned(),
+            a_matrix_session(),
+        );
+        store(&stored, &paths.session_file, Some(&key)).expect("store");
+        let other: StoreKey = Zeroizing::new([9u8; 32]);
+        assert!(matches!(load(&paths.session_file, Some(&other)), LoadOutcome::Locked));
+
+        // An unparsable export: what a later format looks like.
+        let engine = base64::engine::general_purpose::STANDARD;
+        let foreign = serde_json::json!({
+            "encrypted": {
+                "cipher": engine.encode(rmp_serde::to_vec(&"a later format").expect("rmp")),
+                "data": engine.encode(b"irrelevant"),
+            }
+        });
+        std::fs::write(&paths.session_file, foreign.to_string()).expect("write");
+        assert!(matches!(load(&paths.session_file, Some(&key)), LoadOutcome::Newer));
+        // Never a way into a fresh login.
+        assert!(!matches!(load(&paths.session_file, None), LoadOutcome::None));
     }
 }

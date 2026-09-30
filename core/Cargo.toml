@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.40.0"
+version = "0.41.0"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -22,7 +22,7 @@ crate-type = ["staticlib"]
 # TLS is rustls throughout — no OpenSSL, so nothing has to match the device's
 # libssl. SQLite is compiled from bundled sources instead of linking the
 # device's library, which keeps the cross build self-contained.
-matrix-sdk = { version = "=0.18.0", default-features = false, features = [
+matrix-sdk = { version = "=0.19.1", default-features = false, features = [
     # The message search: a Tantivy index per room, filled by the event cache
     # as events arrive and encrypted on disk under the store key. Experimental
     # in the SDK's own naming, and the only local full-text search there is -
@@ -31,6 +31,8 @@ matrix-sdk = { version = "=0.18.0", default-features = false, features = [
     # package, measured.
     "experimental-search",
     "local-server",
+    # The rustls crypto provider: named, not left to another crate's features.
+    "rustls-aws-lc-rs",
     "e2e-encryption",
     "sqlite",
     "bundled-sqlite",
@@ -55,7 +57,7 @@ matrix-sdk = { version = "=0.18.0", default-features = false, features = [
     # of this - and duplicates are suppressed in the crypto store.
     "automatic-room-key-forwarding",
 ] }
-matrix-sdk-ui = "=0.18.0"
+matrix-sdk-ui = "=0.19.1"
 # UnifiedPush, the connector half. The reference client rather than a
 # hand-rolled protocol; the distributor is a separate app on the device, so
 # this brings no daemon of its own into a client that deliberately has none.
@@ -77,7 +79,7 @@ async-trait = "0.1"
 # decrypted over as this type, and neither matrix-sdk nor matrix-sdk-ui
 # re-exports it. The crate is already in the tree as a dependency of both, and
 # it is pinned to the same version, so nothing new is pulled in.
-matrix-sdk-base = { version = "=0.18.0", default-features = false, features = [
+matrix-sdk-base = { version = "=0.19.1", default-features = false, features = [
     "e2e-encryption",
 ] }
 # For the device-code login (RFC 8628), which the SDK only wires up for its
@@ -111,8 +113,8 @@ zeroize = "=1.9.0"
 # markup subset Qt can draw (core/src/markup.rs). Already in the tree as a
 # dependency of the SDK's message types, and pinned to the version the lock
 # file resolved for them, so nothing new enters the build.
-ruma-html = "=0.8.0"
-matrix-sdk-store-encryption = "=0.18.0"
+ruma-html = "=0.9.0"
+matrix-sdk-store-encryption = "=0.19.1"
 base64 = "=0.22.1"
 # Names the files in the media cache (core/src/media.rs). Both are already
 # in the tree via the SDK and pinned to what the lock file resolved.
@@ -122,7 +124,7 @@ hex = "=0.4.3"
 # (core/src/storehealth.rs) - the SDK has no API for that. Both come in through
 # matrix-sdk-sqlite already, pinned to what the lock file resolved, and the
 # bundled SQLite is shared: no second copy is compiled.
-rusqlite = { version = "=0.37.0", default-features = false }
+rusqlite = { version = "=0.40.2", default-features = false }
 rmp-serde = "=1.3.1"
 
 [profile.release]

@@ -506,7 +506,7 @@ fn cipher(connection: &Connection, key: Option<&StoreKey>) -> Result<Option<Stor
     match (stored, key) {
         (None, _) => Ok(None),
         (Some(_), None) => Err("the store is encrypted and its key is not available".to_owned()),
-        (Some(stored), Some(key)) => StoreCipher::import_with_key(key, &stored)
+        (Some(stored), Some(key)) => StoreCipher::import_with_key(key.as_slice(), &stored)
             .map(Some)
             .map_err(|error| format!("the store cipher did not open: {error}")),
     }

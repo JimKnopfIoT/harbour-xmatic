@@ -533,6 +533,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Offline — čakám na sieť</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>bez pripojenia</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1709,10 +1713,6 @@
         <translation>Zobrazovať stav prečítania ostatných</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Vypnuté sa nič nenačítava o tom, kto čo prečítal, čo udrží konverzáciu plynulejšou. Zapnuté tvoje správy ukazujú, koľko ľudí ich prečítalo.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Hlasové správy</translation>
     </message>
@@ -1875,6 +1875,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Zapnuté: dlaždica fotoaparátu ukazuje, čo fotoaparát vidí, kým je výber otvorený. Vypnuté: fotoaparát sa spustí až po ťuknutí na dlaždicu.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Vypnuté sa nesleduje ani nezobrazuje, kto čo prečítal, čo udrží konverzáciu plynulejšou. Zapnuté tvoje správy ukazujú, koľko ľudí ich prečítalo.</translation>
     </message>
 </context>
 <context>
@@ -2761,6 +2765,30 @@
         <source>Share location</source>
         <translation>Zdieľať polohu</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>zmazanie neodoslané</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>úprava neodoslaná</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Nepodarilo sa. Skús to o chvíľu znova.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Späť na najnovšie správy</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Živú polohu sa nepodarilo spustiť</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Už to nečaká na odoslanie.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3141,6 +3169,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Správu sa nepodarilo odoslať.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Úpravu sa nepodarilo odoslať.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Zmazanie sa nepodarilo odoslať. Pre všetkých ostatných je správa stále viditeľná.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Reakciu sa nepodarilo odoslať.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Hlas v ankete sa nepodarilo odoslať.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Zmenu sa nepodarilo odoslať.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Osoba overená tebou má novú identitu. Odvolaj overenie v jej profile a potom odošli znova.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Toto zariadenie treba najprv overiť.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Niektoré zariadenia v tejto miestnosti nie sú overené.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Všetko, čo bolo v tejto miestnosti odoslané po nej, čaká za ňou.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Odoslať znova</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Zahodiť</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Anketu sa nepodarilo odoslať.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3169,6 +3252,60 @@
     <message>
         <source>Need help?</source>
         <translation>Potrebuješ pomoc?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Odhlásiť sa a zmazať miestne dáta</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Je potrebná novšia verzia</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pre Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Skúsiť znova</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Tvoja relácia bola uložená vo formáte, ktorý táto verzia nepozná, najskôr novšou verziou xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Ak bola predtým nainštalovaná novšia verzia xmatic, po jej opätovnej inštalácii sa všetko otvorí ako predtým. Odhlásenie naopak zmaže dáta a kľúče tohto zariadenia.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Odhlásiť sa a zmazať miestne dáta</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Bez pripojenia</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix pre Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Tvoj domovský server nebol dostupný. Tvoja relácia naďalej platí a v tomto zariadení sa nič nezmenilo.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic to skúša ďalej sám. Neprihlasuj sa znova: vzniklo by nové zariadenie a stratili by sa kľúče k tvojej šifrovanej histórii.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Skúsiť znova</translation>
     </message>
 </context>
 <context>

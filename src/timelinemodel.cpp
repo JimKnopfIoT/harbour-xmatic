@@ -128,6 +128,8 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(EditedRole, "edited");
     names.insert(PendingRole, "pending");
     names.insert(SendStateRole, "sendState");
+    names.insert(EditStateRole, "editState");
+    names.insert(RedactionStateRole, "redactionState");
     names.insert(ThreadRootRole, "threadRoot");
     names.insert(ThreadCountRole, "threadCount");
     names.insert(UtdCauseRole, "utdCause");
@@ -144,6 +146,18 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
 void TimelineModel::setPoll(const QString &eventId, const QJsonValue &poll)
 {
     patchField(indexOfEvent(eventId), QStringLiteral("poll"), poll);
+}
+
+double TimelineModel::oldestTimestamp() const
+{
+    double oldest = 0;
+    for (const QJsonObject &row : rows()) {
+        const double stamp = row.value(QStringLiteral("timestamp")).toDouble();
+        if (stamp > 0 && (oldest == 0 || stamp < oldest)) {
+            oldest = stamp;
+        }
+    }
+    return oldest;
 }
 
 int TimelineModel::indexOfEvent(const QString &eventId) const

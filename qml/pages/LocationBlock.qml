@@ -16,11 +16,15 @@ Column {
     property bool encrypted: true
 
     property bool own: false
+    // Drawn at the point where the location is the sender's own.
+    property string avatarSource: ""
+    property string avatarName: ""
     property string roomId
 
     readonly property bool hasPoint: !!location && typeof location.lat === "number"
                                      && typeof location.lon === "number"
     readonly property bool live: !!location && location.live === true
+    readonly property bool ownPosition: !!location && location.self === true
     /// The SDK's reading at row time, held against the clock: no diff marks the expiry.
     property real now: Date.now()
     readonly property bool active: live && location.active === true && now < location.until
@@ -105,6 +109,7 @@ Column {
 
         // The point, where the core centred it.
         Rectangle {
+            visible: !block.ownPosition
             width: Theme.paddingLarge
             height: width
             radius: width / 2
@@ -112,6 +117,28 @@ Column {
             color: block.live && !block.active ? Theme.secondaryColor : Theme.highlightColor
             border.color: "white"
             border.width: Math.max(1, Math.round(Theme.paddingSmall / 3))
+        }
+
+        // The sender's own position: their picture, ringed.
+        Rectangle {
+            visible: block.ownPosition
+            width: selfAvatar.size + 2 * border.width
+            height: width
+            radius: width / 2
+            anchors.centerIn: parent
+            color: "white"
+            border.color: block.live && !block.active ? Theme.secondaryColor : Theme.highlightColor
+            border.width: Math.max(2, Math.round(Theme.paddingSmall / 2))
+            opacity: block.live && !block.active ? 0.6 : 1
+
+            Avatar {
+                id: selfAvatar
+
+                anchors.centerIn: parent
+                size: Theme.iconSizeMedium
+                source: block.avatarSource
+                name: block.avatarName
+            }
         }
 
         // Required by the tile licence, and it says who drew the map.

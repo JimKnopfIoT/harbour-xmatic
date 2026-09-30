@@ -17,16 +17,17 @@ repository.
   session survives restarts
 * Session and local stores encrypted with a key from Sailfish Secrets. A
   device whose system does not provide that key service creates no store at
-  all: it says what is missing, how to install it and how to check the result,
-  and running without encryption is an explicit choice rather than a silent
-  fallback
+  all: it says what is missing, how to install it and how to check the result.
+  There is no way past it — the offer to continue unencrypted was withdrawn in
+  0.28.1, because the image it was built for is the one the package now refuses
+  to install on, and what the button was left doing was letting a dismissed
+  system dialog downgrade a device that can encrypt
 * Four coloured lines say how safe the device is — backup, recovery,
   cross-signing, local storage. Green is in order, orange is a fault you can
   clear, red is missing. Where something is not green they come up once after
   starting, with the action that fits and "later" always available
 * Room list over Simplified Sliding Sync: search, unread counts, favourites,
-  low priority, mute. Each row carries the last message and when it arrived;
-  a picture, a voice message or a poll is named by what it is
+  low priority, mute
 * Timeline in encrypted rooms: send, reply, edit, delete, paginate. A message
   that could not be sent can be sent again or discarded
 * Reactions, sent and shown, grouped by character with a count; the picker's
@@ -94,7 +95,7 @@ repository.
 * Voice and video calls over WebRTC. The media is encrypted between the two
   devices either way; in an encrypted room the signalling is too, which is what
   makes the call end-to-end and not merely encrypted on the wire
-* Twenty-nine interface languages, picked in the app rather than only by the
+* Thirty-two interface languages, picked in the app rather than only by the
   phone's setting
 
 ## What it looks like
@@ -106,7 +107,7 @@ repository.
 | <img src="screenshots/04-account.jpg" alt="The account" width="240"> | <img src="screenshots/05_1-appearance-colours.jpg" alt="Colours" width="240"> | <img src="screenshots/05_2-appearance-options.jpg" alt="More appearance" width="240"> |
 | The account, the device and this app | Every bubble, name and text colour is yours to set | Opacity, the return key, the keyboard, reactions as pictures |
 | <img src="screenshots/06-privacy.jpg" alt="Privacy" width="240"> | <img src="screenshots/07-privacy-device.jpg" alt="On this device" width="240"> | <img src="screenshots/08-languages.jpg" alt="Languages" width="240"> |
-| Who may call, and what others learn | What stays here, and for how long | Twenty-nine languages, switchable in the app |
+| Who may call, and what others learn | What stays here, and for how long | Thirty-two languages, switchable in the app |
 | <img src="screenshots/09-rooms.jpg" alt="The room list" width="240"> | <img src="screenshots/10-conversation.jpg" alt="A conversation" width="240"> | <img src="screenshots/11-room-menu.jpg" alt="The room's menu" width="240"> |
 | The room list, with search | Replies, reactions, a pinned message and a picture | What a room offers, including a call |
 | <img src="screenshots/12-room-info.jpg" alt="Room info" width="240"> | <img src="screenshots/13-rooms-menu.jpg" alt="Starting something" width="240"> | <img src="screenshots/14-directory.jpg" alt="The room directory" width="240"> |
@@ -140,6 +141,14 @@ its colours from the one you use.
   nothing: no address is created and your homeserver is told nothing.
 * Spoilers are marked rather than hidden: the text renderer available here
   cannot hide a run of text.
+* **A thread shows attachments by kind, not as pictures.** Answering in one and
+  starting one work, and thread replies stay in the room's timeline as well,
+  but inside the thread view a picture is a line saying there is a picture —
+  tap the message in the room to open it. Polls and reactions likewise live in
+  the room view only.
+* **A space badge counts its own rooms.** Unread messages in a sub-space are
+  not rolled up into the parent: a space whose traffic is all one level down
+  shows how many sub-spaces carry something, not how many messages wait.
 * **Most translations are unreviewed.** German is the project language,
   Norwegian came largely from a Norwegian speaker, and Finnish, Swedish and
   Danish had a correction pass. The rest, Chinese and Hindi among them, are a
@@ -215,5 +224,5 @@ functions; everything else is a JSON message type.
 ## Licence
 
 Copyright 2026 JimKnopfIoT. Apache-2.0, matching matrix-rust-sdk. The Rust core
-links a number of upstream crates, each under its own permissive licence (see
-`core/Cargo.toml` and the crates it pulls in).
+links a number of upstream crates, each under its own licence - mostly
+permissive, a few weak copyleft (MPL-2.0); `THIRD-PARTY.md` lists every one.

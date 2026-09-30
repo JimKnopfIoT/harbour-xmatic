@@ -29,6 +29,11 @@ function backupLevel(matrix) {
     if (s.backupEnabled) {
         return GREEN
     }
+    // Backup on its way in: a passing state, not a finding.
+    if (s.backup === "resuming" || s.backup === "enabling" || s.backup === "creating"
+            || s.backup === "downloading") {
+        return UNKNOWN
+    }
     // Null is not "no": a failed request used to read as "there is no key backup",
     // the red line that interrupts the start.
     if (s.backupOnServer === undefined || s.backupOnServer === null) {
@@ -47,6 +52,8 @@ function recoveryLevel(matrix) {
     switch (s.recovery) {
     case "enabled": return GREEN
     case "disabled": return RED
+    // Request failed: unknown, not orange.
+    case "unknown": return UNKNOWN
     // "incomplete" and anything unforeseen land here. An answer nobody recognises
     // may not be painted green.
     default: return ORANGE
@@ -58,8 +65,12 @@ function crossSigningLevel(matrix) {
     if (!s || s.recovery === undefined) {
         return UNKNOWN
     }
-    // Orange, not red: the core answers yes/no, so "not signed into an identity"
-    // cannot be told from "there is no identity", and the milder reading is honest.
+    // Null: the crypto machine has not answered yet.
+    if (s.crossSigned === undefined || s.crossSigned === null) {
+        return UNKNOWN
+    }
+    // Orange, not red: "not signed into an identity" cannot be told from "there
+    // is no identity", and the milder reading is honest.
     return s.crossSigned ? GREEN : ORANGE
 }
 
@@ -94,6 +105,11 @@ function overall(matrix) {
         }
     }
     return worst
+}
+
+// Orange or red. Unknown is not "not green".
+function actionable(level) {
+    return level === ORANGE || level === RED
 }
 
 // Whether there is anything to lead the user to. Unknown is not "not green":

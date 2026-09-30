@@ -26,6 +26,7 @@ mod roomlist;
 mod runtime;
 mod sdklog;
 mod search;
+mod sendqueue;
 mod session;
 mod storehealth;
 mod text;

@@ -532,6 +532,10 @@
         <source>Offline — waiting for the network</source>
         <translation>Offline — väntar på nätverket</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>ingen anslutning</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1706,10 +1710,6 @@
         <translation>Visa andras lässtatus</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Av hämtas inget om vem som läst vad, vilket också håller konversationen mjukare. På visar dina egna meddelanden hur många som läst dem.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Röstmeddelanden</translation>
     </message>
@@ -1872,6 +1872,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>På: kamerarutan visar vad kameran ser medan väljaren är öppen. Av: kameran startar först när du trycker på rutan.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Av varken följs eller visas vem som läst vad, vilket också håller konversationen mjukare. På visar dina egna meddelanden hur många som läst dem.</translation>
     </message>
 </context>
 <context>
@@ -2757,6 +2761,30 @@
         <source>Share location</source>
         <translation>Dela plats</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>borttagning inte skickad</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>redigering inte skickad</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Det fungerade inte. Försök igen om en stund.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Tillbaka till de senaste meddelandena</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Liveplats kunde inte startas</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Den väntar inte längre på att skickas.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3137,6 +3165,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Ett meddelande kunde inte skickas.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>En redigering kunde inte skickas.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>En borttagning kunde inte skickas. Meddelandet finns kvar för alla andra.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>En reaktion kunde inte skickas.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>En röst i en omröstning kunde inte skickas.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>En ändring kunde inte skickas.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>En person som du har verifierat har en ny identitet. Dra tillbaka verifieringen på personens profil och skicka sedan igen.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Den här enheten måste verifieras först.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Vissa enheter i det här rummet är inte verifierade.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Allt som skickats efter den i det här rummet väntar bakom den.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Skicka igen</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Kasta</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>En omröstning kunde inte skickas.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3165,6 +3248,60 @@
     <message>
         <source>Need help?</source>
         <translation>Behöver du hjälp?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Logga ut och radera lokala data</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Nyare version krävs</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix för Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Försök igen</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Din session sparades i ett format som den här versionen inte känner till, troligen av en nyare version av xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Om en nyare version av xmatic var installerad tidigare öppnas allt som förut när den installeras igen. Att logga ut raderar i stället data och nycklar på den här enheten.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Logga ut och radera lokala data</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Ingen anslutning</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix för Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Din hemserver kunde inte nås. Du är fortfarande inloggad, och ingenting har ändrats på den här enheten.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>xmatic fortsätter försöka på egen hand. Logga inte in igen: det skulle skapa en ny enhet och kosta nycklarna till din krypterade historik.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Försök igen</translation>
     </message>
 </context>
 <context>

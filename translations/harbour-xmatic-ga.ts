@@ -533,6 +533,10 @@
         <source>Offline — waiting for the network</source>
         <translation>As líne — ag fanacht leis an líonra</translation>
     </message>
+    <message>
+        <source>no connection</source>
+        <translation>gan nasc</translation>
+    </message>
 </context>
 <context>
     <name>CreatePollDialog</name>
@@ -1709,10 +1713,6 @@
         <translation>Taispeáin stádas léite daoine eile</translation>
     </message>
     <message>
-        <source>Off, nothing is fetched about who read what, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
-        <translation>Múchta, ní thugtar aon rud faoi cé a léigh cad, rud a choinníonn an comhrá níos réidhe freisin. Lasta, insíonn do theachtaireachtaí féin cé mhéad duine a léigh iad.</translation>
-    </message>
-    <message>
         <source>Voice messages</source>
         <translation>Teachtaireachtaí gutha</translation>
     </message>
@@ -1875,6 +1875,10 @@
     <message>
         <source>On, the camera cell shows what the camera sees while the picker is open. Off, the camera only runs once you tap the cell.</source>
         <translation>Air: taispeánann cill an cheamara a bhfeiceann an ceamara fad atá an roghnóir oscailte. As: ní thosaíonn an ceamara go dtí go mbrúnn tú an chill.</translation>
+    </message>
+    <message>
+        <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
+        <translation>Múchta, ní rianaítear agus ní thaispeántar cé a léigh cad, rud a choinníonn an comhrá níos réidhe freisin. Lasta, insíonn do theachtaireachtaí féin cé mhéad duine a léigh iad.</translation>
     </message>
 </context>
 <context>
@@ -2761,6 +2765,30 @@
         <source>Share location</source>
         <translation>Comhroinn suíomh</translation>
     </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>scriosadh gan seoladh</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>eagarthóireacht gan seoladh</translation>
+    </message>
+    <message>
+        <source>That did not work. Try again in a moment.</source>
+        <translation>Níor oibrigh sé sin. Bain triail eile as i gceann nóiméid.</translation>
+    </message>
+    <message>
+        <source>Back to the latest messages</source>
+        <translation>Ar ais chuig na teachtaireachtaí is déanaí</translation>
+    </message>
+    <message>
+        <source>Live location could not be started</source>
+        <translation>Níorbh fhéidir suíomh beo a thosú</translation>
+    </message>
+    <message>
+        <source>It is no longer waiting to be sent.</source>
+        <translation>Níl sé ag fanacht le seoladh a thuilleadh.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3141,6 +3169,61 @@
     </message>
 </context>
 <context>
+    <name>SendQueueBanner</name>
+    <message>
+        <source>A message could not be sent.</source>
+        <translation>Níorbh fhéidir teachtaireacht a sheoladh.</translation>
+    </message>
+    <message>
+        <source>An edit could not be sent.</source>
+        <translation>Níorbh fhéidir eagarthóireacht a sheoladh.</translation>
+    </message>
+    <message>
+        <source>A deletion could not be sent. The message is still there for everyone else.</source>
+        <translation>Níorbh fhéidir scriosadh a sheoladh. Tá an teachtaireacht ann fós do gach duine eile.</translation>
+    </message>
+    <message>
+        <source>A reaction could not be sent.</source>
+        <translation>Níorbh fhéidir freagairt a sheoladh.</translation>
+    </message>
+    <message>
+        <source>A poll vote could not be sent.</source>
+        <translation>Níorbh fhéidir vóta pobalbhreithe a sheoladh.</translation>
+    </message>
+    <message>
+        <source>A change could not be sent.</source>
+        <translation>Níorbh fhéidir athrú a sheoladh.</translation>
+    </message>
+    <message>
+        <source>Someone you verified has a new identity. Withdraw the verification on their profile, then send again.</source>
+        <translation>Tá aitheantas nua ag duine a d&apos;fhíoraigh tú. Tarraing an fíorú siar ar phróifíl an duine sin, ansin seol arís.</translation>
+    </message>
+    <message>
+        <source>This device has to be verified first.</source>
+        <translation>Ní mór an gléas seo a fhíorú ar dtús.</translation>
+    </message>
+    <message>
+        <source>Some devices in this room are not verified.</source>
+        <translation>Níl roinnt gléasanna sa seomra seo fíoraithe.</translation>
+    </message>
+    <message>
+        <source>Everything sent after it in this room waits behind it.</source>
+        <translation>Tá gach rud a seoladh ina dhiaidh sa seomra seo ag fanacht taobh thiar de.</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Seol arís</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Caith uait</translation>
+    </message>
+    <message>
+        <source>A poll could not be sent.</source>
+        <translation>Níorbh fhéidir pobalbhreith a sheoladh.</translation>
+    </message>
+</context>
+<context>
     <name>SessionLockedPage</name>
     <message>
         <source>Sign out and delete local data</source>
@@ -3169,6 +3252,60 @@
     <message>
         <source>Need help?</source>
         <translation>An bhfuil cabhair uait?</translation>
+    </message>
+</context>
+<context>
+    <name>SessionNewerPage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Sínigh amach agus scrios na sonraí áitiúla</translation>
+    </message>
+    <message>
+        <source>Newer version needed</source>
+        <translation>Leagan níos nuaí de dhíth</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix do Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Bain triail eile as</translation>
+    </message>
+    <message>
+        <source>Your session was saved in a format this version does not know, most likely by a newer version of xmatic.</source>
+        <translation>Sábháladh do sheisiún i bhformáid nach n-aithníonn an leagan seo, is dócha ag leagan níos nuaí de xmatic.</translation>
+    </message>
+    <message>
+        <source>If a newer version of xmatic was installed before, installing it again opens everything as before. Signing out instead deletes the data and keys this device holds.</source>
+        <translation>Má bhí leagan níos nuaí de xmatic suiteáilte roimhe seo, osclóidh gach rud mar a bhí nuair a shuiteáiltear arís é. Má shíníonn tú amach ina ionad sin, scriosfar sonraí agus eochracha an ghléis seo.</translation>
+    </message>
+</context>
+<context>
+    <name>SessionOfflinePage</name>
+    <message>
+        <source>Sign out and delete local data</source>
+        <translation>Sínigh amach agus scrios na sonraí áitiúla</translation>
+    </message>
+    <message>
+        <source>No connection</source>
+        <translation>Gan nasc</translation>
+    </message>
+    <message>
+        <source>Matrix for Sailfish OS</source>
+        <translation>Matrix do Sailfish OS</translation>
+    </message>
+    <message>
+        <source>Your homeserver could not be reached. You are still signed in, and nothing on this device has changed.</source>
+        <translation>Níorbh fhéidir teacht ar do fhreastalaí baile. Tá tú sínithe isteach fós, agus níor athraigh aon rud ar an ngléas seo.</translation>
+    </message>
+    <message>
+        <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
+        <translation>Leanann xmatic air ag iarraidh as a stuaim féin. Ná sínigh isteach arís: chruthódh sé sin gléas nua agus chaillfí na heochracha do do stair chriptithe.</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Bain triail eile as</translation>
     </message>
 </context>
 <context>

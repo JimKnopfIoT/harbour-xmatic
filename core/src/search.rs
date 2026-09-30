@@ -89,7 +89,7 @@ pub async fn room(
     query: &str,
     limit: usize,
     offset: usize,
-) -> Result<Vec<Value>, String> {
+) -> Result<(Vec<Value>, usize), String> {
     let parsed = matrix_sdk::ruma::RoomId::parse(room_id)
         .map_err(|_| "not a room identifier".to_owned())?;
     let room = client
@@ -98,7 +98,7 @@ pub async fn room(
 
     let query = build_query(query);
     if query.is_empty() {
-        return Ok(Vec::new());
+        return Ok((Vec::new(), 0));
     }
 
     let ids = room
@@ -106,8 +106,9 @@ pub async fn room(
         .await
         .map_err(|error| format!("search failed: {}", scrub_ids(&error.to_string())))?;
 
-    let mut rows = Vec::with_capacity(ids.len());
-    for id in ids {
+    let hits = ids.len();
+    let mut rows = Vec::with_capacity(hits);
+    for (_, id) in ids {
         // From the cache where it has it: the index only names events that passed
         // through this device, so the fetch is the exception.
         let Ok(fetched) = room.load_or_fetch_event(&id, None).await else {
@@ -117,9 +118,22 @@ pub async fn room(
             continue;
         };
 
-        let body = value
-            .get("content")
+        // Poll fallback text: a string (unstable) or representations (stable).
+        let content = value.get("content");
+        let body = content
             .and_then(|content| content.get("body"))
+            .or_else(|| content.and_then(|content| content.get("org.matrix.msc1767.text")))
+            .or_else(|| {
+                // Plain, not first.
+                let texts = content.and_then(|content| content.get("m.text"))?.as_array()?;
+                texts
+                    .iter()
+                    .find(|text| {
+                        text.get("mimetype").and_then(Value::as_str).is_none_or(|m| m == "text/plain")
+                    })
+                    .or_else(|| texts.first())
+                    .and_then(|text| text.get("body"))
+            })
             .and_then(|body| body.as_str())
             .unwrap_or_default();
         // A hit whose body cannot be read any more - redacted after indexing - is not
@@ -149,7 +163,7 @@ pub async fn room(
         }));
     }
 
-    Ok(rows)
+    Ok((rows, hits))
 }
 
 #[cfg(test)]
