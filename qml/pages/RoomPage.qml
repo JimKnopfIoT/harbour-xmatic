@@ -4,6 +4,8 @@ import Sailfish.Pickers 1.0
 import QtMultimedia 5.6
 import "Formatting.js" as Formatting
 import "MatrixLinks.js" as MatrixLinks
+import "LinkMarks.js" as LinkMarks
+import "MessageBody.js" as MessageBody
 import "Composing.js" as Composing
 import "SecurityStatus.js" as SecurityStatus
 
@@ -38,6 +40,14 @@ Page {
     // Media keys whose fetch failed - refused, dropped, given up on. Without them
     // the row cannot tell "still loading" from "never coming".
     property var failedMedia: ({})
+    // Delegates ask again for what they lack.
+    signal mediaRetry()
+
+    function forgetFailedMedia(key) {
+        var marked = page.failedMedia
+        delete marked[key]
+        page.failedMedia = marked
+    }
 
     // Set while an already sent message is being rewritten.
     property string editingEventId: ""
@@ -214,6 +224,14 @@ Page {
             // Reassigned, not mutated in place: a JavaScript object changed
             // through its own reference tells no binding anything.
             page.failedMedia = marked
+        }
+
+        // Back online: a failed picture gets a second attempt.
+        onSyncStateChanged: {
+            if (matrix.syncState === "running" && Object.keys(page.failedMedia).length > 0) {
+                page.failedMedia = ({})
+                page.mediaRetry()
+            }
         }
 
         // What the room says about itself against what the caller believed: encryption,
@@ -1539,28 +1557,8 @@ Page {
                     }
                     // Unknown counts as encrypted: the failure direction of this
                     // gate is the one that asks the server nothing.
-                    if (settings.linkPreviews === "never"
-                            || (settings.linkPreviews === "unencrypted"
-                                && (page.encrypted || !page.encryptionKnown))) {
-                        return ""
-                    }
-                    // The same alphabet linkifyBody uses, so the card describes
-                    // the address a tap on the text would open.
-                    var found = /https?:\/\/[^\s<>"]+/.exec(model.body || "")
-                    if (!found) {
-                        return ""
-                    }
-                    var address = found[0].replace(/[.,;:!?]+$/, "")
-                    // A closing bracket without its opener belongs to the sentence.
-                    if (/\)$/.test(address) && address.indexOf("(") < 0) {
-                        address = address.slice(0, -1)
-                    }
-                    // Through the same gate as the link in the text. The card is
-                    // a link too: it is tappable and it leads to the address it
-                    // shows. Without this, an address the text refused - not
-                    // ASCII, or a user name in front of the host - came back as a
-                    // card, and the homeserver was asked to fetch it as well.
-                    return page.safeHref(address)
+                    return MessageBody.previewUrl(model.body, settings.linkPreviews,
+                                                  page.encrypted || !page.encryptionKnown)
                 }
                 // A poll draws itself; its fallback text would repeat the
                 // question and list the answers a second time.
@@ -1573,51 +1571,17 @@ Page {
                         && page.canRedactOthers
                         && model.kind === "message"
                         && (model.eventId || "").length > 0
-                // Only a body that visibly carries a link pays the rich-text path, behind a
-                // setting. Never for a file row: its caption is a stranger's text.
-                readonly property bool hasLink: model.kind === "message"
-                                                && !model.media
-                                                && ((settings.clickableLinks
-                                                     && /https?:\/\//.test(model.body || ""))
-                                                    || MatrixLinks.hasAddress(model.body))
-                // The core made this markup itself and escaped the sender's characters, so it
-                // can go to StyledText like a linkified body.
-                readonly property bool hasFormatted: model.kind === "message"
-                                                     && !model.media
-                                                     && (model.formatted || "").length > 0
-
+                // Never for a file row: its caption is a stranger's text.
                 // The body as markup, or empty where plain text will do. One property for
                 // format and text, so a Label can never parse what was not built for it.
                 readonly property int emojiPixels: Math.round(Theme.fontSizeSmall * 1.3)
-                readonly property string richBody: {
-                    if (model.kind !== "message" || !!model.media) {
-                        return ""
-                    }
-                    var base = ""
-                    if (hasFormatted) {
-                        base = Formatting.renderFormatted(model.formatted,
-                                                          settings.clickableLinks,
-                                                          Theme.highlightColor)
-                    } else if (hasLink) {
-                        base = page.linkifyBody(model.body || "")
-                    } else if (settings.emojiImages) {
-                        base = page.escapeBody(model.body || "")
-                    } else {
-                        return ""
-                    }
-                    if (!settings.emojiImages) {
-                        return base
-                    }
-                    var pictured = Formatting.withEmojiPictures(
-                                base, emojiPixels,
-                                function(key) { return matrix.emojiSource(key) })
-                    // A plain body with no picture in it stays plain text -
-                    // the markup renderer costs more and buys nothing.
-                    if (!hasFormatted && !hasLink && pictured === base) {
-                        return ""
-                    }
-                    return pictured
-                }
+                readonly property string richBody: model.kind !== "message" || !!model.media
+                                                   ? ""
+                                                   : MessageBody.rich(model.body, model.formatted,
+                                                                      settings,
+                                                                      Theme.highlightColor,
+                                                                      emojiPixels,
+                                                                      function(key) { return matrix.emojiSource(key) })
 
                 // Calls and membership changes show as a centred line so a room made of them
                 // is not empty. Pure profile changes collapse but stay, or indices drift.
@@ -1671,10 +1635,29 @@ Page {
                 // Taller than the page: Silica's menu renders the row into one texture, and past
                 // the GPU's limit that texture is black. Such a row gets the actions as a page.
                 readonly property bool tall: contentHeight > page.height
+                // The link a press is holding, while its menu is open.
+                property string heldLink: ""
+                property var linkMarks: []
                 // Folded to three lines, past a page of text, until opened.
                 readonly property bool expanded: page.expandedRevision >= 0
                                                  && !!page.expandedRows[model.id]
                 readonly property bool longBody: bodyFull.implicitHeight > page.height
+
+                // Tap and hold alike. Too tall for a menu: the old confirmation instead.
+                function holdLink(link, x, y) {
+                    if (row.tall) {
+                        page.followLink(link)
+                        return
+                    }
+                    var origin = bodyLabel.mapToItem(row, 0, 0)
+                    linkHighlight.x = origin.x
+                    linkHighlight.y = origin.y
+                    row.heldLink = link
+                    // From the preview card there is no press in the text, and nothing to mark.
+                    row.linkMarks = x === undefined ? []
+                                                      : LinkMarks.sweep(bodyLabel, row, link, x, y)
+                    row.openMenu()
+                }
 
                 function holdMenu() {
                     if (row.tall) {
@@ -1735,18 +1718,36 @@ Page {
                 enabled: model.kind === "message" || row.isSystem
                 // Every entry of the menu is about a message; a system line would
                 // open it empty.
-                showMenuOnPressAndHold: model.kind === "message" && !row.tall
-                onPressAndHold: {
-                    if (model.kind === "message" && row.tall) {
-                        row.showActions()
+                showMenuOnPressAndHold: false
+                // A link answers itself; the text around it opens the message's menu.
+                onClicked: {
+                    var link = LinkMarks.linkAt(bodyLabel, row, mouse.x, mouse.y)
+                    if (link.length > 0) {
+                        row.holdLink(link, mouse.x, mouse.y)
                     }
+                }
+                onPressAndHold: {
+                    if (model.kind !== "message" || !row.down) {
+                        return
+                    }
+                    var link = LinkMarks.linkAt(bodyLabel, row, mouse.x, mouse.y)
+                    if (link.length > 0) {
+                        row.holdLink(link, mouse.x, mouse.y)
+                        return
+                    }
+                    row.holdMenu()
                 }
                 _showPress: false
 
                 // A growing height under an open menu is the menu, not new rows:
                 // following it scrolls the pressed row off the top.
-                onMenuOpenChanged: page.openMenus = Math.max(0, page.openMenus
-                                                             + (menuOpen ? 1 : -1))
+                onMenuOpenChanged: {
+                    page.openMenus = Math.max(0, page.openMenus + (menuOpen ? 1 : -1))
+                    if (!menuOpen) {
+                        row.heldLink = ""
+                        row.linkMarks = []
+                    }
+                }
                 // A recycled delegate takes its menu with it, and that closing
                 // does not always come back as a `menuOpen` change.
                 Component.onDestruction: {
@@ -1759,12 +1760,33 @@ Page {
                 // 600 px, four menu rows, and a message's menu needs six. Those move to a page.
                 menu: ContextMenu {
 
+                    // A held link: its three actions and Pin; nothing else of the message.
+                    MenuItem {
+                        text: qsTr("Open link?")
+                        visible: row.heldLink.length > 0
+                        onClicked: page.followLink(row.heldLink, undefined, true)
+                    }
+
+                    MenuItem {
+                        text: qsTr("Copy link")
+                        visible: row.heldLink.length > 0
+                        onClicked: Clipboard.text = row.heldLink
+                    }
+
+                    MenuItem {
+                        text: qsTr("Forward link")
+                        visible: row.heldLink.length > 0
+                        onClicked: pageStack.push(Qt.resolvedUrl("ForwardPage.qml"),
+                                                  { body: row.heldLink })
+                    }
+
                     MenuItem {
                         // Also the only way out for a send that failed for good: it has no event id,
                         // and without this it sits in the room for ever.
                         text: model.sendState === "failed"
                               ? qsTr("Discard") : qsTr("Delete")
-                        visible: !page.isLandscape
+                        visible: row.heldLink.length === 0
+                                 && !page.isLandscape
                                  && (row.isOwn || row.canDeleteForOther)
                         onClicked: page.confirmDelete(model.eventId || "",
                                                       model.txnId || "",
@@ -1788,7 +1810,8 @@ Page {
                         // Starting one, not only answering in one that exists: the marker opens a
                         // thread that is already there.
                         text: qsTr("Reply in thread")
-                        visible: model.kind === "message"
+                        visible: row.heldLink.length === 0
+                                 && model.kind === "message"
                                  && (model.eventId || "").length > 0
                                  && !page.isLandscape
                         onClicked: pageStack.push(Qt.resolvedUrl("ThreadPage.qml"), {
@@ -1798,7 +1821,8 @@ Page {
                                                                    && model.threadRoot.length > 0
                                                                    ? model.threadRoot
                                                                    : model.eventId,
-                                                      encrypted: page.encrypted
+                                                      encrypted: page.encrypted,
+                                                      encryptionKnown: page.encryptionKnown
                                                   })
                     }
 
@@ -1808,7 +1832,8 @@ Page {
                         // The queue gave up on this one; this puts it back in
                         // line. Nothing else in the app could move it.
                         text: qsTr("Send again")
-                        visible: model.sendState === "failed" && !page.isLandscape
+                        visible: row.heldLink.length === 0
+                                 && model.sendState === "failed" && !page.isLandscape
                         onClicked: matrix.retryMessage(model.txnId || "")
                     }
 
@@ -1816,13 +1841,15 @@ Page {
 
                     MenuItem {
                         text: qsTr("Save")
-                        visible: (row.isFile || row.isImage) && !page.isLandscape
+                        visible: row.heldLink.length === 0
+                                 && (row.isFile || row.isImage) && !page.isLandscape
                         onClicked: page.saveAttachment(model)
                     }
 
                     MenuItem {
                         text: qsTr("Convert to text")
-                        visible: row.canTranscribe && !page.isLandscape
+                        visible: row.heldLink.length === 0
+                                 && row.canTranscribe && !page.isLandscape
                                  && row.transcriptState !== "working"
                                  && row.transcriptState !== "done"
                         onClicked: matrix.transcripts.transcribe(model.id, model.eventId, model.media)
@@ -1832,7 +1859,8 @@ Page {
 
                     MenuItem {
                         text: qsTr("Copy")
-                        visible: (model.body || "").length > 0
+                        visible: row.heldLink.length === 0
+                                 && (model.body || "").length > 0
                         onClicked: Clipboard.text = model.body
                     }
 
@@ -1842,7 +1870,8 @@ Page {
                         text: qsTr("Forward")
                         // An attachment goes as the file, never as its name: hung off the body
                         // alone, this forwarded a video as the sentence "clip.mp4".
-                        visible: (row.isFile || row.isImage
+                        visible: row.heldLink.length === 0
+                                 && (row.isFile || row.isImage
                                   || (model.body || "").length > 0)
                                  && !page.isLandscape
                         onClicked: {
@@ -1860,7 +1889,8 @@ Page {
 
                     MenuItem {
                         text: qsTr("Edit")
-                        visible: row.isOwn && model.editable === true && !page.isLandscape
+                        visible: row.heldLink.length === 0
+                                 && row.isOwn && model.editable === true && !page.isLandscape
                                  && !page.inSlice
                         onClicked: page.beginEdit(model.eventId, model.body)
                     }
@@ -1869,7 +1899,8 @@ Page {
 
                     MenuItem {
                         text: qsTr("React")
-                        visible: model.kind === "message"
+                        visible: row.heldLink.length === 0
+                                 && model.kind === "message"
                                  && (model.eventId || "").length > 0
                                  && !page.isLandscape
                         onClicked: page.pickReaction(model.eventId)
@@ -1879,7 +1910,8 @@ Page {
 
                     MenuItem {
                         text: qsTr("Reply")
-                        visible: model.kind === "message"
+                        visible: row.heldLink.length === 0
+                                 && model.kind === "message"
                         onClicked: page.beginReply(model.eventId, model.senderName, model.body)
                     }
 
@@ -1887,9 +1919,17 @@ Page {
 
                     MenuItem {
                         text: qsTr("More…")
-                        visible: page.isLandscape
+                        visible: row.heldLink.length === 0
+                                 && page.isLandscape
                         onClicked: row.showActions()
                     }
+                }
+
+                LinkHighlight {
+                    id: linkHighlight
+
+                    label: bodyLabel
+                    marks: row.linkMarks
                 }
 
                 // The sender's picture, for other people only. Keyed by the address, so five
@@ -1953,7 +1993,9 @@ Page {
                                         ? appearance.otherBubbleColor
                                         : Theme.highlightBackgroundColor,
                                         appearance.otherBubbleOpacity)
-                    opacity: model.pending === true ? 0.5 : 1.0
+                    // A held link is marked alone: the bubble steps back with the rest of the page.
+                    opacity: row.linkMarks.length > 0 ? Theme.opacityLow
+                                                     : (model.pending === true ? 0.5 : 1.0)
 
                     Column {
                         id: bubbleColumn
@@ -2143,6 +2185,15 @@ Page {
                                             }
                                         }
                                     }
+
+                                    Connections {
+                                        target: page
+                                        onMediaRetry: {
+                                            if (quoteThumb.source == "") {
+                                                quoteThumb.load()
+                                            }
+                                        }
+                                    }
                                 }
                             }
 
@@ -2295,15 +2346,22 @@ Page {
                                             ? "file://" + known : ""
                                 }
 
-                                Component.onCompleted: {
+                                // A request is out; the spinner belongs to it.
+                                property bool requested: false
+
+                                Component.onCompleted: fetch(false)
+
+                                // `asked`: a tap, which overrides "load pictures: off".
+                                function fetch(asked) {
                                     if (!row.hasPreview || source != "") {
                                         return
                                     }
                                     // Only when asked, where the user said so: scrolling past a picture
-                                    // is a request to the sender's server. The line stays tappable.
-                                    if (!settings.autoLoadMedia) {
+                                    // is a request to the sender's server. The frame stays tappable.
+                                    if (!asked && !settings.autoLoadMedia) {
                                         return
                                     }
+                                    requested = true
                                     // A sender's thumbnail is already small and, in encrypted rooms, the only one
                                     // there is. A video has no other preview at all.
                                     if (model.media.thumbnailSource) {
@@ -2359,21 +2417,74 @@ Page {
                                     }
                                 }
 
+                                Connections {
+                                    target: page
+                                    onMediaRetry: attachment.fetch(false)
+                                }
+
                                 BusyIndicator {
                                     anchors.centerIn: parent
                                     size: BusyIndicatorSize.Medium
                                     // Not while waiting for something that is not coming: a refused or failed
                                     // download left this turning for the life of the page.
                                     running: attachment.visible && attachment.source == ""
+                                             && attachment.requested
                                              && !page.failedMedia[model.id]
+                                }
+
+                                // Failed or not yet asked for: the frame says what a tap does.
+                                readonly property bool waitsForTap: visible && source == ""
+                                                                     && (!!page.failedMedia[model.id]
+                                                                         || !requested)
+
+                                Image {
+                                    id: retryIcon
+
+                                    anchors {
+                                        horizontalCenter: parent.horizontalCenter
+                                        verticalCenter: parent.verticalCenter
+                                        verticalCenterOffset: -retryLabel.height / 2
+                                    }
+                                    visible: attachment.waitsForTap
+                                    source: page.failedMedia[model.id]
+                                            ? "image://theme/icon-m-refresh?" + Theme.secondaryColor
+                                            : "image://theme/icon-m-image?" + Theme.secondaryColor
+                                }
+
+                                Label {
+                                    id: retryLabel
+
+                                    anchors {
+                                        top: retryIcon.bottom
+                                        topMargin: Theme.paddingSmall
+                                        horizontalCenter: parent.horizontalCenter
+                                    }
+                                    width: parent.width - 2 * Theme.paddingMedium
+                                    visible: attachment.waitsForTap
+                                    horizontalAlignment: Text.AlignHCenter
+                                    wrapMode: Text.Wrap
+                                    font.pixelSize: Theme.fontSizeExtraSmall
+                                    color: Theme.secondaryColor
+                                    text: page.failedMedia[model.id]
+                                          ? qsTr("Could not load. Tap to try again.")
+                                          : qsTr("Tap to load")
                                 }
 
                                 MouseArea {
                                     anchors.fill: parent
-                                    enabled: row.hasPreview && attachment.source != ""
-                                    onClicked: row.isVideo
-                                               ? page.openVideo(model.id, model.media)
-                                               : page.openImage(model.id, model.media)
+                                    enabled: row.hasPreview
+                                    onClicked: {
+                                        if (attachment.source == "") {
+                                            page.forgetFailedMedia(model.id)
+                                            attachment.fetch(true)
+                                            return
+                                        }
+                                        if (row.isVideo) {
+                                            page.openVideo(model.id, model.media)
+                                        } else {
+                                            page.openImage(model.id, model.media)
+                                        }
+                                    }
                                     // The delegate's own menu still has to be reachable.
                                     onPressAndHold: row.holdMenu()
                                 }
@@ -2515,11 +2626,10 @@ Page {
                             maximumLineCount: row.longBody && !row.expanded ? 3 : 1000000
                             elide: row.longBody && !row.expanded ? Text.ElideRight : Text.ElideNone
                             // Plain text on purpose: a body is untrusted and AutoText renders anything
-                            // HTML-shaped, `<img>` included. StyledText only after linkifyBody escaped it.
+                            // HTML-shaped, `<img>` included. StyledText only after MessageBody escaped it.
                             textFormat: row.richBody.length > 0
                                         ? Text.StyledText : Text.PlainText
                             linkColor: Theme.highlightColor
-                            onLinkActivated: page.followLink(link)
                             wrapMode: Text.Wrap
                             font.pixelSize: Theme.fontSizeSmall
                             font.italic: model.kind !== "message"
@@ -2641,7 +2751,7 @@ Page {
                                 // The same switch the link in the text obeys. Without
                                 // it "links stay plain text" left the card openable.
                                 tappable: settings.clickableLinks
-                                onActivated: page.followLink(link)
+                                onActivated: row.holdLink(link)
                             }
                         }
 
@@ -2711,7 +2821,8 @@ Page {
                                                    rootEventId: model.threadCount > 0
                                                                 ? model.eventId
                                                                 : model.threadRoot,
-                                                   encrypted: page.encrypted
+                                                   encrypted: page.encrypted,
+                                                   encryptionKnown: page.encryptionKnown
                                                })
                                 onPressAndHold: row.holdMenu()
                             }
@@ -3837,7 +3948,8 @@ Page {
                            roomId: page.roomId,
                            roomName: page.roomName,
                            rootEventId: eventId,
-                           encrypted: page.encrypted
+                           encrypted: page.encrypted,
+                           encryptionKnown: page.encryptionKnown
                        })
     }
 
@@ -3993,9 +4105,14 @@ Page {
     // A tapped link. A Matrix address is answered inside the app; anything
     // else is a web address and goes where it always went.
     // `map`: a location card's cached map, shown under the address.
-    function followLink(link, map) {
+    // `shown`: asked in the link menu already, no second confirmation.
+    function followLink(link, map, shown) {
         var target = MatrixLinks.decide(link)
         if (target.kind === "none") {
+            return
+        }
+        if (target.kind === "web" && shown === true) {
+            Qt.openUrlExternally(link)
             return
         }
         if (target.kind === "web") {
@@ -4054,70 +4171,6 @@ Page {
             }
             page.pendingAddress = ""
         }
-    }
-
-    /// Everything a sender wrote loses its meaning as markup here, and only
-    /// here. Whatever is appended afterwards was written by this app.
-    function escapeBody(body) {
-        return body.replace(/&/g, "&amp;")
-                   .replace(/</g, "&lt;")
-                   .replace(/>/g, "&gt;")
-    }
-
-    /// A URL inside an href, where Qt decodes no entities: the ampersand has to
-    /// stay itself. Anything that could end the attribute is refused.
-    function safeHref(url) {
-        if (/["'<>`\\\s]/.test(url)) {
-            return ""
-        }
-        // The same rule the core applies to a formatted link: an address is
-        // ASCII. Anything else is invisible, a homograph, or both — and this
-        // one is drawn from the plain body, which keeps its zero-width
-        // characters because an emoji sequence needs them.
-        if (/[^\x20-\x7e]/.test(url)) {
-            return ""
-        }
-        // Everything before an "@" in the authority is a user name; the host
-        // that decides sits behind it, past where the dialog wraps.
-        var authority = url.replace(/^https?:\/\//i, "").split(/[\/?#]/)[0]
-        return authority.indexOf("@") >= 0 ? "" : url
-    }
-
-    function linkifyBody(body) {
-        var escaped = page.escapeBody(body)
-        // One pass over both kinds, web address first: a matrix.to permalink carries
-        // a room address inside itself.
-        var pattern = /(https?:\/\/[^\s<>"]+)|([#@!][A-Za-z0-9._=\-\/+]+:[A-Za-z0-9.\-]+(?::[0-9]+)?)/g
-        return escaped.replace(pattern, function(match, url, address) {
-            var trail = ""
-            var target = url || address
-            // Sentence punctuation glued to the end is not part of the link.
-            var punctuation = target.match(/[.,;:!?]+$/)
-            if (punctuation) {
-                trail = punctuation[0]
-                target = target.slice(0, target.length - trail.length)
-            }
-            if (url) {
-                // A closing parenthesis only when none was opened.
-                if (target.charAt(target.length - 1) === ")" && target.indexOf("(") < 0) {
-                    target = target.slice(0, target.length - 1)
-                    trail = ")" + trail
-                }
-                // A Matrix permalink is handled in the app, so it stays tappable even where
-                // web links are off - it never reaches a browser.
-                if (!settings.clickableLinks && !MatrixLinks.parse(target)) {
-                    return target + trail
-                }
-                // The href as written, not as shown: `target` left the escaper with
-                // `&amp;`, and Qt decodes no entities in an attribute.
-                var href = page.safeHref(target.replace(/&amp;/g, "&"))
-                if (href.length === 0) {
-                    return target + trail
-                }
-                return "<a href=\"" + href + "\">" + target + "</a>" + trail
-            }
-            return "<a href=\"xmatic:" + target + "\">" + target + "</a>" + trail
-        })
     }
 
     function storeFile(path, item) {

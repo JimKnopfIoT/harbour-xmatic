@@ -2789,6 +2789,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Tai nebelaukia išsiuntimo.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Nepavyko įkelti. Bakstelėk, kad bandytum dar kartą.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Bakstelėk, kad įkeltum</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Atverti nuorodą?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopijuoti nuorodą</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Persiųsti nuorodą</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3689,6 +3709,22 @@
     <message>
         <source>Open</source>
         <translation>Atverti</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Atverti nuorodą?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopijuoti nuorodą</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Persiųsti nuorodą</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Prisegti</translation>
     </message>
 </context>
 <context>

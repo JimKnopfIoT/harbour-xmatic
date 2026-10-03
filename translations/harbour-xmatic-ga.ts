@@ -2789,6 +2789,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Níl sé ag fanacht le seoladh a thuilleadh.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Níorbh fhéidir é a lódáil. Tapáil chun triail eile a bhaint as.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Tapáil chun lódáil</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>An nasc a oscailt?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Cóipeáil an nasc</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Seol an nasc ar aghaidh</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3689,6 +3709,22 @@
     <message>
         <source>Open</source>
         <translation>Oscail</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>An nasc a oscailt?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Cóipeáil an nasc</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Seol an nasc ar aghaidh</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Pionnáil</translation>
     </message>
 </context>
 <context>

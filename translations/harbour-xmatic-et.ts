@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>See ei oota enam saatmist.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Laadimine ebaõnnestus. Puuduta, et uuesti proovida.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Puuduta laadimiseks</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Ava link?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopeeri link</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Edasta link</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Ava</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Ava link?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopeeri link</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Edasta link</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kinnita üles</translation>
     </message>
 </context>
 <context>

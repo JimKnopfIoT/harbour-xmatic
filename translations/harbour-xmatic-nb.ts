@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Den venter ikke lenger på å bli sendt.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Kunne ikke lastes inn. Trykk for å prøve igjen.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Trykk for å laste inn</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Åpne lenke?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopier lenke</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Videresend lenke</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Åpne</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Åpne lenke?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopier lenke</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Videresend lenke</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Fest</translation>
     </message>
 </context>
 <context>

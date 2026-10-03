@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Sie wartet nicht mehr darauf, gesendet zu werden.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Konnte nicht geladen werden. Tippe für einen neuen Versuch.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Antippen zum Laden</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Link öffnen?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Link kopieren</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Link weiterleiten</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Öffnen</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Link öffnen?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Link kopieren</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Link weiterleiten</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Anpinnen</translation>
     </message>
 </context>
 <context>

@@ -297,6 +297,7 @@ DISTFILES += \
     qml/pages/CameraCapturePage.qml \
     qml/pages/ShareLocationPage.qml \
     qml/pages/LinkPreviewCard.qml \
+    qml/pages/LinkHighlight.qml \
     qml/pages/CreatePollDialog.qml \
     qml/pages/Composing.js \
     qml/pages/FormatBar.qml \
@@ -328,6 +329,8 @@ DISTFILES += \
     qml/pages/LanguagePage.qml \
     qml/pages/Formatting.js \
     qml/pages/MatrixLinks.js \
+    qml/pages/LinkMarks.js \
+    qml/pages/MessageBody.js \
     qml/pages/Preview.js \
     qml/pages/ConfirmDialog.qml \
     qml/pages/ImageViewPage.qml \

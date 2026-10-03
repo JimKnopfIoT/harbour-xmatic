@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Δεν περιμένει πια να σταλεί.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Δεν ήταν δυνατή η φόρτωση. Πάτα για να δοκιμάσεις ξανά.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Πάτα για φόρτωση</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Άνοιγμα του συνδέσμου;</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Αντίγραψε τον σύνδεσμο</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Προώθησε τον σύνδεσμο</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Άνοιγμα</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Άνοιγμα του συνδέσμου;</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Αντίγραψε τον σύνδεσμο</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Προώθησε τον σύνδεσμο</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Καρφίτσωμα</translation>
     </message>
 </context>
 <context>

@@ -2781,6 +2781,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Már nem vár elküldésre.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Nem sikerült betölteni. Koppints az újrapróbáláshoz.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Koppints a betöltéshez</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Megnyitod a hivatkozást?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Hivatkozás másolása</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Hivatkozás továbbítása</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3679,6 +3699,22 @@
     <message>
         <source>Open</source>
         <translation>Megnyitás</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Megnyitod a hivatkozást?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Hivatkozás másolása</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Hivatkozás továbbítása</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kitűzés</translation>
     </message>
 </context>
 <context>
