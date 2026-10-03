@@ -3026,6 +3026,14 @@
         <source>What this page measured</source>
         <translation>このページが測定した内容</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>端末ロックコードを設定しておく必要があります — 設定 › 端末ロック。サービスは起動時にこのコードで解除され、設定がないとロックされたままです。</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>設定 › 鍵 でマスターロックがロック中と表示される場合、端末ロックでは解除されない独自のコードが設定されています。そこで解除してそのコードを削除し、端末を再起動してください。</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

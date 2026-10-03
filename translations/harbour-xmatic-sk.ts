@@ -3034,6 +3034,14 @@
         <source>What this page measured</source>
         <translation>Čo táto stránka namerala</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Musí byť nastavený kód zámku zariadenia — Nastavenia › Zámok zariadenia. Služba sa ním pri spustení odomyká; bez neho zostane zamknutá.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Ak Nastavenia › Kľúče ukazujú hlavný zámok ako zamknutý, je tam nastavený vlastný kód, ktorý zámok zariadenia neotvorí. Odomkni ho tam, odstráň ten kód a reštartuj zariadenie.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

@@ -3034,6 +3034,14 @@
         <source>What this page measured</source>
         <translation>Ką šis puslapis išmatavo</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Turi būti nustatytas įrenginio užrakto kodas — Nustatymai › Įrenginio užraktas. Paleidžiant paslauga atrakinama juo; be jo ji lieka užrakinta.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Jei Nustatymai › Raktai rodo pagrindinį saugos kodą kaip užrakintą, ten nustatytas atskiras kodas, kurio įrenginio užraktas neatidaro. Atrakink jį ten, pašalink tą kodą ir paleisk įrenginį iš naujo.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

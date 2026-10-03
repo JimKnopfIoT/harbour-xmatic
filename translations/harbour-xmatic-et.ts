@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Mida see leht mõõtis</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Seadme lukukood peab olema määratud — Seaded › Seadme lukk. Teenus avatakse sellega käivitamisel; ilma selleta jääb see lukku.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Kui Seaded › Võtmed näitab üldlukku lukustatuna, on seal määratud eraldi kood, mida seadme lukk ei ava. Ava see seal, eemalda see kood ja taaskäivita seade.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

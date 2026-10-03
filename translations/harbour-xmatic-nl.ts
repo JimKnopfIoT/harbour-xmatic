@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Wat deze pagina heeft gemeten</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Er moet een apparaatvergrendelingscode ingesteld zijn — Instellingen › Apparaatvergrendeling. De dienst wordt daarmee bij het opstarten ontgrendeld; zonder code blijft hij vergrendeld.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Als Instellingen › Sleutels de hoofdbeveiliging als vergrendeld toont, is daar een eigen code ingesteld die de apparaatvergrendeling niet opent. Ontgrendel hem daar, verwijder die code en herstart het apparaat.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

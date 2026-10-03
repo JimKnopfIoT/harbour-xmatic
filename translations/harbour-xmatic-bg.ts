@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Какво измери тази страница</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Трябва да е зададен код за заключване на устройството — Настройки › Заключване на устройството. Услугата се отключва с него при стартиране; без него остава заключена.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Ако Настройки › Ключове показва главния ключ като заключен, там е зададен отделен код, който заключването на устройството не отваря. Отключи го там, премахни този код и рестартирай устройството.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

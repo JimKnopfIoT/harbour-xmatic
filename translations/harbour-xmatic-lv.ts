@@ -3034,6 +3034,14 @@
         <source>What this page measured</source>
         <translation>Ko šī lapa izmērīja</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Jābūt iestatītam ierīces bloķēšanas kodam — Iestatījumi › Ierīces bloķēšana. Pakalpojums ar to tiek atbloķēts startā; bez tā tas paliek bloķēts.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Ja Iestatījumi › Atslēgas rāda galveno atslēgu kā bloķētu, tur ir iestatīts atsevišķs kods, ko ierīces bloķēšana neatver. Atbloķē to tur, noņem šo kodu un restartē ierīci.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

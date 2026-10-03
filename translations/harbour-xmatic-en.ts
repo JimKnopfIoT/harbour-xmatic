@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>What this page measured</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

@@ -31,7 +31,7 @@ Page {
     // Empty where there is nothing to type.
     readonly property string command:
         reason === "noDaemon"
-        ? "devel-su pkcon install sailfishsecretsdaemon sailfishsecretsdaemon-secretsplugin-common"
+        ? "devel-su pkcon install sailfishsecretsdaemon sailfishsecretsdaemon-secretsplugin-common sailfishsecretsdaemon-secretsplugins-default sailfishsecretsdaemon-cryptoplugins-default"
         : reason === "collectionLocked"
           ? "devel-su pkcon install sailfish-components-secrets-ui"
           : ""
@@ -107,6 +107,19 @@ Page {
 
             SectionHeader {
                 text: qsTr("What to do")
+            }
+
+            // Preconditions; a separate master lock is not opened by the device lock.
+            Label {
+                visible: page.reason !== "corrupted"
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.highlightColor
+                text: qsTr("A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.")
+                      + (page.reason === "noDaemon" ? ""
+                         : "\n\n" + qsTr("If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device."))
             }
 
             Label {

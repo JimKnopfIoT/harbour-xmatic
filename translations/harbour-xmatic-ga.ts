@@ -3034,6 +3034,14 @@
         <source>What this page measured</source>
         <translation>A dtomhais an leathanach seo</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Ní mór cód glais gléis a bheith socraithe — Socruithe › Glas gléis. Díghlasáiltear an tseirbhís leis ag an tosú; gan é fanann sí faoi ghlas.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Má thaispeánann Socruithe › Eochracha an máistirghlas faoi ghlas, tá cód dá chuid féin socraithe ansin nach n-osclaíonn glas an ghléis. Díghlasáil ansin é, bain an cód sin agus atosaigh an gléas.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

@@ -3046,6 +3046,14 @@
         <source>What this page measured</source>
         <translation>ما قاسته هذه الصفحة</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>يجب ضبط رمز قفل للجهاز — الإعدادات › قفل الجهاز. تُفتح الخدمة به عند بدء التشغيل؛ وبدونه تبقى مقفلة.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>إذا أظهرت الإعدادات › المفاتيح أن القفل الرئيسي مقفل، فهناك رمز خاص به لا يفتحه قفل الجهاز. افتحه هناك واحذف ذلك الرمز، ثم أعد تشغيل الجهاز.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

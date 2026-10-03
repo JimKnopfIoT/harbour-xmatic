@@ -86,8 +86,7 @@ int main(int argc, char *argv[])
     }
 
     // Delivered, never opened here: this process has the handler's identity, and
-    // Sailjail grants rights by identity - no app files, no store key. See
-    // docs/PITFALLS.md.
+    // Sailjail grants rights by identity - no app files, no store key.
     if (!startupLink.isEmpty()) {
         if (deliverLink(startupLink)) {
             return 0;

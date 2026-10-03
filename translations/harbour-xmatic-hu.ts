@@ -3026,6 +3026,14 @@
         <source>What this page measured</source>
         <translation>Mit mért ez az oldal</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Be kell állítani egy eszközzár-kódot — Beállítások › Eszközzár. A szolgáltatás indításkor ezzel nyílik; enélkül zárva marad.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Ha a Beállítások › Kulcsok a mesterkulcsot zároltnak mutatja, ott külön kód van beállítva, amelyet az eszközzár nem nyit. Oldd fel ott, töröld ezt a kódot, majd indítsd újra az eszközt.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

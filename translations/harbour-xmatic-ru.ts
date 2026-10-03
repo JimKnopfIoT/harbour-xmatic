@@ -3034,6 +3034,14 @@
         <source>What this page measured</source>
         <translation>Что измерила эта страница</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Должен быть задан код блокировки устройства — Настройки › Блокировка устройства. Служба разблокируется им при запуске; без него она остаётся заблокированной.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Если Настройки › Ключи показывают мастер-код блокировки как заблокированный, там задан отдельный код, который блокировка устройства не открывает. Разблокируй его там, удали этот код и перезапусти устройство.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

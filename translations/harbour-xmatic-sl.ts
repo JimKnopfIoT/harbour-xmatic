@@ -3038,6 +3038,14 @@
         <source>What this page measured</source>
         <translation>Kaj je ta stran izmerila</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Nastavljena mora biti koda zaklepa naprave — Nastavitve › Zaklep naprave. Storitev se z njo odklene ob zagonu; brez nje ostane zaklenjena.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Če Nastavitve › Ključi prikazujejo glavno geslo kot zaklenjeno, je tam nastavljena lastna koda, ki je zaklep naprave ne odpre. Odkleni jo tam, odstrani to kodo in znova zaženi napravo.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
