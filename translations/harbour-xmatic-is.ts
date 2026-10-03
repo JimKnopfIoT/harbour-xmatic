@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Það bíður ekki lengur eftir að verða sent.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Ekki tókst að hlaða. Ýttu til að reyna aftur.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Ýttu til að hlaða</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Opna tengil?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Afrita tengil</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Áframsenda tengil</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Opna</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Opna tengil?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Afrita tengil</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Áframsenda tengil</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Festa</translation>
     </message>
 </context>
 <context>

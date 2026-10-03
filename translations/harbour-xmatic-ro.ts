@@ -2789,6 +2789,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Nu mai așteaptă să fie trimis.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Nu s-a putut încărca. Atinge pentru a încerca din nou.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Atinge pentru a încărca</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Deschizi linkul?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Copiază linkul</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Redirecționează linkul</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3689,6 +3709,22 @@
     <message>
         <source>Open</source>
         <translation>Deschide</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Deschizi linkul?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Copiază linkul</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Redirecționează linkul</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Fixează</translation>
     </message>
 </context>
 <context>

@@ -2789,6 +2789,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Už to nečaká na odoslanie.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Nepodarilo sa načítať. Ťukni pre nový pokus.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Ťukni pre načítanie</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Otvoriť odkaz?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopírovať odkaz</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Preposlať odkaz</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3689,6 +3709,22 @@
     <message>
         <source>Open</source>
         <translation>Otvoriť</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Otvoriť odkaz?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopírovať odkaz</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Preposlať odkaz</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Pripnúť</translation>
     </message>
 </context>
 <context>

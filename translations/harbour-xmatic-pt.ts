@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Já não está à espera de ser enviado.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Não foi possível carregar. Toca para tentar de novo.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Toca para carregar</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Abrir ligação?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Copiar ligação</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Reencaminhar ligação</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Abrir</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Abrir ligação?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Copiar ligação</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Reencaminhar ligação</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Fixar</translation>
     </message>
 </context>
 <context>

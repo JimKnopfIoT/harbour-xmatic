@@ -2789,6 +2789,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Tas vairs negaida nosūtīšanu.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Neizdevās ielādēt. Pieskaries, lai mēģinātu vēlreiz.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Pieskaries, lai ielādētu</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Atvērt saiti?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopēt saiti</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Pārsūtīt saiti</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3689,6 +3709,22 @@
     <message>
         <source>Open</source>
         <translation>Atvērt</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Atvērt saiti?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopēt saiti</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Pārsūtīt saiti</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Piespraust</translation>
     </message>
 </context>
 <context>

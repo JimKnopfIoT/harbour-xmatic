@@ -2789,6 +2789,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>To više ne čeka na slanje.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Učitavanje nije uspjelo. Dodirni za novi pokušaj.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Dodirni za učitavanje</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Otvoriti poveznicu?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopiraj poveznicu</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Proslijedi poveznicu</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3689,6 +3709,22 @@
     <message>
         <source>Open</source>
         <translation>Otvori</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Otvoriti poveznicu?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopiraj poveznicu</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Proslijedi poveznicu</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Prikvači</translation>
     </message>
 </context>
 <context>

@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Вече не чака да бъде изпратено.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Не можа да се зареди. Докосни, за да опиташ отново.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Докосни, за да заредиш</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Да се отвори ли връзката?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Копирай връзката</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Препрати връзката</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Отвори</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Да се отвори ли връзката?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Копирай връзката</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Препрати връзката</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Закачи</translation>
     </message>
 </context>
 <context>

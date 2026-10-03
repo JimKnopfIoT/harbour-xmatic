@@ -2801,6 +2801,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>لم يعد بانتظار الإرسال.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>تعذّر التحميل. اضغط للمحاولة مجددًا.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>اضغط للتحميل</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>فتح الرابط؟</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>نسخ الرابط</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>إعادة توجيه الرابط</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3704,6 +3724,22 @@
     <message>
         <source>Reply in thread</source>
         <translation>الرد في الخيط</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>فتح الرابط؟</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>نسخ الرابط</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>إعادة توجيه الرابط</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>تثبيت</translation>
     </message>
 </context>
 <context>

@@ -2781,6 +2781,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>دیگر در انتظار فرستادن نیست.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>بارگیری نشد. برای تلاش دوباره ضربه بزن.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>برای بارگیری ضربه بزن</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>پیوند باز شود؟</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>کپی پیوند</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>هدایت پیوند</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3679,6 +3699,22 @@
     <message>
         <source>Reply in thread</source>
         <translation>پاسخ در رشته</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>پیوند باز شود؟</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>کپی پیوند</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>هدایت پیوند</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>سنجاق</translation>
     </message>
 </context>
 <context>

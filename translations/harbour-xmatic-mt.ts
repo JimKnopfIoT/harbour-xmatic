@@ -2793,6 +2793,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>M&apos;għadux qed jistenna li jintbagħat.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Ma setax jitgħabba. Agħfas biex terġa’ tipprova.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Agħfas biex tgħabbi</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Tiftaħ il-link?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Ikkopja l-link</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Ibgħat il-link &apos;il quddiem</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3694,6 +3714,22 @@
     <message>
         <source>Open</source>
         <translation>Iftaħ</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Tiftaħ il-link?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Ikkopja l-link</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Ibgħat il-link &apos;il quddiem</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Waħħal</translation>
     </message>
 </context>
 <context>

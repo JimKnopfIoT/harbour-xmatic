@@ -2781,6 +2781,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>送信待ちではなくなりました。</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>読み込めませんでした。タップしてもう一度試してね。</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>タップして読み込む</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>リンクを開きますか？</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>リンクをコピー</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>リンクを転送</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3679,6 +3699,22 @@
     <message>
         <source>Reply in thread</source>
         <translation>スレッドで返信</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>リンクを開きますか？</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>リンクをコピー</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>リンクを転送</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>ピン留め</translation>
     </message>
 </context>
 <context>

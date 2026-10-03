@@ -1,7 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "Formatting.js" as Formatting
 import "MatrixLinks.js" as MatrixLinks
+import "LinkMarks.js" as LinkMarks
+import "MessageBody.js" as MessageBody
 import "Composing.js" as Composing
 
 // One thread of a room: root first, replies below, own composer. Text-focused,
@@ -15,6 +16,8 @@ Page {
     /// Whether the room this thread belongs to is encrypted - a thread is exactly
     /// as encrypted as its room.
     property bool encrypted: false
+    /// Until the room has answered, a preview gate reads the thread as encrypted.
+    property bool encryptionKnown: false
 
     /// The room's unverified recipients: a thread reaches the same people, so it
     /// asks the same question before sending.
@@ -106,9 +109,14 @@ Page {
 
     // A tapped link, as in the room below: a Matrix address is answered inside
     // the app, anything else is a web address.
-    function followLink(link) {
+    // `shown`: asked in the link menu already, no second confirmation.
+    function followLink(link, shown) {
         var target = MatrixLinks.decide(link)
         if (target.kind === "none") {
+            return
+        }
+        if (target.kind === "web" && shown === true) {
+            Qt.openUrlExternally(link)
             return
         }
         if (target.kind === "web") {
@@ -240,15 +248,76 @@ Page {
             }
         }
 
-        delegate: Item {
+        delegate: ListItem {
             id: threadRow
 
             // "system" covers calls, membership and profile changes: without a row of
             // their own a thread made of those renders as an empty page.
             readonly property bool isSystem: model.kind === "system"
+            // The link a press is holding, while its menu is open; the room's link menu.
+            property string heldLink: ""
+            property var linkMarks: []
+
+            function holdLink(link, x, y) {
+                var origin = bodyText.mapToItem(threadRow, 0, 0)
+                linkHighlight.x = origin.x
+                linkHighlight.y = origin.y
+                threadRow.heldLink = link
+                // From the preview card there is no press in the text, and nothing to mark.
+                threadRow.linkMarks = x === undefined ? []
+                                                  : LinkMarks.sweep(bodyText, threadRow, link, x, y)
+                threadRow.openMenu()
+            }
 
             width: threadView.width
-            height: {
+            enabled: model.kind === "message"
+            showMenuOnPressAndHold: false
+            _showPress: false
+            onClicked: {
+                var link = LinkMarks.linkAt(bodyText, threadRow, mouse.x, mouse.y)
+                if (link.length > 0) {
+                    threadRow.holdLink(link, mouse.x, mouse.y)
+                }
+            }
+            onPressAndHold: {
+                var link = LinkMarks.linkAt(bodyText, threadRow, mouse.x, mouse.y)
+                if (link.length > 0 && threadRow.down) {
+                    threadRow.holdLink(link, mouse.x, mouse.y)
+                }
+            }
+            onMenuOpenChanged: {
+                if (!menuOpen) {
+                    threadRow.heldLink = ""
+                    threadRow.linkMarks = []
+                }
+            }
+
+            menu: ContextMenu {
+                MenuItem {
+                    text: qsTr("Open link?")
+                    onClicked: page.followLink(threadRow.heldLink, true)
+                }
+
+                MenuItem {
+                    text: qsTr("Copy link")
+                    onClicked: Clipboard.text = threadRow.heldLink
+                }
+
+                MenuItem {
+                    text: qsTr("Forward link")
+                    onClicked: pageStack.push(Qt.resolvedUrl("ForwardPage.qml"),
+                                              { body: threadRow.heldLink })
+                }
+
+                MenuItem {
+                    text: qsTr("Pin")
+                    visible: (model.eventId || "").length > 0
+                             && matrix.roomPermissions.pin !== false
+                    onClicked: matrix.pinMessage(model.eventId, true)
+                }
+            }
+
+            contentHeight: {
                 if (model.kind === "date") {
                     return dateLabel.height + Theme.paddingMedium
                 }
@@ -299,6 +368,8 @@ Page {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 spacing: Theme.paddingSmall / 2
+                // A held link is marked alone: the post steps back with the rest of the page.
+                opacity: threadRow.linkMarks.length > 0 ? Theme.opacityLow : 1.0
 
                 Label {
                     width: parent.width
@@ -312,20 +383,24 @@ Page {
                 }
 
                 Label {
+                    id: bodyText
+
                     width: parent.width
                     wrapMode: Text.Wrap
                     font.pixelSize: Theme.fontSizeSmall
                     font.italic: model.kind !== "message"
                     color: model.kind === "message" ? Theme.primaryColor
                                                     : Theme.secondaryColor
-                    // Same rule as the room: markup the core built is StyledText, everything else
-                    // plain. Nothing in it came from the sender unescaped.
-                    readonly property bool hasFormatted: model.kind === "message"
-                                                         && !model.media
-                                                         && (model.formatted || "").length > 0
-                    textFormat: hasFormatted ? Text.StyledText : Text.PlainText
+                    // The room's own rule and settings: links, emoji pictures, the core's markup.
+                    readonly property string richBody: model.kind === "message" && !model.media
+                                                       ? MessageBody.rich(model.body, model.formatted,
+                                                                          settings,
+                                                                          Theme.highlightColor,
+                                                                          Math.round(Theme.fontSizeSmall * 1.3),
+                                                                          function(key) { return matrix.emojiSource(key) })
+                                                       : ""
+                    textFormat: richBody.length > 0 ? Text.StyledText : Text.PlainText
                     linkColor: Theme.highlightColor
-                    onLinkActivated: page.followLink(link)
                     text: {
                         if (model.kind === "undecryptable") {
                             return qsTr("Cannot be decrypted — this device is missing the key")
@@ -336,12 +411,31 @@ Page {
                         if (model.media) {
                             return "📎 " + (model.body || qsTr("Attachment"))
                         }
-                        if (hasFormatted) {
-                            return Formatting.renderFormatted(model.formatted,
-                                                              settings.clickableLinks,
-                                                              Theme.highlightColor)
+                        if (richBody.length > 0) {
+                            return richBody
                         }
                         return model.body || ""
+                    }
+                }
+
+                // The linked page, under the same Privacy setting as in the room.
+                Loader {
+                    id: previewLoader
+
+                    readonly property string url: model.kind === "message" && !model.media
+                                                  && !model.poll && !model.location
+                                                  ? MessageBody.previewUrl(model.body,
+                                                                           settings.linkPreviews,
+                                                                           page.encrypted
+                                                                           || !page.encryptionKnown)
+                                                  : ""
+                    active: url.length > 0
+                    visible: active && !!item && item.available
+                    sourceComponent: LinkPreviewCard {
+                        availableWidth: rowColumn.width
+                        url: previewLoader.url
+                        tappable: settings.clickableLinks
+                        onActivated: threadRow.holdLink(link)
                     }
                 }
 
@@ -357,6 +451,13 @@ Page {
                     textFormat: Text.PlainText
                     text: page.shieldText(model.shield)
                 }
+            }
+
+            LinkHighlight {
+                id: linkHighlight
+
+                label: bodyText
+                marks: threadRow.linkMarks
             }
         }
 

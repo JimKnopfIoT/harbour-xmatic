@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Het wacht niet meer om verzonden te worden.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Laden is mislukt. Tik om het opnieuw te proberen.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Tik om te laden</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Link openen?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Link kopiëren</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Link doorsturen</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Openen</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Link openen?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Link kopiëren</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Link doorsturen</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Vastmaken</translation>
     </message>
 </context>
 <context>

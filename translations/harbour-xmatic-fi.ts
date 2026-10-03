@@ -2785,6 +2785,26 @@
         <source>It is no longer waiting to be sent.</source>
         <translation>Se ei enää odota lähettämistä.</translation>
     </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Lataus epäonnistui. Napauta yrittääksesi uudelleen.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Napauta ladataksesi</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Avataanko linkki?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopioi linkki</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Välitä linkki</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3684,6 +3704,22 @@
     <message>
         <source>Open</source>
         <translation>Avaa</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Avataanko linkki?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopioi linkki</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Välitä linkki</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kiinnitä</translation>
     </message>
 </context>
 <context>

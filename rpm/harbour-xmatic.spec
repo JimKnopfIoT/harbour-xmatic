@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.41.0
+Version:    0.42.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -120,6 +120,18 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Oct 03 2026 harbour-xmatic contributors 0.42.0-1
+- A link has a menu of its own: tap or hold it to open, copy or forward
+  that link, or to pin the message. Only the link is marked, so of several
+  links in a row each one is offered on its own. Holding the text beside a
+  link still opens the message's menu. A tap on a link preview opens the
+  same menu. The same works in threads.
+- Threads draw a message like the room does: links in plain text can be
+  tapped, emoji show as pictures and link previews appear, all under the
+  same Privacy settings.
+- A picture that could not be loaded says so; a tap loads it again, and it
+  is retried once the connection is back.
+
 * Wed Sep 30 2026 harbour-xmatic contributors 0.41.0-1
 - Built on matrix-rust-sdk 0.19. The local data is converted on the first
   start and cannot be read by 0.40 or older afterwards: going back needs a
