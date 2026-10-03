@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Ce que cette page a mesuré</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Un code de verrouillage de l'appareil doit être défini — Réglages › Verrouillage de l'appareil. Le service se déverrouille avec lui au démarrage ; sans lui, il reste verrouillé.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Si Réglages › Clés indique que le verrou principal est verrouillé, un code propre y est défini que le verrouillage de l'appareil n'ouvre pas. Déverrouille-le là, supprime ce code, puis redémarre l'appareil.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

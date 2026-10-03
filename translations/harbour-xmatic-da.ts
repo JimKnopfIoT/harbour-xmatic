@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Hvad denne side målte</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Der skal være sat en enhedslåskode — Indstillinger › Enhedslås. Tjenesten låses op med den ved opstart; uden den forbliver den låst.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Hvis Indstillinger › Nøgler viser masterlåsen som låst, er der sat en separat kode, som enhedslåsen ikke åbner. Lås den op der, fjern koden og genstart enheden.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

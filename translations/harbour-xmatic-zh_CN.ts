@@ -3720,52 +3720,62 @@
         <translation>可以做什么</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="121"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="120"/>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>必须设置设备锁定码 — 设置 › 设备锁定。服务在启动时用它解锁；没有它就一直处于锁定状态。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="122"/>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>如果设置 › 密钥 显示主锁已锁定，说明那里设置了一个单独的码，设备锁定无法打开它。请在那里解锁，删除该码，然后重启设备。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="134"/>
         <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
         <translation>1. 在系统设置中打开开发者模式，位于“设置 › 开发者工具”。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="123"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="136"/>
         <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
         <translation>2. 打开 Terminal 应用并执行下面这一行 — 轻点即可复制。然后重启设备并重新打开 xmatic。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="125"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="138"/>
         <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
         <translation>记下本页下方报告的内容，带到 Sailfish 的支持渠道。退出 xmatic 的登录并不能修复它。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="127"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="140"/>
         <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
         <translation>返回并轻点「再试一次」，然后确认系统的请求。若什么都没出现，请安装缺少的组件（轻点该行即可复制）并重启设备。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="129"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="142"/>
         <source>1. Open Settings › Device lock and set a new security code.</source>
         <translation>1. 打开设置 › 设备锁定，设置新的安全码。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="131"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="144"/>
         <source>2. Restart the device.</source>
         <translation>2. 重启设备。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="133"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="146"/>
         <source>3. Start xmatic again.</source>
         <translation>3. 重新打开 xmatic。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="163"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="176"/>
         <source>Signing out does not help</source>
         <translation>退出登录没有帮助</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="173"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="186"/>
         <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
         <translation>退出登录会连同本地数据一起删除本设备的加密密钥。之后你需要从另一台设备重新验证本设备，较早的消息则需要你的恢复密钥。它不会修复安全存储。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="177"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="190"/>
         <source>What this page measured</source>
         <translation>本页测得的内容</translation>
     </message>

@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Mitä tämä sivu mittasi</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Laitteen lukituskoodin on oltava asetettu — Asetukset › Laitteen lukitus. Palvelu avataan sillä käynnistyksessä; ilman sitä se pysyy lukittuna.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Jos Asetukset › Avaimet näyttää päälukituksen lukittuna, sinne on asetettu oma koodi, jota laitteen lukitus ei avaa. Avaa se siellä, poista koodi ja käynnistä laite uudelleen.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

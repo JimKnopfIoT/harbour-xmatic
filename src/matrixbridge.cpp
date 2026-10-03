@@ -407,8 +407,7 @@ quint64 MatrixBridge::send(const QString &command, const QJsonObject &arguments,
     QByteArray payload = jsonToCompactString(message).toUtf8();
     xm_core_send(m_core, payload.constData());
     if (wipePayload) {
-        // The buffer held a password and the core has its own copy. The transient
-        // QString and QJsonObject residuals: docs/PASSWORD-LOGIN.md.
+        // The buffer held a password and the core has its own copy.
         payload.fill('\0');
     }
     return id;
@@ -1935,7 +1934,7 @@ void MatrixBridge::recoverKeys(const QString &key)
     QJsonObject arguments;
     arguments.insert(QStringLiteral("key"), key.trimmed());
     // Like the login password: the recovery key unlocks the whole backup, so the
-    // payload must not stay on the heap. Residuals: docs/PASSWORD-LOGIN.md.
+    // payload must not stay on the heap.
     send(QStringLiteral("encryption.recover"), arguments, true);
 }
 

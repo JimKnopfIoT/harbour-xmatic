@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Was diese Seite gemessen hat</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Ein Gerätesperrcode muss gesetzt sein — Einstellungen › Gerätesperre. Der Dienst wird beim Start damit entsperrt; ohne Code bleibt er gesperrt.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Zeigt Einstellungen › Schlüssel den Master-Sperrcode als gesperrt, ist dort ein eigener Code gesetzt, den die Gerätesperre nicht öffnet. Entsperre ihn dort, entferne diesen Code und starte das Gerät neu.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

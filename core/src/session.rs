@@ -511,7 +511,7 @@ pub fn reset_store(paths: &Paths) -> Result<(), std::io::Error> {
 }
 
 /// The sliding sync position lives in the crypto store, which a rebuild spares -
-/// so it outlives one. It hangs off the connection's name; see docs/PITFALLS.md.
+/// so it outlives one. It hangs off the connection's name.
 fn sync_connection_file(paths: &Paths) -> PathBuf {
     paths.store.join(".sync-connection")
 }

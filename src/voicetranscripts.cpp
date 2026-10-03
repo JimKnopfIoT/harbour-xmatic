@@ -367,7 +367,7 @@ void VoiceTranscripts::activate()
 void VoiceTranscripts::verify()
 {
     // Bound to the unique name that answers now: a name can change owner during
-    // a job, a unique name cannot. Who may own it at all: docs/PITFALLS.md.
+    // a job, a unique name cannot.
     QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
     const QDBusReply<QString> owner = bus->serviceOwner(QString::fromLatin1(Service));
     if (!owner.isValid() || owner.value().isEmpty()) {

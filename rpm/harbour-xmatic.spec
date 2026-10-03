@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.42.0
+Version:    0.42.1
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -44,17 +44,11 @@ Requires:   %{_libdir}/gstreamer-1.0/libgstnice.so
 # Depend on the QML module by path: requiring the library package by name is
 # what rpmlint objects to, and the module is what the app actually imports.
 Requires:   %{_libdir}/qt5/qml/Nemo/KeepAlive/qmldir
-# The store key lives in a Sailfish Secrets collection, and the 5.2 image
-# ships only the client library — measured on a factory-fresh device, where
-# the app then created an unencrypted store because the daemon it talks to
-# was not there. Both files are in the jolla repo on aarch64/5.2 and
-# armv7hl/4.6, so this resolves rather than blocking an install.
-# By path for two reasons: the daemon binary is what has to answer on D-Bus,
-# and the collection is opened with DefaultEncryptedStoragePluginName, which
-# is org.sailfishos.secrets.plugin.encryptedstorage.sqlcipher — carried by
-# secretsplugin-common, not by the package whose name reads "default".
+# Store key: Sailfish Secrets daemon and its plugins, by path.
 Requires:   /usr/bin/sailfishsecretsd
 Requires:   %{_libdir}/Sailfish/Secrets/libsailfishsecrets-sqlcipher.so
+Requires:   %{_libdir}/Sailfish/Secrets/libsailfishsecrets-openssl.so
+Requires:   %{_libdir}/Sailfish/Crypto/libsailfishcrypto-openssl.so
 BuildRequires: pkgconfig(sailfishapp)
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Qml)
@@ -120,6 +114,12 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Oct 03 2026 harbour-xmatic contributors 0.42.1-1
+- The help for "Encryption not possible" names two causes it missed: no
+  device lock code set, and a master lock code of its own under
+  Settings › Keys, which the device lock does not open.
+- The package pulls in the complete set of secure storage plugins.
+
 * Sat Oct 03 2026 harbour-xmatic contributors 0.42.0-1
 - A link has a menu of its own: tap or hold it to open, copy or forward
   that link, or to pin the message. Only the link is marked, so of several

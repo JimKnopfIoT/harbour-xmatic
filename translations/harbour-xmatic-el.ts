@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Τι μέτρησε αυτή η σελίδα</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Πρέπει να έχει οριστεί κωδικός κλειδώματος συσκευής — Ρυθμίσεις › Κλείδωμα συσκευής. Η υπηρεσία ξεκλειδώνει με αυτόν κατά την εκκίνηση· χωρίς αυτόν μένει κλειδωμένη.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Αν οι Ρυθμίσεις › Κλειδιά δείχνουν τον κύριο κωδικό ως κλειδωμένο, έχει οριστεί εκεί ξεχωριστός κωδικός που το κλείδωμα συσκευής δεν ανοίγει. Ξεκλείδωσέ τον εκεί, αφαίρεσε αυτόν τον κωδικό και επανεκκίνησε τη συσκευή.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

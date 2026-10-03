@@ -3724,52 +3724,62 @@
         <translation>क्या करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="121"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="120"/>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>डिवाइस लॉक कोड लगा होना चाहिए — सेटिंग्स › उपकरण लॉक। सेवा शुरू होते समय इसी से खुलती है; इसके बिना बंद रहती है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="122"/>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>अगर सेटिंग्स › Keys में Master lock बंद दिखे, तो वहाँ अलग कोड लगा है जिसे डिवाइस लॉक नहीं खोलता। उसे वहीं खोलो, वह कोड हटाओ और डिवाइस फिर से शुरू करो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="134"/>
         <source>1. Switch on Developer mode in the system settings, under Settings › Developer tools.</source>
         <translation>1. सिस्टम सेटिंग्स में डेवलपर मोड चालू करें, सेटिंग्स › डेवलपर उपकरण के अंतर्गत।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="123"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="136"/>
         <source>2. Open the Terminal app and run the line below — tap it to copy. Then restart the device and start xmatic again.</source>
         <translation>2. Terminal ऐप खोलो और नीचे दी पंक्ति चलाओ — नकल के लिए उस पर टैप करो। फिर उपकरण पुनः आरंभ करो और xmatic दोबारा खोलो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="125"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="138"/>
         <source>Note down what this page reports below and take it to the Sailfish support channels. Signing out of xmatic does not repair it.</source>
         <translation>यह पृष्ठ नीचे जो बताता है उसे लिख लो और Sailfish के सहायता चैनलों तक ले जाओ। xmatic से साइन आउट करने से यह ठीक नहीं होता।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="127"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="140"/>
         <source>Go back and tap “Try again”, then confirm the system&apos;s request. If nothing appears, install the missing components (tap the line to copy) and restart the device.</source>
         <translation>वापस जाओ और “फिर से कोशिश करें” पर टैप करो, फिर सिस्टम के अनुरोध की पुष्टि करो। यदि कुछ न दिखे, तो लापता हिस्से इंस्टॉल करो (नकल के लिए पंक्ति पर टैप करो) और उपकरण पुनः आरंभ करो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="129"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="142"/>
         <source>1. Open Settings › Device lock and set a new security code.</source>
         <translation>1. सेटिंग्स › उपकरण लॉक खोलो और नया सुरक्षा कोड लगाओ।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="131"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="144"/>
         <source>2. Restart the device.</source>
         <translation>2. उपकरण पुनः आरंभ करो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="133"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="146"/>
         <source>3. Start xmatic again.</source>
         <translation>3. xmatic दोबारा खोलो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="163"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="176"/>
         <source>Signing out does not help</source>
         <translation>साइन आउट करने से मदद नहीं मिलती</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="173"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="186"/>
         <source>Signing out deletes this device&apos;s encryption keys along with the local data. You would then have to verify this device again from another one, and older messages would need your recovery key. It does not repair the secrets service.</source>
         <translation>साइन आउट करने पर इस उपकरण की एन्क्रिप्शन कुंजियाँ स्थानीय डेटा के साथ मिट जाती हैं। तब तुम्हें यह उपकरण किसी दूसरे से दोबारा सत्यापित करना होगा, और पुराने संदेशों के लिए तुम्हारी पुनर्प्राप्ति कुंजी चाहिए होगी। इससे सुरक्षित भंडार ठीक नहीं होता।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SecretsHelpPage.qml" line="177"/>
+        <location filename="../qml/pages/SecretsHelpPage.qml" line="190"/>
         <source>What this page measured</source>
         <translation>इस पृष्ठ ने क्या मापा</translation>
     </message>

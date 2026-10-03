@@ -3038,6 +3038,14 @@
         <source>What this page measured</source>
         <translation>X&apos;kejlet din il-paġna</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Irid ikun issettjat kodiċi tas-sakra tal-apparat — Issettjar › Sakra tal-apparat. Is-servizz jinfetaħ bih mal-bidu; mingħajru jibqa' msakkar.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Jekk Issettjar › Ċwievet juri s-sakra prinċipali bħala msakkra, hemm issettjat kodiċi għalih waħdu li s-sakra tal-apparat ma tiftaħx. Iftaħha hemm, neħħi dak il-kodiċi u erġa' ixgħel l-apparat.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

@@ -3034,6 +3034,14 @@
         <source>What this page measured</source>
         <translation>Ce a măsurat această pagină</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Trebuie setat un cod de blocare a dispozitivului — Setări › Blocarea dispozitivului. Serviciul se deblochează cu el la pornire; fără el rămâne blocat.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Dacă Setări › Chei arată parola principală ca blocată, acolo este setat un cod propriu pe care blocarea dispozitivului nu îl deschide. Deblochează-l acolo, elimină acel cod și repornește dispozitivul.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

@@ -30,9 +30,8 @@ static KNOWN: LazyLock<Mutex<HashMap<String, Value>>> = LazyLock::new(Default::d
 /// and past this the oldest answers are simply asked for again.
 const KNOWN_LIMIT: usize = 500;
 
-/// Decoration is asked once and briefly. The SDK's default policy retries a 429
-/// for up to fifteen minutes - see PITFALLS on rate limits - and a preview is
-/// never worth a queue of retries behind the messages themselves.
+/// Asked once and briefly: the SDK retries a 429 for up to fifteen minutes, and a
+/// preview is never worth a queue of retries behind the messages.
 const VERSIONS_TIMEOUT: Duration = Duration::from_secs(20);
 
 fn request_config() -> RequestConfig {

@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Hvað þessi síða mældi</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Það verður að vera stilltur tækjaláskóði — Stillingar › Tækjalás. Þjónustan er opnuð með honum við ræsingu; án hans helst hún læst.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Ef Stillingar › Lyklar sýna aðallásinn sem læstan er þar stilltur sérstakur kóði sem tækjalásinn opnar ekki. Opnaðu hann þar, fjarlægðu kóðann og endurræstu tækið.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>

@@ -3030,6 +3030,14 @@
         <source>What this page measured</source>
         <translation>Lo que esta página midió</translation>
     </message>
+    <message>
+        <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
+        <translation>Tiene que haber un código de bloqueo del dispositivo — Ajustes › Bloqueo del dispositivo. El servicio se desbloquea con él al arrancar; sin él sigue bloqueado.</translation>
+    </message>
+    <message>
+        <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
+        <translation>Si Ajustes › Claves muestra el bloqueo maestro como bloqueado, hay ahí un código propio que el bloqueo del dispositivo no abre. Desbloquéalo ahí, quita ese código y reinicia el dispositivo.</translation>
+    </message>
 </context>
 <context>
     <name>SecurityRows</name>
