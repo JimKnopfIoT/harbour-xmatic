@@ -182,6 +182,28 @@ void AppSettings::setSpaceInitials(bool enabled)
     emit spaceInitialsChanged();
 }
 
+QString AppSettings::messageLayout() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    const QString value = settings.value(QStringLiteral("ui/messageLayout"),
+                                         QStringLiteral("bubbles")).toString();
+    if (value == QLatin1String("wide") || value == QLatin1String("flat")) {
+        return value;
+    }
+    return QStringLiteral("bubbles");
+}
+
+void AppSettings::setMessageLayout(const QString &layout)
+{
+    if (layout == messageLayout()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("ui/messageLayout"), layout,
+          "the message layout setting");
+    emit messageLayoutChanged();
+}
+
 bool AppSettings::pushEnabled() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

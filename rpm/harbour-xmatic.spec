@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.42.1
+Version:    0.43.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -114,6 +114,12 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Oct 05 2026 harbour-xmatic contributors 0.43.0-1
+- Appearance offers a message layout: bubbles as before, wide bubbles that
+  reach the edge of the screen, or no bubbles, where picture and name head
+  each message and its text runs from margin to margin. More text fits on a
+  line, which matters most on narrow screens.
+
 * Sat Oct 03 2026 harbour-xmatic contributors 0.42.1-1
 - The help for "Encryption not possible" names two causes it missed: no
   device lock code set, and a master lock code of its own under

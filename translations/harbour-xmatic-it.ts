@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Attivo: entrando in una stanza arrivi all&apos;ultimo messaggio letto, con i nuovi sotto, e al punto in cui eri se hai lasciato la stanza in mezzo alla sua cronologia. Quel punto resta memorizzato finché non chiudi l&apos;applicazione. Disattivato: la stanza si apre sul messaggio più recente e la linea che segna dove ti sei fermato si trova scorrendo verso l&apos;alto.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Disposizione dei messaggi</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>I fumetti larghi arrivano fino al bordo dello schermo. Senza fumetti, ogni messaggio è preceduto da immagine e nome e il testo va da margine a margine; i colori dei fumetti non si applicano.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Fumetti</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Fumetti larghi</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Senza fumetti</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -3032,7 +3052,7 @@
     </message>
     <message>
         <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
-        <translation>Deve essere impostato un codice di blocco del dispositivo — Impostazioni › Blocco dispositivo. Il servizio si sblocca con esso all'avvio; senza resta bloccato.</translation>
+        <translation>Deve essere impostato un codice di blocco del dispositivo — Impostazioni › Blocco dispositivo. Il servizio si sblocca con esso all&apos;avvio; senza resta bloccato.</translation>
     </message>
     <message>
         <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>

@@ -301,6 +301,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Mixgħul: meta tidħol f&apos;kamra tasal fl-aħħar messaġġ li qrajt, bil-ġodda taħtu — u lura fil-post fejn kont jekk ħallejt il-kamra f&apos;nofs l-istorja tagħha. Dak il-post jinżamm sakemm tagħlaq l-applikazzjoni. Mitfi: il-kamra tinfetaħ fl-aktar messaġġ riċenti u l-linja li timmarka fejn waqaft issibha billi tiskrollja &apos;l fuq.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>It-tqassim tal-messaġġi</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Il-bużżieqa wiesgħa jaslu sat-tarf tal-iskrin. Mingħajr bużżieqa, kull messaġġ jibda bl-istampa u l-isem u t-test jimxi minn marġni għal marġni; il-kuluri tal-bużżieqa ma japplikawx.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Bużżieqa</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Bużżieqa wiesgħa</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Mingħajr bużżieqa</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -3040,11 +3060,11 @@
     </message>
     <message>
         <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
-        <translation>Irid ikun issettjat kodiċi tas-sakra tal-apparat — Issettjar › Sakra tal-apparat. Is-servizz jinfetaħ bih mal-bidu; mingħajru jibqa' msakkar.</translation>
+        <translation>Irid ikun issettjat kodiċi tas-sakra tal-apparat — Issettjar › Sakra tal-apparat. Is-servizz jinfetaħ bih mal-bidu; mingħajru jibqa&apos; msakkar.</translation>
     </message>
     <message>
         <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
-        <translation>Jekk Issettjar › Ċwievet juri s-sakra prinċipali bħala msakkra, hemm issettjat kodiċi għalih waħdu li s-sakra tal-apparat ma tiftaħx. Iftaħha hemm, neħħi dak il-kodiċi u erġa' ixgħel l-apparat.</translation>
+        <translation>Jekk Issettjar › Ċwievet juri s-sakra prinċipali bħala msakkra, hemm issettjat kodiċi għalih waħdu li s-sakra tal-apparat ma tiftaħx. Iftaħha hemm, neħħi dak il-kodiċi u erġa&apos; ixgħel l-apparat.</translation>
     </message>
 </context>
 <context>

@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Kveikt: þegar þú ferð inn í spjallrými lendirðu á síðustu lesnu skilaboðunum þínum með þau nýju fyrir neðan — og aftur á staðnum sem þú varst á ef þú fórst úr rýminu í miðri sögu þess. Staðurinn geymist þar til forritinu er lokað. Slökkt: rýmið opnast á nýjustu skilaboðunum og línuna sem markar hvar þú hættir finnurðu með því að skruna upp.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Útlit skilaboða</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Breiðar blöðrur ná alveg út að skjábrún. Án blaðra er mynd og nafn efst í hverjum skilaboðum og textinn nær frá spássíu til spássíu; litir blaðranna gilda þá ekki.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Blöðrur</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Breiðar blöðrur</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Án blaðra</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

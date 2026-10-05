@@ -62,6 +62,10 @@ Page {
     // The sender's picture and the gap it leaves. One number for picture, bubble
     // margin and text width - never read off the item, which is the width rule.
     readonly property real avatarSize: Theme.iconSizeMedium
+    // Bound once here, not per row: the getter reads the settings file.
+    readonly property string messageLayout: settings.messageLayout
+    // No bubble: picture and name as a header, the text from margin to margin.
+    readonly property bool flatLayout: messageLayout === "flat"
     // The same for a system line, where the picture only marks who acted.
     readonly property real systemAvatarSize: Theme.iconSizeExtraSmall
 
@@ -1937,11 +1941,13 @@ Page {
                 Avatar {
                     id: senderAvatar
 
-                    visible: row.isBubble && !row.isOwn
+                    visible: row.isBubble && (!row.isOwn || page.flatLayout)
                     anchors {
                         left: parent.left
                         leftMargin: Theme.horizontalPageMargin
                         top: parent.top
+                        // Level with the name line, which sits inside the column's padding.
+                        topMargin: page.flatLayout ? Theme.paddingMedium : 0
                     }
                     size: page.avatarSize
                     source: model.senderAvatar || ""
@@ -1968,13 +1974,15 @@ Page {
 
                     visible: row.isBubble
                     anchors {
-                        right: row.isOwn ? parent.right : undefined
-                        left: row.isOwn ? undefined : parent.left
+                        right: row.isOwn && !page.flatLayout ? parent.right : undefined
+                        left: row.isOwn && !page.flatLayout ? undefined : parent.left
                         rightMargin: Theme.horizontalPageMargin
                         // A constant, never the avatar's width: reading a sibling's width here and
                         // its height there is how this delegate earns a binding loop.
-                        leftMargin: Theme.horizontalPageMargin
-                                    + page.avatarSize + Theme.paddingSmall
+                        leftMargin: page.flatLayout
+                                    ? Theme.horizontalPageMargin - Theme.paddingMedium
+                                    : Theme.horizontalPageMargin
+                                      + page.avatarSize + Theme.paddingSmall
                         top: parent.top
                     }
                     // Width follows the column, which sizes itself from the texts. Deriving it
@@ -1984,7 +1992,8 @@ Page {
                     radius: Theme.paddingMedium
                     // Both fills stay faint: an opaque highlight can land on any lightness under
                     // an ambience. The stronger tint marks the own side; both are settable.
-                    color: row.isOwn
+                    color: page.flatLayout ? "transparent"
+                           : row.isOwn
                            ? Theme.rgba(appearance.ownBubbleColor.length > 0
                                         ? appearance.ownBubbleColor
                                         : Theme.highlightBackgroundColor,
@@ -2002,10 +2011,20 @@ Page {
 
                         // The widest a bubble's text may get before wrapping. Someone else's starts
                         // further right and gets correspondingly less.
-                        property real maxTextWidth: timelineView.width * 0.82
-                                                    - 2 * Theme.paddingMedium
-                                                    - (row.isOwn ? 0 : page.avatarSize
-                                                                      + Theme.paddingSmall)
+                        property real maxTextWidth: page.flatLayout
+                                                    ? timelineView.width
+                                                      - 2 * Theme.horizontalPageMargin
+                                                    : (page.messageLayout === "wide"
+                                                       ? timelineView.width
+                                                         - 2 * Theme.horizontalPageMargin
+                                                       : timelineView.width * 0.82)
+                                                      - 2 * Theme.paddingMedium
+                                                      - (row.isOwn ? 0 : page.avatarSize
+                                                                        + Theme.paddingSmall)
+                        // Where the name starts: beside the picture when it heads the row.
+                        readonly property real senderInset: page.flatLayout
+                                                            ? page.avatarSize + Theme.paddingSmall
+                                                            : 0
 
                         /// How light it is behind a picture: the bubble's tint over the
                         /// ambience. The picture's own content is none of the frame's business.
@@ -2042,15 +2061,19 @@ Page {
 
                         // Which edge the children stand on: an own bubble grows leftwards, so its
                         // content hangs off the right edge. `x` from the parent's width, never width.
-                        readonly property bool holdRight: row.isOwn
+                        readonly property bool holdRight: row.isOwn && !page.flatLayout
 
                         Label {
                             id: senderLabel
 
                             anchors.right: bubbleColumn.holdRight ? parent.right : undefined
 
-                            width: Math.min(implicitWidth, bubbleColumn.maxTextWidth)
-                            visible: !row.isOwn
+                            x: bubbleColumn.senderInset
+                            width: Math.min(implicitWidth,
+                                            bubbleColumn.maxTextWidth - bubbleColumn.senderInset)
+                            height: page.flatLayout ? page.avatarSize : implicitHeight
+                            verticalAlignment: Text.AlignVCenter
+                            visible: !row.isOwn || page.flatLayout
                             font.pixelSize: Theme.fontSizeExtraSmall
                             color: appearance.nameColor.length > 0
                                    ? appearance.nameColor : Theme.highlightColor
@@ -2930,7 +2953,8 @@ Page {
                             width: Math.max(bodyLabel.visible ? bodyLabel.width : 0,
                                             attachment.width,
                                             audioRow.visible ? audioRow.width : 0,
-                                            senderLabel.visible ? senderLabel.width : 0,
+                                            senderLabel.visible
+                                            ? bubbleColumn.senderInset + senderLabel.width : 0,
                                             replyBlock.visible ? replyBlock.width : 0,
                                             threadLabel.visible ? threadLabel.width : 0,
                                             // The names below can be the widest thing in the bubble; without them here

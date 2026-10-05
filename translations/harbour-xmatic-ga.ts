@@ -300,6 +300,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ar siúl: agus tú ag dul isteach i seomra, tagann tú chuig an teachtaireacht dheireanach a léigh tú, na cinn nua faoina bun — agus ar ais san áit a raibh tú má d&apos;fhág tú an seomra i lár na staire. Coinnítear an áit sin go dtí go ndúnfar an feidhmchlár. As: osclaítear an seomra ag an teachtaireacht is nuaí, agus aimsíonn tú an líne a mharcálann cá stop tú trí scrollú suas.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Leagan amach teachtaireachtaí</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Síneann bolgáin leathana go himeall an scáileáin. Gan bholgáin, tá pictiúr agus ainm ag barr gach teachtaireachta agus ritheann an téacs ó imeall go himeall; ní bhaineann dathanna na mbolgán leis ansin.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Bolgáin</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Bolgáin leathana</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Gan bholgáin</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

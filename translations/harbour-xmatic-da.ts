@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Til: når du går ind i et rum, lander du ved din senest læste besked med de nye nedenunder — og tilbage det sted, du var, hvis du forlod rummet midt i historikken. Stedet huskes, indtil appen lukkes. Fra: rummet åbner ved den nyeste besked, og linjen, der markerer hvor du stoppede, finder du ved at rulle op.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Beskedlayout</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Brede bobler går helt ud til skærmkanten. Uden bobler står billede og navn øverst i hver besked, og teksten går fra margen til margen; boblernes farver gælder så ikke.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Bobler</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Brede bobler</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Uden bobler</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

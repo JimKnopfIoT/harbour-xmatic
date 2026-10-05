@@ -298,6 +298,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>オン: 部屋に入ると最後に読んだメッセージに移動し、新しいものはその下に並びます。履歴の途中で部屋を離れた場合は、その位置に戻ります。位置はアプリを閉じるまで保持されます。オフ: 部屋は最新のメッセージで開き、読み終えた位置を示す線は上にスクロールして探します。</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>メッセージのレイアウト</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>幅広の吹き出しは画面の端まで広がります。吹き出しなしでは、各メッセージの上に画像と名前が表示され、本文は余白から余白まで使います。このとき吹き出しの色は適用されません。</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>吹き出し</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>幅広の吹き出し</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>吹き出しなし</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

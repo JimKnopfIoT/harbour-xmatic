@@ -303,6 +303,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>مُفعَّل: عند دخول غرفة تصل إلى آخر رسالة قرأتها، والرسائل الجديدة تحتها — وتعود إلى الموضع الذي كنت فيه إن غادرت الغرفة في منتصف سجلّها. يُحفَظ هذا الموضع حتى إغلاق التطبيق. معطَّل: تُفتح الغرفة عند أحدث رسالة، وتجد الخط الذي يحدّد موضع توقّفك بالتمرير إلى الأعلى.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>تخطيط الرسائل</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>تمتد الفقاعات العريضة حتى حافة الشاشة. بدون فقاعات، تعلو كل رسالة صورة واسم، ويمتد نصها من هامش إلى هامش؛ ولا تنطبق ألوان الفقاعات حينها.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>فقاعات</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>فقاعات عريضة</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>بدون فقاعات</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

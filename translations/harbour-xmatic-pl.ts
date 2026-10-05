@@ -300,6 +300,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Włączone: po wejściu do pokoju trafiasz na ostatnią przeczytaną wiadomość, nowe są poniżej — i wracasz w miejsce, w którym byłeś, jeśli opuściłeś pokój w środku historii. To miejsce jest pamiętane do zamknięcia aplikacji. Wyłączone: pokój otwiera się na najnowszej wiadomości, a linię oznaczającą miejsce przerwania znajdziesz, przewijając w górę.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Układ wiadomości</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Szerokie dymki sięgają krawędzi ekranu. Bez dymków nad każdą wiadomością jest obraz i nazwa, a tekst biegnie od marginesu do marginesu; kolory dymków wtedy nie obowiązują.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Dymki</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Szerokie dymki</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Bez dymków</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

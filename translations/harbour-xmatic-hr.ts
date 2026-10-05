@@ -300,6 +300,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Uključeno: ulaskom u sobu dolaziš do svoje zadnje pročitane poruke, nove su ispod nje — i natrag na mjesto na kojem si bio ako si sobu napustio usred povijesti. To se mjesto pamti dok ne zatvoriš aplikaciju. Isključeno: soba se otvara na najnovijoj poruci, a crtu koja označava gdje si stao naći ćeš pomicanjem prema gore.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Raspored poruka</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Široki oblačići sežu do ruba zaslona. Bez oblačića iznad svake poruke stoje slika i ime, a tekst ide od ruba do ruba; boje oblačića tada ne vrijede.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Oblačići</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Široki oblačići</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Bez oblačića</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
