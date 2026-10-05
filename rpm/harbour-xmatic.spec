@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.43.0
+Version:    0.43.1
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -44,11 +44,14 @@ Requires:   %{_libdir}/gstreamer-1.0/libgstnice.so
 # Depend on the QML module by path: requiring the library package by name is
 # what rpmlint objects to, and the module is what the app actually imports.
 Requires:   %{_libdir}/qt5/qml/Nemo/KeepAlive/qmldir
-# Store key: Sailfish Secrets daemon and its plugins, by path.
+# Store key: Sailfish Secrets daemon and its plugins. The plugins by name: the
+# repositories carry no file lists, so a path under %{_libdir} resolves only
+# against what is already installed, and a device without the plugin could not
+# install the app at all. /usr/bin paths are in the primary metadata.
 Requires:   /usr/bin/sailfishsecretsd
-Requires:   %{_libdir}/Sailfish/Secrets/libsailfishsecrets-sqlcipher.so
-Requires:   %{_libdir}/Sailfish/Secrets/libsailfishsecrets-openssl.so
-Requires:   %{_libdir}/Sailfish/Crypto/libsailfishcrypto-openssl.so
+Requires:   sailfishsecretsdaemon-secretsplugin-common
+Requires:   sailfishsecretsdaemon-secretsplugins-default
+Requires:   sailfishsecretsdaemon-cryptoplugins-default
 BuildRequires: pkgconfig(sailfishapp)
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Qml)
@@ -114,6 +117,13 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Oct 05 2026 harbour-xmatic contributors 0.43.1-1
+- Installs again on a device that lacks a plugin of the secure storage.
+  0.42.1 and 0.43.0 asked for the plugins by file, which the package
+  manager can only find once they are installed, and stopped with "nothing
+  provides ...". They are now asked for by package and installed along
+  with the app.
+
 * Mon Oct 05 2026 harbour-xmatic contributors 0.43.0-1
 - Appearance offers a message layout: bubbles as before, wide bubbles that
   reach the edge of the screen, or no bubbles, where picture and name head
