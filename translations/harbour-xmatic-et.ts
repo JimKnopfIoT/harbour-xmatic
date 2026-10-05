@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Sees: tuppa sisenedes satud viimati loetud sõnumi juurde, uued on selle all — ja tagasi kohta, kus olid, kui lahkusid toast keset ajalugu. See koht jääb meelde, kuni rakendus suletakse. Väljas: tuba avaneb uusima sõnumi juures ja lugemiskohta tähistava joone leiad üles kerides.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Sõnumite paigutus</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Laiad mullid ulatuvad ekraani servani. Ilma mullideta on iga sõnumi kohal pilt ja nimi ning tekst ulatub äärest ääreni; mullide värvid siis ei kehti.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Mullid</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Laiad mullid</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Ilma mullideta</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

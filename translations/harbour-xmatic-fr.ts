@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Activé : en entrant dans un salon, tu arrives à ton dernier message lu, les nouveaux en dessous — et à l&apos;endroit où tu étais si tu as quitté le salon au milieu de son historique. Cet endroit est retenu jusqu&apos;à la fermeture de l&apos;application. Désactivé : le salon s&apos;ouvre sur son message le plus récent et la ligne qui marque où tu t&apos;es arrêté se trouve en remontant.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Mise en page des messages</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Les bulles larges vont jusqu’au bord de l’écran. Sans bulles, chaque message commence par l’image et le nom, et son texte va d’une marge à l’autre ; les couleurs des bulles ne s’appliquent alors plus.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Bulles</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Bulles larges</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Sans bulles</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
@@ -2711,7 +2731,7 @@
     <message>
         <source>%1: %2</source>
         <comment>system line and the reason given for it</comment>
-        <translation>%1&#xa0;: %2</translation>
+        <translation>%1 : %2</translation>
     </message>
     <message>
         <source>Convert to text</source>
@@ -3032,11 +3052,11 @@
     </message>
     <message>
         <source>A device lock code has to be set — Settings › Device lock. The service unlocks with it at start-up; without one it stays locked.</source>
-        <translation>Un code de verrouillage de l'appareil doit être défini — Réglages › Verrouillage de l'appareil. Le service se déverrouille avec lui au démarrage ; sans lui, il reste verrouillé.</translation>
+        <translation>Un code de verrouillage de l&apos;appareil doit être défini — Réglages › Verrouillage de l&apos;appareil. Le service se déverrouille avec lui au démarrage ; sans lui, il reste verrouillé.</translation>
     </message>
     <message>
         <source>If Settings › Keys shows the master lock as locked, a code of its own is set there, and the device lock does not open it. Unlock it there and remove that code, then restart the device.</source>
-        <translation>Si Réglages › Clés indique que le verrou principal est verrouillé, un code propre y est défini que le verrouillage de l'appareil n'ouvre pas. Déverrouille-le là, supprime ce code, puis redémarre l'appareil.</translation>
+        <translation>Si Réglages › Clés indique que le verrou principal est verrouillé, un code propre y est défini que le verrouillage de l&apos;appareil n&apos;ouvre pas. Déverrouille-le là, supprime ce code, puis redémarre l&apos;appareil.</translation>
     </message>
 </context>
 <context>
@@ -3325,7 +3345,7 @@
     </message>
     <message>
         <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
-        <translation>xmatic continue d&apos;essayer tout seul. Ne te reconnecte pas&#xa0;: cela créerait un nouvel appareil et coûterait les clés de ton historique chiffré.</translation>
+        <translation>xmatic continue d&apos;essayer tout seul. Ne te reconnecte pas : cela créerait un nouvel appareil et coûterait les clés de ton historique chiffré.</translation>
     </message>
     <message>
         <source>Try again</source>

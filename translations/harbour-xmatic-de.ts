@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ein: Beim Betreten eines Raums landest du bei deiner zuletzt gelesenen Nachricht, die neuen stehen darunter — und wieder an der Stelle, an der du warst, wenn du den Raum mitten in der Historie verlassen hast. Diese Stelle bleibt gemerkt, bis die App geschlossen wird. Aus: Der Raum öffnet bei der neuesten Nachricht, und die Linie, die deinen Lesestand markiert, findest du durch Hochscrollen.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Nachrichtenlayout</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Breite Sprechblasen reichen bis an den Bildschirmrand. Ohne Sprechblasen steht über jeder Nachricht Bild und Name, und der Text läuft von Rand zu Rand; die Farben der Sprechblasen gelten dann nicht.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Sprechblasen</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Breite Sprechblasen</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Ohne Sprechblasen</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

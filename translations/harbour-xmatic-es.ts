@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Activado: al entrar en una sala llegas a tu último mensaje leído, con los nuevos debajo, y al punto en el que estabas si dejaste la sala en mitad de su historial. Ese punto se conserva hasta que cierres la aplicación. Desactivado: la sala se abre en su mensaje más reciente y la línea que marca dónde lo dejaste se encuentra subiendo.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Diseño de los mensajes</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Las burbujas anchas llegan hasta el borde de la pantalla. Sin burbujas, cada mensaje lleva arriba la imagen y el nombre, y su texto va de margen a margen; los colores de las burbujas dejan de aplicarse.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Burbujas</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Burbujas anchas</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Sin burbujas</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

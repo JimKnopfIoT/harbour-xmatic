@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Включено: при влизане в стая попадаш на последното си прочетено съобщение, новите са под него — и обратно на мястото, на което си бил, ако си напуснал стаята насред историята. Това място се помни, докато приложението не бъде затворено. Изключено: стаята се отваря при най-новото съобщение, а линията, която отбелязва докъде си стигнал, намираш, като превъртиш нагоре.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Оформление на съобщенията</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Широките балончета стигат до края на екрана. Без балончета над всяко съобщение стоят изображение и име, а текстът върви от поле до поле; цветовете на балончетата тогава не важат.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Балончета</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Широки балончета</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Без балончета</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

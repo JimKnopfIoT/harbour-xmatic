@@ -29,6 +29,9 @@ class AppSettings : public QObject
     /// Whether a room's space is marked over its picture in the chat list.
     Q_PROPERTY(bool spaceInitials READ spaceInitials WRITE setSpaceInitials
                NOTIFY spaceInitialsChanged)
+    /// "bubbles", "wide" or "flat": how far a message may spread across the row.
+    Q_PROPERTY(QString messageLayout READ messageLayout WRITE setMessageLayout
+               NOTIFY messageLayoutChanged)
     /// "never", "unencrypted" or "always": when the homeserver may be asked
     /// what a linked page says about itself. Off: the server learns every link.
     Q_PROPERTY(QString linkPreviews READ linkPreviews WRITE setLinkPreviews
@@ -151,6 +154,9 @@ public:
     bool spaceInitials() const;
     void setSpaceInitials(bool enabled);
 
+    QString messageLayout() const;
+    void setMessageLayout(const QString &layout);
+
     /// Whether a link in a message can be tapped.
     bool clickableLinks() const;
     bool pushEnabled() const;
@@ -224,6 +230,7 @@ signals:
     void jumpToReadMarkerChanged();
     void clickableLinksChanged();
     void spaceInitialsChanged();
+    void messageLayoutChanged();
     void linkPreviewsChanged();
     void locationSharingChanged();
     void locationMapsChanged();

@@ -298,6 +298,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Bekapcsolva: egy szobába belépve az utoljára olvasott üzenetednél kötsz ki, az újak alatta vannak — és oda, ahol jártál, ha a szobát az előzmények közepén hagytad el. Ez a hely az alkalmazás bezárásáig megmarad. Kikapcsolva: a szoba a legújabb üzenetnél nyílik meg, és az olvasás helyét jelölő vonalat felfelé görgetve találod meg.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Üzenetek elrendezése</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>A széles buborékok a képernyő széléig érnek. Buborékok nélkül minden üzenet fölött kép és név áll, a szöveg pedig margótól margóig fut; a buborékok színei ilyenkor nem érvényesek.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Buborékok</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Széles buborékok</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Buborékok nélkül</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

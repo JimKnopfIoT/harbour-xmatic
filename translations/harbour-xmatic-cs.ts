@@ -300,6 +300,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Zapnuto: po vstupu do místnosti se dostaneš ke své poslední přečtené zprávě, nové jsou pod ní — a zpět na místo, kde jsi byl, pokud jsi místnost opustil uprostřed historie. Toto místo se pamatuje, dokud aplikaci nezavřeš. Vypnuto: místnost se otevře u nejnovější zprávy a čáru označující, kde jsi skončil, najdeš posunutím nahoru.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Rozvržení zpráv</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Široké bubliny sahají až k okraji obrazovky. Bez bublin je nad každou zprávou obrázek a jméno a text vede od okraje k okraji; barvy bublin pak neplatí.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Bubliny</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Široké bubliny</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Bez bublin</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

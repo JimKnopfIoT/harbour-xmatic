@@ -300,6 +300,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ieslēgts: ieejot istabā, nonāc pie pēdējās izlasītās ziņas, jaunās ir zem tās — un atpakaļ tajā vietā, kur biji, ja pameti istabu vēstures vidū. Šī vieta tiek paturēta, līdz lietotne tiek aizvērta. Izslēgts: istaba atveras pie jaunākās ziņas, un līniju, kas iezīmē lasīšanas vietu, atradīsi, ritinot uz augšu.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Ziņu izkārtojums</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Plati burbuļi sniedzas līdz ekrāna malai. Bez burbuļiem virs katras ziņas ir attēls un vārds, un teksts stiepjas no malas līdz malai; burbuļu krāsas tad netiek lietotas.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Burbuļi</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Plati burbuļi</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Bez burbuļiem</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

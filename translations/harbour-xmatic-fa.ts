@@ -298,6 +298,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>روشن: با ورود به یک اتاق به آخرین پیام خوانده‌شده‌ات می‌رسی و پیام‌های تازه زیر آن هستند — و اگر اتاق را در میانهٔ تاریخچه ترک کرده باشی، به همان جا بازمی‌گردی. این جایگاه تا بسته شدن برنامه نگه داشته می‌شود. خاموش: اتاق روی تازه‌ترین پیام باز می‌شود و خطی که نشان می‌دهد کجا متوقف شده‌ای را با پیمایش به بالا می‌یابی.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>چیدمان پیام‌ها</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>حباب‌های پهن تا لبهٔ صفحه می‌رسند. بدون حباب، بالای هر پیام تصویر و نام می‌آید و متن از حاشیه تا حاشیه می‌رود؛ رنگ‌های حباب‌ها در این حالت اعمال نمی‌شوند.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>حباب‌ها</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>حباب‌های پهن</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>بدون حباب</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

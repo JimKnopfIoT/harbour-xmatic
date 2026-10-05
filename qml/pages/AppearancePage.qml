@@ -107,6 +107,27 @@ Page {
                 title: qsTr("Appearance")
             }
 
+            // Not part of the colour reset: a layout is no palette to be rescued from.
+            ComboBox {
+                readonly property var layouts: ["bubbles", "wide", "flat"]
+
+                label: qsTr("Message layout")
+                description: qsTr("Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.")
+                currentIndex: Math.max(0, layouts.indexOf(settings.messageLayout))
+
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("Bubbles") }
+                    MenuItem { text: qsTr("Wide bubbles") }
+                    MenuItem { text: qsTr("No bubbles") }
+                }
+
+                onCurrentIndexChanged: {
+                    if (currentIndex >= 0) {
+                        settings.messageLayout = layouts[currentIndex]
+                    }
+                }
+            }
+
             // ---- preview ------------------------------------------------
 
             Rectangle {

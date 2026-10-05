@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ενεργό: μπαίνοντας σε ένα δωμάτιο βρίσκεσαι στο τελευταίο μήνυμα που διάβασες, με τα νέα από κάτω — και πίσω στο σημείο όπου ήσουν, αν έφυγες από το δωμάτιο στη μέση του ιστορικού. Το σημείο κρατιέται μέχρι να κλείσει η εφαρμογή. Ανενεργό: το δωμάτιο ανοίγει στο νεότερο μήνυμα και τη γραμμή που δείχνει πού σταμάτησες τη βρίσκεις κάνοντας κύλιση προς τα πάνω.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Διάταξη μηνυμάτων</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Τα φαρδιά συννεφάκια φτάνουν ως την άκρη της οθόνης. Χωρίς συννεφάκια, κάθε μήνυμα ξεκινά με εικόνα και όνομα και το κείμενο απλώνεται από περιθώριο σε περιθώριο· τα χρώματα των συννεφακιών τότε δεν ισχύουν.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Συννεφάκια</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Φαρδιά συννεφάκια</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Χωρίς συννεφάκια</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>

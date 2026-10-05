@@ -299,6 +299,26 @@
         <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
         <translation>Ligado: ao entrares numa sala vais para a tua última mensagem lida, com as novas por baixo, e para o sítio onde estavas se saíste da sala a meio do histórico. Esse sítio fica guardado até fechares a aplicação. Desligado: a sala abre na mensagem mais recente e a linha que marca onde paraste encontra-se subindo.</translation>
     </message>
+    <message>
+        <source>Message layout</source>
+        <translation>Disposição das mensagens</translation>
+    </message>
+    <message>
+        <source>Wide bubbles reach the edge of the screen. Without bubbles, every message is headed by picture and name and its text runs from margin to margin; the bubble colours then do not apply.</source>
+        <translation>Os balões largos vão até à borda do ecrã. Sem balões, cada mensagem começa com a imagem e o nome e o texto vai de margem a margem; as cores dos balões deixam de se aplicar.</translation>
+    </message>
+    <message>
+        <source>Bubbles</source>
+        <translation>Balões</translation>
+    </message>
+    <message>
+        <source>Wide bubbles</source>
+        <translation>Balões largos</translation>
+    </message>
+    <message>
+        <source>No bubbles</source>
+        <translation>Sem balões</translation>
+    </message>
 </context>
 <context>
     <name>AttachmentPickerPage</name>
