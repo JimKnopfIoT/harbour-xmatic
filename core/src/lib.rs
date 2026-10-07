@@ -141,7 +141,8 @@ pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore 
 }
 
 /// Registers the callback for every reply and event. It runs on a worker
-/// thread, and the string it is handed is only valid for that call.
+/// thread, and the string it is handed is only valid for that call. Returns
+/// once no call to the previous callback is running.
 #[no_mangle]
 pub unsafe extern "C" fn xm_core_set_callback(
     core: *mut XmCore,

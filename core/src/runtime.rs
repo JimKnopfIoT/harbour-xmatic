@@ -4,7 +4,7 @@
 use std::ffi::CString;
 use std::os::raw::{c_char, c_void};
 use std::panic::{catch_unwind, AssertUnwindSafe};
-use std::sync::{Arc, Mutex as StdMutex};
+use std::sync::Arc;
 
 use matrix_sdk::{
     authentication::oauth::{error::OAuthDiscoveryError, CsrfToken},
@@ -51,46 +51,44 @@ struct CallbackSlot {
 }
 
 // The pointer is opaque to Rust and only handed back with a message. C++ owns
-// it, keeps it alive, and its trampoline is safe from any thread.
+// it; `set_callback` waits out every call in flight before it returns.
 unsafe impl Send for CallbackSlot {}
 unsafe impl Sync for CallbackSlot {}
 
 /// Delivers JSON messages to the front end.
 pub struct Sink {
-    slot: StdMutex<CallbackSlot>,
+    slot: std::sync::RwLock<CallbackSlot>,
 }
 
 impl Sink {
     pub fn new() -> Self {
         Self {
-            slot: StdMutex::new(CallbackSlot {
+            slot: std::sync::RwLock::new(CallbackSlot {
                 func: None,
                 user_data: std::ptr::null_mut(),
             }),
         }
     }
 
+    /// Blocks until no delivery is running: afterwards the old `user_data` is
+    /// never touched again, so the front end may free it.
     pub fn set_callback(&self, func: Option<XmCallback>, user_data: *mut c_void) {
-        if let Ok(mut slot) = self.slot.lock() {
-            slot.func = func;
-            slot.user_data = user_data;
-        }
+        let mut slot = self.slot.write().unwrap_or_else(|poisoned| poisoned.into_inner());
+        slot.func = func;
+        slot.user_data = user_data;
     }
 
     /// Serialises `value` and hands it to the front end. Messages sent before a
     /// callback is registered are dropped.
     pub fn emit(&self, value: Value) {
-        // Pointer copied out, lock released before the front end is called: a
-        // deadlock should not be the price of the first callback in.
-        let (func, user_data) = {
-            let Ok(slot) = self.slot.lock() else { return };
-            let Some(func) = slot.func else { return };
-            (func, slot.user_data)
-        };
         let Ok(text) = serde_json::to_string(&value) else { return };
         let Ok(message) = CString::new(text) else { return };
 
-        let _ = catch_unwind(AssertUnwindSafe(|| func(user_data, message.as_ptr())));
+        // Read guard across the call: emitters run side by side, `set_callback`
+        // waits. The callback must never call back into the core.
+        let slot = self.slot.read().unwrap_or_else(|poisoned| poisoned.into_inner());
+        let Some(func) = slot.func else { return };
+        let _ = catch_unwind(AssertUnwindSafe(|| func(slot.user_data, message.as_ptr())));
     }
 }
 
@@ -3197,4 +3195,36 @@ async fn logout(state: &Arc<State>, id: u64) {
     state
         .sink
         .emit(event("session.changed", json!({ "state": "none" })));
+}
+
+#[cfg(test)]
+mod sink_tests {
+    use super::*;
+    use std::sync::atomic::{AtomicU8, Ordering};
+    use std::time::Duration;
+
+    // 0 idle, 1 inside the callback, 2 returned from it.
+    static PHASE: AtomicU8 = AtomicU8::new(0);
+
+    extern "C" fn slow(_: *mut c_void, _: *const c_char) {
+        PHASE.store(1, Ordering::SeqCst);
+        std::thread::sleep(Duration::from_millis(200));
+        PHASE.store(2, Ordering::SeqCst);
+    }
+
+    #[test]
+    fn clearing_the_callback_waits_for_a_delivery_in_flight() {
+        let sink = Arc::new(Sink::new());
+        sink.set_callback(Some(slow), 1 as *mut c_void);
+        let emitter = {
+            let sink = sink.clone();
+            std::thread::spawn(move || sink.emit(serde_json::json!({})))
+        };
+        while PHASE.load(Ordering::SeqCst) == 0 {
+            std::thread::yield_now();
+        }
+        sink.set_callback(None, std::ptr::null_mut());
+        assert_eq!(PHASE.load(Ordering::SeqCst), 2);
+        emitter.join().unwrap();
+    }
 }

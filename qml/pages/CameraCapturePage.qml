@@ -19,6 +19,11 @@ Page {
     property bool handedOver: false
     /// The device's rotation at the shutter, as the platform camera reads it.
     property int pictureRotation: 0
+    /// False until the sensor answered once: a rotation of 0 is then a guess.
+    property bool sensorSeen: false
+    property int askedOrientation: 0
+    /// The device's rotation at the shutter: the preview is held the same way.
+    property int shotRotation: 0
 
     readonly property bool callRunning: matrix.calls.state !== "idle"
     readonly property bool front: camera.position === Camera.FrontFace
@@ -47,9 +52,13 @@ Page {
             page.failure = qsTr("The photo could not be saved.")
             return
         }
-        camera.metaData.orientation = camera.position === Camera.FrontFace
+        page.askedOrientation = camera.position === Camera.FrontFace
                 ? (720 + camera.orientation - page.pictureRotation) % 360
                 : (720 + camera.orientation + page.pictureRotation) % 360
+        camera.metaData.orientation = page.askedOrientation
+        page.shotRotation = page.pictureRotation
+        console.info("xmatic: shutter: mount", camera.orientation, "rotation",
+                     page.pictureRotation, "sensor seen", page.sensorSeen)
         page.capturing = true
         camera.imageCapture.captureToLocation(path)
     }
@@ -121,6 +130,8 @@ Page {
                 page.capturing = false
                 page.releaseFocus()
                 page.shot = path
+                matrix.cameraShots.logShot(path, page.askedOrientation,
+                                           page.sensorSeen ? page.pictureRotation : -1)
             }
             onCaptureFailed: {
                 page.capturing = false
@@ -144,8 +155,9 @@ Page {
             case OrientationReading.TopDown: page.pictureRotation = 180; break
             case OrientationReading.LeftUp: page.pictureRotation = 270; break
             case OrientationReading.RightUp: page.pictureRotation = 90; break
-            default: break
+            default: return
             }
+            page.sensorSeen = true
         }
     }
 
@@ -273,15 +285,22 @@ Page {
         }
     }
 
+    // Turned against the device's rotation at the shutter: upright and screen
+    // filling for a hand that still holds the phone as it took the picture.
     Image {
-        anchors.fill: parent
+        readonly property bool sideways: page.shotRotation % 180 !== 0
+
+        anchors.centerIn: parent
+        width: sideways ? parent.height : parent.width
+        height: sideways ? parent.width : parent.height
+        rotation: page.shotRotation
         visible: page.shot.length > 0
         fillMode: Image.PreserveAspectFit
         autoTransform: true
         asynchronous: true
         // Bounded by the screen: a camera frame is many times its size.
-        sourceSize.width: Screen.width
-        sourceSize.height: Screen.height
+        sourceSize.width: Math.max(Screen.width, Screen.height)
+        sourceSize.height: Math.max(Screen.width, Screen.height)
         source: page.shot.length > 0 ? "file://" + page.shot : ""
     }
 

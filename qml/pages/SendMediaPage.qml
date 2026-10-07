@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import Sailfish.Silica 1.0
 
 // What stands between picking a file and sending it: caption, reply and
@@ -157,6 +157,8 @@ Dialog {
             // preview for a PDF would only produce an empty grey box.
             Image {
                 visible: dialog.isImage && status === Image.Ready
+                // As the re-encode will bake it in.
+                autoTransform: true
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 fillMode: Image.PreserveAspectFit

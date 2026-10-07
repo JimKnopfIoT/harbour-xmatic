@@ -1,12 +1,14 @@
-//! Mentions: who a message points at. Two halves - the candidates the picker
-//! offers while `@` is being typed, and the pill plus `m.mentions` that make a
-//! sent message ping. Nothing else knows what a mention is.
+//! Mentions: who or which room a message points at. Two halves - the
+//! candidates the picker offers while `@` or `#` is being typed, and the pill
+//! plus `m.mentions` that make a sent message ping. Nothing else knows what a
+//! mention is.
 
 use crate::compose::{escape_text, to_formatted_body};
 use crate::text::{scrub_ids, strip_bidi};
 use matrix_sdk::ruma::events::room::message::RoomMessageEventContent;
 use matrix_sdk::ruma::events::Mentions;
 use matrix_sdk::ruma::{OwnedUserId, RoomId, UserId};
+use matrix_sdk::Room;
 use matrix_sdk::{Client, RoomMemberships};
 use serde_json::{json, Value};
 
@@ -27,7 +29,7 @@ fn matches(query: &str, name: &str, user_id: &str) -> bool {
     let query = query.to_lowercase();
     // The localpart, so `@wolf` finds `@wolf:server` whatever the display name.
     let localpart = user_id
-        .trim_start_matches('@')
+        .trim_start_matches(['@', '#'])
         .split(':')
         .next()
         .unwrap_or_default()
@@ -40,9 +42,58 @@ fn matches(query: &str, name: &str, user_id: &str) -> bool {
         .any(|word| word.starts_with(&query))
 }
 
-/// Who can be mentioned here, filtered by what stands after the `@`. Read from
-/// the store, never from the server: this is asked again on every keystroke.
+/// What can be mentioned here, filtered by the typed word: `#…` offers rooms,
+/// anything else members. Read from the store: asked again on every keystroke.
 pub async fn candidates(client: &Client, room_id: &str, query: &str) -> Result<Vec<Value>, String> {
+    match query.strip_prefix('#') {
+        Some(rest) => Ok(room_candidates(client, room_id, rest).await),
+        None => member_candidates(client, room_id, query.strip_prefix('@').unwrap_or(query)).await,
+    }
+}
+
+/// The text a room link stands as: its alias, else `#` and its name.
+fn room_text(room: &Room) -> Option<String> {
+    if let Some(alias) = room.canonical_alias() {
+        return Some(alias.to_string());
+    }
+    let name = strip_bidi(&room.cached_display_name()?.to_string());
+    (!name.is_empty()).then(|| format!("#{name}"))
+}
+
+/// Joined rooms other than this one. No direct chats: a link to one opens
+/// nothing for anybody else.
+async fn room_candidates(client: &Client, room_id: &str, query: &str) -> Vec<Value> {
+    let mut rows: Vec<(String, Value)> = Vec::new();
+    for room in client.joined_rooms() {
+        if room.room_id().as_str() == room_id || room.is_direct().await.unwrap_or(true) {
+            continue;
+        }
+        let Some(insert) = room_text(&room) else { continue };
+        let name = room
+            .cached_display_name()
+            .map(|name| strip_bidi(&name.to_string()))
+            .unwrap_or_default();
+        let alias = room.canonical_alias().map(|alias| alias.to_string()).unwrap_or_default();
+        if !matches(query, &name, &alias) {
+            continue;
+        }
+        let label = if name.is_empty() { insert.clone() } else { name };
+        rows.push((
+            label.to_lowercase(),
+            json!({
+                "id": room.room_id().as_str(),
+                "label": label,
+                "insert": insert,
+                "avatar": room.avatar_url().map(|url| url.to_string()),
+            }),
+        ));
+    }
+    rows.sort_by(|a, b| a.0.cmp(&b.0));
+    rows.truncate(MAX_CANDIDATES);
+    rows.into_iter().map(|(_, row)| row).collect()
+}
+
+async fn member_candidates(client: &Client, room_id: &str, query: &str) -> Result<Vec<Value>, String> {
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
     let room = client
         .get_room(&parsed)
@@ -69,10 +120,11 @@ pub async fn candidates(client: &Client, room_id: &str, query: &str) -> Result<V
             // Nameless members are mentioned by their address; the picker shows
             // what will land in the text either way.
             let label = if name.is_empty() { user_id.clone() } else { name.clone() };
+            let insert = if name.is_empty() { user_id.clone() } else { format!("@{name}") };
             let row = json!({
-                "userId": user_id,
-                "displayName": name,
+                "id": user_id,
                 "label": label.clone(),
+                "insert": insert,
                 "avatar": member.avatar_url().map(|url| url.to_string()),
             });
             Some((0, label.to_lowercase(), row))
@@ -91,9 +143,9 @@ pub async fn candidates(client: &Client, room_id: &str, query: &str) -> Result<V
         .unwrap_or(false);
     if room_allowed && matches(query, "room", ROOM_KEY) {
         out.push(json!({
-            "userId": ROOM_KEY,
-            "displayName": "",
+            "id": ROOM_KEY,
             "label": ROOM_KEY,
+            "insert": ROOM_KEY,
             "avatar": Value::Null,
         }));
     }
@@ -107,18 +159,23 @@ struct Outgoing {
     mentions: Option<Mentions>,
 }
 
-/// The text a mention stands as in the body: `@` and the name the picker
-/// inserted. The display name is read here, not taken from the front end - it
-/// decides what is linked, and that is data, not decoration.
-async fn needles(client: &Client, room_id: &str, ids: &[String]) -> (Vec<(String, String)>, bool) {
+/// What the picked ids stand as: (text in the body, link target), the users
+/// to ping, and whether `@room` is meant. Texts are read here, not taken from
+/// the front end - they decide what is linked.
+async fn needles(
+    client: &Client,
+    room_id: &str,
+    ids: &[String],
+) -> (Vec<(String, String)>, Vec<OwnedUserId>, bool) {
     let mut pills: Vec<(String, String)> = Vec::new();
+    let mut users: Vec<OwnedUserId> = Vec::new();
     let mut room = false;
 
     let Ok(parsed) = RoomId::parse(room_id) else {
-        return (pills, room);
+        return (pills, users, room);
     };
     let Some(handle) = client.get_room(&parsed) else {
-        return (pills, room);
+        return (pills, users, room);
     };
 
     for id in ids {
@@ -126,10 +183,20 @@ async fn needles(client: &Client, room_id: &str, ids: &[String]) -> (Vec<(String
             room = true;
             continue;
         }
-        let Ok(user) = <&UserId>::try_from(id.as_str()) else {
+        if let Ok(target) = <&RoomId>::try_from(id.as_str()) {
+            let Some(linked) = client.get_room(target) else { continue };
+            let Some(text) = room_text(&linked) else { continue };
+            let href = match linked.matrix_to_permalink().await {
+                Ok(uri) => uri.to_string(),
+                Err(_) => target.matrix_to_uri().to_string(),
+            };
+            pills.push((text, href));
+            continue;
+        }
+        let Ok(user) = UserId::parse(id.as_str()) else {
             continue;
         };
-        let name = match handle.get_member_no_sync(user).await {
+        let name = match handle.get_member_no_sync(&user).await {
             Ok(Some(member)) => strip_bidi(member.display_name().unwrap_or_default()),
             _ => String::new(),
         };
@@ -138,12 +205,13 @@ async fn needles(client: &Client, room_id: &str, ids: &[String]) -> (Vec<(String
         } else {
             format!("@{name}")
         };
-        pills.push((needle, id.clone()));
+        pills.push((needle, user.matrix_to_uri().to_string()));
+        users.push(user);
     }
 
-    // The longer name first: `@Ann` must not take the head of `@Anna`.
+    // The longer text first: `@Ann` must not take the head of `@Anna`.
     pills.sort_by(|a, b| b.0.len().cmp(&a.0.len()));
-    (pills, room)
+    (pills, users, room)
 }
 
 /// Wraps every mention's text in a permalink. Walks the markup this process
@@ -172,13 +240,13 @@ fn insert_pills(html: &str, pills: &[(String, String)]) -> (String, bool) {
         }
 
         let mut matched = false;
-        for (needle, user_id) in pills {
+        for (needle, href) in pills {
             let escaped = escape_text(needle);
             if escaped.is_empty() || !rest.starts_with(&escaped) {
                 continue;
             }
-            out.push_str("<a href=\"https://matrix.to/#/");
-            out.push_str(&escape_text(user_id));
+            out.push_str("<a href=\"");
+            out.push_str(&escape_text(href).replace('"', "&quot;"));
             out.push_str("\">");
             out.push_str(&escaped);
             out.push_str("</a>");
@@ -208,24 +276,24 @@ async fn resolve(client: Option<&Client>, room_id: &str, body: &str, ids: &[Stri
         return Outgoing { formatted: base, mentions: None };
     };
 
-    let (pills, room) = needles(client, room_id, ids).await;
-    let users: Vec<OwnedUserId> = pills
-        .iter()
-        .filter_map(|(_, id)| UserId::parse(id).ok())
-        .collect();
-    if users.is_empty() && !room {
+    let (pills, users, room) = needles(client, room_id, ids).await;
+    if pills.is_empty() && !room {
         return Outgoing { formatted: base, mentions: None };
     }
 
-    let mut mentions = Mentions::with_user_ids(users);
-    mentions.room = room;
+    // A room link pings nobody.
+    let mentions = (!users.is_empty() || room).then(|| {
+        let mut mentions = Mentions::with_user_ids(users);
+        mentions.room = room;
+        mentions
+    });
 
     // A body with no markers has no formatted copy yet; the pill needs one.
     let source = base.clone().unwrap_or_else(|| escape_text(body));
     let (linked, hit) = insert_pills(&source, &pills);
     let formatted = if hit { Some(linked) } else { base };
 
-    Outgoing { formatted, mentions: Some(mentions) }
+    Outgoing { formatted, mentions }
 }
 
 /// A text message with its mentions, ready to send. The only way in from the
@@ -252,7 +320,7 @@ mod tests {
     use super::{insert_pills, matches};
 
     fn pill() -> Vec<(String, String)> {
-        vec![("@Anna Wolf".to_owned(), "@anna:example.invalid".to_owned())]
+        vec![("@Anna Wolf".to_owned(), "https://matrix.to/#/@anna:example.invalid".to_owned())]
     }
 
     #[test]
@@ -285,8 +353,8 @@ mod tests {
     fn the_longer_name_wins() {
         // As `needles` sorts them: the pair that would swallow the other first.
         let pills = vec![
-            ("@Anna Wolf".to_owned(), "@anna:example.invalid".to_owned()),
-            ("@Anna".to_owned(), "@ann:example.invalid".to_owned()),
+            ("@Anna Wolf".to_owned(), "https://matrix.to/#/@anna:example.invalid".to_owned()),
+            ("@Anna".to_owned(), "https://matrix.to/#/@ann:example.invalid".to_owned()),
         ];
         let (html, _) = insert_pills("@Anna Wolf", &pills);
         assert!(html.contains("@anna:example.invalid"), "{html}");
@@ -305,6 +373,27 @@ mod tests {
         let (html, hit) = insert_pills("&lt;b&gt; @Anna Wolf", &pill());
         assert!(hit);
         assert!(html.starts_with("&lt;b&gt; <a href="), "{html}");
+    }
+
+    #[test]
+    fn a_room_becomes_a_permalink_with_its_target_escaped() {
+        let pills = vec![(
+            "#Garden".to_owned(),
+            "https://matrix.to/#/!r:example.invalid?via=a&via=\"b".to_owned(),
+        )];
+        let (html, hit) = insert_pills("see #Garden", &pills);
+        assert!(hit);
+        assert_eq!(
+            html,
+            "see <a href=\"https://matrix.to/#/!r:example.invalid?via=a&amp;via=&quot;b\">#Garden</a>"
+        );
+    }
+
+    #[test]
+    fn rooms_match_on_name_and_alias() {
+        assert!(matches("gar", "Garden Club", "#plants:example.invalid"));
+        assert!(matches("pla", "Garden Club", "#plants:example.invalid"));
+        assert!(!matches("lub", "Garden Club", "#plants:example.invalid"));
     }
 
     #[test]

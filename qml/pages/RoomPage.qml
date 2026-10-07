@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
 import QtMultimedia 5.6
@@ -357,7 +357,7 @@ Page {
                 page.backToLive()
             }
             if (page.status === PageStatus.Active) {
-                messageComposer.insertMention(userId, displayName)
+                messageComposer.insertMember(userId, displayName)
                 return
             }
             page.pendingAction = {
@@ -610,7 +610,7 @@ Page {
                 } else if (action.kind === "forwardAttachment") {
                     forwardAttachment(action.item)
                 } else if (action.kind === "mention") {
-                    messageComposer.insertMention(action.userId, action.displayName)
+                    messageComposer.insertMember(action.userId, action.displayName)
                 } else if (action.kind === "transcribe") {
                     matrix.transcripts.transcribe(action.item.id, action.eventId, action.item.media)
                 } else if (action.kind === "delete") {
@@ -2151,6 +2151,9 @@ Page {
                                 Image {
                                     id: quoteThumb
 
+                                    // EXIF rotation, as every other client draws it.
+                                    autoTransform: true
+
                                     readonly property var quotedMedia: quoteThumbFrame.quotedMedia
                                     readonly property string mediaKey: quoteThumbFrame.mediaKey
 
@@ -2333,6 +2336,9 @@ Page {
                             // scrolling past the same image does not download it twice.
                             Image {
                                 id: attachment
+
+                                // EXIF rotation, as every other client draws it.
+                                autoTransform: true
 
                                 x: attachmentFrame.border.width + bubbleColumn.frameMat
                                 y: attachmentFrame.border.width + bubbleColumn.frameMat

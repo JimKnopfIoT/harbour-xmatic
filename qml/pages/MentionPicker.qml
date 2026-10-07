@@ -1,8 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Who can be mentioned, offered while `@` is being typed. One scrolling row of
-// names, not a list: a context menu's worth of rows has no place in landscape,
+// Who or which room can be mentioned, offered while `@` or `#` is being typed.
+// One scrolling row of names, not a list: a context menu's worth of rows has no place in landscape,
 // and the row grows the composer upward instead of covering the text.
 Item {
     id: picker
@@ -19,7 +19,8 @@ Item {
                                       ? matrix.mentions.candidates : []
     readonly property bool open: armed && candidates.length > 0
 
-    signal picked(string userId, string displayName)
+    /// `insert` is the text that lands in the field, as the core will link it.
+    signal picked(string id, string insert)
     /// Emitted on the press, before the field loses its focus to it.
     signal keepKeyboardRequested()
 
@@ -56,7 +57,7 @@ Item {
                     width: entry.width
 
                     onPressed: picker.keepKeyboardRequested()
-                    onClicked: picker.picked(modelData.userId, modelData.displayName)
+                    onClicked: picker.picked(modelData.id, modelData.insert)
 
                     Row {
                         id: entry

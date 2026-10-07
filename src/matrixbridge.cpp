@@ -2018,9 +2018,13 @@ static void insertDimensions(QJsonObject &arguments, const QString &localPath,
     }
 
     QImageReader reader(localPath);
-    const QSize size = reader.size();
+    QSize size = reader.size();
     if (!size.isValid() || size.isEmpty()) {
         return;
+    }
+    // An original keeps its EXIF rotation: declare the size it is drawn at.
+    if (reader.transformation() & QImageIOHandler::TransformationRotate90) {
+        size.transpose();
     }
 
     arguments.insert(QStringLiteral("width"), double(size.width()));

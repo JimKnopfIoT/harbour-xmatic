@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.43.1
+Version:    0.44.2
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -117,6 +117,18 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Oct 07 2026 harbour-xmatic contributors 0.44.2-1
+- Typing # in the message line offers the rooms you are in; a tap puts a
+  link to the room into the message, the same way @ names a member.
+- The camera's preview of a photo is held the way the phone was held when
+  it was taken: a landscape shot no longer shows lying on its side.
+- The live picture in the attachment picker's camera cell shows in
+  landscape too.
+- Pictures that carry a rotation in their metadata are drawn upright in the
+  conversation, the viewer and the send preview, and their declared size
+  matches what is drawn.
+- No message from the core can reach the app while it is shutting down.
+
 * Mon Oct 05 2026 harbour-xmatic contributors 0.43.1-1
 - Installs again on a device that lacks a plugin of the secure storage.
   0.42.1 and 0.43.0 asked for the plugins by file, which the package
