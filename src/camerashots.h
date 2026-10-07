@@ -20,6 +20,10 @@ public:
     /// Deletes a photo of ours; anything outside the directory is left alone.
     Q_INVOKABLE void discard(const QString &path);
 
+    /// Journal line: stored pixel size and EXIF transform against what was asked.
+    Q_INVOKABLE void logShot(const QString &path, int requestedOrientation,
+                             int sensorRotation) const;
+
     bool owns(const QString &path) const;
 
 private:

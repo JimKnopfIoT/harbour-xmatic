@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import Sailfish.Silica 1.0
 import Sailfish.Share 1.0
 
@@ -142,6 +142,8 @@ Page {
 
             Image {
                 id: picture
+
+                autoTransform: true
 
                 // The picture *is* the content: growing the content grows it,
                 // and panning is then the flickable's ordinary job.

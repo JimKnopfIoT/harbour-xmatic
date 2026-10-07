@@ -927,8 +927,8 @@ pub enum Command {
         room_id: String,
     },
 
-    /// Who can be mentioned in this room, filtered by what stands after the
-    /// `@`. Answered from the store, so it costs no request per keystroke.
+    /// Members (`@…`) or other joined rooms (`#…`) for the picker, filtered by
+    /// the typed word. Answered from the store, no request per keystroke.
     #[serde(rename = "mention.candidates")]
     MentionCandidates {
         id: u64,

@@ -8,8 +8,8 @@
 
 class QTimer;
 
-/// Who can be mentioned while `@` is being typed: `matrix.mentions`. Asks the
-/// core through the bridge and holds the answer for one query at a time. What
+/// Who or which room can be mentioned while `@` or `#` is being typed:
+/// `matrix.mentions`. Asks the core through the bridge and holds the answer for one query at a time. What
 /// a mention *is* lives in core/src/mention.rs; this only carries.
 class Mentions : public QObject
 {

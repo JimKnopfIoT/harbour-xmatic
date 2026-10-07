@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QImageReader>
 #include <QUrl>
 
 static QString localPath(const QString &path)
@@ -51,4 +52,14 @@ bool CameraShots::owns(const QString &path) const
         return false;
     }
     return QFileInfo(localPath(path)).absolutePath() == m_directory;
+}
+
+void CameraShots::logShot(const QString &path, int requestedOrientation,
+                          int sensorRotation) const
+{
+    QImageReader reader(localPath(path));
+    const QSize size = reader.size();
+    qInfo("xmatic: photo stored %dx%d, exif transform %d, asked %d, sensor %d",
+          size.width(), size.height(), int(reader.transformation()),
+          requestedOrientation, sensorRotation);
 }

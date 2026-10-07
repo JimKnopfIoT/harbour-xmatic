@@ -24,10 +24,11 @@ Column {
 
     property string placeholderText: ""
 
-    /// The room whose members can be mentioned. Empty leaves the picker shut.
+    /// The room whose members and neighbours can be mentioned. Empty leaves
+    /// the picker shut.
     property string roomId: ""
-    /// What was picked, as name → user id. The text is what the reader sees;
-    /// this is what the ping is addressed to.
+    /// What was picked, as text → user or room id. The text is what the reader
+    /// sees; this is what the ping or link is addressed to.
     property var mentionsPicked: ({})
     /// Whether a mention is being typed. The picker's own condition; see there
     /// why the field's focus cannot be it.
@@ -161,6 +162,11 @@ Column {
         return { "start": start, "end": end, "word": text.substring(start, end) }
     }
 
+    /// Whether the word is a mention being typed: `@` a member, `#` a room.
+    function isMentionWord(word) {
+        return word.charAt(0) === "@" || word.charAt(0) === "#"
+    }
+
     /// Asks for candidates while the word is a mention, and closes the list as
     /// soon as it is not. A name may hold spaces; what is typed may not.
     function refreshMentions() {
@@ -168,9 +174,10 @@ Column {
             return
         }
         var word = composer.wordBounds().word
-        if (word.charAt(0) === "@") {
+        if (composer.isMentionWord(word)) {
             composer.mentionArmed = true
-            matrix.mentions.search(composer.roomId, word.substring(1))
+            // The sigil travels: the core tells members from rooms by it.
+            matrix.mentions.search(composer.roomId, word)
         } else {
             composer.closeMentions()
         }
@@ -182,18 +189,22 @@ Column {
         matrix.mentions.clear()
     }
 
-    /// Puts the chosen name in place of what was typed. Through the editor, not
+    /// The member page's way in: a member by name.
+    function insertMember(userId, displayName) {
+        composer.insertMention(userId, displayName.length > 0 ? "@" + displayName : userId)
+    }
+
+    /// Puts the chosen text in place of what was typed. Through the editor, not
     /// through `text`: an assignment folds the keyboard away.
-    function insertMention(userId, displayName) {
+    function insertMention(id, label) {
         composer.holdKeyboard()
         Qt.inputMethod.commit()
-        var name = displayName.length > 0 ? displayName : userId
-        var label = userId === "@room" ? "@room" : "@" + name
         var bounds = composer.wordBounds()
         // Only a half-typed mention is replaced; from the member page the name
         // is inserted where the cursor stands.
-        var from = bounds.word.charAt(0) === "@" ? bounds.start : messageField.cursorPosition
-        var to = bounds.word.charAt(0) === "@" ? bounds.end : messageField.cursorPosition
+        var typed = composer.isMentionWord(bounds.word)
+        var from = typed ? bounds.start : messageField.cursorPosition
+        var to = typed ? bounds.end : messageField.cursorPosition
         if (messageField._editor) {
             if (to > from) {
                 messageField._editor.remove(from, to)
@@ -205,7 +216,7 @@ Column {
             messageField.cursorPosition = from + label.length + 1
         }
         var picked = composer.mentionsPicked
-        picked[label] = userId
+        picked[label] = id
         composer.mentionsPicked = picked
         composer.closeMentions()
         composer.focusField()
@@ -248,7 +259,7 @@ Column {
     MentionPicker {
         roomId: composer.roomId
         armed: composer.mentionArmed
-        onPicked: composer.insertMention(userId, displayName)
+        onPicked: composer.insertMention(id, insert)
         onKeepKeyboardRequested: composer.holdKeyboard()
     }
 

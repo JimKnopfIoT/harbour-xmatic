@@ -345,10 +345,9 @@ Dialog {
                 onClicked: dialog.openCamera()
 
                 // Only where the user turned it on, and only while someone looks.
-                // Portrait only: the viewfinder is not turned with the page.
                 Loader {
                     anchors.fill: parent
-                    active: cell.isCamera && settings.cameraLivePreview && dialog.isPortrait
+                    active: cell.isCamera && settings.cameraLivePreview
                     clip: true
 
                     sourceComponent: Item {
@@ -367,6 +366,15 @@ Dialog {
                             anchors.fill: parent
                             source: tileCamera
                             fillMode: VideoOutput.PreserveAspectCrop
+                            // The page turns, the world does not: undone anticlockwise.
+                            orientation: {
+                                switch (dialog.orientation) {
+                                case Orientation.Landscape: return 90
+                                case Orientation.PortraitInverted: return 180
+                                case Orientation.LandscapeInverted: return 270
+                                default: return 0
+                                }
+                            }
                         }
                     }
                 }
