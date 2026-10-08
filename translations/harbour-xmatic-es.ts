@@ -465,14 +465,6 @@
         <translation>Aceptar</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Rechazar</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Colgar</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Aceptar sin cámara</translation>
     </message>

@@ -109,14 +109,9 @@ Page {
 
     // A tapped link, as in the room below: a Matrix address is answered inside
     // the app, anything else is a web address.
-    // `shown`: asked in the link menu already, no second confirmation.
-    function followLink(link, shown) {
+    function followLink(link) {
         var target = MatrixLinks.decide(link)
         if (target.kind === "none") {
-            return
-        }
-        if (target.kind === "web" && shown === true) {
-            Qt.openUrlExternally(link)
             return
         }
         if (target.kind === "web") {
@@ -295,7 +290,7 @@ Page {
             menu: ContextMenu {
                 MenuItem {
                     text: qsTr("Open link?")
-                    onClicked: page.followLink(threadRow.heldLink, true)
+                    onClicked: page.followLink(threadRow.heldLink)
                 }
 
                 MenuItem {

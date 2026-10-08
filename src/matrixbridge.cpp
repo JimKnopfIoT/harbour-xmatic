@@ -720,6 +720,8 @@ void MatrixBridge::logout()
     m_drafts.clear();
     // Nor what a voice message was heard to say.
     m_transcripts->clear();
+    // Before the core drops the client: afterwards the goodbye has nobody to send it.
+    m_calls->hangUp();
     send(QStringLiteral("logout"));
 }
 
@@ -2558,7 +2560,10 @@ void MatrixBridge::handleReply(const QJsonObject &message)
             return;
         }
         // Asked on sign-in, not by the user; the call page is where it matters.
-        if (command == QLatin1String("call.turnServers")) {
+        // A goodbye after the session ended has no one left to tell.
+        if (command == QLatin1String("call.turnServers")
+            || (command == QLatin1String("call.hangup")
+                && error == QLatin1String("not signed in"))) {
             return;
         }
         if (locationQuiet) {
@@ -3888,6 +3893,11 @@ void MatrixBridge::applySession(const QJsonObject &data)
         setLastError(QString());
     }
 
+    // A call outlives no session: the sign-in page that follows has no way back
+    // to it, and its microphone would stay open.
+    if (m_sessionState == QLatin1String("signed-in") && state != QLatin1String("signed-in")) {
+        m_calls->hangUp();
+    }
     m_sessionState = state;
     m_userId = user;
     m_deviceId = device;

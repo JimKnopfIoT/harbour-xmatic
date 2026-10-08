@@ -1768,7 +1768,7 @@ Page {
                     MenuItem {
                         text: qsTr("Open link?")
                         visible: row.heldLink.length > 0
-                        onClicked: page.followLink(row.heldLink, undefined, true)
+                        onClicked: page.followLink(row.heldLink)
                     }
 
                     MenuItem {
@@ -4135,14 +4135,9 @@ Page {
     // A tapped link. A Matrix address is answered inside the app; anything
     // else is a web address and goes where it always went.
     // `map`: a location card's cached map, shown under the address.
-    // `shown`: asked in the link menu already, no second confirmation.
-    function followLink(link, map, shown) {
+    function followLink(link, map) {
         var target = MatrixLinks.decide(link)
         if (target.kind === "none") {
-            return
-        }
-        if (target.kind === "web" && shown === true) {
-            Qt.openUrlExternally(link)
             return
         }
         if (target.kind === "web") {

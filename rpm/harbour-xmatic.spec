@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.44.2
+Version:    0.45.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -117,6 +117,47 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Oct 08 2026 harbour-xmatic contributors 0.45.0-1
+- Video calls work on phones whose camera gives no pictures to the call
+  directly: after three seconds without one, the call takes them from the
+  call page's own viewfinder, upright and the right way round in either
+  orientation. Elsewhere the camera is used as before.
+- The camera no longer shut itself down when the system restarted its picture
+  during start-up, and prefers a 4:3 picture, which the call sends
+  unstretched.
+- A video call whose camera stays dark goes on as a voice call with the call
+  page open; before, it ran on with no way to hang up.
+- A call whose other side vanished without hanging up ends after 15 seconds
+  without anything received, instead of holding both phones in it and
+  refusing every later call as busy. Closing the app during a call hangs up
+  and waits up to a second for that to go out; signing out, or a session that
+  ends, hangs up too.
+- Turning down a call while busy no longer cuts the running call's room off
+  from the fast sync.
+- The call page has one row of controls, with or without a picture; declining
+  is the same symbol as hanging up.
+- What a finished call's media threads still had in flight can no longer
+  reach the next call, and quitting after a call no longer releases the sound
+  routing while it is still in use.
+- Web links are found whatever the case of their scheme ("Https://", as the
+  keyboard writes it), and an address without a scheme such as example.org
+  is a link that opens as https, in messages without formatting. File names
+  like README.md or logo.ai are left alone.
+- "Open link?" in a message's menu asks with the address it really goes to,
+  as a tap does; a formatted link's text can name another site.
+- A push that wakes the closed app uses the app's own data folder and
+  settings and never asks the secure storage, so no unlock dialog can appear
+  from the background. It shows "New message" as before, and starting the
+  app meanwhile is no longer blocked by it.
+- Signing in, restoring the session and signing out no longer run into each
+  other. A sign-in still waiting for the browser or the other device is
+  stopped by signing out and writes nothing afterwards; an expired session is
+  cleared only if it is still the current one.
+- Without its key, the session file is never rewritten in plain text over an
+  encrypted one, and signing out also removes a half-written copy of it.
+- Importing emoji pictures no longer flags the set as tampered with while the
+  files are being rewritten.
+
 * Wed Oct 07 2026 harbour-xmatic contributors 0.44.2-1
 - Typing # in the message line offers the rooms you are in; a tap puts a
   link to the room into the message, the same way @ names a member.

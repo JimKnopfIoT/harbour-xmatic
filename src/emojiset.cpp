@@ -186,6 +186,7 @@ void EmojiSet::importFrom(const QString &folderUrl)
     }
 
     const QString target = m_store->directory();
+    m_store->suspend();
 
     m_busy = true;
     emit busyChanged();
@@ -298,6 +299,8 @@ void EmojiSet::adopt()
     // still the ones that were verified.
     if (m_store && !outcome.aborted) {
         m_store->adopt(outcome.checksums);
+    } else if (m_store) {
+        m_store->reload();
     }
 
     m_busy = false;

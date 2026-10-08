@@ -465,14 +465,6 @@
         <translation>Vastaa</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Hylkää</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Lopeta puhelu</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Vastaa ilman kameraa</translation>
     </message>

@@ -1,6 +1,7 @@
 #include "callengine.h"
 
 #include <QTimer>
+#include <QTransform>
 #include <QVector>
 
 #include <QDateTime>
@@ -150,7 +151,7 @@ CallEngine::CallEngine(QObject *parent)
     // A camera that never delivers would leave the offer unbuilt and the other
     // side would never see the call. A voice call that rings beats that.
     m_cameraWatchdog.setSingleShot(true);
-    m_cameraWatchdog.setInterval(3000);
+    m_cameraWatchdog.setInterval(7000);
     connect(&m_cameraWatchdog, &QTimer::timeout, this, [this]() {
         if (!m_withVideo || m_cameraFrames.load() > 0 || m_state == QLatin1String("idle")) {
             return;
@@ -158,9 +159,39 @@ CallEngine::CallEngine(QObject *parent)
         qWarning("xmatic: the camera produced nothing, falling back to a voice call");
         setStatus(tr("the camera did not start — continuing without video"));
 
-        const QString room = m_roomId;
-        hangUp();
-        placeCall(room, false);
+        // Never through idle: the call page closes on idle and the voice call
+        // would run on without a way to hang up.
+        if (!m_callId.isEmpty()) {
+            emit hangupReady(m_roomId, m_callId, m_partyId);
+        }
+        tearDown();
+        startOutgoing(false);
+    });
+
+    m_cameraRetry.setSingleShot(true);
+    m_cameraRetry.setInterval(3000);
+    connect(&m_cameraRetry, &QTimer::timeout, this, [this]() {
+        if (!m_withVideo || m_camera.delivering() || m_state == QLatin1String("idle")) {
+            return;
+        }
+        qWarning("xmatic: the camera gives nothing to plain memory; taking the viewfinder's pictures");
+        m_camera.close();
+        m_gpuCapture = true;
+        emit callChanged();
+    });
+
+    m_mediaWatch.setInterval(5000);
+    connect(&m_mediaWatch, &QTimer::timeout, this, [this]() {
+        if (m_state != QLatin1String("active")) {
+            return;
+        }
+        const int seen = m_remotePackets.load();
+        m_silentTicks = seen == m_lastRemotePackets ? m_silentTicks + 1 : 0;
+        m_lastRemotePackets = seen;
+        if (m_silentTicks >= 3) {
+            qWarning("xmatic: nothing received for 15 s, ending the call");
+            markDisconnected(m_generation.load());
+        }
     });
 
     m_candidateTimer.setSingleShot(true);
@@ -245,7 +276,13 @@ void CallEngine::tearDown()
     m_candidateTimer.stop();
     m_pendingCandidates.clear();
     m_cameraWatchdog.stop();
-    m_camera.stop();
+    m_cameraRetry.stop();
+    m_mediaWatch.stop();
+    m_camera.close();
+    if (m_gpuCapture) {
+        m_gpuCapture = false;
+        emit callChanged();
+    }
     m_cameraFeed = nullptr;
     m_cameraFlip = nullptr;
     if (m_pipeline) {
@@ -255,6 +292,8 @@ void CallEngine::tearDown()
     }
     m_webrtc = nullptr;
     m_audioSource = nullptr;
+    // After NULL: its threads are joined, whatever they queued is stale now.
+    m_generation.ref();
 }
 
 bool CallEngine::buildPipeline()
@@ -433,8 +472,6 @@ void CallEngine::placeCall(const QString &roomId, bool withVideo)
     // A new call starts without the last one's reason: it is what holds the page
     // open, so a stale one would keep the next call's page from closing.
     setFailure(QString());
-    m_offerWaits = 0;
-    m_offerDeferred = false;
 
     // Without a camera the video branch produces no caps, the pipeline does not
     // start and no invitation goes out. Falling back to voice beats silence.
@@ -445,18 +482,27 @@ void CallEngine::placeCall(const QString &roomId, bool withVideo)
 
     m_roomId = roomId;
     m_peer.clear();
+    setState(QStringLiteral("calling"));
+    startOutgoing(m_withVideo);
+}
+
+void CallEngine::startOutgoing(bool withVideo)
+{
+    m_withVideo = withVideo;
+    m_offerWaits = 0;
+    m_offerDeferred = false;
     m_callId = freshId(QStringLiteral("c"));
     m_partyId = freshId(QStringLiteral("p"));
     m_isCaller = true;
     m_pendingRemoteOffer.clear();
     emit callChanged();
 
-    setState(QStringLiteral("calling"));
     if (!buildPipeline()) {
         return;
     }
     if (m_withVideo) {
-        m_camera.start();
+        m_camera.open();
+        m_cameraRetry.start();
         m_cameraWatchdog.start();
     }
 
@@ -532,7 +578,8 @@ void CallEngine::acceptCall(bool withVideo)
         return;
     }
     if (m_withVideo) {
-        m_camera.start();
+        m_camera.open();
+        m_cameraRetry.start();
     }
 
     if (gst_element_set_state(m_pipeline, GST_STATE_PLAYING) == GST_STATE_CHANGE_FAILURE) {
@@ -770,8 +817,24 @@ void CallEngine::setOrientation(int orientation)
         break;
     }
 
+    m_flipMethod = method;
     g_object_set(m_cameraFlip, "method", method, nullptr);
     qInfo("xmatic: camera rotation method %d for orientation %d", method, orientation);
+}
+
+void CallEngine::pushGrabbedFrame(const QImage &image)
+{
+    if (!m_gpuCapture || image.isNull()) {
+        return;
+    }
+    // The grab is the front viewfinder: fixed to the device like the sensor, but
+    // mirrored. Unmirrored and laid as the sensor lies, the flip does the rest.
+    QTransform turn;
+    turn.rotate(90);
+    const QImage frame = image.mirrored(true, false).transformed(turn).convertToFormat(QImage::Format_RGB32);
+    const QByteArray data(reinterpret_cast<const char *>(frame.constBits()),
+                          frame.bytesPerLine() * frame.height());
+    pushCameraFrame(data, frame.width(), frame.height(), QStringLiteral("BGRx"));
 }
 
 void CallEngine::setMuted(bool muted)
@@ -789,7 +852,18 @@ void CallEngine::setMuted(bool muted)
 void CallEngine::negotiationNeeded(GstElement *, void *user)
 {
     auto *engine = static_cast<CallEngine *>(user);
-    if (!engine->m_isCaller) {
+    QMetaObject::invokeMethod(engine,
+                              "handleNegotiationNeeded",
+                              Qt::QueuedConnection,
+                              Q_ARG(int, engine->m_generation.load()));
+}
+
+void CallEngine::handleNegotiationNeeded(int generation)
+{
+    if (!current(generation)) {
+        return;
+    }
+    if (!m_isCaller) {
         // The answering side negotiates from the remote offer, not on its own.
         return;
     }
@@ -798,19 +872,19 @@ void CallEngine::negotiationNeeded(GstElement *, void *user)
     // `pushCameraFrame`), so wait for it before describing the video line.
     // A precaution, not the cure for `m=video 0` - that was our own reader
     // (`offers_active_video`), and the offer's shape is the same either way.
-    if (engine->m_withVideo && engine->m_cameraFormat.isEmpty()) {
-        engine->m_offerDeferred = true;
+    if (m_withVideo && m_cameraFormat.isEmpty()) {
+        m_offerDeferred = true;
         // A camera that never delivers must not hold the call: after this the
         // offer goes as it is, which is a voice call - degrade, not block.
-        QTimer::singleShot(3000, engine, [engine]() {
-            if (engine->m_offerDeferred) {
+        QTimer::singleShot(7000, this, [this, generation]() {
+            if (current(generation) && m_offerDeferred) {
                 qWarning("xmatic: camera sent nothing in time, offering voice only");
-                engine->requestOffer();
+                requestOffer();
             }
         });
         return;
     }
-    engine->requestOffer();
+    requestOffer();
 }
 
 bool CallEngine::sendPadsReady() const
@@ -866,8 +940,9 @@ void CallEngine::requestOffer()
     if (m_withVideo && m_offerWaits < 30 && !sendPadsReady()) {
         ++m_offerWaits;
         m_offerDeferred = true;
-        QTimer::singleShot(100, this, [this]() {
-            if (m_offerDeferred) {
+        const int generation = m_generation.load();
+        QTimer::singleShot(100, this, [this, generation]() {
+            if (current(generation) && m_offerDeferred) {
                 requestOffer();
             }
         });
@@ -904,8 +979,9 @@ void CallEngine::descriptionCreated(GstPromise *promise, void *user)
 
     if (!description) {
         QMetaObject::invokeMethod(engine,
-                                  "reportFailure",
+                                  "reportFailureFor",
                                   Qt::QueuedConnection,
+                                  Q_ARG(int, engine->m_generation.load()),
                                   Q_ARG(QString, QObject::tr("no session description")));
         return;
     }
@@ -956,6 +1032,7 @@ void CallEngine::descriptionCreated(GstPromise *promise, void *user)
     QMetaObject::invokeMethod(engine,
                               "deliverLocalDescription",
                               Qt::QueuedConnection,
+                              Q_ARG(int, engine->m_generation.load()),
                               Q_ARG(QString, sdp),
                               Q_ARG(bool, isOffer));
 }
@@ -966,6 +1043,7 @@ void CallEngine::iceCandidate(GstElement *, unsigned index, char *candidate, voi
     QMetaObject::invokeMethod(engine,
                               "deliverCandidate",
                               Qt::QueuedConnection,
+                              Q_ARG(int, engine->m_generation.load()),
                               Q_ARG(QString, QString::fromUtf8(candidate)),
                               Q_ARG(int, static_cast<int>(index)));
 }
@@ -992,6 +1070,15 @@ void CallEngine::streamAdded(GstElement *, GstPad *pad, void *user)
     // Connect the handler and link the incoming pad BEFORE decodebin starts,
     // then sync it to PLAYING last — same not-linked race as the branches.
     g_signal_connect(decode, "pad-added", G_CALLBACK(decodedPadAdded), engine);
+
+    gst_pad_add_probe(
+        pad,
+        GST_PAD_PROBE_TYPE_BUFFER,
+        [](GstPad *p, GstPadProbeInfo *i, gpointer u) -> GstPadProbeReturn {
+            return static_cast<GstPadProbeReturn>(CallEngine::remoteProbe(p, i, u));
+        },
+        engine,
+        nullptr);
 
     GstPad *decodeSink = gst_element_get_static_pad(decode, "sink");
     if (decodeSink) {
@@ -1192,6 +1279,7 @@ int CallEngine::videoFrameArrived(void *sink, void *user)
             QMetaObject::invokeMethod(engine,
                                       "deliverVideoYuv",
                                       Qt::QueuedConnection,
+                                      Q_ARG(int, engine->m_generation.load()),
                                       Q_ARG(QByteArray, tight),
                                       Q_ARG(int, width),
                                       Q_ARG(int, height));
@@ -1213,16 +1301,21 @@ void CallEngine::deliverVideoFrame(const QImage &frame)
     m_remoteVideo.present(frame);
 }
 
-void CallEngine::deliverVideoYuv(const QByteArray &planes, int width, int height)
+void CallEngine::deliverVideoYuv(int generation, const QByteArray &planes, int width,
+                                 int height)
 {
-    if (m_state == QLatin1String("idle")) {
+    if (!current(generation) || m_state == QLatin1String("idle")) {
         return;
     }
     m_remoteVideo.presentYuv(planes, QSize(width, height));
 }
 
-void CallEngine::deliverSelfYuv(const QByteArray &planes, int width, int height)
+void CallEngine::deliverSelfYuv(int generation, const QByteArray &planes, int width,
+                                int height)
 {
+    if (!current(generation)) {
+        return;
+    }
     m_selfVideo.presentYuv(planes, QSize(width, height));
 }
 
@@ -1270,6 +1363,7 @@ int CallEngine::selfFrameArrived(void *sink, void *user)
             QMetaObject::invokeMethod(engine,
                                       "deliverSelfYuv",
                                       Qt::QueuedConnection,
+                                      Q_ARG(int, engine->m_generation.load()),
                                       Q_ARG(QByteArray, tight),
                                       Q_ARG(int, width),
                                       Q_ARG(int, height));
@@ -1293,7 +1387,8 @@ void CallEngine::connectionStateChanged(GstElement *webrtc, void *, void *user)
     auto *engine = static_cast<CallEngine *>(user);
 
     if (state == GST_WEBRTC_PEER_CONNECTION_STATE_CONNECTED) {
-        QMetaObject::invokeMethod(engine, "markConnected", Qt::QueuedConnection);
+        QMetaObject::invokeMethod(engine, "markConnected", Qt::QueuedConnection,
+                                  Q_ARG(int, engine->m_generation.load()));
         return;
     }
 
@@ -1301,8 +1396,15 @@ void CallEngine::connectionStateChanged(GstElement *webrtc, void *, void *user)
     // never ends here and every later one is refused as busy.
     if (state == GST_WEBRTC_PEER_CONNECTION_STATE_FAILED
         || state == GST_WEBRTC_PEER_CONNECTION_STATE_CLOSED) {
-        QMetaObject::invokeMethod(engine, "markDisconnected", Qt::QueuedConnection);
+        QMetaObject::invokeMethod(engine, "markDisconnected", Qt::QueuedConnection,
+                                  Q_ARG(int, engine->m_generation.load()));
     }
+}
+
+unsigned CallEngine::remoteProbe(GstPad *, void *, void *user)
+{
+    static_cast<CallEngine *>(user)->m_remotePackets.ref();
+    return GST_PAD_PROBE_OK;
 }
 
 unsigned CallEngine::cameraProbe(GstPad *, void *, void *user)
@@ -1342,8 +1444,9 @@ int CallEngine::busMessage(void *, void *message, void *user)
             const QString reason = error && error->message
                     ? QString::fromUtf8(error->message)
                     : QString();
-            QMetaObject::invokeMethod(
-                engine, "reportPipelineFailure", Qt::QueuedConnection, Q_ARG(QString, reason));
+            QMetaObject::invokeMethod(engine, "reportPipelineFailure", Qt::QueuedConnection,
+                                      Q_ARG(int, engine->m_generation.load()),
+                                      Q_ARG(QString, reason));
         }
         if (error) {
             g_error_free(error);
@@ -1384,9 +1487,9 @@ void CallEngine::iceStateChanged(GstElement *webrtc, void *, void *)
     qInfo("xmatic: ICE connection=%d gathering=%d", int(connection), int(gathering));
 }
 
-void CallEngine::markDisconnected()
+void CallEngine::markDisconnected(int generation)
 {
-    if (m_state == QLatin1String("idle")) {
+    if (!current(generation) || m_state == QLatin1String("idle")) {
         return;
     }
     qInfo("xmatic: call connection lost");
@@ -1395,19 +1498,28 @@ void CallEngine::markDisconnected()
     hangUp();
 }
 
-void CallEngine::markConnected()
+void CallEngine::markConnected(int generation)
 {
+    if (!current(generation) || m_state == QLatin1String("idle")) {
+        return;
+    }
     if (m_withVideo && m_cameraFrames.load() == 0) {
         qWarning("xmatic: connected but the camera has produced nothing");
     }
 
     m_audioRouter.start();
+    m_silentTicks = 0;
+    m_lastRemotePackets = m_remotePackets.load();
+    m_mediaWatch.start();
     setState(QStringLiteral("active"));
     setStatus(tr("connected"));
 }
 
-void CallEngine::deliverLocalDescription(const QString &sdp, bool isOffer)
+void CallEngine::deliverLocalDescription(int generation, const QString &sdp, bool isOffer)
 {
+    if (!current(generation)) {
+        return;
+    }
     qInfo("xmatic: local %s ready, %d bytes", isOffer ? "offer" : "answer", sdp.size());
 
     if (isOffer) {
@@ -1417,9 +1529,10 @@ void CallEngine::deliverLocalDescription(const QString &sdp, bool isOffer)
     }
 }
 
-void CallEngine::deliverCandidate(const QString &candidate, int mediaLineIndex)
+void CallEngine::deliverCandidate(int generation, const QString &candidate,
+                                  int mediaLineIndex)
 {
-    if (m_roomId.isEmpty() || m_callId.isEmpty()) {
+    if (!current(generation) || m_roomId.isEmpty() || m_callId.isEmpty()) {
         return;
     }
 
@@ -1446,12 +1559,22 @@ void CallEngine::flushCandidates()
     emit candidatesReady(m_roomId, m_callId, m_partyId, batch);
 }
 
-/// A GStreamer error, from the bus thread. Queued into the Qt thread, where
-/// `reportFailure` may touch the pipeline and the properties.
-void CallEngine::reportPipelineFailure(const QString &reason)
+/// A GStreamer error, queued so `reportFailure` never runs inside the bus
+/// dispatch of the pipeline it tears down.
+void CallEngine::reportPipelineFailure(int generation, const QString &reason)
 {
+    if (!current(generation)) {
+        return;
+    }
     reportFailure(reason.isEmpty() ? tr("the call could not be carried on")
                                    : tr("pipeline failed: %1").arg(reason));
+}
+
+void CallEngine::reportFailureFor(int generation, const QString &message)
+{
+    if (current(generation)) {
+        reportFailure(message);
+    }
 }
 
 void CallEngine::reportFailure(const QString &message)

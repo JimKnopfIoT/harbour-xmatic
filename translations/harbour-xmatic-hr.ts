@@ -466,14 +466,6 @@
         <translation>Prihvati</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Odbij</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Prekini</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Prihvati bez kamere</translation>
     </message>

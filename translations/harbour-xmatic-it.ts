@@ -465,14 +465,6 @@
         <translation>Accetta</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Rifiuta</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Riaggancia</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Accetta senza fotocamera</translation>
     </message>

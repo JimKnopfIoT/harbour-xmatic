@@ -465,14 +465,6 @@
         <translation>Godta</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Avvis</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Legg på</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Svar uten kamera</translation>
     </message>

@@ -479,14 +479,6 @@
         <source>Accept</source>
         <translation>応答</translation>
     </message>
-    <message>
-        <source>Decline</source>
-        <translation>拒否</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>通話を終了</translation>
-    </message>
 </context>
 <context>
     <name>CameraCapturePage</name>

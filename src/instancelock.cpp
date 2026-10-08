@@ -56,6 +56,14 @@ bool acquireInstanceLock(const QString &dataDirectory)
     return true;
 }
 
+bool instanceIsRunning()
+{
+    QDBusConnection bus = QDBusConnection::sessionBus();
+    QDBusConnectionInterface *bus_interface = bus.isConnected() ? bus.interface() : nullptr;
+    return bus_interface
+           && bus_interface->isServiceRegistered(QStringLiteral("org.xmatic.xmatic")).value();
+}
+
 void raiseRunningInstance()
 {
     QDBusConnection bus = QDBusConnection::sessionBus();

@@ -479,14 +479,6 @@
         <source>Accept</source>
         <translation>پذیرش</translation>
     </message>
-    <message>
-        <source>Decline</source>
-        <translation>رد</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>قطع تماس</translation>
-    </message>
 </context>
 <context>
     <name>CameraCapturePage</name>

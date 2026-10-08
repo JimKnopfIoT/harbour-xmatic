@@ -465,14 +465,6 @@
         <translation>Svara</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Hafna</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Leggja á</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Svara án myndavélar</translation>
     </message>

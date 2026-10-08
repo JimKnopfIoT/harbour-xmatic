@@ -467,14 +467,6 @@
         <translation>Sprejmi</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Zavrni</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Odloži</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Sprejmi brez kamere</translation>
     </message>

@@ -466,14 +466,6 @@
         <translation>Přijmout</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Odmítnout</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Zavěsit</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Přijmout bez kamery</translation>
     </message>

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import Sailfish.Silica 1.0
 import QtMultimedia 5.6
 
@@ -55,7 +55,7 @@ Page {
         }
         width: Theme.itemSizeHuge * 1.4
         height: width * 3 / 4
-        visible: matrix.calls.selfVideo.active
+        visible: matrix.calls.selfVideo.active && !matrix.calls.gpuCapture
         fillMode: VideoOutput.PreserveAspectFit
         source: matrix.calls.selfVideo
 
@@ -67,12 +67,74 @@ Page {
         }
     }
 
-    // While the other side's picture fills the page the controls have something to
-    // be out of the way of; in a voice call the middle is where they belong.
+    // Where the camera gives nothing to plain memory, the call takes this
+    // viewfinder's pictures instead; it is the self-view then.
+    Camera {
+        id: gpuCamera
+
+        position: Camera.FrontFace
+        captureMode: Camera.CaptureStillImage
+        cameraState: matrix.calls.gpuCapture ? Camera.ActiveState : Camera.UnloadedState
+    }
+
+    VideoOutput {
+        id: gpuView
+
+        // Turned a quarter, the item still lays out upright: shift by the overhang.
+        readonly property real overhang: rotation % 180 !== 0 ? (height - width) / 2 : 0
+
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+            rightMargin: Theme.paddingLarge + overhang
+            bottomMargin: Theme.paddingLarge - overhang
+        }
+        // Portrait whatever the page does: the grab is taken in this item's own frame.
+        // Turned back against the page, so the preview stays upright.
+        width: Theme.itemSizeHuge * 1.05
+        height: width * 4 / 3
+        rotation: {
+            switch (page.orientation) {
+            case Orientation.Landscape: return -90
+            case Orientation.LandscapeInverted: return 90
+            case Orientation.PortraitInverted: return 180
+            default: return 0
+            }
+        }
+        visible: matrix.calls.gpuCapture
+        fillMode: VideoOutput.PreserveAspectCrop
+        source: gpuCamera
+    }
+
+    // Fifteen a second, one at a time: a grab still in flight skips the tick.
+    Timer {
+        id: grabTimer
+
+        property bool grabbing: false
+
+        interval: 66
+        repeat: true
+        running: matrix.calls.gpuCapture && gpuCamera.cameraStatus === Camera.ActiveStatus
+        onTriggered: {
+            if (grabbing) {
+                return
+            }
+            grabbing = true
+            var started = gpuView.grabToImage(function(result) {
+                grabTimer.grabbing = false
+                matrix.calls.pushGrabbedFrame(result.image)
+            }, Qt.size(480, 640))
+            if (!started) {
+                grabbing = false
+            }
+        }
+    }
+
+    // The other side's picture hides the name and the status in the middle.
     readonly property bool videoMode: matrix.calls.remoteVideo.active
 
     // No `visible` on this column: it carries the answer buttons, and a container
-    // that hides takes every entry with it - including the only way out of ringing.
+    // that hides takes every entry with it.
     Column {
         anchors.centerIn: parent
         width: parent.width - 2 * Theme.horizontalPageMargin
@@ -122,14 +184,14 @@ Page {
             text: qsTr("Video calls are switched off in Privacy; this one is answered as a voice call.")
         }
 
-        // Stacked, not in a row: three actions do not fit side by side, and the one
+        // Stacked, not in a row: the labels do not fit side by side, and the one
         // that answers as offered belongs on top.
         Column {
             width: parent.width
             spacing: Theme.paddingMedium
 
             // The width is given, not measured: a wrapping button carries no label of its
-            // own, so all three would collapse to the platform minimum.
+            // own, so both would collapse to the platform minimum.
             readonly property real buttonWidth: Math.min(
                     Theme.buttonWidthLarge,
                     width - 2 * Theme.horizontalPageMargin)
@@ -154,33 +216,13 @@ Page {
                 visible: matrix.calls.state === "ringing"
                 onClicked: matrix.calls.acceptCall(false)
             }
-
-            WrapButton {
-                id: endCall
-
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.buttonWidth
-                // The picture has its own hang-up in the lower left; ringing keeps
-                // this one whatever the video sink claims.
-                visible: !page.videoMode || matrix.calls.state === "ringing"
-                label: matrix.calls.state === "ringing" ? qsTr("Decline") : qsTr("Hang up")
-                onClicked: matrix.calls.hangUp()
-            }
-        }
-
-        IconButton {
-            anchors.horizontalCenter: parent.horizontalCenter
-            visible: !page.videoMode && matrix.calls.state === "active"
-            icon.source: matrix.calls.muted
-                         ? "image://theme/icon-m-mic-mute"
-                         : "image://theme/icon-m-mic"
-            onClicked: matrix.calls.setMuted(!matrix.calls.muted)
         }
     }
 
-    // The same two actions during a video call, in the lower left over the
-    // picture. Half transparent: they are a means, the picture is the point.
+    // The same controls with or without a picture; the picture only moves the
+    // name and the status out of the way.
     Row {
+        // Lower left: the own picture sits in the lower right.
         anchors {
             left: parent.left
             leftMargin: Theme.horizontalPageMargin
@@ -188,8 +230,7 @@ Page {
             bottomMargin: Theme.paddingLarge
         }
         spacing: Theme.paddingLarge
-        visible: page.videoMode
-        opacity: 0.6
+        opacity: page.videoMode ? 0.6 : 1.0
 
         IconButton {
             visible: matrix.calls.state === "active"
@@ -199,9 +240,9 @@ Page {
             onClicked: matrix.calls.setMuted(!matrix.calls.muted)
         }
 
+        // Hangs up, and declines while ringing.
         IconButton {
-            // The cover-sized icon scaled down: Silica ships no hang-up at icon-m, and a
-            // picture made smaller stays sharp where one made larger does not.
+            // The cover-sized icon scaled down: Silica ships no hang-up at icon-m.
             icon.source: "image://theme/icon-cover-hangup"
             icon.width: Theme.iconSizeMedium
             icon.height: Theme.iconSizeMedium

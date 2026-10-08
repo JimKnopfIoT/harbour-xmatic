@@ -471,7 +471,9 @@ pub enum Command {
     #[serde(rename = "push.notify")]
     PushNotify {
         id: u64,
+        #[serde(rename = "roomId")]
         room_id: String,
+        #[serde(rename = "eventId")]
         event_id: String,
     },
 
@@ -1265,6 +1267,17 @@ pub fn event(name: &str, data: Value) -> Value {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn push_notify_reads_the_bridge_s_field_names() {
+        let raw = r#"{"cmd":"push.notify","id":7,"roomId":"!r:example.org","eventId":"$e"}"#;
+        match serde_json::from_str::<Command>(raw).expect("parses") {
+            Command::PushNotify { id, room_id, event_id } => {
+                assert_eq!((id, room_id.as_str(), event_id.as_str()), (7, "!r:example.org", "$e"));
+            }
+            _ => panic!("not push.notify"),
+        }
+    }
 
     /// A message in another script has to survive the way in - UTF-8 JSON, a
     /// NUL-terminated C string, serde. Asked after a Cyrillic message was reported.

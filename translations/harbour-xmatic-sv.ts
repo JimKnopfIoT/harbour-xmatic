@@ -465,14 +465,6 @@
         <translation>Svara</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Avvisa</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Lägg på</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Svara utan kamera</translation>
     </message>

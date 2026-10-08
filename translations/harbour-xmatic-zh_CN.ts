@@ -468,80 +468,80 @@
 <context>
     <name>CallEngine</name>
     <message>
-        <location filename="../src/callengine.cpp" line="159"/>
+        <location filename="../src/callengine.cpp" line="160"/>
         <source>the camera did not start — continuing without video</source>
         <translation>摄像头未启动——将以无视频方式继续</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="177"/>
+        <location filename="../src/callengine.cpp" line="208"/>
         <source>GStreamer could not be started: %1</source>
         <translation>无法启动 GStreamer：%1</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="187"/>
+        <location filename="../src/callengine.cpp" line="218"/>
         <source>This device has no WebRTC support.</source>
         <translation>此设备不支持 WebRTC。</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="193"/>
+        <location filename="../src/callengine.cpp" line="224"/>
         <source>ready</source>
         <translation>就绪</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="272"/>
-        <location filename="../src/callengine.cpp" line="1454"/>
+        <location filename="../src/callengine.cpp" line="311"/>
+        <location filename="../src/callengine.cpp" line="1570"/>
         <source>pipeline failed: %1</source>
         <translation>管线失败：%1</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="279"/>
+        <location filename="../src/callengine.cpp" line="318"/>
         <source>webrtcbin is missing</source>
         <translation>缺少 webrtcbin</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="443"/>
+        <location filename="../src/callengine.cpp" line="480"/>
         <source>no camera — placing a voice call</source>
         <translation>没有摄像头——将发起语音通话</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="466"/>
-        <location filename="../src/callengine.cpp" line="539"/>
+        <location filename="../src/callengine.cpp" line="512"/>
+        <location filename="../src/callengine.cpp" line="586"/>
         <source>the microphone could not be opened</source>
         <translation>无法打开麦克风</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="562"/>
+        <location filename="../src/callengine.cpp" line="609"/>
         <source>answered on another device</source>
         <translation>已在其他设备上接听</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="600"/>
+        <location filename="../src/callengine.cpp" line="647"/>
         <source>the session description could not be read</source>
         <translation>无法读取会话描述</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="610"/>
+        <location filename="../src/callengine.cpp" line="657"/>
         <source>the other side sent an unreadable session description</source>
         <translation>对方发来的会话描述无法读取</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="713"/>
+        <location filename="../src/callengine.cpp" line="760"/>
         <source>the other side hung up</source>
         <translation>对方挂断了</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1393"/>
-        <location filename="../src/callengine.cpp" line="1394"/>
+        <location filename="../src/callengine.cpp" line="1496"/>
+        <location filename="../src/callengine.cpp" line="1497"/>
         <source>the connection was lost</source>
         <translation>连接已断开</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1406"/>
+        <location filename="../src/callengine.cpp" line="1515"/>
         <source>connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1453"/>
+        <location filename="../src/callengine.cpp" line="1569"/>
         <source>the call could not be carried on</source>
         <translation>通话无法继续</translation>
     </message>
@@ -549,64 +549,54 @@
 <context>
     <name>CallPage</name>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="88"/>
+        <location filename="../qml/pages/CallPage.qml" line="150"/>
         <source>Call</source>
         <translation>通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="99"/>
+        <location filename="../qml/pages/CallPage.qml" line="161"/>
         <source>Ringing…</source>
         <translation>正在响铃…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="101"/>
+        <location filename="../qml/pages/CallPage.qml" line="163"/>
         <source>Incoming call</source>
         <translation>来电</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="101"/>
+        <location filename="../qml/pages/CallPage.qml" line="163"/>
         <source>Incoming video call</source>
         <translation>来电视频通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="102"/>
+        <location filename="../qml/pages/CallPage.qml" line="164"/>
         <source>Connecting…</source>
         <translation>正在连接…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="103"/>
+        <location filename="../qml/pages/CallPage.qml" line="165"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="122"/>
+        <location filename="../qml/pages/CallPage.qml" line="184"/>
         <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
         <translation>视频通话已在隐私中关闭；此来电按语音通话接听。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="152"/>
+        <location filename="../qml/pages/CallPage.qml" line="214"/>
         <source>Accept without camera</source>
         <translation>不用摄像头接听</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="153"/>
+        <location filename="../qml/pages/CallPage.qml" line="215"/>
         <source>Accept</source>
         <translation>接听</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="142"/>
+        <location filename="../qml/pages/CallPage.qml" line="204"/>
         <source>Accept with camera</source>
         <translation>用摄像头接听</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/CallPage.qml" line="166"/>
-        <source>Decline</source>
-        <translation>拒接</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/CallPage.qml" line="166"/>
-        <source>Hang up</source>
-        <translation>挂断</translation>
     </message>
 </context>
 <context>
@@ -1481,89 +1471,89 @@
         <translation>请先输入用户名和密码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1646"/>
-        <location filename="../src/matrixbridge.cpp" line="1661"/>
+        <location filename="../src/matrixbridge.cpp" line="1648"/>
+        <location filename="../src/matrixbridge.cpp" line="1663"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>暂时无法读取已保存的名单。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1901"/>
+        <location filename="../src/matrixbridge.cpp" line="1903"/>
         <source>Enter a push gateway first.</source>
         <translation>请先填写推送网关。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1929"/>
+        <location filename="../src/matrixbridge.cpp" line="1931"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2277"/>
-        <location filename="../src/matrixbridge.cpp" line="2305"/>
+        <location filename="../src/matrixbridge.cpp" line="2279"/>
+        <location filename="../src/matrixbridge.cpp" line="2307"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2620"/>
+        <location filename="../src/matrixbridge.cpp" line="2625"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2663"/>
+        <location filename="../src/matrixbridge.cpp" line="2668"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2683"/>
+        <location filename="../src/matrixbridge.cpp" line="2688"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3573"/>
+        <location filename="../src/matrixbridge.cpp" line="3578"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3920"/>
+        <location filename="../src/matrixbridge.cpp" line="3930"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3923"/>
+        <location filename="../src/matrixbridge.cpp" line="3933"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3926"/>
+        <location filename="../src/matrixbridge.cpp" line="3936"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3929"/>
+        <location filename="../src/matrixbridge.cpp" line="3939"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3932"/>
+        <location filename="../src/matrixbridge.cpp" line="3942"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3935"/>
+        <location filename="../src/matrixbridge.cpp" line="3945"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3935"/>
+        <location filename="../src/matrixbridge.cpp" line="3945"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3938"/>
+        <location filename="../src/matrixbridge.cpp" line="3948"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3941"/>
+        <location filename="../src/matrixbridge.cpp" line="3951"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -2438,7 +2428,7 @@
 <context>
     <name>PushWake</name>
     <message>
-        <location filename="../src/pushwake.cpp" line="143"/>
+        <location filename="../src/pushwake.cpp" line="151"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
@@ -2446,7 +2436,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/callengine.cpp" line="909"/>
+        <location filename="../src/callengine.cpp" line="985"/>
         <source>no session description</source>
         <translation>没有会话描述</translation>
     </message>
@@ -3444,68 +3434,68 @@
         <translation>真实性未确认</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4152"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4147"/>
         <source>Open this address?</source>
         <translation>打开此地址？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4154"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4149"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4214"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4209"/>
         <source>Saved to gallery</source>
         <translation>已保存到相册</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4214"/>
-        <location filename="../qml/pages/RoomPage.qml" line="4217"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4209"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4212"/>
         <source>Could not save</source>
         <translation>无法保存</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4217"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4212"/>
         <source>Saved to Downloads</source>
         <translation>已保存到下载</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4260"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4255"/>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>没有说话，因此没有发送任何内容。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4277"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4272"/>
         <source>Voting failed</source>
         <translation>投票失败</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4279"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4274"/>
         <source>The poll could not be ended</source>
         <translation>无法结束投票</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4281"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4276"/>
         <source>The poll could not be sent</source>
         <translation>无法发送投票</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4284"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4279"/>
         <source>Your vote was not sent</source>
         <translation>你的票未发送</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4291"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4286"/>
         <source>It is no longer waiting to be sent.</source>
         <translation>它已不再等待发送。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4292"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4287"/>
         <source>That did not work. Try again in a moment.</source>
         <translation>没有成功。请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4300"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4295"/>
         <source>Live location could not be started</source>
         <translation>无法开始实时位置</translation>
     </message>
@@ -4581,77 +4571,77 @@
         <translation>真实性未确认</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="126"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="121"/>
         <source>Open this address?</source>
         <translation>打开此地址？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="128"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="123"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="226"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="221"/>
         <source>Load older posts</source>
         <translation>加载更早的帖子</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="235"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="230"/>
         <source>Thread</source>
         <translation>话题</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="297"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="292"/>
         <source>Open link?</source>
         <translation>打开链接？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="302"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="297"/>
         <source>Copy link</source>
         <translation>复制链接</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="307"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="302"/>
         <source>Forward link</source>
         <translation>转发链接</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="313"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="308"/>
         <source>Pin</source>
         <translation>置顶</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="346"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="341"/>
         <source>Event</source>
         <translation>事件</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="406"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="401"/>
         <source>Cannot be decrypted — this device is missing the key</source>
         <translation>无法解密——此设备缺少密钥</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="409"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="404"/>
         <source>Message deleted</source>
         <translation>消息已删除</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="412"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="407"/>
         <source>Attachment</source>
         <translation>附件</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="468"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="463"/>
         <source>Thread unavailable</source>
         <translation>话题不可用</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="469"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="464"/>
         <source>Loading thread</source>
         <translation>正在加载话题</translation>
     </message>
     <message>
-        <location filename="../qml/pages/ThreadPage.qml" line="487"/>
+        <location filename="../qml/pages/ThreadPage.qml" line="482"/>
         <source>Reply in thread</source>
         <translation>在话题中回复</translation>
     </message>

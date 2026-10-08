@@ -465,14 +465,6 @@
         <translation>Atender</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Recusar</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Desligar</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Aceitar sem câmara</translation>
     </message>

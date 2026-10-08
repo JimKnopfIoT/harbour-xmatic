@@ -5,6 +5,7 @@
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
 #include <QDir>
+#include <QFile>
 #include <QStandardPaths>
 #include <QTimer>
 #include <QVariantMap>
@@ -80,13 +81,17 @@ QString ensureDirectory(QStandardPaths::StandardLocation location)
 
 int runPushWake(int argc, char *argv[])
 {
-    // The same reasoning as the app's own: this process opens the crypto
-    // store and holds an access token.
+    // The same reasoning as the app's own: this process holds the push keys and
+    // shares the data directory.
     prctl(PR_SET_DUMPABLE, 0);
     // Same as the app: this process opens the same stores.
     umask(S_IRWXG | S_IRWXO);
 
     QCoreApplication app(argc, argv);
+    // The desktop file's names, which the app gets from SailfishApp: without
+    // them AppDataLocation is another directory and no store is found.
+    QCoreApplication::setOrganizationName(QStringLiteral("org.xmatic"));
+    QCoreApplication::setApplicationName(QStringLiteral("xmatic"));
 
     QDBusConnection bus = QDBusConnection::sessionBus();
     if (!bus.isConnected()) {
@@ -107,8 +112,8 @@ int runPushWake(int argc, char *argv[])
         return 0;
     }
 
-    // One process per store: if the app runs without owning the connector name,
-    // this process must not open the same SQLite files behind it.
+    // One process per store: the wake-up opens none, but the app must not start
+    // behind it unasked; it asks through the yield file instead.
     if (!acquireInstanceLock(dataDirectory)) {
         qInfo("xmatic: another instance owns this store; not waking for a push");
         return 0;
@@ -120,20 +125,23 @@ int runPushWake(int argc, char *argv[])
         return 0;
     }
 
-    // The Secrets collection is device-lock-bound and a background activation
-    // cannot answer its dialog. A banner without content is still true.
-    StoreKeyResult storeKey = obtainStoreKey(dataDirectory);
-    const bool locked = storeKey.state != StoreKeyState::Available;
-    if (locked) {
-        qInfo("xmatic: push wake-up without a store key (state %d)",
-              static_cast<int>(storeKey.state));
-    }
-
+    // No store key and no session: asking secretsd from the background can raise
+    // its dialog, and a restore would refresh tokens a quit then drops. The banner
+    // says that something arrived; push.json is all the connector needs.
     AppSettings settings;
-    MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey, &settings);
-    if (!storeKey.key.isEmpty()) {
-        storeKey.key.fill(QChar('0'));
-    }
+    MatrixBridge bridge(dataDirectory, cacheDirectory, StoreKeyResult(), &settings);
+
+    // The app, started meanwhile, asks for the store: it gets it at once.
+    QTimer yieldCheck;
+    QObject::connect(&yieldCheck, &QTimer::timeout, &app, [&]() {
+        // Only looked at: the app removes it once it holds the store, so the next
+        // wake-up of a burst yields too.
+        if (QFile::exists(dataDirectory + QStringLiteral("/") + QStringLiteral(XMATIC_WAKE_YIELD_FILE))) {
+            qInfo("xmatic: the app is starting; leaving the store to it");
+            app.quit();
+        }
+    });
+    yieldCheck.start(250);
 
     // Owned so the distributor's callback lands here. The core's connector
     // claims it as soon as the first push command reaches it.

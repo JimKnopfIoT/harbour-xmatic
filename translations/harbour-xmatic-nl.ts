@@ -465,14 +465,6 @@
         <translation>Aannemen</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Weigeren</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Ophangen</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Aannemen zonder camera</translation>
     </message>

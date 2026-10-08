@@ -98,8 +98,15 @@ CallAudioRouter::CallAudioRouter(QObject *parent)
 CallAudioRouter::~CallAudioRouter()
 {
     stop();
-    if (m_context) {
-        pa_context_unref(static_cast<pa_context *>(m_context));
+    // Under the loop's lock: its thread dispatches into the context until then.
+    if (m_context && m_mainloop) {
+        auto *ml = static_cast<pa_threaded_mainloop *>(m_mainloop);
+        auto *ctx = static_cast<pa_context *>(m_context);
+        pa_threaded_mainloop_lock(ml);
+        pa_context_set_state_callback(ctx, nullptr, nullptr);
+        pa_context_disconnect(ctx);
+        pa_context_unref(ctx);
+        pa_threaded_mainloop_unlock(ml);
         m_context = nullptr;
     }
     if (m_mainloop) {
@@ -161,13 +168,17 @@ bool CallAudioRouter::routeCallStream()
     ensureConnection();
     auto *ctx = static_cast<pa_context *>(m_context);
     auto *ml = static_cast<pa_threaded_mainloop *>(m_mainloop);
-    if (!ctx || !ml || pa_context_get_state(ctx) != PA_CONTEXT_READY) {
+    if (!ctx || !ml) {
         return false;
     }
 
     InputScan scan;
     scan.ml = ml;
     pa_threaded_mainloop_lock(ml);
+    if (pa_context_get_state(ctx) != PA_CONTEXT_READY) {
+        pa_threaded_mainloop_unlock(ml);
+        return false;
+    }
     pa_operation *op = pa_context_get_sink_input_info_list(ctx, &sinkInputInfoCb, &scan);
     if (op) {
         while (pa_operation_get_state(op) == PA_OPERATION_RUNNING) {
