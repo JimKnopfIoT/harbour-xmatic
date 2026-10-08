@@ -262,6 +262,16 @@ pub async fn build_client(
         .map_err(|failure| failure.to_string())
 }
 
+/// A client without a store, for questions asked before any sign-in.
+pub async fn build_storeless_client(server: &str) -> Result<Client, String> {
+    Client::builder()
+        .server_name_or_homeserver_url(server)
+        .respect_login_well_known(false)
+        .build()
+        .await
+        .map_err(|error| crate::text::scrub_ids(&error.to_string()))
+}
+
 pub async fn build_client_at(
     target: Target<'_>,
     paths: &Paths,
@@ -336,8 +346,21 @@ struct EncryptedEnvelope {
     encrypted: EncryptedSession,
 }
 
-/// Writes the session to disk with owner-only permissions — encrypted under
-/// the store key when there is one, plaintext otherwise (degrade, not block).
+/// Whether a plaintext write may replace what is at `path`: nothing there, or
+/// plaintext. Unreadable counts as encrypted - refusing changes nothing.
+fn replaceable_without_key(path: &Path) -> bool {
+    match std::fs::read(path) {
+        Ok(mut bytes) => {
+            let encrypted = serde_json::from_slice::<EncryptedEnvelope>(&bytes).is_ok();
+            bytes.zeroize();
+            !encrypted
+        }
+        Err(error) => error.kind() == std::io::ErrorKind::NotFound,
+    }
+}
+
+/// Writes the session to disk with owner-only permissions, encrypted under the
+/// store key. Plaintext only beside a legacy store: never over an encrypted file.
 pub fn store(
     session: &StoredSession,
     path: &Path,
@@ -364,31 +387,30 @@ pub fn store(
         };
         serde_json::to_vec_pretty(&envelope).map_err(|error| invalid(error.to_string()))?
     } else {
+        if !replaceable_without_key(path) {
+            return Err(invalid("the session is encrypted and its key is not available".to_owned()));
+        }
         serde_json::to_vec_pretty(session).map_err(|error| invalid(error.to_string()))?
     };
 
     // Temp file, restricted, then renamed. `write` truncates in place, and
     // a short session file reads as `Locked`.
-    let temporary = path.with_extension("json.new");
-    {
-        use std::io::Write;
-        let mut file = create_private(&temporary)?;
-        file.write_all(&json)?;
-        file.sync_all()?;
-    }
-    std::fs::rename(&temporary, path)?;
-    restrict_permissions(path)
+    write_private(path, &json)
 }
 
 /// Writes bytes to a private file the same way the session is written: temp
 /// file at 0600, synced, renamed over the old one.
 pub fn write_private(path: &Path, bytes: &[u8]) -> Result<(), std::io::Error> {
-    let temporary = path.with_extension("new");
-    {
+    let temporary = temporary_for(path);
+    let written = (|| {
         use std::io::Write;
         let mut file = create_private(&temporary)?;
         file.write_all(bytes)?;
-        file.sync_all()?;
+        file.sync_all()
+    })();
+    if let Err(error) = written {
+        let _ = std::fs::remove_file(&temporary);
+        return Err(error);
     }
     std::fs::rename(&temporary, path)?;
     restrict_permissions(path)
@@ -489,6 +511,17 @@ pub fn load(path: &Path, key: Option<&StoreKey>) -> LoadOutcome {
 /// Removes the stored session. Missing files are not an error.
 pub fn forget(path: &Path) {
     let _ = std::fs::remove_file(path);
+    // A write that failed or died before its rename leaves its copy behind;
+    // the second name is where the lists' copy went before.
+    let _ = std::fs::remove_file(temporary_for(path));
+    let _ = std::fs::remove_file(path.with_extension("new"));
+}
+
+/// Where a write goes before it is renamed into place.
+fn temporary_for(path: &Path) -> std::path::PathBuf {
+    let mut name = path.file_name().unwrap_or_default().to_os_string();
+    name.push(".new");
+    path.with_file_name(name)
 }
 
 /// Throws away state and crypto stores. They belong to one device: kept
@@ -812,6 +845,49 @@ mod tests {
             panic!("the session must load under its key");
         };
         assert_eq!(loaded.homeserver_url(), Some("https://matrix.example.org/"));
+    }
+
+    #[test]
+    fn no_key_never_turns_an_encrypted_session_into_plaintext() {
+        let sandbox = Sandbox::new("downgrade");
+        let paths = sandbox.paths();
+        let key = a_key();
+        let stored = StoredSession::from_matrix(
+            "example.org".to_owned(),
+            "https://matrix.example.org/".to_owned(),
+            a_matrix_session(),
+        );
+        store(&stored, &paths.session_file, Some(&key)).expect("store");
+        let before = std::fs::read(&paths.session_file).expect("read");
+        assert!(store(&stored, &paths.session_file, None).is_err());
+        assert_eq!(std::fs::read(&paths.session_file).expect("read"), before);
+        assert!(matches!(load(&paths.session_file, Some(&key)), LoadOutcome::Session(_)));
+    }
+
+    #[test]
+    fn forgetting_takes_a_stranded_copy_along() {
+        let sandbox = Sandbox::new("stranded");
+        let paths = sandbox.paths();
+        std::fs::write(&paths.session_file, b"{}").expect("session");
+        let copy = temporary_for(&paths.session_file);
+        std::fs::write(&copy, b"tokens").expect("copy");
+        forget(&paths.session_file);
+        assert!(!paths.session_file.exists());
+        assert!(!copy.exists());
+    }
+
+    #[test]
+    fn no_key_still_writes_beside_a_legacy_plaintext_session() {
+        let sandbox = Sandbox::new("legacy");
+        let paths = sandbox.paths();
+        let stored = StoredSession::from_matrix(
+            "example.org".to_owned(),
+            "https://matrix.example.org/".to_owned(),
+            a_matrix_session(),
+        );
+        store(&stored, &paths.session_file, None).expect("fresh");
+        store(&stored, &paths.session_file, None).expect("over plaintext");
+        assert!(matches!(load(&paths.session_file, None), LoadOutcome::Session(_)));
     }
 
     #[test]

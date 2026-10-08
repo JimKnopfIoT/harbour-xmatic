@@ -167,6 +167,15 @@ void EmojiStore::adopt(const QHash<QString, QByteArray> &checksums)
     emit contentChanged();
 }
 
+void EmojiStore::suspend()
+{
+    {
+        QMutexLocker locked(&m_lock);
+        m_checksums.clear();
+    }
+    emit contentChanged();
+}
+
 void EmojiStore::forget()
 {
     QFile::remove(m_manifestPath);

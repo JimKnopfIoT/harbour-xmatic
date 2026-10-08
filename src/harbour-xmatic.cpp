@@ -2,6 +2,8 @@
 // the models; all protocol work lives in the Rust core behind the C ABI.
 
 #include <QDir>
+#include <QEventLoop>
+#include <QFile>
 #include <QGuiApplication>
 #include <QQmlContext>
 #include <QQmlEngine>
@@ -9,6 +11,8 @@
 #include <QScopedPointer>
 #include <QStandardPaths>
 #include <QString>
+#include <QThread>
+#include <QTimer>
 
 #include <sailfishapp.h>
 
@@ -18,6 +22,7 @@
 #include "appearancesettings.h"
 #include "appservice.h"
 #include "appsettings.h"
+#include "callengine.h"
 #include "emojiimageprovider.h"
 #include "emojiset.h"
 #include "emojistore.h"
@@ -46,6 +51,32 @@ QString ensureDirectory(QStandardPaths::StandardLocation location)
     }
     QDir().mkpath(path);
     return path;
+}
+
+} // namespace
+
+namespace {
+
+/// A push wake-up holds the store for seconds and owns no window. Asked to
+/// yield, it quits; the app waits for the lock instead of ending silently.
+bool takeStoreFromWakeUp(const QString &dataDirectory)
+{
+    if (instanceIsRunning()) {
+        return false;
+    }
+    QFile yield(dataDirectory + QStringLiteral("/") + QStringLiteral(XMATIC_WAKE_YIELD_FILE));
+    if (!yield.open(QIODevice::WriteOnly)) {
+        return false;
+    }
+    yield.close();
+    for (int attempt = 0; attempt < 40; ++attempt) {
+        QThread::msleep(100);
+        if (acquireInstanceLock(dataDirectory)) {
+            return true;
+        }
+    }
+    QFile::remove(yield.fileName());
+    return false;
 }
 
 } // namespace
@@ -104,11 +135,13 @@ int main(int argc, char *argv[])
     }
     // Before anything opens the store: the core runs SQLite without the SDK's
     // cross-process lock, and nothing else guarantees one process per store.
-    if (!acquireInstanceLock(dataDirectory)) {
+    if (!acquireInstanceLock(dataDirectory) && !takeStoreFromWakeUp(dataDirectory)) {
         qInfo("xmatic: another instance owns this store; handing over");
         raiseRunningInstance();
         return 0;
     }
+    // Holding the store: a request to yield, ours or a leftover, is answered.
+    QFile::remove(dataDirectory + QStringLiteral("/") + QStringLiteral(XMATIC_WAKE_YIELD_FILE));
 
     // Attachments go to the cache: they can always be downloaded again, and
     // the system may reclaim the space.
@@ -189,6 +222,15 @@ int main(int argc, char *argv[])
     // The wipe the privacy page offers, on the way out. A killed process never
     // gets here; the bridge therefore also clears leftovers at start.
     QObject::connect(app.data(), &QGuiApplication::aboutToQuit, &bridge, [&bridge, &settings]() {
+        // A call left running would hold the other side in it until its watch gives
+        // up. The core sends on its own threads; a second lets the hangup leave.
+        auto *calls = qobject_cast<CallEngine *>(bridge.calls());
+        if (calls && calls->state() != QLatin1String("idle")) {
+            calls->hangUp();
+            QEventLoop wait;
+            QTimer::singleShot(1000, &wait, &QEventLoop::quit);
+            wait.exec();
+        }
         const QString when = settings.mediaWipe();
         if (when == QStringLiteral("exit") || when == QStringLiteral("background")) {
             bridge.clearMediaCache();

@@ -39,6 +39,9 @@ class CallEngine : public QObject
     Q_PROPERTY(bool videoRefused READ videoRefused NOTIFY callChanged)
     Q_PROPERTY(QObject *remoteVideo READ remoteVideo CONSTANT)
     Q_PROPERTY(QObject *selfVideo READ selfVideo CONSTANT)
+    /// The camera's pictures come from the page's own viewfinder instead: on some
+    /// devices the camera gives nothing to a surface in plain memory.
+    Q_PROPERTY(bool gpuCapture READ gpuCapture NOTIFY callChanged)
 
 public:
     explicit CallEngine(QObject *parent = nullptr);
@@ -82,6 +85,10 @@ public:
     /// Tells the engine how the phone is being held, so the picture it sends
     /// stays upright. Takes a Silica Orientation value.
     Q_INVOKABLE void setOrientation(int orientation);
+
+    /// One picture of the page's viewfinder, upright as shown; sent like a camera frame.
+    Q_INVOKABLE void pushGrabbedFrame(const QImage &image);
+    bool gpuCapture() const { return m_gpuCapture; }
 
     /// Relay credentials, applied to the next call. Without them two devices
     /// behind NAT connect and stay silent.
@@ -133,20 +140,26 @@ signals:
     /// Someone is calling; the UI should show the incoming call screen.
     void incomingCall(const QString &roomId, const QString &peer);
 
+// Every slot taking `generation` is queued from a GStreamer thread; one from a
+// torn-down pipeline is dropped.
 private slots:
-    void deliverLocalDescription(const QString &sdp, bool isOffer);
+    void deliverLocalDescription(int generation, const QString &sdp, bool isOffer);
     void deliverVideoFrame(const QImage &frame);
     void deliverSelfFrame(const QImage &frame);
-    void deliverVideoYuv(const QByteArray &planes, int width, int height);
-    void deliverSelfYuv(const QByteArray &planes, int width, int height);
+    void deliverVideoYuv(int generation, const QByteArray &planes, int width, int height);
+    void deliverSelfYuv(int generation, const QByteArray &planes, int width, int height);
     void flushCandidates();
     void pushCameraFrame(const QByteArray &data, int width, int height, const QString &format);
-    void deliverCandidate(const QString &candidate, int mediaLineIndex);
+    void deliverCandidate(int generation, const QString &candidate, int mediaLineIndex);
     void reportFailure(const QString &message);
-    /// A pipeline error, handed over from the GStreamer bus thread.
-    Q_INVOKABLE void reportPipelineFailure(const QString &reason);
-    void markConnected();
-    void markDisconnected();
+    void reportFailureFor(int generation, const QString &message);
+    /// A pipeline error, handed over from the GStreamer bus.
+    Q_INVOKABLE void reportPipelineFailure(int generation, const QString &reason);
+    void markConnected(int generation);
+    void markDisconnected(int generation);
+    /// webrtcbin's signal, moved off its own thread: the decision reads and
+    /// writes call state and starts timers.
+    void handleNegotiationNeeded(int generation);
 
 private:
     static void negotiationNeeded(GstElement *webrtc, void *user);
@@ -156,6 +169,7 @@ private:
     static void decodedPadAdded(GstElement *decode, GstPad *pad, void *user);
     static int busMessage(void *bus, void *message, void *user);
     static unsigned cameraProbe(GstPad *pad, void *info, void *user);
+    static unsigned remoteProbe(GstPad *pad, void *info, void *user);
     static void iceStateChanged(GstElement *webrtc, void *spec, void *user);
     static int videoFrameArrived(void *sink, void *user);
     static int selfFrameArrived(void *sink, void *user);
@@ -172,8 +186,10 @@ private:
     void requestOffer();
     /// Whether every sink pad of webrtcbin has negotiated caps. Until the video
     /// pad has them, an offer describes that line as refused.
+    void startOutgoing(bool withVideo);
     bool sendPadsReady() const;
     void setState(const QString &state);
+    bool current(int generation) const { return generation == m_generation.load(); }
 
     GstElement *m_pipeline = nullptr;
     GstElement *m_webrtc = nullptr;
@@ -213,9 +229,17 @@ private:
     CameraSource m_camera;
     /// Falls back to voice when the camera stays silent.
     QTimer m_cameraWatchdog;
+    QTimer m_cameraRetry;
+    /// The other side gone without a hangup: nothing arrives, and ICE does not notice.
+    QTimer m_mediaWatch;
+    QAtomicInt m_remotePackets;
+    int m_lastRemotePackets = 0;
+    int m_silentTicks = 0;
     GstElement *m_cameraFeed = nullptr;
     GstElement *m_cameraFlip = nullptr;
     int m_orientation = 1;
+    int m_flipMethod = 3;
+    bool m_gpuCapture = false;
     QString m_cameraFormat;
 
     /// The bus watch's source id, so it can be taken off the main context
@@ -224,6 +248,8 @@ private:
     /// Frames the camera delivered; zero means it never ran. Written on the
     /// camera's thread, read on the Qt one - a stale zero tears a call down.
     QAtomicInt m_cameraFrames;
+    /// Raised once a pipeline is gone; GStreamer threads stamp what they queue.
+    QAtomicInt m_generation;
 };
 
 #endif // CALLENGINE_H

@@ -465,14 +465,6 @@
         <translation>Võta vastu</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Keeldu</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Lõpeta kõne</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Võta vastu ilma kaamerata</translation>
     </message>

@@ -8,6 +8,7 @@
 mod call;
 mod compose;
 mod directory;
+mod gate;
 mod linkpreview;
 mod location;
 mod login;

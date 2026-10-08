@@ -466,14 +466,6 @@
         <translation>Glac leis</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Diúltaigh</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Croch suas</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Glac gan ceamara</translation>
     </message>

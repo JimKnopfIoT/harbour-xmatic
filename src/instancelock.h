@@ -7,6 +7,9 @@
 /// Held for the life of the process and released by the kernel, however it dies.
 bool acquireInstanceLock(const QString &dataDirectory);
 
+/// Whether the app proper runs: it owns the bus name, a push wake-up does not.
+bool instanceIsRunning();
+
 /// Asks the running instance to come to the front, over the share dialog's own
 /// name. Best effort: otherwise the user taps the icon again.
 void raiseRunningInstance();

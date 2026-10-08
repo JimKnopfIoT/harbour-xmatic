@@ -46,6 +46,9 @@ public:
     void adopt(const QHash<QString, QByteArray> &checksums);
     /// Forgets everything, for "remove pictures".
     void forget();
+    /// Drops the checksums in memory while an import rewrites the files: a
+    /// picture read mid-import would fail an old checksum and latch the set.
+    void suspend();
 
 signals:
     /// From the image thread; connect queued.

@@ -484,14 +484,6 @@
         <source>Accept</source>
         <translation>قبول</translation>
     </message>
-    <message>
-        <source>Decline</source>
-        <translation>رفض</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>إنهاء المكالمة</translation>
-    </message>
 </context>
 <context>
     <name>CameraCapturePage</name>

@@ -128,8 +128,8 @@ This is new and will need field reports. What is built:
 - finding a distributor, registering with it, receiving the address
 - registering and removing the pusher on the homeserver
 - receiving a push while the app runs
-- being woken by a push while the app is closed, fetching the message and
-  raising the banner
+- being woken by a push while the app is closed and raising a banner that
+  says "New message" (no store is opened, nothing is fetched)
 
 What is not:
 

@@ -466,14 +466,6 @@
         <translation>Atsiliepti</translation>
     </message>
     <message>
-        <source>Decline</source>
-        <translation>Atmesti</translation>
-    </message>
-    <message>
-        <source>Hang up</source>
-        <translation>Padėti ragelį</translation>
-    </message>
-    <message>
         <source>Accept without camera</source>
         <translation>Atsiliepti be kameros</translation>
     </message>

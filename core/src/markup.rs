@@ -427,7 +427,7 @@ impl Writer {
         element: &ruma_html::ElementData,
         context: &Context,
     ) {
-        let href = attribute(element, "href").unwrap_or_default();
+        let href = lower_web_scheme(attribute(element, "href").unwrap_or_default());
         let usable = !context.in_anchor && is_web_url(&href);
 
         if !usable {
@@ -472,6 +472,16 @@ fn attribute(element: &ruma_html::ElementData, name: &str) -> Option<String> {
 
 /// Only http(s) with a host: an anchor hands the URL to whatever claims the
 /// scheme. Characters that cannot occur in a URL are rejected, not escaped.
+/// `Https://`, as a phone keyboard writes it, is still a web address.
+fn lower_web_scheme(href: String) -> String {
+    for scheme in ["https://", "http://"] {
+        if href.get(..scheme.len()).is_some_and(|head| head.eq_ignore_ascii_case(scheme)) {
+            return format!("{scheme}{}", &href[scheme.len()..]);
+        }
+    }
+    href
+}
+
 fn is_web_url(href: &str) -> bool {
     // RFC 3986: a URI is ASCII. Everything else has to arrive percent-encoded or
     // as punycode, and a sender who writes it directly is not being helpful.
@@ -528,6 +538,9 @@ mod tests {
             "https://accounts.example.com.aaaaaaaaaaaaaaaaaaaaaaaaaaaa@evil.tld/"
         ));
         assert!(is_web_url("https://host.example/holiday.jpg"));
+        assert_eq!(lower_web_scheme("Https://Host.example/A".into()), "https://Host.example/A");
+        assert_eq!(lower_web_scheme("HTTP://h.example".into()), "http://h.example");
+        assert_eq!(lower_web_scheme("mailto:x".into()), "mailto:x");
     }
 
     #[test]
