@@ -1484,78 +1484,78 @@
         <translation>गेटवे एक https URL होना चाहिए।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1976"/>
+        <location filename="../src/matrixbridge.cpp" line="1977"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2324"/>
-        <location filename="../src/matrixbridge.cpp" line="2352"/>
+        <location filename="../src/matrixbridge.cpp" line="2325"/>
+        <location filename="../src/matrixbridge.cpp" line="2353"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2670"/>
+        <location filename="../src/matrixbridge.cpp" line="2675"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2715"/>
+        <location filename="../src/matrixbridge.cpp" line="2720"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2735"/>
+        <location filename="../src/matrixbridge.cpp" line="2740"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3600"/>
+        <location filename="../src/matrixbridge.cpp" line="3605"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3959"/>
+        <location filename="../src/matrixbridge.cpp" line="3964"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3962"/>
+        <location filename="../src/matrixbridge.cpp" line="3967"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3965"/>
+        <location filename="../src/matrixbridge.cpp" line="3970"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3968"/>
+        <location filename="../src/matrixbridge.cpp" line="3973"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3971"/>
+        <location filename="../src/matrixbridge.cpp" line="3976"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3974"/>
+        <location filename="../src/matrixbridge.cpp" line="3979"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3974"/>
+        <location filename="../src/matrixbridge.cpp" line="3979"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3977"/>
+        <location filename="../src/matrixbridge.cpp" line="3982"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3980"/>
+        <location filename="../src/matrixbridge.cpp" line="3985"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -2373,111 +2373,111 @@
         <translation>पुश सूचनाएँ प्राप्त करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="112"/>
-        <location filename="../qml/pages/PushPage.qml" line="134"/>
+        <location filename="../qml/pages/PushPage.qml" line="114"/>
+        <location filename="../qml/pages/PushPage.qml" line="136"/>
         <source>Push server</source>
         <translation>पुश सर्वर</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="112"/>
-        <location filename="../qml/pages/PushPage.qml" line="139"/>
+        <location filename="../qml/pages/PushPage.qml" line="114"/>
+        <location filename="../qml/pages/PushPage.qml" line="141"/>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (सार्वजनिक)</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="113"/>
-        <location filename="../qml/pages/PushPage.qml" line="143"/>
+        <location filename="../qml/pages/PushPage.qml" line="115"/>
+        <location filename="../qml/pages/PushPage.qml" line="145"/>
         <source>Custom</source>
         <translation>अपना</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="113"/>
+        <location filename="../qml/pages/PushPage.qml" line="115"/>
         <source>None</source>
         <translation>कोई नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="118"/>
+        <location filename="../qml/pages/PushPage.qml" line="120"/>
         <source>Uses %1.</source>
         <translation>%1 का उपयोग करता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="121"/>
+        <location filename="../qml/pages/PushPage.qml" line="123"/>
         <source>Your push server has no gateway. Pick another one.</source>
         <translation>तुम्हारे पुश सर्वर में कोई गेटवे नहीं है। कोई दूसरा चुनो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="123"/>
+        <location filename="../qml/pages/PushPage.qml" line="125"/>
         <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
         <translation>पंजीकरण के बाद जाँचा जाता है। ntfy में होता है, Mozilla में नहीं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="129"/>
+        <location filename="../qml/pages/PushPage.qml" line="131"/>
         <source>Pick a gateway to finish turning push on.</source>
         <translation>पुश चालू करना पूरा करने के लिए एक गेटवे चुनो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="158"/>
+        <location filename="../qml/pages/PushPage.qml" line="163"/>
         <source>Gateway URL</source>
         <translation>गेटवे URL</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="171"/>
+        <location filename="../qml/pages/PushPage.qml" line="176"/>
         <source>Distributor</source>
         <translation>वितरक</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="178"/>
+        <location filename="../qml/pages/PushPage.qml" line="183"/>
         <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
         <translation>कोई पुश वितरक स्थापित नहीं है। उसके बिना संबंध बनाए रखने वाला कुछ नहीं है, और यह बंद ही रहेगा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="182"/>
+        <location filename="../qml/pages/PushPage.qml" line="187"/>
         <source>Registration</source>
         <translation>पंजीकरण</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="189"/>
+        <location filename="../qml/pages/PushPage.qml" line="194"/>
         <source>This device has an address to be reached at.</source>
         <translation>इस उपकरण का एक पता है जिस पर यह पहुँचा जा सकता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="198"/>
+        <location filename="../qml/pages/PushPage.qml" line="203"/>
         <source>Waiting for the distributor.</source>
         <translation>वितरक की प्रतीक्षा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="200"/>
+        <location filename="../qml/pages/PushPage.qml" line="205"/>
         <source>Not registered.</source>
         <translation>पंजीकृत नहीं।</translation>
     </message>
     <message>
         <location filename="../qml/pages/PushPage.qml" line="110"/>
-        <location filename="../qml/pages/PushPage.qml" line="206"/>
+        <location filename="../qml/pages/PushPage.qml" line="211"/>
         <source>Gateway</source>
         <translation>गेटवे</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="192"/>
+        <location filename="../qml/pages/PushPage.qml" line="197"/>
         <source>Registered. Waiting for a gateway.</source>
         <translation>पंजीकृत। गेटवे की प्रतीक्षा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="195"/>
+        <location filename="../qml/pages/PushPage.qml" line="200"/>
         <source>Registered. Telling the homeserver.</source>
         <translation>पंजीकृत। होमसर्वर को बताया जा रहा है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="210"/>
+        <location filename="../qml/pages/PushPage.qml" line="215"/>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>कोई नहीं। होमसर्वर अभी इस उपकरण तक नहीं पहुँच सकता।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="214"/>
+        <location filename="../qml/pages/PushPage.qml" line="219"/>
         <source>What leaves this device</source>
         <translation>इस उपकरण से क्या जाता है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="223"/>
+        <location filename="../qml/pages/PushPage.qml" line="228"/>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>तुम्हारे सर्वर को पुश सेवा का एक पता बताया जाता है, और वह हर सूचना के लिए गेटवे को कक्ष और संदेश की पहचान भेजता है। संदेश का पाठ नहीं: पुश केवल पहचान लाता है, संदेश यह उपकरण स्वयं लाता और खोलता है। वह पता एक रहस्य है — जिसके पास हो, वह इस फ़ोन को सूचना भेज सकता है।</translation>
     </message>
