@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Avstemning: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Push-gatewayen må være en https-adresse.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Hjemmetjeneren din får en adresse hos push-tjenesten, og sender gatewayen en rom- og meldings-id for hvert varsel. Ingen meldingstekst: pushen bærer bare id-er, og denne enheten henter og dekrypterer meldingen selv. Den adressen er en hemmelighet — den som har den, kan sende et varsel til denne telefonen.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Denne enheten har en adresse; hjemmeserveren din trenger en gateway for å nå den.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Push-serveren din har ingen Matrix-gateway. Skriv inn en nedenfor; inntil da kan ikke hjemmeserveren din nå denne enheten.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>En Matrix-hjemmeserver kan ikke snakke direkte med en push-distributør, så den sender til en gateway som videresender. La dette stå tomt for å bruke push-serverens egen gateway, hvis den har en. Gatewayen ser hvilket rom hvert varsel gjelder.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-gateway</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Bruk matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

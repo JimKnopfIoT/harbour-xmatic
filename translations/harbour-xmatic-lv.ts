@@ -1249,6 +1249,10 @@
         <source>Poll: %1</source>
         <translation>Aptauja: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Push vārtejai jābūt https adresei.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1942,6 +1946,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Tavam serverim tiek paziņota adrese push pakalpojumā, un tas katram paziņojumam sūta vārtejai istabas un ziņas identifikatoru. Bez teksta: push nes tikai identifikatorus, bet ziņu šī ierīce iegūst un atšifrē pati. Šī adrese ir noslēpums — kam tā ir, var sūtīt šim tālrunim paziņojumu.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Šai ierīcei ir adrese; tavam mājas serverim vajag vārteju, lai to sasniegtu.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Tavam push serverim nav Matrix vārtejas. Ievadi to zemāk; līdz tam tavs mājas serveris nevar sasniegt šo ierīci.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Matrix mājas serveris nevar tieši sarunāties ar push izplatītāju, tāpēc tas sūta uz vārteju, kas pārsūta tālāk. Atstāj tukšu, lai izmantotu tava push servera paša vārteju, ja tam tāda ir. Vārteja redz, kurai istabai ir katrs paziņojums.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push vārteja</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Izmantot matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

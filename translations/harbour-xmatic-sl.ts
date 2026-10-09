@@ -1251,6 +1251,10 @@
         <source>Poll: %1</source>
         <translation>Anketa: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Potisni prehod mora biti naslov https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1945,6 +1949,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Tvoj strežnik izve naslov pri potisni storitvi in za vsako obvestilo prehodu pošlje določilnik sobe in sporočila. Brez besedila: potisk nosi le določilnike, sporočilo pa ta naprava pridobi in odšifrira sama. Ta naslov je skrivnost — kdor ga ima, lahko temu telefonu pošlje obvestilo.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Ta naprava ima naslov; tvoj domači strežnik potrebuje prehod, da jo doseže.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Tvoj potisni strežnik nima prehoda Matrix. Vnesi ga spodaj; do takrat tvoj domači strežnik te naprave ne more doseči.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Domači strežnik Matrix se ne more neposredno pogovarjati z razpečevalnikom potisnih obvestil, zato pošilja na prehod, ki posreduje naprej. Pusti prazno, da se uporabi lastni prehod tvojega potisnega strežnika, če ga ima. Prehod vidi, za katero sobo je vsako obvestilo.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Potisni prehod</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Uporabi matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

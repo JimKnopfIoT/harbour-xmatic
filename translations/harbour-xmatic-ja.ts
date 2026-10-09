@@ -1245,6 +1245,10 @@
         <source>Poll: %1</source>
         <translation>アンケート: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>プッシュゲートウェイは https アドレスである必要があります。</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1936,6 +1940,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>ホームサーバーにはプッシュサービス上のアドレスが伝えられ、通知ごとにルームとメッセージの識別子がゲートウェイへ送られます。本文は送りません: プッシュが運ぶのは識別子だけで、メッセージの取得と復号はこのデバイスが自分で行います。そのアドレスは秘密です - 持っている人は誰でもこの端末に通知を送れます。</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>このデバイスにはアドレスがあります。ホームサーバーがここに届くにはゲートウェイが必要です。</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>プッシュサーバーに Matrix ゲートウェイがありません。下に入力してください。それまでホームサーバーはこのデバイスに届きません。</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Matrix のホームサーバーはプッシュディストリビューターと直接やり取りできないため、転送するゲートウェイへ送ります。空欄にすると、プッシュサーバー自身のゲートウェイがあればそれを使います。ゲートウェイには各通知がどのルーム宛てかが見えます。</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>プッシュゲートウェイ</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>matrix.gateway.unifiedpush.org を使う</translation>
     </message>
 </context>
 <context>

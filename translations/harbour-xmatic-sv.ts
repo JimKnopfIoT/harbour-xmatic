@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Omröstning: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Push-gatewayen måste vara en https-adress.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Din hemserver får en adress hos push-tjänsten och skickar för varje avisering ett rums- och meddelande-id till gatewayen. Ingen meddelandetext: pushen bär bara identifierare och den här enheten hämtar och dekrypterar meddelandet själv. Den adressen är en hemlighet — den som har den kan skicka en avisering till den här telefonen.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Den här enheten har en adress; din hemserver behöver en gateway för att nå den.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Din push-server har ingen Matrix-gateway. Ange en nedan; tills dess kan din hemserver inte nå den här enheten.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>En Matrix-hemserver kan inte prata direkt med en push-distributör, så den skickar till en gateway som vidarebefordrar. Lämna tomt för att använda din push-servers egen gateway, om den har en. Gatewayen ser vilket rum varje avisering gäller.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-gateway</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Använd matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

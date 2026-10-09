@@ -29,23 +29,24 @@ that exists is [Foghorn](https://git.agnos.is/projectmoon/foghorn). Install it,
 start its service, and **connect it to an [ntfy](https://ntfy.sh) server** in
 its settings - the public one or your own.
 
-That is all. There is nothing to enter in xmatic.
-
-### The gateway, and why there is nothing to set
+### The gateway
 
 A Matrix homeserver cannot push to your phone's address directly: it posts to
 a *Matrix push gateway*, which forwards to the address. xmatic uses
 [Leghorn](https://git.agnos.is/projectmoon/foghorn/src/branch/master/leghorn),
-Foghorn's own connector library, and Leghorn finds the gateway the way Element
-does:
+Foghorn's own connector library, and picks the gateway like this:
 
-- It asks the push server behind your address whether it is a Matrix gateway
-  itself. **ntfy is**, so with Foghorn on ntfy the server that holds your
-  address is also the gateway, and no third party is added.
-- Otherwise - Foghorn on the Mozilla Push Service, its default - it uses the
-  public gateway of the UnifiedPush project, `matrix.gateway.unifiedpush.org`.
+- A gateway you entered in Account › Push notifications is used as it stands.
+- Otherwise xmatic asks the push server behind your address whether it is a
+  Matrix gateway itself. **ntfy is**, so with Foghorn on ntfy the server that
+  holds your address is also the gateway, and no third party is added.
+- Otherwise there is no gateway, and the page says so. Foghorn on the Mozilla
+  Push Service is such a case. Enter a gateway, or choose the UnifiedPush
+  project's public one, `matrix.gateway.unifiedpush.org`, with the button
+  below the field. xmatic never picks a third party for you, and a push server
+  that does not answer the question keeps what was used before.
 
-Account › Push notifications shows which one is in use.
+Gateways and addresses must be https; anything else is refused.
 
 ## What leaves your device when this is on
 
@@ -64,7 +65,7 @@ here with keys that never leave.
   so it sees the same room and message identifiers.
 
 With Foghorn on ntfy those two are one server - your own, if you run it. On
-Mozilla they are two, and the gateway is the UnifiedPush project's.
+Mozilla they are two, and the gateway is whichever you chose.
 
 None of them sees a word you wrote. All of them see when and where you are
 active.
@@ -80,7 +81,7 @@ writes it to the log.
 
 - The sandbox. The woken process runs under the same Sailjail profile as the
   app, takes the same single-process lock on the message store, and has no
-  access the app does not.
+  access the app does not. Starting the app while it runs ends it at once.
 - Your notification setting. If message text is switched off in Account ›
   Privacy, a push shows "New message" and nothing more, exactly as an ordinary
   arrival does.
@@ -90,38 +91,40 @@ writes it to the log.
 ## What happens after a reboot
 
 The key that unlocks xmatic's encrypted storage lives in Sailfish Secrets and
-is bound to the device lock. It can only be handed out through the system's own
-dialog, and a process started in the background cannot answer a dialog.
+is bound to the device lock. The woken process only asks for it in a way that
+can never raise the system's dialog.
 
-So after a restart, until you have opened xmatic by hand once, a push cannot be
-decrypted. You still get a banner — it says a message arrived and nothing more
-— because silence would leave you believing nothing had.
+So after a restart, until the device is unlocked, a push cannot be decrypted.
+You still get a banner — it says a message arrived and nothing more — because
+silence would leave you believing nothing had.
 
 ## Turning it off
 
 Account › Push notifications, switch off. xmatic removes the pusher from your
-homeserver and gives the registration back, in that order.
+homeserver, gives the registration back and deletes the address and keys it
+kept, in that order.
 
 If your homeserver is unreachable at that moment, the pusher may stay behind
 and the server will keep posting to an address that no longer exists. That
 attempt shows up in Account › Error log. Switching off again once you are
 online, or signing out, clears it.
 
-Signing out deletes the registration in any case: an address that outlives the
-device it was made for is a secret pointing at a stranger.
+Signing out deletes the registration in any case, and the record of which
+rooms had a banner: an address that outlives the device it was made for is a
+secret pointing at a stranger.
 
 ## Status
 
 This is new and will need field reports. What is built:
 
 - finding a distributor, registering with it, receiving the address
-- finding the Matrix gateway for that address
+- finding the Matrix gateway for that address, or using the one you entered
 - registering and removing the pusher on the homeserver, and replacing it when
-  the distributor moves the address
-- re-registering with the distributor at every start
+  the distributor moves the address, also while the app is closed
+- re-registering with the distributor at every start while push is on
 - receiving a push while the app runs
-- being woken by a push while the app is closed and raising a banner that
-  says "New message" (no store is opened, nothing is fetched)
+- being woken by a push while the app is closed and showing the message, or
+  "New message" while the storage key is locked
 
 What is not:
 

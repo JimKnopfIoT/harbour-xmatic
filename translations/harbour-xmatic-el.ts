@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Δημοσκόπηση: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Η πύλη push πρέπει να είναι διεύθυνση https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Ο διακομιστής σου μαθαίνει μια διεύθυνση στην υπηρεσία push και στέλνει στην πύλη ένα αναγνωριστικό δωματίου και μηνύματος για κάθε ειδοποίηση. Κανένα κείμενο: το push μεταφέρει μόνο αναγνωριστικά και αυτή η συσκευή φέρνει και αποκρυπτογραφεί το μήνυμα μόνη της. Αυτή η διεύθυνση είναι μυστικό — όποιος την έχει μπορεί να στείλει ειδοποίηση σε αυτό το τηλέφωνο.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Αυτή η συσκευή έχει διεύθυνση· ο οικιακός διακομιστής σου χρειάζεται μια πύλη για να τη φτάσει.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Ο διακομιστής push σου δεν έχει πύλη Matrix. Γράψε μία παρακάτω· μέχρι τότε ο οικιακός διακομιστής σου δεν μπορεί να φτάσει αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Ένας οικιακός διακομιστής Matrix δεν μπορεί να μιλήσει απευθείας με έναν διανομέα push, οπότε στέλνει σε μια πύλη που προωθεί. Άφησέ το κενό για να χρησιμοποιηθεί η πύλη του ίδιου του διακομιστή push σου, αν έχει. Η πύλη βλέπει για ποιο δωμάτιο είναι κάθε ειδοποίηση.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Πύλη push</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Χρήση matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

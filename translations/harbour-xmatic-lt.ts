@@ -1249,6 +1249,10 @@
         <source>Poll: %1</source>
         <translation>Apklausa: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Push sietuvas turi būti https adresas.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1942,6 +1946,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Tavo serveriui pranešamas adresas push tarnyboje, ir jis kiekvienam pranešimui siunčia sietuvui kambario ir žinutės identifikatorių. Jokio teksto: push neša tik identifikatorius, o žinutę šis įrenginys parsisiunčia ir iššifruoja pats. Tas adresas yra paslaptis — kas jį turi, gali šiam telefonui siųsti pranešimą.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Šis įrenginys turi adresą; tavo namų serveriui reikia sietuvo, kad jį pasiektų.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Tavo push serveris neturi Matrix sietuvo. Įvesk jį žemiau; iki tol tavo namų serveris negali pasiekti šio įrenginio.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Matrix namų serveris negali tiesiogiai kalbėtis su push platintoju, todėl siunčia į sietuvą, kuris persiunčia toliau. Palik tuščią, kad būtų naudojamas paties tavo push serverio sietuvas, jei jis jį turi. Sietuvas mato, kuriam kambariui skirtas kiekvienas pranešimas.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push sietuvas</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Naudoti matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

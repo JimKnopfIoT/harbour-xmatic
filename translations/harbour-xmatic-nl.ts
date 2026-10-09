@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Peiling: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>De pushgateway moet een https-adres zijn.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Je thuisserver krijgt een adres bij de pushdienst te horen en stuurt de gateway voor elke melding een kamer- en berichtidentificatie. Geen berichttekst: de push draagt alleen identificaties en dit apparaat haalt en ontsleutelt het bericht zelf. Dat adres is een geheim — wie het heeft, kan deze telefoon een melding sturen.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Dit apparaat heeft een adres; je thuisserver heeft een gateway nodig om het te bereiken.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Je pushserver heeft geen Matrix-gateway. Vul er hieronder een in; tot dan kan je thuisserver dit apparaat niet bereiken.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Een Matrix-thuisserver kan niet rechtstreeks met een pushdistributeur praten, dus stuurt hij naar een gateway die doorstuurt. Laat dit leeg om de eigen gateway van je pushserver te gebruiken, als die er een heeft. De gateway ziet voor welke kamer elke melding is.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Pushgateway</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>matrix.gateway.unifiedpush.org gebruiken</translation>
     </message>
 </context>
 <context>

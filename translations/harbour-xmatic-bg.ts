@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Анкета: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Push шлюзът трябва да е https адрес.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Сървърът ти научава адрес в push услугата и праща на шлюза идентификатор на стая и съобщение за всяко известие. Без текст: push носи само идентификатори, а съобщението това устройство изтегля и разшифрова само. Този адрес е тайна — който го има, може да прати известие на този телефон.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Това устройство има адрес; домашният ти сървър има нужда от шлюз, за да го достигне.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Push сървърът ти няма Matrix шлюз. Въведи такъв по-долу; дотогава домашният ти сървър не може да достигне това устройство.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Домашен сървър на Matrix не може да говори директно с push разпространител, затова праща към шлюз, който препраща. Остави празно, за да се ползва собственият шлюз на push сървъра ти, ако има такъв. Шлюзът вижда за коя стая е всяко известие.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push шлюз</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Използвай matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>
