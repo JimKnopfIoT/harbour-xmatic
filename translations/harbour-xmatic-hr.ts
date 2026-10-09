@@ -2004,16 +2004,20 @@
         <translation>%1 ne može dostavljati Matrix obavijesti.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Prebaci uslugu %1 na ntfy ili koristi UnifiedPush pristupnik.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Koristi UnifiedPush pristupnik</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Registrirano preko %1. Matični poslužitelj ne može doći do ovog uređaja.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Vodi ga projekt UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>U aplikaciji %1 odaberi push uslugu s Matrix pristupnikom ili koristi javni pristupnik projekta UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Koristi javni UnifiedPush pristupnik</translation>
     </message>
 </context>
 <context>

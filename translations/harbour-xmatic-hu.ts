@@ -1998,16 +1998,20 @@
         <translation>%1 nem tud Matrix-értesítéseket kézbesíteni.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Válts ntfy-ra itt: %1, vagy használd a UnifiedPush-átjárót.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>UnifiedPush-átjáró használata</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Regisztrálva (%1). Az otthoni kiszolgáló nem éri el ezt az eszközt.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>A UnifiedPush projekt üzemelteti: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Válassz Matrix-átjáróval rendelkező push szolgáltatást itt: %1, vagy használd a UnifiedPush projekt nyilvános átjáróját.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Nyilvános UnifiedPush-átjáró használata</translation>
     </message>
 </context>
 <context>

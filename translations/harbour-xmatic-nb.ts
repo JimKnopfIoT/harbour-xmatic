@@ -2001,16 +2001,20 @@
         <translation>%1 kan ikke levere Matrix-varsler.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Bytt %1 til ntfy, eller bruk UnifiedPush-gatewayen.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Bruk UnifiedPush-gateway</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Registrert via %1. Hjemmetjeneren kan ikke nå denne enheten.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Drives av UnifiedPush-prosjektet: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Velg en push-tjeneste med Matrix-gateway i %1, eller bruk den offentlige gatewayen fra UnifiedPush-prosjektet.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Bruk offentlig UnifiedPush-gateway</translation>
     </message>
 </context>
 <context>

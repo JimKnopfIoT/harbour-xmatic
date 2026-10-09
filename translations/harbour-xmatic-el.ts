@@ -2001,16 +2001,20 @@
         <translation>%1 δεν μπορεί να παραδώσει ειδοποιήσεις Matrix.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Άλλαξε την υπηρεσία του %1 σε ntfy ή χρησιμοποίησε την πύλη UnifiedPush.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Χρήση πύλης UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Εγγράφηκε μέσω %1. Ο οικείος διακομιστής δεν μπορεί να φτάσει αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Τη διαχειρίζεται το έργο UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Διάλεξε στην εφαρμογή %1 υπηρεσία push με πύλη Matrix ή χρησιμοποίησε τη δημόσια πύλη του έργου UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Χρήση δημόσιας πύλης UnifiedPush</translation>
     </message>
 </context>
 <context>

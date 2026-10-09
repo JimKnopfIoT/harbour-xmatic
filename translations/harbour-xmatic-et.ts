@@ -2001,16 +2001,20 @@
         <translation>%1 ei saa Matrixi teavitusi edastada.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Lülita %1 ntfy peale või kasuta UnifiedPushi lüüsi.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Kasuta UnifiedPushi lüüsi</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Registreeritud (%1). Koduserver ei saa seda seadet kätte.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Haldab projekt UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Vali rakenduses %1 Matrixi lüüsiga push-teenus või kasuta projekti UnifiedPush avalikku lüüsi.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Kasuta avalikku UnifiedPush-lüüsi</translation>
     </message>
 </context>
 <context>

@@ -2004,16 +2004,20 @@
         <translation>Ní féidir le %1 fógraí Matrix a sheachadadh.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Athraigh %1 go ntfy, nó úsáid an geata UnifiedPush.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Úsáid geata UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Cláraithe ag %1. Ní féidir leis an bhfreastalaí baile teacht ar an ngléas seo.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Á reáchtáil ag tionscadal UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Roghnaigh seirbhís bhrú a bhfuil geata Matrix aici in %1, nó úsáid an geata poiblí atá á reáchtáil ag tionscadal UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Úsáid geata poiblí UnifiedPush</translation>
     </message>
 </context>
 <context>

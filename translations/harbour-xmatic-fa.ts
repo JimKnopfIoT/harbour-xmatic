@@ -1998,16 +1998,20 @@
         <translation>%1 نمی‌تواند اعلان‌های Matrix را برساند.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>%1 را روی ntfy بگذار، یا از دروازه‌ی UnifiedPush استفاده کن.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>استفاده از دروازه‌ی UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>از طریق %1 ثبت شد. کارساز خانگی به این دستگاه دسترسی ندارد.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>زیر نظر پروژهٔ UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>در %1 یک سرویس Push با دروازهٔ Matrix انتخاب کن، یا از دروازهٔ عمومی پروژهٔ UnifiedPush استفاده کن.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>استفاده از دروازهٔ عمومی UnifiedPush</translation>
     </message>
 </context>
 <context>

@@ -2004,16 +2004,20 @@
         <translation>%1 nu poate livra notificări Matrix.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Comută %1 pe ntfy sau folosește poarta UnifiedPush.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Folosește poarta UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Înregistrat (%1). Serverul nu poate ajunge la acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Administrată de proiectul UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Alege în %1 un serviciu push cu poartă Matrix sau folosește poarta publică a proiectului UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Folosește poarta publică UnifiedPush</translation>
     </message>
 </context>
 <context>

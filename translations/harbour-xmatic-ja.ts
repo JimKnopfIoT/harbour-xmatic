@@ -1998,16 +1998,20 @@
         <translation>%1 は Matrix の通知を配信できません。</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>%1 を ntfy に切り替えるか、UnifiedPush ゲートウェイを使うと届きます。</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>UnifiedPush ゲートウェイを使う</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>%1 に登録済み。ホームサーバーはこのデバイスに届きません。</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>UnifiedPush プロジェクトが運営: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>%1 で Matrix ゲートウェイのあるプッシュサービスを選ぶか、UnifiedPush プロジェクトが運営する公開ゲートウェイを使ってください。</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>UnifiedPush の公開ゲートウェイを使う</translation>
     </message>
 </context>
 <context>

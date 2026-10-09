@@ -2001,16 +2001,20 @@
         <translation>%1 can&apos;t deliver Matrix notifications.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Switch %1 to ntfy, or use the UnifiedPush gateway.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Use UnifiedPush gateway</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Registered with %1. The homeserver can&apos;t reach it.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Run by the UnifiedPush project: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Use UnifiedPush public gateway</translation>
     </message>
 </context>
 <context>

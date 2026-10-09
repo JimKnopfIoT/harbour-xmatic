@@ -2001,16 +2001,20 @@
         <translation>%1 non può consegnare le notifiche Matrix.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Passa %1 a ntfy, oppure usa il gateway UnifiedPush.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Usa il gateway UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Registrato tramite %1. L&apos;homeserver non può raggiungere questo dispositivo.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Gestito dal progetto UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Scegli in %1 un servizio push con gateway Matrix, oppure usa il gateway pubblico del progetto UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Usa il gateway pubblico UnifiedPush</translation>
     </message>
 </context>
 <context>
