@@ -26,11 +26,16 @@ Page {
     readonly property var serverGateway: pushStatus.serverGateway === undefined
                                          ? null : pushStatus.serverGateway
 
+    onGatewayModeChanged: gatewayBox.currentIndex = gatewayModes.indexOf(gatewayMode)
+
     function host(url) {
         return String(url).replace(/^https:\/\//i, "").split("/")[0]
     }
 
-    Component.onCompleted: matrix.refreshPushStatus()
+    Component.onCompleted: {
+        gatewayBox.currentIndex = gatewayModes.indexOf(gatewayMode)
+        matrix.refreshPushStatus()
+    }
 
     // On every visit, not once: a distributor can be installed or removed while
     // this app runs, and a cached answer would be wrong exactly then.
@@ -108,9 +113,9 @@ Page {
                 visible: page.switchedOn
                 width: parent.width
                 label: qsTr("Gateway")
-                // Shown from the saved pick only: Silica would select the first item.
+                // Set from the saved pick only; Silica's own selection breaks a binding.
                 automaticSelection: false
-                currentIndex: page.gatewayModes.indexOf(page.gatewayMode)
+                currentIndex: -1
                 value: [qsTr("Push server"), qsTr("UnifiedPush (public)"),
                         qsTr("Custom")][page.gatewayModes.indexOf(page.gatewayMode)] || qsTr("None")
                 description: {
@@ -134,7 +139,6 @@ Page {
                 menu: ContextMenu {
                     MenuItem {
                         text: qsTr("Push server")
-                        enabled: page.serverGateway !== false
                         onClicked: page.pick("server", "")
                     }
                     MenuItem {
