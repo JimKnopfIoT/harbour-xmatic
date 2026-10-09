@@ -1014,6 +1014,7 @@ private:
     QVariantList m_errorLog;
     QVariantMap m_pushStatus;
     bool m_announcePushes = false;
+    bool m_pushStatusAsked = false;
     /// Last banner per room from each source, on `m_uptime`.
     QHash<QString, qint64> m_pushBannerAt;
     QHash<QString, qint64> m_syncBannerAt;
