@@ -1208,10 +1208,6 @@
         <translation>Сесията ти приключи. Влез отново.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Първо въведи push шлюз.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Ново съобщение</translation>
     </message>
@@ -1250,6 +1246,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Анкета: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Шлюзът трябва да е https URL.</translation>
     </message>
 </context>
 <context>
@@ -1933,14 +1933,6 @@
         <translation>Шлюз</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix сървърът не може да говори директно с push разпространител, затова праща на шлюз, който препраща. Няма стойност по подразбиране: това е единственото, което никой не може да отгатне вместо теб.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push шлюз</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Какво напуска това устройство</translation>
     </message>
@@ -1948,12 +1940,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Сървърът ти научава адрес в push услугата и праща на шлюза идентификатор на стая и съобщение за всяко известие. Без текст: push носи само идентификатори, а съобщението това устройство изтегля и разшифрова само. Този адрес е тайна — който го има, може да прати известие на този телефон.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (публичен)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Собствен</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Няма</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Избери шлюз, за да довършиш включването на push.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>URL на шлюза</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Регистрирано. Изчакване на шлюз.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Регистрирано. Уведомяване на домашния сървър.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Няма. Домашният сървър още не може да достигне това устройство.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>разпространителя</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Предоставен</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Предоставен чрез %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 няма шлюз за Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Още няма отговор от %1. Питам отново.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Намира се чрез %1 след регистрация.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 не може да доставя известия от Matrix.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Регистрирано чрез %1. Домашният сървър не може да достигне това устройство.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Поддържан от проекта UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Избери в %1 push услуга с шлюз за Matrix или използвай публичния шлюз на проекта UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Използвай публичния шлюз на UnifiedPush</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Ново съобщение</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push разпространителят изключи xmatic. Включи push отново в Профил.</translation>
     </message>
 </context>
 <context>

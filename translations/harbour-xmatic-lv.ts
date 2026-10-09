@@ -1210,10 +1210,6 @@
         <translation>Tava sesija ir beigusies. Piesakies vēlreiz.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Vispirms ievadi push vārteju.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Jauna ziņa</translation>
     </message>
@@ -1252,6 +1248,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Aptauja: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Vārtejai jābūt https URL.</translation>
     </message>
 </context>
 <context>
@@ -1936,14 +1936,6 @@
         <translation>Vārteja</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix serveris nevar runāt ar push izplatītāju tieši, tāpēc sūta vārtejai, kas pārsūta tālāk. Noklusējuma vērtības nav: tā ir vienīgā lieta, ko neviens tavā vietā nevar uzminēt.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push vārteja</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Kas atstāj šo ierīci</translation>
     </message>
@@ -1951,12 +1943,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Tavam serverim tiek paziņota adrese push pakalpojumā, un tas katram paziņojumam sūta vārtejai istabas un ziņas identifikatoru. Bez teksta: push nes tikai identifikatorus, bet ziņu šī ierīce iegūst un atšifrē pati. Šī adrese ir noslēpums — kam tā ir, var sūtīt šim tālrunim paziņojumu.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (publiska)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Pielāgota</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nav</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Izvēlies vārteju, lai pabeigtu push ieslēgšanu.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>Vārtejas URL</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Reģistrēts. Gaida vārteju.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Reģistrēts. Paziņo mājas serverim.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nav. Mājas serveris vēl nevar sasniegt šo ierīci.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>izplatītāju</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Nodrošināta</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Nodrošināta caur %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nepiedāvā Matrix vārteju.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Vēl nav atbildes no %1. Jautā vēlreiz.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Nosaka caur %1 pēc reģistrācijas.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 nevar piegādāt Matrix paziņojumus.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Reģistrēts caur %1. Mājas serveris nevar sasniegt šo ierīci.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Uztur projekts UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Lietotnē %1 izvēlies push pakalpojumu ar Matrix vārteju vai izmanto projekta UnifiedPush publisko vārteju.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Izmantot UnifiedPush publisko vārteju</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Jauna ziņa</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push izplatītājs atmeta xmatic. Ieslēdz push no jauna sadaļā Konts.</translation>
     </message>
 </context>
 <context>

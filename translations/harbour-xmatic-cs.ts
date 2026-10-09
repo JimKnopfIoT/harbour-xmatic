@@ -1210,10 +1210,6 @@
         <translation>Tvoje relace skončila. Přihlas se znovu.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Nejdřív zadej push bránu.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nová zpráva</translation>
     </message>
@@ -1252,6 +1248,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Anketa: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Brána musí být URL s https.</translation>
     </message>
 </context>
 <context>
@@ -1936,14 +1936,6 @@
         <translation>Brána</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix server nemůže mluvit s distributorem push přímo, posílá tedy na bránu, která to předá dál. Výchozí hodnota neexistuje: to je jediná věc, kterou za tebe nikdo neuhodne.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push brána</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Co opouští toto zařízení</translation>
     </message>
@@ -1951,12 +1943,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Tvůj server se dozví adresu u služby push a ke každému oznámení pošle bráně identifikátor místnosti a zprávy. Žádný text: push nese jen identifikátory a zprávu si toto zařízení stáhne a rozšifruje samo. Ta adresa je tajemství — kdo ji má, může tomuto telefonu poslat oznámení.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (veřejná)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Vlastní</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Žádná</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Vyber bránu a dokonči zapnutí push.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>URL brány</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrováno. Čekání na bránu.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrováno. Oznamuje se domovskému serveru.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Žádná. Domovský server zatím na toto zařízení nedosáhne.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>distributora</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Dodaná</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Dodaná přes %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nemá bránu pro Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Zatím žádná odpověď od %1. Ptám se znovu.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Zjistí se přes %1 po registraci.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 neumí doručovat oznámení z Matrixu.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registrováno přes %1. Domovský server na toto zařízení nedosáhne.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Provozuje projekt UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>V aplikaci %1 vyber službu push s bránou pro Matrix, nebo použij veřejnou bránu projektu UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Použít veřejnou bránu UnifiedPush</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Nová zpráva</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Distributor push odhlásil xmatic. Zapni push znovu v sekci Účet.</translation>
     </message>
 </context>
 <context>

@@ -48,6 +48,10 @@ struct SecretsDiagnosis {
 // Never interactive, unlike `obtainStoreKey`: it cannot hang on a dialog.
 SecretsDiagnosis inspectSecrets();
 
+// Reads the key only if secretsd gives it without a dialog; never creates one.
+// For the woken process, which runs in the background.
+StoreKeyResult readStoreKeyQuietly();
+
 // Fetches - or on first run creates - the 32-byte key. System interaction is
 // allowed so secretsd can run its device-lock dialog; blocking, called at start.
 StoreKeyResult obtainStoreKey(const QString &dataDirectory);

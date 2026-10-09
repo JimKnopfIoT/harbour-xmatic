@@ -1208,10 +1208,6 @@
         <translation>La tua sessione è terminata. Accedi di nuovo.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Inserisci prima un gateway push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nuovo messaggio</translation>
     </message>
@@ -1250,6 +1246,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Sondaggio: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Il gateway deve essere un URL https.</translation>
     </message>
 </context>
 <context>
@@ -1933,14 +1933,6 @@
         <translation>Gateway</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Un server Matrix non può parlare direttamente con un distributore push, quindi invia a un gateway che inoltra. Non c&apos;è un valore predefinito: è l&apos;unica cosa che nessuno può indovinare al posto tuo.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Gateway push</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Cosa lascia questo dispositivo</translation>
     </message>
@@ -1948,12 +1940,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Al tuo server viene comunicato un indirizzo presso il servizio push, e per ogni notifica invia al gateway un identificatore di stanza e di messaggio. Nessun testo: il push porta solo identificatori e questo dispositivo recupera e decifra il messaggio da sé. Quell&apos;indirizzo è un segreto: chi lo possiede può inviare una notifica a questo telefono.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (pubblico)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Personalizzato</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nessuno</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Scegli un gateway per finire di attivare il push.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>URL del gateway</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrato. In attesa di un gateway.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrato. Avviso l&apos;homeserver.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nessuno. L&apos;homeserver non può ancora raggiungere questo dispositivo.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>il distributore</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Fornito</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Fornito tramite %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 non ha un gateway Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 non ha ancora risposto. Riprovo.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Trovato tramite %1 dopo la registrazione.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 non può consegnare le notifiche Matrix.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registrato tramite %1. L&apos;homeserver non può raggiungere questo dispositivo.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Gestito dal progetto UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Scegli in %1 un servizio push con gateway Matrix, oppure usa il gateway pubblico del progetto UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Usa il gateway pubblico UnifiedPush</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Nuovo messaggio</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Il distributore push ha rimosso xmatic. Riattiva il push in Account.</translation>
     </message>
 </context>
 <context>

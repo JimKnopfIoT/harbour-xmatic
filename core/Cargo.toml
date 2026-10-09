@@ -58,23 +58,10 @@ matrix-sdk = { version = "=0.19.1", default-features = false, features = [
     "automatic-room-key-forwarding",
 ] }
 matrix-sdk-ui = "=0.19.1"
-# UnifiedPush, the connector half. The reference client rather than a
-# hand-rolled protocol; the distributor is a separate app on the device, so
-# this brings no daemon of its own into a client that deliberately has none.
-#
-# `zbus` is named directly because its connection has to be driven by
-# `zbus::block_on` on a thread of its own. The crate's D-Bus handlers call
-# `Handle::block_on`, which is legal only on zbus's async-io executor - polled
-# from a tokio worker they panic with "Cannot start a runtime from within a
-# runtime", the same message this project already met on the Gemini for a
-# different reason. And **`zbus/tokio` must never be enabled anywhere in this
-# crate's dependency graph**: Cargo unifies features, so one such dependency
-# would move the executor and break it from a distance.
-unifiedpush = "0.1"
-unifiedpush_storage = "0.1"
-zbus = "5"
-# The UnifiedPush traits are async and not yet `dyn`-compatible without it.
-async-trait = "0.1"
+# Pinned until leghorn is on crates.io. No `macros`: `main` is C++.
+leghorn = { git = "https://git.agnos.is/projectmoon/foghorn.git", rev = "58bc3b60de6264adfd395ab90fab3b5842af23d0", default-features = false, features = ["matrix"] }
+# Installs aws-lc-rs as the default provider before Leghorn would install ring.
+rustls = { version = "0.23", default-features = false, features = ["aws_lc_rs"] }
 # Only for `UtdCause`: the timeline hands the reason a message could not be
 # decrypted over as this type, and neither matrix-sdk nor matrix-sdk-ui
 # re-exports it. The crate is already in the tree as a dependency of both, and
@@ -96,6 +83,8 @@ tokio = { version = "1", features = ["rt-multi-thread", "time", "sync"] }
 # tree through the SDK; `registry` only, no formatter.
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", default-features = false, features = ["registry", "std"] }
+# Leghorn logs through `log`.
+log = { version = "0.4", features = ["std"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 futures-util = "0.3"

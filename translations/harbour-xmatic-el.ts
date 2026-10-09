@@ -1208,10 +1208,6 @@
         <translation>Η συνεδρία σου τελείωσε. Συνδέσου ξανά.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Δώσε πρώτα μια πύλη push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Νέο μήνυμα</translation>
     </message>
@@ -1250,6 +1246,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Δημοσκόπηση: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Η πύλη πρέπει να είναι URL https.</translation>
     </message>
 </context>
 <context>
@@ -1933,14 +1933,6 @@
         <translation>Πύλη</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Ένας διακομιστής Matrix δεν μπορεί να μιλήσει απευθείας σε διανομέα push, γι&apos; αυτό στέλνει σε μια πύλη που προωθεί. Δεν υπάρχει προεπιλογή: είναι το μόνο που κανείς δεν μπορεί να μαντέψει για σένα.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Πύλη push</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Τι φεύγει από αυτή τη συσκευή</translation>
     </message>
@@ -1948,12 +1940,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Ο διακομιστής σου μαθαίνει μια διεύθυνση στην υπηρεσία push και στέλνει στην πύλη ένα αναγνωριστικό δωματίου και μηνύματος για κάθε ειδοποίηση. Κανένα κείμενο: το push μεταφέρει μόνο αναγνωριστικά και αυτή η συσκευή φέρνει και αποκρυπτογραφεί το μήνυμα μόνη της. Αυτή η διεύθυνση είναι μυστικό — όποιος την έχει μπορεί να στείλει ειδοποίηση σε αυτό το τηλέφωνο.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (δημόσια)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Προσαρμοσμένη</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Καμία</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Διάλεξε πύλη για να ολοκληρωθεί η ενεργοποίηση του push.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>URL πύλης</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Εγγράφηκε. Αναμονή για πύλη.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Εγγράφηκε. Ενημέρωση του οικείου διακομιστή.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Καμία. Ο οικείος διακομιστής δεν μπορεί ακόμη να φτάσει αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>διανομέα</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Παρεχόμενη</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Παρεχόμενη μέσω %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 δεν έχει πύλη Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Καμία απάντηση ακόμη από %1. Νέα ερώτηση.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Βρίσκεται μέσω %1 μετά την εγγραφή.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 δεν μπορεί να παραδώσει ειδοποιήσεις Matrix.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Εγγράφηκε μέσω %1. Ο οικείος διακομιστής δεν μπορεί να φτάσει αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Τη διαχειρίζεται το έργο UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Διάλεξε στην εφαρμογή %1 υπηρεσία push με πύλη Matrix ή χρησιμοποίησε τη δημόσια πύλη του έργου UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Χρήση δημόσιας πύλης UnifiedPush</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Νέο μήνυμα</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Ο διανομέας push απέρριψε το xmatic. Ενεργοποίησε ξανά το push στον Λογαριασμό.</translation>
     </message>
 </context>
 <context>

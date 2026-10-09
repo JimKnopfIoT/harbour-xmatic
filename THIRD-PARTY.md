@@ -1,12 +1,13 @@
 # Third-party notices
 
 harbour-xmatic itself is Apache-2.0 (see `LICENSE`). The application
-binary links a static Rust library that compiles 569 further crates into
+binary links a static Rust library that compiles 525 further crates into
 it, and it bundles SQLite. Their terms are listed here because a binary
 that carries them has to carry their notices too.
 
 Every crate below is fetched from crates.io by exact version, recorded in
-`core/Cargo.lock` with a checksum. Its source is available at
+`core/Cargo.lock` with a checksum, except leghorn, leghorn-build and foghorn-common,
+which come from the Foghorn git repository at the commit named below. Its source is available at
 `https://crates.io/crates/<name>/<version>`; the licence text of each is
 in the crate's own source tree.
 
@@ -22,9 +23,12 @@ address above, and no file of theirs has been changed for this project.
 - eyeball 0.8.8 — MPL-2.0
 - eyeball-im 0.9.1 — MPL-2.0
 - eyeball-im-util 0.11.0 — MPL-2.0
+- foghorn-common 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 58bc3b60de6264adfd395ab90fab3b5842af23d0)
 - htmlescape 0.3.1 — Apache-2.0 / MIT / MPL-2.0
 - imbl 7.0.2 — MPL-2.0+
 - imbl-sized-chunks 0.2.0 — MPL-2.0+
+- leghorn 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 58bc3b60de6264adfd395ab90fab3b5842af23d0)
+- leghorn-build 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 58bc3b60de6264adfd395ab90fab3b5842af23d0)
 - readlock 0.1.11 — MPL-2.0
 - readlock-tokio 0.1.6 — MPL-2.0
 
@@ -44,8 +48,6 @@ linking the device's library. SQLite itself is in the public domain.
 | aes | 0.8.4 | MIT OR Apache-2.0 |
 | aes | 0.9.3 | MIT OR Apache-2.0 |
 | aes-gcm | 0.10.3 | Apache-2.0 OR MIT |
-| aes-gcm | 0.11.1 | Apache-2.0 OR MIT |
-| aes-keywrap | 0.9.0 | MIT |
 | aho-corasick | 1.1.4 | Unlicense OR MIT |
 | allocator-api2 | 0.2.21 | MIT OR Apache-2.0 |
 | android_system_properties | 0.1.5 | MIT/Apache-2.0 |
@@ -57,18 +59,11 @@ linking the device's library. SQLite itself is in the public domain.
 | as_variant | 1.3.0 | MPL-2.0 |
 | assign | 1.1.1 | MIT |
 | async-broadcast | 0.7.2 | MIT OR Apache-2.0 |
-| async-channel | 2.5.0 | Apache-2.0 OR MIT |
 | async-compression | 0.4.42 | MIT OR Apache-2.0 |
-| async-executor | 1.14.0 | Apache-2.0 OR MIT |
-| async-io | 2.6.0 | Apache-2.0 OR MIT |
-| async-lock | 3.4.2 | Apache-2.0 OR MIT |
-| async-process | 2.5.0 | Apache-2.0 OR MIT |
 | async-recursion | 1.1.1 | MIT OR Apache-2.0 |
 | async-rx | 0.2.1 | MPL-2.0 |
-| async-signal | 0.2.14 | Apache-2.0 OR MIT |
 | async-stream | 0.3.6 | MIT |
 | async-stream-impl | 0.3.6 | MIT |
-| async-task | 4.7.1 | Apache-2.0 OR MIT |
 | async-trait | 0.1.92 | MIT OR Apache-2.0 |
 | async_cell | 0.2.3 | MIT |
 | atomic-waker | 1.1.2 | Apache-2.0 OR MIT |
@@ -83,15 +78,12 @@ linking the device's library. SQLite itself is in the public domain.
 | base64 | 0.22.1 | MIT OR Apache-2.0 |
 | base64 | 0.23.1 | MIT OR Apache-2.0 |
 | base64ct | 1.8.3 | Apache-2.0 OR MIT |
-| binstring | 0.1.7 | MIT |
 | bitflags | 2.13.2 | MIT OR Apache-2.0 |
 | bitpacking | 0.9.3 | MIT |
-| blake2b_simd | 1.0.5 | MIT |
 | blake3 | 1.8.7 | CC0-1.0 OR Apache-2.0 OR Apache-2.0 WITH LLVM-exception |
 | block-buffer | 0.10.4 | MIT OR Apache-2.0 |
 | block-buffer | 0.12.1 | MIT OR Apache-2.0 |
 | block-padding | 0.4.2 | MIT OR Apache-2.0 |
-| blocking | 1.7.0 | Apache-2.0 OR MIT |
 | bon | 3.10.0 | MIT OR Apache-2.0 |
 | bon-macros | 3.10.0 | MIT OR Apache-2.0 |
 | bs58 | 0.5.1 | MIT/Apache-2.0 |
@@ -112,11 +104,9 @@ linking the device's library. SQLite itself is in the public domain.
 | cipher | 0.5.2 | MIT OR Apache-2.0 |
 | cmake | 0.1.58 | MIT OR Apache-2.0 |
 | cmov | 0.5.4 | Apache-2.0 OR MIT |
-| coarsetime | 0.1.37 | BSD-2-Clause |
 | combine | 4.6.7 | MIT |
 | compression-codecs | 0.4.38 | MIT OR Apache-2.0 |
 | compression-core | 0.4.32 | MIT OR Apache-2.0 |
-| concurrent-queue | 2.5.0 | Apache-2.0 OR MIT |
 | const-oid | 0.10.2 | Apache-2.0 OR MIT |
 | const-oid | 0.9.6 | Apache-2.0 OR MIT |
 | const_panic | 0.2.15 | Zlib |
@@ -135,7 +125,6 @@ linking the device's library. SQLite itself is in the public domain.
 | crypto-bigint | 0.5.5 | Apache-2.0 OR MIT |
 | crypto-common | 0.1.7 | MIT OR Apache-2.0 |
 | crypto-common | 0.2.2 | MIT OR Apache-2.0 |
-| ct-codecs | 1.1.7 | MIT |
 | ctr | 0.10.1 | MIT OR Apache-2.0 |
 | ctr | 0.9.2 | MIT OR Apache-2.0 |
 | ctutils | 0.4.2 | Apache-2.0 OR MIT |
@@ -152,7 +141,6 @@ linking the device's library. SQLite itself is in the public domain.
 | decancer | 3.3.3 | MIT |
 | delegate-display | 3.0.0 | MIT |
 | der | 0.7.10 | Apache-2.0 OR MIT |
-| der | 0.8.1 | Apache-2.0 OR MIT |
 | deranged | 0.5.8 | MIT OR Apache-2.0 |
 | derivative | 2.2.0 | MIT/Apache-2.0 |
 | derive_more | 1.0.0 | MIT |
@@ -165,9 +153,7 @@ linking the device's library. SQLite itself is in the public domain.
 | downcast-rs | 2.0.2 | MIT OR Apache-2.0 |
 | dunce | 1.0.5 | CC0-1.0 OR MIT-0 OR Apache-2.0 |
 | ecdsa | 0.16.9 | Apache-2.0 OR MIT |
-| ece-native | 0.4.0 | MIT OR Apache-2.0 |
 | ed25519 | 3.0.0 | Apache-2.0 OR MIT |
-| ed25519-compact | 2.4.2 | MIT |
 | ed25519-dalek | 3.0.0 | BSD-3-Clause |
 | either | 1.16.0 | MIT OR Apache-2.0 |
 | elliptic-curve | 0.13.8 | Apache-2.0 OR MIT |
@@ -193,6 +179,7 @@ linking the device's library. SQLite itself is in the public domain.
 | find-msvc-tools | 0.1.9 | MIT OR Apache-2.0 |
 | flate2 | 1.1.9 | MIT OR Apache-2.0 |
 | fnv | 1.0.7 | Apache-2.0 / MIT |
+| foghorn-common | 0.5.0 | MPL-2.0 |
 | foldhash | 0.2.0 | Zlib |
 | form_urlencoded | 1.2.2 | MIT OR Apache-2.0 |
 | fs4 | 0.13.1 | MIT OR Apache-2.0 |
@@ -212,7 +199,6 @@ linking the device's library. SQLite itself is in the public domain.
 | getrandom | 0.2.17 | MIT OR Apache-2.0 |
 | getrandom | 0.4.3 | MIT OR Apache-2.0 |
 | ghash | 0.5.1 | Apache-2.0 OR MIT |
-| ghash | 0.6.0 | Apache-2.0 OR MIT |
 | gloo-timers | 0.3.0 | MIT OR Apache-2.0 |
 | gloo-timers | 0.4.0 | MIT OR Apache-2.0 |
 | gloo-utils | 0.3.0 | MIT OR Apache-2.0 |
@@ -228,9 +214,6 @@ linking the device's library. SQLite itself is in the public domain.
 | hkdf | 0.13.0 | MIT OR Apache-2.0 |
 | hmac | 0.12.1 | MIT OR Apache-2.0 |
 | hmac | 0.13.0 | MIT OR Apache-2.0 |
-| hmac-sha1-compact | 1.1.7 | ISC |
-| hmac-sha256 | 1.1.14 | ISC |
-| hmac-sha512 | 1.1.12 | ISC |
 | hpke | 0.14.1 | MIT/Apache-2.0 |
 | html5ever | 0.39.0 | MIT OR Apache-2.0 |
 | htmlescape | 0.3.1 | Apache-2.0 / MIT / MPL-2.0 |
@@ -274,15 +257,13 @@ linking the device's library. SQLite itself is in the public domain.
 | js-sys | 0.3.106 | MIT OR Apache-2.0 |
 | js_int | 0.2.2 | MIT |
 | js_option | 0.2.0 | MIT |
-| jwt-simple | 0.12.17 | ISC |
-| k256 | 0.13.4 | Apache-2.0 OR MIT |
-| keccak | 0.2.2 | Apache-2.0 OR MIT |
 | konst | 0.4.3 | Zlib |
 | language-tags | 0.3.2 | MIT/Apache-2.0 |
 | lazy_static | 1.5.0 | MIT OR Apache-2.0 |
+| leghorn | 0.5.0 | MPL-2.0 |
+| leghorn-build | 0.5.0 | MPL-2.0 |
 | levenshtein_automata | 0.2.1 | MIT |
 | libc | 0.2.189 | MIT OR Apache-2.0 |
-| libm | 0.2.16 | MIT |
 | libsqlite3-sys | 0.38.2 | MIT |
 | linux-raw-sys | 0.12.1 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
 | litemap | 0.8.2 | Unicode-3.0 |
@@ -322,16 +303,11 @@ linking the device's library. SQLite itself is in the public domain.
 | minimal-lexical | 0.2.1 | MIT/Apache-2.0 |
 | miniz_oxide | 0.8.9 | MIT OR Zlib OR Apache-2.0 |
 | mio | 1.2.2 | MIT |
-| ml-dsa | 0.1.1 | Apache-2.0 OR MIT |
-| module-lattice | 0.2.3 | Apache-2.0 OR MIT |
 | murmurhash32 | 0.3.1 | MIT |
 | new_debug_unreachable | 1.0.6 | MIT |
 | nom | 7.1.3 | MIT |
 | nu-ansi-term | 0.50.3 | MIT |
-| num-bigint-dig | 0.8.6 | MIT/Apache-2.0 |
 | num-conv | 0.2.2 | MIT OR Apache-2.0 |
-| num-integer | 0.1.47 | MIT OR Apache-2.0 |
-| num-iter | 0.1.46 | MIT OR Apache-2.0 |
 | num-traits | 0.2.19 | MIT OR Apache-2.0 |
 | num_cpus | 1.17.0 | MIT OR Apache-2.0 |
 | oauth2 | 5.0.0 | MIT OR Apache-2.0 |
@@ -344,7 +320,6 @@ linking the device's library. SQLite itself is in the public domain.
 | ordered-stream | 0.2.0 | MIT OR Apache-2.0 |
 | ownedbytes | 0.9.0 | MIT |
 | p256 | 0.13.2 | Apache-2.0 OR MIT |
-| p384 | 0.13.1 | Apache-2.0 OR MIT |
 | parking | 2.2.1 | Apache-2.0 OR MIT |
 | parking_lot | 0.12.5 | MIT OR Apache-2.0 |
 | parking_lot_core | 0.9.12 | MIT OR Apache-2.0 |
@@ -356,15 +331,10 @@ linking the device's library. SQLite itself is in the public domain.
 | phf_generator | 0.13.1 | MIT |
 | phf_shared | 0.13.1 | MIT |
 | pin-project-lite | 0.2.17 | Apache-2.0 OR MIT |
-| piper | 0.2.5 | MIT OR Apache-2.0 |
-| pkcs1 | 0.7.5 | Apache-2.0 OR MIT |
 | pkcs8 | 0.10.2 | Apache-2.0 OR MIT |
-| pkcs8 | 0.11.0 | Apache-2.0 OR MIT |
 | pkg-config | 0.3.33 | MIT OR Apache-2.0 |
-| polling | 3.11.0 | Apache-2.0 OR MIT |
 | poly1305 | 0.9.1 | Apache-2.0 OR MIT |
 | polyval | 0.6.2 | Apache-2.0 OR MIT |
-| polyval | 0.7.3 | Apache-2.0 OR MIT |
 | potential_utf | 0.1.5 | Unicode-3.0 |
 | powerfmt | 0.2.0 | MIT OR Apache-2.0 |
 | ppv-lite86 | 0.2.21 | MIT OR Apache-2.0 |
@@ -401,7 +371,6 @@ linking the device's library. SQLite itself is in the public domain.
 | ring | 0.17.14 | Apache-2.0 AND ISC |
 | rmp | 0.8.15 | MIT |
 | rmp-serde | 1.3.1 | MIT |
-| rsa | 0.9.10 | MIT OR Apache-2.0 |
 | ruma | 0.17.0 | MIT |
 | ruma-client-api | 0.25.0 | MIT |
 | ruma-common | 0.20.0 | MIT |
@@ -446,7 +415,6 @@ linking the device's library. SQLite itself is in the public domain.
 | serdect | 0.4.3 | Apache-2.0 OR MIT |
 | sha2 | 0.10.9 | MIT OR Apache-2.0 |
 | sha2 | 0.11.0 | MIT OR Apache-2.0 |
-| shake | 0.1.0 | MIT OR Apache-2.0 |
 | sharded-slab | 0.1.7 | MIT |
 | shlex | 2.0.1 | MIT OR Apache-2.0 |
 | signal-hook-registry | 1.4.8 | MIT OR Apache-2.0 |
@@ -460,16 +428,12 @@ linking the device's library. SQLite itself is in the public domain.
 | slab | 0.4.12 | MIT |
 | smallvec | 1.15.2 | MIT OR Apache-2.0 |
 | socket2 | 0.6.5 | MIT OR Apache-2.0 |
-| spin | 0.9.9 | MIT |
 | spki | 0.7.3 | Apache-2.0 OR MIT |
-| spki | 0.8.0 | Apache-2.0 OR MIT |
-| sponge-cursor | 0.1.0 | MIT OR Apache-2.0 |
 | stable_deref_trait | 1.2.1 | MIT OR Apache-2.0 |
 | string_cache | 0.9.0 | MIT OR Apache-2.0 |
 | string_cache_codegen | 0.6.1 | MIT OR Apache-2.0 |
 | strsim | 0.11.1 | MIT |
 | subtle | 2.6.1 | BSD-3-Clause |
-| superboring | 0.1.14 | ISC |
 | syn | 1.0.109 | MIT OR Apache-2.0 |
 | syn | 2.0.119 | MIT OR Apache-2.0 |
 | syn | 3.0.3 | MIT OR Apache-2.0 |
@@ -527,8 +491,6 @@ linking the device's library. SQLite itself is in the public domain.
 | unicode-normalization | 0.1.25 | MIT OR Apache-2.0 |
 | unicode-segmentation | 1.13.3 | MIT OR Apache-2.0 |
 | unicode-xid | 0.2.6 | MIT OR Apache-2.0 |
-| unifiedpush | 0.1.0 | Apache-2.0 |
-| unifiedpush_storage | 0.1.0 | Apache-2.0 |
 | universal-hash | 0.5.1 | MIT OR Apache-2.0 |
 | universal-hash | 0.6.1 | MIT OR Apache-2.0 |
 | untrusted | 0.9.0 | ISC |
@@ -543,7 +505,6 @@ linking the device's library. SQLite itself is in the public domain.
 | walkdir | 2.5.0 | Unlicense/MIT |
 | want | 0.3.1 | MIT |
 | wasi | 0.11.1+wasi-snapshot-preview1 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
-| wasix | 0.13.2 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
 | wasm-bindgen | 0.2.129 | MIT OR Apache-2.0 |
 | wasm-bindgen-futures | 0.4.79 | MIT OR Apache-2.0 |
 | wasm-bindgen-macro | 0.2.129 | MIT OR Apache-2.0 |
@@ -551,7 +512,6 @@ linking the device's library. SQLite itself is in the public domain.
 | wasm-bindgen-shared | 0.2.129 | MIT OR Apache-2.0 |
 | wasm-streams | 0.5.0 | MIT OR Apache-2.0 |
 | wasm_evt_listener | 0.1.0 | MIT |
-| web-push-native | 0.4.0 | MIT OR Apache-2.0 |
 | web-sys | 0.3.106 | MIT OR Apache-2.0 |
 | web-time | 1.1.0 | MIT OR Apache-2.0 |
 | web_atoms | 0.2.5 | MIT OR Apache-2.0 |

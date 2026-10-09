@@ -286,6 +286,25 @@ async fn begin_session(
         .await
         .extend([recovery_task, session_task]);
     state.with_slot(gate, |slot| slot.advance(generation, Phase::Session));
+    // After the gate is released; it checks the generation itself.
+    let push = state.clone();
+    tokio::spawn(async move { super::pushcmd::push_session_started(&push, generation).await });
+}
+
+/// Saves tokens and drops the client without signing out. For the woken process.
+pub(super) async fn close_session(state: &Arc<State>) {
+    let gate = state.session_gate.lock().await;
+    let client = state.client.lock().await.clone();
+    if let (Some(client), Phase::Session) = (client, state.slot().phase) {
+        // Save refreshed tokens.
+        if let session::LoadOutcome::Session(stored) =
+            session::load(&state.paths.session_file, state.store_key().as_ref())
+        {
+            persist(state, &gate, &client, stored.homeserver().to_owned()).await;
+        }
+    }
+    stop_observers(state).await;
+    drop(state.unassign(&gate).await);
 }
 
 /// Refuses a homeserver not reached over https. Asked of the client, since
@@ -830,6 +849,9 @@ pub(super) async fn logout(state: &Arc<State>, id: u64) {
     // moment before the store goes. Bounded, see `drain_commands`.
     state.drain_commands(std::time::Duration::from_secs(2)).await;
     let client = state.unassign(&gate).await;
+    // A pusher update already under way lands before the pushers are cleared.
+    let push_serial =
+        tokio::time::timeout(std::time::Duration::from_secs(5), state.push_sync.lock()).await;
     if let Some(client) = client {
         // Before the session, or the homeserver keeps posting to an endpoint
         // nothing can name. Bounded and best effort, like the sign-out.
@@ -845,11 +867,9 @@ pub(super) async fn logout(state: &Arc<State>, id: u64) {
         // the store directory open.
         drop(client);
     }
-    // And the registration itself, so the distributor stops pushing to a device
-    // that no longer has an account. The file goes with `reset_store` below.
-    if let Some(handle) = state.push.lock().await.as_ref() {
-        handle.disable();
-    }
+    drop(push_serial);
+    // Unregister and delete Leghorn's state.
+    super::pushcmd::push_forget(state).await;
     session::forget(&state.paths.session_file);
     // The lists that name people belong to the account that is leaving.
     session::forget(&state.paths.private_file);

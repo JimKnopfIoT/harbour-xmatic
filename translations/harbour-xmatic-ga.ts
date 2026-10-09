@@ -1210,10 +1210,6 @@
         <translation>Tá do sheisiún thart. Logáil isteach arís.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Cuir geata brú isteach ar dtús.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Teachtaireacht nua</translation>
     </message>
@@ -1252,6 +1248,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Pobalbhreith: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Caithfidh an geata a bheith ina URL https.</translation>
     </message>
 </context>
 <context>
@@ -1936,14 +1936,6 @@
         <translation>Geata</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Ní féidir le freastalaí Matrix labhairt go díreach le dáileoir brú, mar sin seolann sé chuig geata a chuireann ar aghaidh é. Níl aon réamhshocrú ann: sin an t-aon rud nach féidir le duine ar bith a thomhas duit.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Geata brú</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Cad a fhágann an gléas seo</translation>
     </message>
@@ -1951,12 +1943,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Insítear seoladh ag an tseirbhís bhrú do d&apos;fhreastalaí, agus seolann sé aitheantóir seomra agus teachtaireachta chuig an ngeata do gach fógra. Gan téacs: ní iompraíonn an brú ach aitheantóirí agus faigheann agus díchriptíonn an gléas seo an teachtaireacht é féin. Is rún é an seoladh sin — is féidir le duine ar bith atá aige fógra a sheoladh chuig an bhfón seo.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (poiblí)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Saincheaptha</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Dada</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Roghnaigh geata chun brú a chur ar siúl go hiomlán.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>URL an gheata</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Cláraithe. Ag fanacht le geata.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Cláraithe. Ag insint don fhreastalaí baile.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Dada. Ní féidir leis an bhfreastalaí baile teacht ar an ngléas seo fós.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>an dáileoir</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Soláthraithe</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Soláthraithe ag %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>Níl geata Matrix ag %1.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Gan freagra ó %1 fós. Ag fiafraí arís.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Aimsithe ag %1 tar éis clárú.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>Ní féidir le %1 fógraí Matrix a sheachadadh.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Cláraithe ag %1. Ní féidir leis an bhfreastalaí baile teacht ar an ngléas seo.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Á reáchtáil ag tionscadal UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Roghnaigh seirbhís bhrú a bhfuil geata Matrix aici in %1, nó úsáid an geata poiblí atá á reáchtáil ag tionscadal UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Úsáid geata poiblí UnifiedPush</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Teachtaireacht nua</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Scaoil an dáileoir brú xmatic. Cuir brú ar siúl arís faoi Cuntas.</translation>
     </message>
 </context>
 <context>

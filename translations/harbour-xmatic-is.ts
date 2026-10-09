@@ -1208,10 +1208,6 @@
         <translation>Setunni þinni er lokið. Skráðu þig inn aftur.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Sláðu fyrst inn ýtigátt.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Ný skilaboð</translation>
     </message>
@@ -1250,6 +1246,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Könnun: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Gáttin verður að vera https-slóð.</translation>
     </message>
 </context>
 <context>
@@ -1933,14 +1933,6 @@
         <translation>Gátt</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix-heimaþjónn getur ekki talað beint við ýtidreifi, svo hann sendir á gátt sem áframsendir. Það er ekkert sjálfgefið gildi: það er það eina sem enginn getur giskað á fyrir þig.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Ýtigátt</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Hvað fer frá þessu tæki</translation>
     </message>
@@ -1948,12 +1940,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Heimaþjónninum þínum er sagt vistfang hjá ýtiþjónustunni og hann sendir gáttinni auðkenni herbergis og skilaboða fyrir hverja tilkynningu. Engan texta: ýtingin ber aðeins auðkenni og þetta tæki sækir og afkóðar skilaboðin sjálft. Það vistfang er leyndarmál — sá sem hefur það getur sent þessum síma tilkynningu.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (opinber)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Sérsniðin</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Engin</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Veldu gátt til að ljúka við að kveikja á ýtingum.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>Slóð gáttar</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Skráð. Bíð eftir gátt.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Skráð. Læt heimaþjóninn vita.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Engin. Heimaþjónninn nær ekki enn í þetta tæki.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>dreifinn</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Meðfylgjandi</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Meðfylgjandi í gegnum %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 hefur enga Matrix-gátt.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 hefur ekki svarað enn. Spyr aftur.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Fundin í gegnum %1 eftir skráningu.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 getur ekki skilað Matrix-tilkynningum.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Skráð í gegnum %1. Heimaþjónninn nær ekki í þetta tæki.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Rekin af UnifiedPush-verkefninu: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Veldu ýtiþjónustu með Matrix-gátt í %1, eða notaðu opinberu gáttina frá UnifiedPush-verkefninu.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Nota opinbera UnifiedPush-gátt</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Ný skilaboð</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Ýtidreifirinn sleppti xmatic. Kveiktu aftur á ýtingum undir Reikningur.</translation>
     </message>
 </context>
 <context>

@@ -1210,10 +1210,6 @@
         <translation>Tavo seansas baigėsi. Prisijunk iš naujo.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Pirma nurodyk push sietuvą.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nauja žinutė</translation>
     </message>
@@ -1252,6 +1248,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Apklausa: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Sietuvas turi būti https URL.</translation>
     </message>
 </context>
 <context>
@@ -1936,14 +1936,6 @@
         <translation>Tinklų sietuvas</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix serveris negali kalbėti su push platintoju tiesiogiai, tad siunčia sietuvui, kuris persiunčia toliau. Numatytosios reikšmės nėra: tai vienintelis dalykas, kurio niekas už tave neatspės.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push sietuvas</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Kas išeina iš šio įrenginio</translation>
     </message>
@@ -1951,12 +1943,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Tavo serveriui pranešamas adresas push tarnyboje, ir jis kiekvienam pranešimui siunčia sietuvui kambario ir žinutės identifikatorių. Jokio teksto: push neša tik identifikatorius, o žinutę šis įrenginys parsisiunčia ir iššifruoja pats. Tas adresas yra paslaptis — kas jį turi, gali šiam telefonui siųsti pranešimą.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (viešas)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Savas</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nėra</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Pasirink sietuvą, kad baigtum įjungti push.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>Sietuvo URL</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Užregistruota. Laukiama sietuvo.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Užregistruota. Pranešama namų serveriui.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nėra. Namų serveris dar negali pasiekti šio įrenginio.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>platintoją</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Pateiktas</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Pateiktas per %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 neturi Matrix sietuvo.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 dar neatsakė. Klausiama dar kartą.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Nustatomas per %1 po registracijos.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 negali pristatyti Matrix pranešimų.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Užregistruota per %1. Namų serveris negali pasiekti šio įrenginio.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Prižiūri projektas UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Programėlėje %1 pasirink push tarnybą su Matrix sietuvu arba naudok viešą projekto UnifiedPush sietuvą.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Naudoti viešą UnifiedPush sietuvą</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Nauja žinutė</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push platintojas atsisakė xmatic. Vėl įjunk push skiltyje Paskyra.</translation>
     </message>
 </context>
 <context>

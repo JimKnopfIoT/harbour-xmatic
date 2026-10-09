@@ -1212,10 +1212,6 @@
         <translation>Is-sessjoni tiegħek intemmet. Idħol mill-ġdid.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>L-ewwel daħħal gateway push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Messaġġ ġdid</translation>
     </message>
@@ -1254,6 +1250,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Stħarriġ: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Il-gateway irid ikun URL https.</translation>
     </message>
 </context>
 <context>
@@ -1939,14 +1939,6 @@
         <translation>Gateway</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Server Matrix ma jistax ikellem distributur push direttament, allura jibgħat lil gateway li jgħaddi. M&apos;hemmx valur awtomatiku: hija l-unika ħaġa li ħadd ma jista&apos; jaqta&apos; għalik.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Gateway push</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>X&apos;jitlaq minn dan l-apparat</translation>
     </message>
@@ -1954,12 +1946,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Is-server tiegħek jingħata indirizz mas-servizz push, u għal kull notifika jibgħat lill-gateway identifikatur tal-kamra u tal-messaġġ. Ebda test: il-push iġorr identifikaturi biss u dan l-apparat iġib u jiddeċifra l-messaġġ waħdu. Dak l-indirizz huwa sigriet — min għandu jista&apos; jibgħat notifika lil dan it-telefon.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (pubbliku)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Personalizzat</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Xejn</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Agħżel gateway biex tlesti tixgħel il-push.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>URL tal-gateway</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Irreġistrat. Qed jistenna gateway.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Irreġistrat. Qed jgħid lis-server tad-dar.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Xejn. Is-server tad-dar għadu ma jistax jilħaq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>id-distributur</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Ipprovdut</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Ipprovdut (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 m&apos;għandux gateway Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 għadu ma weġibx. Qed nerġa&apos; nistaqsi.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Wara r-reġistrazzjoni, %1 isibu.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 ma jistax iwassal notifiki Matrix.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Irreġistrat (%1). Is-server tad-dar ma jistax jilħaq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Immexxi mill-proġett UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Agħżel fl-app %1 servizz push b&apos;gateway Matrix, jew uża l-gateway pubbliku tal-proġett UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Uża l-gateway pubbliku ta&apos; UnifiedPush</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Messaġġ ġdid</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Id-distributur push waqqa&apos; lil xmatic. Erġa&apos; ixgħel il-push taħt Kont.</translation>
     </message>
 </context>
 <context>

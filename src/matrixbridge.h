@@ -88,7 +88,7 @@ class MatrixBridge : public QObject
     /// `message`. `lastError` is one string and the next failure overwrites it.
     Q_PROPERTY(QVariantList errorLog READ errorLog NOTIFY errorLogChanged)
     /// UnifiedPush on this device: `state`, `distributors`, `distributor`,
-    /// `acknowledged`, `error`. Empty until asked - the first question claims a name.
+    /// `enabled`, `registered`, `gateway`, `serverGateway`, `error`.
     Q_PROPERTY(QVariantMap pushStatus READ pushStatus NOTIFY pushStatusChanged)
     /// The endpoint this device is reachable at. A secret: anyone holding it can
     /// push to this phone, so it is never shown and never logged.
@@ -212,17 +212,34 @@ public:
     QString lastError() const { return m_lastError; }
     QVariantList errorLog() const { return m_errorLog; }
     QVariantMap pushStatus() const { return m_pushStatus; }
-    /// Whether a push has arrived in this process at all. The woken process
-    /// gives up on its wait by this, not by a timer alone.
-    bool pushMessageSeen() const { return m_pushMessageSeen; }
-    bool pushEndpointReady() const { return !m_pushEndpoint.isEmpty(); }
+    bool pushEndpointReady() const
+    {
+        return m_pushStatus.value(QStringLiteral("enabled")).toBool();
+    }
 
     /// Asks the device what distributors it has. Changes nothing.
     Q_INVOKABLE void refreshPushStatus();
 
-    /// Registers with a distributor and, once it answers, hands the endpoint
-    /// to the homeserver with `gateway` as the push gateway.
-    Q_INVOKABLE void enablePush(const QString &gateway);
+    Q_INVOKABLE void enablePush();
+
+    /// The gateway pick: "server", "public", or "other" with an https `gateway`.
+    /// `enable` turns push on with it once the pick is complete.
+    Q_INVOKABLE bool setPushGateway(const QString &mode, const QString &gateway = QString(),
+                                    bool enable = false);
+
+    /// One banner line from a preview's kind and text, worded as `harbour-xmatic.qml`
+    /// does it. Here as well because the woken process has no QML.
+    static QString previewLine(const QString &kind, const QString &text);
+
+    Q_INVOKABLE void closePushBanners();
+
+    /// The room a push banner's action key stands for, or "".
+    Q_INVOKABLE QString pushBannerRoom(const QString &key);
+
+    void setAnnouncePushes(bool announce) { m_announcePushes = announce; }
+
+    /// Raises a banner for the push unless the sync already did.
+    void fetchPush(const QString &roomId, const QString &eventId);
 
     /// Gives the registration back and removes the pusher.
     Q_INVOKABLE void disablePush();
@@ -754,12 +771,6 @@ signals:
     void errorLogChanged();
     void pushStatusChanged();
 
-    /// A push was turned into something a banner can show: `roomName`, `body`,
-    /// `noisy`. Used by the woken process, which has no QML to raise it from.
-    void pushNotificationReady(const QVariantMap &notification);
-    /// And why it could not be. `filtered out` and `redacted` are answers,
-    /// not failures — the push rules said this one is not to be shown.
-    void pushNotificationFailed(const QString &reason);
     void openRoomChanged();
     void timelineFocusChanged();
     void pinnedChanged();
@@ -945,9 +956,6 @@ private:
     /// `setLastError`: what to show now against what happened at all.
     void noteError(const QString &command, const QString &message);
 
-    /// One banner line from a preview's kind and text, worded as `harbour-xmatic.qml`
-    /// does it. Here as well because the woken process has no QML.
-    QString previewLine(const QString &kind, const QString &text) const;
     void setLoginRunning(bool running);
     void setTimelineAtStart(bool atStart);
     void setTimelineReady(bool ready);
@@ -1007,17 +1015,18 @@ private:
     QString m_lastError;
     QVariantList m_errorLog;
     QVariantMap m_pushStatus;
-    /// Held only to hand to the homeserver and to delete the pusher by. Never
-    /// shown, never logged.
-    QString m_pushEndpoint;
-    QString m_pushP256dh;
-    QString m_pushAuth;
-    /// The gateway the user configured, kept for the moment the endpoint
-    /// arrives — the two halves are minutes apart when a distributor is slow.
-    QString m_pushGateway;
-    bool m_pushMessageSeen = false;
-    /// The `push.notify` in flight, so its answer can be told from any other.
-    quint64 m_pushNotifyRequest = 0;
+    bool m_announcePushes = false;
+    bool m_pushStatusAsked = false;
+    /// Last banner per room from each source, on `m_uptime`.
+    QHash<QString, qint64> m_pushBannerAt;
+    QHash<QString, qint64> m_syncBannerAt;
+    /// Muted or low-priority rooms.
+    QSet<QString> m_quietRooms;
+    /// Push banner action keys to room ids, kept after the banners are closed.
+    QHash<QString, QString> m_pushBannerRooms;
+    void announcePush(const QVariantMap &notification);
+    void sendPushGateway(bool enable = false);
+    QSet<quint64> m_pushNotifyRequests;
     /// Enough for a session's worth of trouble, small enough to stay in memory
     /// without a thought.
     static const int ErrorLogSize = 100;

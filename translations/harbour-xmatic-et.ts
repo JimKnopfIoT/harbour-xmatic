@@ -1208,10 +1208,6 @@
         <translation>Sinu sessioon on lõppenud. Logi uuesti sisse.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Sisesta esmalt push-lüüs.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Uus sõnum</translation>
     </message>
@@ -1250,6 +1246,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Küsitlus: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Lüüs peab olema https-URL.</translation>
     </message>
 </context>
 <context>
@@ -1933,14 +1933,6 @@
         <translation>Lüüs</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrixi koduserver ei saa push-jaoturiga otse rääkida, seega saadab lüüsile, mis edastab. Vaikeväärtust pole: see on ainus asi, mida keegi sinu eest ära arvata ei saa.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-lüüs</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Mis sellest seadmest lahkub</translation>
     </message>
@@ -1948,12 +1940,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Sinu serverile öeldakse aadress push-teenuses ja ta saadab lüüsile iga teavituse kohta toa ja sõnumi tunnuse. Sõnumi teksti mitte: push kannab ainult tunnuseid ja sõnumi hangib ning dekrüpteerib see seade ise. See aadress on saladus — kellel see on, võib sellele telefonile teavituse saata.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (avalik)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Kohandatud</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Puudub</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Vali lüüs, et push lõpuni sisse lülitada.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>Lüüsi URL</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registreeritud. Ootan lüüsi.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registreeritud. Annan koduserverile teada.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Puudub. Koduserver ei saa seda seadet veel kätte.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>jaotur</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Kaasasolev</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Kaasasolev (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 ei paku Matrixi lüüsi.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 pole veel vastanud. Küsin uuesti.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Pärast registreerimist annab %1 selle teada.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 ei saa Matrixi teavitusi edastada.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registreeritud (%1). Koduserver ei saa seda seadet kätte.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Haldab projekt UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Vali rakenduses %1 Matrixi lüüsiga push-teenus või kasuta projekti UnifiedPush avalikku lüüsi.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Kasuta avalikku UnifiedPush-lüüsi</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Uus sõnum</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push-jaotur loobus xmaticust. Lülita push uuesti sisse jaotises Konto.</translation>
     </message>
 </context>
 <context>

@@ -1208,10 +1208,6 @@
         <translation>Je sessie is beëindigd. Log opnieuw in.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Vul eerst een push-gateway in.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nieuw bericht</translation>
     </message>
@@ -1250,6 +1246,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Peiling: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>De gateway moet een https-URL zijn.</translation>
     </message>
 </context>
 <context>
@@ -1933,14 +1933,6 @@
         <translation>Gateway</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Een Matrix-thuisserver kan niet rechtstreeks met een pushdistributeur praten, dus stuurt hij naar een gateway die doorstuurt. Er is geen standaardwaarde: dat is het enige dat niemand voor je kan raden.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-gateway</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Wat dit apparaat verlaat</translation>
     </message>
@@ -1948,12 +1940,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Je thuisserver krijgt een adres bij de pushdienst te horen en stuurt de gateway voor elke melding een kamer- en berichtidentificatie. Geen berichttekst: de push draagt alleen identificaties en dit apparaat haalt en ontsleutelt het bericht zelf. Dat adres is een geheim — wie het heeft, kan deze telefoon een melding sturen.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (openbaar)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Aangepast</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Geen</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Kies een gateway om push helemaal aan te zetten.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>Gateway-URL</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Geregistreerd. Wachten op een gateway.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Geregistreerd. Homeserver wordt ingelicht.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Geen. De homeserver kan dit apparaat nog niet bereiken.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>de distributeur</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Meegeleverd</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Meegeleverd via %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 heeft geen Matrix-gateway.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Nog geen antwoord van %1. Opnieuw vragen.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Gevonden via %1 na registratie.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 kan geen Matrix-meldingen afleveren.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Geregistreerd via %1. De homeserver kan dit apparaat niet bereiken.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Beheerd door het UnifiedPush-project: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Kies in %1 een pushdienst met Matrix-gateway, of gebruik de openbare gateway van het UnifiedPush-project.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Openbare UnifiedPush-gateway gebruiken</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Nieuw bericht</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>De pushdistributeur heeft xmatic laten vallen. Zet push weer aan onder Account.</translation>
     </message>
 </context>
 <context>
