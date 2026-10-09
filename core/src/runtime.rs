@@ -818,7 +818,7 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::EncryptionStatus { .. } => encryption_status(&state, id).await,
         Command::StorageStatus { .. } => storage_status(&state, id),
         Command::StorageRepair { .. } => repair_storage(&state, id).await,
-        Command::PushStatus { .. } => push_status(&state, id).await,
+        Command::PushStatus { quiet, .. } => push_status(&state, id, quiet).await,
         Command::PushEnable { .. } => push_enable(&state, id).await,
         Command::PushDisable { .. } => push_disable(&state, id).await,
         Command::PushGateway {

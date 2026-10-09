@@ -2658,7 +2658,10 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         // Only at start: later it could restart a connector being switched off.
         if (!m_pushStatusAsked) {
             m_pushStatusAsked = true;
-            refreshPushStatus();
+            // Quiet: no bus while push is off.
+            QJsonObject arguments;
+            arguments.insert(QStringLiteral("quiet"), true);
+            send(QStringLiteral("push.status"), arguments);
         }
         return;
     }
