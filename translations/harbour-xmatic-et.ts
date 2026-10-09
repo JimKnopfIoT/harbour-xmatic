@@ -1949,20 +1949,52 @@
         <translation>Sellel seadmel on aadress; sinu koduserver vajab selleni jõudmiseks lüüsi.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Sinu push-serveril pole Matrixi lüüsi. Sisesta see allpool; seni ei jõua sinu koduserver selle seadmeni.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Push-serveri enda lüüs</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Matrixi koduserver ei saa push-jaoturiga otse rääkida, seega saadab ta lüüsile, mis edastab. Jäta see tühjaks, et kasutada sinu push-serveri enda lüüsi, kui sellel see on. Lüüs näeb, millise toa kohta iga teavitus on.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>UnifiedPushi avalik lüüs</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push-lüüs</translation>
+        <source>Other</source>
+        <translation>Muu</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Kasuta matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Valimata</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, server, kellel on selle seadme aadress juba olemas.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Sinu push-serveril pole Matrixi lüüsi. Vali mõni teine.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Leitakse, kui push on sees. ntfy-serveritel on see olemas; Mozilla teenusel mitte.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Seda haldab UnifiedPushi projekt. Lüüs näeb, millise toa kohta iga teavitus on.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Lüüs näeb, millise toa kohta iga teavitus on.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Sinu koduserver saadab Matrixi lüüsile, mis edastab selle seadmeni. Vali üks, et push sisse lülitada.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Lüüsi aadress</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Veel pole; kuni seda pole valitud, ei jõua sinu koduserver selle seadmeni.</translation>
     </message>
 </context>
 <context>

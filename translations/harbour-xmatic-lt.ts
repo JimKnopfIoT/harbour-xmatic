@@ -1952,20 +1952,52 @@
         <translation>Šis įrenginys turi adresą; tavo namų serveriui reikia sietuvo, kad jį pasiektų.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Tavo push serveris neturi Matrix sietuvo. Įvesk jį žemiau; iki tol tavo namų serveris negali pasiekti šio įrenginio.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Push serverio sietuvas</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Matrix namų serveris negali tiesiogiai kalbėtis su push platintoju, todėl siunčia į sietuvą, kuris persiunčia toliau. Palik tuščią, kad būtų naudojamas paties tavo push serverio sietuvas, jei jis jį turi. Sietuvas mato, kuriam kambariui skirtas kiekvienas pranešimas.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Viešasis UnifiedPush sietuvas</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push sietuvas</translation>
+        <source>Other</source>
+        <translation>Kitas</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Naudoti matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Nepasirinktas</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1 – serveris, kuris jau turi šio įrenginio adresą.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Tavo push serveris neturi Matrix sietuvo. Pasirink kitą.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Randamas, kai push įjungtas. ntfy serveriai jį turi; Mozilla paslauga – ne.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Jį palaiko UnifiedPush projektas. Jis mato, kuriam kambariui skirtas kiekvienas pranešimas.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Sietuvas mato, kuriam kambariui skirtas kiekvienas pranešimas.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Tavo namų serveris siunčia į Matrix sietuvą, kuris persiunčia į šį įrenginį. Pasirink vieną, kad įjungtum push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Sietuvo adresas</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Dar nė vieno; kol nepasirinktas, tavo namų serveris negali pasiekti šio įrenginio.</translation>
     </message>
 </context>
 <context>

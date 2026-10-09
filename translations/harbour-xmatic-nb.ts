@@ -1949,20 +1949,52 @@
         <translation>Denne enheten har en adresse; hjemmeserveren din trenger en gateway for å nå den.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Push-serveren din har ingen Matrix-gateway. Skriv inn en nedenfor; inntil da kan ikke hjemmeserveren din nå denne enheten.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Push-serverens egen</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>En Matrix-hjemmeserver kan ikke snakke direkte med en push-distributør, så den sender til en gateway som videresender. La dette stå tomt for å bruke push-serverens egen gateway, hvis den har en. Gatewayen ser hvilket rom hvert varsel gjelder.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Offentlig UnifiedPush-gateway</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push-gateway</translation>
+        <source>Other</source>
+        <translation>Annen</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Bruk matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Ikke valgt</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, serveren som allerede har adressen til denne enheten.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Push-serveren din har ingen Matrix-gateway. Velg en annen.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Blir funnet når push er slått på. ntfy-servere har en; Mozilla-tjenesten har ikke.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Drives av UnifiedPush-prosjektet. Den ser hvilket rom hvert varsel gjelder.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Gatewayen ser hvilket rom hvert varsel gjelder.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Hjemmeserveren din sender til en Matrix-gateway, som videresender til denne enheten. Velg en for å slå på push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Gateway-adresse</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Ingen ennå; inntil en er valgt, kan ikke hjemmeserveren din nå denne enheten.</translation>
     </message>
 </context>
 <context>

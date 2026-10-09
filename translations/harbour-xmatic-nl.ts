@@ -1949,20 +1949,52 @@
         <translation>Dit apparaat heeft een adres; je thuisserver heeft een gateway nodig om het te bereiken.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Je pushserver heeft geen Matrix-gateway. Vul er hieronder een in; tot dan kan je thuisserver dit apparaat niet bereiken.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Die van de pushserver</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Een Matrix-thuisserver kan niet rechtstreeks met een pushdistributeur praten, dus stuurt hij naar een gateway die doorstuurt. Laat dit leeg om de eigen gateway van je pushserver te gebruiken, als die er een heeft. De gateway ziet voor welke kamer elke melding is.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Openbare UnifiedPush-gateway</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Pushgateway</translation>
+        <source>Other</source>
+        <translation>Andere</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>matrix.gateway.unifiedpush.org gebruiken</translation>
+        <source>Not chosen</source>
+        <translation>Niet gekozen</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, de server die het adres van dit apparaat al heeft.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Je pushserver heeft geen Matrix-gateway. Kies een andere.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Wordt gevonden zodra push aan staat. ntfy-servers hebben er een; de dienst van Mozilla niet.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Beheerd door het UnifiedPush-project. Hij ziet voor welke kamer elke melding is.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>De gateway ziet voor welke kamer elke melding is.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Je thuisserver stuurt naar een Matrix-gateway, die doorstuurt naar dit apparaat. Kies er een om push aan te zetten.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Gatewayadres</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Nog geen; tot er een gekozen is, kan je thuisserver dit apparaat niet bereiken.</translation>
     </message>
 </context>
 <context>

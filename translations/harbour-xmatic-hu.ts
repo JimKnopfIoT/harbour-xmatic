@@ -1946,20 +1946,52 @@
         <translation>Ennek az eszköznek van címe; a honi kiszolgálódnak átjáróra van szüksége, hogy elérje.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>A push kiszolgálódnak nincs Matrix átjárója. Adj meg egyet lent; addig a honi kiszolgálód nem éri el ezt az eszközt.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>A push kiszolgáló sajátja</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Egy Matrix honi kiszolgáló nem tud közvetlenül egy push elosztóval beszélni, ezért egy átjárónak küld, amely továbbítja. Hagyd üresen, hogy a push kiszolgálód saját átjáróját használd, ha van neki. Az átjáró látja, melyik szobának szól minden értesítés.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>UnifiedPush nyilvános átjáró</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push átjáró</translation>
+        <source>Other</source>
+        <translation>Másik</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>matrix.gateway.unifiedpush.org használata</translation>
+        <source>Not chosen</source>
+        <translation>Nincs kiválasztva</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, a kiszolgáló, amelynél már megvan ennek az eszköznek a címe.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>A push kiszolgálódnak nincs Matrix átjárója. Válassz egy másikat.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Bekapcsolt push mellett derül ki. Az ntfy kiszolgálóknak van; a Mozilla szolgáltatásának nincs.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>A UnifiedPush projekt üzemelteti. Látja, melyik szobának szól minden értesítés.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Az átjáró látja, melyik szobának szól minden értesítés.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>A honi kiszolgálód egy Matrix átjárónak küld, amely továbbítja erre az eszközre. Válassz egyet a push bekapcsolásához.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Átjáró címe</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Még nincs; amíg nincs kiválasztva, a honi kiszolgálód nem éri el ezt az eszközt.</translation>
     </message>
 </context>
 <context>

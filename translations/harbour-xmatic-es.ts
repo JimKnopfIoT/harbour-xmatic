@@ -1949,20 +1949,52 @@
         <translation>Este dispositivo tiene una dirección; tu servidor necesita una pasarela para llegar a él.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Tu servidor push no tiene pasarela de Matrix. Introduce una abajo; hasta entonces tu servidor de Matrix no puede llegar a este dispositivo.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>La del servidor push</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Un servidor de Matrix no puede hablar directamente con un distribuidor push, así que envía a una pasarela que reenvía. Déjalo vacío para usar la pasarela propia de tu servidor push, si tiene una. La pasarela ve para qué sala es cada notificación.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Pasarela pública de UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Pasarela push</translation>
+        <source>Other</source>
+        <translation>Otra</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Usar matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Sin elegir</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, el servidor que ya tiene la dirección de este dispositivo.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Tu servidor push no tiene pasarela de Matrix. Elige otra.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Se encuentra una vez activado el push. Los servidores ntfy tienen una; el servicio de Mozilla no.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>La gestiona el proyecto UnifiedPush. Ve para qué sala es cada notificación.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>La pasarela ve para qué sala es cada notificación.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Tu servidor envía a una pasarela de Matrix, que reenvía a este dispositivo. Elige una para activar el push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Dirección de la pasarela</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Ninguna todavía; hasta que elijas una, tu servidor no puede llegar a este dispositivo.</translation>
     </message>
 </context>
 <context>

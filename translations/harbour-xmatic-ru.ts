@@ -1952,20 +1952,52 @@
         <translation>У этого устройства есть адрес; твоему домашнему серверу нужен шлюз, чтобы до него достучаться.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>У твоего push-сервера нет шлюза Matrix. Введи его ниже; до тех пор твой домашний сервер не может достучаться до этого устройства.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Шлюз push-сервера</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Домашний сервер Matrix не может общаться с распространителем push напрямую, поэтому он отправляет данные на шлюз, который их пересылает. Оставь пустым, чтобы использовать собственный шлюз твоего push-сервера, если он есть. Шлюз видит, к какой комнате относится каждое уведомление.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Публичный шлюз UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push-шлюз</translation>
+        <source>Other</source>
+        <translation>Другой</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Использовать matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Не выбран</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1 — сервер, у которого уже есть адрес этого устройства.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>У твоего push-сервера нет шлюза Matrix. Выбери другой.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Определяется, когда push включён. У серверов ntfy он есть; у службы Mozilla нет.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Поддерживается проектом UnifiedPush. Он видит, к какой комнате относится каждое уведомление.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Шлюз видит, к какой комнате относится каждое уведомление.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Твой домашний сервер отправляет данные на шлюз Matrix, который пересылает их на это устройство. Выбери шлюз, чтобы включить push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Адрес шлюза</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Ещё не выбран; до тех пор твой домашний сервер не может достучаться до этого устройства.</translation>
     </message>
 </context>
 <context>

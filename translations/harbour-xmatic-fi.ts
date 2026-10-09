@@ -1949,20 +1949,52 @@
         <translation>Tällä laitteella on osoite; kotipalvelimesi tarvitsee yhdyskäytävän tavoittaakseen sen.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Push-palvelimellasi ei ole Matrix-yhdyskäytävää. Anna sellainen alla; siihen asti kotipalvelimesi ei tavoita tätä laitetta.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Push-palvelimen oma</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Matrix-kotipalvelin ei voi puhua push-jakelijalle suoraan, joten se lähettää yhdyskäytävälle, joka välittää eteenpäin. Jätä tämä tyhjäksi käyttääksesi push-palvelimesi omaa yhdyskäytävää, jos sillä on sellainen. Yhdyskäytävä näkee, mihin huoneeseen kukin ilmoitus kuuluu.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>UnifiedPushin julkinen yhdyskäytävä</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push-yhdyskäytävä</translation>
+        <source>Other</source>
+        <translation>Muu</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Käytä matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Ei valittu</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, palvelin, jolla tämän laitteen osoite jo on.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Push-palvelimellasi ei ole Matrix-yhdyskäytävää. Valitse jokin muu.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Löytyy, kun push on päällä. ntfy-palvelimilla on sellainen; Mozillan palvelulla ei.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>UnifiedPush-projektin ylläpitämä. Se näkee, mihin huoneeseen kukin ilmoitus kuuluu.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Yhdyskäytävä näkee, mihin huoneeseen kukin ilmoitus kuuluu.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Kotipalvelimesi lähettää Matrix-yhdyskäytävälle, joka välittää tälle laitteelle. Valitse yksi ottaaksesi pushin käyttöön.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Yhdyskäytävän osoite</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Ei vielä yhtään; ennen kuin sellainen valitaan, kotipalvelimesi ei tavoita tätä laitetta.</translation>
     </message>
 </context>
 <context>

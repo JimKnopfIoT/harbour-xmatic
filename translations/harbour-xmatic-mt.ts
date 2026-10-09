@@ -1955,20 +1955,52 @@
         <translation>Dan l-apparat għandu indirizz; is-server tad-dar tiegħek għandu bżonn gateway biex jilħqu.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Is-server push tiegħek m&apos;għandux gateway Matrix. Daħħal wieħed hawn taħt; sa dakinhar is-server tad-dar tiegħek ma jistax jilħaq dan l-apparat.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Il-gateway tas-server push</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Server tad-dar Matrix ma jistax ikellem distributur push direttament, allura jibgħat lil gateway li jgħaddi kollox &apos;il quddiem. Ħalli dan vojt biex tuża l-gateway tas-server push tiegħek stess, jekk għandu wieħed. Il-gateway jara għal liema kamra hi kull notifika.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Gateway pubbliku ta&apos; UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Gateway push</translation>
+        <source>Other</source>
+        <translation>Ieħor</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Uża matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Mhux magħżul</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, is-server li diġà għandu l-indirizz ta&apos; dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Is-server push tiegħek m&apos;għandux gateway Matrix. Agħżel ieħor.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Jinstab ladarba l-push ikun mixgħul. Is-servers ntfy għandhom wieħed; is-servizz ta&apos; Mozilla le.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Imħaddem mill-proġett UnifiedPush. Jara għal liema kamra hi kull notifika.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Il-gateway jara għal liema kamra hi kull notifika.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Is-server tad-dar tiegħek jibgħat lil gateway Matrix, li jgħaddi lil dan l-apparat. Agħżel wieħed biex tixgħel il-push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Indirizz tal-gateway</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Għad m&apos;hemm l-ebda wieħed; sakemm jintgħażel wieħed, is-server tad-dar tiegħek ma jistax jilħaq dan l-apparat.</translation>
     </message>
 </context>
 <context>

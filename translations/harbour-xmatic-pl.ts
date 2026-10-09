@@ -1952,20 +1952,52 @@
         <translation>To urządzenie ma adres; twój serwer domowy potrzebuje bramy, aby do niego dotrzeć.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Twój serwer push nie ma bramy Matrix. Wpisz ją poniżej; do tego czasu twój serwer domowy nie może dotrzeć do tego urządzenia.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Brama serwera push</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Serwer domowy Matrix nie może rozmawiać z dystrybutorem push bezpośrednio, więc wysyła do bramy, która przekazuje dalej. Zostaw puste, aby użyć własnej bramy twojego serwera push, jeśli ją ma. Brama widzi, do którego pokoju jest każde powiadomienie.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Publiczna brama UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Brama push</translation>
+        <source>Other</source>
+        <translation>Inna</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Użyj matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Nie wybrano</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, serwer, który ma już adres tego urządzenia.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Twój serwer push nie ma bramy Matrix. Wybierz inną.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Wykrywana po włączeniu push. Serwery ntfy ją mają; usługa Mozilli nie.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Prowadzona przez projekt UnifiedPush. Widzi, do którego pokoju jest każde powiadomienie.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Brama widzi, do którego pokoju jest każde powiadomienie.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Twój serwer domowy wysyła do bramy Matrix, która przekazuje dalej do tego urządzenia. Wybierz jakąś, aby włączyć push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Adres bramy</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Jeszcze żadnej; dopóki nie zostanie wybrana, twój serwer domowy nie może dotrzeć do tego urządzenia.</translation>
     </message>
 </context>
 <context>

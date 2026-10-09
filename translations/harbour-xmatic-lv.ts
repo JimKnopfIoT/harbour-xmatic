@@ -1952,20 +1952,52 @@
         <translation>Šai ierīcei ir adrese; tavam mājas serverim vajag vārteju, lai to sasniegtu.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Tavam push serverim nav Matrix vārtejas. Ievadi to zemāk; līdz tam tavs mājas serveris nevar sasniegt šo ierīci.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Push servera vārteja</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Matrix mājas serveris nevar tieši sarunāties ar push izplatītāju, tāpēc tas sūta uz vārteju, kas pārsūta tālāk. Atstāj tukšu, lai izmantotu tava push servera paša vārteju, ja tam tāda ir. Vārteja redz, kurai istabai ir katrs paziņojums.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>UnifiedPush publiskā vārteja</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push vārteja</translation>
+        <source>Other</source>
+        <translation>Cita</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Izmantot matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Nav izvēlēta</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1 — serveris, kuram jau ir šīs ierīces adrese.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Tavam push serverim nav Matrix vārtejas. Izvēlies citu.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Tiek atrasta, kad push ir ieslēgts. ntfy serveriem tāda ir; Mozilla pakalpojumam nav.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>To uztur UnifiedPush projekts. Tā redz, kurai istabai ir katrs paziņojums.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Vārteja redz, kurai istabai ir katrs paziņojums.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Tavs mājas serveris sūta uz Matrix vārteju, kas pārsūta uz šo ierīci. Izvēlies vienu, lai ieslēgtu push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Vārtejas adrese</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Vēl nav; kamēr tā nav izvēlēta, tavs mājas serveris nevar sasniegt šo ierīci.</translation>
     </message>
 </context>
 <context>

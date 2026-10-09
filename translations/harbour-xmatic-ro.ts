@@ -1952,20 +1952,52 @@
         <translation>Acest dispozitiv are o adresă; serverul tău are nevoie de o poartă ca să ajungă la el.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Serverul tău push nu are o poartă Matrix. Introdu una mai jos; până atunci serverul tău Matrix nu poate ajunge la acest dispozitiv.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Poarta serverului push</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Un server Matrix nu poate vorbi direct cu un distribuitor push, așa că trimite către o poartă care redirecționează. Lasă gol pentru a folosi poarta proprie a serverului tău push, dacă are una. Poarta vede pentru ce cameră este fiecare notificare.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Poarta publică UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Poartă push</translation>
+        <source>Other</source>
+        <translation>Alta</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Folosește matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Nealeasă</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, serverul care are deja adresa acestui dispozitiv.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Serverul tău push nu are o poartă Matrix. Alege alta.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Se află după ce push-ul e pornit. Serverele ntfy au una; serviciul Mozilla nu.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Administrată de proiectul UnifiedPush. Vede pentru ce cameră este fiecare notificare.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Poarta vede pentru ce cameră este fiecare notificare.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Serverul tău trimite către o poartă Matrix, care redirecționează către acest dispozitiv. Alege una pentru a porni push-ul.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Adresa porții</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Niciuna încă; până nu e aleasă una, serverul tău nu poate ajunge la acest dispozitiv.</translation>
     </message>
 </context>
 <context>

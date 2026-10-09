@@ -1952,20 +1952,52 @@
         <translation>Ovaj uređaj ima adresu; tvom matičnom poslužitelju treba pristupnik da do njega dođe.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Tvoj push poslužitelj nema Matrix pristupnik. Unesi ga ispod; do tada tvoj matični poslužitelj ne može doći do ovog uređaja.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Pristupnik push poslužitelja</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Matični poslužitelj Matrixa ne može izravno razgovarati s push distributerom, pa šalje pristupniku koji prosljeđuje dalje. Ostavi prazno da se koristi vlastiti pristupnik tvog push poslužitelja, ako ga ima. Pristupnik vidi za koju je sobu svaka obavijest.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Javni pristupnik UnifiedPusha</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push pristupnik</translation>
+        <source>Other</source>
+        <translation>Drugi</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Koristi matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Nije odabran</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, poslužitelj koji već ima adresu ovog uređaja.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Tvoj push poslužitelj nema Matrix pristupnik. Odaberi drugi.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Pronalazi se kad je push uključen. ntfy poslužitelji ga imaju; Mozillina usluga nema.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Vodi ga projekt UnifiedPush. Vidi za koju je sobu svaka obavijest.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Pristupnik vidi za koju je sobu svaka obavijest.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Tvoj matični poslužitelj šalje Matrix pristupniku, koji prosljeđuje ovom uređaju. Odaberi jedan da uključiš push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Adresa pristupnika</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Još nijedan; dok se jedan ne odabere, tvoj matični poslužitelj ne može doći do ovog uređaja.</translation>
     </message>
 </context>
 <context>

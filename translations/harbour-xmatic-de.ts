@@ -1949,20 +1949,52 @@
         <translation>Dieses Gerät hat eine Adresse; dein Heimserver braucht ein Gateway, um es zu erreichen.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Dein Push-Server hat kein Matrix-Gateway. Trag unten eines ein; bis dahin kann dein Heimserver dieses Gerät nicht erreichen.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Gateway des Push-Servers</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Ein Matrix-Heimserver kann nicht direkt mit einem Push-Verteiler sprechen, also schickt er an ein Gateway, das weiterleitet. Lass das Feld leer, um das eigene Gateway deines Push-Servers zu nutzen, falls er eines hat. Das Gateway sieht, für welchen Raum jede Benachrichtigung ist.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Öffentliches UnifiedPush-Gateway</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push-Gateway</translation>
+        <source>Other</source>
+        <translation>Anderes</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>matrix.gateway.unifiedpush.org verwenden</translation>
+        <source>Not chosen</source>
+        <translation>Nicht gewählt</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, der Server, der die Adresse dieses Geräts schon hat.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Dein Push-Server hat kein Matrix-Gateway. Wähl ein anderes.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Wird gefunden, sobald Push an ist. ntfy-Server haben eines; der Mozilla-Dienst nicht.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Betrieben vom UnifiedPush-Projekt. Es sieht, für welchen Raum jede Benachrichtigung ist.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Das Gateway sieht, für welchen Raum jede Benachrichtigung ist.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Dein Heimserver schickt an ein Matrix-Gateway, das an dieses Gerät weiterleitet. Wähl eines, um Push einzuschalten.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Gateway-Adresse</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Noch keines; bis eines gewählt ist, kann dein Heimserver dieses Gerät nicht erreichen.</translation>
     </message>
 </context>
 <context>
