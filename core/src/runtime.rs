@@ -193,8 +193,8 @@ struct State {
     push_sync: Mutex<()>,
     /// Pushkey and gateway last registered with the homeserver.
     push_registered: Mutex<Option<(String, String)>>,
-    /// The gateway the user chose; empty for the push server's own.
-    push_gateway: std::sync::Mutex<String>,
+    /// The gateway the user picked.
+    push_gateway: std::sync::Mutex<crate::push::Gateway>,
     /// The woken process's connector, for `push.yield`.
     push_wake: std::sync::Mutex<Option<tokio::task::AbortHandle>>,
     push_yielded: std::sync::atomic::AtomicBool,
@@ -398,7 +398,7 @@ pub fn spawn(
         push_listener: Mutex::new(None),
         push_sync: Mutex::new(()),
         push_registered: Mutex::new(None),
-        push_gateway: std::sync::Mutex::new(String::new()),
+        push_gateway: std::sync::Mutex::new(crate::push::Gateway::Unset),
         push_wake: std::sync::Mutex::new(None),
         push_yielded: std::sync::atomic::AtomicBool::new(false),
         spaces: Mutex::new(None),
@@ -822,7 +822,9 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::PushStatus { .. } => push_status(&state, id).await,
         Command::PushEnable { .. } => push_enable(&state, id).await,
         Command::PushDisable { .. } => push_disable(&state, id).await,
-        Command::PushGateway { gateway, .. } => push_set_gateway(&state, id, gateway).await,
+        Command::PushGateway { mode, gateway, .. } => {
+            push_set_gateway(&state, id, mode, gateway).await
+        }
         Command::PushWake { .. } => push_wake(&state, id).await,
         Command::PushYield { .. } => push_yield(&state, id),
         Command::PushNotify {

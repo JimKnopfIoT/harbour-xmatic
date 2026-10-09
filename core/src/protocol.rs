@@ -465,9 +465,15 @@ pub enum Command {
     #[serde(rename = "push.disable")]
     PushDisable { id: u64 },
 
-    /// The gateway the user chose, https or empty for the push server's own.
+    /// The gateway the user picked: `mode` "server", "public" or "other" (with an
+    /// https `gateway`), or "" for none yet. Push is not enabled without one.
     #[serde(rename = "push.gateway")]
-    PushGateway { id: u64, gateway: String },
+    PushGateway {
+        id: u64,
+        mode: String,
+        #[serde(default)]
+        gateway: String,
+    },
 
     /// The woken process: answers the distributor until the pushes are handled,
     /// then replies. Emits `push.banner` per push.

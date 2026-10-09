@@ -204,21 +204,33 @@ void AppSettings::setMessageLayout(const QString &layout)
     emit messageLayoutChanged();
 }
 
+QString AppSettings::pushGatewayMode() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    const QString mode = settings.value(QStringLiteral("push/gatewayMode")).toString();
+    // A gateway typed into an older version stays the pick.
+    if (mode.isEmpty() && !pushGateway().isEmpty()) {
+        return QStringLiteral("other");
+    }
+    return mode;
+}
+
 QString AppSettings::pushGateway() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);
     return settings.value(QStringLiteral("push/gateway"), QString()).toString();
 }
 
-void AppSettings::setPushGateway(const QString &gateway)
+void AppSettings::setPushGateway(const QString &mode, const QString &gateway)
 {
-    const QString trimmed = gateway.trimmed();
-    if (trimmed == pushGateway()) {
+    const QString address = mode == QLatin1String("other") ? gateway.trimmed() : QString();
+    if (mode == pushGatewayMode() && address == pushGateway()) {
         return;
     }
     QSettings settings(writablePath(), QSettings::IniFormat);
+    store(settings, QStringLiteral("push/gatewayMode"), mode, "the push gateway choice");
     // Not logged: it names whoever forwards the user's notifications.
-    store(settings, QStringLiteral("push/gateway"), trimmed, "the push gateway");
+    store(settings, QStringLiteral("push/gateway"), address, "the push gateway");
     emit pushChanged();
 }
 

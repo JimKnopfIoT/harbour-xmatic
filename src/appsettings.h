@@ -50,9 +50,10 @@ class AppSettings : public QObject
     /// "auto", "on" or "off", and the thirds grid: the photo page's own choices.
     Q_PROPERTY(QString cameraFlash READ cameraFlash WRITE setCameraFlash NOTIFY cameraChanged)
     Q_PROPERTY(bool cameraGrid READ cameraGrid WRITE setCameraGrid NOTIFY cameraChanged)
-    /// The Matrix push gateway; empty for the push server's own.
-    Q_PROPERTY(QString pushGateway READ pushGateway WRITE setPushGateway
-               NOTIFY pushChanged)
+    /// The picked Matrix push gateway: "server", "public", "other" or "" for none
+    /// yet; `pushGateway` is the address for "other".
+    Q_PROPERTY(QString pushGatewayMode READ pushGatewayMode NOTIFY pushChanged)
+    Q_PROPERTY(QString pushGateway READ pushGateway NOTIFY pushChanged)
     Q_PROPERTY(bool voiceMessages READ voiceMessages WRITE setVoiceMessages
                NOTIFY voiceMessagesChanged)
     /// Whether a long press on a voice message offers to convert it to text.
@@ -173,8 +174,9 @@ public:
 
     /// Whether the microphone sits next to the message field. On, but it is one
     /// hold away from a recording and not everybody wants that in reach.
+    QString pushGatewayMode() const;
     QString pushGateway() const;
-    void setPushGateway(const QString &gateway);
+    void setPushGateway(const QString &mode, const QString &gateway);
     bool voiceMessages() const;
     void setVoiceMessages(bool enabled);
     bool voiceTranscripts() const;

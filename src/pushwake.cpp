@@ -223,11 +223,10 @@ int runPushWake(int argc, char *argv[])
     AppSettings settings;
     const QString generic = QCoreApplication::translate("PushWake", "New message");
     QJsonObject gateway;
+    gateway.insert(QStringLiteral("mode"), settings.pushGatewayMode());
     gateway.insert(QStringLiteral("gateway"), settings.pushGateway());
-    sendCommand(core, 1, QStringLiteral("push.gateway"), gateway);
-    // The name first: Foghorn gives each call a few seconds. The session follows.
-    const quint64 wake = sendCommand(core, 2, QStringLiteral("push.wake"));
-    sendCommand(core, 3, QStringLiteral("session.restore"));
+    const quint64 picked = sendCommand(core, 1, QStringLiteral("push.gateway"), gateway);
+    const quint64 wake = 2;
 
     QTimer drain;
     QObject::connect(&drain, &QTimer::timeout, &app, [&]() {
@@ -241,7 +240,12 @@ int runPushWake(int argc, char *argv[])
             const QString type = message.value(QStringLiteral("type")).toString();
             const QJsonObject data = message.value(QStringLiteral("data")).toObject();
             if (type == QLatin1String("reply")) {
-                if (quint64(message.value(QStringLiteral("id")).toDouble()) == wake) {
+                const quint64 id = quint64(message.value(QStringLiteral("id")).toDouble());
+                if (id == picked) {
+                    // The name first: Foghorn gives each call a few seconds.
+                    sendCommand(core, wake, QStringLiteral("push.wake"));
+                    sendCommand(core, 3, QStringLiteral("session.restore"));
+                } else if (id == wake) {
                     app.quit();
                 }
                 continue;

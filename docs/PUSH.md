@@ -32,19 +32,23 @@ its settings - the public one or your own.
 ### The gateway
 
 A Matrix homeserver cannot push to your phone's address directly: it posts to
-a *Matrix push gateway*, which forwards to the address. xmatic uses
-[Leghorn](https://git.agnos.is/projectmoon/foghorn/src/branch/master/leghorn),
-Foghorn's own connector library, and picks the gateway like this:
+a *Matrix push gateway*, which forwards to the address. You choose it in
+Account › Push notifications, before push can be switched on; until then
+xmatic does not even register with the distributor.
 
-- A gateway you entered in Account › Push notifications is used as it stands.
-- Otherwise xmatic asks the push server behind your address whether it is a
-  Matrix gateway itself. **ntfy is**, so with Foghorn on ntfy the server that
-  holds your address is also the gateway, and no third party is added.
-- Otherwise there is no gateway, and the page says so. Foghorn on the Mozilla
-  Push Service is such a case. Enter a gateway, or choose the UnifiedPush
-  project's public one, `matrix.gateway.unifiedpush.org`, with the button
-  below the field. xmatic never picks a third party for you, and a push server
-  that does not answer the question keeps what was used before.
+- **Push server's own.** xmatic, through
+  [Leghorn](https://git.agnos.is/projectmoon/foghorn/src/branch/master/leghorn),
+  asks the push server behind your address whether it is a Matrix gateway
+  itself. **ntfy is**, so with Foghorn on ntfy the server that holds your
+  address is also the gateway, and no third party is added. The Mozilla Push
+  Service is not; the page then says so and asks for another choice.
+- **UnifiedPush public gateway**, `matrix.gateway.unifiedpush.org`, run by the
+  UnifiedPush project.
+- **Other**: any gateway you name.
+
+xmatic never picks a gateway for you, and a push server that does not answer
+the question keeps what was used before. A gateway entered in an older version
+stays chosen as "Other".
 
 Gateways and addresses must be https; anything else is refused.
 

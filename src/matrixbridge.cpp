@@ -193,13 +193,9 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     // page refuses, and it has to know the rules from the first event on.
     pushCallPolicy();
 
-    // Starts the connector only where push is on.
-    if (m_settings) {
-        QJsonObject gateway;
-        gateway.insert(QStringLiteral("gateway"), m_settings->pushGateway());
-        send(QStringLiteral("push.gateway"), gateway);
-    }
-    refreshPushStatus();
+    // The pick first: push.status starts the connector where push is on, and
+    // registers with what was picked. Its reply sends push.status.
+    sendPushGateway();
 
     // Asked once at start: whether the files are encrypted is a property of the
     // disk, not of a session, and the UI must say so while signed out.
@@ -1919,20 +1915,31 @@ void MatrixBridge::disablePush()
     send(QStringLiteral("push.disable"));
 }
 
-bool MatrixBridge::setPushGateway(const QString &gateway)
+bool MatrixBridge::setPushGateway(const QString &mode, const QString &gateway)
 {
     const QString trimmed = gateway.trimmed();
-    if (!trimmed.isEmpty() && !trimmed.startsWith(QLatin1String("https://"), Qt::CaseInsensitive)) {
+    if (mode == QLatin1String("other")
+        && !trimmed.startsWith(QLatin1String("https://"), Qt::CaseInsensitive)) {
         setLastError(tr("The push gateway has to be an https address."));
         return false;
     }
     if (m_settings) {
-        m_settings->setPushGateway(trimmed);
+        m_settings->setPushGateway(mode, trimmed);
     }
-    QJsonObject arguments;
-    arguments.insert(QStringLiteral("gateway"), trimmed);
-    send(QStringLiteral("push.gateway"), arguments);
+    sendPushGateway();
     return true;
+}
+
+void MatrixBridge::sendPushGateway()
+{
+    QJsonObject arguments;
+    if (m_settings) {
+        arguments.insert(QStringLiteral("mode"), m_settings->pushGatewayMode());
+        arguments.insert(QStringLiteral("gateway"), m_settings->pushGateway());
+    } else {
+        arguments.insert(QStringLiteral("mode"), QString());
+    }
+    send(QStringLiteral("push.gateway"), arguments);
 }
 
 void MatrixBridge::fetchPush(const QString &roomId, const QString &eventId)
@@ -2646,6 +2653,10 @@ void MatrixBridge::handleReply(const QJsonObject &message)
     }
     if (command == QLatin1String("queue.retry") || command == QLatin1String("queue.discard")) {
         m_sendQueue->reportDone(data);
+        return;
+    }
+    if (command == QLatin1String("push.gateway")) {
+        refreshPushStatus();
         return;
     }
     if (command == QLatin1String("push.notify")) {
