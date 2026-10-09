@@ -1,12 +1,12 @@
 # Third-party notices
 
 harbour-xmatic itself is Apache-2.0 (see `LICENSE`). The application
-binary links a static Rust library that compiles 524 further crates into
+binary links a static Rust library that compiles 525 further crates into
 it, and it bundles SQLite. Their terms are listed here because a binary
 that carries them has to carry their notices too.
 
 Every crate below is fetched from crates.io by exact version, recorded in
-`core/Cargo.lock` with a checksum, except leghorn and foghorn-common,
+`core/Cargo.lock` with a checksum, except leghorn, leghorn-build and foghorn-common,
 which come from the Foghorn git repository at the commit named below. Its source is available at
 `https://crates.io/crates/<name>/<version>`; the licence text of each is
 in the crate's own source tree.
@@ -23,11 +23,12 @@ address above, and no file of theirs has been changed for this project.
 - eyeball 0.8.8 — MPL-2.0
 - eyeball-im 0.9.1 — MPL-2.0
 - eyeball-im-util 0.11.0 — MPL-2.0
-- foghorn-common 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 53795716c535c13cf6c68c7f2c9c06eb46e54935)
+- foghorn-common 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 3473598b1e027b3c6709335068f31fae963000c2)
 - htmlescape 0.3.1 — Apache-2.0 / MIT / MPL-2.0
 - imbl 7.0.2 — MPL-2.0+
 - imbl-sized-chunks 0.2.0 — MPL-2.0+
-- leghorn 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 53795716c535c13cf6c68c7f2c9c06eb46e54935)
+- leghorn 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 3473598b1e027b3c6709335068f31fae963000c2)
+- leghorn-build 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 3473598b1e027b3c6709335068f31fae963000c2)
 - readlock 0.1.11 — MPL-2.0
 - readlock-tokio 0.1.6 — MPL-2.0
 
@@ -260,6 +261,7 @@ linking the device's library. SQLite itself is in the public domain.
 | language-tags | 0.3.2 | MIT/Apache-2.0 |
 | lazy_static | 1.5.0 | MIT OR Apache-2.0 |
 | leghorn | 0.5.0 | MPL-2.0 |
+| leghorn-build | 0.5.0 | MPL-2.0 |
 | levenshtein_automata | 0.2.1 | MIT |
 | libc | 0.2.189 | MIT OR Apache-2.0 |
 | libsqlite3-sys | 0.38.2 | MIT |

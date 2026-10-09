@@ -460,10 +460,23 @@ pub enum Command {
     #[serde(rename = "push.enable")]
     PushEnable { id: u64 },
 
-    /// Give the registration back and delete the pusher. Both halves, because
-    /// a pusher left behind keeps a dead endpoint on the server.
+    /// Give the registration back, delete the pusher and forget the endpoint.
+    /// A pusher left behind keeps a dead endpoint on the server.
     #[serde(rename = "push.disable")]
     PushDisable { id: u64 },
+
+    /// The gateway the user chose, https or empty for the push server's own.
+    #[serde(rename = "push.gateway")]
+    PushGateway { id: u64, gateway: String },
+
+    /// The woken process: answers the distributor until the pushes are handled,
+    /// then replies. Emits `push.banner` per push.
+    #[serde(rename = "push.wake")]
+    PushWake { id: u64 },
+
+    /// Ends a `push.wake` at once: the app is starting and wants the store.
+    #[serde(rename = "push.yield")]
+    PushYield { id: u64 },
 
     /// Fetches the message a push named and answers with what a banner needs: the
     /// push carries only a room and an event id.
@@ -1086,6 +1099,9 @@ impl Command {
             | Command::PushStatus { id }
             | Command::PushEnable { id, .. }
             | Command::PushDisable { id, .. }
+            | Command::PushGateway { id, .. }
+            | Command::PushWake { id }
+            | Command::PushYield { id }
             | Command::PushNotify { id, .. }
             | Command::RoomListMore { id }
             | Command::RoomListStop { id }

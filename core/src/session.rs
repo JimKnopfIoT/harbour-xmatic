@@ -45,9 +45,11 @@ pub struct Paths {
     pub voice_cache: PathBuf,
     /// Encrypted lists that name people (see private.rs).
     pub private_file: PathBuf,
-    /// UnifiedPush token, subscription keys, distributor. Beside the
-    /// session - a lost one leaves the server's endpoint pointing nowhere.
+    /// The old connector's registration, read once to carry push over to Leghorn.
     pub push_file: PathBuf,
+    /// Leghorn's endpoint and keys, and the banners the woken process raised.
+    /// Both go with the account: one lets anyone push here, the other names rooms.
+    pub push_state: [PathBuf; 2],
     /// Tantivy index per room. Beside the store rather than in the cache:
     /// expensive to rebuild, and it holds message text.
     pub search_index: PathBuf,
@@ -62,6 +64,10 @@ impl Paths {
             voice_cache: cache_dir.join("voice"),
             private_file: data_dir.join("private.json"),
             push_file: data_dir.join("push.json"),
+            push_state: [
+                data_dir.join("leghorn.json"),
+                data_dir.join("push-banners.json"),
+            ],
             search_index: data_dir.join("search"),
         }
     }
@@ -537,8 +543,10 @@ pub fn reset_store(paths: &Paths) -> Result<(), std::io::Error> {
     }
     // And the push registration - it names a device about to stop existing
     // and its endpoint is a secret anyone holding it can push with.
-    if paths.push_file.exists() {
-        std::fs::remove_file(&paths.push_file)?;
+    for file in std::iter::once(&paths.push_file).chain(&paths.push_state) {
+        if file.exists() {
+            std::fs::remove_file(file)?;
+        }
     }
     paths.prepare()
 }

@@ -4,7 +4,7 @@
 use std::ffi::CString;
 use std::os::raw::{c_char, c_void};
 use std::panic::{catch_unwind, AssertUnwindSafe};
-use std::sync::{Arc, Weak};
+use std::sync::Arc;
 
 use matrix_sdk::{
     authentication::oauth::{error::OAuthDiscoveryError, CsrfToken},
@@ -38,6 +38,7 @@ use crate::search;
 use crate::storehealth;
 use crate::timeline::{self, TimelineHandle};
 use crate::verification;
+use leghorn::Leghorn;
 
 mod lifecycle;
 mod account;
@@ -184,14 +185,19 @@ struct State {
     /// can stop it - and wait until its client clone is gone.
     login_task: Mutex<Option<LoginTask>>,
     rooms: Mutex<Option<RoomListHandle>>,
-    /// `Err` when the connector name cannot be owned.
-    push: tokio::sync::OnceCell<Result<Arc<leghorn::Leghorn>, String>>,
-    /// False in the woken process.
-    push_connector: bool,
+    /// The UnifiedPush connector, started only while push is on or asked about:
+    /// it claims a D-Bus name and must not do so for a feature nobody turned on.
+    push: Mutex<Option<Arc<Leghorn>>>,
+    push_listener: Mutex<Option<tokio::task::JoinHandle<()>>>,
+    /// Serialises pusher changes with each other and with the sign-out.
     push_sync: Mutex<()>,
-    /// Pushkey last registered with the homeserver.
-    push_registered: Mutex<Option<String>>,
-    push_events: Mutex<Option<tokio::sync::mpsc::UnboundedReceiver<leghorn::Event>>>,
+    /// Pushkey and gateway last registered with the homeserver.
+    push_registered: Mutex<Option<(String, String)>>,
+    /// The gateway the user chose; empty for the push server's own.
+    push_gateway: std::sync::Mutex<String>,
+    /// The woken process's connector, for `push.yield`.
+    push_wake: std::sync::Mutex<Option<tokio::task::AbortHandle>>,
+    push_yielded: std::sync::atomic::AtomicBool,
     spaces: Mutex<Option<tokio::task::JoinHandle<()>>>,
     open_space: Mutex<Option<tokio::task::JoinHandle<()>>>,
     /// Behind an `Arc` so a command can clone the handle out and release the
@@ -376,7 +382,6 @@ pub fn spawn(
     runtime: &tokio::runtime::Runtime,
     paths: Paths,
     store_key: Option<session::StoreKey>,
-    push_connector: bool,
     sink: Arc<Sink>,
 ) -> mpsc::UnboundedSender<Command> {
     let (sender, mut receiver) = mpsc::unbounded_channel::<Command>();
@@ -389,11 +394,13 @@ pub fn spawn(
         slot: std::sync::Mutex::new(Slot::default()),
         login_task: Mutex::new(None),
         rooms: Mutex::new(None),
-        push: tokio::sync::OnceCell::new(),
-        push_connector,
+        push: Mutex::new(None),
+        push_listener: Mutex::new(None),
         push_sync: Mutex::new(()),
         push_registered: Mutex::new(None),
-        push_events: Mutex::new(None),
+        push_gateway: std::sync::Mutex::new(String::new()),
+        push_wake: std::sync::Mutex::new(None),
+        push_yielded: std::sync::atomic::AtomicBool::new(false),
         spaces: Mutex::new(None),
         open_space: Mutex::new(None),
         timeline: Mutex::new(None),
@@ -410,10 +417,6 @@ pub fn spawn(
         running: std::sync::atomic::AtomicUsize::new(0),
         sink,
     });
-
-    if state.push_connector {
-        runtime.spawn(push_listen(Arc::downgrade(&state)));
-    }
 
     runtime.spawn(async move {
         while let Some(command) = receiver.recv().await {
@@ -819,6 +822,9 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::PushStatus { .. } => push_status(&state, id).await,
         Command::PushEnable { .. } => push_enable(&state, id).await,
         Command::PushDisable { .. } => push_disable(&state, id).await,
+        Command::PushGateway { gateway, .. } => push_set_gateway(&state, id, gateway).await,
+        Command::PushWake { .. } => push_wake(&state, id).await,
+        Command::PushYield { .. } => push_yield(&state, id),
         Command::PushNotify {
             room_id, event_id, ..
         } => push_notify(&state, id, room_id, event_id).await,
