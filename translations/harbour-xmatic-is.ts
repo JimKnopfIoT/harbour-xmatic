@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Ýtitilkynningar</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Hegðun</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Endurstilla liti</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Fela lyklaborðið eftir sendingu</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Kveikt: lyklaborðið lokast um leið og skilaboðin fara og samtalið sést aftur í heild. Slökkt: það helst opið fyrir næstu skilaboð.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Opna herbergið þar sem þú hættir að lesa</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Lesa inn emoji-pakka</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Viðbrögð sem myndir (emoji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Senda með Enter-lyklinum</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Kveikt sendir Enter-lykillinn skilaboðin; örin við hliðina á reitnum virkar áfram. Línuskil fást þá með því að halda inni örinni, eða með Shift og Enter á vélbúnaðarlyklaborði. Slökkt býr Enter-lykillinn til línuskil og aðeins örin sendir.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Merkja svæðið á myndinni</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Kveikt teiknar spjalllistinn upphafsstaf svæðis herbergisins yfir mynd þess, í lit þess svæðis. Liturinn er stilltur í svæðalistanum með því að halda inni á svæðinu.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Kveikt: þegar þú ferð inn í spjallrými lendirðu á síðustu lesnu skilaboðunum þínum með þau nýju fyrir neðan — og aftur á staðnum sem þú varst á ef þú fórst úr rýminu í miðri sögu þess. Staðurinn geymist þar til forritinu er lokað. Slökkt: rýmið opnast á nýjustu skilaboðunum og línuna sem markar hvar þú hættir finnurðu með því að skruna upp.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Senda textann sem skrá</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Hegðun</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Atburðir í spjallrás</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Sýna þegar fólk kemur og fer</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Boð, brottvísanir og bönn eru alltaf sýnd.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Sýna breytingar á birtingarnafni</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Sýna breytingar á notandamynd</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Lestur</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Opna herbergið þar sem þú hættir að lesa</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Kveikt: þegar þú ferð inn í spjallrými lendirðu á síðustu lesnu skilaboðunum þínum með þau nýju fyrir neðan — og aftur á staðnum sem þú varst á ef þú fórst úr rýminu í miðri sögu þess. Staðurinn geymist þar til forritinu er lokað. Slökkt: rýmið opnast á nýjustu skilaboðunum og línuna sem markar hvar þú hættir finnurðu með því að skruna upp.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Skrif</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Senda með Enter-lyklinum</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Kveikt sendir Enter-lykillinn skilaboðin; örin við hliðina á reitnum virkar áfram. Línuskil fást þá með því að halda inni örinni, eða með Shift og Enter á vélbúnaðarlyklaborði. Slökkt býr Enter-lykillinn til línuskil og aðeins örin sendir.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Fela lyklaborðið eftir sendingu</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Kveikt: lyklaborðið lokast um leið og skilaboðin fara og samtalið sést aftur í heild. Slökkt: það helst opið fyrir næstu skilaboð.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Listar</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Byrja á lista yfir svæði</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Af: forritið opnast á spjalllistanum. Hinn listinn er alltaf ein stroka til hliðar. Tekur gildi við næstu ræsingu.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Röð spjalllistans</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Eftir virkni</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Eftir nafni</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Ólesnar spjallrásir fyrst</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Eftirlæti haldast efst og lág forgangsröð neðst; innan hvors hóps koma spjallrásir með ólesnum skilaboðum fyrst.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Röð svæðalistans</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Um xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Gera að upphafssíðu</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Reikningur</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 breytti aðild</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 breytti aðgangssniði sínu</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Áframsenda tengil</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 breytti birtingarnafni sínu í %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 fjarlægði birtingarnafn sitt</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 breytti notandamynd sinni</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Búa til svæði</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Gera að upphafssíðu</translation>
     </message>
     <message>
         <source>Delete space</source>

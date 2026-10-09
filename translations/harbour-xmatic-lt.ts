@@ -122,6 +122,10 @@
         <source>Push notifications</source>
         <translation>Push pranešimai</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Elgsena</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -245,18 +249,6 @@
         <translation>Atkurti numatytas spalvas</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Slėpti klaviatūrą po išsiuntimo</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Įjungta: klaviatūra užsiveria vos žinutei išėjus ir pokalbis vėl matomas visas. Išjungta: ji lieka atverta kitai žinutei.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Atverti kambarį ten, kur baigei skaityti</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Įkelti jaustukų paketą</translation>
     </message>
@@ -281,24 +273,12 @@
         <translation>Reakcijos kaip paveikslėliai (jaustukai)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Siųsti Enter klavišu</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Įjungta, Enter klavišas išsiunčia žinutę; rodyklė šalia lauko veikia toliau. Naują eilutę tada duoda ilgas rodyklės paspaudimas arba Shift ir Enter fizinėje klaviatūroje. Išjungta, Enter klavišas daro naują eilutę ir siunčia tik rodyklė.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Žymėti erdvę ant paveikslėlio</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Įjungus pokalbių sąrašas ant kambario paveikslėlio piešia jo erdvės pirmąją raidę tos erdvės spalva. Spalva nustatoma erdvių sąraše, palaikius erdvę.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Įjungta: įėjęs į kambarį atsiduri ties paskutine perskaityta žinute, naujos – po ja, ir grįžti į tą vietą, kurioje buvai, jei kambarį palikai istorijos viduryje. Ta vieta įsimenama, kol programėlė uždaroma. Išjungta: kambarys atsiveria ties naujausia žinute, o liniją, žyminčią kur sustojai, rasi slinkdamas aukštyn.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -374,6 +354,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Siųsti tekstą kaip failą</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Elgsena</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Kambario įvykiai</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Rodyti prisijungimus ir išėjimus</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Kvietimai, pašalinimai ir draudimai rodomi visada.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Rodyti rodomo vardo pakeitimus</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Rodyti profilio nuotraukos pakeitimus</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Skaitymas</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Atverti kambarį ten, kur baigei skaityti</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Įjungta: įėjęs į kambarį atsiduri ties paskutine perskaityta žinute, naujos – po ja, ir grįžti į tą vietą, kurioje buvai, jei kambarį palikai istorijos viduryje. Ta vieta įsimenama, kol programėlė uždaroma. Išjungta: kambarys atsiveria ties naujausia žinute, o liniją, žyminčią kur sustojai, rasi slinkdamas aukštyn.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Rašymas</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Siųsti Enter klavišu</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Įjungta, Enter klavišas išsiunčia žinutę; rodyklė šalia lauko veikia toliau. Naują eilutę tada duoda ilgas rodyklės paspaudimas arba Shift ir Enter fizinėje klaviatūroje. Išjungta, Enter klavišas daro naują eilutę ir siunčia tik rodyklė.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Slėpti klaviatūrą po išsiuntimo</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Įjungta: klaviatūra užsiveria vos žinutei išėjus ir pokalbis vėl matomas visas. Išjungta: ji lieka atverta kitai žinutei.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Sąrašai</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Pradėti nuo erdvių sąrašo</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Išjungta: programa atsidaro pokalbių sąraše. Bet kuriuo atveju kitas sąrašas yra per vieną braukimą į šoną. Įsigalioja kitą kartą paleidus.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Pokalbių sąrašo tvarka</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Pagal veiklą</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Pagal pavadinimą</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Neperskaityti kambariai pirmiau</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Mėgstami lieka viršuje, o žemo prioriteto apačioje; kiekvienoje grupėje pirmiau eina kambariai su neperskaitytomis žinutėmis.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Erdvių sąrašo tvarka</translation>
     </message>
 </context>
 <context>
@@ -2373,10 +2448,6 @@
         <translation>Apie xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Padaryti pradžios puslapiu</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Paskyra</translation>
     </message>
@@ -2567,10 +2638,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 pakeitė narystę</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 pakeitė savo profilį</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2892,6 +2959,18 @@
     <message>
         <source>Forward link</source>
         <translation>Persiųsti nuorodą</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 pakeitė rodomą vardą į %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 pašalino rodomą vardą</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 pakeitė profilio nuotrauką</translation>
     </message>
 </context>
 <context>
@@ -3644,10 +3723,6 @@
     <message>
         <source>Create space</source>
         <translation>Sukurti erdvę</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Padaryti pradžios puslapiu</translation>
     </message>
     <message>
         <source>Delete space</source>

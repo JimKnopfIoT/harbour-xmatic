@@ -123,6 +123,10 @@
         <source>Push notifications</source>
         <translation>Notifiki push</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Imġiba</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -246,18 +250,6 @@
         <translation>Erġa&apos; lura għall-kuluri awtomatiċi</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Aħbi t-tastiera wara li tibgħat</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Mixgħul, it-tastiera tingħalaq malli l-messaġġ jitlaq u l-konversazzjoni terġa&apos; tidher kollha. Mitfi, tibqa&apos; miftuħa għall-messaġġ li jmiss.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Iftaħ il-kamra fejn waqaft taqra</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Aqra pakkett ta&apos; emoji</translation>
     </message>
@@ -282,24 +274,12 @@
         <translation>Reazzjonijiet bħala stampi (emoji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Ibgħat biċ-ċavetta Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Mixgħul, iċ-ċavetta Enter tibgħat il-messaġġ; il-vleġġa ħdejn il-kaxxa tibqa&apos; taħdem. Biex tibda linja ġdida mbagħad żomm il-vleġġa magħfusa, jew agħfas Shift u Enter fuq tastiera fiżika. Mitfi, iċ-ċavetta Enter tibda linja ġdida u tibgħat biss il-vleġġa.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Immarka l-ispazju fuq ir-ritratt</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Mixgħul, il-lista taċ-chats tpinġi l-ewwel ittra tal-ispazju tal-kamra fuq ir-ritratt tagħha, bil-kulur ta&apos; dak l-ispazju. Il-kulur jitqiegħed fil-lista tal-ispazji, billi żżomm l-ispazju.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Mixgħul: meta tidħol f&apos;kamra tasal fl-aħħar messaġġ li qrajt, bil-ġodda taħtu — u lura fil-post fejn kont jekk ħallejt il-kamra f&apos;nofs l-istorja tagħha. Dak il-post jinżamm sakemm tagħlaq l-applikazzjoni. Mitfi: il-kamra tinfetaħ fl-aktar messaġġ riċenti u l-linja li timmarka fejn waqaft issibha billi tiskrollja &apos;l fuq.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -375,6 +355,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Ibgħat it-test bħala fajl</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Imġiba</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Avvenimenti tal-kamra</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Uri meta xi ħadd jidħol jew joħroġ</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>L-istediniet, it-tneħħijiet u l-projbizzjonijiet jintwerew dejjem.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Uri l-bidliet fl-isem muri</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Uri l-bidliet fl-istampa tal-profil</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Qari</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Iftaħ il-kamra fejn waqaft taqra</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Mixgħul: meta tidħol f&apos;kamra tasal fl-aħħar messaġġ li qrajt, bil-ġodda taħtu — u lura fil-post fejn kont jekk ħallejt il-kamra f&apos;nofs l-istorja tagħha. Dak il-post jinżamm sakemm tagħlaq l-applikazzjoni. Mitfi: il-kamra tinfetaħ fl-aktar messaġġ riċenti u l-linja li timmarka fejn waqaft issibha billi tiskrollja &apos;l fuq.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Kitba</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Ibgħat biċ-ċavetta Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Mixgħul, iċ-ċavetta Enter tibgħat il-messaġġ; il-vleġġa ħdejn il-kaxxa tibqa&apos; taħdem. Biex tibda linja ġdida mbagħad żomm il-vleġġa magħfusa, jew agħfas Shift u Enter fuq tastiera fiżika. Mitfi, iċ-ċavetta Enter tibda linja ġdida u tibgħat biss il-vleġġa.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Aħbi t-tastiera wara li tibgħat</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Mixgħul, it-tastiera tingħalaq malli l-messaġġ jitlaq u l-konversazzjoni terġa&apos; tidher kollha. Mitfi, tibqa&apos; miftuħa għall-messaġġ li jmiss.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Listi</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Ibda bil-lista tal-ispazji</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Mitfi, l-app tiftaħ bil-lista taċ-chats. Fi kwalunkwe każ il-lista l-oħra hija swipe waħda fil-ġenb. Tidħol fis-seħħ fil-bidu li jmiss.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Ordni tal-lista taċ-chats</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Skont l-attività</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Skont l-isem</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Kmamar mhux moqrija l-ewwel</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Il-favoriti jibqgħu fuq u l-prijorità baxxa isfel; f’kull grupp, il-kmamar b’messaġġi mhux moqrija jiġu l-ewwel.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Ordni tal-lista tal-ispazji</translation>
     </message>
 </context>
 <context>
@@ -2376,10 +2451,6 @@
         <translation>Dwar xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Agħmilha l-paġna tal-bidu</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Kont</translation>
     </message>
@@ -2571,10 +2642,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 biddel is-sħubija</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 biddel il-profil tiegħu</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2896,6 +2963,18 @@
     <message>
         <source>Forward link</source>
         <translation>Ibgħat il-link &apos;il quddiem</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 biddel l-isem muri għal %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 neħħa l-isem muri</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 biddel l-istampa tal-profil</translation>
     </message>
 </context>
 <context>
@@ -3649,10 +3728,6 @@
     <message>
         <source>Create space</source>
         <translation>Oħloq spazju</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Agħmilha l-paġna tal-bidu</translation>
     </message>
     <message>
         <source>Delete space</source>

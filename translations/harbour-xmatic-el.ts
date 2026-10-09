@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Ειδοποιήσεις push</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Συμπεριφορά</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Επαναφορά προεπιλεγμένων χρωμάτων</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Απόκρυψη πληκτρολογίου μετά την αποστολή</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Ενεργό: το πληκτρολόγιο κλείνει μόλις φύγει το μήνυμα και η συνομιλία φαίνεται πάλι ολόκληρη. Ανενεργό: μένει ανοιχτό για το επόμενο μήνυμα.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Άνοιγμα του δωματίου εκεί που σταμάτησες να διαβάζεις</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Φόρτωση πακέτου emoji</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Αντιδράσεις ως εικόνες (emoji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Αποστολή με το πλήκτρο Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Ενεργό, το πλήκτρο Enter στέλνει το μήνυμα· το βέλος δίπλα στο πεδίο εξακολουθεί να λειτουργεί. Αλλαγή γραμμής δίνει τότε το παρατεταμένο πάτημα του βέλους, ή Shift και Enter σε φυσικό πληκτρολόγιο. Ανενεργό, το πλήκτρο Enter αλλάζει γραμμή και στέλνει μόνο το βέλος.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Σήμανση του χώρου πάνω στην εικόνα</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Ενεργό, η λίστα συνομιλιών σχεδιάζει το αρχικό γράμμα του χώρου πάνω στην εικόνα του δωματίου, στο χρώμα του χώρου. Το χρώμα ορίζεται στη λίστα χώρων κρατώντας πατημένο τον χώρο.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ενεργό: μπαίνοντας σε ένα δωμάτιο βρίσκεσαι στο τελευταίο μήνυμα που διάβασες, με τα νέα από κάτω — και πίσω στο σημείο όπου ήσουν, αν έφυγες από το δωμάτιο στη μέση του ιστορικού. Το σημείο κρατιέται μέχρι να κλείσει η εφαρμογή. Ανενεργό: το δωμάτιο ανοίγει στο νεότερο μήνυμα και τη γραμμή που δείχνει πού σταμάτησες τη βρίσκεις κάνοντας κύλιση προς τα πάνω.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Αποστολή κειμένου ως αρχείο</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Συμπεριφορά</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Συμβάντα δωματίου</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Εμφάνιση εισόδων και αποχωρήσεων</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Οι προσκλήσεις, οι αφαιρέσεις και οι αποκλεισμοί εμφανίζονται πάντα.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Εμφάνιση αλλαγών εμφανιζόμενου ονόματος</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Εμφάνιση αλλαγών εικόνας προφίλ</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Ανάγνωση</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Άνοιγμα του δωματίου εκεί που σταμάτησες να διαβάζεις</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ενεργό: μπαίνοντας σε ένα δωμάτιο βρίσκεσαι στο τελευταίο μήνυμα που διάβασες, με τα νέα από κάτω — και πίσω στο σημείο όπου ήσουν, αν έφυγες από το δωμάτιο στη μέση του ιστορικού. Το σημείο κρατιέται μέχρι να κλείσει η εφαρμογή. Ανενεργό: το δωμάτιο ανοίγει στο νεότερο μήνυμα και τη γραμμή που δείχνει πού σταμάτησες τη βρίσκεις κάνοντας κύλιση προς τα πάνω.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Γραφή</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Αποστολή με το πλήκτρο Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Ενεργό, το πλήκτρο Enter στέλνει το μήνυμα· το βέλος δίπλα στο πεδίο εξακολουθεί να λειτουργεί. Αλλαγή γραμμής δίνει τότε το παρατεταμένο πάτημα του βέλους, ή Shift και Enter σε φυσικό πληκτρολόγιο. Ανενεργό, το πλήκτρο Enter αλλάζει γραμμή και στέλνει μόνο το βέλος.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Απόκρυψη πληκτρολογίου μετά την αποστολή</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Ενεργό: το πληκτρολόγιο κλείνει μόλις φύγει το μήνυμα και η συνομιλία φαίνεται πάλι ολόκληρη. Ανενεργό: μένει ανοιχτό για το επόμενο μήνυμα.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Λίστες</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Έναρξη με τη λίστα χώρων</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Ανενεργό: η εφαρμογή ανοίγει με τη λίστα συνομιλιών. Σε κάθε περίπτωση η άλλη λίστα απέχει ένα σάρωμα στο πλάι. Ισχύει από την επόμενη εκκίνηση.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Σειρά λίστας συνομιλιών</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Κατά δραστηριότητα</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Κατά όνομα</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Πρώτα τα μη αναγνωσμένα δωμάτια</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Τα αγαπημένα μένουν πάνω και η χαμηλή προτεραιότητα κάτω· μέσα σε κάθε ομάδα πρώτα έρχονται τα δωμάτια με μη αναγνωσμένα μηνύματα.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Σειρά λίστας χώρων</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Σχετικά με το xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Ορισμός ως αρχική σελίδα</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Λογαριασμός</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>Ο/Η %1 άλλαξε συμμετοχή</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>Ο/Η %1 άλλαξε το προφίλ του</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Προώθησε τον σύνδεσμο</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 άλλαξε το εμφανιζόμενο όνομα σε %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 αφαίρεσε το εμφανιζόμενο όνομα</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 άλλαξε την εικόνα προφίλ</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Δημιουργία χώρου</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Ορισμός ως αρχική σελίδα</translation>
     </message>
     <message>
         <source>Delete space</source>

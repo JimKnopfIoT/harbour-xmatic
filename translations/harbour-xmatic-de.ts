@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Push-Benachrichtigungen</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Verhalten</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Farben auf Standard zurücksetzen</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Tastatur nach dem Senden ausblenden</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>An: Die Tastatur schließt sich, sobald die Nachricht raus ist, und du siehst wieder das ganze Gespräch. Aus: Sie bleibt für die nächste Nachricht offen.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Raum dort öffnen, wo du aufgehört hast zu lesen</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Emoji-Paket einlesen</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reaktionen als Bilder (Emojis)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Mit der Eingabetaste senden</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>An sendet die Eingabetaste die Nachricht; der Pfeil neben dem Feld funktioniert weiter. Einen Zeilenumbruch gibt dann langes Drücken auf diesen Pfeil, oder Umschalt und Eingabe auf einer Hardware-Tastatur. Aus macht die Eingabetaste einen Zeilenumbruch, und nur der Pfeil sendet.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Space auf dem Bild kennzeichnen</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>An, zeichnet die Chatliste den Anfangsbuchstaben des Space über das Bild des Raums, in der Farbe des Space. Die Farbe stellst du in der Space-Liste ein, indem du den Space gedrückt hältst.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ein: Beim Betreten eines Raums landest du bei deiner zuletzt gelesenen Nachricht, die neuen stehen darunter — und wieder an der Stelle, an der du warst, wenn du den Raum mitten in der Historie verlassen hast. Diese Stelle bleibt gemerkt, bis die App geschlossen wird. Aus: Der Raum öffnet bei der neuesten Nachricht, und die Linie, die deinen Lesestand markiert, findest du durch Hochscrollen.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Text als Datei senden</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Verhalten</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Raumereignisse</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Betreten und Verlassen anzeigen</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Einladungen, Entfernungen und Sperren werden immer angezeigt.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Änderungen des Anzeigenamens anzeigen</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Änderungen des Profilbilds anzeigen</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Lesen</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Raum dort öffnen, wo du aufgehört hast zu lesen</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ein: Beim Betreten eines Raums landest du bei deiner zuletzt gelesenen Nachricht, die neuen stehen darunter — und wieder an der Stelle, an der du warst, wenn du den Raum mitten in der Historie verlassen hast. Diese Stelle bleibt gemerkt, bis die App geschlossen wird. Aus: Der Raum öffnet bei der neuesten Nachricht, und die Linie, die deinen Lesestand markiert, findest du durch Hochscrollen.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Schreiben</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Mit der Eingabetaste senden</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>An sendet die Eingabetaste die Nachricht; der Pfeil neben dem Feld funktioniert weiter. Einen Zeilenumbruch gibt dann langes Drücken auf diesen Pfeil, oder Umschalt und Eingabe auf einer Hardware-Tastatur. Aus macht die Eingabetaste einen Zeilenumbruch, und nur der Pfeil sendet.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Tastatur nach dem Senden ausblenden</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>An: Die Tastatur schließt sich, sobald die Nachricht raus ist, und du siehst wieder das ganze Gespräch. Aus: Sie bleibt für die nächste Nachricht offen.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Listen</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Mit der Space-Liste starten</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Aus: Die App öffnet mit der Chatliste. Die andere Liste ist immer eine Wischgeste zur Seite entfernt. Wirkt beim nächsten Start.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Reihenfolge der Chatliste</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Nach Aktivität</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Nach Name</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Ungelesene Räume zuerst</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Favoriten bleiben oben und niedrige Priorität unten; innerhalb davon kommen Räume mit ungelesenen Nachrichten zuerst.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Reihenfolge der Space-Liste</translation>
     </message>
 </context>
 <context>
@@ -1914,7 +1989,7 @@
     </message>
     <message>
         <source>Registration</source>
-        <translation>Anmeldung</translation>
+        <translation>Registrierung</translation>
     </message>
     <message>
         <source>This device has an address to be reached at.</source>
@@ -1926,7 +2001,7 @@
     </message>
     <message>
         <source>Not registered.</source>
-        <translation>Nicht angemeldet.</translation>
+        <translation>Nicht registriert.</translation>
     </message>
     <message>
         <source>Gateway</source>
@@ -1962,11 +2037,11 @@
     </message>
     <message>
         <source>Registered. Waiting for a gateway.</source>
-        <translation>Angemeldet. Warte auf ein Gateway.</translation>
+        <translation>Registriert. Warte auf ein Gateway.</translation>
     </message>
     <message>
         <source>Registered. Telling the homeserver.</source>
-        <translation>Angemeldet. Heimserver wird informiert.</translation>
+        <translation>Registriert. Heimserver wird informiert.</translation>
     </message>
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
@@ -1978,7 +2053,7 @@
     </message>
     <message>
         <source>Provided</source>
-        <translation>Mitgeliefertes</translation>
+        <translation>Mitgeliefert</translation>
     </message>
     <message>
         <source>Provided via %1: %2</source>
@@ -1990,11 +2065,11 @@
     </message>
     <message>
         <source>No answer from %1 yet. Asking again.</source>
-        <translation>Noch keine Antwort von %1. Frage erneut.</translation>
+        <translation>Noch keine Antwort von %1. Wird erneut gefragt.</translation>
     </message>
     <message>
         <source>Found via %1 after registering.</source>
-        <translation>Wird nach der Anmeldung über %1 ermittelt.</translation>
+        <translation>Wird nach der Registrierung über %1 ermittelt.</translation>
     </message>
     <message>
         <source>%1 can&apos;t deliver Matrix notifications.</source>
@@ -2002,7 +2077,7 @@
     </message>
     <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
-        <translation>Angemeldet über %1. Der Heimserver erreicht dieses Gerät nicht.</translation>
+        <translation>Registriert über %1. Der Heimserver erreicht dieses Gerät nicht.</translation>
     </message>
     <message>
         <source>Run by the UnifiedPush project: %1</source>
@@ -2304,10 +2379,6 @@
     <message>
         <source>Account</source>
         <translation>Konto</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Als Startseite festlegen</translation>
     </message>
     <message>
         <source>Offline — waiting for the network</source>
@@ -2614,10 +2685,6 @@
         <translation>%1 hat die Mitgliedschaft geändert</translation>
     </message>
     <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 hat das Profil geändert</translation>
-    </message>
-    <message>
         <source>Pin</source>
         <translation>Anpinnen</translation>
     </message>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Link weiterleiten</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 hat den Anzeigenamen in %2 geändert</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 hat den Anzeigenamen entfernt</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 hat das Profilbild geändert</translation>
     </message>
 </context>
 <context>
@@ -3627,10 +3706,6 @@
     <message>
         <source>Create space</source>
         <translation>Space erstellen</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Als Startseite festlegen</translation>
     </message>
     <message>
         <source>Delete space</source>

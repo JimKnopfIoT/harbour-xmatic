@@ -179,7 +179,7 @@ linking the device's library. SQLite itself is in the public domain.
 | find-msvc-tools | 0.1.9 | MIT OR Apache-2.0 |
 | flate2 | 1.1.9 | MIT OR Apache-2.0 |
 | fnv | 1.0.7 | Apache-2.0 / MIT |
-| foghorn-common | 0.5.0 | MPL-2.0 |
+| foghorn-common | 0.5.0 | MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 853d6e35720e5e0eccfa9c1a3a68a0e128335b73) |
 | foldhash | 0.2.0 | Zlib |
 | form_urlencoded | 1.2.2 | MIT OR Apache-2.0 |
 | fs4 | 0.13.1 | MIT OR Apache-2.0 |
@@ -260,8 +260,8 @@ linking the device's library. SQLite itself is in the public domain.
 | konst | 0.4.3 | Zlib |
 | language-tags | 0.3.2 | MIT/Apache-2.0 |
 | lazy_static | 1.5.0 | MIT OR Apache-2.0 |
-| leghorn | 0.5.0 | MPL-2.0 |
-| leghorn-build | 0.5.0 | MPL-2.0 |
+| leghorn | 0.5.0 | MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 853d6e35720e5e0eccfa9c1a3a68a0e128335b73) |
+| leghorn-build | 0.5.0 | MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 853d6e35720e5e0eccfa9c1a3a68a0e128335b73) |
 | levenshtein_automata | 0.2.1 | MIT |
 | libc | 0.2.189 | MIT OR Apache-2.0 |
 | libsqlite3-sys | 0.38.2 | MIT |

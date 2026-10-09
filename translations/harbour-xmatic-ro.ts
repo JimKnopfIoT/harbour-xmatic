@@ -122,6 +122,10 @@
         <source>Push notifications</source>
         <translation>Notificări push</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Comportament</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -245,18 +249,6 @@
         <translation>Resetează culorile</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Ascunde tastatura după trimitere</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Activat, tastatura se închide de îndată ce mesajul a plecat și conversația se vede din nou întreagă. Dezactivat, rămâne deschisă pentru următorul mesaj.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Deschide camera acolo unde ai rămas cu cititul</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Încarcă un pachet de emoji</translation>
     </message>
@@ -281,24 +273,12 @@
         <translation>Reacții ca imagini (emoji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Trimite cu tasta Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Pornit, tasta Enter trimite mesajul; săgeata de lângă câmp funcționează în continuare. O linie nouă se obține atunci ținând apăsată acea săgeată, sau cu Shift și Enter pe o tastatură fizică. Oprit, tasta Enter face o linie nouă și trimite doar săgeata.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Marchează spațiul pe imagine</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Pornit, lista de conversații desenează inițiala spațiului camerei peste imaginea ei, în culoarea acelui spațiu. Culoarea se stabilește în lista de spații, ținând apăsat pe spațiu.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Activat: când intri într-o cameră ajungi la ultimul mesaj citit, cele noi fiind sub el — și înapoi în locul în care erai, dacă ai părăsit camera în mijlocul istoricului. Locul este reținut până la închiderea aplicației. Dezactivat: camera se deschide la cel mai recent mesaj, iar linia care marchează unde te-ai oprit o găsești derulând în sus.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -374,6 +354,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Trimite textul ca fișier</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Comportament</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Evenimente din cameră</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Arată intrările și ieșirile</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Invitațiile, eliminările și interdicțiile sunt afișate mereu.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Arată schimbările numelui afișat</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Arată schimbările pozei de profil</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Citire</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Deschide camera acolo unde ai rămas cu cititul</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Activat: când intri într-o cameră ajungi la ultimul mesaj citit, cele noi fiind sub el — și înapoi în locul în care erai, dacă ai părăsit camera în mijlocul istoricului. Locul este reținut până la închiderea aplicației. Dezactivat: camera se deschide la cel mai recent mesaj, iar linia care marchează unde te-ai oprit o găsești derulând în sus.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Scriere</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Trimite cu tasta Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Pornit, tasta Enter trimite mesajul; săgeata de lângă câmp funcționează în continuare. O linie nouă se obține atunci ținând apăsată acea săgeată, sau cu Shift și Enter pe o tastatură fizică. Oprit, tasta Enter face o linie nouă și trimite doar săgeata.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Ascunde tastatura după trimitere</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Activat, tastatura se închide de îndată ce mesajul a plecat și conversația se vede din nou întreagă. Dezactivat, rămâne deschisă pentru următorul mesaj.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Liste</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Pornește cu lista de spații</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Dezactivat, aplicația se deschide cu lista de conversații. Oricum, cealaltă listă e la o glisare în lateral. Se aplică la următoarea pornire.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Ordinea listei de conversații</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>După activitate</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>După nume</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Camerele necitite primele</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Favoritele rămân sus, iar prioritatea scăzută jos; în fiecare grup, camerele cu mesaje necitite vin primele.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Ordinea listei de spații</translation>
     </message>
 </context>
 <context>
@@ -2373,10 +2448,6 @@
         <translation>Despre xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Setează ca pagină de start</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Cont</translation>
     </message>
@@ -2567,10 +2638,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 și-a schimbat apartenența</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 și-a modificat profilul</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2892,6 +2959,18 @@
     <message>
         <source>Forward link</source>
         <translation>Redirecționează linkul</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 și-a schimbat numele afișat în %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 și-a eliminat numele afișat</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 și-a schimbat poza de profil</translation>
     </message>
 </context>
 <context>
@@ -3644,10 +3723,6 @@
     <message>
         <source>Create space</source>
         <translation>Creează spațiu</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Setează ca pagină de start</translation>
     </message>
     <message>
         <source>Delete space</source>

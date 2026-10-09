@@ -122,6 +122,10 @@
         <source>Push notifications</source>
         <translation>Push-уведомления</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Поведение</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -245,18 +249,6 @@
         <translation>Сбросить цвета</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Скрывать клавиатуру после отправки</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Включено: клавиатура закрывается, как только сообщение ушло, и разговор снова виден целиком. Выключено: она остаётся открытой для следующего сообщения.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Открывать комнату там, где ты остановился</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Загрузить набор эмодзи</translation>
     </message>
@@ -281,24 +273,12 @@
         <translation>Реакции как картинки (эмодзи)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Отправлять клавишей Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Включено — клавиша Enter отправляет сообщение; стрелка рядом с полем продолжает работать. Перенос строки тогда даёт долгое нажатие на эту стрелку или Shift с Enter на аппаратной клавиатуре. Выключено — клавиша Enter переносит строку, а отправляет только стрелка.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Отмечать пространство на картинке</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Включено — список чатов рисует первую букву пространства комнаты поверх её картинки, цветом этого пространства. Цвет задаётся в списке пространств долгим нажатием на пространство.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Включено: при входе в комнату ты попадаешь на последнее прочитанное сообщение, новые — под ним, и обратно туда, где ты был, если вышел из комнаты посреди истории. Это место помнится, пока приложение не закрыто. Выключено: комната открывается на самом новом сообщении, а линию, отмечающую место остановки, найдёшь, прокрутив вверх.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -374,6 +354,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Отправить текст файлом</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Поведение</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>События комнаты</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Показывать входы и выходы</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Приглашения, удаления и баны показываются всегда.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Показывать смену отображаемого имени</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Показывать смену фото профиля</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Чтение</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Открывать комнату там, где ты остановился</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Включено: при входе в комнату ты попадаешь на последнее прочитанное сообщение, новые — под ним, и обратно туда, где ты был, если вышел из комнаты посреди истории. Это место помнится, пока приложение не закрыто. Выключено: комната открывается на самом новом сообщении, а линию, отмечающую место остановки, найдёшь, прокрутив вверх.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Написание</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Отправлять клавишей Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Включено — клавиша Enter отправляет сообщение; стрелка рядом с полем продолжает работать. Перенос строки тогда даёт долгое нажатие на эту стрелку или Shift с Enter на аппаратной клавиатуре. Выключено — клавиша Enter переносит строку, а отправляет только стрелка.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Скрывать клавиатуру после отправки</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Включено: клавиатура закрывается, как только сообщение ушло, и разговор снова виден целиком. Выключено: она остаётся открытой для следующего сообщения.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Списки</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Начинать со списка пространств</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Выкл.: приложение открывается со списком чатов. В любом случае другой список в одном свайпе в сторону. Действует со следующего запуска.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Порядок списка чатов</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>По активности</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>По названию</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Непрочитанные комнаты сверху</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Избранное остаётся наверху, низкий приоритет внизу; внутри каждой группы сначала идут комнаты с непрочитанными сообщениями.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Порядок списка пространств</translation>
     </message>
 </context>
 <context>
@@ -2373,10 +2448,6 @@
         <translation>О xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Сделать стартовой страницей</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Учётная запись</translation>
     </message>
@@ -2567,10 +2638,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 изменил участие</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 изменил профиль</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2892,6 +2959,18 @@
     <message>
         <source>Forward link</source>
         <translation>Переслать ссылку</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 сменил(а) отображаемое имя на %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 удалил(а) отображаемое имя</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 сменил(а) фото профиля</translation>
     </message>
 </context>
 <context>
@@ -3644,10 +3723,6 @@
     <message>
         <source>Create space</source>
         <translation>Создать пространство</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Сделать стартовой страницей</translation>
     </message>
     <message>
         <source>Delete space</source>

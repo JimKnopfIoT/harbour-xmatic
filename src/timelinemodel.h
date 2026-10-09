@@ -36,6 +36,8 @@ public:
         NameRole,
         /// The reason a moderator gave for a removal or a ban. Null elsewhere.
         ReasonRole,
+        /// The display name before a profile change. Null for other rows.
+        PreviousNameRole,
         OwnRole,
         TimestampRole,
         EditedRole,

@@ -123,6 +123,10 @@
         <source>Push notifications</source>
         <translation>Potisna obvestila</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Vedenje</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -246,18 +250,6 @@
         <translation>Ponastavi barve</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Skrij tipkovnico po pošiljanju</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Vklopljeno: tipkovnica se zapre, brž ko je sporočilo poslano, in pogovor je spet ves viden. Izklopljeno: ostane odprta za naslednje sporočilo.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Sobo odpri tam, kjer si nehal brati</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Naloži paket emodžijev</translation>
     </message>
@@ -282,24 +274,12 @@
         <translation>Odzivi kot slike (emodžiji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Pošiljanje s tipko Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Vklopljeno, tipka Enter pošlje sporočilo; puščica ob polju še naprej deluje. Novo vrstico takrat da dolg pritisk na to puščico ali Shift in Enter na strojni tipkovnici. Izklopljeno, tipka Enter naredi novo vrstico in pošilja samo puščica.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Označi prostor na sliki</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Vklopljeno seznam klepetov nariše začetnico prostora sobe čez njeno sliko, v barvi tega prostora. Barvo nastaviš v seznamu prostorov s pridržanjem prostora.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Vklopljeno: ob vstopu v sobo pristaneš pri svojem zadnjem prebranem sporočilu, nova so pod njim — in nazaj na mestu, kjer si bil, če si sobo zapustil sredi zgodovine. To mesto se ohrani, dokler ne zapreš aplikacije. Izklopljeno: soba se odpre pri najnovejšem sporočilu, črto, ki označuje, kje si ostal, pa najdeš z drsenjem navzgor.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -375,6 +355,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Pošlji besedilo kot datoteko</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Vedenje</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Dogodki v sobi</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Prikaži pridružitve in odhode</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Povabila, odstranitve in prepovedi so vedno prikazani.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Prikaži spremembe prikaznega imena</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Prikaži spremembe profilne slike</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Branje</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Sobo odpri tam, kjer si nehal brati</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Vklopljeno: ob vstopu v sobo pristaneš pri svojem zadnjem prebranem sporočilu, nova so pod njim — in nazaj na mestu, kjer si bil, če si sobo zapustil sredi zgodovine. To mesto se ohrani, dokler ne zapreš aplikacije. Izklopljeno: soba se odpre pri najnovejšem sporočilu, črto, ki označuje, kje si ostal, pa najdeš z drsenjem navzgor.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Pisanje</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Pošiljanje s tipko Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Vklopljeno, tipka Enter pošlje sporočilo; puščica ob polju še naprej deluje. Novo vrstico takrat da dolg pritisk na to puščico ali Shift in Enter na strojni tipkovnici. Izklopljeno, tipka Enter naredi novo vrstico in pošilja samo puščica.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Skrij tipkovnico po pošiljanju</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Vklopljeno: tipkovnica se zapre, brž ko je sporočilo poslano, in pogovor je spet ves viden. Izklopljeno: ostane odprta za naslednje sporočilo.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Seznami</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Začni s seznamom prostorov</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Izklopljeno: aplikacija se odpre s seznamom klepetov. V vsakem primeru je drugi seznam en poteg vstran. Velja ob naslednjem zagonu.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Vrstni red seznama klepetov</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Po dejavnosti</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Po imenu</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Neprebrane sobe najprej</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Priljubljene ostanejo na vrhu, nizka prednost pa na dnu; znotraj vsake skupine so najprej sobe z neprebranimi sporočili.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Vrstni red seznama prostorov</translation>
     </message>
 </context>
 <context>
@@ -2376,10 +2451,6 @@
         <translation>O xmaticu</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Nastavi za začetno stran</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Račun</translation>
     </message>
@@ -2571,10 +2642,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 je spremenil članstvo</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 je spremenil svoj profil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2896,6 +2963,18 @@
     <message>
         <source>Forward link</source>
         <translation>Posreduj povezavo</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 je spremenil(a) prikazno ime v %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 je odstranil(a) prikazno ime</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 je spremenil(a) profilno sliko</translation>
     </message>
 </context>
 <context>
@@ -3649,10 +3728,6 @@
     <message>
         <source>Create space</source>
         <translation>Ustvari prostor</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Nastavi za začetno stran</translation>
     </message>
     <message>
         <source>Delete space</source>

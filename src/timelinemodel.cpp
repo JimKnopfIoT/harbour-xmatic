@@ -123,6 +123,7 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(SystemRole, "system");
     names.insert(NameRole, "name");
     names.insert(ReasonRole, "reason");
+    names.insert(PreviousNameRole, "previousName");
     names.insert(OwnRole, "own");
     names.insert(TimestampRole, "timestamp");
     names.insert(EditedRole, "edited");

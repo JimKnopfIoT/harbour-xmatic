@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Push-varsler</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Oppførsel</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Tilbakestill farger</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Skjul tastaturet etter sending</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>På lukkes tastaturet så snart meldingen er sendt, og samtalen vises i full høyde igjen. Av blir det stående til neste melding.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Åpne rommet der du sluttet å lese</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Les inn en emojipakke</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reaksjoner som bilder (emojier)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Send med enter-tasten</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>På sender enter-tasten meldingen; pilen ved siden av feltet virker fortsatt. Linjeskift får du da ved å holde på pilen, eller med skift og enter på et fysisk tastatur. Av lager enter-tasten et linjeskift, og bare pilen sender.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Merk romgruppen på bildet</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>På tegner chattelisten forbokstaven til rommets romgruppe over bildet, i romgruppens farge. Fargen settes i romgruppelisten ved å holde inne romgruppen.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>På: når du går inn i et rom havner du ved den sist leste meldingen din, med de nye under — og tilbake der du var hvis du forlot rommet midt i historikken. Stedet huskes til appen lukkes. Av: rommet åpnes ved den nyeste meldingen, og linjen som viser hvor du sluttet finner du ved å rulle opp.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Send teksten som en fil</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Oppførsel</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Romhendelser</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Vis når noen blir med eller forlater</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Invitasjoner, fjerninger og utestengelser vises alltid.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Vis endringer av visningsnavn</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Vis endringer av profilbilde</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Lesing</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Åpne rommet der du sluttet å lese</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>På: når du går inn i et rom havner du ved den sist leste meldingen din, med de nye under — og tilbake der du var hvis du forlot rommet midt i historikken. Stedet huskes til appen lukkes. Av: rommet åpnes ved den nyeste meldingen, og linjen som viser hvor du sluttet finner du ved å rulle opp.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Skriving</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Send med enter-tasten</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>På sender enter-tasten meldingen; pilen ved siden av feltet virker fortsatt. Linjeskift får du da ved å holde på pilen, eller med skift og enter på et fysisk tastatur. Av lager enter-tasten et linjeskift, og bare pilen sender.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Skjul tastaturet etter sending</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>På lukkes tastaturet så snart meldingen er sendt, og samtalen vises i full høyde igjen. Av blir det stående til neste melding.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Lister</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Start med listen over romgrupper</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Av: appen åpner med chattelisten. Den andre listen er alltid ett sveip til siden. Gjelder fra neste oppstart.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Rekkefølge i chattelisten</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Etter aktivitet</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Etter navn</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Uleste rom først</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Favoritter blir øverst og lav prioritet nederst; innenfor hver kommer rom med uleste meldinger først.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Rekkefølge i listen over romgrupper</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Om xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Gjør til startside</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 endret medlemskapsstatus</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 endret sin profil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Videresend lenke</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 endret visningsnavnet sitt til %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 fjernet visningsnavnet sitt</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 endret profilbildet sitt</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Opprett romgruppe</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Gjør til startside</translation>
     </message>
     <message>
         <source>Delete space</source>

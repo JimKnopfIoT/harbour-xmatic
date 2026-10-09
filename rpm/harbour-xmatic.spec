@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.45.0
+Version:    0.46.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -117,6 +117,23 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Oct 09 2026 harbour-xmatic contributors 0.46.0-1
+- Push notifications go through Leghorn, a UnifiedPush connector: the Matrix
+  gateway is picked explicitly (the one the push service provides, the public
+  UnifiedPush gateway, or your own), nothing is registered before that, and
+  nothing runs while push is off. Contributed by the Foghorn author.
+- A wake-up from a push hands the store to the app the moment it starts, and
+  a pusher the homeserver could not remove is removed at the next start.
+- New Behaviour page under Account: whether join and leave messages, display
+  name changes and profile picture changes show in a room (all off by
+  default, invitations, removals and bans always show), the start page, the
+  order of the chat list and the space list (by activity or by name, unread
+  rooms first), and the reading and writing switches from Appearance.
+- Member events that change nothing no longer show as "changed membership".
+- A profile change says what changed: the new display name or a new picture.
+- German: registering with the push distributor is "Registrierung", no longer
+  "Anmeldung".
+
 * Thu Oct 08 2026 harbour-xmatic contributors 0.45.0-1
 - Video calls work on phones whose camera gives no pictures to the call
   directly: after three seconds without one, the call takes them from the

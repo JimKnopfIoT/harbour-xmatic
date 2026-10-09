@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Push-teavitused</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Käitumine</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Lähtesta värvid</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Peida klaviatuur pärast saatmist</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Sees sulgub klaviatuur kohe, kui sõnum on läinud, ja vestlus on jälle täies ulatuses näha. Väljas jääb see järgmise sõnumi jaoks avatuks.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Ava tuba sealt, kus lugemise pooleli jätsid</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Loe emoji-pakk sisse</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reaktsioonid piltidena (emojid)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Saada Enter-klahviga</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Sees saadab Enter-klahv sõnumi; välja kõrval olev nool töötab edasi. Reavahetuse annab siis noole all hoidmine või Shift ja Enter riistvaralisel klaviatuuril. Väljas teeb Enter-klahv reavahetuse ja saadab ainult nool.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Märgi ruum pildile</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Sees joonistab vestluste loend toa ruumi esitähe tema pildi peale, selle ruumi värviga. Värvi saab määrata ruumide loendis ruumi all hoides.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Sees: tuppa sisenedes satud viimati loetud sõnumi juurde, uued on selle all — ja tagasi kohta, kus olid, kui lahkusid toast keset ajalugu. See koht jääb meelde, kuni rakendus suletakse. Väljas: tuba avaneb uusima sõnumi juures ja lugemiskohta tähistava joone leiad üles kerides.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Saada tekst failina</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Käitumine</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Jututoa sündmused</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Näita liitumisi ja lahkumisi</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Kutsed, eemaldamised ja keelud näidatakse alati.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Näita kuvatava nime muutusi</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Näita profiilipildi muutusi</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Lugemine</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Ava tuba sealt, kus lugemise pooleli jätsid</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Sees: tuppa sisenedes satud viimati loetud sõnumi juurde, uued on selle all — ja tagasi kohta, kus olid, kui lahkusid toast keset ajalugu. See koht jääb meelde, kuni rakendus suletakse. Väljas: tuba avaneb uusima sõnumi juures ja lugemiskohta tähistava joone leiad üles kerides.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Kirjutamine</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Saada Enter-klahviga</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Sees saadab Enter-klahv sõnumi; välja kõrval olev nool töötab edasi. Reavahetuse annab siis noole all hoidmine või Shift ja Enter riistvaralisel klaviatuuril. Väljas teeb Enter-klahv reavahetuse ja saadab ainult nool.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Peida klaviatuur pärast saatmist</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Sees sulgub klaviatuur kohe, kui sõnum on läinud, ja vestlus on jälle täies ulatuses näha. Väljas jääb see järgmise sõnumi jaoks avatuks.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Loendid</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Alusta ruumide loendiga</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Väljas: rakendus avaneb vestlusloendiga. Teine loend on alati ühe külgpühkimise kaugusel. Jõustub järgmisel käivitamisel.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Vestlusloendi järjestus</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Tegevuse järgi</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Nime järgi</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Lugemata jututoad eespool</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Lemmikud jäävad üles ja madal tähtsus alla; kummaski on eespool jututoad, kus on lugemata sõnumeid.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Ruumide loendi järjestus</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Teave xmaticu kohta</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Määra avaleheks</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 muutis liikmesust</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 muutis oma profiili</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Edasta link</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 muutis oma kuvatava nime: %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 eemaldas oma kuvatava nime</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 muutis oma profiilipilti</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Loo ruum</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Määra avaleheks</translation>
     </message>
     <message>
         <source>Delete space</source>

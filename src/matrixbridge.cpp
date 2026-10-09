@@ -350,6 +350,7 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
 
     // The UI reads the grouped proxy; the core keeps filling the flat source.
     m_roomsSorted.setSourceModel(&m_rooms);
+    m_spacesSorted.setSourceModel(&m_spaces);
 
     connect(&m_rooms, &RoomListModel::unreadTotalsChanged,
             this, &MatrixBridge::unreadTotalsChanged);

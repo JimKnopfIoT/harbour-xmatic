@@ -120,6 +120,10 @@
         <source>Encryption</source>
         <translation>暗号化</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>動作</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -227,26 +231,6 @@
         <translation>色を既定値に戻す</translation>
     </message>
     <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>読み終えた位置からルームを開く</translation>
-    </message>
-    <message>
-        <source>Send with the return key</source>
-        <translation>Enter キーで送信</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>オンのとき、Enter キーがメッセージを送信し、入力欄の横の矢印もそのまま使えます。改行はその矢印を長押しするか、ハードウェアキーボードの Shift と Enter で入力します。オフのときは Enter キーが改行になり、送信は矢印だけです。</translation>
-    </message>
-    <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>送信後にキーボードを閉じる</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>オンのとき、メッセージを送るとキーボードが閉じ、会話全体が見えます。オフのときは次のメッセージのために開いたままです。</translation>
-    </message>
-    <message>
         <source>Reactions as pictures (emoji)</source>
         <translation>リアクションを画像で表示 (絵文字)</translation>
     </message>
@@ -293,10 +277,6 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>オンにすると、チャット一覧がルームの Space の頭文字をその画像の上に、その Space の色で描きます。色は Space 一覧で Space を長押しして設定します。</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>オン: 部屋に入ると最後に読んだメッセージに移動し、新しいものはその下に並びます。履歴の途中で部屋を離れた場合は、その位置に戻ります。位置はアプリを閉じるまで保持されます。オフ: 部屋は最新のメッセージで開き、読み終えた位置を示す線は上にスクロールして探します。</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -372,6 +352,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>テキストをファイルとして送信</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>動作</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>ルームのイベント</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>参加と退出を表示</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>招待、削除、追放は常に表示されます。</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>表示名の変更を表示</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>プロフィール画像の変更を表示</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>閲覧</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>読み終えた位置からルームを開く</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>オン: 部屋に入ると最後に読んだメッセージに移動し、新しいものはその下に並びます。履歴の途中で部屋を離れた場合は、その位置に戻ります。位置はアプリを閉じるまで保持されます。オフ: 部屋は最新のメッセージで開き、読み終えた位置を示す線は上にスクロールして探します。</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>入力</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Enter キーで送信</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>オンのとき、Enter キーがメッセージを送信し、入力欄の横の矢印もそのまま使えます。改行はその矢印を長押しするか、ハードウェアキーボードの Shift と Enter で入力します。オフのときは Enter キーが改行になり、送信は矢印だけです。</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>送信後にキーボードを閉じる</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>オンのとき、メッセージを送るとキーボードが閉じ、会話全体が見えます。オフのときは次のメッセージのために開いたままです。</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>リスト</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Space リストで起動</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>オフのとき、アプリはチャットリストで開きます。どちらでも、もう一方のリストは横に一度スワイプするだけです。次回起動時から有効です。</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>チャットリストの並び順</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>アクティビティ順</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>名前順</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>未読のルームを先頭に</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>お気に入りは常に上、優先度低は常に下です。それぞれの中で、未読メッセージのあるルームが先に並びます。</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Space リストの並び順</translation>
     </message>
 </context>
 <context>
@@ -2379,10 +2454,6 @@
         <translation>ユーザーを検証</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>起動時のページにする</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>アカウント</translation>
     </message>
@@ -2583,10 +2654,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 のメンバー状態が変わりました</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 がプロフィールを変更しました</translation>
     </message>
     <message>
         <source>Discard</source>
@@ -2884,6 +2951,18 @@
     <message>
         <source>Forward link</source>
         <translation>リンクを転送</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 が表示名を %2 に変更しました</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 が表示名を削除しました</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 がプロフィール画像を変更しました</translation>
     </message>
 </context>
 <context>
@@ -3634,10 +3713,6 @@
     <message>
         <source>Create space</source>
         <translation>Space を作成</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>起動時のページにする</translation>
     </message>
     <message>
         <source>Delete space</source>

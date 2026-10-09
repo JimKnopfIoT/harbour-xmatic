@@ -125,6 +125,10 @@
         <source>Encryption</source>
         <translation>التعمية</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>السلوك</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -232,26 +236,6 @@
         <translation>إعادة الألوان إلى الافتراضي</translation>
     </message>
     <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>افتح الغرفة عند موضع توقّف قراءتك</translation>
-    </message>
-    <message>
-        <source>Send with the return key</source>
-        <translation>الإرسال بمفتاح Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>عند التشغيل، يرسل مفتاح Enter الرسالة ويبقى السهم بجوار الحقل عاملًا. يأتي فاصل السطر عندئذٍ من الضغط المطوّل على ذلك السهم، أو من Shift مع Enter على لوحة مفاتيح فعلية. عند الإيقاف، يصنع Enter فاصل سطر ويرسل السهم وحده.</translation>
-    </message>
-    <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>إخفاء لوحة المفاتيح بعد الإرسال</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>عند التشغيل، تُغلق لوحة المفاتيح بمجرد خروج الرسالة وتعود المحادثة كاملة. عند الإيقاف، تبقى مفتوحة للرسالة التالية.</translation>
-    </message>
-    <message>
         <source>Reactions as pictures (emoji)</source>
         <translation>التفاعلات كصور (إيموجي)</translation>
     </message>
@@ -298,10 +282,6 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>عند التفعيل، تُرسم أول حروف اسم المساحة فوق صورة الغرفة في قائمة المحادثات، بلون تلك المساحة. يُضبط اللون من قائمة المساحات بالضغط المطوّل على المساحة.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>مُفعَّل: عند دخول غرفة تصل إلى آخر رسالة قرأتها، والرسائل الجديدة تحتها — وتعود إلى الموضع الذي كنت فيه إن غادرت الغرفة في منتصف سجلّها. يُحفَظ هذا الموضع حتى إغلاق التطبيق. معطَّل: تُفتح الغرفة عند أحدث رسالة، وتجد الخط الذي يحدّد موضع توقّفك بالتمرير إلى الأعلى.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -377,6 +357,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>إرسال النص كملف</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>السلوك</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>أحداث الغرفة</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>اعرض الانضمام والمغادرة</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>تُعرض الدعوات والإزالات والحظر دائمًا.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>اعرض تغييرات الاسم المعروض</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>اعرض تغييرات صورة الملف الشخصي</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>القراءة</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>افتح الغرفة عند موضع توقّف قراءتك</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>مُفعَّل: عند دخول غرفة تصل إلى آخر رسالة قرأتها، والرسائل الجديدة تحتها — وتعود إلى الموضع الذي كنت فيه إن غادرت الغرفة في منتصف سجلّها. يُحفَظ هذا الموضع حتى إغلاق التطبيق. معطَّل: تُفتح الغرفة عند أحدث رسالة، وتجد الخط الذي يحدّد موضع توقّفك بالتمرير إلى الأعلى.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>الكتابة</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>الإرسال بمفتاح Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>عند التشغيل، يرسل مفتاح Enter الرسالة ويبقى السهم بجوار الحقل عاملًا. يأتي فاصل السطر عندئذٍ من الضغط المطوّل على ذلك السهم، أو من Shift مع Enter على لوحة مفاتيح فعلية. عند الإيقاف، يصنع Enter فاصل سطر ويرسل السهم وحده.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>إخفاء لوحة المفاتيح بعد الإرسال</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>عند التشغيل، تُغلق لوحة المفاتيح بمجرد خروج الرسالة وتعود المحادثة كاملة. عند الإيقاف، تبقى مفتوحة للرسالة التالية.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>القوائم</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>ابدأ بقائمة المساحات</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>عند الإيقاف يفتح التطبيق على قائمة المحادثات. وفي الحالتين تبعد القائمة الأخرى سحبة واحدة إلى الجانب. يسري عند التشغيل التالي.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>ترتيب قائمة المحادثات</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>حسب النشاط</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>حسب الاسم</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>الغرف غير المقروءة أولًا</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>تبقى المفضلة في الأعلى والأولوية المنخفضة في الأسفل؛ وداخل كل مجموعة تأتي الغرف التي فيها رسائل غير مقروءة أولًا.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>ترتيب قائمة المساحات</translation>
     </message>
 </context>
 <context>
@@ -2394,10 +2469,6 @@
         <translation>التحقق من المستخدم</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>اجعلها صفحة البداية</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>الحساب</translation>
     </message>
@@ -2603,10 +2674,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>تغيّرت عضوية %1</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>غيّر %1 ملفه الشخصي</translation>
     </message>
     <message>
         <source>Discard</source>
@@ -2904,6 +2971,18 @@
     <message>
         <source>Forward link</source>
         <translation>إعادة توجيه الرابط</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>غيّر %1 اسمه المعروض إلى %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>أزال %1 اسمه المعروض</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>غيّر %1 صورة ملفه الشخصي</translation>
     </message>
 </context>
 <context>
@@ -3659,10 +3738,6 @@
     <message>
         <source>Create space</source>
         <translation>إنشاء مساحة</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>اجعلها صفحة البداية</translation>
     </message>
     <message>
         <source>Delete space</source>

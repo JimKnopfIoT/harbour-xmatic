@@ -122,6 +122,10 @@
         <source>Push notifications</source>
         <translation>Push oznámení</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Chování</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -245,18 +249,6 @@
         <translation>Obnovit výchozí barvy</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Skrýt klávesnici po odeslání</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Zapnuto: klávesnice se zavře, jakmile zpráva odejde, a konverzace je zase celá vidět. Vypnuto: zůstane otevřená pro další zprávu.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Otevřít místnost tam, kde jsi přestal číst</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Načíst balíček emoji</translation>
     </message>
@@ -281,24 +273,12 @@
         <translation>Reakce jako obrázky (emoji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Odesílat klávesou Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Zapnuto, klávesa Enter odešle zprávu; šipka vedle pole funguje dál. Nový řádek pak vznikne podržením té šipky nebo Shiftem a Enterem na hardwarové klávesnici. Vypnuto, klávesa Enter vloží nový řádek a odesílá jen šipka.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Označit prostor na obrázku</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Zapnuto, seznam chatů vykreslí počáteční písmeno prostoru přes obrázek místnosti, barvou daného prostoru. Barvu nastavíš v seznamu prostorů podržením prostoru.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Zapnuto: po vstupu do místnosti se dostaneš ke své poslední přečtené zprávě, nové jsou pod ní — a zpět na místo, kde jsi byl, pokud jsi místnost opustil uprostřed historie. Toto místo se pamatuje, dokud aplikaci nezavřeš. Vypnuto: místnost se otevře u nejnovější zprávy a čáru označující, kde jsi skončil, najdeš posunutím nahoru.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -374,6 +354,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Odeslat text jako soubor</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Chování</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Události místnosti</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Zobrazovat příchody a odchody</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Pozvánky, odebrání a zákazy se zobrazují vždy.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Zobrazovat změny zobrazovaného jména</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Zobrazovat změny profilového obrázku</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Čtení</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Otevřít místnost tam, kde jsi přestal číst</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Zapnuto: po vstupu do místnosti se dostaneš ke své poslední přečtené zprávě, nové jsou pod ní — a zpět na místo, kde jsi byl, pokud jsi místnost opustil uprostřed historie. Toto místo se pamatuje, dokud aplikaci nezavřeš. Vypnuto: místnost se otevře u nejnovější zprávy a čáru označující, kde jsi skončil, najdeš posunutím nahoru.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Psaní</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Odesílat klávesou Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Zapnuto, klávesa Enter odešle zprávu; šipka vedle pole funguje dál. Nový řádek pak vznikne podržením té šipky nebo Shiftem a Enterem na hardwarové klávesnici. Vypnuto, klávesa Enter vloží nový řádek a odesílá jen šipka.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Skrýt klávesnici po odeslání</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Zapnuto: klávesnice se zavře, jakmile zpráva odejde, a konverzace je zase celá vidět. Vypnuto: zůstane otevřená pro další zprávu.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Seznamy</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Začínat seznamem prostorů</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Vypnuto: aplikace se otevře se seznamem chatů. V obou případech je druhý seznam jedno přejetí stranou. Platí od příštího spuštění.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Pořadí seznamu chatů</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Podle aktivity</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Podle názvu</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Nepřečtené místnosti nahoře</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Oblíbené zůstávají nahoře a nízká priorita dole; uvnitř každé skupiny jsou nahoře místnosti s nepřečtenými zprávami.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Pořadí seznamu prostorů</translation>
     </message>
 </context>
 <context>
@@ -2373,10 +2448,6 @@
         <translation>O xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Nastavit jako úvodní stránku</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Účet</translation>
     </message>
@@ -2567,10 +2638,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 změnil členství</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 změnil svůj profil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2892,6 +2959,18 @@
     <message>
         <source>Forward link</source>
         <translation>Přeposlat odkaz</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 změnil(a) zobrazované jméno na %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 odstranil(a) zobrazované jméno</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 změnil(a) profilový obrázek</translation>
     </message>
 </context>
 <context>
@@ -3644,10 +3723,6 @@
     <message>
         <source>Create space</source>
         <translation>Vytvořit prostor</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Nastavit jako úvodní stránku</translation>
     </message>
     <message>
         <source>Delete space</source>

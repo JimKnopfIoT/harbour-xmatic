@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Push notifications</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Behaviour</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Reset colours to defaults</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Hide the keyboard after sending</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Open a room where you stopped reading</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Read in an emoji pack</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reactions as pictures (emoji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Send with the return key</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Mark the space on the picture</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Send text as a file</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Behaviour</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Room events</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Show join and leave messages</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Invitations, removals and bans are always shown.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Show display name changes</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Show profile picture changes</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Reading</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Open a room where you stopped reading</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Writing</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Send with the return key</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Hide the keyboard after sending</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Lists</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Start with the space list</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Chat list order</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>By activity</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>By name</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Unread rooms first</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Space list order</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>About xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Make start page</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Account</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 changed membership</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 changed their profile</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Forward link</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 changed their display name to %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 removed their display name</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 changed their profile picture</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Create space</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Make start page</translation>
     </message>
     <message>
         <source>Delete space</source>

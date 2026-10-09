@@ -253,7 +253,7 @@ public:
     int unreadRooms() const { return m_rooms.unreadRooms(); }
     int unreadMessages() const { return m_rooms.unreadMessages(); }
     bool unreadCapped() const { return m_rooms.unreadCapped(); }
-    QObject *spaces() { return &m_spaces; }
+    QObject *spaces() { return &m_spacesSorted; }
     QObject *spaceRooms() { return &m_spaceRooms; }
     QObject *spaceMarkers() { return m_spaceMarkers; }
     int spaceCounts() const { return m_spaceCountsRevision; }
@@ -1035,6 +1035,7 @@ private:
     RoomListModel m_rooms;
     RoomSortModel m_roomsSorted;
     RoomListModel m_spaces;
+    RoomSortModel m_spacesSorted;
     RoomListModel m_spaceRooms;
     VoiceRecorder *m_recorder = nullptr;
     CallEngine *m_calls = nullptr;

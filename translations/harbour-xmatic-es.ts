@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Notificaciones push</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Comportamiento</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Restablecer los colores</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Ocultar el teclado tras enviar</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Activado, el teclado se cierra en cuanto sale el mensaje y la conversación vuelve a verse entera. Desactivado, sigue abierto para el siguiente.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Abrir la sala donde dejaste de leer</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Cargar un paquete de emojis</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reacciones como imágenes (emojis)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Enviar con la tecla Intro</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Activado, la tecla Intro envía el mensaje; la flecha junto al campo sigue funcionando. Un salto de línea se consigue entonces manteniendo pulsada esa flecha, o con Mayús e Intro en un teclado físico. Desactivado, la tecla Intro hace un salto de línea y solo envía la flecha.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Marcar el espacio en la imagen</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Activado, la lista de chats dibuja la inicial del espacio de la sala sobre su imagen, en el color de ese espacio. El color se ajusta en la lista de espacios manteniendo pulsado el espacio.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Activado: al entrar en una sala llegas a tu último mensaje leído, con los nuevos debajo, y al punto en el que estabas si dejaste la sala en mitad de su historial. Ese punto se conserva hasta que cierres la aplicación. Desactivado: la sala se abre en su mensaje más reciente y la línea que marca dónde lo dejaste se encuentra subiendo.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Enviar el texto como archivo</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Comportamiento</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Eventos de la sala</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Mostrar entradas y salidas</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Las invitaciones, expulsiones y bloqueos se muestran siempre.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Mostrar cambios de nombre visible</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Mostrar cambios de foto de perfil</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Lectura</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Abrir la sala donde dejaste de leer</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Activado: al entrar en una sala llegas a tu último mensaje leído, con los nuevos debajo, y al punto en el que estabas si dejaste la sala en mitad de su historial. Ese punto se conserva hasta que cierres la aplicación. Desactivado: la sala se abre en su mensaje más reciente y la línea que marca dónde lo dejaste se encuentra subiendo.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Escritura</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Enviar con la tecla Intro</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Activado, la tecla Intro envía el mensaje; la flecha junto al campo sigue funcionando. Un salto de línea se consigue entonces manteniendo pulsada esa flecha, o con Mayús e Intro en un teclado físico. Desactivado, la tecla Intro hace un salto de línea y solo envía la flecha.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Ocultar el teclado tras enviar</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Activado, el teclado se cierra en cuanto sale el mensaje y la conversación vuelve a verse entera. Desactivado, sigue abierto para el siguiente.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Listas</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Empezar con la lista de espacios</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Desactivado, la app se abre con la lista de chats. En ambos casos la otra lista está a un deslizamiento lateral. Se aplica en el próximo inicio.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Orden de la lista de chats</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Por actividad</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Por nombre</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Salas no leídas primero</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Los favoritos quedan arriba y la prioridad baja abajo; dentro de cada grupo, las salas con mensajes no leídos van primero.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Orden de la lista de espacios</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Acerca de xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Poner como página de inicio</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Cuenta</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 cambió su pertenencia</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 cambió su perfil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Reenviar enlace</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 cambió su nombre visible a %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 eliminó su nombre visible</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 cambió su foto de perfil</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Crear espacio</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Poner como página de inicio</translation>
     </message>
     <message>
         <source>Delete space</source>

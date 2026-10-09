@@ -260,16 +260,6 @@ Page {
                 onClicked: page.resetAll()
             }
 
-            // The line itself is not a setting - it costs nothing and appears only where
-            // something is unread. What differs is where the room opens.
-            TextSwitch {
-                text: qsTr("Open a room where you stopped reading")
-                description: qsTr("On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.")
-                checked: settings.jumpToReadMarker
-                automaticCheck: false
-                onClicked: settings.jumpToReadMarker = !settings.jumpToReadMarker
-            }
-
             // Where a room is in no space nothing is drawn, so this only
             // matters to somebody who sorts rooms into spaces.
             TextSwitch {
@@ -278,22 +268,6 @@ Page {
                 checked: settings.spaceInitials
                 automaticCheck: false
                 onClicked: settings.spaceInitials = !settings.spaceInitials
-            }
-
-            TextSwitch {
-                text: qsTr("Send with the return key")
-                description: qsTr("On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.")
-                checked: settings.sendByEnter
-                automaticCheck: false
-                onClicked: settings.sendByEnter = !settings.sendByEnter
-            }
-
-            TextSwitch {
-                text: qsTr("Hide the keyboard after sending")
-                description: qsTr("On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.")
-                checked: settings.hideKeyboardOnSend
-                automaticCheck: false
-                onClicked: settings.hideKeyboardOnSend = !settings.hideKeyboardOnSend
             }
 
             TextSwitch {

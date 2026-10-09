@@ -42,6 +42,7 @@ SOURCES += \
     src/harbour-xmatic.cpp \
     src/appearancesettings.cpp \
     src/appservice.cpp \
+    src/behavioursettings.cpp \
     src/appsettings.cpp \
     src/instancelock.cpp \
     src/pushwake.cpp \
@@ -81,6 +82,7 @@ SOURCES += \
 HEADERS += \
     src/appearancesettings.h \
     src/appservice.h \
+    src/behavioursettings.h \
     src/appsettings.h \
     src/difflistmodel.h \
     src/emojiset.h \
@@ -310,6 +312,7 @@ DISTFILES += \
     qml/pages/AppearancePage.qml \
     qml/pages/EmojiFolderPage.qml \
     qml/pages/PrivacyPage.qml \
+    qml/pages/BehaviourPage.qml \
     qml/pages/PushPage.qml \
     qml/pages/ColorField.qml \
     qml/pages/VerificationPage.qml \

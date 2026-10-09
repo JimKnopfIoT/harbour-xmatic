@@ -69,6 +69,20 @@ Page {
     // The same for a system line, where the picture only marks who acted.
     readonly property real systemAvatarSize: Theme.iconSizeExtraSmall
 
+    // Which room events get a line; the switches are on the behaviour page.
+    function systemShown(kind) {
+        switch (kind) {
+        case "member.joined":
+        case "member.left":     return behaviour.showJoinLeaves
+        case "profile.name":    return behaviour.showDisplayNameChanges
+        case "profile.avatar":  return behaviour.showAvatarChanges
+        case "profile.both":    return behaviour.showDisplayNameChanges && behaviour.showAvatarChanges
+        case "profile":
+        case "member.none":     return false
+        default:                return true
+        }
+    }
+
     // Whether new messages should scroll the view along.
     property bool followTail: true
 
@@ -1588,9 +1602,9 @@ Page {
                                                                       function(key) { return matrix.emojiSource(key) })
 
                 // Calls and membership changes show as a centred line so a room made of them
-                // is not empty. Pure profile changes collapse but stay, or indices drift.
+                // is not empty. What the behaviour page hides collapses but stays, or indices drift.
                 readonly property bool isSystem: model.kind === "system"
-                                                 && model.system !== "profile"
+                                                 && page.systemShown(model.system)
 
                 // Localised here, not in the core: the token comes from Rust, the
                 // wording and language belong to the UI.
@@ -1601,6 +1615,8 @@ Page {
                               ? model.name : model.senderName
                     var by = model.senderName
                     var line = ""
+                    var before = (model.previousName && model.previousName.length > 0)
+                                 ? model.previousName : model.sender
                     switch (model.system) {
                     case "call":            return qsTr("Call", "timeline system line, a noun")
                     case "member.joined":   line = qsTr("%1 joined").arg(who); break
@@ -1613,7 +1629,13 @@ Page {
                     case "member.declined": line = qsTr("%1 declined the invitation").arg(who); break
                     case "member.knocked":  line = qsTr("%1 asked to join").arg(who); break
                     case "member":          line = qsTr("%1 changed membership").arg(who); break
-                    case "profile":         line = qsTr("%1 changed their profile").arg(who); break
+                    case "profile.name":
+                    case "profile.both":
+                        line = model.name && model.name.length > 0
+                               ? qsTr("%1 changed their display name to %2").arg(before).arg(model.name)
+                               : qsTr("%1 removed their display name").arg(before)
+                        break
+                    case "profile.avatar":  line = qsTr("%1 changed their profile picture").arg(by); break
                     default:                return ""
                     }
                     // Only where the core vouches for one - see member_reason().
