@@ -1941,10 +1941,6 @@
         <translation>Kotipalvelimellesi kerrotaan osoite push-palvelussa, ja se lähettää yhdyskäytävälle jokaisesta ilmoituksesta huoneen ja viestin tunnisteen. Ei viestin tekstiä: push kantaa vain tunnisteita, ja tämä laite hakee ja purkaa viestin itse. Osoite on salaisuus — sen haltija voi lähettää tähän puhelimeen ilmoituksen.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Push-palvelin</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (julkinen)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Ei mitään</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Käytössä %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Push-palvelimellasi ei ole yhdyskäytävää. Valitse toinen.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Tarkistetaan rekisteröinnin jälkeen. ntfy:ssä on, Mozillassa ei.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Ei mitään. Kotipalvelin ei vielä tavoita tätä laitetta.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>jakelija</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Mukana tuleva</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Mukana tuleva (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 ei tarjoa Matrix-yhdyskäytävää.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 ei ole vielä vastannut. Kysytään uudelleen.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Rekisteröinnin jälkeen %1 kertoo sen.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 ei pysty toimittamaan Matrix-ilmoituksia.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Aseta %1 käyttämään ntfy:tä tai käytä UnifiedPush-yhdyskäytävää.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Käytä UnifiedPush-yhdyskäytävää</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Rekisteröity (%1). Kotipalvelin ei tavoita tätä laitetta.</translation>
     </message>
 </context>
 <context>

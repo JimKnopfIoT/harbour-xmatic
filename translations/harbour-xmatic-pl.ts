@@ -1944,10 +1944,6 @@
         <translation>Twój serwer dostaje adres w usłudze push i przy każdym powiadomieniu wysyła do bramy identyfikator pokoju i wiadomości. Bez treści: push niesie tylko identyfikatory, a wiadomość to urządzenie pobiera i odszyfrowuje samo. Ten adres to sekret — kto go ma, może wysłać temu telefonowi powiadomienie.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Serwer push</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (publiczna)</translation>
     </message>
@@ -1958,18 +1954,6 @@
     <message>
         <source>None</source>
         <translation>Brak</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Używa %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Twój serwer push nie ma bramy. Wybierz inną.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Sprawdzane po rejestracji. ntfy ma, Mozilla nie.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1990,6 +1974,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Brak. Serwer domowy nie może jeszcze dotrzeć do tego urządzenia.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>dystrybutora</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Dostarczona</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Dostarczona przez %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nie ma bramy Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Na razie brak odpowiedzi od %1. Pytam ponownie.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Ustalana przez %1 po rejestracji.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 nie może dostarczać powiadomień Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Przełącz %1 na ntfy albo użyj bramy UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Użyj bramy UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Zarejestrowano przez %1. Serwer domowy nie może dotrzeć do tego urządzenia.</translation>
     </message>
 </context>
 <context>

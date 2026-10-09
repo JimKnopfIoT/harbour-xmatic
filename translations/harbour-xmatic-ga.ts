@@ -1944,10 +1944,6 @@
         <translation>Insítear seoladh ag an tseirbhís bhrú do d&apos;fhreastalaí, agus seolann sé aitheantóir seomra agus teachtaireachta chuig an ngeata do gach fógra. Gan téacs: ní iompraíonn an brú ach aitheantóirí agus faigheann agus díchriptíonn an gléas seo an teachtaireacht é féin. Is rún é an seoladh sin — is féidir le duine ar bith atá aige fógra a sheoladh chuig an bhfón seo.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Freastalaí brú</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (poiblí)</translation>
     </message>
@@ -1958,18 +1954,6 @@
     <message>
         <source>None</source>
         <translation>Dada</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Úsáideann sé %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Níl geata ag d&apos;fhreastalaí brú. Roghnaigh ceann eile.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Seiceáiltear é tar éis clárú. Tá ceann ag ntfy, níl ag Mozilla.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1990,6 +1974,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Dada. Ní féidir leis an bhfreastalaí baile teacht ar an ngléas seo fós.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>an dáileoir</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Soláthraithe</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Soláthraithe ag %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>Níl geata Matrix ag %1.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Gan freagra ó %1 fós. Ag fiafraí arís.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Aimsithe ag %1 tar éis clárú.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>Ní féidir le %1 fógraí Matrix a sheachadadh.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Athraigh %1 go ntfy, nó úsáid an geata UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Úsáid geata UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Cláraithe ag %1. Ní féidir leis an bhfreastalaí baile teacht ar an ngléas seo.</translation>
     </message>
 </context>
 <context>

@@ -1947,10 +1947,6 @@
         <translation>Is-server tiegħek jingħata indirizz mas-servizz push, u għal kull notifika jibgħat lill-gateway identifikatur tal-kamra u tal-messaġġ. Ebda test: il-push iġorr identifikaturi biss u dan l-apparat iġib u jiddeċifra l-messaġġ waħdu. Dak l-indirizz huwa sigriet — min għandu jista&apos; jibgħat notifika lil dan it-telefon.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Server push</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (pubbliku)</translation>
     </message>
@@ -1961,18 +1957,6 @@
     <message>
         <source>None</source>
         <translation>Xejn</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Juża %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Is-server push tiegħek m&apos;għandux gateway. Agħżel ieħor.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Jiġi ċċekkjat wara r-reġistrazzjoni. ntfy għandu wieħed, Mozilla le.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1993,6 +1977,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Xejn. Is-server tad-dar għadu ma jistax jilħaq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>id-distributur</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Ipprovdut</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Ipprovdut (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 m&apos;għandux gateway Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 għadu ma weġibx. Qed nerġa&apos; nistaqsi.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Wara r-reġistrazzjoni, %1 isibu.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 ma jistax iwassal notifiki Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Biddel %1 għal ntfy, jew uża l-gateway UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Uża l-gateway UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Irreġistrat (%1). Is-server tad-dar ma jistax jilħaq dan l-apparat.</translation>
     </message>
 </context>
 <context>

@@ -220,12 +220,11 @@ async fn push_report(state: &Arc<State>, forced: Option<&str>, error: Option<Str
         "registered": registered,
         "gateway": gateway,
         "gatewayMode": picked.mode(),
-        // Null until a probe answered: unknown is not "none".
-        "serverGateway": match &pusher {
-            Some(pusher) if !pusher.provisional => json!(pusher.gateway.is_some()),
-            _ => Value::Null,
-        },
+        // "yes", "no" or "unknown" once registered; null before.
+        "serverGateway": endpoint.as_ref().and_then(|endpoint| endpoint.matrix_support()),
         "serverGatewayUrl": server_gateway,
+        // Host only: the rest of the address is a secret.
+        "pushService": endpoint.as_ref().map(|endpoint| crate::push::host(&endpoint.url)),
     });
     if let Some(error) = error {
         data["error"] = json!(error);

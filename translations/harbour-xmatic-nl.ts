@@ -1941,10 +1941,6 @@
         <translation>Je thuisserver krijgt een adres bij de pushdienst te horen en stuurt de gateway voor elke melding een kamer- en berichtidentificatie. Geen berichttekst: de push draagt alleen identificaties en dit apparaat haalt en ontsleutelt het bericht zelf. Dat adres is een geheim — wie het heeft, kan deze telefoon een melding sturen.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Pushserver</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (openbaar)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Geen</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Gebruikt %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Je pushserver heeft geen gateway. Kies een andere.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Wordt na registratie gecontroleerd. ntfy heeft er een, Mozilla niet.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Geen. De homeserver kan dit apparaat nog niet bereiken.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>de distributeur</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Meegeleverd</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Meegeleverd via %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 heeft geen Matrix-gateway.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Nog geen antwoord van %1. Opnieuw vragen.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Gevonden via %1 na registratie.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 kan geen Matrix-meldingen afleveren.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Zet %1 op ntfy, of gebruik de UnifiedPush-gateway.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>UnifiedPush-gateway gebruiken</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Geregistreerd via %1. De homeserver kan dit apparaat niet bereiken.</translation>
     </message>
 </context>
 <context>

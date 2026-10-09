@@ -1947,10 +1947,6 @@
         <translation>Tvoj strežnik izve naslov pri potisni storitvi in za vsako obvestilo prehodu pošlje določilnik sobe in sporočila. Brez besedila: potisk nosi le določilnike, sporočilo pa ta naprava pridobi in odšifrira sama. Ta naslov je skrivnost — kdor ga ima, lahko temu telefonu pošlje obvestilo.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Potisni strežnik</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (javni)</translation>
     </message>
@@ -1961,18 +1957,6 @@
     <message>
         <source>None</source>
         <translation>Noben</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Uporablja %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Tvoj potisni strežnik nima prehoda. Izberi drugega.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Preveri se po registraciji. ntfy ga ima, Mozilla ne.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1993,6 +1977,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Noben. Domači strežnik te naprave še ne doseže.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>razpečevalnika</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Priložen</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Priložen prek %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nima prehoda za Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Od %1 še ni odgovora. Sprašujem znova.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Najde se prek %1 po registraciji.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 ne more dostavljati obvestil Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Preklopi %1 na ntfy ali uporabi prehod UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Uporabi prehod UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registrirano prek %1. Domači strežnik te naprave ne doseže.</translation>
     </message>
 </context>
 <context>

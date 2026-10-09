@@ -1944,10 +1944,6 @@
         <translation>Твоему серверу сообщается адрес в службе push, и он отправляет шлюзу идентификатор комнаты и сообщения для каждого уведомления. Без текста сообщения: push несёт только идентификаторы, а само сообщение это устройство получает и расшифровывает само. Этот адрес — секрет: кто им владеет, может послать этому телефону уведомление.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Push-сервер</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (публичный)</translation>
     </message>
@@ -1958,18 +1954,6 @@
     <message>
         <source>None</source>
         <translation>Нет</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Использует %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>У твоего push-сервера нет шлюза. Выбери другой.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Проверяется после регистрации. У ntfy есть, у Mozilla нет.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1990,6 +1974,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Нет. Домашний сервер пока не может достучаться до этого устройства.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>распространитель</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Предоставленный</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Предоставлен через %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 не предоставляет шлюз Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Ответа от %1 пока нет. Спрашиваем снова.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Определяется через %1 после регистрации.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 не может доставлять уведомления Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Переключи %1 на ntfy или используй шлюз UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Использовать шлюз UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Зарегистрировано через %1. Домашний сервер не может достучаться до этого устройства.</translation>
     </message>
 </context>
 <context>

@@ -1944,10 +1944,6 @@
         <translation>Tavo serveriui pranešamas adresas push tarnyboje, ir jis kiekvienam pranešimui siunčia sietuvui kambario ir žinutės identifikatorių. Jokio teksto: push neša tik identifikatorius, o žinutę šis įrenginys parsisiunčia ir iššifruoja pats. Tas adresas yra paslaptis — kas jį turi, gali šiam telefonui siųsti pranešimą.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Push serveris</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (viešas)</translation>
     </message>
@@ -1958,18 +1954,6 @@
     <message>
         <source>None</source>
         <translation>Nėra</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Naudoja %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Tavo push serveris neturi sietuvo. Pasirink kitą.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Tikrinama po registracijos. ntfy turi, Mozilla ne.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1990,6 +1974,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Nėra. Namų serveris dar negali pasiekti šio įrenginio.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>platintoją</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Pateiktas</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Pateiktas per %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 neturi Matrix sietuvo.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 dar neatsakė. Klausiama dar kartą.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Nustatomas per %1 po registracijos.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 negali pristatyti Matrix pranešimų.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Perjunk %1 į ntfy arba naudok UnifiedPush sietuvą.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Naudoti UnifiedPush sietuvą</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Užregistruota per %1. Namų serveris negali pasiekti šio įrenginio.</translation>
     </message>
 </context>
 <context>

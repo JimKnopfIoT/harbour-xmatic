@@ -1953,10 +1953,6 @@
         <translation>يُخبَر خادمك المنزلي بعنوان لدى خدمة الإشعارات، ويرسل إلى البوابة معرّف الغرفة والرسالة مع كل إشعار. لا نص رسالة: يحمل الدفع معرّفات فقط، وهذا الجهاز يجلب الرسالة ويفكّ تعميتها بنفسه. ذلك العنوان سرّ - من يملكه يستطيع إرسال إشعار إلى هذا الهاتف.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>خادم الإشعارات</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (عامة)</translation>
     </message>
@@ -1967,18 +1963,6 @@
     <message>
         <source>None</source>
         <translation>لا شيء</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>تستخدم %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>لا بوابة في خادم الإشعارات لديك. اختر غيرها.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>يُتحقَّق منها بعد التسجيل. لدى ntfy واحدة، وليس لدى Mozilla.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1999,6 +1983,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>لا شيء. لا يستطيع الخادم المنزلي الوصول إلى هذا الجهاز بعد.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>الموزّع</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>مرفقة</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>مرفقة عبر %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>لا بوابة Matrix لدى %1.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>لا رد من %1 بعد. جارٍ السؤال مجددًا.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>تُعرف عبر %1 بعد التسجيل.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>لا يستطيع %1 توصيل إشعارات Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>بدّل %1 إلى ntfy، أو استخدم بوابة UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>استخدام بوابة UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>مسجَّل عبر %1. لا يستطيع الخادم المنزلي الوصول إلى هذا الجهاز.</translation>
     </message>
 </context>
 <context>

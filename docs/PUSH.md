@@ -34,8 +34,10 @@ The homeserver doesn't push to your phone's address directly. It posts to a
 Matrix push gateway, which forwards. After you switch push on, xmatic asks
 which one to use, and registers with the distributor only once you've picked:
 
-- **Push server**: the gateway built into your push server, if it has one.
-  ntfy does; Mozilla's service doesn't. xmatic finds out after registering.
+- **Provided**: the gateway built into the push service your distributor
+  uses, if it has one. ntfy does; Mozilla's doesn't, and the page then offers
+  the public gateway or switching Foghorn to ntfy. xmatic finds out after
+  registering.
 - **UnifiedPush (public)**: `matrix.gateway.unifiedpush.org`.
 - **Custom**: a URL you enter.
 

@@ -23,12 +23,12 @@ address above, and no file of theirs has been changed for this project.
 - eyeball 0.8.8 — MPL-2.0
 - eyeball-im 0.9.1 — MPL-2.0
 - eyeball-im-util 0.11.0 — MPL-2.0
-- foghorn-common 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 3473598b1e027b3c6709335068f31fae963000c2)
+- foghorn-common 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 58bc3b60de6264adfd395ab90fab3b5842af23d0)
 - htmlescape 0.3.1 — Apache-2.0 / MIT / MPL-2.0
 - imbl 7.0.2 — MPL-2.0+
 - imbl-sized-chunks 0.2.0 — MPL-2.0+
-- leghorn 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 3473598b1e027b3c6709335068f31fae963000c2)
-- leghorn-build 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 3473598b1e027b3c6709335068f31fae963000c2)
+- leghorn 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 58bc3b60de6264adfd395ab90fab3b5842af23d0)
+- leghorn-build 0.5.0 — MPL-2.0 (git: https://git.agnos.is/projectmoon/foghorn, commit 58bc3b60de6264adfd395ab90fab3b5842af23d0)
 - readlock 0.1.11 — MPL-2.0
 - readlock-tokio 0.1.6 — MPL-2.0
 

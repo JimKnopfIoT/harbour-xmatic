@@ -1944,10 +1944,6 @@
         <translation>Serverul tău află o adresă la serviciul push și trimite porții un identificator de cameră și de mesaj pentru fiecare notificare. Fără text: push-ul poartă doar identificatori, iar mesajul este preluat și decriptat de acest dispozitiv. Adresa este un secret — cine o are poate trimite o notificare acestui telefon.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Server push</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (publică)</translation>
     </message>
@@ -1958,18 +1954,6 @@
     <message>
         <source>None</source>
         <translation>Niciuna</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Folosește %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Serverul tău push nu are poartă. Alege alta.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Se verifică după înregistrare. ntfy are una, Mozilla nu.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1990,6 +1974,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Niciuna. Serverul nu poate încă ajunge la acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>distribuitorul</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Inclusă</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Inclusă (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nu are poartă Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 nu a răspuns încă. Se întreabă din nou.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>După înregistrare, %1 o găsește.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 nu poate livra notificări Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Comută %1 pe ntfy sau folosește poarta UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Folosește poarta UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Înregistrat (%1). Serverul nu poate ajunge la acest dispozitiv.</translation>
     </message>
 </context>
 <context>

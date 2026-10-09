@@ -1944,10 +1944,6 @@
         <translation>Tvůj server se dozví adresu u služby push a ke každému oznámení pošle bráně identifikátor místnosti a zprávy. Žádný text: push nese jen identifikátory a zprávu si toto zařízení stáhne a rozšifruje samo. Ta adresa je tajemství — kdo ji má, může tomuto telefonu poslat oznámení.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Push server</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (veřejná)</translation>
     </message>
@@ -1958,18 +1954,6 @@
     <message>
         <source>None</source>
         <translation>Žádná</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Používá %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Tvůj push server nemá bránu. Vyber jinou.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Ověří se po registraci. ntfy ji má, Mozilla ne.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1990,6 +1974,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Žádná. Domovský server zatím na toto zařízení nedosáhne.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>distributora</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Dodaná</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Dodaná přes %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nemá bránu pro Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Zatím žádná odpověď od %1. Ptám se znovu.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Zjistí se přes %1 po registraci.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 neumí doručovat oznámení z Matrixu.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Přepni %1 na ntfy, nebo použij bránu UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Použít bránu UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registrováno přes %1. Domovský server na toto zařízení nedosáhne.</translation>
     </message>
 </context>
 <context>

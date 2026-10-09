@@ -1941,10 +1941,6 @@
         <translation>Sinu serverile öeldakse aadress push-teenuses ja ta saadab lüüsile iga teavituse kohta toa ja sõnumi tunnuse. Sõnumi teksti mitte: push kannab ainult tunnuseid ja sõnumi hangib ning dekrüpteerib see seade ise. See aadress on saladus — kellel see on, võib sellele telefonile teavituse saata.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Push-server</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (avalik)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Puudub</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Kasutab %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Sinu push-serveril pole lüüsi. Vali teine.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Kontrollitakse pärast registreerimist. ntfy-l on, Mozillal pole.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Puudub. Koduserver ei saa seda seadet veel kätte.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>jaotur</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Kaasasolev</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Kaasasolev (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 ei paku Matrixi lüüsi.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 pole veel vastanud. Küsin uuesti.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Pärast registreerimist annab %1 selle teada.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 ei saa Matrixi teavitusi edastada.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Lülita %1 ntfy peale või kasuta UnifiedPushi lüüsi.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Kasuta UnifiedPushi lüüsi</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registreeritud (%1). Koduserver ei saa seda seadet kätte.</translation>
     </message>
 </context>
 <context>

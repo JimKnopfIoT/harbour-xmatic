@@ -1941,10 +1941,6 @@
         <translation>Din hemserver får en adress hos push-tjänsten och skickar för varje avisering ett rums- och meddelande-id till gatewayen. Ingen meddelandetext: pushen bär bara identifierare och den här enheten hämtar och dekrypterar meddelandet själv. Den adressen är en hemlighet — den som har den kan skicka en avisering till den här telefonen.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Push-server</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (offentlig)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Ingen</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Använder %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Din push-server har ingen gateway. Välj en annan.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Kontrolleras efter registrering. ntfy har en, Mozilla inte.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Ingen. Hemservern kan inte nå den här enheten än.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>distributören</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Medföljande</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Medföljande via %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 har ingen Matrix-gateway.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Inget svar från %1 än. Frågar igen.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Hittas via %1 efter registrering.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 kan inte leverera Matrix-aviseringar.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Byt %1 till ntfy, eller använd UnifiedPush-gatewayen.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Använd UnifiedPush-gateway</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registrerad via %1. Hemservern kan inte nå den här enheten.</translation>
     </message>
 </context>
 <context>

@@ -1938,10 +1938,6 @@
         <translation>ホームサーバーにはプッシュサービス上のアドレスが伝えられ、通知ごとにルームとメッセージの識別子がゲートウェイへ送られます。本文は送りません: プッシュが運ぶのは識別子だけで、メッセージの取得と復号はこのデバイスが自分で行います。そのアドレスは秘密です - 持っている人は誰でもこの端末に通知を送れます。</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>プッシュサーバー</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush（公開）</translation>
     </message>
@@ -1952,18 +1948,6 @@
     <message>
         <source>None</source>
         <translation>なし</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>%1 を使用します。</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>プッシュサーバーにゲートウェイがありません。別のものを選んでください。</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>登録後に確認します。ntfy にはあり、Mozilla にはありません。</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1984,6 +1968,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>なし。ホームサーバーはまだこのデバイスに届きません。</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>ディストリビューター</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>付属</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>付属（%1 経由）: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 には Matrix ゲートウェイがありません。</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 からまだ応答がありません。再度問い合わせています。</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>登録後に %1 経由で見つかります。</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 は Matrix の通知を配信できません。</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>%1 を ntfy に切り替えるか、UnifiedPush ゲートウェイを使うと届きます。</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>UnifiedPush ゲートウェイを使う</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>%1 に登録済み。ホームサーバーはこのデバイスに届きません。</translation>
     </message>
 </context>
 <context>
