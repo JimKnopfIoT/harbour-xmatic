@@ -34,7 +34,8 @@ use matrix_sdk_base::crypto::types::events::UtdCause;
 use matrix_sdk_ui::{
     eyeball_im::VectorDiff,
     timeline::{
-        EncryptedMessage, EventSendState, EventTimelineItem, MembershipChange, MsgLikeKind,
+        EncryptedMessage, EventSendState, EventTimelineItem, MemberProfileChange, MembershipChange,
+        MsgLikeKind,
         RoomExt, RoomMembershipChange, TimelineDetails, TimelineEventItemId, TimelineItem,
         TimelineItemContent,
         TimelineReadReceiptTracking, VirtualTimelineItem,
@@ -900,6 +901,23 @@ fn member_name(room_id: &str, change: &RoomMembershipChange) -> String {
         .unwrap_or_else(|| user.to_owned())
 }
 
+/// What a profile change touched: "profile.name", "profile.avatar" or both.
+fn profile_token(change: &MemberProfileChange) -> &'static str {
+    match (change.displayname_change().is_some(), change.avatar_url_change().is_some()) {
+        (true, true) => "profile.both",
+        (true, false) => "profile.name",
+        (false, true) => "profile.avatar",
+        (false, false) => "profile",
+    }
+}
+
+/// A display name as the row shows it; empty where there is none.
+fn profile_name(name: Option<&str>) -> String {
+    name.map(strip_bidi)
+        .filter(|name| !name.trim().is_empty())
+        .unwrap_or_default()
+}
+
 /// The reason a moderator gave, bounded and filtered like a message body.
 /// Only where it is one: the spec warns that an invite's reason is a spam
 /// vector, and a self-chosen leave reason is the same free text.
@@ -1041,6 +1059,8 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
                 Some(MembershipChange::InvitationRejected) => "member.declined",
                 Some(MembershipChange::InvitationRevoked) => "member.revoked",
                 Some(MembershipChange::Knocked) => "member.knocked",
+                // A member event that changes nothing; hidden like a profile change.
+                Some(MembershipChange::None) => "member.none",
                 _ => "member",
             };
             (
@@ -1054,9 +1074,16 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
                 member_name(room_id, change),
             )
         }
-        TimelineItemContent::ProfileChange(_) => {
-            ("system", String::new(), String::new(), false, None, None, "profile", String::new())
-        }
+        TimelineItemContent::ProfileChange(change) => (
+            "system",
+            String::new(),
+            String::new(),
+            false,
+            None,
+            None,
+            profile_token(change),
+            profile_name(change.displayname_change().and_then(|name| name.new.as_deref())),
+        ),
         _ => ("other", String::new(), String::new(), false, None, None, "", String::new()),
     };
 
@@ -1177,6 +1204,13 @@ fn encode_item(room_id: &str, item: &TimelineItem, own: Option<&UserId>) -> Valu
         "name": name,
         // Null for every row that is not a moderator's act.
         "reason": reason,
+        // The display name before a profile change; empty where there was none.
+        "previousName": match event.content() {
+            TimelineItemContent::ProfileChange(change) => Some(profile_name(
+                change.displayname_change().and_then(|name| name.old.as_deref()),
+            )),
+            _ => None,
+        },
         "sender": event.sender().as_str(),
         "senderName": sender_name(room_id, event),
         "senderAvatar": sender_avatar(room_id, event),

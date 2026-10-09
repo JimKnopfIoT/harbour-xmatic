@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Pushmeldingen</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Gedrag</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Kleuren terugzetten</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Toetsenbord verbergen na het verzenden</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Aan sluit het toetsenbord zodra het bericht weg is en zie je het gesprek weer helemaal. Uit blijft het open voor het volgende bericht.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Een kamer openen waar je gestopt bent met lezen</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Emoji-pakket inlezen</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reacties als afbeeldingen (emoji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Verzenden met de enter-toets</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Aan verstuurt de enter-toets het bericht; de pijl naast het veld blijft werken. Een regeleinde krijg je dan door die pijl ingedrukt te houden, of met shift en enter op een fysiek toetsenbord. Uit maakt de enter-toets een regeleinde en verstuurt alleen de pijl.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Space op de afbeelding tonen</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Aan tekent de chatlijst de beginletter van de Space van de kamer over de afbeelding, in de kleur van die Space. De kleur stel je in de Space-lijst in door de Space vast te houden.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Aan: als je een kamer opent, kom je bij je laatst gelezen bericht, met de nieuwe eronder — en terug op de plek waar je was als je de kamer midden in de geschiedenis verliet. Die plek blijft bewaard tot de app wordt afgesloten. Uit: de kamer opent bij het nieuwste bericht en de lijn die aangeeft waar je stopte vind je door omhoog te scrollen.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Tekst als bestand versturen</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Gedrag</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Kamergebeurtenissen</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Binnenkomen en vertrekken tonen</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Uitnodigingen, verwijderingen en bans worden altijd getoond.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Wijzigingen van weergavenaam tonen</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Wijzigingen van profielfoto tonen</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Lezen</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Een kamer openen waar je gestopt bent met lezen</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Aan: als je een kamer opent, kom je bij je laatst gelezen bericht, met de nieuwe eronder — en terug op de plek waar je was als je de kamer midden in de geschiedenis verliet. Die plek blijft bewaard tot de app wordt afgesloten. Uit: de kamer opent bij het nieuwste bericht en de lijn die aangeeft waar je stopte vind je door omhoog te scrollen.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Schrijven</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Verzenden met de enter-toets</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Aan verstuurt de enter-toets het bericht; de pijl naast het veld blijft werken. Een regeleinde krijg je dan door die pijl ingedrukt te houden, of met shift en enter op een fysiek toetsenbord. Uit maakt de enter-toets een regeleinde en verstuurt alleen de pijl.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Toetsenbord verbergen na het verzenden</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Aan sluit het toetsenbord zodra het bericht weg is en zie je het gesprek weer helemaal. Uit blijft het open voor het volgende bericht.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Lijsten</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Beginnen met de spaces-lijst</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Uit: de app opent met de chatlijst. Hoe dan ook is de andere lijst één veeg opzij. Werkt bij de volgende start.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Volgorde van de chatlijst</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Op activiteit</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Op naam</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Ongelezen kamers eerst</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Favorieten blijven bovenaan en lage prioriteit onderaan; daarbinnen komen kamers met ongelezen berichten eerst.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Volgorde van de spaces-lijst</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Over xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Als startpagina instellen</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Account</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 wijzigde het lidmaatschap</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 wijzigde zijn profiel</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Link doorsturen</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 heeft de weergavenaam gewijzigd in %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 heeft de weergavenaam verwijderd</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 heeft de profielfoto gewijzigd</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Space aanmaken</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Als startpagina instellen</translation>
     </message>
     <message>
         <source>Delete space</source>

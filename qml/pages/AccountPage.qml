@@ -112,6 +112,15 @@ Page {
             }
 
             WrapButton {
+                id: behaviourButton
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: column.buttonWidth
+                label: qsTr("Behaviour")
+                onClicked: pageStack.push(Qt.resolvedUrl("BehaviourPage.qml"))
+            }
+
+            WrapButton {
                 id: privacyButton
 
                 anchors.horizontalCenter: parent.horizontalCenter

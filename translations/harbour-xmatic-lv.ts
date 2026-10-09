@@ -122,6 +122,10 @@
         <source>Push notifications</source>
         <translation>Push paziņojumi</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Uzvedība</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -245,18 +249,6 @@
         <translation>Atjaunot noklusējuma krāsas</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Slēpt tastatūru pēc nosūtīšanas</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Ieslēgts: tastatūra aizveras, tiklīdz ziņa ir aizsūtīta, un saruna atkal redzama pilnībā. Izslēgts: tā paliek atvērta nākamajai ziņai.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Atvērt istabu tur, kur beidzi lasīt</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Ielasīt emocijzīmju paku</translation>
     </message>
@@ -281,24 +273,12 @@
         <translation>Reakcijas kā attēli (emocijzīmes)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Sūtīt ar Enter taustiņu</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Ieslēgts, Enter taustiņš nosūta ziņu; bultiņa blakus laukam darbojas joprojām. Jaunu rindu tad dod ilga bultiņas turēšana vai Shift un Enter uz fiziskas tastatūras. Izslēgts, Enter taustiņš veido jaunu rindu un sūta tikai bultiņa.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Atzīmēt telpu uz attēla</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Ieslēgts, sarunu saraksts uz istabas attēla zīmē tās telpas pirmo burtu attiecīgās telpas krāsā. Krāsu iestata telpu sarakstā, turot telpu nospiestu.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ieslēgts: ieejot istabā, nonāc pie pēdējās izlasītās ziņas, jaunās ir zem tās — un atpakaļ tajā vietā, kur biji, ja pameti istabu vēstures vidū. Šī vieta tiek paturēta, līdz lietotne tiek aizvērta. Izslēgts: istaba atveras pie jaunākās ziņas, un līniju, kas iezīmē lasīšanas vietu, atradīsi, ritinot uz augšu.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -374,6 +354,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Sūtīt tekstu kā failu</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Uzvedība</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Istabas notikumi</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Rādīt pievienošanos un aiziešanu</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Ielūgumi, izraidīšanas un aizliegumi tiek rādīti vienmēr.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Rādīt attēlojamā vārda maiņas</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Rādīt profila attēla maiņas</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Lasīšana</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Atvērt istabu tur, kur beidzi lasīt</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ieslēgts: ieejot istabā, nonāc pie pēdējās izlasītās ziņas, jaunās ir zem tās — un atpakaļ tajā vietā, kur biji, ja pameti istabu vēstures vidū. Šī vieta tiek paturēta, līdz lietotne tiek aizvērta. Izslēgts: istaba atveras pie jaunākās ziņas, un līniju, kas iezīmē lasīšanas vietu, atradīsi, ritinot uz augšu.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Rakstīšana</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Sūtīt ar Enter taustiņu</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Ieslēgts, Enter taustiņš nosūta ziņu; bultiņa blakus laukam darbojas joprojām. Jaunu rindu tad dod ilga bultiņas turēšana vai Shift un Enter uz fiziskas tastatūras. Izslēgts, Enter taustiņš veido jaunu rindu un sūta tikai bultiņa.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Slēpt tastatūru pēc nosūtīšanas</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Ieslēgts: tastatūra aizveras, tiklīdz ziņa ir aizsūtīta, un saruna atkal redzama pilnībā. Izslēgts: tā paliek atvērta nākamajai ziņai.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Saraksti</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Sākt ar telpu sarakstu</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Izslēgts: lietotne atveras ar tērzēšanu sarakstu. Jebkurā gadījumā otrs saraksts ir viena pavilciena attālumā sānis. Stājas spēkā nākamajā palaišanā.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Tērzēšanu saraksta secība</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Pēc aktivitātes</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Pēc nosaukuma</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Nelasītās istabas vispirms</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Izlase paliek augšā un zema prioritāte apakšā; katrā grupā vispirms ir istabas ar nelasītām ziņām.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Telpu saraksta secība</translation>
     </message>
 </context>
 <context>
@@ -2373,10 +2448,6 @@
         <translation>Par xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Padarīt par sākumlapu</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Konts</translation>
     </message>
@@ -2567,10 +2638,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 mainīja dalību</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 mainīja savu profilu</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2892,6 +2959,18 @@
     <message>
         <source>Forward link</source>
         <translation>Pārsūtīt saiti</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 nomainīja attēlojamo vārdu uz %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 noņēma attēlojamo vārdu</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 nomainīja profila attēlu</translation>
     </message>
 </context>
 <context>
@@ -3644,10 +3723,6 @@
     <message>
         <source>Create space</source>
         <translation>Izveidot telpu</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Padarīt par sākumlapu</translation>
     </message>
     <message>
         <source>Delete space</source>

@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Push-notifikationer</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Adfærd</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Nulstil farver til standard</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Skjul tastaturet efter afsendelse</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Til lukker tastaturet, så snart beskeden er sendt, og samtalen fylder igen. Fra bliver det stående til den næste besked.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Åbn rummet, hvor du holdt op med at læse</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Indlæs en emojipakke</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reaktioner som billeder (emojier)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Send med retur-tasten</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Til sender retur-tasten beskeden; pilen ved siden af feltet virker fortsat. Et linjeskift får du så ved at holde på pilen eller med Skift og retur på et fysisk tastatur. Fra laver retur-tasten et linjeskift, og kun pilen sender.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Markér space på billedet</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Til tegner chatlisten forbogstavet på rummets space over dets billede, i det pågældende spaces farve. Farven sættes i space-listen ved at holde på space&apos;et.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Til: når du går ind i et rum, lander du ved din senest læste besked med de nye nedenunder — og tilbage det sted, du var, hvis du forlod rummet midt i historikken. Stedet huskes, indtil appen lukkes. Fra: rummet åbner ved den nyeste besked, og linjen, der markerer hvor du stoppede, finder du ved at rulle op.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Send teksten som en fil</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Adfærd</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Rumbegivenheder</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Vis når nogen kommer og går</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Invitationer, fjernelser og udelukkelser vises altid.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Vis ændringer af visningsnavn</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Vis ændringer af profilbillede</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Læsning</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Åbn rummet, hvor du holdt op med at læse</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Til: når du går ind i et rum, lander du ved din senest læste besked med de nye nedenunder — og tilbage det sted, du var, hvis du forlod rummet midt i historikken. Stedet huskes, indtil appen lukkes. Fra: rummet åbner ved den nyeste besked, og linjen, der markerer hvor du stoppede, finder du ved at rulle op.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Skrivning</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Send med retur-tasten</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Til sender retur-tasten beskeden; pilen ved siden af feltet virker fortsat. Et linjeskift får du så ved at holde på pilen eller med Skift og retur på et fysisk tastatur. Fra laver retur-tasten et linjeskift, og kun pilen sender.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Skjul tastaturet efter afsendelse</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Til lukker tastaturet, så snart beskeden er sendt, og samtalen fylder igen. Fra bliver det stående til den næste besked.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Lister</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Start med listen over spaces</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Fra: appen åbner med chatlisten. Den anden liste er altid ét stryg til siden. Træder i kraft ved næste start.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Rækkefølge i chatlisten</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Efter aktivitet</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Efter navn</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Ulæste rum først</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Favoritter bliver øverst og lav prioritet nederst; inden for hver kommer rum med ulæste beskeder først.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Rækkefølge i listen over spaces</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Om xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Gør til startside</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 ændrede medlemskab</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 ændrede sin profil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Videresend link</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 ændrede sit visningsnavn til %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 fjernede sit visningsnavn</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 ændrede sit profilbillede</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Opret space</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Gør til startside</translation>
     </message>
     <message>
         <source>Delete space</source>

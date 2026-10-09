@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Push-aviseringar</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Beteende</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Återställ färgerna</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Dölj tangentbordet efter sändning</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>På stängs tangentbordet så snart meddelandet är skickat och samtalet syns helt igen. Av stannar det kvar till nästa meddelande.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Öppna rummet där du slutade läsa</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Läs in ett emojipaket</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reaktioner som bilder (emojier)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Skicka med retur-tangenten</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>På skickar retur-tangenten meddelandet; pilen bredvid fältet fungerar fortfarande. Radbrytning får du då genom att hålla in pilen, eller med skift och retur på ett fysiskt tangentbord. Av gör retur-tangenten en radbrytning och bara pilen skickar.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Märk space på bilden</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>På ritar chattlistan begynnelsebokstaven för rummets space över dess bild, i det spacets färg. Färgen ställs in i space-listan genom att hålla in spacet.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>På: när du går in i ett rum hamnar du vid ditt senast lästa meddelande med de nya under — och tillbaka på platsen du var på om du lämnade rummet mitt i historiken. Platsen sparas tills appen stängs. Av: rummet öppnas vid det senaste meddelandet och linjen som visar var du slutade hittar du genom att rulla uppåt.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Skicka texten som en fil</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Beteende</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Rumshändelser</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Visa när någon går med eller lämnar</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Inbjudningar, borttagningar och avstängningar visas alltid.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Visa ändringar av visningsnamn</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Visa ändringar av profilbild</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Läsa</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Öppna rummet där du slutade läsa</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>På: när du går in i ett rum hamnar du vid ditt senast lästa meddelande med de nya under — och tillbaka på platsen du var på om du lämnade rummet mitt i historiken. Platsen sparas tills appen stängs. Av: rummet öppnas vid det senaste meddelandet och linjen som visar var du slutade hittar du genom att rulla uppåt.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Skriva</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Skicka med retur-tangenten</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>På skickar retur-tangenten meddelandet; pilen bredvid fältet fungerar fortfarande. Radbrytning får du då genom att hålla in pilen, eller med skift och retur på ett fysiskt tangentbord. Av gör retur-tangenten en radbrytning och bara pilen skickar.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Dölj tangentbordet efter sändning</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>På stängs tangentbordet så snart meddelandet är skickat och samtalet syns helt igen. Av stannar det kvar till nästa meddelande.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Listor</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Starta med listan över spaces</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Av: appen öppnas med chattlistan. Den andra listan är alltid ett svep åt sidan. Gäller från nästa start.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Ordning i chattlistan</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Efter aktivitet</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Efter namn</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Olästa rum först</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Favoriter stannar överst och låg prioritet nederst; inom varje grupp kommer rum med olästa meddelanden först.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Ordning i listan över spaces</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Om xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Gör till startsida</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Konto</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 ändrade medlemskap</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 ändrade sin profil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Vidarebefordra länk</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 ändrade sitt visningsnamn till %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 tog bort sitt visningsnamn</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 ändrade sin profilbild</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Skapa space</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Gör till startsida</translation>
     </message>
     <message>
         <source>Delete space</source>

@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Notifications push</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Comportement</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Rétablir les couleurs par défaut</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Masquer le clavier après l&apos;envoi</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Activé, le clavier se ferme dès que le message est parti et la conversation reprend toute la place. Désactivé, il reste ouvert pour le suivant.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Ouvrir le salon là où tu t&apos;es arrêté de lire</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Charger un pack d&apos;emojis</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Réactions en images (emojis)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Envoyer avec la touche Entrée</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Activé, la touche Entrée envoie le message ; la flèche à côté du champ continue de fonctionner. Un saut de ligne s&apos;obtient alors par un appui long sur cette flèche, ou par Maj et Entrée sur un clavier physique. Désactivé, la touche Entrée fait un saut de ligne et seule la flèche envoie.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Marquer l&apos;espace sur l&apos;image</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Activé, la liste des discussions dessine l&apos;initiale de l&apos;espace du salon sur son image, dans la couleur de cet espace. La couleur se règle dans la liste des espaces, en maintenant l&apos;espace appuyé.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Activé : en entrant dans un salon, tu arrives à ton dernier message lu, les nouveaux en dessous — et à l&apos;endroit où tu étais si tu as quitté le salon au milieu de son historique. Cet endroit est retenu jusqu&apos;à la fermeture de l&apos;application. Désactivé : le salon s&apos;ouvre sur son message le plus récent et la ligne qui marque où tu t&apos;es arrêté se trouve en remontant.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Envoyer le texte comme fichier</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Comportement</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Événements du salon</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Afficher les arrivées et les départs</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Les invitations, exclusions et bannissements sont toujours affichés.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Afficher les changements de nom d’affichage</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Afficher les changements de photo de profil</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Lecture</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Ouvrir le salon là où tu t&apos;es arrêté de lire</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Activé : en entrant dans un salon, tu arrives à ton dernier message lu, les nouveaux en dessous — et à l&apos;endroit où tu étais si tu as quitté le salon au milieu de son historique. Cet endroit est retenu jusqu&apos;à la fermeture de l&apos;application. Désactivé : le salon s&apos;ouvre sur son message le plus récent et la ligne qui marque où tu t&apos;es arrêté se trouve en remontant.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Écriture</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Envoyer avec la touche Entrée</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Activé, la touche Entrée envoie le message ; la flèche à côté du champ continue de fonctionner. Un saut de ligne s&apos;obtient alors par un appui long sur cette flèche, ou par Maj et Entrée sur un clavier physique. Désactivé, la touche Entrée fait un saut de ligne et seule la flèche envoie.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Masquer le clavier après l&apos;envoi</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Activé, le clavier se ferme dès que le message est parti et la conversation reprend toute la place. Désactivé, il reste ouvert pour le suivant.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Listes</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Démarrer sur la liste des espaces</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Désactivé, l’app s’ouvre sur la liste des discussions. Dans les deux cas, l’autre liste est à un balayage latéral. Prend effet au prochain démarrage.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Ordre de la liste des discussions</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Par activité</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Par nom</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Salons non lus en premier</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Les favoris restent en haut et la priorité basse en bas ; dans chaque groupe, les salons avec des messages non lus passent en premier.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Ordre de la liste des espaces</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>À propos de xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Définir comme page de démarrage</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Compte</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 a changé d&apos;appartenance</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 a modifié son profil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Transférer le lien</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 a changé son nom d’affichage en %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 a supprimé son nom d’affichage</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 a changé sa photo de profil</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Créer un espace</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Définir comme page de démarrage</translation>
     </message>
     <message>
         <source>Delete space</source>

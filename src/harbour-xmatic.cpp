@@ -22,6 +22,8 @@
 #include "appearancesettings.h"
 #include "appservice.h"
 #include "appsettings.h"
+#include "behavioursettings.h"
+#include "roomsortmodel.h"
 #include "callengine.h"
 #include "emojiimageprovider.h"
 #include "emojiset.h"
@@ -195,6 +197,19 @@ int main(int argc, char *argv[])
 
     AppearanceSettings appearance;
 
+    BehaviourSettings behaviour;
+    const auto applyOrder = [&bridge, &behaviour]() {
+        if (auto *rooms = qobject_cast<RoomSortModel *>(bridge.rooms())) {
+            rooms->setOrder(behaviour.roomOrder() == QLatin1String("name"),
+                            behaviour.unreadFirst());
+        }
+        if (auto *spaces = qobject_cast<RoomSortModel *>(bridge.spaces())) {
+            spaces->setOrder(behaviour.spaceOrder() == QLatin1String("name"), false);
+        }
+    };
+    applyOrder();
+    QObject::connect(&behaviour, &BehaviourSettings::changed, &behaviour, applyOrder);
+
     LanguageSettings language;
 
     // Where the reader stood in each room. Memory only: it ends with the app,
@@ -210,6 +225,7 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty(QStringLiteral("settings"), &settings);
     view->rootContext()->setContextProperty(QStringLiteral("activation"), &service);
     view->rootContext()->setContextProperty(QStringLiteral("appearance"), &appearance);
+    view->rootContext()->setContextProperty(QStringLiteral("behaviour"), &behaviour);
     view->rootContext()->setContextProperty(QStringLiteral("language"), &language);
     view->rootContext()->setContextProperty(QStringLiteral("emojiSet"), &emojiSet);
     view->rootContext()->setContextProperty(QStringLiteral("positions"), &positions);

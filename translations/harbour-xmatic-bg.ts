@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Push известия</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Поведение</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Връщане на цветовете към стандартните</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Скриване на клавиатурата след изпращане</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Включено: клавиатурата се затваря веднага щом съобщението замине и разговорът се вижда отново изцяло. Изключено: тя остава отворена за следващото съобщение.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Стаята се отваря там, докъдето си чел</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Зареждане на пакет с емоджита</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Реакции като картинки (емоджита)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Изпращане с клавиша Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Включено, клавишът Enter изпраща съобщението; стрелката до полето продължава да работи. Нов ред тогава се получава със задържане на тази стрелка или с Shift и Enter на хардуерна клавиатура. Изключено, клавишът Enter прави нов ред и изпраща само стрелката.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Отбелязване на пространството върху снимката</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Включено, списъкът с чатове изписва първата буква на пространството върху снимката на стаята, в цвета на това пространство. Цветът се задава в списъка с пространства чрез задържане върху пространството.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Включено: при влизане в стая попадаш на последното си прочетено съобщение, новите са под него — и обратно на мястото, на което си бил, ако си напуснал стаята насред историята. Това място се помни, докато приложението не бъде затворено. Изключено: стаята се отваря при най-новото съобщение, а линията, която отбелязва докъде си стигнал, намираш, като превъртиш нагоре.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Изпращане на текста като файл</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Поведение</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Събития в стаята</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Показвай влизания и излизания</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Поканите, премахванията и забраните се показват винаги.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Показвай промени на показваното име</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Показвай промени на профилната снимка</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Четене</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Стаята се отваря там, докъдето си чел</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Включено: при влизане в стая попадаш на последното си прочетено съобщение, новите са под него — и обратно на мястото, на което си бил, ако си напуснал стаята насред историята. Това място се помни, докато приложението не бъде затворено. Изключено: стаята се отваря при най-новото съобщение, а линията, която отбелязва докъде си стигнал, намираш, като превъртиш нагоре.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Писане</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Изпращане с клавиша Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Включено, клавишът Enter изпраща съобщението; стрелката до полето продължава да работи. Нов ред тогава се получава със задържане на тази стрелка или с Shift и Enter на хардуерна клавиатура. Изключено, клавишът Enter прави нов ред и изпраща само стрелката.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Скриване на клавиатурата след изпращане</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Включено: клавиатурата се затваря веднага щом съобщението замине и разговорът се вижда отново изцяло. Изключено: тя остава отворена за следващото съобщение.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Списъци</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Започвай със списъка с пространства</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Изключено: приложението се отваря със списъка с чатове. И в двата случая другият списък е на едно плъзгане встрани. Влиза в сила при следващото стартиране.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Подредба на списъка с чатове</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>По активност</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>По име</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Непрочетените стаи първи</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Любимите остават най-горе, а ниският приоритет най-долу; във всяка група първи са стаите с непрочетени съобщения.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Подредба на списъка с пространства</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Относно xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Направи начална страница</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Профил</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 промени членството</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 промени профила си</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Препрати връзката</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 смени показваното си име на %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 премахна показваното си име</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 смени профилната си снимка</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Създай пространство</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Направи начална страница</translation>
     </message>
     <message>
         <source>Delete space</source>

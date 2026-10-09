@@ -121,6 +121,10 @@
         <source>Push notifications</source>
         <translation>Notificações push</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Comportamento</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -244,18 +248,6 @@
         <translation>Repor as cores predefinidas</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Ocultar o teclado depois de enviar</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Ligado, o teclado fecha assim que a mensagem sai e a conversa volta a aparecer por inteiro. Desligado, fica aberto para a seguinte.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Abrir a sala onde paraste de ler</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Carregar um pacote de emojis</translation>
     </message>
@@ -280,24 +272,12 @@
         <translation>Reações como imagens (emojis)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Enviar com a tecla Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Ligado, a tecla Enter envia a mensagem; a seta ao lado do campo continua a funcionar. Uma quebra de linha obtém-se então mantendo essa seta premida, ou com Shift e Enter num teclado físico. Desligado, a tecla Enter faz uma quebra de linha e só a seta envia.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Marcar o espaço na imagem</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Ligado, a lista de conversas desenha a inicial do espaço da sala sobre a imagem dela, na cor desse espaço. A cor define-se na lista de espaços, mantendo o espaço premido.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ligado: ao entrares numa sala vais para a tua última mensagem lida, com as novas por baixo, e para o sítio onde estavas se saíste da sala a meio do histórico. Esse sítio fica guardado até fechares a aplicação. Desligado: a sala abre na mensagem mais recente e a linha que marca onde paraste encontra-se subindo.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -373,6 +353,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Enviar o texto como ficheiro</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Comportamento</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Eventos da sala</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Mostrar entradas e saídas</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Convites, remoções e banimentos são sempre mostrados.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Mostrar alterações do nome de exibição</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Mostrar alterações da foto de perfil</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Leitura</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Abrir a sala onde paraste de ler</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ligado: ao entrares numa sala vais para a tua última mensagem lida, com as novas por baixo, e para o sítio onde estavas se saíste da sala a meio do histórico. Esse sítio fica guardado até fechares a aplicação. Desligado: a sala abre na mensagem mais recente e a linha que marca onde paraste encontra-se subindo.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Escrita</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Enviar com a tecla Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Ligado, a tecla Enter envia a mensagem; a seta ao lado do campo continua a funcionar. Uma quebra de linha obtém-se então mantendo essa seta premida, ou com Shift e Enter num teclado físico. Desligado, a tecla Enter faz uma quebra de linha e só a seta envia.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Ocultar o teclado depois de enviar</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Ligado, o teclado fecha assim que a mensagem sai e a conversa volta a aparecer por inteiro. Desligado, fica aberto para a seguinte.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Listas</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Começar pela lista de espaços</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Desativado, a app abre na lista de conversas. Em qualquer caso, a outra lista fica a um deslizar para o lado. Aplica-se no próximo arranque.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Ordem da lista de conversas</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Por atividade</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Por nome</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Salas não lidas primeiro</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Os favoritos ficam no topo e a prioridade baixa no fundo; dentro de cada grupo, as salas com mensagens não lidas vêm primeiro.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Ordem da lista de espaços</translation>
     </message>
 </context>
 <context>
@@ -2370,10 +2445,6 @@
         <translation>Sobre o xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Definir como página inicial</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Conta</translation>
     </message>
@@ -2563,10 +2634,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 mudou de estado na sala</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 alterou o seu perfil</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2888,6 +2955,18 @@
     <message>
         <source>Forward link</source>
         <translation>Reencaminhar ligação</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 alterou o nome de exibição para %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 removeu o nome de exibição</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 alterou a foto de perfil</translation>
     </message>
 </context>
 <context>
@@ -3639,10 +3718,6 @@
     <message>
         <source>Create space</source>
         <translation>Criar espaço</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Definir como página inicial</translation>
     </message>
     <message>
         <source>Delete space</source>

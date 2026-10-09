@@ -233,8 +233,6 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
 
-            // Above the room entries: "Make start page" hides when this list is the start
-            // page, and anything below it would slide up and read as a way into a room.
             MenuItem {
                 text: qsTr("Verify user")
                 onClicked: pageStack.push(Qt.resolvedUrl("VerifyUserPage.qml"))
@@ -247,13 +245,6 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("RoomActionsPage.qml"))
             }
 
-            MenuItem {
-                // Only shown when rooms is not already the start page; picking
-                // it takes effect on the next start.
-                text: qsTr("Make start page")
-                visible: settings.startPage !== "rooms"
-                onClicked: settings.startPage = "rooms"
-            }
 
             MenuItem {
                 text: qsTr("Account")

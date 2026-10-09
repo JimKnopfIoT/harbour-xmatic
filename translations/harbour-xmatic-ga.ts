@@ -122,6 +122,10 @@
         <source>Push notifications</source>
         <translation>Fógraí brú</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Iompar</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -245,18 +249,6 @@
         <translation>Athshocraigh na dathanna</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Folaigh an méarchlár tar éis seolta</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Ann, dúnann an méarchlár chomh luath is a imíonn an teachtaireacht agus feictear an comhrá ina iomláine arís. As, fanann sé oscailte don chéad cheann eile.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>Oscail seomra san áit ar stad tú de bheith ag léamh</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Léigh isteach pacáiste emoji</translation>
     </message>
@@ -281,24 +273,12 @@
         <translation>Freagairtí mar phictiúir (emoji)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Seol le heochair Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Air, seolann eochair Enter an teachtaireacht; oibríonn an tsaighead in aice leis an réimse fós. Faightear briseadh líne ansin trí bhrú fada ar an tsaighead sin, nó le Shift agus Enter ar mhéarchlár crua-earraí. As, déanann eochair Enter briseadh líne agus ní sheolann ach an tsaighead.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>Marcáil an spás ar an bpictiúr</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Air, tarraingíonn an liosta comhrá céadlitir spás an tseomra ar a phictiúr, i ndath an spáis sin. Socraítear an dath i liosta na spásanna, tríd an spás a choinneáil síos.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Ar siúl: agus tú ag dul isteach i seomra, tagann tú chuig an teachtaireacht dheireanach a léigh tú, na cinn nua faoina bun — agus ar ais san áit a raibh tú má d&apos;fhág tú an seomra i lár na staire. Coinnítear an áit sin go dtí go ndúnfar an feidhmchlár. As: osclaítear an seomra ag an teachtaireacht is nuaí, agus aimsíonn tú an líne a mharcálann cá stop tú trí scrollú suas.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -374,6 +354,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Seol an téacs mar chomhad</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Iompar</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Imeachtaí an tseomra</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Taispeáin teacht agus imeacht</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>Taispeántar cuirí, bainteacha agus cosc i gcónaí.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Taispeáin athruithe ar an ainm taispeána</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Taispeáin athruithe ar an bpictiúr próifíle</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Léamh</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>Oscail seomra san áit ar stad tú de bheith ag léamh</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Ar siúl: agus tú ag dul isteach i seomra, tagann tú chuig an teachtaireacht dheireanach a léigh tú, na cinn nua faoina bun — agus ar ais san áit a raibh tú má d&apos;fhág tú an seomra i lár na staire. Coinnítear an áit sin go dtí go ndúnfar an feidhmchlár. As: osclaítear an seomra ag an teachtaireacht is nuaí, agus aimsíonn tú an líne a mharcálann cá stop tú trí scrollú suas.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Scríobh</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Seol le heochair Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Air, seolann eochair Enter an teachtaireacht; oibríonn an tsaighead in aice leis an réimse fós. Faightear briseadh líne ansin trí bhrú fada ar an tsaighead sin, nó le Shift agus Enter ar mhéarchlár crua-earraí. As, déanann eochair Enter briseadh líne agus ní sheolann ach an tsaighead.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Folaigh an méarchlár tar éis seolta</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Ann, dúnann an méarchlár chomh luath is a imíonn an teachtaireacht agus feictear an comhrá ina iomláine arís. As, fanann sé oscailte don chéad cheann eile.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Liostaí</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Tosaigh le liosta na spásanna</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Múchta, osclaíonn an aip le liosta na gcomhráite. Ar aon nós, níl an liosta eile ach svaidhpeáil amháin i leataobh. Tagann sé i bhfeidhm ag an gcéad tosú eile.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>Ord liosta na gcomhráite</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>De réir gníomhaíochta</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>De réir ainm</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Seomraí neamhléite ar dtús</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>Fanann ceanáin ag an mbarr agus tosaíocht íseal ag an mbun; laistigh de gach grúpa, tagann seomraí le teachtaireachtaí neamhléite ar dtús.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>Ord liosta na spásanna</translation>
     </message>
 </context>
 <context>
@@ -2373,10 +2448,6 @@
         <translation>Maidir le xmatic</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Déan an leathanach tosaigh de</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Cuntas</translation>
     </message>
@@ -2567,10 +2638,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>D&apos;athraigh %1 a bhallraíocht</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>D&apos;athraigh %1 a phróifíl</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2892,6 +2959,18 @@
     <message>
         <source>Forward link</source>
         <translation>Seol an nasc ar aghaidh</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>D’athraigh %1 an t-ainm taispeána go %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>Bhain %1 an t-ainm taispeána</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>D’athraigh %1 an pictiúr próifíle</translation>
     </message>
 </context>
 <context>
@@ -3644,10 +3723,6 @@
     <message>
         <source>Create space</source>
         <translation>Cruthaigh spás</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Déan an leathanach tosaigh de</translation>
     </message>
     <message>
         <source>Delete space</source>

@@ -120,6 +120,10 @@
         <source>Push notifications</source>
         <translation>Push értesítések</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>Viselkedés</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -243,18 +247,6 @@
         <translation>Színek visszaállítása</translation>
     </message>
     <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>Billentyűzet elrejtése küldés után</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>Bekapcsolva a billentyűzet bezárul, amint az üzenet elment, és megint az egész beszélgetés látszik. Kikapcsolva nyitva marad a következő üzenethez.</translation>
-    </message>
-    <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>A szoba ott nyíljon meg, ahol abbahagytad az olvasást</translation>
-    </message>
-    <message>
         <source>Read in an emoji pack</source>
         <translation>Emodzsicsomag beolvasása</translation>
     </message>
@@ -279,24 +271,12 @@
         <translation>Reakciók képként (emodzsik)</translation>
     </message>
     <message>
-        <source>Send with the return key</source>
-        <translation>Küldés az Enter billentyűvel</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>Bekapcsolva az Enter billentyű elküldi az üzenetet; a mező melletti nyíl továbbra is működik. Új sort ekkor a nyíl hosszú nyomva tartása ad, vagy hardveres billentyűzeten a Shift és az Enter. Kikapcsolva az Enter billentyű új sort kezd, és csak a nyíl küld.</translation>
-    </message>
-    <message>
         <source>Mark the space on the picture</source>
         <translation>A tér jelölése a képen</translation>
     </message>
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>Bekapcsolva a csevegéslista a szoba terének kezdőbetűjét rajzolja a képére, az adott tér színével. A szín a terek listájában állítható be, a tér nyomva tartásával.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>Bekapcsolva: egy szobába belépve az utoljára olvasott üzenetednél kötsz ki, az újak alatta vannak — és oda, ahol jártál, ha a szobát az előzmények közepén hagytad el. Ez a hely az alkalmazás bezárásáig megmarad. Kikapcsolva: a szoba a legújabb üzenetnél nyílik meg, és az olvasás helyét jelölő vonalat felfelé görgetve találod meg.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -372,6 +352,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>Szöveg küldése fájlként</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>Viselkedés</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>Szobaesemények</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>Belépések és kilépések megjelenítése</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>A meghívások, eltávolítások és kitiltások mindig megjelennek.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>Megjelenítendő név változásainak megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>Profilkép változásainak megjelenítése</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>Olvasás</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>A szoba ott nyíljon meg, ahol abbahagytad az olvasást</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>Bekapcsolva: egy szobába belépve az utoljára olvasott üzenetednél kötsz ki, az újak alatta vannak — és oda, ahol jártál, ha a szobát az előzmények közepén hagytad el. Ez a hely az alkalmazás bezárásáig megmarad. Kikapcsolva: a szoba a legújabb üzenetnél nyílik meg, és az olvasás helyét jelölő vonalat felfelé görgetve találod meg.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>Írás</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>Küldés az Enter billentyűvel</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>Bekapcsolva az Enter billentyű elküldi az üzenetet; a mező melletti nyíl továbbra is működik. Új sort ekkor a nyíl hosszú nyomva tartása ad, vagy hardveres billentyűzeten a Shift és az Enter. Kikapcsolva az Enter billentyű új sort kezd, és csak a nyíl küld.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>Billentyűzet elrejtése küldés után</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>Bekapcsolva a billentyűzet bezárul, amint az üzenet elment, és megint az egész beszélgetés látszik. Kikapcsolva nyitva marad a következő üzenethez.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>Listák</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>Kezdés a terek listájával</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>Ki: az alkalmazás a csevegőlistával nyílik meg. A másik lista mindig egy oldalra húzásnyira van. A következő indításkor lép életbe.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>A csevegőlista sorrendje</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>Aktivitás szerint</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>Név szerint</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>Olvasatlan szobák elöl</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>A kedvencek felül, az alacsony prioritásúak alul maradnak; ezeken belül az olvasatlan üzenetet tartalmazó szobák kerülnek előre.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>A terek listájának sorrendje</translation>
     </message>
 </context>
 <context>
@@ -2367,10 +2442,6 @@
         <translation>Az xmatic névjegye</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>Legyen a kezdőoldal</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>Fiók</translation>
     </message>
@@ -2559,10 +2630,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>%1 tagsága megváltozott</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 módosította a profilját</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2884,6 +2951,18 @@
     <message>
         <source>Forward link</source>
         <translation>Hivatkozás továbbítása</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 megjelenítendő nevét erre változtatta: %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 eltávolította a megjelenítendő nevét</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 megváltoztatta a profilképét</translation>
     </message>
 </context>
 <context>
@@ -3634,10 +3713,6 @@
     <message>
         <source>Create space</source>
         <translation>Tér létrehozása</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>Legyen a kezdőoldal</translation>
     </message>
     <message>
         <source>Delete space</source>

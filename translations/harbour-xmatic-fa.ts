@@ -120,6 +120,10 @@
         <source>Encryption</source>
         <translation>رمزگذاری</translation>
     </message>
+    <message>
+        <source>Behaviour</source>
+        <translation>رفتار</translation>
+    </message>
 </context>
 <context>
     <name>AddDirectoryServerDialog</name>
@@ -227,26 +231,6 @@
         <translation>بازگردانی رنگ‌ها به پیش‌فرض</translation>
     </message>
     <message>
-        <source>Open a room where you stopped reading</source>
-        <translation>باز کردن اتاق در جایی که خواندن را رها کردی</translation>
-    </message>
-    <message>
-        <source>Send with the return key</source>
-        <translation>ارسال با کلید Enter</translation>
-    </message>
-    <message>
-        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
-        <translation>روشن، کلید Enter پیام را می‌فرستد و پیکان کنار کادر هم کار می‌کند. شکست خط آن‌گاه از نگه‌داشتن همان پیکان یا از Shift و Enter روی صفحه‌کلید سخت‌افزاری می‌آید. خاموش، Enter شکست خط می‌سازد و تنها پیکان می‌فرستد.</translation>
-    </message>
-    <message>
-        <source>Hide the keyboard after sending</source>
-        <translation>پنهان کردن صفحه‌کلید پس از ارسال</translation>
-    </message>
-    <message>
-        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
-        <translation>روشن، همین که پیام بیرون رفت صفحه‌کلید بسته می‌شود و گفت‌وگو دوباره کامل دیده می‌شود. خاموش، برای پیام بعدی باز می‌ماند.</translation>
-    </message>
-    <message>
         <source>Reactions as pictures (emoji)</source>
         <translation>واکنش‌ها به شکل تصویر (اموجی)</translation>
     </message>
@@ -293,10 +277,6 @@
     <message>
         <source>On, the chat list draws the initial of a room&apos;s space over its picture, in that space&apos;s colour. The colour is set in the space list, by holding the space.</source>
         <translation>روشن، فهرست گفتگوها نخستین حرف Space اتاق را روی تصویر آن می‌کشد، به رنگ همان Space. رنگ را در فهرست Spaceها با نگه داشتن Space تنظیم می‌کنی.</translation>
-    </message>
-    <message>
-        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
-        <translation>روشن: با ورود به یک اتاق به آخرین پیام خوانده‌شده‌ات می‌رسی و پیام‌های تازه زیر آن هستند — و اگر اتاق را در میانهٔ تاریخچه ترک کرده باشی، به همان جا بازمی‌گردی. این جایگاه تا بسته شدن برنامه نگه داشته می‌شود. خاموش: اتاق روی تازه‌ترین پیام باز می‌شود و خطی که نشان می‌دهد کجا متوقف شده‌ای را با پیمایش به بالا می‌یابی.</translation>
     </message>
     <message>
         <source>Message layout</source>
@@ -372,6 +352,101 @@
     <message>
         <source>Send text as a file</source>
         <translation>ارسال متن به‌صورت فایل</translation>
+    </message>
+</context>
+<context>
+    <name>BehaviourPage</name>
+    <message>
+        <source>Behaviour</source>
+        <translation>رفتار</translation>
+    </message>
+    <message>
+        <source>Room events</source>
+        <translation>رویدادهای اتاق</translation>
+    </message>
+    <message>
+        <source>Show join and leave messages</source>
+        <translation>پیوستن و ترک کردن را نشان بده</translation>
+    </message>
+    <message>
+        <source>Invitations, removals and bans are always shown.</source>
+        <translation>دعوت‌ها، حذف‌ها و مسدودسازی‌ها همیشه نشان داده می‌شوند.</translation>
+    </message>
+    <message>
+        <source>Show display name changes</source>
+        <translation>تغییرات نام نمایشی را نشان بده</translation>
+    </message>
+    <message>
+        <source>Show profile picture changes</source>
+        <translation>تغییرات تصویر نمایه را نشان بده</translation>
+    </message>
+    <message>
+        <source>Reading</source>
+        <translation>خواندن</translation>
+    </message>
+    <message>
+        <source>Open a room where you stopped reading</source>
+        <translation>باز کردن اتاق در جایی که خواندن را رها کردی</translation>
+    </message>
+    <message>
+        <source>On, entering a room takes you to your last read message, with the new ones below it — and back to the place you were at if you left the room in the middle of its history. That place is kept until the app is closed. Off, the room opens at its newest message and the line marking where you stopped is found by scrolling up.</source>
+        <translation>روشن: با ورود به یک اتاق به آخرین پیام خوانده‌شده‌ات می‌رسی و پیام‌های تازه زیر آن هستند — و اگر اتاق را در میانهٔ تاریخچه ترک کرده باشی، به همان جا بازمی‌گردی. این جایگاه تا بسته شدن برنامه نگه داشته می‌شود. خاموش: اتاق روی تازه‌ترین پیام باز می‌شود و خطی که نشان می‌دهد کجا متوقف شده‌ای را با پیمایش به بالا می‌یابی.</translation>
+    </message>
+    <message>
+        <source>Writing</source>
+        <translation>نوشتن</translation>
+    </message>
+    <message>
+        <source>Send with the return key</source>
+        <translation>ارسال با کلید Enter</translation>
+    </message>
+    <message>
+        <source>On, the return key sends the message; the arrow beside the field keeps working. A line break then comes from holding that arrow, or from shift and the return key on a hardware keyboard. Off, the return key makes a line break and only the arrow sends.</source>
+        <translation>روشن، کلید Enter پیام را می‌فرستد و پیکان کنار کادر هم کار می‌کند. شکست خط آن‌گاه از نگه‌داشتن همان پیکان یا از Shift و Enter روی صفحه‌کلید سخت‌افزاری می‌آید. خاموش، Enter شکست خط می‌سازد و تنها پیکان می‌فرستد.</translation>
+    </message>
+    <message>
+        <source>Hide the keyboard after sending</source>
+        <translation>پنهان کردن صفحه‌کلید پس از ارسال</translation>
+    </message>
+    <message>
+        <source>On, the keyboard closes once a message is out and the conversation is back in full. Off, it stays up for the next one.</source>
+        <translation>روشن، همین که پیام بیرون رفت صفحه‌کلید بسته می‌شود و گفت‌وگو دوباره کامل دیده می‌شود. خاموش، برای پیام بعدی باز می‌ماند.</translation>
+    </message>
+    <message>
+        <source>Lists</source>
+        <translation>فهرست‌ها</translation>
+    </message>
+    <message>
+        <source>Start with the space list</source>
+        <translation>شروع با فهرست Spaceها</translation>
+    </message>
+    <message>
+        <source>Off, the app opens with the chat list. Either way the other list is one swipe sideways. Takes effect on the next start.</source>
+        <translation>خاموش باشد، برنامه با فهرست گفتگوها باز می‌شود. در هر حال فهرست دیگر با یک کشیدن به کنار در دسترس است. از اجرای بعدی اعمال می‌شود.</translation>
+    </message>
+    <message>
+        <source>Chat list order</source>
+        <translation>ترتیب فهرست گفتگوها</translation>
+    </message>
+    <message>
+        <source>By activity</source>
+        <translation>بر اساس فعالیت</translation>
+    </message>
+    <message>
+        <source>By name</source>
+        <translation>بر اساس نام</translation>
+    </message>
+    <message>
+        <source>Unread rooms first</source>
+        <translation>اول اتاق‌های خوانده‌نشده</translation>
+    </message>
+    <message>
+        <source>Favourites stay at the top and low priority at the bottom; inside each, rooms with unread messages come first.</source>
+        <translation>علاقه‌مندی‌ها بالا و کم‌اولویت‌ها پایین می‌مانند؛ در هر گروه، اتاق‌هایی که پیام خوانده‌نشده دارند اول می‌آیند.</translation>
+    </message>
+    <message>
+        <source>Space list order</source>
+        <translation>ترتیب فهرست Spaceها</translation>
     </message>
 </context>
 <context>
@@ -2379,10 +2454,6 @@
         <translation>تأیید کاربر</translation>
     </message>
     <message>
-        <source>Make start page</source>
-        <translation>صفحهٔ آغازین کن</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translation>حساب</translation>
     </message>
@@ -2583,10 +2654,6 @@
     <message>
         <source>%1 changed membership</source>
         <translation>عضویت %1 تغییر کرد</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile</source>
-        <translation>%1 نمایه‌اش را تغییر داد</translation>
     </message>
     <message>
         <source>Discard</source>
@@ -2884,6 +2951,18 @@
     <message>
         <source>Forward link</source>
         <translation>هدایت پیوند</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 نام نمایشی خود را به %2 تغییر داد</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 نام نمایشی خود را حذف کرد</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 تصویر نمایه خود را تغییر داد</translation>
     </message>
 </context>
 <context>
@@ -3634,10 +3713,6 @@
     <message>
         <source>Create space</source>
         <translation>ساخت Space</translation>
-    </message>
-    <message>
-        <source>Make start page</source>
-        <translation>صفحهٔ آغازین کن</translation>
     </message>
     <message>
         <source>Delete space</source>
