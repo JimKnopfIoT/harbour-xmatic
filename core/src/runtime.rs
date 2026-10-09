@@ -38,6 +38,7 @@ use crate::search;
 use crate::storehealth;
 use crate::timeline::{self, TimelineHandle};
 use crate::verification;
+use leghorn::Leghorn;
 
 mod lifecycle;
 mod account;
@@ -184,9 +185,18 @@ struct State {
     /// can stop it - and wait until its client clone is gone.
     login_task: Mutex<Option<LoginTask>>,
     rooms: Mutex<Option<RoomListHandle>>,
-    /// The UnifiedPush connector, started on the first push command: it claims a
-    /// D-Bus name and must not do so for a feature nobody turned on.
-    push: Mutex<Option<crate::push::PushHandle>>,
+    /// The UnifiedPush connector. Runs only while push is on or the push page asks.
+    push: Mutex<Option<Arc<Leghorn>>>,
+    push_listener: Mutex<Option<tokio::task::JoinHandle<()>>>,
+    /// Serialises pusher changes with each other and with the sign-out.
+    push_sync: Mutex<()>,
+    /// Pushkey and gateway last registered with the homeserver.
+    push_registered: Mutex<Option<(String, String)>>,
+    /// The gateway the user picked.
+    push_gateway: std::sync::Mutex<crate::push::Gateway>,
+    /// The woken process's connector, for `push.yield`.
+    push_wake: std::sync::Mutex<Option<tokio::task::AbortHandle>>,
+    push_yielded: std::sync::atomic::AtomicBool,
     spaces: Mutex<Option<tokio::task::JoinHandle<()>>>,
     open_space: Mutex<Option<tokio::task::JoinHandle<()>>>,
     /// Behind an `Arc` so a command can clone the handle out and release the
@@ -384,6 +394,12 @@ pub fn spawn(
         login_task: Mutex::new(None),
         rooms: Mutex::new(None),
         push: Mutex::new(None),
+        push_listener: Mutex::new(None),
+        push_sync: Mutex::new(()),
+        push_registered: Mutex::new(None),
+        push_gateway: std::sync::Mutex::new(crate::push::Gateway::Unset),
+        push_wake: std::sync::Mutex::new(None),
+        push_yielded: std::sync::atomic::AtomicBool::new(false),
         spaces: Mutex::new(None),
         open_space: Mutex::new(None),
         timeline: Mutex::new(None),
@@ -803,18 +819,19 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::StorageStatus { .. } => storage_status(&state, id),
         Command::StorageRepair { .. } => repair_storage(&state, id).await,
         Command::PushStatus { .. } => push_status(&state, id).await,
-        Command::PushEnable { gateway, .. } => push_enable(&state, id, gateway).await,
-        Command::PushDisable { endpoint, .. } => push_disable(&state, id, endpoint).await,
+        Command::PushEnable { .. } => push_enable(&state, id).await,
+        Command::PushDisable { .. } => push_disable(&state, id).await,
+        Command::PushGateway {
+            mode,
+            gateway,
+            enable,
+            ..
+        } => push_set_gateway(&state, id, mode, gateway, enable).await,
+        Command::PushWake { .. } => push_wake(&state, id).await,
+        Command::PushYield { .. } => push_yield(&state, id),
         Command::PushNotify {
             room_id, event_id, ..
         } => push_notify(&state, id, room_id, event_id).await,
-        Command::PushPusher {
-            endpoint,
-            p256dh,
-            auth,
-            gateway,
-            ..
-        } => push_pusher(&state, id, endpoint, p256dh, auth, gateway).await,
         Command::EncryptionRecover { key, .. } => encryption_recover(&state, id, key).await,
         Command::EncryptionEnableBackup { .. } => encryption_enable_backup(&state, id).await,
         Command::EncryptionFetchKeys { room_id, .. } => fetch_room_keys(&state, id, room_id).await,

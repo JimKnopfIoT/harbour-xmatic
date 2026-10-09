@@ -1196,10 +1196,6 @@
         <translation>تعذّرت قراءة القوائم المخزَّنة الآن.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>أدخل بوابة إشعارات أولًا.</translation>
-    </message>
-    <message>
         <source>Enter your recovery key first.</source>
         <translation>أدخل مفتاح استردادك أولًا.</translation>
     </message>
@@ -1258,6 +1254,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>استطلاع: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>يجب أن تكون البوابة عنوان URL يبدأ بـ https.</translation>
     </message>
 </context>
 <context>
@@ -1945,14 +1945,6 @@
         <translation>البوابة</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>لا يستطيع خادم Matrix المنزلي مخاطبة موزّع الإشعارات مباشرة، فيرسل إلى بوابة تعيد التوجيه. لا قيمة افتراضية: هذا هو الشيء الوحيد الذي لا يستطيع أحد تخمينه بدلًا عنك.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>بوابة الإشعارات</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>ما يغادر هذا الجهاز</translation>
     </message>
@@ -1960,12 +1952,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>يُخبَر خادمك المنزلي بعنوان لدى خدمة الإشعارات، ويرسل إلى البوابة معرّف الغرفة والرسالة مع كل إشعار. لا نص رسالة: يحمل الدفع معرّفات فقط، وهذا الجهاز يجلب الرسالة ويفكّ تعميتها بنفسه. ذلك العنوان سرّ - من يملكه يستطيع إرسال إشعار إلى هذا الهاتف.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (عامة)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>مخصّصة</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>لا شيء</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>اختر بوابة لإكمال تشغيل الإشعارات الفورية.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>عنوان URL للبوابة</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>مسجَّل. في انتظار بوابة.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>مسجَّل. جارٍ إبلاغ الخادم المنزلي.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>لا شيء. لا يستطيع الخادم المنزلي الوصول إلى هذا الجهاز بعد.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>الموزّع</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>مرفقة</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>مرفقة عبر %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>لا بوابة Matrix لدى %1.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>لا رد من %1 بعد. جارٍ السؤال مجددًا.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>تُعرف عبر %1 بعد التسجيل.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>لا يستطيع %1 توصيل إشعارات Matrix.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>مسجَّل عبر %1. لا يستطيع الخادم المنزلي الوصول إلى هذا الجهاز.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>يديرها مشروع UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>اختر في %1 خدمة إشعارات فيها بوابة Matrix، أو استخدم البوابة العامة التي يديرها مشروع UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>استخدم بوابة UnifiedPush العامة</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>رسالة جديدة</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>أسقط موزّع الإشعارات xmatic. أعد تشغيل الإشعارات الفورية من الحساب.</translation>
     </message>
 </context>
 <context>

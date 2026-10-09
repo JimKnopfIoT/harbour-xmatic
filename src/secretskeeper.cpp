@@ -225,6 +225,33 @@ SecretsDiagnosis inspectSecrets()
     return outcome;
 }
 
+StoreKeyResult readStoreKeyQuietly()
+{
+    SecretManager manager;
+    StoredSecretRequest read;
+    read.setManager(&manager);
+    read.setIdentifier(keyIdentifier());
+    read.setUserInteractionMode(SecretManager::PreventInteraction);
+    read.startRequest();
+    read.waitForFinished();
+    if (read.result().code() != Result::Succeeded) {
+        return failure(StoreKeyState::Locked, read.result());
+    }
+    QByteArray data = read.secret().data();
+    data.detach();
+    if (data.size() != 32) {
+        wipe(data);
+        return StoreKeyResult();
+    }
+    QByteArray encoded64 = data.toBase64();
+    StoreKeyResult outcome;
+    outcome.state = StoreKeyState::Available;
+    outcome.key = QString::fromLatin1(encoded64);
+    wipe(encoded64);
+    wipe(data);
+    return outcome;
+}
+
 StoreKeyResult obtainStoreKey(const QString &dataDirectory)
 {
     SecretManager manager;

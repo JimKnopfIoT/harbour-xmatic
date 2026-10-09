@@ -1210,10 +1210,6 @@
         <translation>Tvoja je sesija završila. Prijavi se ponovno.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Prvo unesi push pristupnik.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nova poruka</translation>
     </message>
@@ -1252,6 +1248,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Anketa: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Pristupnik mora biti https URL.</translation>
     </message>
 </context>
 <context>
@@ -1936,14 +1936,6 @@
         <translation>Pristupnik</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix poslužitelj ne može izravno razgovarati s push distributerom, pa šalje pristupniku koji prosljeđuje. Nema zadane vrijednosti: to je jedino što nitko ne može pogoditi umjesto tebe.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push pristupnik</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Što napušta ovaj uređaj</translation>
     </message>
@@ -1951,12 +1943,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Tvoj poslužitelj saznaje adresu na push usluzi i za svaku obavijest šalje pristupniku identifikator sobe i poruke. Bez teksta: push nosi samo identifikatore, a poruku ovaj uređaj dohvaća i dešifrira sam. Ta je adresa tajna — tko je ima, može ovom telefonu poslati obavijest.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (javni)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Prilagođeni</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nijedan</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Odaberi pristupnik da dovršiš uključivanje pusha.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>URL pristupnika</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrirano. Čeka se pristupnik.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrirano. Javlja se matičnom poslužitelju.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nijedan. Matični poslužitelj još ne može doći do ovog uređaja.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>distributera</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Isporučeni</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Isporučen preko %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nema Matrix pristupnik.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Još nema odgovora od %1. Ponovno pitam.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Pronalazi se preko %1 nakon registracije.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 ne može dostavljati Matrix obavijesti.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registrirano preko %1. Matični poslužitelj ne može doći do ovog uređaja.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Vodi ga projekt UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>U aplikaciji %1 odaberi push uslugu s Matrix pristupnikom ili koristi javni pristupnik projekta UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Koristi javni UnifiedPush pristupnik</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Nova poruka</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push distributer je odbacio xmatic. Ponovno uključi push pod Račun.</translation>
     </message>
 </context>
 <context>

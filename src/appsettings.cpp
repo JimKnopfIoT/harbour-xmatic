@@ -204,24 +204,15 @@ void AppSettings::setMessageLayout(const QString &layout)
     emit messageLayoutChanged();
 }
 
-bool AppSettings::pushEnabled() const
+QString AppSettings::pushGatewayMode() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("push/enabled"), false).toBool();
-}
-
-void AppSettings::setPushEnabled(bool enabled)
-{
-    if (enabled == pushEnabled()) {
-        return;
+    const QString mode = settings.value(QStringLiteral("push/gatewayMode")).toString();
+    // A gateway typed into an older version stays the pick.
+    if (mode.isEmpty() && !pushGateway().isEmpty()) {
+        return QStringLiteral("other");
     }
-    QSettings settings(writablePath(), QSettings::IniFormat);
-    store(settings, QStringLiteral("push/enabled"), enabled,
-          "the push notification setting");
-    if (settings.status() == QSettings::NoError) {
-        qInfo("xmatic: push notifications %s", enabled ? "on" : "off");
-    }
-    emit pushChanged();
+    return mode;
 }
 
 QString AppSettings::pushGateway() const
@@ -230,16 +221,16 @@ QString AppSettings::pushGateway() const
     return settings.value(QStringLiteral("push/gateway"), QString()).toString();
 }
 
-void AppSettings::setPushGateway(const QString &gateway)
+void AppSettings::setPushGateway(const QString &mode, const QString &gateway)
 {
-    const QString trimmed = gateway.trimmed();
-    if (trimmed == pushGateway()) {
+    const QString address = mode == QLatin1String("other") ? gateway.trimmed() : QString();
+    if (mode == pushGatewayMode() && address == pushGateway()) {
         return;
     }
     QSettings settings(writablePath(), QSettings::IniFormat);
-    // The address itself stays out of the journal: it names whoever the user
-    // trusts to forward their notifications, which is nobody else's business.
-    store(settings, QStringLiteral("push/gateway"), trimmed, "the push gateway");
+    store(settings, QStringLiteral("push/gatewayMode"), mode, "the push gateway choice");
+    // Not logged.
+    store(settings, QStringLiteral("push/gateway"), address, "the push gateway");
     emit pushChanged();
 }
 

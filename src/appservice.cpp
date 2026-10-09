@@ -79,6 +79,22 @@ bool AppService::requestLink(const QString &link)
     return true;
 }
 
+void AppService::requestPushBanner(const QString &key)
+{
+    if (receivers(SIGNAL(pushBannerRequested(QString))) == 0) {
+        m_pendingPushBanner = key;
+        return;
+    }
+    emit pushBannerRequested(key);
+}
+
+QString AppService::takePendingPushBanner()
+{
+    const QString key = m_pendingPushBanner;
+    m_pendingPushBanner.clear();
+    return key;
+}
+
 QString AppService::takePendingLink()
 {
     const QString link = m_pendingLink;
@@ -100,6 +116,12 @@ void AppServiceAdaptor::activate()
 void AppServiceAdaptor::openNotified()
 {
     m_service->requestNotifiedRoom();
+}
+
+void AppServiceAdaptor::openPushBanner(const QString &key)
+{
+    m_service->requestRaise();
+    m_service->requestPushBanner(key);
 }
 
 void AppServiceAdaptor::openUrl(const QString &link)

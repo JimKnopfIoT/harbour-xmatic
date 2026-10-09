@@ -134,9 +134,10 @@ its colours from the one you use.
   Push notifications are the one way around that, and they are **off by
   default, have their own setting, and do nothing until switched on by hand**.
   The feature exists because users asked for it. It needs a UnifiedPush
-  distributor installed separately and a Matrix push gateway you choose
-  yourself, and it discloses metadata — which rooms, at what times — to two
-  parties that otherwise know nothing about you. Read
+  distributor installed separately (Foghorn, best with ntfy) and a Matrix
+  gateway (ntfy has one), and
+  it discloses metadata — which rooms, at what times — to the push server and
+  the Matrix gateway, parties that otherwise know nothing about you. Read
   [docs/PUSH.md](docs/PUSH.md) before turning it on. Leaving it off changes
   nothing: no address is created and your homeserver is told nothing.
 * Spoilers are marked rather than hidden: the text renderer available here

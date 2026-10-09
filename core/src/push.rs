@@ -1,356 +1,114 @@
-//! Push over UnifiedPush: the distributor is the daemon, this is only the
-//! connector. Nothing registers until the user asks; see docs/PUSH.md.
+//! UnifiedPush through Leghorn. See docs/PUSH.md.
 
-use crate::protocol::event;
-use crate::runtime::Sink;
+use leghorn::matrix::{Notification, Pusher as LeghornPusher};
+use leghorn::{Config as PushConfig, Event as PushEvent, Leghorn};
 use serde_json::{json, Value};
-use std::path::PathBuf;
-use std::sync::mpsc::{channel, Sender as StdSender};
-use std::sync::Arc;
-use tokio::sync::mpsc::{unbounded_channel, UnboundedSender};
-use unifiedpush::{auth_to_string, pubkey_to_string, EventSink, PushEvent, PushMessage};
-use unifiedpush::UnifiedPush;
-use unifiedpush_storage::{Distributor, TokenInstance, UnifiedPushStorage};
+use tokio::sync::mpsc::{unbounded_channel, UnboundedReceiver};
 
-/// Not `org.xmatic.xmatic`: Sailjail grants one name and that one is spent on
-/// the share activation. This namespace comes with the UnifiedPush permission.
-const DBUS_NAME: &str = "org.unifiedpush.Connector.xmatic";
+/// Org and app must match the desktop file's [X-Sailjail] names. No fallback
+/// gateway; the user picks one.
+pub const PUSH: PushConfig = PushConfig::new("org.xmatic", "xmatic")
+    .description("xmatic")
+    .matrix(APP_ID)
+    .matrix_without_fallback()
+    .matrix_device("xmatic", "en");
 
-/// One registration per app here. The protocol allows several ("instances");
-/// this app has one account and one stream of notifications.
-const INSTANCE: &str = "xmatic";
+/// Must not change: existing pushers on homeservers are filed under it.
+const APP_ID: &str = "org.xmatic.xmatic";
 
-/// What the connector thread is asked to do.
-enum Command {
-    /// Pick a distributor and register. Answers with `push.state`, and the
-    /// endpoint follows as `push.endpoint` once the distributor calls back.
-    Enable,
-    /// Give the registration back. The endpoint dies with it.
-    Disable,
-    /// Report what is on the device and what this app has, without changing
-    /// anything.
-    Status,
-}
+pub async fn start() -> (
+    Result<Leghorn, String>,
+    UnboundedReceiver<PushEvent>,
+) {
+    // Otherwise Leghorn's gateway probe installs ring.
+    let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
 
-/// The handle the runtime keeps. Dropping it ends the connector thread.
-pub struct PushHandle {
-    commands: UnboundedSender<Command>,
-}
-
-impl PushHandle {
-    pub fn enable(&self) {
-        let _ = self.commands.send(Command::Enable);
-    }
-
-    pub fn disable(&self) {
-        let _ = self.commands.send(Command::Disable);
-    }
-
-    pub fn status(&self) {
-        let _ = self.commands.send(Command::Status);
-    }
-}
-
-/// Starts the connector. `None` where the bus or the name cannot be had - the
-/// ordinary outcome on a device with no distributor installed.
-pub fn start(path: PathBuf, sink: Arc<Sink>) -> PushHandle {
-    let (commands, mut rx) = unbounded_channel::<Command>();
-
-    // The crate's event channel is synchronous, so it gets a thread of its own
-    // rather than blocking either executor.
-    let (events_tx, events_rx) = channel::<PushEvent>();
-    {
-        let sink = sink.clone();
-        std::thread::spawn(move || {
-            for push in events_rx.iter() {
-                forward(&sink, push);
-            }
-        });
-    }
-
-    let handle = tokio::runtime::Handle::current();
-    std::thread::spawn(move || {
-        // Not `Runtime::block_on`. See the module comment.
-        zbus::block_on(async move {
-            let storage = FileStorage::open(path);
-            let unifiedpush =
-                match UnifiedPush::new(DBUS_NAME, storage, EventChannel(events_tx), handle).await {
-                    Ok(unifiedpush) => unifiedpush,
-                    Err(error) => {
-                        // The usual cause is the Sailjail permission missing because no distributor
-                        // is installed, and D-Bus reports that as `ServiceUnknown`.
-                        sink.emit(event(
-                            "push.state",
-                            json!({
-                                "state": "unavailable",
-                                "error": crate::text::scrub_ids(&error.to_string()),
-                            }),
-                        ));
-                        return;
-                    }
-                };
-
-            report(&sink, &unifiedpush).await;
-
-            while let Some(command) = rx.recv().await {
-                match command {
-                    Command::Enable => {
-                        // Before every register: unregistering makes the crate forget the
-                        // distributor. And this is no availability check - two distributors look like none.
-                        if !unifiedpush.try_use_default_distributor().await {
-                            let names = unifiedpush.list_distributors().await;
-                            match names.first() {
-                                Some(first) => unifiedpush.save_distributor(first).await,
-                                None => {
-                                    sink.emit(event(
-                                        "push.state",
-                                        json!({ "state": "no-distributor" }),
-                                    ));
-                                    continue;
-                                }
-                            }
-                        }
-                        report_with(&sink, &unifiedpush, Some("registering")).await;
-                        unifiedpush
-                            .register(INSTANCE, Some("xmatic"), None)
-                            .await;
-                    }
-                    Command::Disable => {
-                        unifiedpush.unregister(INSTANCE).await;
-                        report_with(&sink, &unifiedpush, Some("off")).await;
-                    }
-                    Command::Status => report(&sink, &unifiedpush).await,
-                }
-            }
-        });
-    });
-
-    PushHandle { commands }
-}
-
-/// What is on the device and what this app holds, as one object. Every
-/// `push.state` goes through here - a partial one blanks the page.
-async fn report_with(sink: &Arc<Sink>, unifiedpush: &UnifiedPush, state: Option<&str>) {
-    let distributors = unifiedpush.list_distributors().await;
-    let chosen = unifiedpush.get_distributor().await;
-    let derived = if distributors.is_empty() { "no-distributor" } else { "idle" };
-    sink.emit(event(
-        "push.state",
-        json!({
-            "state": state.unwrap_or(derived),
-            // Bus names, which is all a distributor is identified by. The UI
-            // shows the last segment; the whole name is what a report needs.
-            "distributors": distributors,
-            "distributor": chosen.as_ref().map(|d| d.name.clone()),
-            // Whether the chosen one has ever answered with an endpoint. A
-            // registration that was never acknowledged is not a working one.
-            "acknowledged": chosen.as_ref().map(|d| d.ack).unwrap_or(false),
-        }),
-    ));
-}
-
-/// The whole picture, with the state derived from it.
-async fn report(sink: &Arc<Sink>, unifiedpush: &UnifiedPush) {
-    report_with(sink, unifiedpush, None).await;
-}
-
-/// One event from the distributor, as JSON for the bridge.
-fn forward(sink: &Arc<Sink>, push: PushEvent) {
-    match push {
-        PushEvent::NewEndpoint { endpoint, .. } => {
-            // All three: Web Push wants an encrypted body, and a gateway given only the
-            // URL cannot make one. Whether it uses them is its business.
-            sink.emit(event(
-                "push.endpoint",
-                json!({
-                    "endpoint": endpoint.endpoint,
-                    "p256dh": pubkey_to_string(&endpoint.pubkey).unwrap_or_default(),
-                    "auth": auth_to_string(&endpoint.auth).unwrap_or_default(),
-                }),
-            ));
+    let (events, receiver) = unbounded_channel();
+    let handler = move |push: PushEvent| {
+        let events = events.clone();
+        async move {
+            let _ = events.send(push);
+            Ok::<(), std::convert::Infallible>(())
         }
-        PushEvent::Message { message, .. } => {
-            // Both shapes. A Matrix gateway hands the distributor the homeserver's plain
-            // JSON, so the undecrypted case is the normal one, not an error.
-            let (body, decrypted) = match message {
-                PushMessage::Decrypted { content } => (content, true),
-                PushMessage::Raw { content } => (content, false),
-            };
-            // Parsed here rather than in the bridge: a pure function with tests, and a
-            // push that is not a Matrix notification has to be told apart from one that is.
-            let text = String::from_utf8_lossy(&body).into_owned();
-            let target = notification_target(&text);
-            sink.emit(event(
-                "push.message",
-                json!({
-                    "decrypted": decrypted,
-                    "roomId": target.as_ref().map(|(room, _)| room.clone()),
-                    "eventId": target.as_ref().map(|(_, id)| id.clone()),
-                }),
-            ));
+    };
+    let started = leghorn::start(&PUSH, handler)
+        .await
+        .map_err(|error| crate::text::scrub_ids(&error.to_string()));
+    (started, receiver)
+}
+
+/// Whether `gateway` is an https URL.
+pub fn gateway_is_sound(gateway: &str) -> bool {
+    let gateway = gateway.trim();
+    gateway.len() > 8
+        && gateway
+            .get(..8)
+            .is_some_and(|scheme| scheme.eq_ignore_ascii_case("https://"))
+}
+
+/// The host of `url`, without scheme, port or path.
+pub fn host(url: &str) -> String {
+    let rest = url.split_once("://").map_or(url, |(_, rest)| rest);
+    let authority = rest.split(['/', '?', '#']).next().unwrap_or_default();
+    let authority = authority.rsplit_once('@').map_or(authority, |(_, host)| host);
+    authority.split(':').next().unwrap_or_default().to_owned()
+}
+
+/// The UnifiedPush project's gateway, used only where the user picked it.
+pub const PUBLIC_GATEWAY: &str = "https://matrix.gateway.unifiedpush.org/_matrix/push/v1/notify";
+
+/// Which gateway the user picked. Nothing registers before a pick.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub enum Gateway {
+    #[default]
+    Unset,
+    /// The push server's own, found by Leghorn.
+    Server,
+    Public,
+    Other(String),
+}
+
+impl Gateway {
+    pub fn parse(mode: &str, url: &str) -> Result<Self, &'static str> {
+        match mode {
+            "" => Ok(Self::Unset),
+            "server" => Ok(Self::Server),
+            "public" => Ok(Self::Public),
+            "other" if gateway_is_sound(url) => Ok(Self::Other(url.trim().to_owned())),
+            "other" => Err("the push gateway has to be an https address"),
+            _ => Err("unknown gateway choice"),
         }
-        PushEvent::Unregistered { .. } => {
-            sink.emit(event("push.state", json!({ "state": "off" })));
+    }
+
+    pub fn mode(&self) -> &'static str {
+        match self {
+            Self::Unset => "",
+            Self::Server => "server",
+            Self::Public => "public",
+            Self::Other(_) => "other",
         }
-        PushEvent::Abort => {
-            sink.emit(event(
-                "push.state",
-                json!({ "state": "unavailable", "error": "the distributor went away" }),
-            ));
+    }
+
+    /// The gateway to register, given what the push server offered.
+    pub fn resolve(&self, discovered: Option<&str>) -> Option<String> {
+        match self {
+            Self::Unset => None,
+            Self::Server => discovered.filter(|gateway| gateway_is_sound(gateway)).map(str::to_owned),
+            Self::Public => Some(PUBLIC_GATEWAY.to_owned()),
+            Self::Other(url) => Some(url.clone()),
         }
     }
 }
 
-/// Adapter from the crate's `EventSink` to a plain channel, so the handling can
-/// happen off both executors.
-struct EventChannel(StdSender<PushEvent>);
-
-#[async_trait::async_trait]
-impl EventSink for EventChannel {
-    async fn emit(&self, push: PushEvent) {
-        let _ = self.0.send(push);
+/// Room and event of a Matrix push; both null for a count-only or foreign push.
+pub fn message(body: &[u8]) -> Value {
+    let note = Notification::from_slice(body).ok();
+    let room = note.as_ref().and_then(|note| note.room_id.clone());
+    let event = note.as_ref().and_then(|note| note.event_id.clone());
+    match (room, event) {
+        (Some(room), Some(event)) => json!({ "roomId": room, "eventId": event }),
+        _ => json!({ "roomId": null, "eventId": null }),
     }
-}
-
-/// Registration, keys and distributor in one JSON file: the keys go stale the
-/// moment the process restarts. Under the app's own directory - the rest is tmpfs.
-struct FileStorage {
-    path: PathBuf,
-    state: StoredPush,
-}
-
-#[derive(Default, serde::Serialize, serde::Deserialize)]
-struct StoredPush {
-    distributor: Option<String>,
-    #[serde(default)]
-    distributor_ack: bool,
-    #[serde(default)]
-    registrations: Vec<TokenInstance>,
-    /// Subscription keys, by instance.
-    #[serde(default)]
-    keys: std::collections::BTreeMap<String, String>,
-}
-
-impl FileStorage {
-    fn open(path: PathBuf) -> Self {
-        let state = std::fs::read(&path)
-            .ok()
-            .and_then(|raw| serde_json::from_slice(&raw).ok())
-            .unwrap_or_default();
-        FileStorage { path, state }
-    }
-
-    /// 0600 throughout: the registration is a bearer credential. Not under the
-    /// store key - the woken process has no key after a reboot.
-    fn save(&self) {
-        let Ok(raw) = serde_json::to_vec_pretty(&self.state) else {
-            return;
-        };
-        let _ = crate::session::write_private(&self.path, &raw);
-    }
-}
-
-#[async_trait::async_trait]
-impl UnifiedPushStorage for FileStorage {
-    async fn distributor_get(&self) -> Option<Distributor> {
-        self.state.distributor.as_ref().map(|name| Distributor {
-            name: name.clone(),
-            ack: self.state.distributor_ack,
-        })
-    }
-
-    async fn distributor_set(&mut self, distributor: String) {
-        self.state.distributor = Some(distributor);
-        self.state.distributor_ack = false;
-        self.save();
-    }
-
-    async fn distributor_ack(&mut self) {
-        self.state.distributor_ack = true;
-        self.save();
-    }
-
-    async fn distributor_remove(&mut self) {
-        self.state.distributor = None;
-        self.state.distributor_ack = false;
-        self.save();
-    }
-
-    async fn key_get(&self, instance: &str) -> Option<String> {
-        self.state.keys.get(instance).cloned()
-    }
-
-    async fn key_set(&mut self, instance: &str, key: &str) {
-        self.state.keys.insert(instance.to_owned(), key.to_owned());
-        self.save();
-    }
-
-    async fn key_remove(&mut self, instance: &str) {
-        self.state.keys.remove(instance);
-        self.save();
-    }
-
-    async fn key_remove_all(&mut self) {
-        self.state.keys.clear();
-        self.save();
-    }
-
-    async fn registration_get_from_instance(&self, instance: &str) -> Option<TokenInstance> {
-        self.state
-            .registrations
-            .iter()
-            .find(|entry| entry.instance == instance)
-            .cloned()
-    }
-
-    async fn registration_get_from_token(&self, token: &str) -> Option<TokenInstance> {
-        self.state
-            .registrations
-            .iter()
-            .find(|entry| entry.token == token)
-            .cloned()
-    }
-
-    async fn registration_save(&mut self, token: &TokenInstance) {
-        self.state
-            .registrations
-            .retain(|entry| entry.instance != token.instance);
-        self.state.registrations.push(token.clone());
-        self.save();
-    }
-
-    async fn registration_list(&self) -> Vec<TokenInstance> {
-        self.state.registrations.clone()
-    }
-
-    async fn registration_remove(&mut self, instance: &str) -> bool {
-        let before = self.state.registrations.len();
-        self.state
-            .registrations
-            .retain(|entry| entry.instance != instance);
-        self.state.keys.remove(instance);
-        let removed = self.state.registrations.len() != before;
-        if removed {
-            self.save();
-        }
-        removed
-    }
-
-    async fn registration_remove_all(&mut self) {
-        self.state.registrations.clear();
-        self.state.keys.clear();
-        self.save();
-    }
-}
-
-/// What a Matrix push carries. `event_id_only`, so it names room and event and
-/// nothing else; every field is optional because a gateway may reshape it.
-pub fn notification_target(body: &str) -> Option<(String, String)> {
-    let parsed: Value = serde_json::from_str(body).ok()?;
-    let notification = parsed.get("notification")?;
-    let room = notification.get("room_id")?.as_str()?.to_owned();
-    let event = notification.get("event_id")?.as_str()?.to_owned();
-    Some((room, event))
 }
 
 #[cfg(test)]
@@ -359,99 +117,151 @@ mod tests {
 
     #[test]
     fn a_matrix_notification_names_its_room_and_event() {
-        let body = r#"{"notification":{"event_id":"$abc","room_id":"!room:example.org",
+        let body = br#"{"notification":{"event_id":"$abc","room_id":"!room:example.org",
                         "counts":{"unread":1}}}"#;
         assert_eq!(
-            notification_target(body),
-            Some(("!room:example.org".to_owned(), "$abc".to_owned()))
+            message(body),
+            json!({ "roomId": "!room:example.org", "eventId": "$abc" })
         );
     }
 
     #[test]
     fn anything_else_is_not_ours() {
-        // A push meant for another app, a reshaped body, or the distributor's test
-        // message. None of these may look like a message to fetch.
         for probe in [
             "",
             "not json at all",
             r#"{"notification":{}}"#,
+            r#"{"notification":{"counts":{"unread":3}}}"#,
             r#"{"notification":{"room_id":"!room:example.org"}}"#,
             r#"{"hello":"world"}"#,
         ] {
-            assert_eq!(notification_target(probe), None, "accepted: {probe}");
+            assert_eq!(
+                message(probe.as_bytes()),
+                json!({ "roomId": null, "eventId": null }),
+                "accepted: {probe}"
+            );
         }
     }
+
+    #[test]
+    fn only_https_gateways_are_sound() {
+        assert!(gateway_is_sound("https://push.example.org/_matrix/push/v1/notify"));
+        assert!(gateway_is_sound(" HTTPS://push.example.org "));
+        assert!(!gateway_is_sound("http://push.example.org/_matrix/push/v1/notify"));
+        assert!(!gateway_is_sound("https://"));
+        assert!(!gateway_is_sound(""));
+    }
+
+    #[test]
+    fn the_gateway_is_what_was_picked() {
+        let found = "https://push.example.org/_matrix/push/v1/notify";
+        let mine = "https://gateway.example.net/_matrix/push/v1/notify";
+        assert_eq!(Gateway::Unset.resolve(Some(found)), None);
+        assert_eq!(Gateway::Server.resolve(Some(found)).as_deref(), Some(found));
+        assert_eq!(Gateway::Server.resolve(None), None);
+        assert_eq!(Gateway::Server.resolve(Some("http://push.example.org/notify")), None);
+        assert_eq!(Gateway::Public.resolve(None).as_deref(), Some(PUBLIC_GATEWAY));
+        let other = Gateway::parse("other", mine).unwrap();
+        assert_eq!(other.resolve(Some(found)).as_deref(), Some(mine));
+    }
+
+    #[test]
+    fn only_the_host_is_kept() {
+        assert_eq!(host("https://updates.push.services.mozilla.com/wpush/v2/gAAA"), "updates.push.services.mozilla.com");
+        assert_eq!(host("https://ntfy.example:8443/upAbc?up=1"), "ntfy.example");
+        assert_eq!(host("https://user:pw@ntfy.example/up"), "ntfy.example");
+    }
+
+    #[test]
+    fn a_pick_is_parsed_strictly() {
+        assert_eq!(Gateway::parse("", ""), Ok(Gateway::Unset));
+        assert_eq!(Gateway::parse("server", "ignored"), Ok(Gateway::Server));
+        assert!(Gateway::parse("other", "http://gateway.example.net").is_err());
+        assert!(Gateway::parse("other", "").is_err());
+        assert!(Gateway::parse("fallback", "").is_err());
+        assert_eq!(Gateway::parse("public", "").map(|pick| pick.mode()), Ok("public"));
+    }
+
+    #[test]
+    fn leghorns_pusher_reads_as_ruma_s() {
+        use matrix_sdk::ruma::api::client::push::{Pusher, PusherKind};
+        let pusher: LeghornPusher = serde_json::from_value(json!({
+            "pushkey": "https://push.example.org/up/abc",
+            "app_id": APP_ID,
+            "gateway": "https://push.example.org/_matrix/push/v1/notify",
+            "app_display_name": "xmatic",
+            "device_display_name": "phone",
+            "lang": "en",
+            "replaces": null,
+        }))
+        .unwrap();
+        let ruma: Pusher = pusher.convert().unwrap();
+        assert_eq!(ruma.ids.pushkey, "https://push.example.org/up/abc");
+        assert_eq!(ruma.ids.app_id, APP_ID);
+        let PusherKind::Http(data) = ruma.kind else {
+            panic!("not an http pusher");
+        };
+        assert_eq!(data.url, "https://push.example.org/_matrix/push/v1/notify");
+        assert_eq!(
+            data.format,
+            Some(matrix_sdk::ruma::push::PushFormat::EventIdOnly)
+        );
+    }
 }
 
-/// True for a gateway this app will hand to the homeserver. https only: the
-/// server posts room and event ids to it for every notification.
-pub fn gateway_is_sound(gateway: &str) -> bool {
-    let gateway = gateway.trim();
-    gateway.starts_with("https://") && gateway.len() > "https://".len()
-}
-
-/// Registers the endpoint as an HTTP pusher. The endpoint is the pushkey and
-/// the gateway the URL: a homeserver requires the URL to end in `/notify`.
-pub async fn set_pusher(
+/// Sets the pusher with `gateway` unless already present, and deletes this app's others.
+pub async fn register(
     client: &matrix_sdk::Client,
-    endpoint: &str,
-    p256dh: &str,
-    auth: &str,
+    pusher: &LeghornPusher,
     gateway: &str,
 ) -> Result<(), String> {
-    use matrix_sdk::ruma::api::client::push::{Pusher, PusherIds, PusherInit, PusherKind};
-    use matrix_sdk::ruma::push::{HttpPusherData, PushFormat};
+    use matrix_sdk::ruma::api::client::push::{get_pushers, Pusher, PusherIds, PusherKind};
 
-    if !gateway_is_sound(gateway) {
-        return Err("the push gateway has to be an https address".to_owned());
+    if !gateway_is_sound(gateway) || !gateway_is_sound(&pusher.pushkey) {
+        return Err("the push gateway and address have to be https".to_owned());
     }
-
-    let mut data = HttpPusherData::new(gateway.to_owned());
-    data.format = Some(PushFormat::EventIdOnly);
-    if !p256dh.is_empty() {
-        data.data
-            .insert("p256dh".to_owned(), serde_json::json!(p256dh));
-    }
-    if !auth.is_empty() {
-        data.data.insert("auth".to_owned(), serde_json::json!(auth));
-    }
-
-    let pusher: Pusher = PusherInit {
-        ids: PusherIds::new(endpoint.to_owned(), APP_ID.to_owned()),
-        kind: PusherKind::Http(data),
-        app_display_name: "xmatic".to_owned(),
-        // Deliberately not the device's own name: it shows in every other client's
-        // session list, and this app does not put it where nobody asked.
-        device_display_name: "xmatic".to_owned(),
-        profile_tag: None,
-        lang: "en".to_owned(),
-    }
-    .into();
-
-    // `append: false` drops any other pusher with the same pushkey - one endpoint
-    // per device, and a second registration means two of every notification.
-    client
-        .pusher()
-        .set(pusher, false)
+    let current = client
+        .send(get_pushers::v3::Request::new())
         .await
-        .map_err(|error| crate::text::scrub_ids(&format!("could not register the pusher: {error}")))
+        .map_err(|error| crate::text::scrub_ids(&format!("could not read the pushers: {error}")))?;
+    let ours: Vec<_> = current
+        .pushers
+        .into_iter()
+        .filter(|existing| existing.ids.app_id == APP_ID)
+        .collect();
+
+    let in_place = ours.iter().any(|existing| {
+        existing.ids.pushkey == pusher.pushkey
+            && matches!(&existing.kind, PusherKind::Http(data) if data.url == gateway)
+    });
+    if !in_place {
+        let mut chosen = pusher.clone();
+        chosen.gateway = Some(gateway.to_owned());
+        let wanted: Pusher = chosen
+            .convert()
+            .map_err(|error| format!("Leghorn's pusher did not parse: {error}"))?;
+        client
+            .pusher()
+            .set(wanted, false)
+            .await
+            .map_err(|error| {
+                crate::text::scrub_ids(&format!("could not register the pusher: {error}"))
+            })?;
+    }
+
+    for stale in ours {
+        if stale.ids.pushkey == pusher.pushkey {
+            continue;
+        }
+        let _ = client
+            .pusher()
+            .delete(PusherIds::new(stale.ids.pushkey, APP_ID.to_owned()))
+            .await;
+    }
+    Ok(())
 }
 
-/// Removes the pusher again, so the homeserver stops posting to an endpoint
-/// that no longer exists.
-pub async fn clear_pusher(client: &matrix_sdk::Client, endpoint: &str) -> Result<(), String> {
-    use matrix_sdk::ruma::api::client::push::PusherIds;
-
-    client
-        .pusher()
-        .delete(PusherIds::new(endpoint.to_owned(), APP_ID.to_owned()))
-        .await
-        .map(|_| ())
-        .map_err(|error| crate::text::scrub_ids(&format!("could not remove the pusher: {error}")))
-}
-
-/// Removes every pusher this app registered. The endpoint is never persisted,
-/// so a registration that outlived it can only be found on the server.
+/// Removes every pusher this app registered.
 pub async fn clear_own_pushers(client: &matrix_sdk::Client) -> Result<(), String> {
     use matrix_sdk::ruma::api::client::push::{get_pushers, PusherIds};
 
@@ -480,9 +290,14 @@ pub async fn clear_own_pushers(client: &matrix_sdk::Client) -> Result<(), String
     }
 }
 
-/// The identifier the homeserver files this pusher under. It has to stay put:
-/// changing it leaves the old pusher pointing at a dead endpoint.
-const APP_ID: &str = "org.xmatic.xmatic";
+/// Whether a `push.json` from the old connector holds a registration.
+pub fn legacy_enabled(path: &std::path::Path) -> bool {
+    std::fs::read(path)
+        .ok()
+        .and_then(|raw| serde_json::from_slice::<Value>(&raw).ok())
+        .and_then(|state| state.get("registrations")?.as_array().map(|list| !list.is_empty()))
+        .unwrap_or(false)
+}
 
 /// Fetches the message a push named. `NotificationClient` reaches an event no
 /// sync brought in; `MultipleProcesses`, because a woken process may be second.

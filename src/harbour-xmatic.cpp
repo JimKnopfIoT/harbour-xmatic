@@ -83,6 +83,9 @@ bool takeStoreFromWakeUp(const QString &dataDirectory)
 
 int main(int argc, char *argv[])
 {
+    // Before any thread starts.
+    pushPrelude(argv[0]);
+
     // The push-wake branch before Qt: that path must never put a window up. The
     // mode travels in the environment - SailJail matches argv exactly.
     if (qEnvironmentVariableIsSet(XMATIC_PUSH_WAKE_ENV)) {
@@ -177,6 +180,8 @@ int main(int argc, char *argv[])
     service.publish();
 
     MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey, &settings);
+    bridge.setAnnouncePushes(true);
+    bridge.closePushBanners();
     if (!storeKey.key.isEmpty()) {
         storeKey.key.fill(QChar('0'));
     }

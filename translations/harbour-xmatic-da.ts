@@ -1208,10 +1208,6 @@
         <translation>Din session er slut. Log ind igen.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Angiv først en push-gateway.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Ny besked</translation>
     </message>
@@ -1250,6 +1246,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Afstemning: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Gatewayen skal være en https-URL.</translation>
     </message>
 </context>
 <context>
@@ -1933,14 +1933,6 @@
         <translation>Gateway</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>En Matrix-hjemmeserver kan ikke tale direkte med en push-distributør, så den sender til en gateway, der videresender. Der er ingen standardværdi: det er det eneste, ingen kan gætte for dig.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-gateway</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Hvad der forlader denne enhed</translation>
     </message>
@@ -1948,12 +1940,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Din hjemmeserver får en adresse hos push-tjenesten og sender for hver notifikation et rum- og besked-id til gatewayen. Ingen beskedtekst: pushen bærer kun id&apos;er, og denne enhed henter og dekrypterer beskeden selv. Den adresse er en hemmelighed — den, der har den, kan sende en notifikation til denne telefon.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (offentlig)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Brugerdefineret</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Ingen</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Vælg en gateway for at slå push helt til.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>Gateway-URL</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registreret. Venter på en gateway.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registreret. Giver hjemmeserveren besked.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Ingen. Hjemmeserveren kan ikke nå denne enhed endnu.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>distributøren</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Medfølgende</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Medfølgende via %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 har ingen Matrix-gateway.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Intet svar fra %1 endnu. Spørger igen.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Findes via %1 efter registrering.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 kan ikke levere Matrix-notifikationer.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registreret via %1. Hjemmeserveren kan ikke nå denne enhed.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Drives af UnifiedPush-projektet: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Vælg en push-tjeneste med Matrix-gateway i %1, eller brug den offentlige gateway fra UnifiedPush-projektet.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Brug offentlig UnifiedPush-gateway</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Ny besked</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push-distributøren har droppet xmatic. Slå push til igen under Konto.</translation>
     </message>
 </context>
 <context>

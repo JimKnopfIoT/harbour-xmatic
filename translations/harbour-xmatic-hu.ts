@@ -1206,10 +1206,6 @@
         <translation>A munkameneted véget ért. Jelentkezz be újra.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Adj meg előbb egy push átjárót.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Új üzenet</translation>
     </message>
@@ -1248,6 +1244,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Szavazás: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Az átjárónak https URL-nek kell lennie.</translation>
     </message>
 </context>
 <context>
@@ -1930,14 +1930,6 @@
         <translation>Átjáró</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Egy Matrix kiszolgáló nem tud közvetlenül a push elosztóval beszélni, ezért egy átjárónak küld, amely továbbítja. Nincs alapérték: ez az egyetlen dolog, amit senki nem tud kitalálni helyetted.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push átjáró</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Mi hagyja el ezt az eszközt</translation>
     </message>
@@ -1945,12 +1937,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>A kiszolgálód megkapja a push szolgáltatásnál lévő címet, és minden értesítéshez elküldi az átjárónak a szoba- és üzenetazonosítót. Üzenetszöveget nem: a push csak azonosítókat visz, az üzenetet ez az eszköz tölti le és fejti vissza. Ez a cím titok — akinél megvan, értesítést küldhet erre a telefonra.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (nyilvános)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Egyéni</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nincs</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Válassz átjárót a push bekapcsolásának befejezéséhez.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>Átjáró URL-je</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Regisztrálva. Várakozás átjáróra.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Regisztrálva. Az otthoni kiszolgáló értesítése.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nincs. Az otthoni kiszolgáló még nem éri el ezt az eszközt.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>az elosztó</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Mellékelt</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Mellékelt (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nem kínál Matrix-átjárót.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 még nem válaszolt. Újra kérdezem.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Regisztráció után %1 adja meg.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 nem tud Matrix-értesítéseket kézbesíteni.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Regisztrálva (%1). Az otthoni kiszolgáló nem éri el ezt az eszközt.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>A UnifiedPush projekt üzemelteti: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Válassz Matrix-átjáróval rendelkező push szolgáltatást itt: %1, vagy használd a UnifiedPush projekt nyilvános átjáróját.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Nyilvános UnifiedPush-átjáró használata</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Új üzenet</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>A push elosztó elengedte az xmaticot. Kapcsold vissza a pusht a Fiók alatt.</translation>
     </message>
 </context>
 <context>

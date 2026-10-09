@@ -1186,10 +1186,6 @@
         <translation>保存された一覧をいま読み取れません。</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>先にプッシュゲートウェイを入力してください。</translation>
-    </message>
-    <message>
         <source>Enter your recovery key first.</source>
         <translation>先に復旧キーを入力してください。</translation>
     </message>
@@ -1248,6 +1244,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>アンケート: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>ゲートウェイは https の URL にしてください。</translation>
     </message>
 </context>
 <context>
@@ -1930,14 +1930,6 @@
         <translation>ゲートウェイ</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix のホームサーバーはプッシュディストリビューターと直接やり取りできないため、転送するゲートウェイへ送ります。既定値はありません: 誰も代わりに推測できない唯一の項目です。</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>プッシュゲートウェイ</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>このデバイスから出るもの</translation>
     </message>
@@ -1945,12 +1937,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>ホームサーバーにはプッシュサービス上のアドレスが伝えられ、通知ごとにルームとメッセージの識別子がゲートウェイへ送られます。本文は送りません: プッシュが運ぶのは識別子だけで、メッセージの取得と復号はこのデバイスが自分で行います。そのアドレスは秘密です - 持っている人は誰でもこの端末に通知を送れます。</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush（公開）</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>カスタム</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>なし</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>ゲートウェイを選ぶとプッシュがオンになります。</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>ゲートウェイの URL</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>登録済み。ゲートウェイを待っています。</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>登録済み。ホームサーバーに伝えています。</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>なし。ホームサーバーはまだこのデバイスに届きません。</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>ディストリビューター</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>付属</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>付属（%1 経由）: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 には Matrix ゲートウェイがありません。</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 からまだ応答がありません。再度問い合わせています。</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>登録後に %1 経由で見つかります。</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 は Matrix の通知を配信できません。</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>%1 に登録済み。ホームサーバーはこのデバイスに届きません。</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>UnifiedPush プロジェクトが運営: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>%1 で Matrix ゲートウェイのあるプッシュサービスを選ぶか、UnifiedPush プロジェクトが運営する公開ゲートウェイを使ってください。</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>UnifiedPush の公開ゲートウェイを使う</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>新しいメッセージ</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>プッシュディストリビューターが xmatic を外しました。アカウントからプッシュをオンにし直してください。</translation>
     </message>
 </context>
 <context>

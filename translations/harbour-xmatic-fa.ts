@@ -1186,10 +1186,6 @@
         <translation>فهرست‌های ذخیره‌شده اکنون خوانده نمی‌شوند.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>نخست یک دروازهٔ Push وارد کن.</translation>
-    </message>
-    <message>
         <source>Enter your recovery key first.</source>
         <translation>نخست کلید بازیابی‌ات را وارد کن.</translation>
     </message>
@@ -1248,6 +1244,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>نظرسنجی: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>دروازه باید یک نشانی https باشد.</translation>
     </message>
 </context>
 <context>
@@ -1930,14 +1930,6 @@
         <translation>دروازه</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>کارساز خانگی Matrix نمی‌تواند مستقیم با توزیع‌کنندهٔ Push سخن بگوید، پس به دروازه‌ای می‌فرستد که آن را هدایت می‌کند. پیش‌فرضی وجود ندارد: این تنها چیزی است که هیچ‌کس نمی‌تواند برایت حدس بزند.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>دروازهٔ Push</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>آنچه از این دستگاه بیرون می‌رود</translation>
     </message>
@@ -1945,12 +1937,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>به کارساز خانگی‌ات نشانی‌ای در سرویس Push گفته می‌شود و برای هر اعلان، شناسهٔ اتاق و پیام به دروازه فرستاده می‌شود. متن پیام نه: Push تنها شناسه می‌برد و خودِ این دستگاه پیام را می‌گیرد و رمزگشایی می‌کند. آن نشانی رازی است - هرکه داشته باشد می‌تواند به این گوشی اعلان بفرستد.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (عمومی)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>سفارشی</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>هیچ</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>برای کامل کردن روشن شدن Push یک دروازه برگزین.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>نشانی دروازه</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>ثبت شد. در انتظار دروازه.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>ثبت شد. در حال خبر دادن به کارساز خانگی.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>هیچ. کارساز خانگی هنوز به این دستگاه دسترسی ندارد.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>توزیع‌کننده</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>همراه</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>همراه، از طریق %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 دروازه‌ی Matrix ندارد.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>هنوز پاسخی از %1 نیامده. دوباره می‌پرسیم.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>پس از ثبت، از طریق %1 پیدا می‌شود.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 نمی‌تواند اعلان‌های Matrix را برساند.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>از طریق %1 ثبت شد. کارساز خانگی به این دستگاه دسترسی ندارد.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>زیر نظر پروژهٔ UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>در %1 یک سرویس Push با دروازهٔ Matrix انتخاب کن، یا از دروازهٔ عمومی پروژهٔ UnifiedPush استفاده کن.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>استفاده از دروازهٔ عمومی UnifiedPush</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>پیام تازه</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>توزیع‌کنندهٔ Push، xmatic را کنار گذاشت. Push را دوباره در حساب روشن کن.</translation>
     </message>
 </context>
 <context>

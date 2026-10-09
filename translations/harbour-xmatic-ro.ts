@@ -1210,10 +1210,6 @@
         <translation>Sesiunea ta s-a încheiat. Conectează-te din nou.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Introdu mai întâi o poartă push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Mesaj nou</translation>
     </message>
@@ -1252,6 +1248,10 @@
     <message>
         <source>Poll: %1</source>
         <translation>Sondaj: %1</translation>
+    </message>
+    <message>
+        <source>The gateway must be an https URL.</source>
+        <translation>Poarta trebuie să fie un URL https.</translation>
     </message>
 </context>
 <context>
@@ -1936,14 +1936,6 @@
         <translation>Poartă</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Un server Matrix nu poate vorbi direct cu un distribuitor push, deci trimite către o poartă care redirecționează. Nu există o valoare implicită: este singurul lucru pe care nimeni nu îl poate ghici în locul tău.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Poartă push</translation>
-    </message>
-    <message>
         <source>What leaves this device</source>
         <translation>Ce părăsește acest dispozitiv</translation>
     </message>
@@ -1951,12 +1943,92 @@
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Serverul tău află o adresă la serviciul push și trimite porții un identificator de cameră și de mesaj pentru fiecare notificare. Fără text: push-ul poartă doar identificatori, iar mesajul este preluat și decriptat de acest dispozitiv. Adresa este un secret — cine o are poate trimite o notificare acestui telefon.</translation>
     </message>
+    <message>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (publică)</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Personalizată</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Niciuna</translation>
+    </message>
+    <message>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Alege o poartă ca să termini de pornit push-ul.</translation>
+    </message>
+    <message>
+        <source>Gateway URL</source>
+        <translation>URL-ul porții</translation>
+    </message>
+    <message>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Înregistrat. Se așteaptă o poartă.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Înregistrat. Se anunță serverul.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Niciuna. Serverul nu poate încă ajunge la acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>distribuitorul</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Inclusă</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Inclusă (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nu are poartă Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 nu a răspuns încă. Se întreabă din nou.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>După înregistrare, %1 o găsește.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 nu poate livra notificări Matrix.</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Înregistrat (%1). Serverul nu poate ajunge la acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Administrată de proiectul UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Alege în %1 un serviciu push cu poartă Matrix sau folosește poarta publică a proiectului UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Folosește poarta publică UnifiedPush</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
     <message>
         <source>New message</source>
         <translation>Mesaj nou</translation>
+    </message>
+    <message>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Distribuitorul push a renunțat la xmatic. Repornește push-ul din Cont.</translation>
     </message>
 </context>
 <context>
