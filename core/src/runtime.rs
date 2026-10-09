@@ -821,9 +821,12 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::PushStatus { .. } => push_status(&state, id).await,
         Command::PushEnable { .. } => push_enable(&state, id).await,
         Command::PushDisable { .. } => push_disable(&state, id).await,
-        Command::PushGateway { mode, gateway, .. } => {
-            push_set_gateway(&state, id, mode, gateway).await
-        }
+        Command::PushGateway {
+            mode,
+            gateway,
+            enable,
+            ..
+        } => push_set_gateway(&state, id, mode, gateway, enable).await,
         Command::PushWake { .. } => push_wake(&state, id).await,
         Command::PushYield { .. } => push_yield(&state, id),
         Command::PushNotify {

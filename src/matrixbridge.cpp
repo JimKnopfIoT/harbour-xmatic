@@ -1913,7 +1913,7 @@ void MatrixBridge::disablePush()
     send(QStringLiteral("push.disable"));
 }
 
-bool MatrixBridge::setPushGateway(const QString &mode, const QString &gateway)
+bool MatrixBridge::setPushGateway(const QString &mode, const QString &gateway, bool enable)
 {
     const QString trimmed = gateway.trimmed();
     if (mode == QLatin1String("other")
@@ -1924,13 +1924,14 @@ bool MatrixBridge::setPushGateway(const QString &mode, const QString &gateway)
     if (m_settings) {
         m_settings->setPushGateway(mode, trimmed);
     }
-    sendPushGateway();
+    sendPushGateway(enable);
     return true;
 }
 
-void MatrixBridge::sendPushGateway()
+void MatrixBridge::sendPushGateway(bool enable)
 {
     QJsonObject arguments;
+    arguments.insert(QStringLiteral("enable"), enable);
     if (m_settings) {
         arguments.insert(QStringLiteral("mode"), m_settings->pushGatewayMode());
         arguments.insert(QStringLiteral("gateway"), m_settings->pushGateway());

@@ -223,7 +223,9 @@ public:
     Q_INVOKABLE void enablePush();
 
     /// The gateway pick: "server", "public", or "other" with an https `gateway`.
-    Q_INVOKABLE bool setPushGateway(const QString &mode, const QString &gateway = QString());
+    /// `enable` turns push on with it once the pick is complete.
+    Q_INVOKABLE bool setPushGateway(const QString &mode, const QString &gateway = QString(),
+                                    bool enable = false);
 
     /// One banner line from a preview's kind and text, worded as `harbour-xmatic.qml`
     /// does it. Here as well because the woken process has no QML.
@@ -1023,7 +1025,7 @@ private:
     /// Push banner action keys to room ids, kept after the banners are closed.
     QHash<QString, QString> m_pushBannerRooms;
     void announcePush(const QVariantMap &notification);
-    void sendPushGateway();
+    void sendPushGateway(bool enable = false);
     QSet<quint64> m_pushNotifyRequests;
     /// Enough for a session's worth of trouble, small enough to stay in memory
     /// without a thought.
