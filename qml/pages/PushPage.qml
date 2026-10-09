@@ -22,9 +22,17 @@ Page {
     property bool wanted: false
     readonly property bool switchedOn: pushOn || wanted || pushState === "registering"
     readonly property string gatewayMode: choosingOther ? "other" : settings.pushGatewayMode
-    // true, false, or null if not checked yet.
-    readonly property var serverGateway: pushStatus.serverGateway === undefined
-                                         ? null : pushStatus.serverGateway
+    // "yes", "no", "unknown", or "" before registering.
+    readonly property string serverGateway: pushStatus.serverGateway || ""
+    readonly property string distributorName: distributors.length > 0
+                                              ? String(distributors[0]).split(".").pop()
+                                              : qsTr("the distributor")
+    readonly property string pushService: {
+        var host = pushStatus.pushService || ""
+        return /(^|\.)mozilla\.com$/.test(host) ? "Mozilla Push Service" : host
+    }
+    readonly property bool serviceLacksGateway: pushOn && gatewayMode === "server"
+                                                && serverGateway === "no"
 
     onGatewayModeChanged: gatewayBox.currentIndex = gatewayModes.indexOf(gatewayMode)
 
@@ -116,18 +124,22 @@ Page {
                 // Set from the saved pick only; Silica's own selection breaks a binding.
                 automaticSelection: false
                 currentIndex: -1
-                value: [qsTr("Push server"), qsTr("UnifiedPush (public)"),
+                value: [qsTr("Provided"), qsTr("UnifiedPush (public)"),
                         qsTr("Custom")][page.gatewayModes.indexOf(page.gatewayMode)] || qsTr("None")
                 description: {
                     switch (page.gatewayMode) {
                     case "server":
-                        if (page.serverGateway === true) {
-                            return qsTr("Uses %1.").arg(page.host(page.pushStatus.serverGatewayUrl))
+                        if (page.serverGateway === "yes") {
+                            return qsTr("Provided via %1: %2").arg(page.distributorName)
+                                .arg(page.host(page.pushStatus.serverGatewayUrl))
                         }
-                        if (page.serverGateway === false) {
-                            return qsTr("Your push server has no gateway. Pick another one.")
+                        if (page.serverGateway === "no") {
+                            return qsTr("%1 has no Matrix gateway.").arg(page.pushService)
                         }
-                        return qsTr("Checked after registering. ntfy has one, Mozilla doesn't.")
+                        if (page.serverGateway === "unknown") {
+                            return qsTr("No answer from %1 yet. Asking again.").arg(page.pushService)
+                        }
+                        return qsTr("Found via %1 after registering.").arg(page.distributorName)
                     case "public":
                         return "matrix.gateway.unifiedpush.org"
                     case "other":
@@ -138,7 +150,7 @@ Page {
 
                 menu: ContextMenu {
                     MenuItem {
-                        text: qsTr("Push server")
+                        text: qsTr("Provided")
                         onClicked: page.pick("server", "")
                     }
                     MenuItem {
@@ -176,6 +188,35 @@ Page {
                 }
             }
 
+            Column {
+                visible: page.serviceLacksGateway
+                width: parent.width
+                spacing: Theme.paddingMedium
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    wrapMode: Text.Wrap
+                    color: Theme.errorColor
+                    text: qsTr("%1 can't deliver Matrix notifications.").arg(page.pushService)
+                }
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    wrapMode: Text.Wrap
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.secondaryColor
+                    text: qsTr("Switch %1 to ntfy, or use the UnifiedPush gateway.").arg(page.distributorName)
+                }
+
+                Button {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("Use UnifiedPush gateway")
+                    onClicked: page.pick("public", "")
+                }
+            }
+
             SecurityRow {
                 label: qsTr("Distributor")
                 level: page.distributors.length > 0 ? SecurityStatus.GREEN
@@ -196,6 +237,9 @@ Page {
                 detail: {
                     if (page.pushStatus.registered) {
                         return qsTr("This device has an address to be reached at.")
+                    }
+                    if (page.serviceLacksGateway) {
+                        return qsTr("Registered with %1. The homeserver can't reach it.").arg(page.distributorName)
                     }
                     if (page.pushState === "needs-gateway") {
                         return qsTr("Registered. Waiting for a gateway.")

@@ -1941,10 +1941,6 @@
         <translation>Ο διακομιστής σου μαθαίνει μια διεύθυνση στην υπηρεσία push και στέλνει στην πύλη ένα αναγνωριστικό δωματίου και μηνύματος για κάθε ειδοποίηση. Κανένα κείμενο: το push μεταφέρει μόνο αναγνωριστικά και αυτή η συσκευή φέρνει και αποκρυπτογραφεί το μήνυμα μόνη της. Αυτή η διεύθυνση είναι μυστικό — όποιος την έχει μπορεί να στείλει ειδοποίηση σε αυτό το τηλέφωνο.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Διακομιστής push</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (δημόσια)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Καμία</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Χρησιμοποιεί το %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Ο διακομιστής push σου δεν έχει πύλη. Διάλεξε άλλη.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Ελέγχεται μετά την εγγραφή. Το ntfy έχει, το Mozilla όχι.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Καμία. Ο οικείος διακομιστής δεν μπορεί ακόμη να φτάσει αυτή τη συσκευή.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>διανομέα</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Παρεχόμενη</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Παρεχόμενη μέσω %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 δεν έχει πύλη Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Καμία απάντηση ακόμη από %1. Νέα ερώτηση.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Βρίσκεται μέσω %1 μετά την εγγραφή.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 δεν μπορεί να παραδώσει ειδοποιήσεις Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Άλλαξε την υπηρεσία του %1 σε ntfy ή χρησιμοποίησε την πύλη UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Χρήση πύλης UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Εγγράφηκε μέσω %1. Ο οικείος διακομιστής δεν μπορεί να φτάσει αυτή τη συσκευή.</translation>
     </message>
 </context>
 <context>

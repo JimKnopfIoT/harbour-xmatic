@@ -1941,10 +1941,6 @@
         <translation>Ao teu servidor é indicado um endereço no serviço push, e para cada notificação envia ao gateway um identificador de sala e de mensagem. Sem texto: o push leva apenas identificadores e este dispositivo obtém e decifra a mensagem sozinho. Esse endereço é um segredo — quem o tiver pode enviar uma notificação a este telemóvel.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Servidor push</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (público)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Nenhum</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Usa %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>O teu servidor push não tem gateway. Escolhe outro.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Verificado após o registo. O ntfy tem um, o Mozilla não.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Nenhum. O servidor ainda não consegue alcançar este dispositivo.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>o distribuidor</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Incluído</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Incluído via %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 não tem gateway Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 ainda não respondeu. A perguntar de novo.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Obtido via %1 após o registo.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 não consegue entregar notificações Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Muda %1 para ntfy, ou usa o gateway UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Usar o gateway UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registado via %1. O servidor não consegue alcançar este dispositivo.</translation>
     </message>
 </context>
 <context>

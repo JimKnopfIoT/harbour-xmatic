@@ -1941,10 +1941,6 @@
         <translation>A tu servidor se le indica una dirección en el servicio push, y envía a la pasarela un identificador de sala y de mensaje por cada notificación. Sin texto del mensaje: el push lleva solo identificadores y este dispositivo obtiene y descifra el mensaje por su cuenta. Esa dirección es un secreto: quien la tenga puede enviar una notificación a este teléfono.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Servidor push</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (pública)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Ninguna</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Usa %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Tu servidor push no tiene pasarela. Elige otra.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Se comprueba tras registrarse. ntfy tiene una, Mozilla no.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Ninguna. El servidor aún no puede llegar a este dispositivo.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>el distribuidor</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Incluida</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Incluida mediante %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 no tiene pasarela de Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 aún no responde. Volviendo a preguntar.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Se obtiene mediante %1 tras registrarse.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 no puede entregar notificaciones de Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Cambia %1 a ntfy o usa la pasarela UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Usar la pasarela UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Registrado mediante %1. El servidor no puede llegar a este dispositivo.</translation>
     </message>
 </context>
 <context>

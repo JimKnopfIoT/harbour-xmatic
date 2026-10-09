@@ -1938,10 +1938,6 @@
         <translation>به کارساز خانگی‌ات نشانی‌ای در سرویس Push گفته می‌شود و برای هر اعلان، شناسهٔ اتاق و پیام به دروازه فرستاده می‌شود. متن پیام نه: Push تنها شناسه می‌برد و خودِ این دستگاه پیام را می‌گیرد و رمزگشایی می‌کند. آن نشانی رازی است - هرکه داشته باشد می‌تواند به این گوشی اعلان بفرستد.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>کارساز Push</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (عمومی)</translation>
     </message>
@@ -1952,18 +1948,6 @@
     <message>
         <source>None</source>
         <translation>هیچ</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>از %1 استفاده می‌کند.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>کارساز Push تو دروازه ندارد. یکی دیگر برگزین.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>پس از ثبت بررسی می‌شود. ntfy دارد، Mozilla ندارد.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1984,6 +1968,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>هیچ. کارساز خانگی هنوز به این دستگاه دسترسی ندارد.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>توزیع‌کننده</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>همراه</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>همراه، از طریق %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 دروازه‌ی Matrix ندارد.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>هنوز پاسخی از %1 نیامده. دوباره می‌پرسیم.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>پس از ثبت، از طریق %1 پیدا می‌شود.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 نمی‌تواند اعلان‌های Matrix را برساند.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>%1 را روی ntfy بگذار، یا از دروازه‌ی UnifiedPush استفاده کن.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>استفاده از دروازه‌ی UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>از طریق %1 ثبت شد. کارساز خانگی به این دستگاه دسترسی ندارد.</translation>
     </message>
 </context>
 <context>

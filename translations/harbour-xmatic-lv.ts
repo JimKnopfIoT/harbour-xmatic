@@ -1944,10 +1944,6 @@
         <translation>Tavam serverim tiek paziņota adrese push pakalpojumā, un tas katram paziņojumam sūta vārtejai istabas un ziņas identifikatoru. Bez teksta: push nes tikai identifikatorus, bet ziņu šī ierīce iegūst un atšifrē pati. Šī adrese ir noslēpums — kam tā ir, var sūtīt šim tālrunim paziņojumu.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Push serveris</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (publiska)</translation>
     </message>
@@ -1958,18 +1954,6 @@
     <message>
         <source>None</source>
         <translation>Nav</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Izmanto %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Tavam push serverim nav vārtejas. Izvēlies citu.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Pārbauda pēc reģistrācijas. ntfy tāda ir, Mozilla nav.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1990,6 +1974,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Nav. Mājas serveris vēl nevar sasniegt šo ierīci.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>izplatītāju</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Nodrošināta</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Nodrošināta caur %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nepiedāvā Matrix vārteju.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Vēl nav atbildes no %1. Jautā vēlreiz.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Nosaka caur %1 pēc reģistrācijas.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 nevar piegādāt Matrix paziņojumus.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Pārslēdz %1 uz ntfy vai izmanto UnifiedPush vārteju.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Izmantot UnifiedPush vārteju</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Reģistrēts caur %1. Mājas serveris nevar sasniegt šo ierīci.</translation>
     </message>
 </context>
 <context>

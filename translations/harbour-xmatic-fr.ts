@@ -1941,10 +1941,6 @@
         <translation>Ton serveur reçoit une adresse chez le service push, et envoie à la passerelle un identifiant de salon et de message pour chaque notification. Aucun texte de message : le push ne porte que des identifiants, et cet appareil récupère et déchiffre le message lui-même. Cette adresse est un secret — qui la détient peut envoyer une notification à ce téléphone.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Serveur push</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (publique)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Aucune</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Utilise %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Ton serveur push n&apos;a pas de passerelle. Choisis-en une autre.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Vérifié après l&apos;enregistrement. ntfy en a une, Mozilla non.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Aucune. Le serveur d&apos;accueil ne peut pas encore joindre cet appareil.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>le distributeur</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Fournie</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Fournie via %1 : %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 n&apos;a pas de passerelle Matrix.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>Pas encore de réponse de %1. Nouvel essai.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Trouvée via %1 après l&apos;enregistrement.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 ne peut pas livrer les notifications Matrix.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Passe %1 sur ntfy, ou utilise la passerelle UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Utiliser la passerelle UnifiedPush</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Enregistré via %1. Le serveur d&apos;accueil ne peut pas joindre cet appareil.</translation>
     </message>
 </context>
 <context>

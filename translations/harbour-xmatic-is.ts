@@ -1941,10 +1941,6 @@
         <translation>Heimaþjónninum þínum er sagt vistfang hjá ýtiþjónustunni og hann sendir gáttinni auðkenni herbergis og skilaboða fyrir hverja tilkynningu. Engan texta: ýtingin ber aðeins auðkenni og þetta tæki sækir og afkóðar skilaboðin sjálft. Það vistfang er leyndarmál — sá sem hefur það getur sent þessum síma tilkynningu.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Ýtiþjónn</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (opinber)</translation>
     </message>
@@ -1955,18 +1951,6 @@
     <message>
         <source>None</source>
         <translation>Engin</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Notar %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>Ýtiþjónninn þinn hefur enga gátt. Veldu aðra.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Athugað eftir skráningu. ntfy hefur eina, Mozilla ekki.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1987,6 +1971,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Engin. Heimaþjónninn nær ekki enn í þetta tæki.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>dreifinn</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Meðfylgjandi</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Meðfylgjandi í gegnum %1: %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 hefur enga Matrix-gátt.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 hefur ekki svarað enn. Spyr aftur.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Fundin í gegnum %1 eftir skráningu.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 getur ekki skilað Matrix-tilkynningum.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Stilltu %1 á ntfy, eða notaðu UnifiedPush-gáttina.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>Nota UnifiedPush-gátt</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Skráð í gegnum %1. Heimaþjónninn nær ekki í þetta tæki.</translation>
     </message>
 </context>
 <context>

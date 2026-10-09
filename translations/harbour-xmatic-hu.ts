@@ -1938,10 +1938,6 @@
         <translation>A kiszolgálód megkapja a push szolgáltatásnál lévő címet, és minden értesítéshez elküldi az átjárónak a szoba- és üzenetazonosítót. Üzenetszöveget nem: a push csak azonosítókat visz, az üzenetet ez az eszköz tölti le és fejti vissza. Ez a cím titok — akinél megvan, értesítést küldhet erre a telefonra.</translation>
     </message>
     <message>
-        <source>Push server</source>
-        <translation>Push kiszolgáló</translation>
-    </message>
-    <message>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush (nyilvános)</translation>
     </message>
@@ -1952,18 +1948,6 @@
     <message>
         <source>None</source>
         <translation>Nincs</translation>
-    </message>
-    <message>
-        <source>Uses %1.</source>
-        <translation>Ezt használja: %1.</translation>
-    </message>
-    <message>
-        <source>Your push server has no gateway. Pick another one.</source>
-        <translation>A push kiszolgálódnak nincs átjárója. Válassz másikat.</translation>
-    </message>
-    <message>
-        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
-        <translation>Regisztráció után derül ki. Az ntfy-nak van, a Mozillának nincs.</translation>
     </message>
     <message>
         <source>Pick a gateway to finish turning push on.</source>
@@ -1984,6 +1968,46 @@
     <message>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>Nincs. Az otthoni kiszolgáló még nem éri el ezt az eszközt.</translation>
+    </message>
+    <message>
+        <source>the distributor</source>
+        <translation>az elosztó</translation>
+    </message>
+    <message>
+        <source>Provided</source>
+        <translation>Mellékelt</translation>
+    </message>
+    <message>
+        <source>Provided via %1: %2</source>
+        <translation>Mellékelt (%1): %2</translation>
+    </message>
+    <message>
+        <source>%1 has no Matrix gateway.</source>
+        <translation>%1 nem kínál Matrix-átjárót.</translation>
+    </message>
+    <message>
+        <source>No answer from %1 yet. Asking again.</source>
+        <translation>%1 még nem válaszolt. Újra kérdezem.</translation>
+    </message>
+    <message>
+        <source>Found via %1 after registering.</source>
+        <translation>Regisztráció után %1 adja meg.</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t deliver Matrix notifications.</source>
+        <translation>%1 nem tud Matrix-értesítéseket kézbesíteni.</translation>
+    </message>
+    <message>
+        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
+        <translation>Válts ntfy-ra itt: %1, vagy használd a UnifiedPush-átjárót.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush gateway</source>
+        <translation>UnifiedPush-átjáró használata</translation>
+    </message>
+    <message>
+        <source>Registered with %1. The homeserver can&apos;t reach it.</source>
+        <translation>Regisztrálva (%1). Az otthoni kiszolgáló nem éri el ezt az eszközt.</translation>
     </message>
 </context>
 <context>

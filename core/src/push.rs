@@ -46,6 +46,14 @@ pub fn gateway_is_sound(gateway: &str) -> bool {
             .is_some_and(|scheme| scheme.eq_ignore_ascii_case("https://"))
 }
 
+/// The host of `url`, without scheme, port or path.
+pub fn host(url: &str) -> String {
+    let rest = url.split_once("://").map_or(url, |(_, rest)| rest);
+    let authority = rest.split(['/', '?', '#']).next().unwrap_or_default();
+    let authority = authority.rsplit_once('@').map_or(authority, |(_, host)| host);
+    authority.split(':').next().unwrap_or_default().to_owned()
+}
+
 /// The UnifiedPush project's gateway, used only where the user picked it.
 pub const PUBLIC_GATEWAY: &str = "https://matrix.gateway.unifiedpush.org/_matrix/push/v1/notify";
 
@@ -155,6 +163,13 @@ mod tests {
         assert_eq!(Gateway::Public.resolve(None).as_deref(), Some(PUBLIC_GATEWAY));
         let other = Gateway::parse("other", mine).unwrap();
         assert_eq!(other.resolve(Some(found)).as_deref(), Some(mine));
+    }
+
+    #[test]
+    fn only_the_host_is_kept() {
+        assert_eq!(host("https://updates.push.services.mozilla.com/wpush/v2/gAAA"), "updates.push.services.mozilla.com");
+        assert_eq!(host("https://ntfy.example:8443/upAbc?up=1"), "ntfy.example");
+        assert_eq!(host("https://user:pw@ntfy.example/up"), "ntfy.example");
     }
 
     #[test]
