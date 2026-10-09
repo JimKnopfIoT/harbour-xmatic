@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Kysely: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Push-yhdyskäytävän on oltava https-osoite.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Kotipalvelimellesi kerrotaan osoite push-palvelussa, ja se lähettää yhdyskäytävälle jokaisesta ilmoituksesta huoneen ja viestin tunnisteen. Ei viestin tekstiä: push kantaa vain tunnisteita, ja tämä laite hakee ja purkaa viestin itse. Osoite on salaisuus — sen haltija voi lähettää tähän puhelimeen ilmoituksen.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Tällä laitteella on osoite; kotipalvelimesi tarvitsee yhdyskäytävän tavoittaakseen sen.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Push-palvelimellasi ei ole Matrix-yhdyskäytävää. Anna sellainen alla; siihen asti kotipalvelimesi ei tavoita tätä laitetta.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Matrix-kotipalvelin ei voi puhua push-jakelijalle suoraan, joten se lähettää yhdyskäytävälle, joka välittää eteenpäin. Jätä tämä tyhjäksi käyttääksesi push-palvelimesi omaa yhdyskäytävää, jos sillä on sellainen. Yhdyskäytävä näkee, mihin huoneeseen kukin ilmoitus kuuluu.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-yhdyskäytävä</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Käytä matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

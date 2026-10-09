@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Umfrage: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Das Push-Gateway muss eine https-Adresse sein.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Deinem Heimserver wird eine Adresse beim Push-Dienst mitgeteilt, und er schickt für jede Benachrichtigung eine Raum- und Nachrichtenkennung an das Gateway. Keinen Nachrichtentext: der Push trägt nur Kennungen, die Nachricht holt und entschlüsselt dieses Gerät selbst. Diese Adresse ist ein Geheimnis — wer sie hat, kann diesem Telefon eine Benachrichtigung schicken.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Dieses Gerät hat eine Adresse; dein Heimserver braucht ein Gateway, um es zu erreichen.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Dein Push-Server hat kein Matrix-Gateway. Trag unten eines ein; bis dahin kann dein Heimserver dieses Gerät nicht erreichen.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Ein Matrix-Heimserver kann nicht direkt mit einem Push-Verteiler sprechen, also schickt er an ein Gateway, das weiterleitet. Lass das Feld leer, um das eigene Gateway deines Push-Servers zu nutzen, falls er eines hat. Das Gateway sieht, für welchen Raum jede Benachrichtigung ist.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-Gateway</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>matrix.gateway.unifiedpush.org verwenden</translation>
     </message>
 </context>
 <context>

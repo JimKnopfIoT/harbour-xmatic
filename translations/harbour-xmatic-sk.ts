@@ -1249,6 +1249,10 @@
         <source>Poll: %1</source>
         <translation>Anketa: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Brána push musí byť adresa https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1942,6 +1946,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Tvoj server sa dozvie adresu v službe push a ku každému oznámeniu pošle bráne identifikátor miestnosti a správy. Žiadny text: push nesie len identifikátory a správu si toto zariadenie stiahne a rozšifruje samo. Tá adresa je tajomstvo — kto ju má, môže tomuto telefónu poslať oznámenie.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Toto zariadenie má adresu; tvoj domovský server potrebuje bránu, aby sa k nemu dostal.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Tvoj push server nemá bránu Matrix. Zadaj ju nižšie; dovtedy sa tvoj domovský server k tomuto zariadeniu nedostane.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Domovský server Matrix nemôže hovoriť s distribútorom push priamo, preto posiela na bránu, ktorá to odovzdá ďalej. Nechaj prázdne a použije sa vlastná brána tvojho push servera, ak nejakú má. Brána vidí, pre ktorú miestnosť je každé oznámenie.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Brána push</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Použiť matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

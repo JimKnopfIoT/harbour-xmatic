@@ -1249,6 +1249,10 @@
         <source>Poll: %1</source>
         <translation>Pobalbhreith: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Caithfidh an geata brú a bheith ina sheoladh https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1942,6 +1946,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Insítear seoladh ag an tseirbhís bhrú do d&apos;fhreastalaí, agus seolann sé aitheantóir seomra agus teachtaireachta chuig an ngeata do gach fógra. Gan téacs: ní iompraíonn an brú ach aitheantóirí agus faigheann agus díchriptíonn an gléas seo an teachtaireacht é féin. Is rún é an seoladh sin — is féidir le duine ar bith atá aige fógra a sheoladh chuig an bhfón seo.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Tá seoladh ag an ngléas seo; teastaíonn geata ó do fhreastalaí baile chun teacht air.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Níl geata Matrix ag do fhreastalaí brú. Cuir ceann isteach thíos; go dtí sin ní féidir le do fhreastalaí baile teacht ar an ngléas seo.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Ní féidir le freastalaí baile Matrix labhairt go díreach le dáileoir brú, mar sin seolann sé chuig geata a chuireann ar aghaidh é. Fág folamh é chun geata do fhreastalaí brú féin a úsáid, má tá ceann aige. Feiceann an geata cén seomra a bhfuil gach fógra dó.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Geata brú</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Úsáid matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

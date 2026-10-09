@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Sondage : %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>La passerelle push doit être une adresse https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Ton serveur reçoit une adresse chez le service push, et envoie à la passerelle un identifiant de salon et de message pour chaque notification. Aucun texte de message : le push ne porte que des identifiants, et cet appareil récupère et déchiffre le message lui-même. Cette adresse est un secret — qui la détient peut envoyer une notification à ce téléphone.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Cet appareil a une adresse ; ton serveur d&apos;accueil a besoin d&apos;une passerelle pour le joindre.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Ton serveur push n&apos;a pas de passerelle Matrix. Saisis-en une ci-dessous ; d&apos;ici là, ton serveur d&apos;accueil ne peut pas joindre cet appareil.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Un serveur d&apos;accueil Matrix ne peut pas parler directement à un distributeur push, il envoie donc à une passerelle qui transmet. Laisse ce champ vide pour utiliser la passerelle de ton serveur push, s&apos;il en a une. La passerelle voit à quel salon chaque notification est destinée.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Passerelle push</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Utiliser matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

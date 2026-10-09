@@ -1249,6 +1249,10 @@
         <source>Poll: %1</source>
         <translation>Опрос: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Push-шлюз должен быть адресом https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1942,6 +1946,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Твоему серверу сообщается адрес в службе push, и он отправляет шлюзу идентификатор комнаты и сообщения для каждого уведомления. Без текста сообщения: push несёт только идентификаторы, а само сообщение это устройство получает и расшифровывает само. Этот адрес — секрет: кто им владеет, может послать этому телефону уведомление.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>У этого устройства есть адрес; твоему домашнему серверу нужен шлюз, чтобы до него достучаться.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>У твоего push-сервера нет шлюза Matrix. Введи его ниже; до тех пор твой домашний сервер не может достучаться до этого устройства.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Домашний сервер Matrix не может общаться с распространителем push напрямую, поэтому он отправляет данные на шлюз, который их пересылает. Оставь пустым, чтобы использовать собственный шлюз твоего push-сервера, если он есть. Шлюз видит, к какой комнате относится каждое уведомление.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-шлюз</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Использовать matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

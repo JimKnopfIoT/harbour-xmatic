@@ -1249,6 +1249,10 @@
         <source>Poll: %1</source>
         <translation>Ankieta: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Brama push musi być adresem https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1942,6 +1946,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Twój serwer dostaje adres w usłudze push i przy każdym powiadomieniu wysyła do bramy identyfikator pokoju i wiadomości. Bez treści: push niesie tylko identyfikatory, a wiadomość to urządzenie pobiera i odszyfrowuje samo. Ten adres to sekret — kto go ma, może wysłać temu telefonowi powiadomienie.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>To urządzenie ma adres; twój serwer domowy potrzebuje bramy, aby do niego dotrzeć.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Twój serwer push nie ma bramy Matrix. Wpisz ją poniżej; do tego czasu twój serwer domowy nie może dotrzeć do tego urządzenia.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Serwer domowy Matrix nie może rozmawiać z dystrybutorem push bezpośrednio, więc wysyła do bramy, która przekazuje dalej. Zostaw puste, aby użyć własnej bramy twojego serwera push, jeśli ją ma. Brama widzi, do którego pokoju jest każde powiadomienie.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Brama push</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Użyj matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

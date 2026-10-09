@@ -1249,6 +1249,10 @@
         <source>Poll: %1</source>
         <translation>Sondaj: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Poarta push trebuie să fie o adresă https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1942,6 +1946,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Serverul tău află o adresă la serviciul push și trimite porții un identificator de cameră și de mesaj pentru fiecare notificare. Fără text: push-ul poartă doar identificatori, iar mesajul este preluat și decriptat de acest dispozitiv. Adresa este un secret — cine o are poate trimite o notificare acestui telefon.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Acest dispozitiv are o adresă; serverul tău are nevoie de o poartă ca să ajungă la el.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Serverul tău push nu are o poartă Matrix. Introdu una mai jos; până atunci serverul tău Matrix nu poate ajunge la acest dispozitiv.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Un server Matrix nu poate vorbi direct cu un distribuitor push, așa că trimite către o poartă care redirecționează. Lasă gol pentru a folosi poarta proprie a serverului tău push, dacă are una. Poarta vede pentru ce cameră este fiecare notificare.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Poartă push</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Folosește matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

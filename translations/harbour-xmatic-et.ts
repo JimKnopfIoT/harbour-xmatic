@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Küsitlus: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Push-lüüs peab olema https-aadress.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Sinu serverile öeldakse aadress push-teenuses ja ta saadab lüüsile iga teavituse kohta toa ja sõnumi tunnuse. Sõnumi teksti mitte: push kannab ainult tunnuseid ja sõnumi hangib ning dekrüpteerib see seade ise. See aadress on saladus — kellel see on, võib sellele telefonile teavituse saata.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Sellel seadmel on aadress; sinu koduserver vajab selleni jõudmiseks lüüsi.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Sinu push-serveril pole Matrixi lüüsi. Sisesta see allpool; seni ei jõua sinu koduserver selle seadmeni.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Matrixi koduserver ei saa push-jaoturiga otse rääkida, seega saadab ta lüüsile, mis edastab. Jäta see tühjaks, et kasutada sinu push-serveri enda lüüsi, kui sellel see on. Lüüs näeb, millise toa kohta iga teavitus on.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push-lüüs</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Kasuta matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

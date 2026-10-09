@@ -1255,6 +1255,10 @@
         <source>Poll: %1</source>
         <translation>استطلاع: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>يجب أن تكون بوابة الإشعارات عنوان https.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1951,6 +1955,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>يُخبَر خادمك المنزلي بعنوان لدى خدمة الإشعارات، ويرسل إلى البوابة معرّف الغرفة والرسالة مع كل إشعار. لا نص رسالة: يحمل الدفع معرّفات فقط، وهذا الجهاز يجلب الرسالة ويفكّ تعميتها بنفسه. ذلك العنوان سرّ - من يملكه يستطيع إرسال إشعار إلى هذا الهاتف.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>لهذا الجهاز عنوان؛ يحتاج خادمك المنزلي إلى بوابة ليصل إليه.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>لا بوابة Matrix لدى خادم الإشعارات لديك. أدخِل واحدة أدناه؛ وحتى ذلك الحين لا يستطيع خادمك المنزلي الوصول إلى هذا الجهاز.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>لا يستطيع خادم Matrix المنزلي التحدث إلى موزّع الإشعارات مباشرة، لذا يرسل إلى بوابة تعيد التوجيه. اترك هذا فارغًا لاستخدام بوابة خادم الإشعارات نفسه إن كانت لديه. ترى البوابة لأي غرفة كل إشعار.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>بوابة الإشعارات</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>استخدام matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

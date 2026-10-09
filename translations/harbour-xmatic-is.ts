@@ -1247,6 +1247,10 @@
         <source>Poll: %1</source>
         <translation>Könnun: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>Ýtigáttin verður að vera https-vistfang.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1939,6 +1943,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>Heimaþjónninum þínum er sagt vistfang hjá ýtiþjónustunni og hann sendir gáttinni auðkenni herbergis og skilaboða fyrir hverja tilkynningu. Engan texta: ýtingin ber aðeins auðkenni og þetta tæki sækir og afkóðar skilaboðin sjálft. Það vistfang er leyndarmál — sá sem hefur það getur sent þessum síma tilkynningu.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Þetta tæki hefur vistfang; heimaþjónninn þinn þarf gátt til að ná í það.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>Ýtiþjónninn þinn hefur enga Matrix-gátt. Sláðu eina inn hér fyrir neðan; þangað til nær heimaþjónninn þinn ekki í þetta tæki.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Matrix-heimaþjónn getur ekki talað beint við ýtidreifi, svo hann sendir á gátt sem áframsendir. Hafðu þetta autt til að nota eigin gátt ýtiþjónsins þíns, ef hann hefur hana. Gáttin sér fyrir hvaða herbergi hver tilkynning er.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Ýtigátt</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>Nota matrix.gateway.unifiedpush.org</translation>
     </message>
 </context>
 <context>

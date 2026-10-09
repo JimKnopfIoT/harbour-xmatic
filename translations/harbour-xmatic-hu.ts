@@ -1245,6 +1245,10 @@
         <source>Poll: %1</source>
         <translation>Szavazás: %1</translation>
     </message>
+    <message>
+        <source>The push gateway has to be an https address.</source>
+        <translation>A push átjárónak https címnek kell lennie.</translation>
+    </message>
 </context>
 <context>
     <name>MemberListPage</name>
@@ -1936,6 +1940,26 @@
     <message>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>A kiszolgálód megkapja a push szolgáltatásnál lévő címet, és minden értesítéshez elküldi az átjárónak a szoba- és üzenetazonosítót. Üzenetszöveget nem: a push csak azonosítókat visz, az üzenetet ez az eszköz tölti le és fejti vissza. Ez a cím titok — akinél megvan, értesítést küldhet erre a telefonra.</translation>
+    </message>
+    <message>
+        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
+        <translation>Ennek az eszköznek van címe; a honi kiszolgálódnak átjáróra van szüksége, hogy elérje.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
+        <translation>A push kiszolgálódnak nincs Matrix átjárója. Adj meg egyet lent; addig a honi kiszolgálód nem éri el ezt az eszközt.</translation>
+    </message>
+    <message>
+        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
+        <translation>Egy Matrix honi kiszolgáló nem tud közvetlenül egy push elosztóval beszélni, ezért egy átjárónak küld, amely továbbítja. Hagyd üresen, hogy a push kiszolgálód saját átjáróját használd, ha van neki. Az átjáró látja, melyik szobának szól minden értesítés.</translation>
+    </message>
+    <message>
+        <source>Push gateway</source>
+        <translation>Push átjáró</translation>
+    </message>
+    <message>
+        <source>Use matrix.gateway.unifiedpush.org</source>
+        <translation>matrix.gateway.unifiedpush.org használata</translation>
     </message>
 </context>
 <context>
