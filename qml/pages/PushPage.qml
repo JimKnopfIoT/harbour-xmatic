@@ -47,6 +47,8 @@ Page {
             if (pushOn || pushState === "registering") {
                 matrix.disablePush()
             }
+            // The next switch-on asks again.
+            matrix.setPushGateway("")
         } else if (settings.pushGatewayMode.length > 0) {
             matrix.enablePush()
         } else {
@@ -108,9 +110,11 @@ Page {
                 visible: page.switchedOn
                 width: parent.width
                 label: qsTr("Gateway")
+                // Shown from the saved pick only: Silica would select the first item.
+                automaticSelection: false
                 currentIndex: page.gatewayModes.indexOf(page.gatewayMode)
                 value: [qsTr("Push server"), qsTr("UnifiedPush (public)"),
-                        qsTr("Custom")][currentIndex] || qsTr("None")
+                        qsTr("Custom")][page.gatewayModes.indexOf(page.gatewayMode)] || qsTr("None")
                 description: {
                     switch (page.gatewayMode) {
                     case "server":

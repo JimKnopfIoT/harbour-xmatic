@@ -1456,106 +1456,106 @@
         <translation>प्रोटोकॉल कोर शुरू नहीं हो सका।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="394"/>
+        <location filename="../src/matrixbridge.cpp" line="393"/>
         <source>The protocol core is not available.</source>
         <translation>प्रोटोकॉल कोर उपलब्ध नहीं है।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="650"/>
-        <location filename="../src/matrixbridge.cpp" line="689"/>
-        <location filename="../src/matrixbridge.cpp" line="705"/>
+        <location filename="../src/matrixbridge.cpp" line="649"/>
+        <location filename="../src/matrixbridge.cpp" line="688"/>
+        <location filename="../src/matrixbridge.cpp" line="704"/>
         <source>Enter a homeserver first.</source>
         <translation>पहले कोई होमसर्वर दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="671"/>
+        <location filename="../src/matrixbridge.cpp" line="670"/>
         <source>Enter username and password first.</source>
         <translation>पहले उपयोगकर्ता नाम और पासवर्ड दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1655"/>
-        <location filename="../src/matrixbridge.cpp" line="1670"/>
+        <location filename="../src/matrixbridge.cpp" line="1653"/>
+        <location filename="../src/matrixbridge.cpp" line="1668"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>सहेजी सूचियाँ अभी पढ़ी नहीं जा सकतीं।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1923"/>
+        <location filename="../src/matrixbridge.cpp" line="1921"/>
         <source>The gateway must be an https URL.</source>
         <translation>गेटवे एक https URL होना चाहिए।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1978"/>
+        <location filename="../src/matrixbridge.cpp" line="1976"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2326"/>
-        <location filename="../src/matrixbridge.cpp" line="2354"/>
+        <location filename="../src/matrixbridge.cpp" line="2324"/>
+        <location filename="../src/matrixbridge.cpp" line="2352"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2672"/>
+        <location filename="../src/matrixbridge.cpp" line="2670"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2717"/>
+        <location filename="../src/matrixbridge.cpp" line="2715"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2737"/>
+        <location filename="../src/matrixbridge.cpp" line="2735"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3602"/>
+        <location filename="../src/matrixbridge.cpp" line="3600"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3961"/>
+        <location filename="../src/matrixbridge.cpp" line="3959"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3964"/>
+        <location filename="../src/matrixbridge.cpp" line="3962"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3967"/>
+        <location filename="../src/matrixbridge.cpp" line="3965"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3970"/>
+        <location filename="../src/matrixbridge.cpp" line="3968"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3973"/>
+        <location filename="../src/matrixbridge.cpp" line="3971"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3976"/>
+        <location filename="../src/matrixbridge.cpp" line="3974"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3976"/>
+        <location filename="../src/matrixbridge.cpp" line="3974"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3979"/>
+        <location filename="../src/matrixbridge.cpp" line="3977"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3982"/>
+        <location filename="../src/matrixbridge.cpp" line="3980"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -2485,12 +2485,12 @@
 <context>
     <name>PushWake</name>
     <message>
-        <location filename="../src/pushwake.cpp" line="224"/>
+        <location filename="../src/pushwake.cpp" line="223"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/pushwake.cpp" line="384"/>
+        <location filename="../src/pushwake.cpp" line="383"/>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>पुश वितरक ने xmatic को हटा दिया। खाता में जाकर पुश फिर से चालू करो।</translation>
     </message>

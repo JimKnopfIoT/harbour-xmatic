@@ -1454,106 +1454,106 @@
         <translation>协议内核无法启动。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="394"/>
+        <location filename="../src/matrixbridge.cpp" line="393"/>
         <source>The protocol core is not available.</source>
         <translation>协议内核不可用。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="650"/>
-        <location filename="../src/matrixbridge.cpp" line="689"/>
-        <location filename="../src/matrixbridge.cpp" line="705"/>
+        <location filename="../src/matrixbridge.cpp" line="649"/>
+        <location filename="../src/matrixbridge.cpp" line="688"/>
+        <location filename="../src/matrixbridge.cpp" line="704"/>
         <source>Enter a homeserver first.</source>
         <translation>请先输入主服务器。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="671"/>
+        <location filename="../src/matrixbridge.cpp" line="670"/>
         <source>Enter username and password first.</source>
         <translation>请先输入用户名和密码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1655"/>
-        <location filename="../src/matrixbridge.cpp" line="1670"/>
+        <location filename="../src/matrixbridge.cpp" line="1653"/>
+        <location filename="../src/matrixbridge.cpp" line="1668"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>暂时无法读取已保存的名单。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1923"/>
+        <location filename="../src/matrixbridge.cpp" line="1921"/>
         <source>The gateway must be an https URL.</source>
         <translation>网关必须是 https URL。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1978"/>
+        <location filename="../src/matrixbridge.cpp" line="1976"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2326"/>
-        <location filename="../src/matrixbridge.cpp" line="2354"/>
+        <location filename="../src/matrixbridge.cpp" line="2324"/>
+        <location filename="../src/matrixbridge.cpp" line="2352"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2672"/>
+        <location filename="../src/matrixbridge.cpp" line="2670"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2717"/>
+        <location filename="../src/matrixbridge.cpp" line="2715"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2737"/>
+        <location filename="../src/matrixbridge.cpp" line="2735"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3602"/>
+        <location filename="../src/matrixbridge.cpp" line="3600"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3961"/>
+        <location filename="../src/matrixbridge.cpp" line="3959"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3964"/>
+        <location filename="../src/matrixbridge.cpp" line="3962"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3967"/>
+        <location filename="../src/matrixbridge.cpp" line="3965"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3970"/>
+        <location filename="../src/matrixbridge.cpp" line="3968"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3973"/>
+        <location filename="../src/matrixbridge.cpp" line="3971"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3976"/>
+        <location filename="../src/matrixbridge.cpp" line="3974"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3976"/>
+        <location filename="../src/matrixbridge.cpp" line="3974"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3979"/>
+        <location filename="../src/matrixbridge.cpp" line="3977"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3982"/>
+        <location filename="../src/matrixbridge.cpp" line="3980"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -2482,12 +2482,12 @@
 <context>
     <name>PushWake</name>
     <message>
-        <location filename="../src/pushwake.cpp" line="224"/>
+        <location filename="../src/pushwake.cpp" line="223"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/pushwake.cpp" line="384"/>
+        <location filename="../src/pushwake.cpp" line="383"/>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>推送分发器移除了 xmatic。请在“账户”中重新开启推送。</translation>
     </message>

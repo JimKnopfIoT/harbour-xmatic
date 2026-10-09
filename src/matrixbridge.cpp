@@ -2654,7 +2654,11 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         return;
     }
     if (command == QLatin1String("push.gateway")) {
-        refreshPushStatus();
+        // Only at start: later it could restart a connector being switched off.
+        if (!m_pushStatusAsked) {
+            m_pushStatusAsked = true;
+            refreshPushStatus();
+        }
         return;
     }
     if (command == QLatin1String("push.notify")) {
