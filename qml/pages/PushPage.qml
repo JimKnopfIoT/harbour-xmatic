@@ -44,11 +44,12 @@ Page {
         if (!on) {
             wanted = false
             choosingOther = false
-            if (pushOn || pushState === "registering") {
+            // Clearing the pick drops the registration; without one, disable does.
+            if (settings.pushGatewayMode.length > 0) {
+                matrix.setPushGateway("")
+            } else if (pushOn || pushState === "registering") {
                 matrix.disablePush()
             }
-            // The next switch-on asks again.
-            matrix.setPushGateway("")
         } else if (settings.pushGatewayMode.length > 0) {
             matrix.enablePush()
         } else {
@@ -56,16 +57,13 @@ Page {
         }
     }
 
-    // The registration starts once a gateway is picked.
+    // A new pick drops the registration and, if complete, registers again.
     function pick(mode, address) {
-        if (!matrix.setPushGateway(mode, address)) {
+        if (!matrix.setPushGateway(mode, address, wanted || pushOn)) {
             return false
         }
         choosingOther = false
-        if (wanted && !pushOn) {
-            wanted = false
-            matrix.enablePush()
-        }
+        wanted = wanted || pushOn
         return true
     }
 
@@ -146,7 +144,10 @@ Page {
                     MenuItem {
                         text: qsTr("Custom")
                         onClicked: {
-                            page.choosingOther = settings.pushGatewayMode !== "other"
+                            if (settings.pushGatewayMode !== "other") {
+                                page.pick("", "")
+                                page.choosingOther = true
+                            }
                             gatewayField.forceActiveFocus()
                         }
                     }

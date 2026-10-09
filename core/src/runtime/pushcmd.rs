@@ -303,6 +303,13 @@ pub(super) async fn push_enable(state: &Arc<State>, id: u64) {
 
 /// Removes the pusher, then everything Leghorn kept, and lets go of the name.
 pub(super) async fn push_disable(state: &Arc<State>, id: u64) {
+    let failure = drop_registration(state).await;
+    push_report(state, None, failure).await;
+    state.sink.emit(reply_ok(id, json!({ "enabled": false })));
+}
+
+/// Pusher, distributor registration and Leghorn's state, then the name.
+async fn drop_registration(state: &Arc<State>) -> Option<String> {
     let mut failure = None;
     {
         let _serial = state.push_sync.lock().await;
@@ -319,8 +326,7 @@ pub(super) async fn push_disable(state: &Arc<State>, id: u64) {
         failure = Some(crate::text::scrub_ids(&error.to_string()));
     }
     push_stop(state).await;
-    push_report(state, None, failure).await;
-    state.sink.emit(reply_ok(id, json!({ "enabled": false })));
+    failure
 }
 
 /// Unregisters and deletes push state at sign-out.
@@ -338,7 +344,14 @@ pub(super) async fn push_forget(state: &Arc<State>) {
     push_stop(state).await;
 }
 
-pub(super) async fn push_set_gateway(state: &Arc<State>, id: u64, mode: String, gateway: String) {
+/// A different pick drops the registration; a complete one registers again.
+pub(super) async fn push_set_gateway(
+    state: &Arc<State>,
+    id: u64,
+    mode: String,
+    gateway: String,
+    turn_on: bool,
+) {
     let picked = match crate::push::Gateway::parse(&mode, &gateway) {
         Ok(picked) => picked,
         Err(error) => {
@@ -346,16 +359,26 @@ pub(super) async fn push_set_gateway(state: &Arc<State>, id: u64, mode: String, 
             return;
         }
     };
-    *state
-        .push_gateway
-        .lock()
-        .unwrap_or_else(|poisoned| poisoned.into_inner()) = picked;
-    if running(state).await.is_some() {
-        let synced = match session_generation(state) {
-            Some(generation) => push_sync(state, generation, None).await,
-            None => Ok(false),
-        };
-        push_report(state, None, synced.err()).await;
+    let previous = std::mem::replace(
+        &mut *state
+            .push_gateway
+            .lock()
+            .unwrap_or_else(|poisoned| poisoned.into_inner()),
+        picked.clone(),
+    );
+    let complete = picked != crate::push::Gateway::Unset;
+    let mut start = turn_on && complete && running(state).await.is_none();
+    if previous != picked && running(state).await.is_some() {
+        let failure = drop_registration(state).await;
+        start = complete;
+        if !complete {
+            push_report(state, None, failure).await;
+        }
+    }
+    if start {
+        if let Err(error) = enable(state).await {
+            push_report(state, Some("error"), Some(error)).await;
+        }
     }
     state.sink.emit(reply_ok(id, json!({ "set": true })));
 }
