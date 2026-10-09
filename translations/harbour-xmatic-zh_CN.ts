@@ -2355,126 +2355,126 @@
 <context>
     <name>PushPage</name>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="83"/>
+        <location filename="../qml/pages/PushPage.qml" line="88"/>
         <source>Push notifications</source>
         <translation>推送通知</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="92"/>
+        <location filename="../qml/pages/PushPage.qml" line="97"/>
         <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
         <translation>xmatic 没有后台服务，所以消息只在它运行时到达。推送分发器是一个独立应用，它为设备上所有应用维持一条连接，并在有消息时唤醒它们。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="96"/>
+        <location filename="../qml/pages/PushPage.qml" line="101"/>
         <source>Receive push notifications</source>
         <translation>接收推送通知</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="114"/>
-        <location filename="../qml/pages/PushPage.qml" line="136"/>
+        <location filename="../qml/pages/PushPage.qml" line="119"/>
+        <location filename="../qml/pages/PushPage.qml" line="141"/>
         <source>Push server</source>
         <translation>推送服务器</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="114"/>
-        <location filename="../qml/pages/PushPage.qml" line="141"/>
+        <location filename="../qml/pages/PushPage.qml" line="119"/>
+        <location filename="../qml/pages/PushPage.qml" line="145"/>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush（公共）</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="115"/>
-        <location filename="../qml/pages/PushPage.qml" line="145"/>
+        <location filename="../qml/pages/PushPage.qml" line="120"/>
+        <location filename="../qml/pages/PushPage.qml" line="149"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="115"/>
+        <location filename="../qml/pages/PushPage.qml" line="120"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="120"/>
+        <location filename="../qml/pages/PushPage.qml" line="125"/>
         <source>Uses %1.</source>
         <translation>使用 %1。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="123"/>
+        <location filename="../qml/pages/PushPage.qml" line="128"/>
         <source>Your push server has no gateway. Pick another one.</source>
         <translation>你的推送服务器没有网关。请另选一个。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="125"/>
+        <location filename="../qml/pages/PushPage.qml" line="130"/>
         <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
         <translation>注册后检查。ntfy 有，Mozilla 没有。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="131"/>
+        <location filename="../qml/pages/PushPage.qml" line="136"/>
         <source>Pick a gateway to finish turning push on.</source>
         <translation>选择一个网关以完成开启推送。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="163"/>
+        <location filename="../qml/pages/PushPage.qml" line="167"/>
         <source>Gateway URL</source>
         <translation>网关 URL</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="176"/>
+        <location filename="../qml/pages/PushPage.qml" line="180"/>
         <source>Distributor</source>
         <translation>分发器</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="183"/>
+        <location filename="../qml/pages/PushPage.qml" line="187"/>
         <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
         <translation>未安装推送分发器。没有它就没有东西维持连接，此项将保持关闭。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="187"/>
+        <location filename="../qml/pages/PushPage.qml" line="191"/>
         <source>Registration</source>
         <translation>注册</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="194"/>
+        <location filename="../qml/pages/PushPage.qml" line="198"/>
         <source>This device has an address to be reached at.</source>
         <translation>本设备已有可被送达的地址。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="203"/>
+        <location filename="../qml/pages/PushPage.qml" line="207"/>
         <source>Waiting for the distributor.</source>
         <translation>正在等待分发器。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="205"/>
+        <location filename="../qml/pages/PushPage.qml" line="209"/>
         <source>Not registered.</source>
         <translation>未注册。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="110"/>
-        <location filename="../qml/pages/PushPage.qml" line="211"/>
+        <location filename="../qml/pages/PushPage.qml" line="115"/>
+        <location filename="../qml/pages/PushPage.qml" line="215"/>
         <source>Gateway</source>
         <translation>网关</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="197"/>
+        <location filename="../qml/pages/PushPage.qml" line="201"/>
         <source>Registered. Waiting for a gateway.</source>
         <translation>已注册。正在等待网关。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="200"/>
+        <location filename="../qml/pages/PushPage.qml" line="204"/>
         <source>Registered. Telling the homeserver.</source>
         <translation>已注册。正在通知主服务器。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="215"/>
+        <location filename="../qml/pages/PushPage.qml" line="219"/>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>无。主服务器暂时无法送达本设备。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="219"/>
+        <location filename="../qml/pages/PushPage.qml" line="223"/>
         <source>What leaves this device</source>
         <translation>有什么离开本设备</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="228"/>
+        <location filename="../qml/pages/PushPage.qml" line="232"/>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>你的服务器会得知一个推送服务上的地址，并在每条通知时向网关发送聊天室和消息标识符。不含消息正文：推送只携带标识符，消息由本设备自行获取并解密。那个地址是秘密——持有它的人可以向这台手机发送通知。</translation>
     </message>
