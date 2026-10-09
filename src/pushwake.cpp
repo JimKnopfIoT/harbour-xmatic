@@ -151,6 +151,20 @@ void publishBanner(const QString &dataDirectory, const QString &slot, const QStr
     }
 }
 
+/// Leghorn's saved state: nothing wakes unless push was turned on.
+bool pushIsOn(const QString &dataDirectory)
+{
+    QFile state(dataDirectory + QStringLiteral("/leghorn.json"));
+    if (!state.open(QIODevice::ReadOnly)) {
+        return false;
+    }
+    return QJsonDocument::fromJson(state.readAll()).object()
+            .value(QStringLiteral("enabled")).toBool();
+}
+
+/// How long a wake-up asked to yield waits for the core's answer.
+const int YieldLimitMs = 1500;
+
 QString ensureDirectory(QStandardPaths::StandardLocation location)
 {
     const QString path = QStandardPaths::writableLocation(location);
@@ -174,6 +188,11 @@ int runPushWake(int argc, char *argv[])
     // them AppDataLocation is another directory and no store is found.
     QCoreApplication::setOrganizationName(QStringLiteral("org.xmatic"));
     QCoreApplication::setApplicationName(QStringLiteral("xmatic"));
+
+    if (!pushIsOn(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation))) {
+        qInfo("xmatic: push is off; not waking");
+        return 0;
+    }
 
     QDBusConnection bus = QDBusConnection::sessionBus();
     if (!bus.isConnected()) {
@@ -280,8 +299,17 @@ int runPushWake(int argc, char *argv[])
     });
     drain.start(50);
 
-    // Yield if the app starts.
+    // Ends the wake; quits even if the core does not answer in time.
     bool yielded = false;
+    auto yieldNow = [&]() {
+        if (yielded) {
+            return;
+        }
+        yielded = true;
+        sendCommand(core, 4, QStringLiteral("push.yield"));
+        QTimer::singleShot(YieldLimitMs, &app, &QCoreApplication::quit);
+    };
+
     QTimer yieldCheck;
     QObject::connect(&yieldCheck, &QTimer::timeout, &app, [&]() {
         // The app deletes it.
@@ -289,15 +317,14 @@ int runPushWake(int argc, char *argv[])
             && QFile::exists(dataDirectory + QStringLiteral("/")
                              + QStringLiteral(XMATIC_WAKE_YIELD_FILE))) {
             qInfo("xmatic: the app is starting; leaving the store to it");
-            yielded = true;
-            sendCommand(core, 4, QStringLiteral("push.yield"));
+            yieldNow();
         }
     });
     yieldCheck.start(250);
 
     QTimer::singleShot(WakeLimitMs, &app, [&]() {
         qWarning("xmatic: push wake-up ran out of time");
-        app.quit();
+        yieldNow();
     });
 
     app.exec();
