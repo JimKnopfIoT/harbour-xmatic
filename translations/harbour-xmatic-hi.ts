@@ -1495,67 +1495,67 @@
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2675"/>
+        <location filename="../src/matrixbridge.cpp" line="2678"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2720"/>
+        <location filename="../src/matrixbridge.cpp" line="2723"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2740"/>
+        <location filename="../src/matrixbridge.cpp" line="2743"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3605"/>
+        <location filename="../src/matrixbridge.cpp" line="3608"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3964"/>
+        <location filename="../src/matrixbridge.cpp" line="3967"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3967"/>
+        <location filename="../src/matrixbridge.cpp" line="3970"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3970"/>
+        <location filename="../src/matrixbridge.cpp" line="3973"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3973"/>
+        <location filename="../src/matrixbridge.cpp" line="3976"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3976"/>
+        <location filename="../src/matrixbridge.cpp" line="3979"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3979"/>
+        <location filename="../src/matrixbridge.cpp" line="3982"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3979"/>
+        <location filename="../src/matrixbridge.cpp" line="3982"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3982"/>
+        <location filename="../src/matrixbridge.cpp" line="3985"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3985"/>
+        <location filename="../src/matrixbridge.cpp" line="3988"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -2520,12 +2520,12 @@
 <context>
     <name>PushWake</name>
     <message>
-        <location filename="../src/pushwake.cpp" line="223"/>
+        <location filename="../src/pushwake.cpp" line="242"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/pushwake.cpp" line="383"/>
+        <location filename="../src/pushwake.cpp" line="410"/>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>पुश वितरक ने xmatic को हटा दिया। खाता में जाकर पुश फिर से चालू करो।</translation>
     </message>
