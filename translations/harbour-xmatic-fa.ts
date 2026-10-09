@@ -1946,20 +1946,52 @@
         <translation>این دستگاه نشانی دارد؛ کارساز خانگی‌ات برای رسیدن به آن به یک دروازه نیاز دارد.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>سرور Push تو دروازهٔ Matrix ندارد. یکی را در پایین وارد کن؛ تا آن موقع کارساز خانگی‌ات نمی‌تواند به این دستگاه برسد.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>دروازهٔ خودِ سرور Push</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>کارساز خانگی Matrix نمی‌تواند مستقیم با توزیع‌کنندهٔ Push حرف بزند، پس به دروازه‌ای می‌فرستد که بازارسال می‌کند. این را خالی بگذار تا دروازهٔ خودِ سرور Push تو به کار رود، اگر داشته باشد. دروازه می‌بیند هر اعلان برای کدام اتاق است.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>دروازهٔ عمومی UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>دروازهٔ Push</translation>
+        <source>Other</source>
+        <translation>دیگر</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>استفاده از matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>انتخاب نشده</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1، سروری که نشانی این دستگاه را از قبل دارد.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>سرور Push تو دروازهٔ Matrix ندارد. دروازهٔ دیگری انتخاب کن.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>پس از روشن شدن Push پیدا می‌شود. سرورهای ntfy یکی دارند؛ سرویس Mozilla ندارد.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>پروژهٔ UnifiedPush آن را اداره می‌کند. می‌بیند هر اعلان برای کدام اتاق است.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>دروازه می‌بیند هر اعلان برای کدام اتاق است.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>کارساز خانگی‌ات به یک دروازهٔ Matrix می‌فرستد که آن را به این دستگاه می‌رساند. یکی انتخاب کن تا Push روشن شود.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>نشانی دروازه</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>هنوز هیچ؛ تا یکی انتخاب نشود، کارساز خانگی‌ات نمی‌تواند به این دستگاه برسد.</translation>
     </message>
 </context>
 <context>

@@ -1949,20 +1949,52 @@
         <translation>Αυτή η συσκευή έχει διεύθυνση· ο οικιακός διακομιστής σου χρειάζεται μια πύλη για να τη φτάσει.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Ο διακομιστής push σου δεν έχει πύλη Matrix. Γράψε μία παρακάτω· μέχρι τότε ο οικιακός διακομιστής σου δεν μπορεί να φτάσει αυτή τη συσκευή.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Η πύλη του διακομιστή push</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Ένας οικιακός διακομιστής Matrix δεν μπορεί να μιλήσει απευθείας με έναν διανομέα push, οπότε στέλνει σε μια πύλη που προωθεί. Άφησέ το κενό για να χρησιμοποιηθεί η πύλη του ίδιου του διακομιστή push σου, αν έχει. Η πύλη βλέπει για ποιο δωμάτιο είναι κάθε ειδοποίηση.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Δημόσια πύλη UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Πύλη push</translation>
+        <source>Other</source>
+        <translation>Άλλη</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Χρήση matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Δεν επιλέχθηκε</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, ο διακομιστής που έχει ήδη τη διεύθυνση αυτής της συσκευής.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Ο διακομιστής push σου δεν έχει πύλη Matrix. Διάλεξε άλλη.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Εντοπίζεται μόλις ενεργοποιηθεί το push. Οι διακομιστές ntfy έχουν· η υπηρεσία της Mozilla όχι.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Τη διαχειρίζεται το έργο UnifiedPush. Βλέπει για ποιο δωμάτιο είναι κάθε ειδοποίηση.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Η πύλη βλέπει για ποιο δωμάτιο είναι κάθε ειδοποίηση.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Ο οικιακός διακομιστής σου στέλνει σε μια πύλη Matrix, που προωθεί σε αυτή τη συσκευή. Διάλεξε μία για να ενεργοποιηθεί το push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Διεύθυνση πύλης</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Καμία ακόμη· μέχρι να επιλεγεί μία, ο οικιακός διακομιστής σου δεν μπορεί να φτάσει αυτή τη συσκευή.</translation>
     </message>
 </context>
 <context>

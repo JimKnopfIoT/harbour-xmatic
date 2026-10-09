@@ -1952,20 +1952,52 @@
         <translation>Tá seoladh ag an ngléas seo; teastaíonn geata ó do fhreastalaí baile chun teacht air.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Níl geata Matrix ag do fhreastalaí brú. Cuir ceann isteach thíos; go dtí sin ní féidir le do fhreastalaí baile teacht ar an ngléas seo.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Geata an fhreastalaí bhrú</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Ní féidir le freastalaí baile Matrix labhairt go díreach le dáileoir brú, mar sin seolann sé chuig geata a chuireann ar aghaidh é. Fág folamh é chun geata do fhreastalaí brú féin a úsáid, má tá ceann aige. Feiceann an geata cén seomra a bhfuil gach fógra dó.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Geata poiblí UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Geata brú</translation>
+        <source>Other</source>
+        <translation>Ceann eile</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Úsáid matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Gan roghnú</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, an freastalaí a bhfuil seoladh an ghléis seo aige cheana.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Níl geata Matrix ag do fhreastalaí brú. Roghnaigh ceann eile.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Aimsítear é nuair atá an brú ar siúl. Tá ceann ag freastalaithe ntfy; níl ag seirbhís Mozilla.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Á reáchtáil ag tionscadal UnifiedPush. Feiceann sé cén seomra a bhfuil gach fógra dó.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Feiceann an geata cén seomra a bhfuil gach fógra dó.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Seolann do fhreastalaí baile chuig geata Matrix, a chuireann ar aghaidh chuig an ngléas seo é. Roghnaigh ceann chun an brú a chur ar siúl.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Seoladh an gheata</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Níl ceann ann fós; go dtí go roghnófar ceann, ní féidir le do fhreastalaí baile teacht ar an ngléas seo.</translation>
     </message>
 </context>
 <context>

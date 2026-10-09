@@ -1946,20 +1946,52 @@
         <translation>このデバイスにはアドレスがあります。ホームサーバーがここに届くにはゲートウェイが必要です。</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>プッシュサーバーに Matrix ゲートウェイがありません。下に入力してください。それまでホームサーバーはこのデバイスに届きません。</translation>
+        <source>Push server&apos;s own</source>
+        <translation>プッシュサーバー自身のもの</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Matrix のホームサーバーはプッシュディストリビューターと直接やり取りできないため、転送するゲートウェイへ送ります。空欄にすると、プッシュサーバー自身のゲートウェイがあればそれを使います。ゲートウェイには各通知がどのルーム宛てかが見えます。</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>UnifiedPush 公開ゲートウェイ</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>プッシュゲートウェイ</translation>
+        <source>Other</source>
+        <translation>その他</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>matrix.gateway.unifiedpush.org を使う</translation>
+        <source>Not chosen</source>
+        <translation>未選択</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1。このデバイスのアドレスをすでに持っているサーバーです。</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>プッシュサーバーに Matrix ゲートウェイがありません。別のものを選んでください。</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>プッシュをオンにすると見つかります。ntfy サーバーにはありますが、Mozilla のサービスにはありません。</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>UnifiedPush プロジェクトが運営しています。各通知がどのルーム宛てかが見えます。</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>ゲートウェイには各通知がどのルーム宛てかが見えます。</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>ホームサーバーは Matrix ゲートウェイへ送り、ゲートウェイがこのデバイスへ転送します。プッシュをオンにするには1つ選んでください。</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>ゲートウェイのアドレス</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>まだありません。選ぶまで、ホームサーバーはこのデバイスに届きません。</translation>
     </message>
 </context>
 <context>

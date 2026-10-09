@@ -1949,20 +1949,52 @@
         <translation>Þetta tæki hefur vistfang; heimaþjónninn þinn þarf gátt til að ná í það.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Ýtiþjónninn þinn hefur enga Matrix-gátt. Sláðu eina inn hér fyrir neðan; þangað til nær heimaþjónninn þinn ekki í þetta tæki.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Eigin gátt ýtiþjónsins</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Matrix-heimaþjónn getur ekki talað beint við ýtidreifi, svo hann sendir á gátt sem áframsendir. Hafðu þetta autt til að nota eigin gátt ýtiþjónsins þíns, ef hann hefur hana. Gáttin sér fyrir hvaða herbergi hver tilkynning er.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Opinber gátt UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Ýtigátt</translation>
+        <source>Other</source>
+        <translation>Önnur</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Nota matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Ekki valin</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, þjónninn sem hefur nú þegar vistfang þessa tækis.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Ýtiþjónninn þinn hefur enga Matrix-gátt. Veldu aðra.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Finnst þegar kveikt er á ýtingu. ntfy-þjónar hafa hana; Mozilla-þjónustan ekki.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Rekin af UnifiedPush-verkefninu. Hún sér fyrir hvaða herbergi hver tilkynning er.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Gáttin sér fyrir hvaða herbergi hver tilkynning er.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Heimaþjónninn þinn sendir á Matrix-gátt sem áframsendir til þessa tækis. Veldu eina til að kveikja á ýtingu.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Vistfang gáttar</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Engin enn; þar til ein er valin nær heimaþjónninn þinn ekki í þetta tæki.</translation>
     </message>
 </context>
 <context>

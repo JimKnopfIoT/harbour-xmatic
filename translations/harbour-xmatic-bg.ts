@@ -1949,20 +1949,52 @@
         <translation>Това устройство има адрес; домашният ти сървър има нужда от шлюз, за да го достигне.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Push сървърът ти няма Matrix шлюз. Въведи такъв по-долу; дотогава домашният ти сървър не може да достигне това устройство.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Шлюзът на push сървъра</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Домашен сървър на Matrix не може да говори директно с push разпространител, затова праща към шлюз, който препраща. Остави празно, за да се ползва собственият шлюз на push сървъра ти, ако има такъв. Шлюзът вижда за коя стая е всяко известие.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Публичен шлюз на UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Push шлюз</translation>
+        <source>Other</source>
+        <translation>Друг</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Използвай matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Не е избран</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1 — сървърът, който вече има адреса на това устройство.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Push сървърът ти няма Matrix шлюз. Избери друг.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Открива се, след като push е включен. ntfy сървърите имат такъв; услугата на Mozilla няма.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Поддържа се от проекта UnifiedPush. Вижда за коя стая е всяко известие.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Шлюзът вижда за коя стая е всяко известие.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Домашният ти сървър праща към Matrix шлюз, който препраща към това устройство. Избери един, за да включиш push.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Адрес на шлюза</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Още няма; докато не бъде избран, домашният ти сървър не може да достигне това устройство.</translation>
     </message>
 </context>
 <context>

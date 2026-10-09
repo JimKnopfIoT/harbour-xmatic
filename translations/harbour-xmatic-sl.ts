@@ -1955,20 +1955,52 @@
         <translation>Ta naprava ima naslov; tvoj domači strežnik potrebuje prehod, da jo doseže.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Tvoj potisni strežnik nima prehoda Matrix. Vnesi ga spodaj; do takrat tvoj domači strežnik te naprave ne more doseči.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Prehod potisnega strežnika</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Domači strežnik Matrix se ne more neposredno pogovarjati z razpečevalnikom potisnih obvestil, zato pošilja na prehod, ki posreduje naprej. Pusti prazno, da se uporabi lastni prehod tvojega potisnega strežnika, če ga ima. Prehod vidi, za katero sobo je vsako obvestilo.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Javni prehod UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Potisni prehod</translation>
+        <source>Other</source>
+        <translation>Drug</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Uporabi matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Ni izbran</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, strežnik, ki že ima naslov te naprave.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Tvoj potisni strežnik nima prehoda Matrix. Izberi drugega.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Najde se, ko so potisna obvestila vklopljena. Strežniki ntfy ga imajo; storitev Mozilla ga nima.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Upravlja ga projekt UnifiedPush. Vidi, za katero sobo je vsako obvestilo.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Prehod vidi, za katero sobo je vsako obvestilo.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Tvoj domači strežnik pošilja na prehod Matrix, ki posreduje tej napravi. Izberi enega, da vklopiš potisna obvestila.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Naslov prehoda</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Še nobenega; dokler ni izbran, tvoj domači strežnik te naprave ne more doseči.</translation>
     </message>
 </context>
 <context>

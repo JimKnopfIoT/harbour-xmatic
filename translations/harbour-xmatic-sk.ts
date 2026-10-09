@@ -1952,20 +1952,52 @@
         <translation>Toto zariadenie má adresu; tvoj domovský server potrebuje bránu, aby sa k nemu dostal.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>Tvoj push server nemá bránu Matrix. Zadaj ju nižšie; dovtedy sa tvoj domovský server k tomuto zariadeniu nedostane.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>Brána push servera</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Domovský server Matrix nemôže hovoriť s distribútorom push priamo, preto posiela na bránu, ktorá to odovzdá ďalej. Nechaj prázdne a použije sa vlastná brána tvojho push servera, ak nejakú má. Brána vidí, pre ktorú miestnosť je každé oznámenie.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>Verejná brána UnifiedPush</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>Brána push</translation>
+        <source>Other</source>
+        <translation>Iná</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>Použiť matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>Nezvolené</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, server, ktorý už adresu tohto zariadenia má.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>Tvoj push server nemá bránu Matrix. Zvoľ inú.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>Zistí sa, keď je push zapnutý. Servery ntfy ju majú; služba Mozilla nie.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>Prevádzkuje ju projekt UnifiedPush. Vidí, pre ktorú miestnosť je každé oznámenie.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>Brána vidí, pre ktorú miestnosť je každé oznámenie.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>Tvoj domovský server posiela na bránu Matrix, ktorá to odovzdá tomuto zariadeniu. Zvoľ nejakú, aby sa push zapol.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>Adresa brány</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>Zatiaľ žiadna; kým nejakú nezvolíš, tvoj domovský server sa k tomuto zariadeniu nedostane.</translation>
     </message>
 </context>
 <context>

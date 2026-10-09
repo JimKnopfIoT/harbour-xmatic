@@ -1456,106 +1456,106 @@
         <translation>प्रोटोकॉल कोर शुरू नहीं हो सका।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="398"/>
+        <location filename="../src/matrixbridge.cpp" line="394"/>
         <source>The protocol core is not available.</source>
         <translation>प्रोटोकॉल कोर उपलब्ध नहीं है।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="654"/>
-        <location filename="../src/matrixbridge.cpp" line="693"/>
-        <location filename="../src/matrixbridge.cpp" line="709"/>
+        <location filename="../src/matrixbridge.cpp" line="650"/>
+        <location filename="../src/matrixbridge.cpp" line="689"/>
+        <location filename="../src/matrixbridge.cpp" line="705"/>
         <source>Enter a homeserver first.</source>
         <translation>पहले कोई होमसर्वर दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="675"/>
+        <location filename="../src/matrixbridge.cpp" line="671"/>
         <source>Enter username and password first.</source>
         <translation>पहले उपयोगकर्ता नाम और पासवर्ड दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1659"/>
-        <location filename="../src/matrixbridge.cpp" line="1674"/>
+        <location filename="../src/matrixbridge.cpp" line="1655"/>
+        <location filename="../src/matrixbridge.cpp" line="1670"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>सहेजी सूचियाँ अभी पढ़ी नहीं जा सकतीं।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1926"/>
+        <location filename="../src/matrixbridge.cpp" line="1923"/>
         <source>The push gateway has to be an https address.</source>
         <translation>पुश गेटवे का पता https होना चाहिए।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1971"/>
+        <location filename="../src/matrixbridge.cpp" line="1978"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2319"/>
-        <location filename="../src/matrixbridge.cpp" line="2347"/>
+        <location filename="../src/matrixbridge.cpp" line="2326"/>
+        <location filename="../src/matrixbridge.cpp" line="2354"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2661"/>
+        <location filename="../src/matrixbridge.cpp" line="2672"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2706"/>
+        <location filename="../src/matrixbridge.cpp" line="2717"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2726"/>
+        <location filename="../src/matrixbridge.cpp" line="2737"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3591"/>
+        <location filename="../src/matrixbridge.cpp" line="3602"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3950"/>
+        <location filename="../src/matrixbridge.cpp" line="3961"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3953"/>
+        <location filename="../src/matrixbridge.cpp" line="3964"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3956"/>
+        <location filename="../src/matrixbridge.cpp" line="3967"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3959"/>
+        <location filename="../src/matrixbridge.cpp" line="3970"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3962"/>
+        <location filename="../src/matrixbridge.cpp" line="3973"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3965"/>
+        <location filename="../src/matrixbridge.cpp" line="3976"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3965"/>
+        <location filename="../src/matrixbridge.cpp" line="3976"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3968"/>
+        <location filename="../src/matrixbridge.cpp" line="3979"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3971"/>
+        <location filename="../src/matrixbridge.cpp" line="3982"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -2358,93 +2358,136 @@
 <context>
     <name>PushPage</name>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="51"/>
+        <location filename="../qml/pages/PushPage.qml" line="61"/>
         <source>Push notifications</source>
         <translation>पुश सूचनाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="60"/>
+        <location filename="../qml/pages/PushPage.qml" line="70"/>
         <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
         <translation>xmatic में कोई पृष्ठभूमि सेवा नहीं है, इसलिए संदेश केवल तभी आते हैं जब यह चल रहा हो। पुश वितरक एक अलग ऐप है जो उपकरण के सभी ऐप के लिए एक ही संबंध बनाए रखता है और कुछ आने पर उन्हें जगाता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="64"/>
+        <location filename="../qml/pages/PushPage.qml" line="79"/>
+        <location filename="../qml/pages/PushPage.qml" line="102"/>
+        <source>Push server&apos;s own</source>
+        <translation>पुश सर्वर का अपना</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="79"/>
+        <location filename="../qml/pages/PushPage.qml" line="110"/>
+        <source>UnifiedPush public gateway</source>
+        <translation>UnifiedPush सार्वजनिक गेटवे</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="80"/>
+        <location filename="../qml/pages/PushPage.qml" line="117"/>
+        <source>Other</source>
+        <translation>दूसरा</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="80"/>
+        <source>Not chosen</source>
+        <translation>चुना नहीं गया</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="85"/>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1, वह सर्वर जिसके पास इस उपकरण का पता पहले से है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="89"/>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>तुम्हारे पुश सर्वर में कोई Matrix गेटवे नहीं है। कोई दूसरा चुनो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="91"/>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>पुश चालू होने पर मिलता है। ntfy सर्वरों में एक होता है; Mozilla सेवा में नहीं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="93"/>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>UnifiedPush परियोजना द्वारा चलाया जाता है। यह देखता है कि हर सूचना किस कक्ष के लिए है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="95"/>
+        <source>It sees which room every notification is for.</source>
+        <translation>गेटवे देखता है कि हर सूचना किस कक्ष के लिए है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="97"/>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>तुम्हारा होमसर्वर एक Matrix गेटवे को भेजता है, जो इस उपकरण तक आगे पहुँचाता है। पुश चालू करने के लिए एक चुनो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="132"/>
+        <source>Gateway address</source>
+        <translation>गेटवे का पता</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="146"/>
         <source>Receive push notifications</source>
         <translation>पुश सूचनाएँ प्राप्त करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="74"/>
+        <location filename="../qml/pages/PushPage.qml" line="157"/>
         <source>Distributor</source>
         <translation>वितरक</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="81"/>
+        <location filename="../qml/pages/PushPage.qml" line="164"/>
         <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
         <translation>कोई पुश वितरक स्थापित नहीं है। उसके बिना संबंध बनाए रखने वाला कुछ नहीं है, और यह बंद ही रहेगा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="85"/>
+        <location filename="../qml/pages/PushPage.qml" line="168"/>
         <source>Registration</source>
         <translation>पंजीकरण</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="92"/>
+        <location filename="../qml/pages/PushPage.qml" line="175"/>
         <source>This device has an address to be reached at.</source>
         <translation>इस उपकरण का एक पता है जिस पर यह पहुँचा जा सकता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="95"/>
+        <location filename="../qml/pages/PushPage.qml" line="178"/>
         <source>This device has an address; your homeserver needs a gateway to reach it.</source>
         <translation>इस उपकरण का एक पता है; तुम्हारे होमसर्वर को इस तक पहुँचने के लिए एक गेटवे चाहिए।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="98"/>
+        <location filename="../qml/pages/PushPage.qml" line="181"/>
         <source>This device has an address; waiting to tell your homeserver.</source>
         <translation>इस उपकरण का एक पता है; तुम्हारे होमसर्वर को बताने की प्रतीक्षा है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="101"/>
+        <location filename="../qml/pages/PushPage.qml" line="184"/>
         <source>Waiting for the distributor.</source>
         <translation>वितरक की प्रतीक्षा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="103"/>
+        <location filename="../qml/pages/PushPage.qml" line="186"/>
         <source>Not registered.</source>
         <translation>पंजीकृत नहीं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="109"/>
-        <location filename="../qml/pages/PushPage.qml" line="117"/>
+        <location filename="../qml/pages/PushPage.qml" line="196"/>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>अभी कोई नहीं; जब तक कोई चुना न जाए, तुम्हारा होमसर्वर इस उपकरण तक नहीं पहुँच सकता।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="77"/>
+        <location filename="../qml/pages/PushPage.qml" line="192"/>
         <source>Gateway</source>
         <translation>गेटवे</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="113"/>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>तुम्हारे पुश सर्वर में कोई Matrix गेटवे नहीं है। नीचे एक दर्ज करो; तब तक तुम्हारा होमसर्वर इस उपकरण तक नहीं पहुँच सकता।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="126"/>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>Matrix होमसर्वर पुश वितरक से सीधे बात नहीं कर सकता, इसलिए वह एक गेटवे को भेजता है जो आगे पहुँचाता है। अपने पुश सर्वर का अपना गेटवे इस्तेमाल करने के लिए इसे खाली छोड़ दो, अगर उसमें एक हो। गेटवे देखता है कि हर सूचना किस कक्ष के लिए है।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="134"/>
-        <source>Push gateway</source>
-        <translation>पुश गेटवे</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="149"/>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>matrix.gateway.unifiedpush.org इस्तेमाल करो</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="158"/>
+        <location filename="../qml/pages/PushPage.qml" line="200"/>
         <source>What leaves this device</source>
         <translation>इस उपकरण से क्या जाता है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="167"/>
+        <location filename="../qml/pages/PushPage.qml" line="209"/>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>तुम्हारे सर्वर को पुश सेवा का एक पता बताया जाता है, और वह हर सूचना के लिए गेटवे को कक्ष और संदेश की पहचान भेजता है। संदेश का पाठ नहीं: पुश केवल पहचान लाता है, संदेश यह उपकरण स्वयं लाता और खोलता है। वह पता एक रहस्य है — जिसके पास हो, वह इस फ़ोन को सूचना भेज सकता है।</translation>
     </message>
@@ -2457,7 +2500,7 @@
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/pushwake.cpp" line="379"/>
+        <location filename="../src/pushwake.cpp" line="384"/>
         <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
         <translation>पुश वितरक ने xmatic तक पहुँचाना बंद कर दिया है। खाता में जाकर पुश सूचनाएँ फिर से चालू करो।</translation>
     </message>

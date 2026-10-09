@@ -1961,20 +1961,52 @@
         <translation>لهذا الجهاز عنوان؛ يحتاج خادمك المنزلي إلى بوابة ليصل إليه.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.</source>
-        <translation>لا بوابة Matrix لدى خادم الإشعارات لديك. أدخِل واحدة أدناه؛ وحتى ذلك الحين لا يستطيع خادمك المنزلي الوصول إلى هذا الجهاز.</translation>
+        <source>Push server&apos;s own</source>
+        <translation>بوابة خادم الإشعارات نفسه</translation>
     </message>
     <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server&apos;s own gateway, if it has one. The gateway sees which room every notification is for.</source>
-        <translation>لا يستطيع خادم Matrix المنزلي التحدث إلى موزّع الإشعارات مباشرة، لذا يرسل إلى بوابة تعيد التوجيه. اترك هذا فارغًا لاستخدام بوابة خادم الإشعارات نفسه إن كانت لديه. ترى البوابة لأي غرفة كل إشعار.</translation>
+        <source>UnifiedPush public gateway</source>
+        <translation>بوابة UnifiedPush العامة</translation>
     </message>
     <message>
-        <source>Push gateway</source>
-        <translation>بوابة الإشعارات</translation>
+        <source>Other</source>
+        <translation>أخرى</translation>
     </message>
     <message>
-        <source>Use matrix.gateway.unifiedpush.org</source>
-        <translation>استخدام matrix.gateway.unifiedpush.org</translation>
+        <source>Not chosen</source>
+        <translation>لم تُختر</translation>
+    </message>
+    <message>
+        <source>%1, the server that already holds this device&apos;s address.</source>
+        <translation>%1، الخادم الذي يحمل عنوان هذا الجهاز أصلًا.</translation>
+    </message>
+    <message>
+        <source>Your push server has no Matrix gateway. Choose another one.</source>
+        <translation>لا بوابة Matrix لدى خادم الإشعارات لديك. اختر بوابة أخرى.</translation>
+    </message>
+    <message>
+        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
+        <translation>تُكتشف بعد تشغيل الإشعارات. لخوادم ntfy بوابة؛ أما خدمة Mozilla فلا.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
+        <translation>يديرها مشروع UnifiedPush. ترى لأي غرفة كل إشعار.</translation>
+    </message>
+    <message>
+        <source>It sees which room every notification is for.</source>
+        <translation>ترى البوابة لأي غرفة كل إشعار.</translation>
+    </message>
+    <message>
+        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
+        <translation>يرسل خادمك المنزلي إلى بوابة Matrix، تعيد توجيهه إلى هذا الجهاز. اختر واحدة لتشغيل الإشعارات.</translation>
+    </message>
+    <message>
+        <source>Gateway address</source>
+        <translation>عنوان البوابة</translation>
+    </message>
+    <message>
+        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
+        <translation>لا شيء بعد؛ وإلى أن تُختار واحدة لا يستطيع خادمك المنزلي الوصول إلى هذا الجهاز.</translation>
     </message>
 </context>
 <context>
