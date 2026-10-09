@@ -1210,10 +1210,6 @@
         <translation>Tvoja je sesija završila. Prijavi se ponovno.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Prvo unesi push pristupnik.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nova poruka</translation>
     </message>
@@ -1924,6 +1920,10 @@
         <translation>Ovaj uređaj ima adresu na kojoj je dostupan.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Ovaj uređaj ima adresu; čeka se da se javi vašem matičnom poslužitelju.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Čeka se distributer.</translation>
     </message>
@@ -1934,14 +1934,6 @@
     <message>
         <source>Gateway</source>
         <translation>Pristupnik</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix poslužitelj ne može izravno razgovarati s push distributerom, pa šalje pristupniku koji prosljeđuje. Nema zadane vrijednosti: to je jedino što nitko ne može pogoditi umjesto tebe.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push pristupnik</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1957,6 +1949,10 @@
     <message>
         <source>New message</source>
         <translation>Nova poruka</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Distributer push obavijesti prestao je isporučivati u xmatic. Ponovno uključite push obavijesti pod Račun.</translation>
     </message>
 </context>
 <context>

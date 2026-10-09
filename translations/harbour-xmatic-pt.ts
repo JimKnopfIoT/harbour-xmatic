@@ -1208,10 +1208,6 @@
         <translation>A tua sessão terminou. Inicia sessão de novo.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Indica primeiro um gateway push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nova mensagem</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Este dispositivo tem um endereço onde pode ser contactado.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Este dispositivo tem um endereço; a aguardar para o comunicar ao seu servidor.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>À espera do distribuidor.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Gateway</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Um servidor Matrix não consegue falar diretamente com um distribuidor push, por isso envia para um gateway que reencaminha. Não há predefinição: é a única coisa que ninguém pode adivinhar por ti.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Gateway push</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Nova mensagem</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>O distribuidor push deixou de entregar ao xmatic. Volte a ativar as notificações push em Conta.</translation>
     </message>
 </context>
 <context>

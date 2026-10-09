@@ -1206,10 +1206,6 @@
         <translation>A munkameneted véget ért. Jelentkezz be újra.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Adj meg előbb egy push átjárót.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Új üzenet</translation>
     </message>
@@ -1918,6 +1914,10 @@
         <translation>Ennek az eszköznek van címe, amelyen elérhető.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Ennek az eszköznek van címe; várakozás a honi kiszolgáló értesítésére.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Várakozás az elosztóra.</translation>
     </message>
@@ -1928,14 +1928,6 @@
     <message>
         <source>Gateway</source>
         <translation>Átjáró</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Egy Matrix kiszolgáló nem tud közvetlenül a push elosztóval beszélni, ezért egy átjárónak küld, amely továbbítja. Nincs alapérték: ez az egyetlen dolog, amit senki nem tud kitalálni helyetted.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push átjáró</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1951,6 +1943,10 @@
     <message>
         <source>New message</source>
         <translation>Új üzenet</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>A push-elosztó leállította a kézbesítést az xmatic felé. Kapcsold be újra a push-értesítéseket a Fiók alatt.</translation>
     </message>
 </context>
 <context>

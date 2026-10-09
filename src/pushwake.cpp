@@ -4,8 +4,15 @@
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
+#include <QDBusReply>
+#include <QDataStream>
+#include <QUuid>
 #include <QDir>
 #include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QSaveFile>
 #include <QStandardPaths>
 #include <QTimer>
 #include <QVariantMap>
@@ -17,6 +24,7 @@
 #include "instancelock.h"
 #include "matrixbridge.h"
 #include "secretskeeper.h"
+#include "xmatic_core.h"
 
 namespace {
 
@@ -24,17 +32,42 @@ namespace {
 /// string handed to it at registration, and this is that string.
 const char *ConnectorName = "org.unifiedpush.Connector.xmatic";
 
-/// How long to wait for the push after claiming the name: a ceiling for a busy
-/// device, not an expectation.
-const int MessageWaitMs = 20000;
-
 /// And for the round trip that fetches the message behind it. Longer, because
 /// it is a network request on a phone that may just have woken up.
 const int FetchWaitMs = 30000;
 
+/// Banner ids by room id, so a room's banner is replaced, not stacked.
+QString bannerRecordPath(const QString &dataDirectory)
+{
+    return dataDirectory + QStringLiteral("/push-banners.json");
+}
+
+QJsonObject readBannerRecord(const QString &dataDirectory)
+{
+    QFile file(bannerRecordPath(dataDirectory));
+    if (!file.open(QIODevice::ReadOnly)) {
+        return QJsonObject();
+    }
+    return QJsonDocument::fromJson(file.readAll()).object();
+}
+
+void writeBannerRecord(const QString &dataDirectory, const QJsonObject &record)
+{
+    if (record.isEmpty()) {
+        QFile::remove(bannerRecordPath(dataDirectory));
+        return;
+    }
+    QSaveFile file(bannerRecordPath(dataDirectory));
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(QJsonDocument(record).toJson(QJsonDocument::Compact));
+        file.commit();
+    }
+}
+
 /// Raises the banner without Qt Quick - this process has no QML engine. The
 /// category is what makes it audible; without one the banner is silent.
-void publishBanner(const QString &summary, const QString &body, bool noisy)
+void publishBanner(const QString &dataDirectory, const QString &roomId,
+                   const QString &summary, const QString &body, bool noisy)
 {
     QDBusInterface notifications(QStringLiteral("org.freedesktop.Notifications"),
                                  QStringLiteral("/org/freedesktop/Notifications"),
@@ -57,15 +90,43 @@ void publishBanner(const QString &summary, const QString &body, bool noisy)
     hints.insert(QStringLiteral("x-nemo-preview-body"), body);
     hints.insert(QStringLiteral("x-nemo-owner"), QStringLiteral("xmatic"));
 
-    notifications.call(QStringLiteral("Notify"),
+    QJsonObject record = readBannerRecord(dataDirectory);
+    const QString slot = roomId.isEmpty() ? QStringLiteral("*") : roomId;
+    QJsonObject entry = record.value(slot).toObject();
+    const uint replaces = uint(entry.value(QStringLiteral("id")).toDouble());
+
+    // The action carries an opaque key, not the room id; the app maps it back.
+    QString action = QStringLiteral("org.xmatic.xmatic /org/xmatic/xmatic org.xmatic.xmatic activate");
+    if (!roomId.isEmpty()) {
+        QString key = entry.value(QStringLiteral("key")).toString();
+        if (key.isEmpty()) {
+            key = QString::fromLatin1(QUuid::createUuid().toRfc4122().toHex());
+            entry.insert(QStringLiteral("key"), key);
+        }
+        QByteArray argument;
+        QDataStream stream(&argument, QIODevice::WriteOnly);
+        stream << QVariant(key);
+        action = QStringLiteral("org.xmatic.xmatic /org/xmatic/xmatic org.xmatic.xmatic openPushBanner ")
+                + QString::fromLatin1(argument.toBase64());
+    }
+    hints.insert(QStringLiteral("x-nemo-remote-action-default"), action);
+    hints.insert(QStringLiteral("x-nemo-remote-action-app"), action);
+
+    const QDBusReply<uint> reply = notifications.call(QStringLiteral("Notify"),
                        QStringLiteral("xmatic"),
-                       uint(0),
+                       replaces,
                        QStringLiteral("/usr/share/icons/hicolor/86x86/apps/harbour-xmatic.png"),
                        summary,
                        body,
-                       QStringList(),
+                       QStringList{QStringLiteral("default"), QString(),
+                                   QStringLiteral("app"), QString()},
                        hints,
                        -1);
+    if (reply.isValid()) {
+        entry.insert(QStringLiteral("id"), double(reply.value()));
+        record.insert(slot, entry);
+        writeBannerRecord(dataDirectory, record);
+    }
 }
 
 QString ensureDirectory(QStandardPaths::StandardLocation location)
@@ -119,88 +180,160 @@ int runPushWake(int argc, char *argv[])
         return 0;
     }
 
+    // Claim the name before anything slow: Foghorn allows 8 s per call.
+    const QJsonObject wake = [] {
+        char *raw = xm_push_wake();
+        if (!raw) {
+            return QJsonObject();
+        }
+        const QJsonObject parsed = QJsonDocument::fromJson(QByteArray(raw)).object();
+        xm_string_free(raw);
+        return parsed;
+    }();
+    const QJsonArray messages = wake.value(QStringLiteral("messages")).toArray();
+
+    if (wake.value(QStringLiteral("unregistered")).toBool()) {
+        qInfo("xmatic: the distributor unregistered this app");
+        publishPushNotice(dataDirectory);
+    }
+    if (messages.isEmpty()) {
+        qInfo("xmatic: push wake with no message to fetch (new address: %d)",
+              wake.value(QStringLiteral("newEndpoint")).toBool() ? 1 : 0);
+        return 0;
+    }
+    qInfo("xmatic: push wake with %d message(s) to fetch", int(messages.size()));
+
     const QString cacheDirectory = ensureDirectory(QStandardPaths::CacheLocation);
     if (cacheDirectory.isEmpty()) {
         qWarning("xmatic: push wake-up has no writable cache directory");
+        publishBanner(dataDirectory, QString(),
+                      QCoreApplication::translate("PushWake", "New message"),
+                      QCoreApplication::translate("PushWake", "New message"), true);
         return 0;
     }
 
-    // No store key and no session: asking secretsd from the background can raise
-    // its dialog, and a restore would refresh tokens a quit then drops. The banner
-    // says that something arrived; push.json is all the connector needs.
+    // The Secrets collection is device-lock-bound and a background activation
+    // cannot answer its dialog. A banner without content is still true.
+    StoreKeyResult storeKey = obtainStoreKey(dataDirectory);
+    if (storeKey.state != StoreKeyState::Available) {
+        qInfo("xmatic: push wake-up without a store key (state %d)",
+              static_cast<int>(storeKey.state));
+    }
+
     AppSettings settings;
-    MatrixBridge bridge(dataDirectory, cacheDirectory, StoreKeyResult(), &settings);
+    MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey, &settings);
+    if (!storeKey.key.isEmpty()) {
+        storeKey.key.fill(QChar('0'));
+    }
+    bridge.restoreSession();
 
-    // The app, started meanwhile, asks for the store: it gets it at once.
-    QTimer yieldCheck;
-    QObject::connect(&yieldCheck, &QTimer::timeout, &app, [&]() {
-        // Only looked at: the app removes it once it holds the store, so the next
-        // wake-up of a burst yields too.
-        if (QFile::exists(dataDirectory + QStringLiteral("/") + QStringLiteral(XMATIC_WAKE_YIELD_FILE))) {
-            qInfo("xmatic: the app is starting; leaving the store to it");
-            app.quit();
-        }
-    });
-    yieldCheck.start(250);
-
-    // Owned so the distributor's callback lands here. The core's connector
-    // claims it as soon as the first push command reaches it.
-    bridge.refreshPushStatus();
-
-    bool published = false;
     const QString genericSummary = QCoreApplication::translate("PushWake", "New message");
 
-    // The push named a room and an event; ask for the message. Where it cannot be
-    // had, the banner still says something arrived.
+    const int expected = messages.size();
+    int settled = 0;
+    auto settle = [&]() {
+        if (++settled >= expected) {
+            app.quit();
+        }
+    };
+
     QObject::connect(&bridge, &MatrixBridge::pushNotificationReady, &app,
                      [&](const QVariantMap &notification) {
-        if (published) {
-            return;
-        }
-        published = true;
         const QString room = notification.value(QStringLiteral("roomName")).toString();
         const QString body = notification.value(QStringLiteral("body")).toString();
-        publishBanner(room.isEmpty() ? genericSummary : room,
+        publishBanner(dataDirectory,
+                      notification.value(QStringLiteral("roomId")).toString(),
+                      room.isEmpty() ? genericSummary : room,
                       body.isEmpty() ? genericSummary : body,
                       notification.value(QStringLiteral("noisy")).toBool());
-        app.quit();
+        settle();
     });
 
     QObject::connect(&bridge, &MatrixBridge::pushNotificationFailed, &app,
                      [&](const QString &reason) {
-        if (published) {
-            return;
-        }
-        // "Filtered out" is the push rules saying do not show it. Anything else is a
-        // failure to look, and silence would hide an arrival.
         if (reason == QLatin1String("filtered out")
                 || reason == QLatin1String("redacted")) {
             qInfo("xmatic: push not shown (%s)", qPrintable(reason));
-            published = true;
-            app.quit();
-            return;
+        } else {
+            qWarning("xmatic: push could not be fetched (%s)", qPrintable(reason));
+            publishBanner(dataDirectory, QString(), genericSummary, genericSummary, true);
         }
-        published = true;
-        qWarning("xmatic: push could not be fetched (%s)", qPrintable(reason));
-        publishBanner(genericSummary, genericSummary, false);
-        app.quit();
+        settle();
     });
 
-    // Two ceilings, because two things can fail to happen: the distributor may
-    // never call, and the fetch may never answer.
-    QTimer::singleShot(MessageWaitMs, &app, [&]() {
-        if (!bridge.pushMessageSeen()) {
-            qInfo("xmatic: no push arrived within the wait; leaving");
-            app.quit();
+    auto finishNow = [&]() {
+        if (settled < expected) {
+            publishBanner(dataDirectory, QString(), genericSummary, genericSummary, true);
+        }
+        app.quit();
+    };
+
+    // The app, started meanwhile, asks for the store: it gets it at once.
+    QTimer yieldCheck;
+    QObject::connect(&yieldCheck, &QTimer::timeout, &app, [&]() {
+        // Only looked at: the app removes it once it holds the store.
+        if (QFile::exists(dataDirectory + QStringLiteral("/") + QStringLiteral(XMATIC_WAKE_YIELD_FILE))) {
+            qInfo("xmatic: the app is starting; leaving the store to it");
+            finishNow();
         }
     });
-    QTimer::singleShot(MessageWaitMs + FetchWaitMs, &app, [&]() {
-        if (!published) {
-            qWarning("xmatic: the push could not be turned into a notification in time");
-            publishBanner(genericSummary, genericSummary, false);
-            app.quit();
+    yieldCheck.start(250);
+
+    QTimer::singleShot(FetchWaitMs, &app, [&]() {
+        if (settled < expected) {
+            qWarning("xmatic: %d push(es) could not be turned into a notification in time",
+                     expected - settled);
         }
+        finishNow();
     });
+
+    for (const QJsonValue &message : messages) {
+        const QJsonObject target = message.toObject();
+        bridge.fetchPush(target.value(QStringLiteral("roomId")).toString(),
+                         target.value(QStringLiteral("eventId")).toString());
+    }
 
     return app.exec();
+}
+
+QHash<QString, QString> pushBannerRooms(const QString &dataDirectory)
+{
+    QHash<QString, QString> rooms;
+    const QJsonObject record = readBannerRecord(dataDirectory);
+    for (auto it = record.constBegin(); it != record.constEnd(); ++it) {
+        const QString key = it.value().toObject().value(QStringLiteral("key")).toString();
+        if (!key.isEmpty()) {
+            rooms.insert(key, it.key());
+        }
+    }
+    return rooms;
+}
+
+void closePushBanners(const QString &dataDirectory)
+{
+    const QJsonObject record = readBannerRecord(dataDirectory);
+    if (record.isEmpty()) {
+        return;
+    }
+    QDBusInterface notifications(QStringLiteral("org.freedesktop.Notifications"),
+                                 QStringLiteral("/org/freedesktop/Notifications"),
+                                 QStringLiteral("org.freedesktop.Notifications"),
+                                 QDBusConnection::sessionBus());
+    if (notifications.isValid()) {
+        for (auto it = record.constBegin(); it != record.constEnd(); ++it) {
+            notifications.call(QStringLiteral("CloseNotification"),
+                               uint(it.value().toObject().value(QStringLiteral("id")).toDouble()));
+        }
+    }
+    writeBannerRecord(dataDirectory, QJsonObject());
+}
+
+void publishPushNotice(const QString &dataDirectory)
+{
+    publishBanner(dataDirectory, QStringLiteral("unregistered"),
+                  QStringLiteral("xmatic"),
+                  QCoreApplication::translate(
+                      "PushWake",
+                      "The push distributor stopped delivering to xmatic. Switch push notifications on again under Account."),
+                  false);
 }

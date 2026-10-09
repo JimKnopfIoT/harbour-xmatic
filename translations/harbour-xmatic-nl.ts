@@ -1208,10 +1208,6 @@
         <translation>Je sessie is beëindigd. Log opnieuw in.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Vul eerst een push-gateway in.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nieuw bericht</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Dit apparaat heeft een adres waarop het bereikbaar is.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Dit apparaat heeft een adres; wacht om het aan je thuisserver door te geven.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Wachten op de distributeur.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Gateway</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Een Matrix-thuisserver kan niet rechtstreeks met een pushdistributeur praten, dus stuurt hij naar een gateway die doorstuurt. Er is geen standaardwaarde: dat is het enige dat niemand voor je kan raden.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-gateway</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Nieuw bericht</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>De pushdistributeur levert niet meer aan xmatic. Zet pushmeldingen opnieuw aan onder Account.</translation>
     </message>
 </context>
 <context>

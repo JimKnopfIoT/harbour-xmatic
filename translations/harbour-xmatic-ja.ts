@@ -1186,10 +1186,6 @@
         <translation>保存された一覧をいま読み取れません。</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>先にプッシュゲートウェイを入力してください。</translation>
-    </message>
-    <message>
         <source>Enter your recovery key first.</source>
         <translation>先に復旧キーを入力してください。</translation>
     </message>
@@ -1918,6 +1914,10 @@
         <translation>このデバイスには到達用のアドレスがあります。</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>このデバイスにはアドレスがあります。ホームサーバーへの通知を待っています。</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>ディストリビューターを待っています。</translation>
     </message>
@@ -1928,14 +1928,6 @@
     <message>
         <source>Gateway</source>
         <translation>ゲートウェイ</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix のホームサーバーはプッシュディストリビューターと直接やり取りできないため、転送するゲートウェイへ送ります。既定値はありません: 誰も代わりに推測できない唯一の項目です。</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>プッシュゲートウェイ</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1951,6 +1943,10 @@
     <message>
         <source>New message</source>
         <translation>新しいメッセージ</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>プッシュ配信元が xmatic への配信を停止しました。アカウントからプッシュ通知を再度オンにしてください。</translation>
     </message>
 </context>
 <context>

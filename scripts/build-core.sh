@@ -81,7 +81,9 @@ export "CARGO_TARGET_${TARGET_UPPER}_LINKER=${SDK_BIN}/cross-gcc"
 # C parts do the same through __FILE__. Unremapped, the finished binary carries
 # hundreds of strings naming the build machine's home directory — invisible to
 # strip, and a plain identity leak in anything published.
+# Git dependencies (Leghorn) are checked out under .cargo/git, not the registry.
 export RUSTFLAGS="--remap-path-prefix=$HOME/.cargo/registry=/cargo \
+--remap-path-prefix=$HOME/.cargo/git=/cargo-git \
 --remap-path-prefix=$HOME/.rustup=/rustup \
 --remap-path-prefix=$ROOT=/build ${RUSTFLAGS:-}"
 export "CFLAGS_${TARGET_UNDER}=--sysroot=${SFOS_SYSROOT} \

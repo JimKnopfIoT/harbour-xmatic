@@ -1210,10 +1210,6 @@
         <translation>Sesiunea ta s-a încheiat. Conectează-te din nou.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Introdu mai întâi o poartă push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Mesaj nou</translation>
     </message>
@@ -1924,6 +1920,10 @@
         <translation>Acest dispozitiv are o adresă la care poate fi contactat.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Acest dispozitiv are o adresă; se așteaptă comunicarea ei serverului tău.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Se așteaptă distribuitorul.</translation>
     </message>
@@ -1934,14 +1934,6 @@
     <message>
         <source>Gateway</source>
         <translation>Poartă</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Un server Matrix nu poate vorbi direct cu un distribuitor push, deci trimite către o poartă care redirecționează. Nu există o valoare implicită: este singurul lucru pe care nimeni nu îl poate ghici în locul tău.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Poartă push</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1957,6 +1949,10 @@
     <message>
         <source>New message</source>
         <translation>Mesaj nou</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Distribuitorul push a încetat să mai livreze către xmatic. Reactivează notificările push din Cont.</translation>
     </message>
 </context>
 <context>

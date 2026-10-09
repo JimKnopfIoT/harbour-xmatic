@@ -24,6 +24,36 @@ ApplicationWindow {
     // The room the standing notification is about, or "" if none stands.
     property string notifiedRoomId: ""
 
+    // A room from a tapped push banner, opened once the home page is up.
+    property string pendingPushRoom: ""
+
+    function queuePushRoom(roomId) {
+        if (roomId.length === 0) {
+            return
+        }
+        pendingPushRoom = roomId
+        pendingPushRoomLife.restart()
+        openPendingPushRoom()
+    }
+
+    function openPendingPushRoom() {
+        if (pendingPushRoom.length === 0 || matrix.sessionState !== "signed-in"
+                || pageStack.busy || pendingRoot !== "" || shownRoot !== rootFor("signed-in")) {
+            return
+        }
+        var roomId = pendingPushRoom
+        pendingPushRoom = ""
+        pendingPushRoomLife.stop()
+        notifiedRoomId = roomId
+        openNotifiedRoom()
+    }
+
+    Timer {
+        id: pendingPushRoomLife
+        interval: 30000
+        onTriggered: app.pendingPushRoom = ""
+    }
+
     // Decided here rather than corrected a moment later: the login page must not
     // flash up on a device that has to be told what to install.
     initialPage: Qt.resolvedUrl(matrix.storageBlocked
@@ -152,6 +182,7 @@ ApplicationWindow {
                 // security page rather than under it: the link is what the user
                 // just tapped.
                 app.openPendingLinkPage()
+                app.openPendingPushRoom()
             }
         }
     }
@@ -166,6 +197,7 @@ ApplicationWindow {
         }
         // A link the app was started for. It waits for the session the restore
         // above is fetching - opening a room needs one.
+        app.queuePushRoom(matrix.pushBannerRoom(activation.takePendingPushBanner()))
         app.startupLink = activation.takePendingLink()
         if (app.startupLink.length > 0) {
             startupLinkLife.restart()
@@ -191,6 +223,7 @@ ApplicationWindow {
         target: matrix
 
         onSessionChanged: {
+            Qt.callLater(app.openPendingPushRoom)
             if (app.startupLink.length === 0 || matrix.sessionState !== "signed-in") {
                 return
             }
@@ -207,6 +240,11 @@ ApplicationWindow {
         target: activation
 
         onRaiseRequested: app.activate()
+
+        onPushBannerRequested: {
+            app.activate()
+            app.queuePushRoom(matrix.pushBannerRoom(key))
+        }
 
         onNotifiedRoomRequested: {
             app.activate()
@@ -423,6 +461,7 @@ ApplicationWindow {
             if (Qt.application.state === Qt.ApplicationActive) {
                 backgroundSync.enabled = false
                 notification.close()
+                matrix.closePushBanners()
                 app.notifiedRoomId = ""
             } else {
                 backgroundSync.enabled = matrix.sessionState === "signed-in"

@@ -1208,10 +1208,6 @@
         <translation>Deine Sitzung ist beendet. Melde dich neu an.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Gib zuerst ein Push-Gateway ein.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Neue Nachricht</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Dieses Gerät hat eine Adresse, unter der es erreichbar ist.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Dieses Gerät hat eine Adresse; sie wird deinem Heimserver noch mitgeteilt.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Warte auf den Verteiler.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Gateway</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Ein Matrix-Heimserver kann nicht direkt mit einem Push-Verteiler sprechen, also schickt er an ein Gateway, das weiterleitet. Es gibt keine Vorbelegung: das ist das Einzige, was dir niemand erraten kann.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-Gateway</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Neue Nachricht</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Der Push-Verteiler stellt nichts mehr an xmatic zu. Schalte Push-Benachrichtigungen unter Konto wieder ein.</translation>
     </message>
 </context>
 <context>

@@ -1212,10 +1212,6 @@
         <translation>Is-sessjoni tiegħek intemmet. Idħol mill-ġdid.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>L-ewwel daħħal gateway push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Messaġġ ġdid</translation>
     </message>
@@ -1927,6 +1923,10 @@
         <translation>Dan l-apparat għandu indirizz fejn jista&apos; jintlaħaq.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Dan l-apparat għandu indirizz; qed jistenna biex jgħarraf lis-server tad-dar tiegħek.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Qed jistenna d-distributur.</translation>
     </message>
@@ -1937,14 +1937,6 @@
     <message>
         <source>Gateway</source>
         <translation>Gateway</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Server Matrix ma jistax ikellem distributur push direttament, allura jibgħat lil gateway li jgħaddi. M&apos;hemmx valur awtomatiku: hija l-unika ħaġa li ħadd ma jista&apos; jaqta&apos; għalik.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Gateway push</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1960,6 +1952,10 @@
     <message>
         <source>New message</source>
         <translation>Messaġġ ġdid</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Id-distributur tal-push waqaf iwassal lil xmatic. Ixgħel in-notifiki push mill-ġdid taħt Kont.</translation>
     </message>
 </context>
 <context>

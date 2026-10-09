@@ -13,6 +13,8 @@ Page {
     readonly property var pushStatus: matrix.pushStatus
     readonly property string pushState: pushStatus.state || ""
     readonly property var distributors: pushStatus.distributors || []
+    readonly property bool pushOn: matrix.pushEndpointReady
+    readonly property string gateway: pushStatus.gateway || ""
 
     Component.onCompleted: matrix.refreshPushStatus()
 
@@ -25,9 +27,8 @@ Page {
     }
 
     function apply(on) {
-        settings.pushEnabled = on
         if (on) {
-            matrix.enablePush(settings.pushGateway)
+            matrix.enablePush()
         } else {
             matrix.disablePush()
         }
@@ -60,17 +61,12 @@ Page {
 
             TextSwitch {
                 text: qsTr("Receive push notifications")
-                checked: settings.pushEnabled
+                checked: page.pushOn
                 automaticCheck: false
-                // Switching *on* needs both halves - the line below promises that.
-                // Switching off must always be possible: a distributor that is
-                // uninstalled or merely not running right now would otherwise
-                // leave this on, unreachable, with the pusher still registered on
-                // the homeserver and the metadata still flowing.
-                enabled: settings.pushEnabled
-                         || (settings.pushGateway.trim().length > 0
-                             && page.distributors.length > 0)
-                onClicked: page.apply(!settings.pushEnabled)
+                busy: page.pushState === "registering"
+                // Off must stay possible without a distributor.
+                enabled: page.pushOn || page.distributors.length > 0
+                onClicked: page.apply(!page.pushOn)
             }
 
             SecurityRow {
@@ -86,13 +82,16 @@ Page {
 
             SecurityRow {
                 label: qsTr("Registration")
-                level: matrix.pushEndpointReady
+                level: page.pushStatus.registered
                        ? SecurityStatus.GREEN
-                       : (page.pushState === "registering" ? SecurityStatus.ORANGE
-                                                       : SecurityStatus.RED)
+                       : (page.pushOn || page.pushState === "registering"
+                          ? SecurityStatus.ORANGE : SecurityStatus.RED)
                 detail: {
-                    if (matrix.pushEndpointReady) {
+                    if (page.pushStatus.registered) {
                         return qsTr("This device has an address to be reached at.")
+                    }
+                    if (page.pushOn) {
+                        return qsTr("This device has an address; waiting to tell your homeserver.")
                     }
                     if (page.pushState === "registering") {
                         return qsTr("Waiting for the distributor.")
@@ -101,32 +100,11 @@ Page {
                 }
             }
 
-            SectionHeader {
-                text: qsTr("Gateway")
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryColor
-                text: qsTr("A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.")
-            }
-
-            TextField {
-                id: gatewayField
-
-                width: parent.width
-                text: settings.pushGateway
-                label: qsTr("Push gateway")
-                placeholderText: "https://example.org/_matrix/push/v1/notify"
-                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-                EnterKey.onClicked: {
-                    settings.pushGateway = text
-                    focus = false
-                }
+            SecurityRow {
+                visible: page.gateway.length > 0
+                label: qsTr("Gateway")
+                level: SecurityStatus.GREEN
+                detail: page.gateway.replace(/^https?:\/\//, "").split("/")[0]
             }
 
             SectionHeader {

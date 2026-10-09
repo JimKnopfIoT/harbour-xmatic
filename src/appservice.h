@@ -29,6 +29,10 @@ public:
     /// it. Empty once it has been.
     Q_INVOKABLE QString takePendingLink();
 
+    void requestPushBanner(const QString &key);
+    /// A push banner tapped before the UI was there.
+    Q_INVOKABLE QString takePendingPushBanner();
+
     /// The app asking for its own window, for a ringing call: a notification
     /// banner is gone in a moment, and a call has to be answerable.
     Q_INVOKABLE void raiseWindow() { emit raiseRequested(); }
@@ -40,9 +44,12 @@ signals:
     void notifiedRoomRequested();
     /// A Matrix link arrived from outside; the UI decides what it means.
     void linkRequested(const QString &link);
+    /// A push banner was tapped; `key` maps to its room in the bridge.
+    void pushBannerRequested(const QString &key);
 
 private:
     QString m_pendingLink;
+    QString m_pendingPushBanner;
 };
 
 /// The interface as the notification and the service file name it. Separate so
@@ -64,6 +71,8 @@ public slots:
     /// The link handler's way in, and the one method here that takes something
     /// from the caller. What it accepts is decided in AppService::requestLink.
     void openUrl(const QString &link);
+    /// A push banner's tap. The key is opaque; the app maps it to a room.
+    void openPushBanner(const QString &key);
 
 private:
     AppService *m_service;

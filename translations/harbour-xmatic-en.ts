@@ -1208,10 +1208,6 @@
         <translation>Your session has ended. Please sign in again.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Enter a push gateway first.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>New message</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>This device has an address to be reached at.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>This device has an address; waiting to tell your homeserver.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Waiting for the distributor.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Gateway</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push gateway</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>New message</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</translation>
     </message>
 </context>
 <context>

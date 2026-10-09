@@ -1210,10 +1210,6 @@
         <translation>Твоя сессия завершена. Войди снова.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Сначала укажи push-шлюз.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Новое сообщение</translation>
     </message>
@@ -1924,6 +1920,10 @@
         <translation>У этого устройства есть адрес, по которому его можно достать.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>У этого устройства есть адрес; ждём, чтобы сообщить его вашему домашнему серверу.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Ожидание распространителя.</translation>
     </message>
@@ -1934,14 +1934,6 @@
     <message>
         <source>Gateway</source>
         <translation>Шлюз</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix-сервер не может обращаться к распространителю push напрямую, поэтому он отправляет на шлюз, который пересылает дальше. Значения по умолчанию нет: это единственное, что никто не может угадать за тебя.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-шлюз</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1957,6 +1949,10 @@
     <message>
         <source>New message</source>
         <translation>Новое сообщение</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Распространитель push-уведомлений перестал доставлять их в xmatic. Снова включите push-уведомления в разделе «Учётная запись».</translation>
     </message>
 </context>
 <context>

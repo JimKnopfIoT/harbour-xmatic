@@ -1210,10 +1210,6 @@
         <translation>Tvoja relácia sa skončila. Prihlás sa znova.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Najprv zadaj push bránu.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nová správa</translation>
     </message>
@@ -1924,6 +1920,10 @@
         <translation>Toto zariadenie má adresu, na ktorej je dosiahnuteľné.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Toto zariadenie má adresu; čaká sa na jej odovzdanie vášmu domovskému serveru.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Čaká sa na distribútora.</translation>
     </message>
@@ -1934,14 +1934,6 @@
     <message>
         <source>Gateway</source>
         <translation>Brána</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix server nemôže hovoriť s distribútorom push priamo, posiela teda na bránu, ktorá to posunie ďalej. Predvolená hodnota neexistuje: to je jediná vec, ktorú za teba nikto neuhádne.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push brána</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1957,6 +1949,10 @@
     <message>
         <source>New message</source>
         <translation>Nová správa</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Distribútor push oznámení prestal doručovať do xmatic. Znova zapnite push oznámenia v časti Účet.</translation>
     </message>
 </context>
 <context>

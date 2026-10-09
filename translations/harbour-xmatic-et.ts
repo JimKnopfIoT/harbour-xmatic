@@ -1208,10 +1208,6 @@
         <translation>Sinu sessioon on lõppenud. Logi uuesti sisse.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Sisesta esmalt push-lüüs.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Uus sõnum</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Sellel seadmel on aadress, kust ta on kättesaadav.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Sellel seadmel on aadress; ootab, et see koduserverile teatada.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Ootan jaoturit.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Lüüs</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrixi koduserver ei saa push-jaoturiga otse rääkida, seega saadab lüüsile, mis edastab. Vaikeväärtust pole: see on ainus asi, mida keegi sinu eest ära arvata ei saa.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-lüüs</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Uus sõnum</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Push-jaotur lõpetas xmaticule edastamise. Lülita push-teavitused jaotises Konto uuesti sisse.</translation>
     </message>
 </context>
 <context>

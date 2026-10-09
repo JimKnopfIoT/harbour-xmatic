@@ -1208,10 +1208,6 @@
         <translation>La tua sessione è terminata. Accedi di nuovo.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Inserisci prima un gateway push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nuovo messaggio</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Questo dispositivo ha un indirizzo a cui può essere raggiunto.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Questo dispositivo ha un indirizzo; in attesa di comunicarlo al tuo homeserver.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>In attesa del distributore.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Gateway</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Un server Matrix non può parlare direttamente con un distributore push, quindi invia a un gateway che inoltra. Non c&apos;è un valore predefinito: è l&apos;unica cosa che nessuno può indovinare al posto tuo.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Gateway push</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Nuovo messaggio</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Il distributore push ha smesso di consegnare a xmatic. Riattiva le notifiche push in Account.</translation>
     </message>
 </context>
 <context>
