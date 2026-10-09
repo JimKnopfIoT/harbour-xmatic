@@ -9,9 +9,13 @@
 /// the wake-up quits, the app removes it.
 #define XMATIC_WAKE_YIELD_FILE "wake-yield"
 
-/// Runs the process as a push connector - no window, no QML. Claims the name,
-/// waits a bounded time, raises the notification and exits.
+/// Runs the process as a push connector - no window, no QML. The core claims
+/// the name, the banners go up here, and the process exits.
 int runPushWake(int argc, char *argv[]);
+
+/// Sets FLATPAK_ID for Leghorn's bus library on Sailfish OS before 5.1.
+/// Before Qt and any other thread.
+void pushPrelude(const char *argv0);
 
 #include <QString>
 

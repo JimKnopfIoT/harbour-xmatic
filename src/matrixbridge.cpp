@@ -76,8 +76,6 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     , m_cacheDirectory(cacheDirectory)
     , m_settings(settings)
 {
-    m_headless = !qobject_cast<QGuiApplication *>(QCoreApplication::instance());
-
     // The read status is fixed when a timeline is built, so the open one is
     // rebuilt here - the switch acts on the room the user came from.
     if (m_settings) {
@@ -131,7 +129,6 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     if (!storeKey.key.isEmpty()) {
         config.insert(QStringLiteral("storeKey"), storeKey.key);
     }
-    config.insert(QStringLiteral("pushConnector"), !m_headless);
     // Not const: the buffer holds the store key and is wiped once the core
     // has taken its copy. Same rule as the password command's payload.
     QByteArray configJson = jsonToCompactString(config).toUtf8();
@@ -195,6 +192,14 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     // Before any sync can deliver a call: the core refuses what the privacy
     // page refuses, and it has to know the rules from the first event on.
     pushCallPolicy();
+
+    // Starts the connector only where push is on.
+    if (m_settings) {
+        QJsonObject gateway;
+        gateway.insert(QStringLiteral("gateway"), m_settings->pushGateway());
+        send(QStringLiteral("push.gateway"), gateway);
+    }
+    refreshPushStatus();
 
     // Asked once at start: whether the files are encrypted is a property of the
     // disk, not of a session, and the UI must say so while signed out.
@@ -331,9 +336,7 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     // Recordings are throwaway files; they live in the cache next to the
     // downloaded attachments.
     m_voiceDirectory = cacheDirectory + QStringLiteral("/voice");
-    if (!m_headless) {
-        m_recorder = new VoiceRecorder(m_voiceDirectory, this);
-    }
+    m_recorder = new VoiceRecorder(m_voiceDirectory, this);
     m_textDirectory = cacheDirectory + QStringLiteral("/text");
     // Crash or failed-send leftovers: plaintext.
     if (!cacheDirectory.isEmpty()) {
@@ -341,12 +344,12 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     }
     // Photos taken in the picker. src/camerashots.cpp.
     m_cameraShots = new CameraShots(cacheDirectory + QStringLiteral("/camera"), this);
-    if (m_recorder) connect(m_recorder, &VoiceRecorder::finished, this, [this](const QString &path,
+    connect(m_recorder, &VoiceRecorder::finished, this, [this](const QString &path,
                                                                const QString &mimeType,
                                                                qint64 duration) {
         sendMedia(path, mimeType, QString(), QString(), duration);
     });
-    if (m_recorder) connect(m_recorder, &VoiceRecorder::failed, this, [this](const QString &message) {
+    connect(m_recorder, &VoiceRecorder::failed, this, [this](const QString &message) {
         setLastError(message);
     });
 
@@ -728,6 +731,8 @@ void MatrixBridge::logout()
     m_transcripts->clear();
     // Before the core drops the client: afterwards the goodbye has nobody to send it.
     m_calls->hangUp();
+    // They name the account's rooms; the core removes their record with the store.
+    ::closePushBanners(m_dataDirectory);
     send(QStringLiteral("logout"));
 }
 
@@ -1914,6 +1919,22 @@ void MatrixBridge::disablePush()
     send(QStringLiteral("push.disable"));
 }
 
+bool MatrixBridge::setPushGateway(const QString &gateway)
+{
+    const QString trimmed = gateway.trimmed();
+    if (!trimmed.isEmpty() && !trimmed.startsWith(QLatin1String("https://"), Qt::CaseInsensitive)) {
+        setLastError(tr("The push gateway has to be an https address."));
+        return false;
+    }
+    if (m_settings) {
+        m_settings->setPushGateway(trimmed);
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("gateway"), trimmed);
+    send(QStringLiteral("push.gateway"), arguments);
+    return true;
+}
+
 void MatrixBridge::fetchPush(const QString &roomId, const QString &eventId)
 {
     QJsonObject arguments;
@@ -2555,7 +2576,6 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         }
         if (m_pushNotifyRequests.remove(id)) {
             qInfo("xmatic: push not fetched: %s", qPrintable(error.left(120)));
-            emit pushNotificationFailed(error);
             return;
         }
 
@@ -2645,7 +2665,6 @@ void MatrixBridge::handleReply(const QJsonObject &message)
             if (m_announcePushes) {
                 announcePush(notification);
             }
-            emit pushNotificationReady(notification);
         }
         return;
     }
@@ -3325,19 +3344,16 @@ bool MatrixBridge::eventVerification(const QString &name, const QJsonObject &dat
         if (!error.isEmpty()) {
             noteError(QStringLiteral("push"), error);
         }
-        if (state == QLatin1String("unregistered") && !m_headless) {
+        if (state == QLatin1String("unregistered")) {
             publishPushNotice(m_dataDirectory);
         }
         emit pushStatusChanged();
     } else if (name == QLatin1String("push.message")) {
-        m_pushMessageSeen = true;
         const QString roomId = data.value(QStringLiteral("roomId")).toString();
         const QString eventId = data.value(QStringLiteral("eventId")).toString();
         // Never the identifiers themselves.
         qInfo("xmatic: push received (matrix=%d)", roomId.isEmpty() ? 0 : 1);
-        if (roomId.isEmpty() || eventId.isEmpty()) {
-            emit pushNotificationFailed(QStringLiteral("no message"));
-        } else {
+        if (!roomId.isEmpty() && !eventId.isEmpty()) {
             fetchPush(roomId, eventId);
         }
     } else if (name == QLatin1String("encryption.changed")) {
@@ -3911,7 +3927,7 @@ void MatrixBridge::applySession(const QJsonObject &data)
     qInfo("xmatic: session state: %s", qPrintable(m_sessionState));
 
     // Relay credentials are short-lived and only useful once signed in.
-    if (m_sessionState == QLatin1String("signed-in") && !m_headless) {
+    if (m_sessionState == QLatin1String("signed-in")) {
         send(QStringLiteral("call.turnServers"));
     }
 
@@ -3922,7 +3938,7 @@ void MatrixBridge::applySession(const QJsonObject &data)
     emit sessionChanged();
 }
 
-QString MatrixBridge::previewLine(const QString &kind, const QString &text) const
+QString MatrixBridge::previewLine(const QString &kind, const QString &text)
 {
     if (kind == QLatin1String("text")) {
         return text;
