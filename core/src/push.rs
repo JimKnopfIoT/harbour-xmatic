@@ -1,31 +1,30 @@
 //! UnifiedPush through Leghorn. See docs/PUSH.md.
 
 use leghorn::matrix::{Notification, Pusher as LeghornPusher};
+use leghorn::{Config as PushConfig, Event as PushEvent, Leghorn};
 use serde_json::{json, Value};
 use tokio::sync::mpsc::{unbounded_channel, UnboundedReceiver};
 
-/// Org and app must match the desktop file's [X-Sailjail] names.
-pub const PUSH: leghorn::Config = leghorn::Config::new("org.xmatic", "xmatic")
+/// Org and app must match the desktop file's [X-Sailjail] names. No fallback
+/// gateway: which one sees the pushes is the user's choice.
+pub const PUSH: PushConfig = PushConfig::new("org.xmatic", "xmatic")
     .description("xmatic")
-    .matrix(APP_ID);
+    .matrix(APP_ID)
+    .matrix_without_fallback()
+    .matrix_device("xmatic", "en");
 
 /// Must not change: existing pushers on homeservers are filed under it.
 const APP_ID: &str = "org.xmatic.xmatic";
 
-/// Sets an environment variable; call before any thread starts.
-pub fn prelude() {
-    leghorn::prelude();
-}
-
 pub async fn start() -> (
-    Result<leghorn::Leghorn, String>,
-    UnboundedReceiver<leghorn::Event>,
+    Result<Leghorn, String>,
+    UnboundedReceiver<PushEvent>,
 ) {
     // Otherwise Leghorn's gateway probe installs ring.
     let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
 
     let (events, receiver) = unbounded_channel();
-    let handler = move |push: leghorn::Event| {
+    let handler = move |push: PushEvent| {
         let events = events.clone();
         async move {
             let _ = events.send(push);
@@ -38,77 +37,22 @@ pub async fn start() -> (
     (started, receiver)
 }
 
-/// The woken process: claims the name, collects pushes until Leghorn goes idle.
-/// Does not register.
-pub fn run_wake() -> Value {
-    let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
-    if log::set_boxed_logger(Box::new(WakeLog)).is_ok() {
-        log::set_max_level(log::LevelFilter::Info);
-    }
-
-    let taken = std::sync::Arc::new(std::sync::Mutex::new(Wake::default()));
-    let handler = {
-        let taken = taken.clone();
-        move |push: leghorn::Event| {
-            let taken = taken.clone();
-            async move {
-                if let Ok(mut wake) = taken.lock() {
-                    match push {
-                        leghorn::Event::Message(body) => {
-                            let target = message(&body);
-                            if target["roomId"].is_string() && target["eventId"].is_string() {
-                                wake.messages.push(target);
-                            }
-                        }
-                        leghorn::Event::NewEndpoint(_) => wake.new_endpoint = true,
-                        leghorn::Event::Unregistered => wake.unregistered = true,
-                        leghorn::Event::Raw(_) => {}
-                        leghorn::Event::Failed(error) => {
-                            log::warn!(target: "leghorn", "{error}");
-                        }
-                    }
-                }
-                Ok::<(), std::convert::Infallible>(())
-            }
-        }
-    };
-    leghorn::run_wake(&PUSH, handler);
-
-    let wake = taken.lock().map(|wake| wake.clone()).unwrap_or_default();
-    json!({
-        "messages": wake.messages,
-        "newEndpoint": wake.new_endpoint,
-        "unregistered": wake.unregistered,
-    })
+/// Whether `gateway` is an https URL. Every push passes through it.
+pub fn gateway_is_sound(gateway: &str) -> bool {
+    let gateway = gateway.trim();
+    gateway.len() > 8
+        && gateway
+            .get(..8)
+            .is_some_and(|scheme| scheme.eq_ignore_ascii_case("https://"))
 }
 
-#[derive(Default, Clone)]
-struct Wake {
-    messages: Vec<Value>,
-    new_endpoint: bool,
-    unregistered: bool,
-}
-
-/// Leghorn's log lines to stderr, before the core exists.
-struct WakeLog;
-
-impl log::Log for WakeLog {
-    fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {
-        metadata.level() <= log::Level::Info && metadata.target().starts_with("leghorn")
+/// The user's gateway where one is set, else the push server's own.
+pub fn gateway_for(user: &str, discovered: Option<&str>) -> Option<String> {
+    let user = user.trim();
+    if !user.is_empty() {
+        return gateway_is_sound(user).then(|| user.to_owned());
     }
-
-    fn log(&self, record: &log::Record<'_>) {
-        if self.enabled(record.metadata()) {
-            eprintln!(
-                "xmatic: push wake {} {}: {}",
-                record.level(),
-                record.target(),
-                crate::text::scrub_ids(&record.args().to_string())
-            );
-        }
-    }
-
-    fn flush(&self) {}
+    discovered.filter(|gateway| gateway_is_sound(gateway)).map(str::to_owned)
 }
 
 /// Room and event of a Matrix push; both null for a count-only or foreign push.
@@ -155,6 +99,26 @@ mod tests {
     }
 
     #[test]
+    fn only_https_gateways_are_sound() {
+        assert!(gateway_is_sound("https://push.example.org/_matrix/push/v1/notify"));
+        assert!(gateway_is_sound(" HTTPS://push.example.org "));
+        assert!(!gateway_is_sound("http://push.example.org/_matrix/push/v1/notify"));
+        assert!(!gateway_is_sound("https://"));
+        assert!(!gateway_is_sound(""));
+    }
+
+    #[test]
+    fn the_user_s_gateway_wins() {
+        let found = "https://push.example.org/_matrix/push/v1/notify";
+        let mine = "https://gateway.example.net/_matrix/push/v1/notify";
+        assert_eq!(gateway_for(mine, Some(found)).as_deref(), Some(mine));
+        assert_eq!(gateway_for("", Some(found)).as_deref(), Some(found));
+        assert_eq!(gateway_for("  ", None), None);
+        assert_eq!(gateway_for("http://gateway.example.net", Some(found)), None);
+        assert_eq!(gateway_for("", Some("http://push.example.org/notify")), None);
+    }
+
+    #[test]
     fn leghorns_pusher_reads_as_ruma_s() {
         use matrix_sdk::ruma::api::client::push::{Pusher, PusherKind};
         let pusher: LeghornPusher = serde_json::from_value(json!({
@@ -181,10 +145,17 @@ mod tests {
     }
 }
 
-/// Sets Leghorn's pusher unless already present, and deletes this app's others.
-pub async fn register(client: &matrix_sdk::Client, pusher: &LeghornPusher) -> Result<(), String> {
+/// Sets the pusher with `gateway` unless already present, and deletes this app's others.
+pub async fn register(
+    client: &matrix_sdk::Client,
+    pusher: &LeghornPusher,
+    gateway: &str,
+) -> Result<(), String> {
     use matrix_sdk::ruma::api::client::push::{get_pushers, Pusher, PusherIds, PusherKind};
 
+    if !gateway_is_sound(gateway) || !gateway_is_sound(&pusher.pushkey) {
+        return Err("the push gateway and address have to be https".to_owned());
+    }
     let current = client
         .send(get_pushers::v3::Request::new())
         .await
@@ -197,10 +168,12 @@ pub async fn register(client: &matrix_sdk::Client, pusher: &LeghornPusher) -> Re
 
     let in_place = ours.iter().any(|existing| {
         existing.ids.pushkey == pusher.pushkey
-            && matches!(&existing.kind, PusherKind::Http(data) if data.url == pusher.gateway)
+            && matches!(&existing.kind, PusherKind::Http(data) if data.url == gateway)
     });
     if !in_place {
-        let wanted: Pusher = pusher
+        let mut chosen = pusher.clone();
+        chosen.gateway = Some(gateway.to_owned());
+        let wanted: Pusher = chosen
             .convert()
             .map_err(|error| format!("Leghorn's pusher did not parse: {error}"))?;
         client
@@ -253,7 +226,7 @@ pub async fn clear_own_pushers(client: &matrix_sdk::Client) -> Result<(), String
     }
 }
 
-/// Whether the pre-Leghorn push.json had a registration.
+/// Whether a `push.json` from the old connector holds a registration.
 pub fn legacy_enabled(path: &std::path::Path) -> bool {
     std::fs::read(path)
         .ok()

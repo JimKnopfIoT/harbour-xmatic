@@ -286,6 +286,26 @@ async fn begin_session(
         .await
         .extend([recovery_task, session_task]);
     state.with_slot(gate, |slot| slot.advance(generation, Phase::Session));
+    // After the gate is released; it checks the generation itself.
+    let push = state.clone();
+    tokio::spawn(async move { super::pushcmd::push_session_started(&push, generation).await });
+}
+
+/// Ends the session without signing out: tokens saved, client dropped. For the
+/// woken process, which must leave the store as the app expects to find it.
+pub(super) async fn close_session(state: &Arc<State>) {
+    let gate = state.session_gate.lock().await;
+    let client = state.client.lock().await.clone();
+    if let (Some(client), Phase::Session) = (client, state.slot().phase) {
+        // A refreshed token not written now is a session lost at the next start.
+        if let session::LoadOutcome::Session(stored) =
+            session::load(&state.paths.session_file, state.store_key().as_ref())
+        {
+            persist(state, &gate, &client, stored.homeserver().to_owned()).await;
+        }
+    }
+    stop_observers(state).await;
+    drop(state.unassign(&gate).await);
 }
 
 /// Refuses a homeserver not reached over https. Asked of the client, since
@@ -642,17 +662,6 @@ fn watch_session(
 ) -> tokio::task::JoinHandle<()> {
     let state = state.clone();
     let client = client.clone();
-    {
-        let state = state.clone();
-        let client = client.clone();
-        tokio::spawn(async move {
-            match super::pushcmd::push_sync(&state, Some(client), None).await {
-                Ok(false) => {}
-                Ok(true) => super::pushcmd::push_report(&state, None, None).await,
-                Err(error) => super::pushcmd::push_report(&state, Some("error"), Some(error)).await,
-            }
-        });
-    }
     let mut changes = client.subscribe_to_session_changes();
     tokio::spawn(async move {
         loop {
@@ -841,6 +850,9 @@ pub(super) async fn logout(state: &Arc<State>, id: u64) {
     // moment before the store goes. Bounded, see `drain_commands`.
     state.drain_commands(std::time::Duration::from_secs(2)).await;
     let client = state.unassign(&gate).await;
+    // A pusher update already under way lands before the pushers are cleared.
+    let push_serial =
+        tokio::time::timeout(std::time::Duration::from_secs(5), state.push_sync.lock()).await;
     if let Some(client) = client {
         // Before the session, or the homeserver keeps posting to an endpoint
         // nothing can name. Bounded and best effort, like the sign-out.
@@ -856,12 +868,9 @@ pub(super) async fn logout(state: &Arc<State>, id: u64) {
         // the store directory open.
         drop(client);
     }
-    // And the registration itself, so the distributor stops pushing to a device
-    // that no longer has an account. The file goes with `reset_store` below.
-    if let Some(Ok(leghorn)) = state.push.get() {
-        let _ = tokio::time::timeout(std::time::Duration::from_secs(5), leghorn.disable()).await;
-    }
-    *state.push_registered.lock().await = None;
+    drop(push_serial);
+    // The registration and Leghorn's file with it: the endpoint lets anyone push here.
+    super::pushcmd::push_forget(state).await;
     session::forget(&state.paths.session_file);
     // The lists that name people belong to the account that is leaving.
     session::forget(&state.paths.private_file);

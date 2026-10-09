@@ -1,156 +1,213 @@
-//! UnifiedPush: the connector, the pusher, a woken fetch.
+//! UnifiedPush: the connector, the pusher, the woken process.
 
 use super::*;
 
-pub(super) async fn push_connector(state: &Arc<State>) -> Result<Arc<leghorn::Leghorn>, String> {
-    if !state.push_connector {
-        return Err("the push connector does not run in this process".to_owned());
+use crate::push::PUSH;
+use leghorn::matrix::Pusher;
+use leghorn::{Error as PushError, Event as PushEvent, Holds, Leghorn};
+
+/// The connector, started here and nowhere else.
+async fn push_connector(state: &Arc<State>) -> Result<Arc<Leghorn>, String> {
+    let mut slot = state.push.lock().await;
+    if let Some(leghorn) = slot.as_ref() {
+        return Ok(leghorn.clone());
     }
+    let (started, mut events) = crate::push::start().await;
+    let leghorn = Arc::new(started?);
+    *slot = Some(leghorn.clone());
+    drop(slot);
+    let weak = Arc::downgrade(state);
+    let listener = tokio::spawn(async move {
+        while let Some(push) = events.recv().await {
+            let Some(state) = weak.upgrade() else {
+                return;
+            };
+            push_event(&state, push).await;
+        }
+    });
+    if let Some(old) = state.push_listener.lock().await.replace(listener) {
+        old.abort();
+    }
+    Ok(leghorn)
+}
+
+/// Releases the connector name. The listener ends with the connector's channel;
+/// aborting it here would stop the event that called this.
+async fn push_stop(state: &Arc<State>) {
+    drop(state.push.lock().await.take());
+}
+
+async fn running(state: &Arc<State>) -> Option<Arc<Leghorn>> {
+    state.push.lock().await.clone()
+}
+
+fn user_gateway(state: &State) -> String {
     state
-        .push
-        .get_or_init(|| async {
-            let (started, events) = crate::push::start().await;
-            *state.push_events.lock().await = Some(events);
-            started.map(Arc::new)
-        })
-        .await
+        .push_gateway
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
         .clone()
 }
 
-pub(super) async fn push_listen(state: Weak<State>) {
-    let events = {
-        let Some(state) = state.upgrade() else {
-            return;
-        };
-        if push_connector(&state).await.is_err() {
-            return;
-        }
-        // Migration from the pre-Leghorn push.json.
-        let legacy = state.paths.push_file.clone();
-        if legacy.exists() {
-            let was_on = crate::push::legacy_enabled(&legacy);
-            let _ = std::fs::remove_file(&legacy);
-            if was_on {
-                push_enable(&state, 0).await;
-            }
-        }
-        let events = state.push_events.lock().await.take();
-        events
-    };
-    let Some(mut events) = events else {
+/// The signed-in client while `generation` is still the session.
+async fn client_of(state: &Arc<State>, generation: u64) -> Option<Client> {
+    let slot = state.slot();
+    if slot.generation != generation || slot.phase != Phase::Session {
+        return None;
+    }
+    state.client.lock().await.clone()
+}
+
+fn session_generation(state: &State) -> Option<u64> {
+    let slot = state.slot();
+    (slot.phase == Phase::Session).then_some(slot.generation)
+}
+
+/// Whether the old connector's push.json held a registration. Read once.
+fn take_legacy(state: &State) -> bool {
+    let legacy = &state.paths.push_file;
+    if !legacy.exists() {
+        return false;
+    }
+    let was_on = crate::push::legacy_enabled(legacy);
+    let _ = std::fs::remove_file(legacy);
+    was_on
+}
+
+/// After a sign-in or restore: the pusher for this session, or a leftover cleared.
+pub(super) async fn push_session_started(state: &Arc<State>, generation: u64) {
+    // The woken process holds Leghorn's lock; it registers from its own events.
+    if state
+        .push_wake
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+        .is_some()
+    {
         return;
-    };
-    while let Some(push) = events.recv().await {
-        let Some(state) = state.upgrade() else {
-            return;
-        };
-        push_event(&state, push).await;
+    }
+    match push_sync(state, generation, None).await {
+        Ok(false) => {}
+        Ok(true) => push_report(state, None, None).await,
+        Err(error) => push_report(state, Some("error"), Some(error)).await,
     }
 }
 
-pub(super) async fn push_event(state: &Arc<State>, push: leghorn::Event) {
+/// Registers the pusher for `generation`, unless it is no longer the session.
+async fn push_sync(
+    state: &Arc<State>,
+    generation: u64,
+    pusher: Option<Pusher>,
+) -> Result<bool, String> {
+    let _serial = state.push_sync.lock().await;
+    let Some(client) = client_of(state, generation).await else {
+        return Ok(false);
+    };
+    let pusher = match pusher {
+        Some(pusher) => Some(pusher),
+        None => match running(state).await {
+            Some(leghorn) => leghorn.endpoint().and_then(|endpoint| endpoint.matrix),
+            None => None,
+        },
+    };
+    let Some(pusher) = pusher else {
+        // Push went off while no session could delete the pusher.
+        if running(state).await.is_none()
+            && !leghorn::enabled(&PUSH)
+            && leghorn::matrix::last_pusher(&PUSH).is_some()
+        {
+            crate::push::clear_own_pushers(&client).await?;
+            if client_of(state, generation).await.is_some() {
+                leghorn::forget_stored(&PUSH)
+                    .await
+                    .map_err(|error| crate::text::scrub_ids(&error.to_string()))?;
+            }
+        }
+        return Ok(false);
+    };
+    let Some(gateway) = crate::push::gateway_for(&user_gateway(state), pusher.gateway.as_deref())
+    else {
+        // A gateway the user took back sees nothing more.
+        if state.push_registered.lock().await.take().is_some() {
+            crate::push::clear_own_pushers(&client).await?;
+        }
+        return Ok(false);
+    };
+    crate::push::register(&client, &pusher, &gateway).await?;
+    *state.push_registered.lock().await = Some((pusher.pushkey, gateway));
+    Ok(true)
+}
+
+async fn push_event(state: &Arc<State>, push: PushEvent) {
     match push {
-        leghorn::Event::NewEndpoint(endpoint) => {
-            // Leghorn may not report itself enabled yet.
-            let synced = push_sync(state, None, endpoint.matrix).await;
+        PushEvent::NewEndpoint(endpoint) => {
+            let synced = match session_generation(state) {
+                Some(generation) => push_sync(state, generation, endpoint.matrix).await,
+                None => Ok(false),
+            };
             push_report(state, None, synced.err()).await;
         }
-        leghorn::Event::Message(body) => {
+        PushEvent::Message(body) => {
             state
                 .sink
                 .emit(event("push.message", crate::push::message(&body)));
         }
-        leghorn::Event::Raw(_) => {}
-        leghorn::Event::Unregistered => {
+        PushEvent::Raw(_) => {}
+        PushEvent::Unregistered => {
             *state.push_registered.lock().await = None;
             let mut failure = None;
             if let Some(client) = state.client().await {
                 failure = crate::push::clear_own_pushers(&client).await.err();
+                // Kept otherwise: the next sign-in deletes the pusher it names.
+                if failure.is_none() {
+                    if let Some(leghorn) = running(state).await {
+                        let _ = leghorn.forget().await;
+                    }
+                }
             }
+            push_stop(state).await;
             push_report(state, Some("unregistered"), failure).await;
         }
-        leghorn::Event::Failed(error) => {
+        PushEvent::Failed(error) => {
             let error = crate::text::scrub_ids(&error.to_string());
             push_report(state, Some("error"), Some(error)).await;
         }
     }
 }
 
-/// Registers Leghorn's pusher when there is a client. Runs on new endpoints and sign-in.
-pub(super) async fn push_sync(
-    state: &Arc<State>,
-    client: Option<Client>,
-    pusher: Option<leghorn::matrix::Pusher>,
-) -> Result<bool, String> {
-    let pusher = match pusher {
-        Some(pusher) => Some(pusher),
-        None => match push_connector(state).await {
-            Ok(leghorn) => leghorn.endpoint().and_then(|endpoint| endpoint.matrix),
-            Err(_) => None,
-        },
-    };
-    let Some(pusher) = pusher else {
-        // Pusher left behind by an unregister in a woken process.
-        if let (Ok(_), Some(_)) = (
-            push_connector(state).await,
-            leghorn::matrix::last_pusher(&crate::push::PUSH),
-        ) {
-            let client = match client {
-                Some(client) => Some(client),
-                None => state.client().await,
-            };
-            if let Some(client) = client {
-                crate::push::clear_own_pushers(&client).await?;
-            }
-        }
-        return Ok(false);
-    };
-    let client = match client {
-        Some(client) => client,
-        None => match state.client().await {
-            Some(client) => client,
-            None => return Ok(false),
-        },
-    };
-    let _serial = state.push_sync.lock().await;
-    crate::push::register(&client, &pusher).await?;
-    *state.push_registered.lock().await = Some(pusher.pushkey);
-    Ok(true)
-}
-
 /// Always a complete `push.state`; partial ones blank the page.
-pub(super) async fn push_report(state: &Arc<State>, forced: Option<&str>, error: Option<String>) {
-    let leghorn = match push_connector(state).await {
-        Ok(leghorn) => leghorn,
-        Err(start) => {
-            state.sink.emit(event(
-                "push.state",
-                json!({
-                    "state": "unavailable",
-                    "error": error.unwrap_or(start),
-                    "distributors": [],
-                    "distributor": null,
-                    "enabled": false,
-                    "registered": false,
-                    "gateway": null,
-                }),
-            ));
-            return;
+async fn push_report(state: &Arc<State>, forced: Option<&str>, error: Option<String>) {
+    let leghorn = running(state).await;
+    let distributors = match &leghorn {
+        Some(leghorn) => leghorn.distributors().await,
+        None => leghorn::distributors().await,
+    }
+    .unwrap_or_default();
+    let endpoint = leghorn.as_ref().and_then(|leghorn| leghorn.endpoint());
+    let pusher = endpoint
+        .as_ref()
+        .and_then(|endpoint| endpoint.matrix.clone());
+    let server_gateway = pusher.as_ref().and_then(|pusher| pusher.gateway.clone());
+    let gateway = crate::push::gateway_for(&user_gateway(state), server_gateway.as_deref());
+    let registered = match (
+        &pusher,
+        &gateway,
+        state.push_registered.lock().await.as_ref(),
+    ) {
+        (Some(pusher), Some(gateway), Some((pushkey, registered))) => {
+            pusher.pushkey == *pushkey && gateway == registered
         }
-    };
-    let distributors = leghorn.distributors().await.unwrap_or_default();
-    let endpoint = leghorn.endpoint();
-    let pusher = endpoint.as_ref().and_then(|endpoint| endpoint.matrix.clone());
-    let registered = match (&pusher, state.push_registered.lock().await.as_ref()) {
-        (Some(pusher), Some(pushkey)) => pusher.pushkey == *pushkey,
         _ => false,
     };
-    let derived = if endpoint.is_some() {
+    let derived = if pusher.is_some() {
         if registered {
             "on"
+        } else if gateway.is_none() {
+            "needs-gateway"
         } else {
             "registering"
         }
+    } else if endpoint.is_some() {
+        "registering"
     } else if distributors.is_empty() {
         "no-distributor"
     } else {
@@ -159,10 +216,11 @@ pub(super) async fn push_report(state: &Arc<State>, forced: Option<&str>, error:
     let mut data = json!({
         "state": forced.unwrap_or(derived),
         "distributors": distributors,
-        "distributor": leghorn.distributor(),
+        "distributor": leghorn.as_ref().and_then(|leghorn| leghorn.distributor()),
         "enabled": endpoint.is_some(),
         "registered": registered,
-        "gateway": pusher.map(|pusher| pusher.gateway),
+        "gateway": gateway,
+        "serverGateway": server_gateway.is_some(),
     });
     if let Some(error) = error {
         data["error"] = json!(error);
@@ -170,23 +228,31 @@ pub(super) async fn push_report(state: &Arc<State>, forced: Option<&str>, error:
     state.sink.emit(event("push.state", data));
 }
 
+/// Starts the connector where push is on. Asked by the app at start and by the
+/// push page; a phone that never turned push on gets an answer and nothing else.
 pub(super) async fn push_status(state: &Arc<State>, id: u64) {
-    push_report(state, None, None).await;
+    if take_legacy(state) {
+        if let Err(error) = enable(state).await {
+            push_report(state, Some("error"), Some(error)).await;
+        }
+    } else if leghorn::enabled(&PUSH) {
+        if let Err(error) = push_connector(state).await {
+            push_report(state, Some("unavailable"), Some(error)).await;
+            state.sink.emit(reply_ok(id, json!({ "asked": true })));
+            return;
+        }
+        push_report(state, None, None).await;
+    } else {
+        push_report(state, None, None).await;
+    }
     state.sink.emit(reply_ok(id, json!({ "asked": true })));
 }
 
-pub(super) async fn push_enable(state: &Arc<State>, id: u64) {
-    let leghorn = match push_connector(state).await {
-        Ok(leghorn) => leghorn,
-        Err(error) => {
-            push_report(state, None, None).await;
-            state.sink.emit(reply_error(id, error));
-            return;
-        }
-    };
+async fn enable(state: &Arc<State>) -> Result<(), String> {
+    let leghorn = push_connector(state).await?;
     push_report(state, Some("registering"), None).await;
     let mut enabled = leghorn.enable().await;
-    if let Err(leghorn::Error::ChooseDistributor(names)) = &enabled {
+    if let Err(PushError::ChooseDistributor(names)) = &enabled {
         // No distributor choice yet: take the first.
         if let Some(first) = names.first().cloned() {
             enabled = match leghorn.select(&first).await {
@@ -197,47 +263,110 @@ pub(super) async fn push_enable(state: &Arc<State>, id: u64) {
     }
     match enabled {
         Ok(endpoint) => {
-            let synced = push_sync(state, None, endpoint.matrix).await;
+            let synced = match session_generation(state) {
+                Some(generation) => push_sync(state, generation, endpoint.matrix).await,
+                None => Ok(false),
+            };
             push_report(state, None, synced.err()).await;
-            state.sink.emit(reply_ok(id, json!({ "enabled": true })));
+            Ok(())
         }
-        Err(leghorn::Error::NoDistributor) => {
+        Err(PushError::NoDistributor) => {
+            push_stop(state).await;
             push_report(state, Some("no-distributor"), None).await;
-            state
-                .sink
-                .emit(reply_error(id, "no push distributor is installed"));
+            Err("no push distributor is installed".to_owned())
         }
         Err(error) => {
+            if !leghorn::enabled(&PUSH) {
+                push_stop(state).await;
+            }
             let error = crate::text::scrub_ids(&error.to_string());
             push_report(state, Some("error"), Some(error.clone())).await;
-            state.sink.emit(reply_error(id, error));
+            Err(error)
         }
     }
 }
 
+pub(super) async fn push_enable(state: &Arc<State>, id: u64) {
+    match enable(state).await {
+        Ok(()) => state.sink.emit(reply_ok(id, json!({ "enabled": true }))),
+        Err(error) => state.sink.emit(reply_error(id, error)),
+    }
+}
+
+/// Removes the pusher, then everything Leghorn kept, and lets go of the name.
 pub(super) async fn push_disable(state: &Arc<State>, id: u64) {
     let mut failure = None;
-    if let Some(client) = state.client().await {
-        failure = crate::push::clear_own_pushers(&client).await.err();
-    }
-    *state.push_registered.lock().await = None;
-    if let Ok(leghorn) = push_connector(state).await {
-        if let Err(error) = leghorn.disable().await {
-            failure = Some(crate::text::scrub_ids(&error.to_string()));
+    {
+        let _serial = state.push_sync.lock().await;
+        if let Some(client) = state.client().await {
+            failure = crate::push::clear_own_pushers(&client).await.err();
         }
+        *state.push_registered.lock().await = None;
     }
+    let forgotten = match running(state).await {
+        Some(leghorn) => leghorn.forget().await,
+        None => leghorn::forget_stored(&PUSH).await,
+    };
+    if let Err(error) = forgotten {
+        failure = Some(crate::text::scrub_ids(&error.to_string()));
+    }
+    push_stop(state).await;
     push_report(state, None, failure).await;
     state.sink.emit(reply_ok(id, json!({ "enabled": false })));
+}
+
+/// Forgets push for a sign-out: the endpoint lets anyone push to this phone.
+pub(super) async fn push_forget(state: &Arc<State>) {
+    *state.push_registered.lock().await = None;
+    let forgotten = match running(state).await {
+        Some(leghorn) => tokio::time::timeout(std::time::Duration::from_secs(5), leghorn.forget())
+            .await
+            .unwrap_or(Ok(())),
+        None => leghorn::forget_stored(&PUSH).await,
+    };
+    if let Err(error) = forgotten {
+        log(state, "warn", format!("push state not removed: {error}"));
+    }
+    push_stop(state).await;
+}
+
+pub(super) async fn push_set_gateway(state: &Arc<State>, id: u64, gateway: String) {
+    let gateway = gateway.trim().to_owned();
+    if !gateway.is_empty() && !crate::push::gateway_is_sound(&gateway) {
+        state.sink.emit(reply_error(
+            id,
+            "the push gateway has to be an https address",
+        ));
+        return;
+    }
+    *state
+        .push_gateway
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner()) = gateway;
+    if running(state).await.is_some() {
+        let synced = match session_generation(state) {
+            Some(generation) => push_sync(state, generation, None).await,
+            None => Ok(false),
+        };
+        push_report(state, None, synced.err()).await;
+    }
+    state.sink.emit(reply_ok(id, json!({ "set": true })));
 }
 
 /// Turns a push into a banner. Answers with an error where the push rules say
 /// not to show it: silence is the right outcome then.
 pub(super) async fn push_notify(state: &Arc<State>, id: u64, room_id: String, event_id: String) {
+    match notification(state, &room_id, &event_id).await {
+        Ok(data) => state.sink.emit(reply_ok(id, data)),
+        Err(error) => state.sink.emit(reply_error(id, error)),
+    }
+}
+
+async fn notification(state: &Arc<State>, room_id: &str, event_id: &str) -> Result<Value, String> {
     // Wait for a restore in flight.
     drop(state.session_gate.lock().await);
     let Some(client) = state.client().await else {
-        state.sink.emit(reply_error(id, "not signed in"));
-        return;
+        return Err("not signed in".to_owned());
     };
     // The running sync service where there is one - the woken process has none,
     // and there it really is the only process.
@@ -247,9 +376,122 @@ pub(super) async fn push_notify(state: &Arc<State>, id: u64, room_id: String, ev
         .await
         .as_ref()
         .map(|handle| handle.sync.clone());
-    match crate::push::notification_for(&client, &room_id, &event_id, sync).await {
-        Ok(data) => state.sink.emit(reply_ok(id, data)),
-        Err(error) => state.sink.emit(reply_error(id, error)),
+    crate::push::notification_for(&client, room_id, event_id, sync).await
+}
+
+/// The woken process. Keeps the connector name until every push is shown and a
+/// new endpoint registered; `push.yield` ends it early.
+pub(super) async fn push_wake(state: &Arc<State>, id: u64) {
+    let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
+    let holds = Holds::default();
+    let (jobs, mut received) = tokio::sync::mpsc::unbounded_channel();
+    let handler = {
+        let holds = holds.clone();
+        move |push: PushEvent| {
+            let job = (push, holds.hold());
+            let jobs = jobs.clone();
+            async move {
+                let _ = jobs.send(job);
+                Ok::<(), std::convert::Infallible>(())
+            }
+        }
+    };
+    let worker = state.clone();
+    let task = tokio::spawn(async move {
+        let work = async {
+            while let Some((push, hold)) = received.recv().await {
+                wake_event(&worker, push).await;
+                drop(hold);
+            }
+        };
+        let (served, ()) = tokio::join!(leghorn::wake(&PUSH, handler, &holds), work);
+        served
+    });
+    *state
+        .push_wake
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner()) = Some(task.abort_handle());
+    if state.push_yielded.load(std::sync::atomic::Ordering::SeqCst) {
+        task.abort();
+    }
+    let outcome = task.await;
+    lifecycle::close_session(state).await;
+    *state
+        .push_wake
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner()) = None;
+    match outcome {
+        Ok(Ok(())) => state.sink.emit(reply_ok(id, json!({ "yielded": false }))),
+        Ok(Err(error)) => state
+            .sink
+            .emit(reply_error(id, crate::text::scrub_ids(&error.to_string()))),
+        Err(_) => state.sink.emit(reply_ok(id, json!({ "yielded": true }))),
     }
 }
 
+pub(super) fn push_yield(state: &Arc<State>, id: u64) {
+    state
+        .push_yielded
+        .store(true, std::sync::atomic::Ordering::SeqCst);
+    if let Some(task) = state
+        .push_wake
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+        .as_ref()
+    {
+        task.abort();
+    }
+    state.sink.emit(reply_ok(id, json!({})));
+}
+
+async fn wake_event(state: &Arc<State>, push: PushEvent) {
+    match push {
+        PushEvent::Message(body) => {
+            let target = crate::push::message(&body);
+            let (Some(room_id), Some(event_id)) =
+                (target["roomId"].as_str(), target["eventId"].as_str())
+            else {
+                return;
+            };
+            match notification(state, room_id, event_id).await {
+                Ok(data) => state.sink.emit(event("push.banner", data)),
+                Err(error) if error == "filtered out" || error == "redacted" => {}
+                Err(error) => {
+                    log(
+                        state,
+                        "info",
+                        format!("push shown without its message: {error}"),
+                    );
+                    state
+                        .sink
+                        .emit(event("push.banner", json!({ "generic": true })));
+                }
+            }
+        }
+        PushEvent::NewEndpoint(endpoint) => {
+            drop(state.session_gate.lock().await);
+            if let Some(generation) = session_generation(state) {
+                if let Err(error) = push_sync(state, generation, endpoint.matrix).await {
+                    log(
+                        state,
+                        "warn",
+                        format!("the new push address was not registered: {error}"),
+                    );
+                }
+            }
+        }
+        PushEvent::Unregistered => {
+            drop(state.session_gate.lock().await);
+            if let Some(client) = state.client().await {
+                let _ = crate::push::clear_own_pushers(&client).await;
+            }
+            state
+                .sink
+                .emit(event("push.state", json!({ "state": "unregistered" })));
+        }
+        PushEvent::Failed(error) => {
+            log(state, "warn", crate::text::scrub_ids(&error.to_string()));
+        }
+        PushEvent::Raw(_) => {}
+    }
+}

@@ -112,7 +112,8 @@ impl<S: Subscriber> Layer<S> for SdkLog {
     }
 }
 
-/// Leghorn logs through `log`, not `tracing`.
+/// Leghorn logs through `log`, not `tracing`. Warnings and errors only: its info
+/// lines name the push server.
 struct PushLog {
     sink: Arc<Sink>,
     seen: Mutex<HashSet<String>>,
@@ -120,7 +121,7 @@ struct PushLog {
 
 impl log::Log for PushLog {
     fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {
-        metadata.level() <= log::Level::Info && metadata.target().starts_with("leghorn")
+        metadata.level() <= log::Level::Warn && metadata.target().starts_with("leghorn")
     }
 
     fn log(&self, record: &log::Record<'_>) {
@@ -151,7 +152,7 @@ pub fn install(sink: Arc<Sink>) {
         seen: Mutex::new(HashSet::new()),
     };
     if log::set_boxed_logger(Box::new(push)).is_ok() {
-        log::set_max_level(log::LevelFilter::Info);
+        log::set_max_level(log::LevelFilter::Warn);
     }
     let layer = SdkLog {
         sink,
