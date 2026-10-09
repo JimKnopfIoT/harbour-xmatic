@@ -1256,8 +1256,8 @@
         <translation>استطلاع: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>يجب أن تكون بوابة الإشعارات عنوان https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>يجب أن تكون البوابة عنوان URL يبدأ بـ https.</translation>
     </message>
 </context>
 <context>
@@ -1933,10 +1933,6 @@
         <translation>لهذا الجهاز عنوان يمكن الوصول إليه عبره.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>لهذا الجهاز عنوان؛ بانتظار إبلاغ خادمك المنزلي.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>في انتظار الموزّع.</translation>
     </message>
@@ -1957,56 +1953,52 @@
         <translation>يُخبَر خادمك المنزلي بعنوان لدى خدمة الإشعارات، ويرسل إلى البوابة معرّف الغرفة والرسالة مع كل إشعار. لا نص رسالة: يحمل الدفع معرّفات فقط، وهذا الجهاز يجلب الرسالة ويفكّ تعميتها بنفسه. ذلك العنوان سرّ - من يملكه يستطيع إرسال إشعار إلى هذا الهاتف.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>لهذا الجهاز عنوان؛ يحتاج خادمك المنزلي إلى بوابة ليصل إليه.</translation>
+        <source>Push server</source>
+        <translation>خادم الإشعارات</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>بوابة خادم الإشعارات نفسه</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (عامة)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>بوابة UnifiedPush العامة</translation>
+        <source>Custom</source>
+        <translation>مخصّصة</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>أخرى</translation>
+        <source>None</source>
+        <translation>لا شيء</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>لم تُختر</translation>
+        <source>Uses %1.</source>
+        <translation>تستخدم %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1، الخادم الذي يحمل عنوان هذا الجهاز أصلًا.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>لا بوابة في خادم الإشعارات لديك. اختر غيرها.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>لا بوابة Matrix لدى خادم الإشعارات لديك. اختر بوابة أخرى.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>يُتحقَّق منها بعد التسجيل. لدى ntfy واحدة، وليس لدى Mozilla.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>تُكتشف بعد تشغيل الإشعارات. لخوادم ntfy بوابة؛ أما خدمة Mozilla فلا.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>اختر بوابة لإكمال تشغيل الإشعارات الفورية.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>يديرها مشروع UnifiedPush. ترى لأي غرفة كل إشعار.</translation>
+        <source>Gateway URL</source>
+        <translation>عنوان URL للبوابة</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>ترى البوابة لأي غرفة كل إشعار.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>مسجَّل. في انتظار بوابة.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>يرسل خادمك المنزلي إلى بوابة Matrix، تعيد توجيهه إلى هذا الجهاز. اختر واحدة لتشغيل الإشعارات.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>مسجَّل. جارٍ إبلاغ الخادم المنزلي.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>عنوان البوابة</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>لا شيء بعد؛ وإلى أن تُختار واحدة لا يستطيع خادمك المنزلي الوصول إلى هذا الجهاز.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>لا شيء. لا يستطيع الخادم المنزلي الوصول إلى هذا الجهاز بعد.</translation>
     </message>
 </context>
 <context>
@@ -2016,8 +2008,8 @@
         <translation>رسالة جديدة</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>توقف موزّع الإشعارات الفورية عن التسليم إلى xmatic. فعّل الإشعارات الفورية مجددًا من الحساب.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>أسقط موزّع الإشعارات xmatic. أعد تشغيل الإشعارات الفورية من الحساب.</translation>
     </message>
 </context>
 <context>

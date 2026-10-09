@@ -1480,8 +1480,8 @@
     </message>
     <message>
         <location filename="../src/matrixbridge.cpp" line="1923"/>
-        <source>The push gateway has to be an https address.</source>
-        <translation>पुश गेटवे का पता https होना चाहिए।</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>गेटवे एक https URL होना चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/matrixbridge.cpp" line="1978"/>
@@ -2358,136 +2358,126 @@
 <context>
     <name>PushPage</name>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="61"/>
+        <location filename="../qml/pages/PushPage.qml" line="83"/>
         <source>Push notifications</source>
         <translation>पुश सूचनाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="70"/>
+        <location filename="../qml/pages/PushPage.qml" line="92"/>
         <source>xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.</source>
         <translation>xmatic में कोई पृष्ठभूमि सेवा नहीं है, इसलिए संदेश केवल तभी आते हैं जब यह चल रहा हो। पुश वितरक एक अलग ऐप है जो उपकरण के सभी ऐप के लिए एक ही संबंध बनाए रखता है और कुछ आने पर उन्हें जगाता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="79"/>
-        <location filename="../qml/pages/PushPage.qml" line="102"/>
-        <source>Push server&apos;s own</source>
-        <translation>पुश सर्वर का अपना</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="79"/>
-        <location filename="../qml/pages/PushPage.qml" line="110"/>
-        <source>UnifiedPush public gateway</source>
-        <translation>UnifiedPush सार्वजनिक गेटवे</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="80"/>
-        <location filename="../qml/pages/PushPage.qml" line="117"/>
-        <source>Other</source>
-        <translation>दूसरा</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="80"/>
-        <source>Not chosen</source>
-        <translation>चुना नहीं गया</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="85"/>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, वह सर्वर जिसके पास इस उपकरण का पता पहले से है।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="89"/>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>तुम्हारे पुश सर्वर में कोई Matrix गेटवे नहीं है। कोई दूसरा चुनो।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="91"/>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>पुश चालू होने पर मिलता है। ntfy सर्वरों में एक होता है; Mozilla सेवा में नहीं।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="93"/>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>UnifiedPush परियोजना द्वारा चलाया जाता है। यह देखता है कि हर सूचना किस कक्ष के लिए है।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="95"/>
-        <source>It sees which room every notification is for.</source>
-        <translation>गेटवे देखता है कि हर सूचना किस कक्ष के लिए है।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="97"/>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>तुम्हारा होमसर्वर एक Matrix गेटवे को भेजता है, जो इस उपकरण तक आगे पहुँचाता है। पुश चालू करने के लिए एक चुनो।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="132"/>
-        <source>Gateway address</source>
-        <translation>गेटवे का पता</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="146"/>
+        <location filename="../qml/pages/PushPage.qml" line="96"/>
         <source>Receive push notifications</source>
         <translation>पुश सूचनाएँ प्राप्त करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="157"/>
+        <location filename="../qml/pages/PushPage.qml" line="112"/>
+        <location filename="../qml/pages/PushPage.qml" line="134"/>
+        <source>Push server</source>
+        <translation>पुश सर्वर</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="112"/>
+        <location filename="../qml/pages/PushPage.qml" line="139"/>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (सार्वजनिक)</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="113"/>
+        <location filename="../qml/pages/PushPage.qml" line="143"/>
+        <source>Custom</source>
+        <translation>अपना</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="113"/>
+        <source>None</source>
+        <translation>कोई नहीं</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="118"/>
+        <source>Uses %1.</source>
+        <translation>%1 का उपयोग करता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="121"/>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>तुम्हारे पुश सर्वर में कोई गेटवे नहीं है। कोई दूसरा चुनो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="123"/>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>पंजीकरण के बाद जाँचा जाता है। ntfy में होता है, Mozilla में नहीं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="129"/>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>पुश चालू करना पूरा करने के लिए एक गेटवे चुनो।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="158"/>
+        <source>Gateway URL</source>
+        <translation>गेटवे URL</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="171"/>
         <source>Distributor</source>
         <translation>वितरक</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="164"/>
+        <location filename="../qml/pages/PushPage.qml" line="178"/>
         <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
         <translation>कोई पुश वितरक स्थापित नहीं है। उसके बिना संबंध बनाए रखने वाला कुछ नहीं है, और यह बंद ही रहेगा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="168"/>
+        <location filename="../qml/pages/PushPage.qml" line="182"/>
         <source>Registration</source>
         <translation>पंजीकरण</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="175"/>
+        <location filename="../qml/pages/PushPage.qml" line="189"/>
         <source>This device has an address to be reached at.</source>
         <translation>इस उपकरण का एक पता है जिस पर यह पहुँचा जा सकता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="178"/>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>इस उपकरण का एक पता है; तुम्हारे होमसर्वर को इस तक पहुँचने के लिए एक गेटवे चाहिए।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="181"/>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>इस उपकरण का एक पता है; तुम्हारे होमसर्वर को बताने की प्रतीक्षा है।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="184"/>
+        <location filename="../qml/pages/PushPage.qml" line="198"/>
         <source>Waiting for the distributor.</source>
         <translation>वितरक की प्रतीक्षा।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="186"/>
+        <location filename="../qml/pages/PushPage.qml" line="200"/>
         <source>Not registered.</source>
         <translation>पंजीकृत नहीं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="196"/>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>अभी कोई नहीं; जब तक कोई चुना न जाए, तुम्हारा होमसर्वर इस उपकरण तक नहीं पहुँच सकता।</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/PushPage.qml" line="77"/>
-        <location filename="../qml/pages/PushPage.qml" line="192"/>
+        <location filename="../qml/pages/PushPage.qml" line="110"/>
+        <location filename="../qml/pages/PushPage.qml" line="206"/>
         <source>Gateway</source>
         <translation>गेटवे</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="200"/>
+        <location filename="../qml/pages/PushPage.qml" line="192"/>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>पंजीकृत। गेटवे की प्रतीक्षा।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="195"/>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>पंजीकृत। होमसर्वर को बताया जा रहा है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="210"/>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>कोई नहीं। होमसर्वर अभी इस उपकरण तक नहीं पहुँच सकता।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PushPage.qml" line="214"/>
         <source>What leaves this device</source>
         <translation>इस उपकरण से क्या जाता है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="209"/>
+        <location filename="../qml/pages/PushPage.qml" line="223"/>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>तुम्हारे सर्वर को पुश सेवा का एक पता बताया जाता है, और वह हर सूचना के लिए गेटवे को कक्ष और संदेश की पहचान भेजता है। संदेश का पाठ नहीं: पुश केवल पहचान लाता है, संदेश यह उपकरण स्वयं लाता और खोलता है। वह पता एक रहस्य है — जिसके पास हो, वह इस फ़ोन को सूचना भेज सकता है।</translation>
     </message>
@@ -2501,8 +2491,8 @@
     </message>
     <message>
         <location filename="../src/pushwake.cpp" line="384"/>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>पुश वितरक ने xmatic तक पहुँचाना बंद कर दिया है। खाता में जाकर पुश सूचनाएँ फिर से चालू करो।</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>पुश वितरक ने xmatic को हटा दिया। खाता में जाकर पुश फिर से चालू करो।</translation>
     </message>
 </context>
 <context>

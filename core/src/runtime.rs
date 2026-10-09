@@ -185,8 +185,7 @@ struct State {
     /// can stop it - and wait until its client clone is gone.
     login_task: Mutex<Option<LoginTask>>,
     rooms: Mutex<Option<RoomListHandle>>,
-    /// The UnifiedPush connector, started only while push is on or asked about:
-    /// it claims a D-Bus name and must not do so for a feature nobody turned on.
+    /// The UnifiedPush connector. Runs only while push is on or the push page asks.
     push: Mutex<Option<Arc<Leghorn>>>,
     push_listener: Mutex<Option<tokio::task::JoinHandle<()>>>,
     /// Serialises pusher changes with each other and with the sign-out.

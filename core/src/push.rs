@@ -6,7 +6,7 @@ use serde_json::{json, Value};
 use tokio::sync::mpsc::{unbounded_channel, UnboundedReceiver};
 
 /// Org and app must match the desktop file's [X-Sailjail] names. No fallback
-/// gateway: which one sees the pushes is the user's choice.
+/// gateway; the user picks one.
 pub const PUSH: PushConfig = PushConfig::new("org.xmatic", "xmatic")
     .description("xmatic")
     .matrix(APP_ID)
@@ -37,7 +37,7 @@ pub async fn start() -> (
     (started, receiver)
 }
 
-/// Whether `gateway` is an https URL. Every push passes through it.
+/// Whether `gateway` is an https URL.
 pub fn gateway_is_sound(gateway: &str) -> bool {
     let gateway = gateway.trim();
     gateway.len() > 8

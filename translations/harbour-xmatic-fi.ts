@@ -1248,8 +1248,8 @@
         <translation>Kysely: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Push-yhdyskäytävän on oltava https-osoite.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Yhdyskäytävän on oltava https-URL.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Tällä laitteella on osoite, josta se tavoitetaan.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Tällä laitteella on osoite; odotetaan sen kertomista kotipalvelimellesi.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Odotetaan jakelijaa.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Kotipalvelimellesi kerrotaan osoite push-palvelussa, ja se lähettää yhdyskäytävälle jokaisesta ilmoituksesta huoneen ja viestin tunnisteen. Ei viestin tekstiä: push kantaa vain tunnisteita, ja tämä laite hakee ja purkaa viestin itse. Osoite on salaisuus — sen haltija voi lähettää tähän puhelimeen ilmoituksen.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Tällä laitteella on osoite; kotipalvelimesi tarvitsee yhdyskäytävän tavoittaakseen sen.</translation>
+        <source>Push server</source>
+        <translation>Push-palvelin</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Push-palvelimen oma</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (julkinen)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>UnifiedPushin julkinen yhdyskäytävä</translation>
+        <source>Custom</source>
+        <translation>Mukautettu</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Muu</translation>
+        <source>None</source>
+        <translation>Ei mitään</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Ei valittu</translation>
+        <source>Uses %1.</source>
+        <translation>Käytössä %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, palvelin, jolla tämän laitteen osoite jo on.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Push-palvelimellasi ei ole yhdyskäytävää. Valitse toinen.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Push-palvelimellasi ei ole Matrix-yhdyskäytävää. Valitse jokin muu.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Tarkistetaan rekisteröinnin jälkeen. ntfy:ssä on, Mozillassa ei.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Löytyy, kun push on päällä. ntfy-palvelimilla on sellainen; Mozillan palvelulla ei.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Valitse yhdyskäytävä, niin push otetaan käyttöön.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>UnifiedPush-projektin ylläpitämä. Se näkee, mihin huoneeseen kukin ilmoitus kuuluu.</translation>
+        <source>Gateway URL</source>
+        <translation>Yhdyskäytävän URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Yhdyskäytävä näkee, mihin huoneeseen kukin ilmoitus kuuluu.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Rekisteröity. Odotetaan yhdyskäytävää.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Kotipalvelimesi lähettää Matrix-yhdyskäytävälle, joka välittää tälle laitteelle. Valitse yksi ottaaksesi pushin käyttöön.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Rekisteröity. Ilmoitetaan kotipalvelimelle.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Yhdyskäytävän osoite</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Ei vielä yhtään; ennen kuin sellainen valitaan, kotipalvelimesi ei tavoita tätä laitetta.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Ei mitään. Kotipalvelin ei vielä tavoita tätä laitetta.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Uusi viesti</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Push-jakelija lopetti toimituksen xmaticille. Ota push-ilmoitukset uudelleen käyttöön kohdassa Tili.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push-jakelija pudotti xmaticin. Ota push uudelleen käyttöön kohdassa Tili.</translation>
     </message>
 </context>
 <context>

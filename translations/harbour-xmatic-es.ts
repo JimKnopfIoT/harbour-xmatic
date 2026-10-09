@@ -1248,8 +1248,8 @@
         <translation>Encuesta: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>La pasarela push tiene que ser una dirección https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>La pasarela debe ser una URL https.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Este dispositivo tiene una dirección en la que se le puede localizar.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Este dispositivo tiene una dirección; falta comunicársela a tu servidor.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Esperando al distribuidor.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>A tu servidor se le indica una dirección en el servicio push, y envía a la pasarela un identificador de sala y de mensaje por cada notificación. Sin texto del mensaje: el push lleva solo identificadores y este dispositivo obtiene y descifra el mensaje por su cuenta. Esa dirección es un secreto: quien la tenga puede enviar una notificación a este teléfono.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Este dispositivo tiene una dirección; tu servidor necesita una pasarela para llegar a él.</translation>
+        <source>Push server</source>
+        <translation>Servidor push</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>La del servidor push</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (pública)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Pasarela pública de UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Personalizada</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Otra</translation>
+        <source>None</source>
+        <translation>Ninguna</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Sin elegir</translation>
+        <source>Uses %1.</source>
+        <translation>Usa %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, el servidor que ya tiene la dirección de este dispositivo.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Tu servidor push no tiene pasarela. Elige otra.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Tu servidor push no tiene pasarela de Matrix. Elige otra.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Se comprueba tras registrarse. ntfy tiene una, Mozilla no.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Se encuentra una vez activado el push. Los servidores ntfy tienen una; el servicio de Mozilla no.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Elige una pasarela para terminar de activar el push.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>La gestiona el proyecto UnifiedPush. Ve para qué sala es cada notificación.</translation>
+        <source>Gateway URL</source>
+        <translation>URL de la pasarela</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>La pasarela ve para qué sala es cada notificación.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrado. Esperando una pasarela.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Tu servidor envía a una pasarela de Matrix, que reenvía a este dispositivo. Elige una para activar el push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrado. Avisando al servidor.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Dirección de la pasarela</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Ninguna todavía; hasta que elijas una, tu servidor no puede llegar a este dispositivo.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Ninguna. El servidor aún no puede llegar a este dispositivo.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Mensaje nuevo</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>El distribuidor push dejó de entregar a xmatic. Vuelve a activar las notificaciones push en Cuenta.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>El distribuidor push ha dado de baja a xmatic. Vuelve a activar el push en Cuenta.</translation>
     </message>
 </context>
 <context>

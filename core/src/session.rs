@@ -47,8 +47,7 @@ pub struct Paths {
     pub private_file: PathBuf,
     /// The old connector's registration, read once to carry push over to Leghorn.
     pub push_file: PathBuf,
-    /// Leghorn's endpoint and keys, and the banners the woken process raised.
-    /// Both go with the account: one lets anyone push here, the other names rooms.
+    /// Leghorn's state and the banner record. Deleted at sign-out.
     pub push_state: [PathBuf; 2],
     /// Tantivy index per room. Beside the store rather than in the cache:
     /// expensive to rebuild, and it holds message text.

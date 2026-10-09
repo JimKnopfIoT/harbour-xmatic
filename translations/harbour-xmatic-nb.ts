@@ -1248,8 +1248,8 @@
         <translation>Avstemning: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Push-gatewayen må være en https-adresse.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Gatewayen må være en https-URL.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Denne enheten har en adresse den kan nås på.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Denne enheten har en adresse; venter på å gi den til hjemmeserveren din.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Venter på distributøren.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Hjemmetjeneren din får en adresse hos push-tjenesten, og sender gatewayen en rom- og meldings-id for hvert varsel. Ingen meldingstekst: pushen bærer bare id-er, og denne enheten henter og dekrypterer meldingen selv. Den adressen er en hemmelighet — den som har den, kan sende et varsel til denne telefonen.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Denne enheten har en adresse; hjemmeserveren din trenger en gateway for å nå den.</translation>
+        <source>Push server</source>
+        <translation>Push-tjener</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Push-serverens egen</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (offentlig)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Offentlig UnifiedPush-gateway</translation>
+        <source>Custom</source>
+        <translation>Egendefinert</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Annen</translation>
+        <source>None</source>
+        <translation>Ingen</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Ikke valgt</translation>
+        <source>Uses %1.</source>
+        <translation>Bruker %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, serveren som allerede har adressen til denne enheten.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Push-tjeneren din har ingen gateway. Velg en annen.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Push-serveren din har ingen Matrix-gateway. Velg en annen.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Sjekkes etter registrering. ntfy har en, Mozilla har ikke.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Blir funnet når push er slått på. ntfy-servere har en; Mozilla-tjenesten har ikke.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Velg en gateway for å slå på push helt.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Drives av UnifiedPush-prosjektet. Den ser hvilket rom hvert varsel gjelder.</translation>
+        <source>Gateway URL</source>
+        <translation>Gateway-URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Gatewayen ser hvilket rom hvert varsel gjelder.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrert. Venter på en gateway.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Hjemmeserveren din sender til en Matrix-gateway, som videresender til denne enheten. Velg en for å slå på push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrert. Gir beskjed til hjemmetjeneren.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Gateway-adresse</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Ingen ennå; inntil en er valgt, kan ikke hjemmeserveren din nå denne enheten.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Ingen. Hjemmetjeneren kan ikke nå denne enheten ennå.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Ny melding</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Push-distributøren sluttet å levere til xmatic. Slå på push-varsler igjen under Konto.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push-distributøren har droppet xmatic. Slå på push igjen under Konto.</translation>
     </message>
 </context>
 <context>

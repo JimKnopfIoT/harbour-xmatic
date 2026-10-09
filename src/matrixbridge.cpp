@@ -193,8 +193,7 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
     // page refuses, and it has to know the rules from the first event on.
     pushCallPolicy();
 
-    // The pick first: push.status starts the connector where push is on, and
-    // registers with what was picked. Its reply sends push.status.
+    // Gateway pick first; its reply sends push.status.
     sendPushGateway();
 
     // Asked once at start: whether the files are encrypted is a property of the
@@ -727,7 +726,6 @@ void MatrixBridge::logout()
     m_transcripts->clear();
     // Before the core drops the client: afterwards the goodbye has nobody to send it.
     m_calls->hangUp();
-    // They name the account's rooms; the core removes their record with the store.
     ::closePushBanners(m_dataDirectory);
     send(QStringLiteral("logout"));
 }
@@ -1920,7 +1918,7 @@ bool MatrixBridge::setPushGateway(const QString &mode, const QString &gateway)
     const QString trimmed = gateway.trimmed();
     if (mode == QLatin1String("other")
         && !trimmed.startsWith(QLatin1String("https://"), Qt::CaseInsensitive)) {
-        setLastError(tr("The push gateway has to be an https address."));
+        setLastError(tr("The gateway must be an https URL."));
         return false;
     }
     if (m_settings) {
@@ -4050,8 +4048,7 @@ void MatrixBridge::setLoginRunning(bool running)
     emit busyChanged();
 }
 
-/// Banner for a push in the running app, unless the sync announced the room
-/// in the last minute.
+/// Banner for a push in the running app, unless the sync showed one in the last minute.
 void MatrixBridge::announcePush(const QVariantMap &notification)
 {
     const QString roomId = notification.value(QStringLiteral("roomId")).toString();

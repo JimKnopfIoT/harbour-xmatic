@@ -1250,8 +1250,8 @@
         <translation>Sondaj: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Poarta push trebuie să fie o adresă https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Poarta trebuie să fie un URL https.</translation>
     </message>
 </context>
 <context>
@@ -1924,10 +1924,6 @@
         <translation>Acest dispozitiv are o adresă la care poate fi contactat.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Acest dispozitiv are o adresă; se așteaptă comunicarea ei serverului tău.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Se așteaptă distribuitorul.</translation>
     </message>
@@ -1948,56 +1944,52 @@
         <translation>Serverul tău află o adresă la serviciul push și trimite porții un identificator de cameră și de mesaj pentru fiecare notificare. Fără text: push-ul poartă doar identificatori, iar mesajul este preluat și decriptat de acest dispozitiv. Adresa este un secret — cine o are poate trimite o notificare acestui telefon.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Acest dispozitiv are o adresă; serverul tău are nevoie de o poartă ca să ajungă la el.</translation>
+        <source>Push server</source>
+        <translation>Server push</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Poarta serverului push</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (publică)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Poarta publică UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Personalizată</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Alta</translation>
+        <source>None</source>
+        <translation>Niciuna</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Nealeasă</translation>
+        <source>Uses %1.</source>
+        <translation>Folosește %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, serverul care are deja adresa acestui dispozitiv.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Serverul tău push nu are poartă. Alege alta.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Serverul tău push nu are o poartă Matrix. Alege alta.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Se verifică după înregistrare. ntfy are una, Mozilla nu.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Se află după ce push-ul e pornit. Serverele ntfy au una; serviciul Mozilla nu.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Alege o poartă ca să termini de pornit push-ul.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Administrată de proiectul UnifiedPush. Vede pentru ce cameră este fiecare notificare.</translation>
+        <source>Gateway URL</source>
+        <translation>URL-ul porții</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Poarta vede pentru ce cameră este fiecare notificare.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Înregistrat. Se așteaptă o poartă.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Serverul tău trimite către o poartă Matrix, care redirecționează către acest dispozitiv. Alege una pentru a porni push-ul.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Înregistrat. Se anunță serverul.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Adresa porții</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Niciuna încă; până nu e aleasă una, serverul tău nu poate ajunge la acest dispozitiv.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Niciuna. Serverul nu poate încă ajunge la acest dispozitiv.</translation>
     </message>
 </context>
 <context>
@@ -2007,8 +1999,8 @@
         <translation>Mesaj nou</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Distribuitorul push a încetat să mai livreze către xmatic. Reactivează notificările push din Cont.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Distribuitorul push a renunțat la xmatic. Repornește push-ul din Cont.</translation>
     </message>
 </context>
 <context>

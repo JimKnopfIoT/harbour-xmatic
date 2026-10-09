@@ -229,7 +229,7 @@ void AppSettings::setPushGateway(const QString &mode, const QString &gateway)
     }
     QSettings settings(writablePath(), QSettings::IniFormat);
     store(settings, QStringLiteral("push/gatewayMode"), mode, "the push gateway choice");
-    // Not logged: it names whoever forwards the user's notifications.
+    // Not logged.
     store(settings, QStringLiteral("push/gateway"), address, "the push gateway");
     emit pushChanged();
 }

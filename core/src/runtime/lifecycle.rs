@@ -291,13 +291,12 @@ async fn begin_session(
     tokio::spawn(async move { super::pushcmd::push_session_started(&push, generation).await });
 }
 
-/// Ends the session without signing out: tokens saved, client dropped. For the
-/// woken process, which must leave the store as the app expects to find it.
+/// Saves tokens and drops the client without signing out. For the woken process.
 pub(super) async fn close_session(state: &Arc<State>) {
     let gate = state.session_gate.lock().await;
     let client = state.client.lock().await.clone();
     if let (Some(client), Phase::Session) = (client, state.slot().phase) {
-        // A refreshed token not written now is a session lost at the next start.
+        // Save refreshed tokens.
         if let session::LoadOutcome::Session(stored) =
             session::load(&state.paths.session_file, state.store_key().as_ref())
         {
@@ -869,7 +868,7 @@ pub(super) async fn logout(state: &Arc<State>, id: u64) {
         drop(client);
     }
     drop(push_serial);
-    // The registration and Leghorn's file with it: the endpoint lets anyone push here.
+    // Unregister and delete Leghorn's state.
     super::pushcmd::push_forget(state).await;
     session::forget(&state.paths.session_file);
     // The lists that name people belong to the account that is leaving.

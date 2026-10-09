@@ -1250,8 +1250,8 @@
         <translation>Anketa: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Push pristupnik mora biti https adresa.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Pristupnik mora biti https URL.</translation>
     </message>
 </context>
 <context>
@@ -1924,10 +1924,6 @@
         <translation>Ovaj uređaj ima adresu na kojoj je dostupan.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Ovaj uređaj ima adresu; čeka se da se javi vašem matičnom poslužitelju.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Čeka se distributer.</translation>
     </message>
@@ -1948,56 +1944,52 @@
         <translation>Tvoj poslužitelj saznaje adresu na push usluzi i za svaku obavijest šalje pristupniku identifikator sobe i poruke. Bez teksta: push nosi samo identifikatore, a poruku ovaj uređaj dohvaća i dešifrira sam. Ta je adresa tajna — tko je ima, može ovom telefonu poslati obavijest.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Ovaj uređaj ima adresu; tvom matičnom poslužitelju treba pristupnik da do njega dođe.</translation>
+        <source>Push server</source>
+        <translation>Push poslužitelj</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Pristupnik push poslužitelja</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (javni)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Javni pristupnik UnifiedPusha</translation>
+        <source>Custom</source>
+        <translation>Prilagođeni</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Drugi</translation>
+        <source>None</source>
+        <translation>Nijedan</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Nije odabran</translation>
+        <source>Uses %1.</source>
+        <translation>Koristi %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, poslužitelj koji već ima adresu ovog uređaja.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Tvoj push poslužitelj nema pristupnik. Odaberi drugi.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Tvoj push poslužitelj nema Matrix pristupnik. Odaberi drugi.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Provjerava se nakon registracije. ntfy ga ima, Mozilla nema.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Pronalazi se kad je push uključen. ntfy poslužitelji ga imaju; Mozillina usluga nema.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Odaberi pristupnik da dovršiš uključivanje pusha.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Vodi ga projekt UnifiedPush. Vidi za koju je sobu svaka obavijest.</translation>
+        <source>Gateway URL</source>
+        <translation>URL pristupnika</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Pristupnik vidi za koju je sobu svaka obavijest.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrirano. Čeka se pristupnik.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Tvoj matični poslužitelj šalje Matrix pristupniku, koji prosljeđuje ovom uređaju. Odaberi jedan da uključiš push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrirano. Javlja se matičnom poslužitelju.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Adresa pristupnika</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Još nijedan; dok se jedan ne odabere, tvoj matični poslužitelj ne može doći do ovog uređaja.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nijedan. Matični poslužitelj još ne može doći do ovog uređaja.</translation>
     </message>
 </context>
 <context>
@@ -2007,8 +1999,8 @@
         <translation>Nova poruka</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Distributer push obavijesti prestao je isporučivati u xmatic. Ponovno uključite push obavijesti pod Račun.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push distributer je odbacio xmatic. Ponovno uključi push pod Račun.</translation>
     </message>
 </context>
 <context>

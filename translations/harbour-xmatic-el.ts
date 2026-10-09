@@ -1248,8 +1248,8 @@
         <translation>Δημοσκόπηση: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Η πύλη push πρέπει να είναι διεύθυνση https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Η πύλη πρέπει να είναι URL https.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Αυτή η συσκευή έχει διεύθυνση στην οποία μπορεί να προσεγγιστεί.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Αυτή η συσκευή έχει διεύθυνση· αναμονή για ενημέρωση του οικιακού σας διακομιστή.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Αναμονή για τον διανομέα.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Ο διακομιστής σου μαθαίνει μια διεύθυνση στην υπηρεσία push και στέλνει στην πύλη ένα αναγνωριστικό δωματίου και μηνύματος για κάθε ειδοποίηση. Κανένα κείμενο: το push μεταφέρει μόνο αναγνωριστικά και αυτή η συσκευή φέρνει και αποκρυπτογραφεί το μήνυμα μόνη της. Αυτή η διεύθυνση είναι μυστικό — όποιος την έχει μπορεί να στείλει ειδοποίηση σε αυτό το τηλέφωνο.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Αυτή η συσκευή έχει διεύθυνση· ο οικιακός διακομιστής σου χρειάζεται μια πύλη για να τη φτάσει.</translation>
+        <source>Push server</source>
+        <translation>Διακομιστής push</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Η πύλη του διακομιστή push</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (δημόσια)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Δημόσια πύλη UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Προσαρμοσμένη</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Άλλη</translation>
+        <source>None</source>
+        <translation>Καμία</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Δεν επιλέχθηκε</translation>
+        <source>Uses %1.</source>
+        <translation>Χρησιμοποιεί το %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, ο διακομιστής που έχει ήδη τη διεύθυνση αυτής της συσκευής.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Ο διακομιστής push σου δεν έχει πύλη. Διάλεξε άλλη.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Ο διακομιστής push σου δεν έχει πύλη Matrix. Διάλεξε άλλη.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Ελέγχεται μετά την εγγραφή. Το ntfy έχει, το Mozilla όχι.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Εντοπίζεται μόλις ενεργοποιηθεί το push. Οι διακομιστές ntfy έχουν· η υπηρεσία της Mozilla όχι.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Διάλεξε πύλη για να ολοκληρωθεί η ενεργοποίηση του push.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Τη διαχειρίζεται το έργο UnifiedPush. Βλέπει για ποιο δωμάτιο είναι κάθε ειδοποίηση.</translation>
+        <source>Gateway URL</source>
+        <translation>URL πύλης</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Η πύλη βλέπει για ποιο δωμάτιο είναι κάθε ειδοποίηση.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Εγγράφηκε. Αναμονή για πύλη.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Ο οικιακός διακομιστής σου στέλνει σε μια πύλη Matrix, που προωθεί σε αυτή τη συσκευή. Διάλεξε μία για να ενεργοποιηθεί το push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Εγγράφηκε. Ενημέρωση του οικείου διακομιστή.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Διεύθυνση πύλης</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Καμία ακόμη· μέχρι να επιλεγεί μία, ο οικιακός διακομιστής σου δεν μπορεί να φτάσει αυτή τη συσκευή.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Καμία. Ο οικείος διακομιστής δεν μπορεί ακόμη να φτάσει αυτή τη συσκευή.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Νέο μήνυμα</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Ο διανομέας push σταμάτησε να παραδίδει στο xmatic. Ενεργοποιήστε ξανά τις ειδοποιήσεις push από τον Λογαριασμό.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Ο διανομέας push απέρριψε το xmatic. Ενεργοποίησε ξανά το push στον Λογαριασμό.</translation>
     </message>
 </context>
 <context>
