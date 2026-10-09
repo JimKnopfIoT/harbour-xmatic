@@ -46,13 +46,50 @@ pub fn gateway_is_sound(gateway: &str) -> bool {
             .is_some_and(|scheme| scheme.eq_ignore_ascii_case("https://"))
 }
 
-/// The user's gateway where one is set, else the push server's own.
-pub fn gateway_for(user: &str, discovered: Option<&str>) -> Option<String> {
-    let user = user.trim();
-    if !user.is_empty() {
-        return gateway_is_sound(user).then(|| user.to_owned());
+/// The UnifiedPush project's gateway, used only where the user picked it.
+pub const PUBLIC_GATEWAY: &str = "https://matrix.gateway.unifiedpush.org/_matrix/push/v1/notify";
+
+/// Which gateway the user picked. Nothing registers before a pick.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub enum Gateway {
+    #[default]
+    Unset,
+    /// The push server's own, found by Leghorn.
+    Server,
+    Public,
+    Other(String),
+}
+
+impl Gateway {
+    pub fn parse(mode: &str, url: &str) -> Result<Self, &'static str> {
+        match mode {
+            "" => Ok(Self::Unset),
+            "server" => Ok(Self::Server),
+            "public" => Ok(Self::Public),
+            "other" if gateway_is_sound(url) => Ok(Self::Other(url.trim().to_owned())),
+            "other" => Err("the push gateway has to be an https address"),
+            _ => Err("unknown gateway choice"),
+        }
     }
-    discovered.filter(|gateway| gateway_is_sound(gateway)).map(str::to_owned)
+
+    pub fn mode(&self) -> &'static str {
+        match self {
+            Self::Unset => "",
+            Self::Server => "server",
+            Self::Public => "public",
+            Self::Other(_) => "other",
+        }
+    }
+
+    /// The gateway to register, given what the push server offered.
+    pub fn resolve(&self, discovered: Option<&str>) -> Option<String> {
+        match self {
+            Self::Unset => None,
+            Self::Server => discovered.filter(|gateway| gateway_is_sound(gateway)).map(str::to_owned),
+            Self::Public => Some(PUBLIC_GATEWAY.to_owned()),
+            Self::Other(url) => Some(url.clone()),
+        }
+    }
 }
 
 /// Room and event of a Matrix push; both null for a count-only or foreign push.
@@ -108,14 +145,26 @@ mod tests {
     }
 
     #[test]
-    fn the_user_s_gateway_wins() {
+    fn the_gateway_is_what_was_picked() {
         let found = "https://push.example.org/_matrix/push/v1/notify";
         let mine = "https://gateway.example.net/_matrix/push/v1/notify";
-        assert_eq!(gateway_for(mine, Some(found)).as_deref(), Some(mine));
-        assert_eq!(gateway_for("", Some(found)).as_deref(), Some(found));
-        assert_eq!(gateway_for("  ", None), None);
-        assert_eq!(gateway_for("http://gateway.example.net", Some(found)), None);
-        assert_eq!(gateway_for("", Some("http://push.example.org/notify")), None);
+        assert_eq!(Gateway::Unset.resolve(Some(found)), None);
+        assert_eq!(Gateway::Server.resolve(Some(found)).as_deref(), Some(found));
+        assert_eq!(Gateway::Server.resolve(None), None);
+        assert_eq!(Gateway::Server.resolve(Some("http://push.example.org/notify")), None);
+        assert_eq!(Gateway::Public.resolve(None).as_deref(), Some(PUBLIC_GATEWAY));
+        let other = Gateway::parse("other", mine).unwrap();
+        assert_eq!(other.resolve(Some(found)).as_deref(), Some(mine));
+    }
+
+    #[test]
+    fn a_pick_is_parsed_strictly() {
+        assert_eq!(Gateway::parse("", ""), Ok(Gateway::Unset));
+        assert_eq!(Gateway::parse("server", "ignored"), Ok(Gateway::Server));
+        assert!(Gateway::parse("other", "http://gateway.example.net").is_err());
+        assert!(Gateway::parse("other", "").is_err());
+        assert!(Gateway::parse("fallback", "").is_err());
+        assert_eq!(Gateway::parse("public", "").map(|pick| pick.mode()), Ok("public"));
     }
 
     #[test]

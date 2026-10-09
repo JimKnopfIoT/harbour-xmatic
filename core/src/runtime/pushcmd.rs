@@ -41,7 +41,7 @@ async fn running(state: &Arc<State>) -> Option<Arc<Leghorn>> {
     state.push.lock().await.clone()
 }
 
-fn user_gateway(state: &State) -> String {
+fn picked_gateway(state: &State) -> crate::push::Gateway {
     state
         .push_gateway
         .lock()
@@ -124,8 +124,7 @@ async fn push_sync(
         }
         return Ok(false);
     };
-    let Some(gateway) = crate::push::gateway_for(&user_gateway(state), pusher.gateway.as_deref())
-    else {
+    let Some(gateway) = picked_gateway(state).resolve(pusher.gateway.as_deref()) else {
         // A gateway the user took back sees nothing more.
         if state.push_registered.lock().await.take().is_some() {
             crate::push::clear_own_pushers(&client).await?;
@@ -187,7 +186,8 @@ async fn push_report(state: &Arc<State>, forced: Option<&str>, error: Option<Str
         .as_ref()
         .and_then(|endpoint| endpoint.matrix.clone());
     let server_gateway = pusher.as_ref().and_then(|pusher| pusher.gateway.clone());
-    let gateway = crate::push::gateway_for(&user_gateway(state), server_gateway.as_deref());
+    let picked = picked_gateway(state);
+    let gateway = picked.resolve(server_gateway.as_deref());
     let registered = match (
         &pusher,
         &gateway,
@@ -220,7 +220,13 @@ async fn push_report(state: &Arc<State>, forced: Option<&str>, error: Option<Str
         "enabled": endpoint.is_some(),
         "registered": registered,
         "gateway": gateway,
-        "serverGateway": server_gateway.is_some(),
+        "gatewayMode": picked.mode(),
+        // Null until a probe answered: unknown is not "none".
+        "serverGateway": match &pusher {
+            Some(pusher) if !pusher.provisional => json!(pusher.gateway.is_some()),
+            _ => Value::Null,
+        },
+        "serverGatewayUrl": server_gateway,
     });
     if let Some(error) = error {
         data["error"] = json!(error);
@@ -249,6 +255,10 @@ pub(super) async fn push_status(state: &Arc<State>, id: u64) {
 }
 
 async fn enable(state: &Arc<State>) -> Result<(), String> {
+    // Not even the distributor hears of xmatic before a gateway is picked.
+    if picked_gateway(state) == crate::push::Gateway::Unset {
+        return Err("choose a push gateway first".to_owned());
+    }
     let leghorn = push_connector(state).await?;
     push_report(state, Some("registering"), None).await;
     let mut enabled = leghorn.enable().await;
@@ -330,19 +340,18 @@ pub(super) async fn push_forget(state: &Arc<State>) {
     push_stop(state).await;
 }
 
-pub(super) async fn push_set_gateway(state: &Arc<State>, id: u64, gateway: String) {
-    let gateway = gateway.trim().to_owned();
-    if !gateway.is_empty() && !crate::push::gateway_is_sound(&gateway) {
-        state.sink.emit(reply_error(
-            id,
-            "the push gateway has to be an https address",
-        ));
-        return;
-    }
+pub(super) async fn push_set_gateway(state: &Arc<State>, id: u64, mode: String, gateway: String) {
+    let picked = match crate::push::Gateway::parse(&mode, &gateway) {
+        Ok(picked) => picked,
+        Err(error) => {
+            state.sink.emit(reply_error(id, error));
+            return;
+        }
+    };
     *state
         .push_gateway
         .lock()
-        .unwrap_or_else(|poisoned| poisoned.into_inner()) = gateway;
+        .unwrap_or_else(|poisoned| poisoned.into_inner()) = picked;
     if running(state).await.is_some() {
         let synced = match session_generation(state) {
             Some(generation) => push_sync(state, generation, None).await,

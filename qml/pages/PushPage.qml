@@ -15,7 +15,17 @@ Page {
     readonly property var distributors: pushStatus.distributors || []
     readonly property bool pushOn: matrix.pushEndpointReady
     readonly property string gateway: pushStatus.gateway || ""
-    readonly property string publicGateway: "https://matrix.gateway.unifiedpush.org/_matrix/push/v1/notify"
+    readonly property var gatewayModes: ["server", "public", "other"]
+    // "Other" picked in the list before an address was entered.
+    property bool choosingOther: false
+    readonly property string gatewayMode: choosingOther ? "other" : settings.pushGatewayMode
+    // true, false, or null while unknown: only a registered address can be asked.
+    readonly property var serverGateway: pushStatus.serverGateway === undefined
+                                         ? null : pushStatus.serverGateway
+
+    function host(url) {
+        return String(url).replace(/^https:\/\//i, "").split("/")[0]
+    }
 
     Component.onCompleted: matrix.refreshPushStatus()
 
@@ -60,13 +70,86 @@ Page {
                 text: qsTr("xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.")
             }
 
+            ComboBox {
+                id: gatewayBox
+
+                width: parent.width
+                label: qsTr("Gateway")
+                currentIndex: page.gatewayModes.indexOf(page.gatewayMode)
+                value: [qsTr("Push server's own"), qsTr("UnifiedPush public gateway"),
+                        qsTr("Other")][currentIndex] || qsTr("Not chosen")
+                description: {
+                    switch (page.gatewayMode) {
+                    case "server":
+                        if (page.serverGateway === true) {
+                            return qsTr("%1, the server that already holds this device's address.")
+                                .arg(page.host(page.pushStatus.serverGatewayUrl))
+                        }
+                        if (page.serverGateway === false) {
+                            return qsTr("Your push server has no Matrix gateway. Choose another one.")
+                        }
+                        return qsTr("Found once push is on. ntfy servers have one; the Mozilla service does not.")
+                    case "public":
+                        return qsTr("Run by the UnifiedPush project. It sees which room every notification is for.")
+                    case "other":
+                        return qsTr("It sees which room every notification is for.")
+                    }
+                    return qsTr("Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.")
+                }
+
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Push server's own")
+                        enabled: page.serverGateway !== false
+                        onClicked: {
+                            page.choosingOther = false
+                            matrix.setPushGateway("server")
+                        }
+                    }
+                    MenuItem {
+                        text: qsTr("UnifiedPush public gateway")
+                        onClicked: {
+                            page.choosingOther = false
+                            matrix.setPushGateway("public")
+                        }
+                    }
+                    MenuItem {
+                        text: qsTr("Other")
+                        onClicked: {
+                            page.choosingOther = settings.pushGatewayMode !== "other"
+                            gatewayField.forceActiveFocus()
+                        }
+                    }
+                }
+            }
+
+            TextField {
+                id: gatewayField
+
+                visible: page.gatewayMode === "other"
+                width: parent.width
+                text: settings.pushGateway
+                label: qsTr("Gateway address")
+                placeholderText: "https://example.org/_matrix/push/v1/notify"
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
+                EnterKey.enabled: /^https:\/\/./i.test(text.trim())
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                EnterKey.onClicked: {
+                    if (matrix.setPushGateway("other", text)) {
+                        page.choosingOther = false
+                        focus = false
+                    }
+                }
+            }
+
             TextSwitch {
                 text: qsTr("Receive push notifications")
                 checked: page.pushOn
                 automaticCheck: false
                 busy: page.pushState === "registering"
-                // Off must stay possible without a distributor.
-                enabled: page.pushOn || page.distributors.length > 0
+                // Off must stay possible without a distributor or a gateway.
+                enabled: page.pushOn || (page.distributors.length > 0
+                                         && settings.pushGatewayMode.length > 0)
                 onClicked: page.apply(!page.pushOn)
             }
 
@@ -105,53 +188,12 @@ Page {
             }
 
             SecurityRow {
-                visible: page.pushOn || page.gateway.length > 0
+                visible: page.pushOn
                 label: qsTr("Gateway")
                 level: page.gateway.length > 0 ? SecurityStatus.GREEN : SecurityStatus.RED
                 detail: page.gateway.length > 0
-                        ? page.gateway.replace(/^https:\/\//i, "").split("/")[0]
-                        : qsTr("Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.")
-            }
-
-            SectionHeader {
-                text: qsTr("Gateway")
-            }
-
-            Label {
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryColor
-                text: qsTr("A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server's own gateway, if it has one. The gateway sees which room every notification is for.")
-            }
-
-            TextField {
-                id: gatewayField
-
-                width: parent.width
-                text: settings.pushGateway
-                label: qsTr("Push gateway")
-                placeholderText: "https://example.org/_matrix/push/v1/notify"
-                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
-                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
-                EnterKey.onClicked: {
-                    if (matrix.setPushGateway(text)) {
-                        focus = false
-                    }
-                }
-            }
-
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                visible: page.pushOn && settings.pushGateway.length === 0
-                         && !page.pushStatus.serverGateway
-                text: qsTr("Use matrix.gateway.unifiedpush.org")
-                onClicked: {
-                    if (matrix.setPushGateway(page.publicGateway)) {
-                        gatewayField.text = page.publicGateway
-                    }
-                }
+                        ? page.host(page.gateway)
+                        : qsTr("None yet; until one is chosen your homeserver cannot reach this device.")
             }
 
             SectionHeader {
