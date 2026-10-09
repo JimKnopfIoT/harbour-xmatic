@@ -15,6 +15,7 @@ Page {
     readonly property var distributors: pushStatus.distributors || []
     readonly property bool pushOn: matrix.pushEndpointReady
     readonly property string gateway: pushStatus.gateway || ""
+    readonly property string publicGateway: "https://matrix.gateway.unifiedpush.org/_matrix/push/v1/notify"
 
     Component.onCompleted: matrix.refreshPushStatus()
 
@@ -90,6 +91,9 @@ Page {
                     if (page.pushStatus.registered) {
                         return qsTr("This device has an address to be reached at.")
                     }
+                    if (page.pushState === "needs-gateway") {
+                        return qsTr("This device has an address; your homeserver needs a gateway to reach it.")
+                    }
                     if (page.pushOn) {
                         return qsTr("This device has an address; waiting to tell your homeserver.")
                     }
@@ -101,10 +105,53 @@ Page {
             }
 
             SecurityRow {
-                visible: page.gateway.length > 0
+                visible: page.pushOn || page.gateway.length > 0
                 label: qsTr("Gateway")
-                level: SecurityStatus.GREEN
-                detail: page.gateway.replace(/^https?:\/\//, "").split("/")[0]
+                level: page.gateway.length > 0 ? SecurityStatus.GREEN : SecurityStatus.RED
+                detail: page.gateway.length > 0
+                        ? page.gateway.replace(/^https:\/\//i, "").split("/")[0]
+                        : qsTr("Your push server has no Matrix gateway. Enter one below; until then your homeserver cannot reach this device.")
+            }
+
+            SectionHeader {
+                text: qsTr("Gateway")
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryColor
+                text: qsTr("A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. Leave this empty to use your push server's own gateway, if it has one. The gateway sees which room every notification is for.")
+            }
+
+            TextField {
+                id: gatewayField
+
+                width: parent.width
+                text: settings.pushGateway
+                label: qsTr("Push gateway")
+                placeholderText: "https://example.org/_matrix/push/v1/notify"
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                EnterKey.onClicked: {
+                    if (matrix.setPushGateway(text)) {
+                        focus = false
+                    }
+                }
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: page.pushOn && settings.pushGateway.length === 0
+                         && !page.pushStatus.serverGateway
+                text: qsTr("Use matrix.gateway.unifiedpush.org")
+                onClicked: {
+                    if (matrix.setPushGateway(page.publicGateway)) {
+                        gatewayField.text = page.publicGateway
+                    }
+                }
             }
 
             SectionHeader {

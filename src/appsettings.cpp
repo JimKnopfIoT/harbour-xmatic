@@ -204,6 +204,24 @@ void AppSettings::setMessageLayout(const QString &layout)
     emit messageLayoutChanged();
 }
 
+QString AppSettings::pushGateway() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("push/gateway"), QString()).toString();
+}
+
+void AppSettings::setPushGateway(const QString &gateway)
+{
+    const QString trimmed = gateway.trimmed();
+    if (trimmed == pushGateway()) {
+        return;
+    }
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    // Not logged: it names whoever forwards the user's notifications.
+    store(settings, QStringLiteral("push/gateway"), trimmed, "the push gateway");
+    emit pushChanged();
+}
+
 bool AppSettings::voiceMessages() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

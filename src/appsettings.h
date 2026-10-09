@@ -50,6 +50,9 @@ class AppSettings : public QObject
     /// "auto", "on" or "off", and the thirds grid: the photo page's own choices.
     Q_PROPERTY(QString cameraFlash READ cameraFlash WRITE setCameraFlash NOTIFY cameraChanged)
     Q_PROPERTY(bool cameraGrid READ cameraGrid WRITE setCameraGrid NOTIFY cameraChanged)
+    /// The Matrix push gateway; empty for the push server's own.
+    Q_PROPERTY(QString pushGateway READ pushGateway WRITE setPushGateway
+               NOTIFY pushChanged)
     Q_PROPERTY(bool voiceMessages READ voiceMessages WRITE setVoiceMessages
                NOTIFY voiceMessagesChanged)
     /// Whether a long press on a voice message offers to convert it to text.
@@ -170,6 +173,8 @@ public:
 
     /// Whether the microphone sits next to the message field. On, but it is one
     /// hold away from a recording and not everybody wants that in reach.
+    QString pushGateway() const;
+    void setPushGateway(const QString &gateway);
     bool voiceMessages() const;
     void setVoiceMessages(bool enabled);
     bool voiceTranscripts() const;
@@ -223,6 +228,7 @@ signals:
     void locationSharingChanged();
     void locationMapsChanged();
     void cameraChanged();
+    void pushChanged();
     void voiceMessagesChanged();
     void voiceTranscriptsChanged();
     void hideKeyboardOnSendChanged();
