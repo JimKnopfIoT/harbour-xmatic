@@ -1186,10 +1186,6 @@
         <translation>فهرست‌های ذخیره‌شده اکنون خوانده نمی‌شوند.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>نخست یک دروازهٔ Push وارد کن.</translation>
-    </message>
-    <message>
         <source>Enter your recovery key first.</source>
         <translation>نخست کلید بازیابی‌ات را وارد کن.</translation>
     </message>
@@ -1918,6 +1914,10 @@
         <translation>این دستگاه نشانی‌ای برای دسترسی دارد.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>این دستگاه نشانی دارد؛ در انتظار اطلاع دادن به سرور خانگی شما.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>در انتظار توزیع‌کننده.</translation>
     </message>
@@ -1928,14 +1928,6 @@
     <message>
         <source>Gateway</source>
         <translation>دروازه</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>کارساز خانگی Matrix نمی‌تواند مستقیم با توزیع‌کنندهٔ Push سخن بگوید، پس به دروازه‌ای می‌فرستد که آن را هدایت می‌کند. پیش‌فرضی وجود ندارد: این تنها چیزی است که هیچ‌کس نمی‌تواند برایت حدس بزند.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>دروازهٔ Push</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1951,6 +1943,10 @@
     <message>
         <source>New message</source>
         <translation>پیام تازه</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>توزیع‌کننده پوش دیگر به xmatic تحویل نمی‌دهد. اعلان‌های پوش را دوباره از بخش حساب روشن کنید.</translation>
     </message>
 </context>
 <context>

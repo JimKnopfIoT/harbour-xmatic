@@ -1208,10 +1208,6 @@
         <translation>Η συνεδρία σου τελείωσε. Συνδέσου ξανά.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Δώσε πρώτα μια πύλη push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Νέο μήνυμα</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Αυτή η συσκευή έχει διεύθυνση στην οποία μπορεί να προσεγγιστεί.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Αυτή η συσκευή έχει διεύθυνση· αναμονή για ενημέρωση του οικιακού σας διακομιστή.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Αναμονή για τον διανομέα.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Πύλη</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Ένας διακομιστής Matrix δεν μπορεί να μιλήσει απευθείας σε διανομέα push, γι&apos; αυτό στέλνει σε μια πύλη που προωθεί. Δεν υπάρχει προεπιλογή: είναι το μόνο που κανείς δεν μπορεί να μαντέψει για σένα.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Πύλη push</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Νέο μήνυμα</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Ο διανομέας push σταμάτησε να παραδίδει στο xmatic. Ενεργοποιήστε ξανά τις ειδοποιήσεις push από τον Λογαριασμό.</translation>
     </message>
 </context>
 <context>

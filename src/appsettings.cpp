@@ -204,45 +204,6 @@ void AppSettings::setMessageLayout(const QString &layout)
     emit messageLayoutChanged();
 }
 
-bool AppSettings::pushEnabled() const
-{
-    QSettings settings(appSettingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("push/enabled"), false).toBool();
-}
-
-void AppSettings::setPushEnabled(bool enabled)
-{
-    if (enabled == pushEnabled()) {
-        return;
-    }
-    QSettings settings(writablePath(), QSettings::IniFormat);
-    store(settings, QStringLiteral("push/enabled"), enabled,
-          "the push notification setting");
-    if (settings.status() == QSettings::NoError) {
-        qInfo("xmatic: push notifications %s", enabled ? "on" : "off");
-    }
-    emit pushChanged();
-}
-
-QString AppSettings::pushGateway() const
-{
-    QSettings settings(appSettingsPath(), QSettings::IniFormat);
-    return settings.value(QStringLiteral("push/gateway"), QString()).toString();
-}
-
-void AppSettings::setPushGateway(const QString &gateway)
-{
-    const QString trimmed = gateway.trimmed();
-    if (trimmed == pushGateway()) {
-        return;
-    }
-    QSettings settings(writablePath(), QSettings::IniFormat);
-    // The address itself stays out of the journal: it names whoever the user
-    // trusts to forward their notifications, which is nobody else's business.
-    store(settings, QStringLiteral("push/gateway"), trimmed, "the push gateway");
-    emit pushChanged();
-}
-
 bool AppSettings::voiceMessages() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

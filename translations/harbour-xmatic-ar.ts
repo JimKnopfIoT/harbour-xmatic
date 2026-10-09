@@ -1196,10 +1196,6 @@
         <translation>تعذّرت قراءة القوائم المخزَّنة الآن.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>أدخل بوابة إشعارات أولًا.</translation>
-    </message>
-    <message>
         <source>Enter your recovery key first.</source>
         <translation>أدخل مفتاح استردادك أولًا.</translation>
     </message>
@@ -1933,6 +1929,10 @@
         <translation>لهذا الجهاز عنوان يمكن الوصول إليه عبره.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>لهذا الجهاز عنوان؛ بانتظار إبلاغ خادمك المنزلي.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>في انتظار الموزّع.</translation>
     </message>
@@ -1943,14 +1943,6 @@
     <message>
         <source>Gateway</source>
         <translation>البوابة</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>لا يستطيع خادم Matrix المنزلي مخاطبة موزّع الإشعارات مباشرة، فيرسل إلى بوابة تعيد التوجيه. لا قيمة افتراضية: هذا هو الشيء الوحيد الذي لا يستطيع أحد تخمينه بدلًا عنك.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>بوابة الإشعارات</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1966,6 +1958,10 @@
     <message>
         <source>New message</source>
         <translation>رسالة جديدة</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>توقف موزّع الإشعارات الفورية عن التسليم إلى xmatic. فعّل الإشعارات الفورية مجددًا من الحساب.</translation>
     </message>
 </context>
 <context>

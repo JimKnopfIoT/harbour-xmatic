@@ -1208,10 +1208,6 @@
         <translation>Istuntosi päättyi. Kirjaudu uudelleen.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Anna ensin push-yhdyskäytävä.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Uusi viesti</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Tällä laitteella on osoite, josta se tavoitetaan.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Tällä laitteella on osoite; odotetaan sen kertomista kotipalvelimellesi.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Odotetaan jakelijaa.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Yhdyskäytävä</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix-kotipalvelin ei voi puhua push-jakelijalle suoraan, joten se lähettää yhdyskäytävälle, joka välittää edelleen. Oletusarvoa ei ole: se on ainoa asia, jota kukaan ei voi arvata puolestasi.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-yhdyskäytävä</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Uusi viesti</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Push-jakelija lopetti toimituksen xmaticille. Ota push-ilmoitukset uudelleen käyttöön kohdassa Tili.</translation>
     </message>
 </context>
 <context>

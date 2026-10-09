@@ -1210,10 +1210,6 @@
         <translation>Tá do sheisiún thart. Logáil isteach arís.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Cuir geata brú isteach ar dtús.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Teachtaireacht nua</translation>
     </message>
@@ -1924,6 +1920,10 @@
         <translation>Tá seoladh ag an ngléas seo ar féidir teacht air.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Tá seoladh ag an ngléas seo; ag fanacht lena insint do do fhreastalaí baile.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Ag fanacht leis an dáileoir.</translation>
     </message>
@@ -1934,14 +1934,6 @@
     <message>
         <source>Gateway</source>
         <translation>Geata</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Ní féidir le freastalaí Matrix labhairt go díreach le dáileoir brú, mar sin seolann sé chuig geata a chuireann ar aghaidh é. Níl aon réamhshocrú ann: sin an t-aon rud nach féidir le duine ar bith a thomhas duit.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Geata brú</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1957,6 +1949,10 @@
     <message>
         <source>New message</source>
         <translation>Teachtaireacht nua</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Stop an dáileoir brú ag seachadadh chuig xmatic. Cas fógraí brú air arís faoi Cuntas.</translation>
     </message>
 </context>
 <context>

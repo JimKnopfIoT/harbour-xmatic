@@ -456,15 +456,14 @@ pub enum Command {
     #[serde(rename = "push.status")]
     PushStatus { id: u64 },
 
-    /// Register with a distributor and hand the endpoint to the homeserver.
-    /// Nothing here can be guessed: the endpoint is the distributor's, the gateway
+    /// Register with a distributor and set the pusher.
     #[serde(rename = "push.enable")]
-    PushEnable { id: u64, gateway: String },
+    PushEnable { id: u64 },
 
     /// Give the registration back and delete the pusher. Both halves, because
     /// a pusher left behind keeps a dead endpoint on the server.
     #[serde(rename = "push.disable")]
-    PushDisable { id: u64, endpoint: String },
+    PushDisable { id: u64 },
 
     /// Fetches the message a push named and answers with what a banner needs: the
     /// push carries only a room and an event id.
@@ -475,17 +474,6 @@ pub enum Command {
         room_id: String,
         #[serde(rename = "eventId")]
         event_id: String,
-    },
-
-    /// Hands the endpoint to the homeserver, sent by the front end because the
-    /// gateway is a setting - and the two halves are worth seeing separately.
-    #[serde(rename = "push.pusher")]
-    PushPusher {
-        id: u64,
-        endpoint: String,
-        p256dh: String,
-        auth: String,
-        gateway: String,
     },
 
     /// Unlock the key backup with a recovery key or passphrase.
@@ -1098,7 +1086,6 @@ impl Command {
             | Command::PushStatus { id }
             | Command::PushEnable { id, .. }
             | Command::PushDisable { id, .. }
-            | Command::PushPusher { id, .. }
             | Command::PushNotify { id, .. }
             | Command::RoomListMore { id }
             | Command::RoomListStop { id }

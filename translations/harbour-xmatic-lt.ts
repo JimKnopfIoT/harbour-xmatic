@@ -1210,10 +1210,6 @@
         <translation>Tavo seansas baigėsi. Prisijunk iš naujo.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Pirma nurodyk push sietuvą.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nauja žinutė</translation>
     </message>
@@ -1924,6 +1920,10 @@
         <translation>Šis įrenginys turi adresą, kuriuo pasiekiamas.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Šis įrenginys turi adresą; laukiama, kol jis bus praneštas jūsų namų serveriui.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Laukiama platintojo.</translation>
     </message>
@@ -1934,14 +1934,6 @@
     <message>
         <source>Gateway</source>
         <translation>Tinklų sietuvas</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix serveris negali kalbėti su push platintoju tiesiogiai, tad siunčia sietuvui, kuris persiunčia toliau. Numatytosios reikšmės nėra: tai vienintelis dalykas, kurio niekas už tave neatspės.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push sietuvas</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1957,6 +1949,10 @@
     <message>
         <source>New message</source>
         <translation>Nauja žinutė</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Push platintojas nustojo pristatyti į xmatic. Vėl įjunkite push pranešimus skiltyje Paskyra.</translation>
     </message>
 </context>
 <context>

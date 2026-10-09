@@ -1208,10 +1208,6 @@
         <translation>Сесията ти приключи. Влез отново.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Първо въведи push шлюз.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Ново съобщение</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Това устройство има адрес, на който може да бъде достигнато.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Това устройство има адрес; чака се да бъде съобщен на вашия домашен сървър.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Изчакване на разпространителя.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Шлюз</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix сървърът не може да говори директно с push разпространител, затова праща на шлюз, който препраща. Няма стойност по подразбиране: това е единственото, което никой не може да отгатне вместо теб.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push шлюз</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Ново съобщение</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Разпространителят на push известия спря да доставя до xmatic. Включете отново push известията от „Акаунт“.</translation>
     </message>
 </context>
 <context>

@@ -112,8 +112,47 @@ impl<S: Subscriber> Layer<S> for SdkLog {
     }
 }
 
+/// Leghorn logs through `log`, not `tracing`.
+struct PushLog {
+    sink: Arc<Sink>,
+    seen: Mutex<HashSet<String>>,
+}
+
+impl log::Log for PushLog {
+    fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {
+        metadata.level() <= log::Level::Info && metadata.target().starts_with("leghorn")
+    }
+
+    fn log(&self, record: &log::Record<'_>) {
+        if !self.enabled(record.metadata()) {
+            return;
+        }
+        let text = scrub_ids(&record.args().to_string());
+        {
+            let Ok(mut seen) = self.seen.lock() else { return };
+            if seen.len() >= MAX_LINES || !seen.insert(text.clone()) {
+                return;
+            }
+        }
+        let level = if record.level() == log::Level::Error { "error" } else { "warn" };
+        self.sink.emit(event(
+            "core.log",
+            json!({ "level": level, "target": record.target(), "message": text }),
+        ));
+    }
+
+    fn flush(&self) {}
+}
+
 /// Once per process: a second core keeps the first one's sink.
 pub fn install(sink: Arc<Sink>) {
+    let push = PushLog {
+        sink: sink.clone(),
+        seen: Mutex::new(HashSet::new()),
+    };
+    if log::set_boxed_logger(Box::new(push)).is_ok() {
+        log::set_max_level(log::LevelFilter::Info);
+    }
     let layer = SdkLog {
         sink,
         seen: Mutex::new(HashSet::new()),

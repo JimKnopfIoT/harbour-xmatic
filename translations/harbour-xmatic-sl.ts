@@ -1212,10 +1212,6 @@
         <translation>Tvoja seja se je končala. Prijavi se znova.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Najprej vnesi potisni prehod.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Novo sporočilo</translation>
     </message>
@@ -1927,6 +1923,10 @@
         <translation>Ta naprava ima naslov, na katerem je dosegljiva.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Ta naprava ima naslov; čaka, da ga sporoči vašemu domačemu strežniku.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Čakanje na razpečevalnika.</translation>
     </message>
@@ -1937,14 +1937,6 @@
     <message>
         <source>Gateway</source>
         <translation>Prehod</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Strežnik Matrix ne more govoriti neposredno z razpečevalnikom, zato pošlje prehodu, ki posreduje naprej. Privzete vrednosti ni: to je edino, česar nihče ne more uganiti namesto tebe.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Potisni prehod</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1960,6 +1952,10 @@
     <message>
         <source>New message</source>
         <translation>Novo sporočilo</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Distributer potisnih obvestil je prenehal dostavljati v xmatic. Potisna obvestila znova vklopite pod Račun.</translation>
     </message>
 </context>
 <context>

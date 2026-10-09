@@ -215,14 +215,25 @@ public:
     /// Whether a push has arrived in this process at all. The woken process
     /// gives up on its wait by this, not by a timer alone.
     bool pushMessageSeen() const { return m_pushMessageSeen; }
-    bool pushEndpointReady() const { return !m_pushEndpoint.isEmpty(); }
+    bool pushEndpointReady() const
+    {
+        return m_pushStatus.value(QStringLiteral("enabled")).toBool();
+    }
 
     /// Asks the device what distributors it has. Changes nothing.
     Q_INVOKABLE void refreshPushStatus();
 
-    /// Registers with a distributor and, once it answers, hands the endpoint
-    /// to the homeserver with `gateway` as the push gateway.
-    Q_INVOKABLE void enablePush(const QString &gateway);
+    Q_INVOKABLE void enablePush();
+
+    Q_INVOKABLE void closePushBanners();
+
+    /// The room a push banner's action key stands for, or "".
+    Q_INVOKABLE QString pushBannerRoom(const QString &key);
+
+    void setAnnouncePushes(bool announce) { m_announcePushes = announce; }
+
+    /// Ends in one `pushNotificationReady` or `pushNotificationFailed`.
+    void fetchPush(const QString &roomId, const QString &eventId);
 
     /// Gives the registration back and removes the pusher.
     Q_INVOKABLE void disablePush();
@@ -757,6 +768,7 @@ signals:
     /// A push was turned into something a banner can show: `roomName`, `body`,
     /// `noisy`. Used by the woken process, which has no QML to raise it from.
     void pushNotificationReady(const QVariantMap &notification);
+
     /// And why it could not be. `filtered out` and `redacted` are answers,
     /// not failures — the push rules said this one is not to be shown.
     void pushNotificationFailed(const QString &reason);
@@ -1007,17 +1019,19 @@ private:
     QString m_lastError;
     QVariantList m_errorLog;
     QVariantMap m_pushStatus;
-    /// Held only to hand to the homeserver and to delete the pusher by. Never
-    /// shown, never logged.
-    QString m_pushEndpoint;
-    QString m_pushP256dh;
-    QString m_pushAuth;
-    /// The gateway the user configured, kept for the moment the endpoint
-    /// arrives — the two halves are minutes apart when a distributor is slow.
-    QString m_pushGateway;
     bool m_pushMessageSeen = false;
-    /// The `push.notify` in flight, so its answer can be told from any other.
-    quint64 m_pushNotifyRequest = 0;
+    bool m_announcePushes = false;
+    /// The woken process: no recorder, no TURN fetch, no push connector.
+    bool m_headless = false;
+    /// Last banner per room from each source, on `m_uptime`.
+    QHash<QString, qint64> m_pushBannerAt;
+    QHash<QString, qint64> m_syncBannerAt;
+    /// Muted or low-priority rooms.
+    QSet<QString> m_quietRooms;
+    /// Push banner action keys to room ids, kept after the banners are closed.
+    QHash<QString, QString> m_pushBannerRooms;
+    void announcePush(const QVariantMap &notification);
+    QSet<quint64> m_pushNotifyRequests;
     /// Enough for a session's worth of trouble, small enough to stay in memory
     /// without a thought.
     static const int ErrorLogSize = 100;

@@ -1,4 +1,4 @@
-//! xmatic-core behind a tiny C ABI: six functions, JSON in, JSON out.
+//! xmatic-core behind a tiny C ABI: eight functions, JSON in, JSON out.
 //! Everything else is a message type, not a symbol - see `protocol.rs`.
 
 // The dispatcher's futures nest deeply — every command arm contributes its own
@@ -68,6 +68,14 @@ struct CoreConfig {
     /// unavailable; never logged, wiped after decoding.
     #[serde(rename = "storeKey", default)]
     store_key: Option<String>,
+
+    /// Off in the woken process, which used `xm_push_wake`.
+    #[serde(rename = "pushConnector", default = "default_true")]
+    push_connector: bool,
+}
+
+fn default_true() -> bool {
+    true
 }
 
 /// Hands out a heap-allocated C string, or NULL. Every pointer crossing the
@@ -96,6 +104,22 @@ pub extern "C" fn xm_version() -> *mut c_char {
         into_c_string(format!("xmatic-core {}", env!("CARGO_PKG_VERSION")))
     }))
     .unwrap_or(std::ptr::null_mut())
+}
+
+/// Call first in `main`, before any thread exists.
+#[no_mangle]
+pub extern "C" fn xm_push_prelude() {
+    let _ = catch_unwind(push::prelude);
+}
+
+/// Claims the connector name and collects pushes until idle. Blocks for seconds.
+/// Returns JSON `{messages: [{roomId, eventId}], newEndpoint, unregistered}`;
+/// free with `xm_string_free`.
+#[no_mangle]
+pub extern "C" fn xm_push_wake() -> *mut c_char {
+    catch_unwind(push::run_wake)
+        .map(|wake| into_c_string(wake.to_string()))
+        .unwrap_or(std::ptr::null_mut())
 }
 
 /// Creates a core instance from a config object with a `dataDir`. NULL on a
@@ -129,7 +153,8 @@ pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore 
 
         let sink = Arc::new(Sink::new());
         sdklog::install(sink.clone());
-        let commands = runtime::spawn(&runtime, paths, store_key, sink.clone());
+        let commands =
+            runtime::spawn(&runtime, paths, store_key, config.push_connector, sink.clone());
 
         Some(Box::into_raw(Box::new(XmCore {
             runtime,

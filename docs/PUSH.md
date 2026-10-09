@@ -24,43 +24,28 @@ this feature cannot be switched on at all, and the page says so.
 
 ## What you need
 
-1. **A UnifiedPush distributor for Sailfish OS.** At the time of writing the
-   one that exists is [Foghorn](https://git.agnos.is/projectmoon/foghorn), which
-   uses the Mozilla Push Service. Install it and start its service.
-2. **A Matrix push gateway.** A Matrix homeserver cannot talk to a push
-   distributor directly: it speaks the Matrix push protocol, and the
-   distributor speaks Web Push. Something in between has to translate.
+**A UnifiedPush distributor for Sailfish OS.** At the time of writing the one
+that exists is [Foghorn](https://git.agnos.is/projectmoon/foghorn). Install it,
+start its service, and **connect it to an [ntfy](https://ntfy.sh) server** in
+its settings - the public one or your own.
 
-   There is no default for this in xmatic and there cannot be one. The gateway
-   sees a room and message identifier for every notification you get, so whose
-   gateway you use is a decision only you can make.
+That is all. There is nothing to enter in xmatic.
 
-### A note on the gateway, as of this writing
+### The gateway, and why there is nothing to set
 
-The usual translator is
-[common-proxies](https://codeberg.org/UnifiedPush/common-proxies), which is
-what runs behind the public `matrix.gateway.unifiedpush.org`. Its Matrix
-gateway forwards the homeserver's notification to the distributor's endpoint
-**without setting a `TTL` or a `Content-Encoding` header**.
+A Matrix homeserver cannot push to your phone's address directly: it posts to
+a *Matrix push gateway*, which forwards to the address. xmatic uses
+[Leghorn](https://git.agnos.is/projectmoon/foghorn/src/branch/master/leghorn),
+Foghorn's own connector library, and Leghorn finds the gateway the way Element
+does:
 
-A Web Push service requires both. Measured against a real Mozilla endpoint:
+- It asks the push server behind your address whether it is a Matrix gateway
+  itself. **ntfy is**, so with Foghorn on ntfy the server that holds your
+  address is also the gateway, and no third party is added.
+- Otherwise - Foghorn on the Mozilla Push Service, its default - it uses the
+  public gateway of the UnifiedPush project, `matrix.gateway.unifiedpush.org`.
 
-| what is sent | answer |
-|---|---|
-| body only — what the Matrix gateway sends | `400 Missing TTL value` |
-| `TTL` alone | `400 Missing Content-Encoding header` |
-| `Content-Encoding` alone | `400 Missing TTL value` |
-| both, body unencrypted | `201` |
-
-So with a Mozilla-backed distributor, that gateway cannot deliver. The same
-project's *generic* gateway sets both headers and works. Until this is fixed
-upstream, a gateway you run yourself with those two headers added is the way
-through. Nothing in xmatic can work around it — the headers are set by whoever
-runs the gateway.
-
-This is also why nothing is encrypted end-to-end on that hop: the push service
-validates those headers and relays the body opaquely, and no component in that
-chain encrypts. Which brings us to the part that matters.
+Account › Push notifications shows which one is in use.
 
 ## What leaves your device when this is on
 
@@ -69,16 +54,20 @@ notification carries a room identifier and a message identifier and nothing
 else. The text is fetched by your phone, from your homeserver, and decrypted
 here with keys that never leave.
 
-**But metadata does, to two parties that knew nothing before:**
+**But metadata does, to parties that knew nothing before:**
 
 - **The gateway** learns your push address and, for every notification, which
   room and which message, at what time. Over a week that is an activity
   profile: this account, these rooms, these hours.
-- **The push service** (Mozilla, with Foghorn) sees your push address and the
-  bytes passing through. Because that body travels unencrypted today, it sees
-  the same room and message identifiers.
+- **The push service** (your ntfy server, or Mozilla) sees your push address
+  and the bytes passing through. Matrix gateways send that body unencrypted,
+  so it sees the same room and message identifiers.
 
-Neither sees a word you wrote. Both see when and where you are active.
+With Foghorn on ntfy those two are one server - your own, if you run it. On
+Mozilla they are two, and the gateway is the UnifiedPush project's.
+
+None of them sees a word you wrote. All of them see when and where you are
+active.
 
 **Your push address is a bearer secret.** Anyone who holds it can send a
 notification to your phone — as often as they like. They cannot forge a
@@ -126,7 +115,10 @@ device it was made for is a secret pointing at a stranger.
 This is new and will need field reports. What is built:
 
 - finding a distributor, registering with it, receiving the address
-- registering and removing the pusher on the homeserver
+- finding the Matrix gateway for that address
+- registering and removing the pusher on the homeserver, and replacing it when
+  the distributor moves the address
+- re-registering with the distributor at every start
 - receiving a push while the app runs
 - being woken by a push while the app is closed and raising a banner that
   says "New message" (no store is opened, nothing is fetched)
@@ -134,7 +126,6 @@ This is new and will need field reports. What is built:
 What is not:
 
 - choosing between several distributors — the first one found is used
-- re-registering by itself when a distributor is reinstalled
 
 If it does not work for you, Account › Error log holds what failed, with
 identifiers already removed, and can be copied out as it stands.

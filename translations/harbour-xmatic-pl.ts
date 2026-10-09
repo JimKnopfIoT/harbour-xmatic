@@ -1210,10 +1210,6 @@
         <translation>Twoja sesja się zakończyła. Zaloguj się ponownie.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Najpierw podaj bramę push.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Nowa wiadomość</translation>
     </message>
@@ -1924,6 +1920,10 @@
         <translation>To urządzenie ma adres, pod którym jest osiągalne.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>To urządzenie ma adres; czeka na przekazanie go twojemu serwerowi domowemu.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Czekanie na dystrybutora.</translation>
     </message>
@@ -1934,14 +1934,6 @@
     <message>
         <source>Gateway</source>
         <translation>Brama</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Serwer Matrix nie może rozmawiać z dystrybutorem push bezpośrednio, więc wysyła do bramy, która przekazuje dalej. Nie ma wartości domyślnej: to jedyna rzecz, której nikt za ciebie nie zgadnie.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Brama push</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1957,6 +1949,10 @@
     <message>
         <source>New message</source>
         <translation>Nowa wiadomość</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Dystrybutor push przestał dostarczać do xmatic. Włącz ponownie powiadomienia push w sekcji Konto.</translation>
     </message>
 </context>
 <context>

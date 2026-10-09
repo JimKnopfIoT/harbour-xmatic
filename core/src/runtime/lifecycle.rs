@@ -642,6 +642,17 @@ fn watch_session(
 ) -> tokio::task::JoinHandle<()> {
     let state = state.clone();
     let client = client.clone();
+    {
+        let state = state.clone();
+        let client = client.clone();
+        tokio::spawn(async move {
+            match super::pushcmd::push_sync(&state, Some(client), None).await {
+                Ok(false) => {}
+                Ok(true) => super::pushcmd::push_report(&state, None, None).await,
+                Err(error) => super::pushcmd::push_report(&state, Some("error"), Some(error)).await,
+            }
+        });
+    }
     let mut changes = client.subscribe_to_session_changes();
     tokio::spawn(async move {
         loop {
@@ -847,9 +858,10 @@ pub(super) async fn logout(state: &Arc<State>, id: u64) {
     }
     // And the registration itself, so the distributor stops pushing to a device
     // that no longer has an account. The file goes with `reset_store` below.
-    if let Some(handle) = state.push.lock().await.as_ref() {
-        handle.disable();
+    if let Some(Ok(leghorn)) = state.push.get() {
+        let _ = tokio::time::timeout(std::time::Duration::from_secs(5), leghorn.disable()).await;
     }
+    *state.push_registered.lock().await = None;
     session::forget(&state.paths.session_file);
     // The lists that name people belong to the account that is leaving.
     session::forget(&state.paths.private_file);

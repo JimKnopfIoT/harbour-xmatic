@@ -1208,10 +1208,6 @@
         <translation>Økten din er avsluttet. Logg inn på nytt.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Oppgi først en push-gateway.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Ny melding</translation>
     </message>
@@ -1921,6 +1917,10 @@
         <translation>Denne enheten har en adresse den kan nås på.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Denne enheten har en adresse; venter på å gi den til hjemmeserveren din.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Venter på distributøren.</translation>
     </message>
@@ -1931,14 +1931,6 @@
     <message>
         <source>Gateway</source>
         <translation>Gateway</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>En Matrix-hjemmetjener kan ikke snakke direkte med en push-distributør, så den sender til en gateway som videresender. Det finnes ingen standardverdi: det er det eneste ingen kan gjette for deg.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push-gateway</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1954,6 +1946,10 @@
     <message>
         <source>New message</source>
         <translation>Ny melding</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Push-distributøren sluttet å levere til xmatic. Slå på push-varsler igjen under Konto.</translation>
     </message>
 </context>
 <context>

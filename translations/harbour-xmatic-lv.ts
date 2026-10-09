@@ -1210,10 +1210,6 @@
         <translation>Tava sesija ir beigusies. Piesakies vēlreiz.</translation>
     </message>
     <message>
-        <source>Enter a push gateway first.</source>
-        <translation>Vispirms ievadi push vārteju.</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation>Jauna ziņa</translation>
     </message>
@@ -1924,6 +1920,10 @@
         <translation>Šai ierīcei ir adrese, kurā tā ir sasniedzama.</translation>
     </message>
     <message>
+        <source>This device has an address; waiting to tell your homeserver.</source>
+        <translation>Šai ierīcei ir adrese; gaida, lai to paziņotu jūsu mājas serverim.</translation>
+    </message>
+    <message>
         <source>Waiting for the distributor.</source>
         <translation>Gaida izplatītāju.</translation>
     </message>
@@ -1934,14 +1934,6 @@
     <message>
         <source>Gateway</source>
         <translation>Vārteja</translation>
-    </message>
-    <message>
-        <source>A Matrix homeserver cannot talk to a push distributor directly, so it posts to a gateway that forwards. There is no default: it is the one thing nobody can guess for you.</source>
-        <translation>Matrix serveris nevar runāt ar push izplatītāju tieši, tāpēc sūta vārtejai, kas pārsūta tālāk. Noklusējuma vērtības nav: tā ir vienīgā lieta, ko neviens tavā vietā nevar uzminēt.</translation>
-    </message>
-    <message>
-        <source>Push gateway</source>
-        <translation>Push vārteja</translation>
     </message>
     <message>
         <source>What leaves this device</source>
@@ -1957,6 +1949,10 @@
     <message>
         <source>New message</source>
         <translation>Jauna ziņa</translation>
+    </message>
+    <message>
+        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
+        <translation>Push izplatītājs pārtrauca piegādi uz xmatic. Atkal ieslēdziet push paziņojumus sadaļā Konts.</translation>
     </message>
 </context>
 <context>
