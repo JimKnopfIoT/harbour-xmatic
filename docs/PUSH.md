@@ -94,7 +94,8 @@ is bound to the device lock. The woken process only takes it if Secrets hands
 it over without asking.
 
 After a restart, until you unlock the phone, a push can't be read. You get a
-"New message" banner instead.
+"New message" banner instead. A new address the distributor hands out in that
+time reaches your homeserver at the next app start.
 
 ## Turning it off
 
@@ -102,10 +103,9 @@ Account › Push notifications, switch off. xmatic removes the pusher from your
 homeserver, unregisters from the distributor and deletes the stored address
 and keys.
 
-If your homeserver is unreachable at that moment, the pusher may stay behind
-and the server will keep posting to an address that no longer exists. That
-attempt shows up in Account › Error log. Switching off again once you are
-online, or signing out, clears it.
+If your homeserver is unreachable at that moment, the pusher stays behind for
+now and the attempt shows up in Account › Error log. xmatic keeps a note of it
+and removes it at the next start with a session; signing out clears it too.
 
 Signing out does the same, and also deletes the list of rooms that had a
 banner.
