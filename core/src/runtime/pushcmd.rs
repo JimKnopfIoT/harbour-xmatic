@@ -62,14 +62,16 @@ fn session_generation(state: &State) -> Option<u64> {
     (slot.phase == Phase::Session).then_some(slot.generation)
 }
 
-/// Whether the old connector's push.json held a registration. Read once.
-fn take_legacy(state: &State) -> bool {
+/// Whether the old connector's push.json held a registration. One without is removed.
+fn legacy_on(state: &State) -> bool {
     let legacy = &state.paths.push_file;
     if !legacy.exists() {
         return false;
     }
     let was_on = crate::push::legacy_enabled(legacy);
-    let _ = std::fs::remove_file(legacy);
+    if !was_on {
+        let _ = std::fs::remove_file(legacy);
+    }
     was_on
 }
 
@@ -232,11 +234,16 @@ async fn push_report(state: &Arc<State>, forced: Option<&str>, error: Option<Str
     state.sink.emit(event("push.state", data));
 }
 
-/// Reports push state. Starts the connector only if push is on.
-pub(super) async fn push_status(state: &Arc<State>, id: u64) {
-    if take_legacy(state) {
-        if let Err(error) = enable(state).await {
-            push_report(state, Some("error"), Some(error)).await;
+/// Reports push state. Starts the connector only if push is on; `quiet` leaves
+/// the bus alone while it is off.
+pub(super) async fn push_status(state: &Arc<State>, id: u64, quiet: bool) {
+    if legacy_on(state) {
+        // Kept until push is on again, so a failed start is tried at the next one.
+        match enable(state).await {
+            Ok(()) => {
+                let _ = std::fs::remove_file(&state.paths.push_file);
+            }
+            Err(error) => push_report(state, Some("error"), Some(error)).await,
         }
     } else if leghorn::enabled(&PUSH) {
         if let Err(error) = push_connector(state).await {
@@ -244,8 +251,13 @@ pub(super) async fn push_status(state: &Arc<State>, id: u64) {
             state.sink.emit(reply_ok(id, json!({ "asked": true })));
             return;
         }
-        push_report(state, None, None).await;
-    } else {
+        // The session may have started before the connector did.
+        let synced = match session_generation(state) {
+            Some(generation) => push_sync(state, generation, None).await,
+            None => Ok(false),
+        };
+        push_report(state, None, synced.err()).await;
+    } else if !quiet {
         push_report(state, None, None).await;
     }
     state.sink.emit(reply_ok(id, json!({ "asked": true })));
@@ -310,18 +322,32 @@ pub(super) async fn push_disable(state: &Arc<State>, id: u64) {
 /// Pusher, distributor registration and Leghorn's state, then the name.
 async fn drop_registration(state: &Arc<State>) -> Option<String> {
     let mut failure = None;
+    let mut cleared = false;
     {
         let _serial = state.push_sync.lock().await;
         if let Some(client) = state.client().await {
-            failure = crate::push::clear_own_pushers(&client).await.err();
+            match crate::push::clear_own_pushers(&client).await {
+                Ok(()) => cleared = true,
+                Err(error) => failure = Some(error),
+            }
         }
         *state.push_registered.lock().await = None;
     }
-    let forgotten = match running(state).await {
-        Some(leghorn) => leghorn.forget().await,
-        None => leghorn::forget_stored(&PUSH).await,
+    // A pusher still on the server keeps its record, for the next session to remove.
+    let dropped = match (cleared, running(state).await) {
+        (true, Some(leghorn)) => leghorn.forget().await,
+        (true, None) => leghorn::forget_stored(&PUSH).await,
+        (false, Some(leghorn)) => leghorn.disable().await,
+        (false, None) if leghorn::enabled(&PUSH) => match push_connector(state).await {
+            Ok(leghorn) => leghorn.disable().await,
+            Err(error) => {
+                failure = Some(error);
+                Ok(())
+            }
+        },
+        (false, None) => Ok(()),
     };
-    if let Err(error) = forgotten {
+    if let Err(error) = dropped {
         failure = Some(crate::text::scrub_ids(&error.to_string()));
     }
     push_stop(state).await;
@@ -411,6 +437,10 @@ async fn notification(state: &Arc<State>, room_id: &str, event_id: &str) -> Resu
 /// The woken process: holds the connector name until the pushes are handled.
 /// `push.yield` ends it.
 pub(super) async fn push_wake(state: &Arc<State>, id: u64) {
+    if !leghorn::enabled(&PUSH) {
+        state.sink.emit(reply_ok(id, json!({ "yielded": false })));
+        return;
+    }
     let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
     let holds = Holds::default();
     let (jobs, mut received) = tokio::sync::mpsc::unbounded_channel();
@@ -444,7 +474,13 @@ pub(super) async fn push_wake(state: &Arc<State>, id: u64) {
         task.abort();
     }
     let outcome = task.await;
-    lifecycle::close_session(state).await;
+    if state.push_yielded.load(std::sync::atomic::Ordering::SeqCst) {
+        // A refreshed token waiting for the gate is saved; a restore holding it refreshes none.
+        let gate = state.session_gate.lock();
+        let _ = tokio::time::timeout(std::time::Duration::from_secs(1), gate).await;
+    } else {
+        lifecycle::close_session(state).await;
+    }
     *state
         .push_wake
         .lock()

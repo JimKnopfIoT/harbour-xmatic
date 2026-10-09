@@ -451,10 +451,14 @@ pub enum Command {
     #[serde(rename = "storage.repair")]
     StorageRepair { id: u64 },
 
-    /// What UnifiedPush looks like here. Needs no client and changes nothing; the
-    /// page asks on every visit because a distributor can appear at any time.
+    /// What UnifiedPush looks like here; the page asks on every visit. `quiet` is
+    /// the start-up question, answered without the bus while push is off.
     #[serde(rename = "push.status")]
-    PushStatus { id: u64 },
+    PushStatus {
+        id: u64,
+        #[serde(default)]
+        quiet: bool,
+    },
 
     /// Register with a distributor and set the pusher.
     #[serde(rename = "push.enable")]
@@ -1104,7 +1108,7 @@ impl Command {
             | Command::Logout { id }
             | Command::RoomListStart { id }
             | Command::RoomListFilter { id, .. }
-            | Command::PushStatus { id }
+            | Command::PushStatus { id, .. }
             | Command::PushEnable { id, .. }
             | Command::PushDisable { id, .. }
             | Command::PushGateway { id, .. }
@@ -1288,6 +1292,20 @@ mod tests {
             }
             _ => panic!("not push.notify"),
         }
+    }
+
+    #[test]
+    fn push_status_is_loud_unless_asked() {
+        let raw = r#"{"cmd":"push.status","id":3}"#;
+        assert!(matches!(
+            serde_json::from_str::<Command>(raw).expect("parses"),
+            Command::PushStatus { id: 3, quiet: false }
+        ));
+        let raw = r#"{"cmd":"push.status","id":4,"quiet":true}"#;
+        assert!(matches!(
+            serde_json::from_str::<Command>(raw).expect("parses"),
+            Command::PushStatus { id: 4, quiet: true }
+        ));
     }
 
     /// A message in another script has to survive the way in - UTF-8 JSON, a
