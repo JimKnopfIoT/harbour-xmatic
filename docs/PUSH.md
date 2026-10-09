@@ -35,10 +35,11 @@ Matrix push gateway, which forwards. After you switch push on, xmatic asks
 which one to use, and registers with the distributor only once you've picked:
 
 - **Provided**: the gateway built into the push service your distributor
-  uses, if it has one. ntfy does; Mozilla's doesn't, and the page then offers
-  the public gateway or switching Foghorn to ntfy. xmatic finds out after
-  registering.
-- **UnifiedPush (public)**: `matrix.gateway.unifiedpush.org`.
+  uses, if it has one (ntfy does, Mozilla's doesn't). If it has none, the page
+  says so and offers the public gateway; the other way out is a push service
+  with a gateway in the distributor. xmatic finds out after registering.
+- **UnifiedPush (public)**: `matrix.gateway.unifiedpush.org`, run by the
+  UnifiedPush project.
 - **Custom**: a URL you enter.
 
 There's no default. If the push server doesn't answer when asked about its

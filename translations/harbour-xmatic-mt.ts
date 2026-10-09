@@ -2007,16 +2007,20 @@
         <translation>%1 ma jistax iwassal notifiki Matrix.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Biddel %1 għal ntfy, jew uża l-gateway UnifiedPush.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Uża l-gateway UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Irreġistrat (%1). Is-server tad-dar ma jistax jilħaq dan l-apparat.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Immexxi mill-proġett UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Agħżel fl-app %1 servizz push b&apos;gateway Matrix, jew uża l-gateway pubbliku tal-proġett UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Uża l-gateway pubbliku ta&apos; UnifiedPush</translation>
     </message>
 </context>
 <context>

@@ -27,10 +27,8 @@ Page {
     readonly property string distributorName: distributors.length > 0
                                               ? String(distributors[0]).split(".").pop()
                                               : qsTr("the distributor")
-    readonly property string pushService: {
-        var host = pushStatus.pushService || ""
-        return /(^|\.)mozilla\.com$/.test(host) ? "Mozilla Push Service" : host
-    }
+    // Set whenever the gateway answer is: both come with the push address.
+    readonly property string pushService: pushStatus.pushService || ""
     readonly property bool serviceLacksGateway: pushOn && gatewayMode === "server"
                                                 && serverGateway === "no"
 
@@ -141,7 +139,7 @@ Page {
                         }
                         return qsTr("Found via %1 after registering.").arg(page.distributorName)
                     case "public":
-                        return "matrix.gateway.unifiedpush.org"
+                        return qsTr("Run by the UnifiedPush project: %1").arg("matrix.gateway.unifiedpush.org")
                     case "other":
                         return ""
                     }
@@ -207,12 +205,12 @@ Page {
                     wrapMode: Text.Wrap
                     font.pixelSize: Theme.fontSizeSmall
                     color: Theme.secondaryColor
-                    text: qsTr("Switch %1 to ntfy, or use the UnifiedPush gateway.").arg(page.distributorName)
+                    text: qsTr("Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.").arg(page.distributorName)
                 }
 
                 Button {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("Use UnifiedPush gateway")
+                    text: qsTr("Use UnifiedPush public gateway")
                     onClicked: page.pick("public", "")
                 }
             }

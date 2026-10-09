@@ -2004,16 +2004,20 @@
         <translation>%1 не может доставлять уведомления Matrix.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Переключи %1 на ntfy или используй шлюз UnifiedPush.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Использовать шлюз UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Зарегистрировано через %1. Домашний сервер не может достучаться до этого устройства.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Поддерживается проектом UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Выбери в приложении %1 службу push со шлюзом Matrix или используй публичный шлюз проекта UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Использовать публичный шлюз UnifiedPush</translation>
     </message>
 </context>
 <context>

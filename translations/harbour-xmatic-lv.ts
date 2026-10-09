@@ -2004,16 +2004,20 @@
         <translation>%1 nevar piegādāt Matrix paziņojumus.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Pārslēdz %1 uz ntfy vai izmanto UnifiedPush vārteju.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Izmantot UnifiedPush vārteju</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Reģistrēts caur %1. Mājas serveris nevar sasniegt šo ierīci.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Uztur projekts UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Lietotnē %1 izvēlies push pakalpojumu ar Matrix vārteju vai izmanto projekta UnifiedPush publisko vārteju.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Izmantot UnifiedPush publisko vārteju</translation>
     </message>
 </context>
 <context>

@@ -2004,16 +2004,20 @@
         <translation>%1 neumí doručovat oznámení z Matrixu.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Přepni %1 na ntfy, nebo použij bránu UnifiedPush.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Použít bránu UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Registrováno přes %1. Domovský server na toto zařízení nedosáhne.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Provozuje projekt UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>V aplikaci %1 vyber službu push s bránou pro Matrix, nebo použij veřejnou bránu projektu UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Použít veřejnou bránu UnifiedPush</translation>
     </message>
 </context>
 <context>

@@ -2001,16 +2001,20 @@
         <translation>%1 kan geen Matrix-meldingen afleveren.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Zet %1 op ntfy, of gebruik de UnifiedPush-gateway.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>UnifiedPush-gateway gebruiken</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Geregistreerd via %1. De homeserver kan dit apparaat niet bereiken.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Beheerd door het UnifiedPush-project: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>Kies in %1 een pushdienst met Matrix-gateway, of gebruik de openbare gateway van het UnifiedPush-project.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Openbare UnifiedPush-gateway gebruiken</translation>
     </message>
 </context>
 <context>

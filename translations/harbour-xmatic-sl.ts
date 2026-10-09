@@ -2007,16 +2007,20 @@
         <translation>%1 ne more dostavljati obvestil Matrix.</translation>
     </message>
     <message>
-        <source>Switch %1 to ntfy, or use the UnifiedPush gateway.</source>
-        <translation>Preklopi %1 na ntfy ali uporabi prehod UnifiedPush.</translation>
-    </message>
-    <message>
-        <source>Use UnifiedPush gateway</source>
-        <translation>Uporabi prehod UnifiedPush</translation>
-    </message>
-    <message>
         <source>Registered with %1. The homeserver can&apos;t reach it.</source>
         <translation>Registrirano prek %1. Domači strežnik te naprave ne doseže.</translation>
+    </message>
+    <message>
+        <source>Run by the UnifiedPush project: %1</source>
+        <translation>Upravlja ga projekt UnifiedPush: %1</translation>
+    </message>
+    <message>
+        <source>Choose a push service with a Matrix gateway in %1, or use the public gateway run by the UnifiedPush project.</source>
+        <translation>V aplikaciji %1 izberi potisno storitev s prehodom za Matrix ali uporabi javni prehod projekta UnifiedPush.</translation>
+    </message>
+    <message>
+        <source>Use UnifiedPush public gateway</source>
+        <translation>Uporabi javni prehod UnifiedPush</translation>
     </message>
 </context>
 <context>
