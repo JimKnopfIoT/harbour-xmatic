@@ -1482,78 +1482,78 @@
         <translation>网关必须是 https URL。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="1976"/>
+        <location filename="../src/matrixbridge.cpp" line="1977"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2324"/>
-        <location filename="../src/matrixbridge.cpp" line="2352"/>
+        <location filename="../src/matrixbridge.cpp" line="2325"/>
+        <location filename="../src/matrixbridge.cpp" line="2353"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2670"/>
+        <location filename="../src/matrixbridge.cpp" line="2675"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2715"/>
+        <location filename="../src/matrixbridge.cpp" line="2720"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2735"/>
+        <location filename="../src/matrixbridge.cpp" line="2740"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3600"/>
+        <location filename="../src/matrixbridge.cpp" line="3605"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3959"/>
+        <location filename="../src/matrixbridge.cpp" line="3964"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3962"/>
+        <location filename="../src/matrixbridge.cpp" line="3967"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3965"/>
+        <location filename="../src/matrixbridge.cpp" line="3970"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3968"/>
+        <location filename="../src/matrixbridge.cpp" line="3973"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3971"/>
+        <location filename="../src/matrixbridge.cpp" line="3976"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3974"/>
+        <location filename="../src/matrixbridge.cpp" line="3979"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3974"/>
+        <location filename="../src/matrixbridge.cpp" line="3979"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3977"/>
+        <location filename="../src/matrixbridge.cpp" line="3982"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3980"/>
+        <location filename="../src/matrixbridge.cpp" line="3985"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -2370,111 +2370,111 @@
         <translation>接收推送通知</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="112"/>
-        <location filename="../qml/pages/PushPage.qml" line="134"/>
+        <location filename="../qml/pages/PushPage.qml" line="114"/>
+        <location filename="../qml/pages/PushPage.qml" line="136"/>
         <source>Push server</source>
         <translation>推送服务器</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="112"/>
-        <location filename="../qml/pages/PushPage.qml" line="139"/>
+        <location filename="../qml/pages/PushPage.qml" line="114"/>
+        <location filename="../qml/pages/PushPage.qml" line="141"/>
         <source>UnifiedPush (public)</source>
         <translation>UnifiedPush（公共）</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="113"/>
-        <location filename="../qml/pages/PushPage.qml" line="143"/>
+        <location filename="../qml/pages/PushPage.qml" line="115"/>
+        <location filename="../qml/pages/PushPage.qml" line="145"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="113"/>
+        <location filename="../qml/pages/PushPage.qml" line="115"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="118"/>
+        <location filename="../qml/pages/PushPage.qml" line="120"/>
         <source>Uses %1.</source>
         <translation>使用 %1。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="121"/>
+        <location filename="../qml/pages/PushPage.qml" line="123"/>
         <source>Your push server has no gateway. Pick another one.</source>
         <translation>你的推送服务器没有网关。请另选一个。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="123"/>
+        <location filename="../qml/pages/PushPage.qml" line="125"/>
         <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
         <translation>注册后检查。ntfy 有，Mozilla 没有。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="129"/>
+        <location filename="../qml/pages/PushPage.qml" line="131"/>
         <source>Pick a gateway to finish turning push on.</source>
         <translation>选择一个网关以完成开启推送。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="158"/>
+        <location filename="../qml/pages/PushPage.qml" line="163"/>
         <source>Gateway URL</source>
         <translation>网关 URL</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="171"/>
+        <location filename="../qml/pages/PushPage.qml" line="176"/>
         <source>Distributor</source>
         <translation>分发器</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="178"/>
+        <location filename="../qml/pages/PushPage.qml" line="183"/>
         <source>No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.</source>
         <translation>未安装推送分发器。没有它就没有东西维持连接，此项将保持关闭。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="182"/>
+        <location filename="../qml/pages/PushPage.qml" line="187"/>
         <source>Registration</source>
         <translation>注册</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="189"/>
+        <location filename="../qml/pages/PushPage.qml" line="194"/>
         <source>This device has an address to be reached at.</source>
         <translation>本设备已有可被送达的地址。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="198"/>
+        <location filename="../qml/pages/PushPage.qml" line="203"/>
         <source>Waiting for the distributor.</source>
         <translation>正在等待分发器。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="200"/>
+        <location filename="../qml/pages/PushPage.qml" line="205"/>
         <source>Not registered.</source>
         <translation>未注册。</translation>
     </message>
     <message>
         <location filename="../qml/pages/PushPage.qml" line="110"/>
-        <location filename="../qml/pages/PushPage.qml" line="206"/>
+        <location filename="../qml/pages/PushPage.qml" line="211"/>
         <source>Gateway</source>
         <translation>网关</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="192"/>
+        <location filename="../qml/pages/PushPage.qml" line="197"/>
         <source>Registered. Waiting for a gateway.</source>
         <translation>已注册。正在等待网关。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="195"/>
+        <location filename="../qml/pages/PushPage.qml" line="200"/>
         <source>Registered. Telling the homeserver.</source>
         <translation>已注册。正在通知主服务器。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="210"/>
+        <location filename="../qml/pages/PushPage.qml" line="215"/>
         <source>None. The homeserver can&apos;t reach this device yet.</source>
         <translation>无。主服务器暂时无法送达本设备。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="214"/>
+        <location filename="../qml/pages/PushPage.qml" line="219"/>
         <source>What leaves this device</source>
         <translation>有什么离开本设备</translation>
     </message>
     <message>
-        <location filename="../qml/pages/PushPage.qml" line="223"/>
+        <location filename="../qml/pages/PushPage.qml" line="228"/>
         <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
         <translation>你的服务器会得知一个推送服务上的地址，并在每条通知时向网关发送聊天室和消息标识符。不含消息正文：推送只携带标识符，消息由本设备自行获取并解密。那个地址是秘密——持有它的人可以向这台手机发送通知。</translation>
     </message>
