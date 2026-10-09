@@ -1248,8 +1248,8 @@
         <translation>Küsitlus: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Push-lüüs peab olema https-aadress.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Lüüs peab olema https-URL.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Sellel seadmel on aadress, kust ta on kättesaadav.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Sellel seadmel on aadress; ootab, et see koduserverile teatada.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Ootan jaoturit.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Sinu serverile öeldakse aadress push-teenuses ja ta saadab lüüsile iga teavituse kohta toa ja sõnumi tunnuse. Sõnumi teksti mitte: push kannab ainult tunnuseid ja sõnumi hangib ning dekrüpteerib see seade ise. See aadress on saladus — kellel see on, võib sellele telefonile teavituse saata.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Sellel seadmel on aadress; sinu koduserver vajab selleni jõudmiseks lüüsi.</translation>
+        <source>Push server</source>
+        <translation>Push-server</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Push-serveri enda lüüs</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (avalik)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>UnifiedPushi avalik lüüs</translation>
+        <source>Custom</source>
+        <translation>Kohandatud</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Muu</translation>
+        <source>None</source>
+        <translation>Puudub</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Valimata</translation>
+        <source>Uses %1.</source>
+        <translation>Kasutab %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, server, kellel on selle seadme aadress juba olemas.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Sinu push-serveril pole lüüsi. Vali teine.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Sinu push-serveril pole Matrixi lüüsi. Vali mõni teine.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Kontrollitakse pärast registreerimist. ntfy-l on, Mozillal pole.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Leitakse, kui push on sees. ntfy-serveritel on see olemas; Mozilla teenusel mitte.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Vali lüüs, et push lõpuni sisse lülitada.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Seda haldab UnifiedPushi projekt. Lüüs näeb, millise toa kohta iga teavitus on.</translation>
+        <source>Gateway URL</source>
+        <translation>Lüüsi URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Lüüs näeb, millise toa kohta iga teavitus on.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registreeritud. Ootan lüüsi.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Sinu koduserver saadab Matrixi lüüsile, mis edastab selle seadmeni. Vali üks, et push sisse lülitada.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registreeritud. Annan koduserverile teada.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Lüüsi aadress</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Veel pole; kuni seda pole valitud, ei jõua sinu koduserver selle seadmeni.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Puudub. Koduserver ei saa seda seadet veel kätte.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Uus sõnum</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Push-jaotur lõpetas xmaticule edastamise. Lülita push-teavitused jaotises Konto uuesti sisse.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push-jaotur loobus xmaticust. Lülita push uuesti sisse jaotises Konto.</translation>
     </message>
 </context>
 <context>

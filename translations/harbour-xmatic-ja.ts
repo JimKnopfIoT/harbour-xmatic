@@ -1246,8 +1246,8 @@
         <translation>アンケート: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>プッシュゲートウェイは https アドレスである必要があります。</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>ゲートウェイは https の URL にしてください。</translation>
     </message>
 </context>
 <context>
@@ -1918,10 +1918,6 @@
         <translation>このデバイスには到達用のアドレスがあります。</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>このデバイスにはアドレスがあります。ホームサーバーへの通知を待っています。</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>ディストリビューターを待っています。</translation>
     </message>
@@ -1942,56 +1938,52 @@
         <translation>ホームサーバーにはプッシュサービス上のアドレスが伝えられ、通知ごとにルームとメッセージの識別子がゲートウェイへ送られます。本文は送りません: プッシュが運ぶのは識別子だけで、メッセージの取得と復号はこのデバイスが自分で行います。そのアドレスは秘密です - 持っている人は誰でもこの端末に通知を送れます。</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>このデバイスにはアドレスがあります。ホームサーバーがここに届くにはゲートウェイが必要です。</translation>
+        <source>Push server</source>
+        <translation>プッシュサーバー</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>プッシュサーバー自身のもの</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush（公開）</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>UnifiedPush 公開ゲートウェイ</translation>
+        <source>Custom</source>
+        <translation>カスタム</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>その他</translation>
+        <source>None</source>
+        <translation>なし</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>未選択</translation>
+        <source>Uses %1.</source>
+        <translation>%1 を使用します。</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1。このデバイスのアドレスをすでに持っているサーバーです。</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>プッシュサーバーにゲートウェイがありません。別のものを選んでください。</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>プッシュサーバーに Matrix ゲートウェイがありません。別のものを選んでください。</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>登録後に確認します。ntfy にはあり、Mozilla にはありません。</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>プッシュをオンにすると見つかります。ntfy サーバーにはありますが、Mozilla のサービスにはありません。</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>ゲートウェイを選ぶとプッシュがオンになります。</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>UnifiedPush プロジェクトが運営しています。各通知がどのルーム宛てかが見えます。</translation>
+        <source>Gateway URL</source>
+        <translation>ゲートウェイの URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>ゲートウェイには各通知がどのルーム宛てかが見えます。</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>登録済み。ゲートウェイを待っています。</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>ホームサーバーは Matrix ゲートウェイへ送り、ゲートウェイがこのデバイスへ転送します。プッシュをオンにするには1つ選んでください。</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>登録済み。ホームサーバーに伝えています。</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>ゲートウェイのアドレス</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>まだありません。選ぶまで、ホームサーバーはこのデバイスに届きません。</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>なし。ホームサーバーはまだこのデバイスに届きません。</translation>
     </message>
 </context>
 <context>
@@ -2001,8 +1993,8 @@
         <translation>新しいメッセージ</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>プッシュ配信元が xmatic への配信を停止しました。アカウントからプッシュ通知を再度オンにしてください。</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>プッシュディストリビューターが xmatic を外しました。アカウントからプッシュをオンにし直してください。</translation>
     </message>
 </context>
 <context>

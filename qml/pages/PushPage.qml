@@ -18,8 +18,11 @@ Page {
     readonly property var gatewayModes: ["server", "public", "other"]
     // "Other" picked in the list before an address was entered.
     property bool choosingOther: false
+    // Switched on but no gateway picked yet.
+    property bool wanted: false
+    readonly property bool switchedOn: pushOn || wanted || pushState === "registering"
     readonly property string gatewayMode: choosingOther ? "other" : settings.pushGatewayMode
-    // true, false, or null while unknown: only a registered address can be asked.
+    // true, false, or null if not checked yet.
     readonly property var serverGateway: pushStatus.serverGateway === undefined
                                          ? null : pushStatus.serverGateway
 
@@ -38,11 +41,30 @@ Page {
     }
 
     function apply(on) {
-        if (on) {
+        if (!on) {
+            wanted = false
+            choosingOther = false
+            if (pushOn || pushState === "registering") {
+                matrix.disablePush()
+            }
+        } else if (settings.pushGatewayMode.length > 0) {
             matrix.enablePush()
         } else {
-            matrix.disablePush()
+            wanted = true
         }
+    }
+
+    // The registration starts once a gateway is picked.
+    function pick(mode, address) {
+        if (!matrix.setPushGateway(mode, address)) {
+            return false
+        }
+        choosingOther = false
+        if (wanted && !pushOn) {
+            wanted = false
+            matrix.enablePush()
+        }
+        return true
     }
 
     SilicaFlickable {
@@ -70,51 +92,55 @@ Page {
                 text: qsTr("xmatic has no background service, so messages arrive only while it runs. A push distributor is a separate app that holds one connection for every app on the device and wakes them when something comes in.")
             }
 
+            TextSwitch {
+                text: qsTr("Receive push notifications")
+                checked: page.switchedOn
+                automaticCheck: false
+                busy: page.pushState === "registering"
+                // Off must stay possible without a distributor.
+                enabled: page.switchedOn || page.distributors.length > 0
+                onClicked: page.apply(!page.switchedOn)
+            }
+
             ComboBox {
                 id: gatewayBox
 
+                visible: page.switchedOn
                 width: parent.width
                 label: qsTr("Gateway")
                 currentIndex: page.gatewayModes.indexOf(page.gatewayMode)
-                value: [qsTr("Push server's own"), qsTr("UnifiedPush public gateway"),
-                        qsTr("Other")][currentIndex] || qsTr("Not chosen")
+                value: [qsTr("Push server"), qsTr("UnifiedPush (public)"),
+                        qsTr("Custom")][currentIndex] || qsTr("None")
                 description: {
                     switch (page.gatewayMode) {
                     case "server":
                         if (page.serverGateway === true) {
-                            return qsTr("%1, the server that already holds this device's address.")
-                                .arg(page.host(page.pushStatus.serverGatewayUrl))
+                            return qsTr("Uses %1.").arg(page.host(page.pushStatus.serverGatewayUrl))
                         }
                         if (page.serverGateway === false) {
-                            return qsTr("Your push server has no Matrix gateway. Choose another one.")
+                            return qsTr("Your push server has no gateway. Pick another one.")
                         }
-                        return qsTr("Found once push is on. ntfy servers have one; the Mozilla service does not.")
+                        return qsTr("Checked after registering. ntfy has one, Mozilla doesn't.")
                     case "public":
-                        return qsTr("Run by the UnifiedPush project. It sees which room every notification is for.")
+                        return "matrix.gateway.unifiedpush.org"
                     case "other":
-                        return qsTr("It sees which room every notification is for.")
+                        return ""
                     }
-                    return qsTr("Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.")
+                    return qsTr("Pick a gateway to finish turning push on.")
                 }
 
                 menu: ContextMenu {
                     MenuItem {
-                        text: qsTr("Push server's own")
+                        text: qsTr("Push server")
                         enabled: page.serverGateway !== false
-                        onClicked: {
-                            page.choosingOther = false
-                            matrix.setPushGateway("server")
-                        }
+                        onClicked: page.pick("server", "")
                     }
                     MenuItem {
-                        text: qsTr("UnifiedPush public gateway")
-                        onClicked: {
-                            page.choosingOther = false
-                            matrix.setPushGateway("public")
-                        }
+                        text: qsTr("UnifiedPush (public)")
+                        onClicked: page.pick("public", "")
                     }
                     MenuItem {
-                        text: qsTr("Other")
+                        text: qsTr("Custom")
                         onClicked: {
                             page.choosingOther = settings.pushGatewayMode !== "other"
                             gatewayField.forceActiveFocus()
@@ -126,31 +152,19 @@ Page {
             TextField {
                 id: gatewayField
 
-                visible: page.gatewayMode === "other"
+                visible: page.switchedOn && page.gatewayMode === "other"
                 width: parent.width
                 text: settings.pushGateway
-                label: qsTr("Gateway address")
+                label: qsTr("Gateway URL")
                 placeholderText: "https://example.org/_matrix/push/v1/notify"
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhUrlCharactersOnly
                 EnterKey.enabled: /^https:\/\/./i.test(text.trim())
                 EnterKey.iconSource: "image://theme/icon-m-enter-accept"
                 EnterKey.onClicked: {
-                    if (matrix.setPushGateway("other", text)) {
-                        page.choosingOther = false
+                    if (page.pick("other", text)) {
                         focus = false
                     }
                 }
-            }
-
-            TextSwitch {
-                text: qsTr("Receive push notifications")
-                checked: page.pushOn
-                automaticCheck: false
-                busy: page.pushState === "registering"
-                // Off must stay possible without a distributor or a gateway.
-                enabled: page.pushOn || (page.distributors.length > 0
-                                         && settings.pushGatewayMode.length > 0)
-                onClicked: page.apply(!page.pushOn)
             }
 
             SecurityRow {
@@ -175,10 +189,10 @@ Page {
                         return qsTr("This device has an address to be reached at.")
                     }
                     if (page.pushState === "needs-gateway") {
-                        return qsTr("This device has an address; your homeserver needs a gateway to reach it.")
+                        return qsTr("Registered. Waiting for a gateway.")
                     }
                     if (page.pushOn) {
-                        return qsTr("This device has an address; waiting to tell your homeserver.")
+                        return qsTr("Registered. Telling the homeserver.")
                     }
                     if (page.pushState === "registering") {
                         return qsTr("Waiting for the distributor.")
@@ -193,7 +207,7 @@ Page {
                 level: page.gateway.length > 0 ? SecurityStatus.GREEN : SecurityStatus.RED
                 detail: page.gateway.length > 0
                         ? page.host(page.gateway)
-                        : qsTr("None yet; until one is chosen your homeserver cannot reach this device.")
+                        : qsTr("None. The homeserver can't reach this device yet.")
             }
 
             SectionHeader {

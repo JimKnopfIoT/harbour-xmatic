@@ -1248,8 +1248,8 @@
         <translation>Sondage : %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>La passerelle push doit être une adresse https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>La passerelle doit être une URL https.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Cet appareil a une adresse à laquelle il peut être joint.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Cet appareil a une adresse ; en attente de la transmettre à votre serveur d’accueil.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>En attente du distributeur.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Ton serveur reçoit une adresse chez le service push, et envoie à la passerelle un identifiant de salon et de message pour chaque notification. Aucun texte de message : le push ne porte que des identifiants, et cet appareil récupère et déchiffre le message lui-même. Cette adresse est un secret — qui la détient peut envoyer une notification à ce téléphone.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Cet appareil a une adresse ; ton serveur d&apos;accueil a besoin d&apos;une passerelle pour le joindre.</translation>
+        <source>Push server</source>
+        <translation>Serveur push</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Celle du serveur push</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (publique)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Passerelle publique UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Personnalisée</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Autre</translation>
+        <source>None</source>
+        <translation>Aucune</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Non choisie</translation>
+        <source>Uses %1.</source>
+        <translation>Utilise %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, le serveur qui détient déjà l&apos;adresse de cet appareil.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Ton serveur push n&apos;a pas de passerelle. Choisis-en une autre.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Ton serveur push n&apos;a pas de passerelle Matrix. Choisis-en une autre.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Vérifié après l&apos;enregistrement. ntfy en a une, Mozilla non.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Trouvée une fois le push activé. Les serveurs ntfy en ont une ; le service Mozilla, non.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Choisis une passerelle pour finir d&apos;activer le push.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Gérée par le projet UnifiedPush. Elle voit à quel salon chaque notification est destinée.</translation>
+        <source>Gateway URL</source>
+        <translation>URL de la passerelle</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>La passerelle voit à quel salon chaque notification est destinée.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Enregistré. En attente d&apos;une passerelle.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Ton serveur d&apos;accueil envoie à une passerelle Matrix, qui transmet à cet appareil. Choisis-en une pour activer le push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Enregistré. Envoi au serveur d&apos;accueil.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Adresse de la passerelle</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Aucune pour l&apos;instant ; tant qu&apos;aucune n&apos;est choisie, ton serveur d&apos;accueil ne peut pas joindre cet appareil.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Aucune. Le serveur d&apos;accueil ne peut pas encore joindre cet appareil.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Nouveau message</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Le distributeur push a cessé de livrer à xmatic. Réactivez les notifications push dans Compte.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Le distributeur push a désinscrit xmatic. Réactive le push dans Compte.</translation>
     </message>
 </context>
 <context>

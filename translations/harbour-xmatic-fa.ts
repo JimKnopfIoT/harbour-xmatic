@@ -1246,8 +1246,8 @@
         <translation>نظرسنجی: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>دروازهٔ Push باید نشانی https باشد.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>دروازه باید یک نشانی https باشد.</translation>
     </message>
 </context>
 <context>
@@ -1918,10 +1918,6 @@
         <translation>این دستگاه نشانی‌ای برای دسترسی دارد.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>این دستگاه نشانی دارد؛ در انتظار اطلاع دادن به سرور خانگی شما.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>در انتظار توزیع‌کننده.</translation>
     </message>
@@ -1942,56 +1938,52 @@
         <translation>به کارساز خانگی‌ات نشانی‌ای در سرویس Push گفته می‌شود و برای هر اعلان، شناسهٔ اتاق و پیام به دروازه فرستاده می‌شود. متن پیام نه: Push تنها شناسه می‌برد و خودِ این دستگاه پیام را می‌گیرد و رمزگشایی می‌کند. آن نشانی رازی است - هرکه داشته باشد می‌تواند به این گوشی اعلان بفرستد.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>این دستگاه نشانی دارد؛ کارساز خانگی‌ات برای رسیدن به آن به یک دروازه نیاز دارد.</translation>
+        <source>Push server</source>
+        <translation>کارساز Push</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>دروازهٔ خودِ سرور Push</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (عمومی)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>دروازهٔ عمومی UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>سفارشی</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>دیگر</translation>
+        <source>None</source>
+        <translation>هیچ</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>انتخاب نشده</translation>
+        <source>Uses %1.</source>
+        <translation>از %1 استفاده می‌کند.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1، سروری که نشانی این دستگاه را از قبل دارد.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>کارساز Push تو دروازه ندارد. یکی دیگر برگزین.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>سرور Push تو دروازهٔ Matrix ندارد. دروازهٔ دیگری انتخاب کن.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>پس از ثبت بررسی می‌شود. ntfy دارد، Mozilla ندارد.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>پس از روشن شدن Push پیدا می‌شود. سرورهای ntfy یکی دارند؛ سرویس Mozilla ندارد.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>برای کامل کردن روشن شدن Push یک دروازه برگزین.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>پروژهٔ UnifiedPush آن را اداره می‌کند. می‌بیند هر اعلان برای کدام اتاق است.</translation>
-    </message>
-    <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>دروازه می‌بیند هر اعلان برای کدام اتاق است.</translation>
-    </message>
-    <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>کارساز خانگی‌ات به یک دروازهٔ Matrix می‌فرستد که آن را به این دستگاه می‌رساند. یکی انتخاب کن تا Push روشن شود.</translation>
-    </message>
-    <message>
-        <source>Gateway address</source>
+        <source>Gateway URL</source>
         <translation>نشانی دروازه</translation>
     </message>
     <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>هنوز هیچ؛ تا یکی انتخاب نشود، کارساز خانگی‌ات نمی‌تواند به این دستگاه برسد.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>ثبت شد. در انتظار دروازه.</translation>
+    </message>
+    <message>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>ثبت شد. در حال خبر دادن به کارساز خانگی.</translation>
+    </message>
+    <message>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>هیچ. کارساز خانگی هنوز به این دستگاه دسترسی ندارد.</translation>
     </message>
 </context>
 <context>
@@ -2001,8 +1993,8 @@
         <translation>پیام تازه</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>توزیع‌کننده پوش دیگر به xmatic تحویل نمی‌دهد. اعلان‌های پوش را دوباره از بخش حساب روشن کنید.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>توزیع‌کنندهٔ Push، xmatic را کنار گذاشت. Push را دوباره در حساب روشن کن.</translation>
     </message>
 </context>
 <context>

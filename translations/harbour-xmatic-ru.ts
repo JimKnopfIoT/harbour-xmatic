@@ -1250,8 +1250,8 @@
         <translation>Опрос: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Push-шлюз должен быть адресом https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Шлюз должен быть URL с https.</translation>
     </message>
 </context>
 <context>
@@ -1924,10 +1924,6 @@
         <translation>У этого устройства есть адрес, по которому его можно достать.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>У этого устройства есть адрес; ждём, чтобы сообщить его вашему домашнему серверу.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Ожидание распространителя.</translation>
     </message>
@@ -1948,56 +1944,52 @@
         <translation>Твоему серверу сообщается адрес в службе push, и он отправляет шлюзу идентификатор комнаты и сообщения для каждого уведомления. Без текста сообщения: push несёт только идентификаторы, а само сообщение это устройство получает и расшифровывает само. Этот адрес — секрет: кто им владеет, может послать этому телефону уведомление.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>У этого устройства есть адрес; твоему домашнему серверу нужен шлюз, чтобы до него достучаться.</translation>
+        <source>Push server</source>
+        <translation>Push-сервер</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Шлюз push-сервера</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (публичный)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Публичный шлюз UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Свой</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Другой</translation>
+        <source>None</source>
+        <translation>Нет</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Не выбран</translation>
+        <source>Uses %1.</source>
+        <translation>Использует %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1 — сервер, у которого уже есть адрес этого устройства.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>У твоего push-сервера нет шлюза. Выбери другой.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>У твоего push-сервера нет шлюза Matrix. Выбери другой.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Проверяется после регистрации. У ntfy есть, у Mozilla нет.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Определяется, когда push включён. У серверов ntfy он есть; у службы Mozilla нет.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Выбери шлюз, чтобы до конца включить push.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Поддерживается проектом UnifiedPush. Он видит, к какой комнате относится каждое уведомление.</translation>
+        <source>Gateway URL</source>
+        <translation>URL шлюза</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Шлюз видит, к какой комнате относится каждое уведомление.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Зарегистрировано. Ожидание шлюза.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Твой домашний сервер отправляет данные на шлюз Matrix, который пересылает их на это устройство. Выбери шлюз, чтобы включить push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Зарегистрировано. Сообщаем домашнему серверу.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Адрес шлюза</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Ещё не выбран; до тех пор твой домашний сервер не может достучаться до этого устройства.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Нет. Домашний сервер пока не может достучаться до этого устройства.</translation>
     </message>
 </context>
 <context>
@@ -2007,8 +1999,8 @@
         <translation>Новое сообщение</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Распространитель push-уведомлений перестал доставлять их в xmatic. Снова включите push-уведомления в разделе «Учётная запись».</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Распространитель push отключил xmatic. Снова включи push в разделе «Учётная запись».</translation>
     </message>
 </context>
 <context>

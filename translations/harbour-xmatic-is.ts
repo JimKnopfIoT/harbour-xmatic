@@ -1248,8 +1248,8 @@
         <translation>Könnun: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Ýtigáttin verður að vera https-vistfang.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Gáttin verður að vera https-slóð.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Þetta tæki hefur vistfang þar sem hægt er að ná í það.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Þetta tæki hefur vistfang; bíður eftir að láta heimaþjóninn vita.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Bíð eftir dreifinum.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Heimaþjónninum þínum er sagt vistfang hjá ýtiþjónustunni og hann sendir gáttinni auðkenni herbergis og skilaboða fyrir hverja tilkynningu. Engan texta: ýtingin ber aðeins auðkenni og þetta tæki sækir og afkóðar skilaboðin sjálft. Það vistfang er leyndarmál — sá sem hefur það getur sent þessum síma tilkynningu.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Þetta tæki hefur vistfang; heimaþjónninn þinn þarf gátt til að ná í það.</translation>
+        <source>Push server</source>
+        <translation>Ýtiþjónn</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Eigin gátt ýtiþjónsins</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (opinber)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Opinber gátt UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Sérsniðin</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Önnur</translation>
+        <source>None</source>
+        <translation>Engin</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Ekki valin</translation>
+        <source>Uses %1.</source>
+        <translation>Notar %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, þjónninn sem hefur nú þegar vistfang þessa tækis.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Ýtiþjónninn þinn hefur enga gátt. Veldu aðra.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Ýtiþjónninn þinn hefur enga Matrix-gátt. Veldu aðra.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Athugað eftir skráningu. ntfy hefur eina, Mozilla ekki.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Finnst þegar kveikt er á ýtingu. ntfy-þjónar hafa hana; Mozilla-þjónustan ekki.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Veldu gátt til að ljúka við að kveikja á ýtingum.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Rekin af UnifiedPush-verkefninu. Hún sér fyrir hvaða herbergi hver tilkynning er.</translation>
+        <source>Gateway URL</source>
+        <translation>Slóð gáttar</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Gáttin sér fyrir hvaða herbergi hver tilkynning er.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Skráð. Bíð eftir gátt.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Heimaþjónninn þinn sendir á Matrix-gátt sem áframsendir til þessa tækis. Veldu eina til að kveikja á ýtingu.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Skráð. Læt heimaþjóninn vita.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Vistfang gáttar</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Engin enn; þar til ein er valin nær heimaþjónninn þinn ekki í þetta tæki.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Engin. Heimaþjónninn nær ekki enn í þetta tæki.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Ný skilaboð</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Push-dreifingaraðilinn hætti að afhenda til xmatic. Kveiktu aftur á push-tilkynningum undir Aðgangur.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Ýtidreifirinn sleppti xmatic. Kveiktu aftur á ýtingum undir Reikningur.</translation>
     </message>
 </context>
 <context>

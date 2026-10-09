@@ -1250,8 +1250,8 @@
         <translation>Pobalbhreith: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Caithfidh an geata brú a bheith ina sheoladh https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Caithfidh an geata a bheith ina URL https.</translation>
     </message>
 </context>
 <context>
@@ -1924,10 +1924,6 @@
         <translation>Tá seoladh ag an ngléas seo ar féidir teacht air.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Tá seoladh ag an ngléas seo; ag fanacht lena insint do do fhreastalaí baile.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Ag fanacht leis an dáileoir.</translation>
     </message>
@@ -1948,56 +1944,52 @@
         <translation>Insítear seoladh ag an tseirbhís bhrú do d&apos;fhreastalaí, agus seolann sé aitheantóir seomra agus teachtaireachta chuig an ngeata do gach fógra. Gan téacs: ní iompraíonn an brú ach aitheantóirí agus faigheann agus díchriptíonn an gléas seo an teachtaireacht é féin. Is rún é an seoladh sin — is féidir le duine ar bith atá aige fógra a sheoladh chuig an bhfón seo.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Tá seoladh ag an ngléas seo; teastaíonn geata ó do fhreastalaí baile chun teacht air.</translation>
+        <source>Push server</source>
+        <translation>Freastalaí brú</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Geata an fhreastalaí bhrú</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (poiblí)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Geata poiblí UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Saincheaptha</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Ceann eile</translation>
+        <source>None</source>
+        <translation>Dada</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Gan roghnú</translation>
+        <source>Uses %1.</source>
+        <translation>Úsáideann sé %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, an freastalaí a bhfuil seoladh an ghléis seo aige cheana.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Níl geata ag d&apos;fhreastalaí brú. Roghnaigh ceann eile.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Níl geata Matrix ag do fhreastalaí brú. Roghnaigh ceann eile.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Seiceáiltear é tar éis clárú. Tá ceann ag ntfy, níl ag Mozilla.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Aimsítear é nuair atá an brú ar siúl. Tá ceann ag freastalaithe ntfy; níl ag seirbhís Mozilla.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Roghnaigh geata chun brú a chur ar siúl go hiomlán.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Á reáchtáil ag tionscadal UnifiedPush. Feiceann sé cén seomra a bhfuil gach fógra dó.</translation>
+        <source>Gateway URL</source>
+        <translation>URL an gheata</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Feiceann an geata cén seomra a bhfuil gach fógra dó.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Cláraithe. Ag fanacht le geata.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Seolann do fhreastalaí baile chuig geata Matrix, a chuireann ar aghaidh chuig an ngléas seo é. Roghnaigh ceann chun an brú a chur ar siúl.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Cláraithe. Ag insint don fhreastalaí baile.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Seoladh an gheata</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Níl ceann ann fós; go dtí go roghnófar ceann, ní féidir le do fhreastalaí baile teacht ar an ngléas seo.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Dada. Ní féidir leis an bhfreastalaí baile teacht ar an ngléas seo fós.</translation>
     </message>
 </context>
 <context>
@@ -2007,8 +1999,8 @@
         <translation>Teachtaireacht nua</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Stop an dáileoir brú ag seachadadh chuig xmatic. Cas fógraí brú air arís faoi Cuntas.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Scaoil an dáileoir brú xmatic. Cuir brú ar siúl arís faoi Cuntas.</translation>
     </message>
 </context>
 <context>

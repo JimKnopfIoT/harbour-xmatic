@@ -1250,8 +1250,8 @@
         <translation>Apklausa: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Push sietuvas turi būti https adresas.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Sietuvas turi būti https URL.</translation>
     </message>
 </context>
 <context>
@@ -1924,10 +1924,6 @@
         <translation>Šis įrenginys turi adresą, kuriuo pasiekiamas.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Šis įrenginys turi adresą; laukiama, kol jis bus praneštas jūsų namų serveriui.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Laukiama platintojo.</translation>
     </message>
@@ -1948,56 +1944,52 @@
         <translation>Tavo serveriui pranešamas adresas push tarnyboje, ir jis kiekvienam pranešimui siunčia sietuvui kambario ir žinutės identifikatorių. Jokio teksto: push neša tik identifikatorius, o žinutę šis įrenginys parsisiunčia ir iššifruoja pats. Tas adresas yra paslaptis — kas jį turi, gali šiam telefonui siųsti pranešimą.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Šis įrenginys turi adresą; tavo namų serveriui reikia sietuvo, kad jį pasiektų.</translation>
+        <source>Push server</source>
+        <translation>Push serveris</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Push serverio sietuvas</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (viešas)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Viešasis UnifiedPush sietuvas</translation>
+        <source>Custom</source>
+        <translation>Savas</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Kitas</translation>
+        <source>None</source>
+        <translation>Nėra</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Nepasirinktas</translation>
+        <source>Uses %1.</source>
+        <translation>Naudoja %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1 – serveris, kuris jau turi šio įrenginio adresą.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Tavo push serveris neturi sietuvo. Pasirink kitą.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Tavo push serveris neturi Matrix sietuvo. Pasirink kitą.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Tikrinama po registracijos. ntfy turi, Mozilla ne.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Randamas, kai push įjungtas. ntfy serveriai jį turi; Mozilla paslauga – ne.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Pasirink sietuvą, kad baigtum įjungti push.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Jį palaiko UnifiedPush projektas. Jis mato, kuriam kambariui skirtas kiekvienas pranešimas.</translation>
+        <source>Gateway URL</source>
+        <translation>Sietuvo URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Sietuvas mato, kuriam kambariui skirtas kiekvienas pranešimas.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Užregistruota. Laukiama sietuvo.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Tavo namų serveris siunčia į Matrix sietuvą, kuris persiunčia į šį įrenginį. Pasirink vieną, kad įjungtum push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Užregistruota. Pranešama namų serveriui.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Sietuvo adresas</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Dar nė vieno; kol nepasirinktas, tavo namų serveris negali pasiekti šio įrenginio.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nėra. Namų serveris dar negali pasiekti šio įrenginio.</translation>
     </message>
 </context>
 <context>
@@ -2007,8 +1999,8 @@
         <translation>Nauja žinutė</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Push platintojas nustojo pristatyti į xmatic. Vėl įjunkite push pranešimus skiltyje Paskyra.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push platintojas atsisakė xmatic. Vėl įjunk push skiltyje Paskyra.</translation>
     </message>
 </context>
 <context>

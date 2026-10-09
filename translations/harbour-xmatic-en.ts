@@ -1248,8 +1248,8 @@
         <translation>Poll: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>The push gateway has to be an https address.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>The gateway must be an https URL.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>This device has an address to be reached at.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>This device has an address; waiting to tell your homeserver.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Waiting for the distributor.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>This device has an address; your homeserver needs a gateway to reach it.</translation>
+        <source>Push server</source>
+        <translation>Push server</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Push server&apos;s own</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (public)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>UnifiedPush public gateway</translation>
+        <source>Custom</source>
+        <translation>Custom</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Other</translation>
+        <source>None</source>
+        <translation>None</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Not chosen</translation>
+        <source>Uses %1.</source>
+        <translation>Uses %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, the server that already holds this device&apos;s address.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Your push server has no gateway. Pick another one.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Your push server has no Matrix gateway. Choose another one.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Found once push is on. ntfy servers have one; the Mozilla service does not.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Pick a gateway to finish turning push on.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Run by the UnifiedPush project. It sees which room every notification is for.</translation>
+        <source>Gateway URL</source>
+        <translation>Gateway URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>It sees which room every notification is for.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registered. Waiting for a gateway.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registered. Telling the homeserver.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Gateway address</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>None yet; until one is chosen your homeserver cannot reach this device.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>None. The homeserver can&apos;t reach this device yet.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>New message</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>The push distributor dropped xmatic. Turn push back on under Account.</translation>
     </message>
 </context>
 <context>

@@ -1252,8 +1252,8 @@
         <translation>Anketa: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Potisni prehod mora biti naslov https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Prehod mora biti URL s https.</translation>
     </message>
 </context>
 <context>
@@ -1927,10 +1927,6 @@
         <translation>Ta naprava ima naslov, na katerem je dosegljiva.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Ta naprava ima naslov; čaka, da ga sporoči vašemu domačemu strežniku.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Čakanje na razpečevalnika.</translation>
     </message>
@@ -1951,56 +1947,52 @@
         <translation>Tvoj strežnik izve naslov pri potisni storitvi in za vsako obvestilo prehodu pošlje določilnik sobe in sporočila. Brez besedila: potisk nosi le določilnike, sporočilo pa ta naprava pridobi in odšifrira sama. Ta naslov je skrivnost — kdor ga ima, lahko temu telefonu pošlje obvestilo.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Ta naprava ima naslov; tvoj domači strežnik potrebuje prehod, da jo doseže.</translation>
+        <source>Push server</source>
+        <translation>Potisni strežnik</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Prehod potisnega strežnika</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (javni)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Javni prehod UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Po meri</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Drug</translation>
+        <source>None</source>
+        <translation>Noben</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Ni izbran</translation>
+        <source>Uses %1.</source>
+        <translation>Uporablja %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, strežnik, ki že ima naslov te naprave.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Tvoj potisni strežnik nima prehoda. Izberi drugega.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Tvoj potisni strežnik nima prehoda Matrix. Izberi drugega.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Preveri se po registraciji. ntfy ga ima, Mozilla ne.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Najde se, ko so potisna obvestila vklopljena. Strežniki ntfy ga imajo; storitev Mozilla ga nima.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Izberi prehod, da dokončaš vklop potisnih obvestil.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Upravlja ga projekt UnifiedPush. Vidi, za katero sobo je vsako obvestilo.</translation>
+        <source>Gateway URL</source>
+        <translation>URL prehoda</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Prehod vidi, za katero sobo je vsako obvestilo.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrirano. Čakanje na prehod.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Tvoj domači strežnik pošilja na prehod Matrix, ki posreduje tej napravi. Izberi enega, da vklopiš potisna obvestila.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrirano. Obveščanje domačega strežnika.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Naslov prehoda</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Še nobenega; dokler ni izbran, tvoj domači strežnik te naprave ne more doseči.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Noben. Domači strežnik te naprave še ne doseže.</translation>
     </message>
 </context>
 <context>
@@ -2010,8 +2002,8 @@
         <translation>Novo sporočilo</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Distributer potisnih obvestil je prenehal dostavljati v xmatic. Potisna obvestila znova vklopite pod Račun.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Razpečevalnik je odstranil xmatic. Potisna obvestila znova vklopi v razdelku Račun.</translation>
     </message>
 </context>
 <context>

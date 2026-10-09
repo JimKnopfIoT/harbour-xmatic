@@ -31,8 +31,7 @@ async fn push_connector(state: &Arc<State>) -> Result<Arc<Leghorn>, String> {
     Ok(leghorn)
 }
 
-/// Releases the connector name. The listener ends with the connector's channel;
-/// aborting it here would stop the event that called this.
+/// Releases the connector name. The listener ends by itself.
 async fn push_stop(state: &Arc<State>) {
     drop(state.push.lock().await.take());
 }
@@ -110,7 +109,7 @@ async fn push_sync(
         },
     };
     let Some(pusher) = pusher else {
-        // Push went off while no session could delete the pusher.
+        // Pusher left over from push going off without a session.
         if running(state).await.is_none()
             && !leghorn::enabled(&PUSH)
             && leghorn::matrix::last_pusher(&PUSH).is_some()
@@ -125,7 +124,7 @@ async fn push_sync(
         return Ok(false);
     };
     let Some(gateway) = picked_gateway(state).resolve(pusher.gateway.as_deref()) else {
-        // A gateway the user took back sees nothing more.
+        // No gateway any more: remove the pusher.
         if state.push_registered.lock().await.take().is_some() {
             crate::push::clear_own_pushers(&client).await?;
         }
@@ -156,7 +155,7 @@ async fn push_event(state: &Arc<State>, push: PushEvent) {
             let mut failure = None;
             if let Some(client) = state.client().await {
                 failure = crate::push::clear_own_pushers(&client).await.err();
-                // Kept otherwise: the next sign-in deletes the pusher it names.
+                // Otherwise kept, so the next sign-in can delete the pusher.
                 if failure.is_none() {
                     if let Some(leghorn) = running(state).await {
                         let _ = leghorn.forget().await;
@@ -234,8 +233,7 @@ async fn push_report(state: &Arc<State>, forced: Option<&str>, error: Option<Str
     state.sink.emit(event("push.state", data));
 }
 
-/// Starts the connector where push is on. Asked by the app at start and by the
-/// push page; a phone that never turned push on gets an answer and nothing else.
+/// Reports push state. Starts the connector only if push is on.
 pub(super) async fn push_status(state: &Arc<State>, id: u64) {
     if take_legacy(state) {
         if let Err(error) = enable(state).await {
@@ -255,7 +253,7 @@ pub(super) async fn push_status(state: &Arc<State>, id: u64) {
 }
 
 async fn enable(state: &Arc<State>) -> Result<(), String> {
-    // Not even the distributor hears of xmatic before a gateway is picked.
+    // No registration before a gateway is picked.
     if picked_gateway(state) == crate::push::Gateway::Unset {
         return Err("choose a push gateway first".to_owned());
     }
@@ -325,7 +323,7 @@ pub(super) async fn push_disable(state: &Arc<State>, id: u64) {
     state.sink.emit(reply_ok(id, json!({ "enabled": false })));
 }
 
-/// Forgets push for a sign-out: the endpoint lets anyone push to this phone.
+/// Unregisters and deletes push state at sign-out.
 pub(super) async fn push_forget(state: &Arc<State>) {
     *state.push_registered.lock().await = None;
     let forgotten = match running(state).await {
@@ -388,8 +386,8 @@ async fn notification(state: &Arc<State>, room_id: &str, event_id: &str) -> Resu
     crate::push::notification_for(&client, room_id, event_id, sync).await
 }
 
-/// The woken process. Keeps the connector name until every push is shown and a
-/// new endpoint registered; `push.yield` ends it early.
+/// The woken process: holds the connector name until the pushes are handled.
+/// `push.yield` ends it.
 pub(super) async fn push_wake(state: &Arc<State>, id: u64) {
     let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
     let holds = Holds::default();

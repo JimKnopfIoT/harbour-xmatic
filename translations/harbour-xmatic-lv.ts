@@ -1250,8 +1250,8 @@
         <translation>Aptauja: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Push vārtejai jābūt https adresei.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Vārtejai jābūt https URL.</translation>
     </message>
 </context>
 <context>
@@ -1924,10 +1924,6 @@
         <translation>Šai ierīcei ir adrese, kurā tā ir sasniedzama.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Šai ierīcei ir adrese; gaida, lai to paziņotu jūsu mājas serverim.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Gaida izplatītāju.</translation>
     </message>
@@ -1948,56 +1944,52 @@
         <translation>Tavam serverim tiek paziņota adrese push pakalpojumā, un tas katram paziņojumam sūta vārtejai istabas un ziņas identifikatoru. Bez teksta: push nes tikai identifikatorus, bet ziņu šī ierīce iegūst un atšifrē pati. Šī adrese ir noslēpums — kam tā ir, var sūtīt šim tālrunim paziņojumu.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Šai ierīcei ir adrese; tavam mājas serverim vajag vārteju, lai to sasniegtu.</translation>
+        <source>Push server</source>
+        <translation>Push serveris</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Push servera vārteja</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (publiska)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>UnifiedPush publiskā vārteja</translation>
+        <source>Custom</source>
+        <translation>Pielāgota</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Cita</translation>
+        <source>None</source>
+        <translation>Nav</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Nav izvēlēta</translation>
+        <source>Uses %1.</source>
+        <translation>Izmanto %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1 — serveris, kuram jau ir šīs ierīces adrese.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Tavam push serverim nav vārtejas. Izvēlies citu.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Tavam push serverim nav Matrix vārtejas. Izvēlies citu.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Pārbauda pēc reģistrācijas. ntfy tāda ir, Mozilla nav.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Tiek atrasta, kad push ir ieslēgts. ntfy serveriem tāda ir; Mozilla pakalpojumam nav.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Izvēlies vārteju, lai pabeigtu push ieslēgšanu.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>To uztur UnifiedPush projekts. Tā redz, kurai istabai ir katrs paziņojums.</translation>
+        <source>Gateway URL</source>
+        <translation>Vārtejas URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Vārteja redz, kurai istabai ir katrs paziņojums.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Reģistrēts. Gaida vārteju.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Tavs mājas serveris sūta uz Matrix vārteju, kas pārsūta uz šo ierīci. Izvēlies vienu, lai ieslēgtu push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Reģistrēts. Paziņo mājas serverim.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Vārtejas adrese</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Vēl nav; kamēr tā nav izvēlēta, tavs mājas serveris nevar sasniegt šo ierīci.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nav. Mājas serveris vēl nevar sasniegt šo ierīci.</translation>
     </message>
 </context>
 <context>
@@ -2007,8 +1999,8 @@
         <translation>Jauna ziņa</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Push izplatītājs pārtrauca piegādi uz xmatic. Atkal ieslēdziet push paziņojumus sadaļā Konts.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push izplatītājs atmeta xmatic. Ieslēdz push no jauna sadaļā Konts.</translation>
     </message>
 </context>
 <context>

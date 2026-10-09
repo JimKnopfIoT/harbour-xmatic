@@ -24,33 +24,26 @@ this feature cannot be switched on at all, and the page says so.
 
 ## What you need
 
-**A UnifiedPush distributor for Sailfish OS.** At the time of writing the one
-that exists is [Foghorn](https://git.agnos.is/projectmoon/foghorn). Install it,
-start its service, and **connect it to an [ntfy](https://ntfy.sh) server** in
-its settings - the public one or your own.
+**A UnifiedPush distributor.** On Sailfish OS that's
+[Foghorn](https://git.agnos.is/projectmoon/foghorn). Install it, start it, and
+point it at an [ntfy](https://ntfy.sh) server, public or your own.
 
 ### The gateway
 
-A Matrix homeserver cannot push to your phone's address directly: it posts to
-a *Matrix push gateway*, which forwards to the address. You choose it in
-Account › Push notifications, before push can be switched on; until then
-xmatic does not even register with the distributor.
+The homeserver doesn't push to your phone's address directly. It posts to a
+Matrix push gateway, which forwards. After you switch push on, xmatic asks
+which one to use, and registers with the distributor only once you've picked:
 
-- **Push server's own.** xmatic, through
-  [Leghorn](https://git.agnos.is/projectmoon/foghorn/src/branch/master/leghorn),
-  asks the push server behind your address whether it is a Matrix gateway
-  itself. **ntfy is**, so with Foghorn on ntfy the server that holds your
-  address is also the gateway, and no third party is added. The Mozilla Push
-  Service is not; the page then says so and asks for another choice.
-- **UnifiedPush public gateway**, `matrix.gateway.unifiedpush.org`, run by the
-  UnifiedPush project.
-- **Other**: any gateway you name.
+- **Push server**: the gateway built into your push server, if it has one.
+  ntfy does; Mozilla's service doesn't. xmatic finds out after registering.
+- **UnifiedPush (public)**: `matrix.gateway.unifiedpush.org`.
+- **Custom**: a URL you enter.
 
-xmatic never picks a gateway for you, and a push server that does not answer
-the question keeps what was used before. A gateway entered in an older version
-stays chosen as "Other".
+There's no default. If the push server doesn't answer when asked about its
+gateway, the previous answer stays. A gateway set in an older version shows up
+as Custom.
 
-Gateways and addresses must be https; anything else is refused.
+Gateways and push addresses must be https. Anything else is refused.
 
 ## What leaves your device when this is on
 
@@ -59,20 +52,19 @@ notification carries a room identifier and a message identifier and nothing
 else. The text is fetched by your phone, from your homeserver, and decrypted
 here with keys that never leave.
 
-**But metadata does, to parties that knew nothing before:**
+**Metadata does, to parties that knew nothing before:**
 
 - **The gateway** learns your push address and, for every notification, which
   room and which message, at what time. Over a week that is an activity
   profile: this account, these rooms, these hours.
 - **The push service** (your ntfy server, or Mozilla) sees your push address
-  and the bytes passing through. Matrix gateways send that body unencrypted,
-  so it sees the same room and message identifiers.
+  and every push. Gateways send the body unencrypted, so it sees the same room
+  and message IDs.
 
-With Foghorn on ntfy those two are one server - your own, if you run it. On
-Mozilla they are two, and the gateway is whichever you chose.
+With ntfy and its own gateway, that's one server (yours, if you run it).
+Otherwise it's two.
 
-None of them sees a word you wrote. All of them see when and where you are
-active.
+Neither sees what you wrote. Both see when and in which rooms you're active.
 
 **Your push address is a bearer secret.** Anyone who holds it can send a
 notification to your phone — as often as they like. They cannot forge a
@@ -85,7 +77,7 @@ writes it to the log.
 
 - The sandbox. The woken process runs under the same Sailjail profile as the
   app, takes the same single-process lock on the message store, and has no
-  access the app does not. Starting the app while it runs ends it at once.
+  access the app does not. Opening the app stops it.
 - Your notification setting. If message text is switched off in Account ›
   Privacy, a push shows "New message" and nothing more, exactly as an ordinary
   arrival does.
@@ -95,40 +87,38 @@ writes it to the log.
 ## What happens after a reboot
 
 The key that unlocks xmatic's encrypted storage lives in Sailfish Secrets and
-is bound to the device lock. The woken process only asks for it in a way that
-can never raise the system's dialog.
+is bound to the device lock. The woken process only takes it if Secrets hands
+it over without asking.
 
-So after a restart, until the device is unlocked, a push cannot be decrypted.
-You still get a banner — it says a message arrived and nothing more — because
-silence would leave you believing nothing had.
+After a restart, until you unlock the phone, a push can't be read. You get a
+"New message" banner instead.
 
 ## Turning it off
 
 Account › Push notifications, switch off. xmatic removes the pusher from your
-homeserver, gives the registration back and deletes the address and keys it
-kept, in that order.
+homeserver, unregisters from the distributor and deletes the stored address
+and keys.
 
 If your homeserver is unreachable at that moment, the pusher may stay behind
 and the server will keep posting to an address that no longer exists. That
 attempt shows up in Account › Error log. Switching off again once you are
 online, or signing out, clears it.
 
-Signing out deletes the registration in any case, and the record of which
-rooms had a banner: an address that outlives the device it was made for is a
-secret pointing at a stranger.
+Signing out does the same, and also deletes the list of rooms that had a
+banner.
 
 ## Status
 
 This is new and will need field reports. What is built:
 
 - finding a distributor, registering with it, receiving the address
-- finding the Matrix gateway for that address, or using the one you entered
-- registering and removing the pusher on the homeserver, and replacing it when
-  the distributor moves the address, also while the app is closed
+- the gateway choice
+- setting and removing the pusher on the homeserver, including when the
+  address changes while the app is closed
 - re-registering with the distributor at every start while push is on
 - receiving a push while the app runs
-- being woken by a push while the app is closed and showing the message, or
-  "New message" while the storage key is locked
+- showing the message when a push wakes the closed app ("New message" while
+  the phone is still locked after a restart)
 
 What is not:
 

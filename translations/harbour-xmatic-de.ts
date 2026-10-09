@@ -1248,8 +1248,8 @@
         <translation>Umfrage: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Das Push-Gateway muss eine https-Adresse sein.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Das Gateway muss eine https-URL sein.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Dieses Gerät hat eine Adresse, unter der es erreichbar ist.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Dieses Gerät hat eine Adresse; sie wird deinem Heimserver noch mitgeteilt.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Warte auf den Verteiler.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Deinem Heimserver wird eine Adresse beim Push-Dienst mitgeteilt, und er schickt für jede Benachrichtigung eine Raum- und Nachrichtenkennung an das Gateway. Keinen Nachrichtentext: der Push trägt nur Kennungen, die Nachricht holt und entschlüsselt dieses Gerät selbst. Diese Adresse ist ein Geheimnis — wer sie hat, kann diesem Telefon eine Benachrichtigung schicken.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Dieses Gerät hat eine Adresse; dein Heimserver braucht ein Gateway, um es zu erreichen.</translation>
+        <source>Push server</source>
+        <translation>Push-Server</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Gateway des Push-Servers</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (öffentlich)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Öffentliches UnifiedPush-Gateway</translation>
+        <source>Custom</source>
+        <translation>Eigenes</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Anderes</translation>
+        <source>None</source>
+        <translation>Keines</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Nicht gewählt</translation>
+        <source>Uses %1.</source>
+        <translation>Nutzt %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, der Server, der die Adresse dieses Geräts schon hat.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Dein Push-Server hat kein Gateway. Wähl ein anderes.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Dein Push-Server hat kein Matrix-Gateway. Wähl ein anderes.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Wird nach der Anmeldung geprüft. ntfy hat eines, Mozilla nicht.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Wird gefunden, sobald Push an ist. ntfy-Server haben eines; der Mozilla-Dienst nicht.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Wähl ein Gateway, um Push fertig einzuschalten.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Betrieben vom UnifiedPush-Projekt. Es sieht, für welchen Raum jede Benachrichtigung ist.</translation>
+        <source>Gateway URL</source>
+        <translation>Gateway-URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Das Gateway sieht, für welchen Raum jede Benachrichtigung ist.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Angemeldet. Warte auf ein Gateway.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Dein Heimserver schickt an ein Matrix-Gateway, das an dieses Gerät weiterleitet. Wähl eines, um Push einzuschalten.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Angemeldet. Heimserver wird informiert.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Gateway-Adresse</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Noch keines; bis eines gewählt ist, kann dein Heimserver dieses Gerät nicht erreichen.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Keines. Der Heimserver kann dieses Gerät noch nicht erreichen.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Neue Nachricht</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Der Push-Verteiler stellt nichts mehr an xmatic zu. Schalte Push-Benachrichtigungen unter Konto wieder ein.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Der Push-Verteiler hat xmatic abgemeldet. Schalte Push unter Konto wieder ein.</translation>
     </message>
 </context>
 <context>

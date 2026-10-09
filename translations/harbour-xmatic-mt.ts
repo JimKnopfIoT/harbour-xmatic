@@ -1252,8 +1252,8 @@
         <translation>Stħarriġ: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Il-gateway push irid ikun indirizz https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Il-gateway irid ikun URL https.</translation>
     </message>
 </context>
 <context>
@@ -1927,10 +1927,6 @@
         <translation>Dan l-apparat għandu indirizz fejn jista&apos; jintlaħaq.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Dan l-apparat għandu indirizz; qed jistenna biex jgħarraf lis-server tad-dar tiegħek.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Qed jistenna d-distributur.</translation>
     </message>
@@ -1951,56 +1947,52 @@
         <translation>Is-server tiegħek jingħata indirizz mas-servizz push, u għal kull notifika jibgħat lill-gateway identifikatur tal-kamra u tal-messaġġ. Ebda test: il-push iġorr identifikaturi biss u dan l-apparat iġib u jiddeċifra l-messaġġ waħdu. Dak l-indirizz huwa sigriet — min għandu jista&apos; jibgħat notifika lil dan it-telefon.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Dan l-apparat għandu indirizz; is-server tad-dar tiegħek għandu bżonn gateway biex jilħqu.</translation>
+        <source>Push server</source>
+        <translation>Server push</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Il-gateway tas-server push</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (pubbliku)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Gateway pubbliku ta&apos; UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Personalizzat</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Ieħor</translation>
+        <source>None</source>
+        <translation>Xejn</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Mhux magħżul</translation>
+        <source>Uses %1.</source>
+        <translation>Juża %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, is-server li diġà għandu l-indirizz ta&apos; dan l-apparat.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Is-server push tiegħek m&apos;għandux gateway. Agħżel ieħor.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Is-server push tiegħek m&apos;għandux gateway Matrix. Agħżel ieħor.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Jiġi ċċekkjat wara r-reġistrazzjoni. ntfy għandu wieħed, Mozilla le.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Jinstab ladarba l-push ikun mixgħul. Is-servers ntfy għandhom wieħed; is-servizz ta&apos; Mozilla le.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Agħżel gateway biex tlesti tixgħel il-push.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Imħaddem mill-proġett UnifiedPush. Jara għal liema kamra hi kull notifika.</translation>
+        <source>Gateway URL</source>
+        <translation>URL tal-gateway</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Il-gateway jara għal liema kamra hi kull notifika.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Irreġistrat. Qed jistenna gateway.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Is-server tad-dar tiegħek jibgħat lil gateway Matrix, li jgħaddi lil dan l-apparat. Agħżel wieħed biex tixgħel il-push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Irreġistrat. Qed jgħid lis-server tad-dar.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Indirizz tal-gateway</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Għad m&apos;hemm l-ebda wieħed; sakemm jintgħażel wieħed, is-server tad-dar tiegħek ma jistax jilħaq dan l-apparat.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Xejn. Is-server tad-dar għadu ma jistax jilħaq dan l-apparat.</translation>
     </message>
 </context>
 <context>
@@ -2010,8 +2002,8 @@
         <translation>Messaġġ ġdid</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Id-distributur tal-push waqaf iwassal lil xmatic. Ixgħel in-notifiki push mill-ġdid taħt Kont.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Id-distributur push waqqa&apos; lil xmatic. Erġa&apos; ixgħel il-push taħt Kont.</translation>
     </message>
 </context>
 <context>

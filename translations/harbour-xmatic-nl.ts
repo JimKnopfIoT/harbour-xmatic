@@ -1248,8 +1248,8 @@
         <translation>Peiling: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>De pushgateway moet een https-adres zijn.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>De gateway moet een https-URL zijn.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Dit apparaat heeft een adres waarop het bereikbaar is.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Dit apparaat heeft een adres; wacht om het aan je thuisserver door te geven.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Wachten op de distributeur.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Je thuisserver krijgt een adres bij de pushdienst te horen en stuurt de gateway voor elke melding een kamer- en berichtidentificatie. Geen berichttekst: de push draagt alleen identificaties en dit apparaat haalt en ontsleutelt het bericht zelf. Dat adres is een geheim — wie het heeft, kan deze telefoon een melding sturen.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Dit apparaat heeft een adres; je thuisserver heeft een gateway nodig om het te bereiken.</translation>
+        <source>Push server</source>
+        <translation>Pushserver</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Die van de pushserver</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (openbaar)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Openbare UnifiedPush-gateway</translation>
+        <source>Custom</source>
+        <translation>Aangepast</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Andere</translation>
+        <source>None</source>
+        <translation>Geen</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Niet gekozen</translation>
+        <source>Uses %1.</source>
+        <translation>Gebruikt %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, de server die het adres van dit apparaat al heeft.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Je pushserver heeft geen gateway. Kies een andere.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Je pushserver heeft geen Matrix-gateway. Kies een andere.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Wordt na registratie gecontroleerd. ntfy heeft er een, Mozilla niet.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Wordt gevonden zodra push aan staat. ntfy-servers hebben er een; de dienst van Mozilla niet.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Kies een gateway om push helemaal aan te zetten.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Beheerd door het UnifiedPush-project. Hij ziet voor welke kamer elke melding is.</translation>
+        <source>Gateway URL</source>
+        <translation>Gateway-URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>De gateway ziet voor welke kamer elke melding is.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Geregistreerd. Wachten op een gateway.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Je thuisserver stuurt naar een Matrix-gateway, die doorstuurt naar dit apparaat. Kies er een om push aan te zetten.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Geregistreerd. Homeserver wordt ingelicht.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Gatewayadres</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Nog geen; tot er een gekozen is, kan je thuisserver dit apparaat niet bereiken.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Geen. De homeserver kan dit apparaat nog niet bereiken.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Nieuw bericht</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>De pushdistributeur levert niet meer aan xmatic. Zet pushmeldingen opnieuw aan onder Account.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>De pushdistributeur heeft xmatic laten vallen. Zet push weer aan onder Account.</translation>
     </message>
 </context>
 <context>

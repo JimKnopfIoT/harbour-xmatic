@@ -1250,8 +1250,8 @@
         <translation>Anketa: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Brána push musí být adresa https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Brána musí být URL s https.</translation>
     </message>
 </context>
 <context>
@@ -1924,10 +1924,6 @@
         <translation>Toto zařízení má adresu, na které je dosažitelné.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Toto zařízení má adresu; čeká se na její předání vašemu domovskému serveru.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Čekání na distributora.</translation>
     </message>
@@ -1948,56 +1944,52 @@
         <translation>Tvůj server se dozví adresu u služby push a ke každému oznámení pošle bráně identifikátor místnosti a zprávy. Žádný text: push nese jen identifikátory a zprávu si toto zařízení stáhne a rozšifruje samo. Ta adresa je tajemství — kdo ji má, může tomuto telefonu poslat oznámení.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Toto zařízení má adresu; tvůj domovský server potřebuje bránu, aby se k němu dostal.</translation>
+        <source>Push server</source>
+        <translation>Push server</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Brána push serveru</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (veřejná)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Veřejná brána UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Vlastní</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Jiná</translation>
+        <source>None</source>
+        <translation>Žádná</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Nezvoleno</translation>
+        <source>Uses %1.</source>
+        <translation>Používá %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, server, který už adresu tohoto zařízení má.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Tvůj push server nemá bránu. Vyber jinou.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Tvůj push server nemá bránu Matrix. Zvol jinou.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Ověří se po registraci. ntfy ji má, Mozilla ne.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Zjistí se, jakmile je push zapnutý. Servery ntfy ji mají; služba Mozilla ne.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Vyber bránu a dokonči zapnutí push.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Provozuje ji projekt UnifiedPush. Vidí, pro kterou místnost je každé oznámení.</translation>
+        <source>Gateway URL</source>
+        <translation>URL brány</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Brána vidí, pro kterou místnost je každé oznámení.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrováno. Čekání na bránu.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Tvůj domovský server posílá na bránu Matrix, která to předá tomuto zařízení. Zvol nějakou, aby se push zapnul.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrováno. Oznamuje se domovskému serveru.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Adresa brány</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Zatím žádná; dokud nějakou nezvolíš, tvůj domovský server se k tomuto zařízení nedostane.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Žádná. Domovský server zatím na toto zařízení nedosáhne.</translation>
     </message>
 </context>
 <context>
@@ -2007,8 +1999,8 @@
         <translation>Nová zpráva</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Distributor push oznámení přestal doručovat do xmatic. Znovu zapněte push oznámení v části Účet.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Distributor push odhlásil xmatic. Zapni push znovu v sekci Účet.</translation>
     </message>
 </context>
 <context>

@@ -1248,8 +1248,8 @@
         <translation>Sondaggio: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Il gateway push deve essere un indirizzo https.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Il gateway deve essere un URL https.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Questo dispositivo ha un indirizzo a cui può essere raggiunto.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Questo dispositivo ha un indirizzo; in attesa di comunicarlo al tuo homeserver.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>In attesa del distributore.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Al tuo server viene comunicato un indirizzo presso il servizio push, e per ogni notifica invia al gateway un identificatore di stanza e di messaggio. Nessun testo: il push porta solo identificatori e questo dispositivo recupera e decifra il messaggio da sé. Quell&apos;indirizzo è un segreto: chi lo possiede può inviare una notifica a questo telefono.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Questo dispositivo ha un indirizzo; il tuo homeserver ha bisogno di un gateway per raggiungerlo.</translation>
+        <source>Push server</source>
+        <translation>Server push</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Quello del server push</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (pubblico)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Gateway pubblico UnifiedPush</translation>
+        <source>Custom</source>
+        <translation>Personalizzato</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Altro</translation>
+        <source>None</source>
+        <translation>Nessuno</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Non scelto</translation>
+        <source>Uses %1.</source>
+        <translation>Usa %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, il server che ha già l&apos;indirizzo di questo dispositivo.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Il tuo server push non ha un gateway. Scegline un altro.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Il tuo server push non ha un gateway Matrix. Scegline un altro.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Verificato dopo la registrazione. ntfy ce l&apos;ha, Mozilla no.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Si trova una volta attivato il push. I server ntfy ne hanno uno; il servizio Mozilla no.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Scegli un gateway per finire di attivare il push.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Gestito dal progetto UnifiedPush. Vede a quale stanza è destinata ogni notifica.</translation>
+        <source>Gateway URL</source>
+        <translation>URL del gateway</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Il gateway vede a quale stanza è destinata ogni notifica.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrato. In attesa di un gateway.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Il tuo homeserver invia a un gateway Matrix, che inoltra a questo dispositivo. Scegline uno per attivare il push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrato. Avviso l&apos;homeserver.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Indirizzo del gateway</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Nessuno per ora; finché non ne scegli uno, il tuo homeserver non può raggiungere questo dispositivo.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nessuno. L&apos;homeserver non può ancora raggiungere questo dispositivo.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Nuovo messaggio</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Il distributore push ha smesso di consegnare a xmatic. Riattiva le notifiche push in Account.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Il distributore push ha rimosso xmatic. Riattiva il push in Account.</translation>
     </message>
 </context>
 <context>

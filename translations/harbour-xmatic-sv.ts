@@ -1248,8 +1248,8 @@
         <translation>Omröstning: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>Push-gatewayen måste vara en https-adress.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Gatewayen måste vara en https-URL.</translation>
     </message>
 </context>
 <context>
@@ -1921,10 +1921,6 @@
         <translation>Den här enheten har en adress där den kan nås.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Den här enheten har en adress; väntar på att meddela din hemserver.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Väntar på distributören.</translation>
     </message>
@@ -1945,56 +1941,52 @@
         <translation>Din hemserver får en adress hos push-tjänsten och skickar för varje avisering ett rums- och meddelande-id till gatewayen. Ingen meddelandetext: pushen bär bara identifierare och den här enheten hämtar och dekrypterar meddelandet själv. Den adressen är en hemlighet — den som har den kan skicka en avisering till den här telefonen.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Den här enheten har en adress; din hemserver behöver en gateway för att nå den.</translation>
+        <source>Push server</source>
+        <translation>Push-server</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>Push-serverns egen</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (offentlig)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>Offentlig UnifiedPush-gateway</translation>
+        <source>Custom</source>
+        <translation>Egen</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Annan</translation>
+        <source>None</source>
+        <translation>Ingen</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Inte vald</translation>
+        <source>Uses %1.</source>
+        <translation>Använder %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, servern som redan har den här enhetens adress.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>Din push-server har ingen gateway. Välj en annan.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>Din push-server har ingen Matrix-gateway. Välj en annan.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Kontrolleras efter registrering. ntfy har en, Mozilla inte.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Hittas när push är på. ntfy-servrar har en; Mozillas tjänst har inte det.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Välj en gateway för att slå på push helt.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>Drivs av UnifiedPush-projektet. Den ser vilket rum varje avisering gäller.</translation>
+        <source>Gateway URL</source>
+        <translation>Gateway-URL</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Gatewayen ser vilket rum varje avisering gäller.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Registrerad. Väntar på en gateway.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>Din hemserver skickar till en Matrix-gateway, som vidarebefordrar till den här enheten. Välj en för att slå på push.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Registrerad. Meddelar hemservern.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Gateway-adress</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Ingen än; tills en är vald kan din hemserver inte nå den här enheten.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Ingen. Hemservern kan inte nå den här enheten än.</translation>
     </message>
 </context>
 <context>
@@ -2004,8 +1996,8 @@
         <translation>Nytt meddelande</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>Push-distributören slutade leverera till xmatic. Slå på push-aviseringar igen under Konto.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>Push-distributören släppte xmatic. Slå på push igen under Konto.</translation>
     </message>
 </context>
 <context>

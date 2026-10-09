@@ -201,8 +201,7 @@ int runPushWake(int argc, char *argv[])
         return 0;
     }
 
-    // Only a key secretsd hands over without a dialog: none can be answered from
-    // the background. Without one the banner says "New message".
+    // Only a key secretsd gives without a dialog. Without it, banners say "New message".
     StoreKeyResult storeKey = readStoreKeyQuietly();
     QJsonObject config;
     config.insert(QStringLiteral("dataDir"), dataDirectory);
@@ -281,11 +280,11 @@ int runPushWake(int argc, char *argv[])
     });
     drain.start(50);
 
-    // The app, started meanwhile, asks for the store: the wake-up ends at once.
+    // Yield if the app starts.
     bool yielded = false;
     QTimer yieldCheck;
     QObject::connect(&yieldCheck, &QTimer::timeout, &app, [&]() {
-        // Only looked at: the app removes it once it holds the store.
+        // The app deletes it.
         if (!yielded
             && QFile::exists(dataDirectory + QStringLiteral("/")
                              + QStringLiteral(XMATIC_WAKE_YIELD_FILE))) {
@@ -340,8 +339,8 @@ void pushPrelude(const char *argv0)
     if (proxyHandlesPipelinedAuth()) {
         return;
     }
-    // zbus skips pipelined SASL under FLATPAK_ID, which older proxies drop. Every
-    // process: the push page asks the bus before push is on.
+    // zbus skips pipelined SASL under FLATPAK_ID; older proxies drop it. Always set,
+    // since the push page uses the bus while push is off.
     qputenv("FLATPAK_ID", QFileInfo(QString::fromLocal8Bit(argv0)).fileName().toLocal8Bit());
 }
 
@@ -383,6 +382,6 @@ void publishPushNotice(const QString &dataDirectory)
                   QStringLiteral("xmatic"),
                   QCoreApplication::translate(
                       "PushWake",
-                      "The push distributor stopped delivering to xmatic. Switch push notifications on again under Account."),
+                      "The push distributor dropped xmatic. Turn push back on under Account."),
                   false);
 }

@@ -1246,8 +1246,8 @@
         <translation>Szavazás: %1</translation>
     </message>
     <message>
-        <source>The push gateway has to be an https address.</source>
-        <translation>A push átjárónak https címnek kell lennie.</translation>
+        <source>The gateway must be an https URL.</source>
+        <translation>Az átjárónak https URL-nek kell lennie.</translation>
     </message>
 </context>
 <context>
@@ -1918,10 +1918,6 @@
         <translation>Ennek az eszköznek van címe, amelyen elérhető.</translation>
     </message>
     <message>
-        <source>This device has an address; waiting to tell your homeserver.</source>
-        <translation>Ennek az eszköznek van címe; várakozás a honi kiszolgáló értesítésére.</translation>
-    </message>
-    <message>
         <source>Waiting for the distributor.</source>
         <translation>Várakozás az elosztóra.</translation>
     </message>
@@ -1942,56 +1938,52 @@
         <translation>A kiszolgálód megkapja a push szolgáltatásnál lévő címet, és minden értesítéshez elküldi az átjárónak a szoba- és üzenetazonosítót. Üzenetszöveget nem: a push csak azonosítókat visz, az üzenetet ez az eszköz tölti le és fejti vissza. Ez a cím titok — akinél megvan, értesítést küldhet erre a telefonra.</translation>
     </message>
     <message>
-        <source>This device has an address; your homeserver needs a gateway to reach it.</source>
-        <translation>Ennek az eszköznek van címe; a honi kiszolgálódnak átjáróra van szüksége, hogy elérje.</translation>
+        <source>Push server</source>
+        <translation>Push kiszolgáló</translation>
     </message>
     <message>
-        <source>Push server&apos;s own</source>
-        <translation>A push kiszolgáló sajátja</translation>
+        <source>UnifiedPush (public)</source>
+        <translation>UnifiedPush (nyilvános)</translation>
     </message>
     <message>
-        <source>UnifiedPush public gateway</source>
-        <translation>UnifiedPush nyilvános átjáró</translation>
+        <source>Custom</source>
+        <translation>Egyéni</translation>
     </message>
     <message>
-        <source>Other</source>
-        <translation>Másik</translation>
+        <source>None</source>
+        <translation>Nincs</translation>
     </message>
     <message>
-        <source>Not chosen</source>
-        <translation>Nincs kiválasztva</translation>
+        <source>Uses %1.</source>
+        <translation>Ezt használja: %1.</translation>
     </message>
     <message>
-        <source>%1, the server that already holds this device&apos;s address.</source>
-        <translation>%1, a kiszolgáló, amelynél már megvan ennek az eszköznek a címe.</translation>
+        <source>Your push server has no gateway. Pick another one.</source>
+        <translation>A push kiszolgálódnak nincs átjárója. Válassz másikat.</translation>
     </message>
     <message>
-        <source>Your push server has no Matrix gateway. Choose another one.</source>
-        <translation>A push kiszolgálódnak nincs Matrix átjárója. Válassz egy másikat.</translation>
+        <source>Checked after registering. ntfy has one, Mozilla doesn&apos;t.</source>
+        <translation>Regisztráció után derül ki. Az ntfy-nak van, a Mozillának nincs.</translation>
     </message>
     <message>
-        <source>Found once push is on. ntfy servers have one; the Mozilla service does not.</source>
-        <translation>Bekapcsolt push mellett derül ki. Az ntfy kiszolgálóknak van; a Mozilla szolgáltatásának nincs.</translation>
+        <source>Pick a gateway to finish turning push on.</source>
+        <translation>Válassz átjárót a push bekapcsolásának befejezéséhez.</translation>
     </message>
     <message>
-        <source>Run by the UnifiedPush project. It sees which room every notification is for.</source>
-        <translation>A UnifiedPush projekt üzemelteti. Látja, melyik szobának szól minden értesítés.</translation>
+        <source>Gateway URL</source>
+        <translation>Átjáró URL-je</translation>
     </message>
     <message>
-        <source>It sees which room every notification is for.</source>
-        <translation>Az átjáró látja, melyik szobának szól minden értesítés.</translation>
+        <source>Registered. Waiting for a gateway.</source>
+        <translation>Regisztrálva. Várakozás átjáróra.</translation>
     </message>
     <message>
-        <source>Your homeserver posts to a Matrix gateway, which forwards to this device. Choose one to turn push on.</source>
-        <translation>A honi kiszolgálód egy Matrix átjárónak küld, amely továbbítja erre az eszközre. Válassz egyet a push bekapcsolásához.</translation>
+        <source>Registered. Telling the homeserver.</source>
+        <translation>Regisztrálva. Az otthoni kiszolgáló értesítése.</translation>
     </message>
     <message>
-        <source>Gateway address</source>
-        <translation>Átjáró címe</translation>
-    </message>
-    <message>
-        <source>None yet; until one is chosen your homeserver cannot reach this device.</source>
-        <translation>Még nincs; amíg nincs kiválasztva, a honi kiszolgálód nem éri el ezt az eszközt.</translation>
+        <source>None. The homeserver can&apos;t reach this device yet.</source>
+        <translation>Nincs. Az otthoni kiszolgáló még nem éri el ezt az eszközt.</translation>
     </message>
 </context>
 <context>
@@ -2001,8 +1993,8 @@
         <translation>Új üzenet</translation>
     </message>
     <message>
-        <source>The push distributor stopped delivering to xmatic. Switch push notifications on again under Account.</source>
-        <translation>A push-elosztó leállította a kézbesítést az xmatic felé. Kapcsold be újra a push-értesítéseket a Fiók alatt.</translation>
+        <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
+        <translation>A push elosztó elengedte az xmaticot. Kapcsold vissza a pusht a Fiók alatt.</translation>
     </message>
 </context>
 <context>
