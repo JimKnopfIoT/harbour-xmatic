@@ -25,13 +25,17 @@ Dialog {
     /// What was already typed when the file was picked, as the caption's start:
     /// text and picture were meant as one message.
     property string caption: ""
+    /// The room the caption's mentions are looked up in, and those already
+    /// picked in the text that became the caption.
+    property string roomId: ""
+    property var mentionsPicked: ({})
 
     /// Called once the attachment is on its way, so the room can drop the
     /// reply it was holding without losing a half-typed message.
     property var afterSend: null
 
-    /// Called when the send was called off, with the caption as it stands, so
-    /// the conversation can put the text back where it was typed.
+    /// Called when the send was called off, with the caption and its mentions as
+    /// they stand, so the conversation can put the text back where it was typed.
     property var afterCancel: null
 
     /// Whether the picture goes as it lies. Off, it is re-encoded towards a
@@ -52,7 +56,7 @@ Dialog {
 
     onRejected: {
         if (dialog.afterCancel) {
-            dialog.afterCancel(captionField.text)
+            dialog.afterCancel(captionField.text, captionMentions.picked)
         }
     }
 
@@ -79,7 +83,7 @@ Dialog {
             // Handed over, not sent: what follows a send belongs after it. Calling
             // `afterSend` here cleared the reply before anything was established.
             dialog.send(dialog.plainFiles(), captionField.text, dialog.replyTo,
-                        dialog.original)
+                        dialog.original, captionMentions.ids())
             return
         }
         var picked = dialog.plainFiles()
@@ -87,11 +91,37 @@ Dialog {
             matrix.sendMedia(picked[i].path, picked[i].mimeType,
                              i === 0 ? captionField.text : "",
                              i === 0 ? dialog.replyTo : "",
-                             0, dialog.original)
+                             0, dialog.original,
+                             i === 0 ? captionMentions.ids() : [])
         }
         if (dialog.afterSend) {
             dialog.afterSend()
         }
+    }
+
+    /// Open while a press on the picker is under way: Silica clears a field's
+    /// focus on every press outside it, and the keyboard would go with it.
+    property bool keepKeyboard: false
+
+    Timer {
+        id: keepKeyboardWindow
+
+        interval: 400
+        onTriggered: dialog.keepKeyboard = false
+    }
+
+    function holdKeyboard() {
+        dialog.keepKeyboard = true
+        keepKeyboardWindow.restart()
+    }
+
+    MentionInput {
+        id: captionMentions
+
+        field: captionField
+        roomId: dialog.roomId
+        picked: dialog.mentionsPicked
+        onKeepKeyboardRequested: dialog.holdKeyboard()
     }
 
     SilicaFlickable {
@@ -221,6 +251,13 @@ Dialog {
                 onClicked: dialog.original = !dialog.original
             }
 
+            MentionPicker {
+                roomId: dialog.roomId
+                armed: captionMentions.armed
+                onPicked: captionMentions.insert(id, insert)
+                onKeepKeyboardRequested: dialog.holdKeyboard()
+            }
+
             TextArea {
                 id: captionField
 
@@ -229,6 +266,16 @@ Dialog {
                 placeholderText: qsTr("Caption (optional)")
                 focus: true
                 text: dialog.caption
+                focusOutBehavior: dialog.keepKeyboard ? FocusBehavior.KeepFocus
+                                                      : FocusBehavior.ClearItemFocus
+
+                onTextChanged: captionMentions.changed()
+                onCursorPositionChanged: captionMentions.changed()
+                onActiveFocusChanged: {
+                    if (!activeFocus && !dialog.keepKeyboard) {
+                        captionMentions.close()
+                    }
+                }
             }
         }
     }

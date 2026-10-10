@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.46.0
+Version:    0.46.2
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -117,6 +117,15 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Oct 10 2026 harbour-xmatic contributors 0.46.2-1
+- Mentions work in an attachment's caption: `@` and `#` offer members and
+  rooms there as in the message line, and the caption carries the pill and
+  `m.mentions` that make the mention ping. Mentions typed before the file was
+  picked travel with the text into the caption.
+- A caption's formatting and mentions show: links, names and markup in the
+  text under a picture, a video or a voice message render as in a message
+  instead of as plain text.
+
 * Fri Oct 09 2026 harbour-xmatic contributors 0.46.0-1
 - Push notifications go through Leghorn, a UnifiedPush connector: the Matrix
   gateway is picked explicitly (the one the push service provides, the public

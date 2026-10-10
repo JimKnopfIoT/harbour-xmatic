@@ -665,6 +665,7 @@ async fn handle(state: Arc<State>, command: Command) {
             path,
             mime_type,
             caption,
+            mentions,
             reply_to,
             voice,
             duration,
@@ -675,8 +676,8 @@ async fn handle(state: Arc<State>, command: Command) {
             ..
         } => {
             send_media(
-                &state, id, path, mime_type, caption, reply_to, voice, duration, width, height,
-                thumbnail, room_id,
+                &state, id, path, mime_type, caption, mentions, reply_to, voice, duration, width,
+                height, thumbnail, room_id,
             )
             .await
         }

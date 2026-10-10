@@ -2193,7 +2193,8 @@ bool MatrixBridge::sendTextAsFile(const QString &text, const QString &replyTo)
 
 void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                              const QString &caption, const QString &replyTo,
-                             qint64 voiceDuration, bool original)
+                             qint64 voiceDuration, bool original,
+                             const QStringList &mentions)
 {
     // The type, never the name: a file name carries whatever the user called
     // it, and the log is not the place for that.
@@ -2213,6 +2214,9 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                      outgoing.mimeType.isEmpty() ? QStringLiteral("application/octet-stream")
                                                  : outgoing.mimeType);
     arguments.insert(QStringLiteral("caption"), caption);
+    if (!caption.isEmpty() && !mentions.isEmpty()) {
+        arguments.insert(QStringLiteral("mentions"), QJsonArray::fromStringList(mentions));
+    }
     arguments.insert(QStringLiteral("replyTo"), replyTo);
     // The room as it is now, not as it will be when the command goes: a video's
     // still is decoded first, and the core refuses a room that moved on.

@@ -300,6 +300,9 @@ pub enum Command {
         mime_type: String,
         #[serde(default)]
         caption: String,
+        /// Who the caption mentions, as `timeline.send` carries them.
+        #[serde(default)]
+        mentions: Vec<String>,
         #[serde(rename = "replyTo", default)]
         reply_to: String,
         /// A recording of one's own goes out marked as a voice message (MSC3245),

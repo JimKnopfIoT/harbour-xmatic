@@ -13,6 +13,7 @@ use matrix_sdk::{
     ruma::{
         events::room::message::{RoomMessageEventContent, TextMessageEventContent},
         events::room::MediaSource,
+        events::Mentions,
         EventId, RoomId, UInt,
     },
     Client,
@@ -413,7 +414,7 @@ pub async fn send(
     timeline: &Timeline,
     path: &str,
     mime_type: &str,
-    caption: &str,
+    caption: Option<(TextMessageEventContent, Option<Mentions>)>,
     reply_to: &str,
     voice: Option<u64>,
     dimensions: Option<(u64, u64)>,
@@ -452,9 +453,9 @@ pub async fn send(
     config.info = Some(attachment_info(&mime, size, dimensions, voice, duration));
     config.thumbnail = read_still(still);
 
-    let caption = caption.trim();
-    if !caption.is_empty() {
-        config.caption = Some(TextMessageEventContent::plain(caption));
+    if let Some((caption, mentions)) = caption {
+        config.caption = Some(caption);
+        config.mentions = mentions;
     }
     if !reply_to.is_empty() {
         // Refused rather than silently sent bare: an attachment that lost its reply

@@ -1533,6 +1533,9 @@ Page {
                 readonly property int reactionsHidden: Math.max(0, reactionList.length - 6)
                 readonly property string captionText: model.caption || ""
                 readonly property bool hasCaption: captionText.length > 0
+                // Where the label is the caption: under a preview or a voice message.
+                readonly property bool showsCaption: !!model.media && hasCaption
+                                                     && (hasPreview || isAudio)
                 readonly property bool isImage: model.kind === "message"
                                                 && model.msgtype === "m.image"
                                                 && !!model.media
@@ -1589,13 +1592,16 @@ Page {
                         && page.canRedactOthers
                         && model.kind === "message"
                         && (model.eventId || "").length > 0
-                // Never for a file row: its caption is a stranger's text.
                 // The body as markup, or empty where plain text will do. One property for
                 // format and text, so a Label can never parse what was not built for it.
                 readonly property int emojiPixels: Math.round(Theme.fontSizeSmall * 1.3)
-                readonly property string richBody: model.kind !== "message" || !!model.media
+                // A file row: only the caption, and only where the label shows it.
+                readonly property string richBody: model.kind !== "message"
+                                                   || (!!model.media && !row.showsCaption)
                                                    ? ""
-                                                   : MessageBody.rich(model.body, model.formatted,
+                                                   : MessageBody.rich(!!model.media ? row.captionText
+                                                                                    : model.body,
+                                                                      model.formatted,
                                                                       settings,
                                                                       Theme.highlightColor,
                                                                       emojiPixels,
@@ -2710,7 +2716,8 @@ Page {
 
                             text: {
                                 if (row.hasPreview || row.isAudio) {
-                                    return row.captionText
+                                    return row.richBody.length > 0 ? row.richBody
+                                                                    : row.captionText
                                 }
                                 if (model.kind === "undecryptable") {
                                     return page.undecryptableText(model.utdCause)
@@ -3688,20 +3695,25 @@ Page {
                 // What was typed goes along as the caption - one message. The field is
                 // cleared so it cannot be sent twice, and refilled if the send is called off.
                 var typed = messageComposer.text
+                var typedMentions = messageComposer.mentionsPicked
                 messageComposer.clearField()
+                messageComposer.clearMentions()
                 pageStack.push(Qt.resolvedUrl("SendMediaPage.qml"), {
                     files: picked,
                     caption: typed,
+                    roomId: page.roomId,
+                    mentionsPicked: typedMentions,
                     replyTo: page.replyingEventId,
                     replySender: page.replyingTo,
                     replyBody: page.replyingBody,
                     // Handed back here rather than sent from the dialog: the unverified-recipient
                     // warning lives on this page, and an attachment went past it.
-                    send: function (files, caption, replyTo, original) {
+                    send: function (files, caption, replyTo, original, mentions) {
                         page.pendingAction = {
                             "kind": "sendMedia",
                             "files": files,
                             "caption": caption,
+                            "mentions": mentions,
                             "replyTo": replyTo,
                             "original": original
                         }
@@ -3712,8 +3724,9 @@ Page {
                         page.clearReplyState()
                         page.followTail = true
                     },
-                    afterCancel: function (text) {
+                    afterCancel: function (text, mentions) {
                         messageComposer.text = text
+                        messageComposer.mentionsPicked = mentions
                         // A photo taken for this send goes with it; gallery files are not ours.
                         for (var i = 0; i < picked.length; i++) {
                             matrix.cameraShots.discard(picked[i].path)
@@ -3887,7 +3900,8 @@ Page {
             matrix.sendMedia(file.path, file.mimeType,
                              i === 0 ? action.caption : "",
                              i === 0 ? action.replyTo : "",
-                             0, action.original === true)
+                             0, action.original === true,
+                             i === 0 && action.mentions ? action.mentions : [])
         }
         page.clearReplyState()
         page.followTail = true

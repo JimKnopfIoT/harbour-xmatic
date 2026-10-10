@@ -688,12 +688,13 @@ public:
     /// Sends a file as an attachment; `caption` and `replyTo` may be empty and
     /// cannot be added later. `voiceDuration` above zero marks a voice message.
     /// `original` keeps a picture as it lies; without it, it is re-encoded
-    /// towards a size a mobile line can carry.
+    /// towards a size a mobile line can carry. `mentions` are the caption's.
     Q_INVOKABLE void sendMedia(const QString &path, const QString &mimeType,
                                const QString &caption = QString(),
                                const QString &replyTo = QString(),
                                qint64 voiceDuration = 0,
-                               bool original = false);
+                               bool original = false,
+                               const QStringList &mentions = QStringList());
 
     /// A draft too long for a bubble, sent as a text file. False where the file
     /// could not be written; the caller then sends it as a message.

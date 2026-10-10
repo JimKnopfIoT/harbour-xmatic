@@ -27,12 +27,8 @@ Column {
     /// The room whose members and neighbours can be mentioned. Empty leaves
     /// the picker shut.
     property string roomId: ""
-    /// What was picked, as text → user or room id. The text is what the reader
-    /// sees; this is what the ping or link is addressed to.
-    property var mentionsPicked: ({})
-    /// Whether a mention is being typed. The picker's own condition; see there
-    /// why the field's focus cannot be it.
-    property bool mentionArmed: false
+    /// What was picked, as text → user or room id; see `MentionInput`.
+    property alias mentionsPicked: mentionInput.picked
 
     signal submitted()
     signal attachRequested()
@@ -137,108 +133,18 @@ Column {
     }
 
     // --- Mentions -----------------------------------------------------------
-    // Everything below works on the word the cursor stands in. The input method
-    // holds the word being typed until it commits, so the picker follows a beat
-    // behind on a predictive keyboard - it cannot lead it.
-
-    /// Where the word around the cursor begins and ends.
-    function wordBounds() {
-        var text = messageField.text
-        var cursor = messageField.cursorPosition
-        var start = 0
-        for (var back = cursor - 1; back >= 0; --back) {
-            if (/\s/.test(text.charAt(back))) {
-                start = back + 1
-                break
-            }
-        }
-        var end = text.length
-        for (var forward = cursor; forward < text.length; ++forward) {
-            if (/\s/.test(text.charAt(forward))) {
-                end = forward
-                break
-            }
-        }
-        return { "start": start, "end": end, "word": text.substring(start, end) }
-    }
-
-    /// Whether the word is a mention being typed: `@` a member, `#` a room.
-    function isMentionWord(word) {
-        return word.charAt(0) === "@" || word.charAt(0) === "#"
-    }
-
-    /// Asks for candidates while the word is a mention, and closes the list as
-    /// soon as it is not. A name may hold spaces; what is typed may not.
-    function refreshMentions() {
-        if (composer.roomId.length === 0) {
-            return
-        }
-        var word = composer.wordBounds().word
-        if (composer.isMentionWord(word)) {
-            composer.mentionArmed = true
-            // The sigil travels: the core tells members from rooms by it.
-            matrix.mentions.search(composer.roomId, word)
-        } else {
-            composer.closeMentions()
-        }
-    }
-
-    /// Shuts the picker without forgetting what was already picked.
-    function closeMentions() {
-        composer.mentionArmed = false
-        matrix.mentions.clear()
-    }
 
     /// The member page's way in: a member by name.
     function insertMember(userId, displayName) {
-        composer.insertMention(userId, displayName.length > 0 ? "@" + displayName : userId)
+        mentionInput.insert(userId, displayName.length > 0 ? "@" + displayName : userId)
     }
 
-    /// Puts the chosen text in place of what was typed. Through the editor, not
-    /// through `text`: an assignment folds the keyboard away.
-    function insertMention(id, label) {
-        composer.holdKeyboard()
-        Qt.inputMethod.commit()
-        var bounds = composer.wordBounds()
-        // Only a half-typed mention is replaced; from the member page the name
-        // is inserted where the cursor stands.
-        var typed = composer.isMentionWord(bounds.word)
-        var from = typed ? bounds.start : messageField.cursorPosition
-        var to = typed ? bounds.end : messageField.cursorPosition
-        if (messageField._editor) {
-            if (to > from) {
-                messageField._editor.remove(from, to)
-            }
-            messageField._editor.insert(from, label + " ")
-        } else {
-            messageField.text = messageField.text.slice(0, from) + label + " "
-                    + messageField.text.slice(to)
-            messageField.cursorPosition = from + label.length + 1
-        }
-        var picked = composer.mentionsPicked
-        picked[label] = id
-        composer.mentionsPicked = picked
-        composer.closeMentions()
-        composer.focusField()
-    }
-
-    /// The mentions a send carries: those whose text is still in the field. A
-    /// name that was written over is not addressed any more.
     function mentionIds() {
-        var ids = []
-        var text = messageField.text
-        for (var label in composer.mentionsPicked) {
-            if (text.indexOf(label) >= 0 && ids.indexOf(composer.mentionsPicked[label]) < 0) {
-                ids.push(composer.mentionsPicked[label])
-            }
-        }
-        return ids
+        return mentionInput.ids()
     }
 
-    /// Forgotten with the message they belonged to.
     function clearMentions() {
-        composer.mentionsPicked = ({})
-        composer.closeMentions()
+        mentionInput.clear()
     }
 
     Timer {
@@ -248,18 +154,18 @@ Column {
         onTriggered: composer.keepKeyboard = false
     }
 
-    // Not on every keystroke: a word typed at speed asks once.
-    Timer {
-        id: mentionWatch
+    MentionInput {
+        id: mentionInput
 
-        interval: 120
-        onTriggered: composer.refreshMentions()
+        field: messageField
+        roomId: composer.roomId
+        onKeepKeyboardRequested: composer.holdKeyboard()
     }
 
     MentionPicker {
         roomId: composer.roomId
-        armed: composer.mentionArmed
-        onPicked: composer.insertMention(id, insert)
+        armed: mentionInput.armed
+        onPicked: mentionInput.insert(id, insert)
         onKeepKeyboardRequested: composer.holdKeyboard()
     }
 
@@ -326,13 +232,13 @@ Column {
 
             // Both, because moving the cursor into a mention is as good a reason
             // to open the list as typing one.
-            onTextChanged: mentionWatch.restart()
-            onCursorPositionChanged: mentionWatch.restart()
+            onTextChanged: mentionInput.changed()
+            onCursorPositionChanged: mentionInput.changed()
             // Not while the keyboard is being held: that is the press on the
             // picker itself, and it must not shut what it is aiming at.
             onActiveFocusChanged: {
                 if (!activeFocus && !composer.keepKeyboard) {
-                    composer.closeMentions()
+                    mentionInput.close()
                 }
             }
 
