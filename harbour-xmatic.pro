@@ -354,6 +354,7 @@ DISTFILES += \
     qml/pages/AddDirectoryServerDialog.qml \
     qml/pages/PinnedMessagesPage.qml \
     qml/pages/MemberListPage.qml \
+    qml/pages/MentionInput.qml \
     qml/pages/MentionPicker.qml \
     qml/pages/MemberProfilePage.qml \
     qml/pages/IgnoredUsersPage.qml \

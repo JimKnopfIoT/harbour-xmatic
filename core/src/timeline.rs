@@ -399,6 +399,11 @@ fn formatted_body(message_type: &MessageType) -> Option<String> {
         MessageType::Text(content) => content.formatted.as_ref()?,
         MessageType::Notice(content) => content.formatted.as_ref()?,
         MessageType::Emote(content) => content.formatted.as_ref()?,
+        // An attachment's is its caption's; none without a caption.
+        MessageType::Image(content) => content.formatted_caption()?,
+        MessageType::Video(content) => content.formatted_caption()?,
+        MessageType::Audio(content) => content.formatted_caption()?,
+        MessageType::File(content) => content.formatted_caption()?,
         _ => return None,
     };
     // `format` is an open enum in the spec; HTML is the only one defined, and

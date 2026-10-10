@@ -358,6 +358,7 @@ pub(super) async fn send_media(
     path: String,
     mime_type: String,
     caption: String,
+    mentions: Vec<String>,
     reply_to: String,
     voice: bool,
     duration: u64,
@@ -394,11 +395,18 @@ pub(super) async fn send_media(
     let length = if duration > 0 { Some(duration) } else { None };
     let voice = if voice { Some(duration) } else { None };
     let dimensions = dimensions(width, height);
+    let caption = caption.trim();
+    let caption = if caption.is_empty() {
+        None
+    } else {
+        let client = state.client().await;
+        Some(mention::caption_content(client.as_ref(), &open_room, caption, &mentions).await)
+    };
     match media::send(
         &timeline,
         &path,
         &mime_type,
-        &caption,
+        caption,
         &reply_to,
         voice,
         dimensions,

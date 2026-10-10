@@ -5,7 +5,7 @@
 
 use crate::compose::{escape_text, to_formatted_body};
 use crate::text::{scrub_ids, strip_bidi};
-use matrix_sdk::ruma::events::room::message::RoomMessageEventContent;
+use matrix_sdk::ruma::events::room::message::{RoomMessageEventContent, TextMessageEventContent};
 use matrix_sdk::ruma::events::Mentions;
 use matrix_sdk::ruma::{OwnedUserId, RoomId, UserId};
 use matrix_sdk::Room;
@@ -313,6 +313,22 @@ pub async fn text_content(
         Some(mentions) => content.add_mentions(mentions),
         None => content,
     }
+}
+
+/// An attachment's caption with its mentions: the same pills and `m.mentions`
+/// a text message gets, handed to the attachment instead.
+pub async fn caption_content(
+    client: Option<&Client>,
+    room_id: &str,
+    body: &str,
+    ids: &[String],
+) -> (TextMessageEventContent, Option<Mentions>) {
+    let resolved = resolve(client, room_id, body, ids).await;
+    let content = match resolved.formatted {
+        Some(html) => TextMessageEventContent::html(body, html),
+        None => TextMessageEventContent::plain(body),
+    };
+    (content, resolved.mentions)
 }
 
 #[cfg(test)]
