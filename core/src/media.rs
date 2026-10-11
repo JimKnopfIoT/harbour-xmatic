@@ -18,6 +18,7 @@ use matrix_sdk::{
     },
     Client,
 };
+use futures_util::FutureExt;
 use matrix_sdk_ui::timeline::{AttachmentConfig, AttachmentSource, Timeline};
 
 use crate::protocol::MediaStill;
@@ -375,7 +376,9 @@ pub async fn forward_file(
         .info(attachment_info(&mime, data.len(), dimensions, None, duration))
         .thumbnail(read_still(still));
 
-    room.send_attachment(filename, &mime, data, config)
+    // Through the queue: kept across a dead network and a restart.
+    room.send_queue()
+        .send_attachment(filename, mime, data, config)
         .await
         .map(|_| ())
         .map_err(|error| format!("could not forward the attachment: {error}"))
@@ -395,17 +398,24 @@ pub async fn forward_text(client: &Client, room_id: &str, body: String) -> Resul
         None => RoomMessageEventContent::text_plain(body),
     };
 
-    room.send(content)
+    room.send_queue()
+        .send(content.into())
         .await
         .map(|_| ())
         .map_err(|error| format!("could not forward the message: {error}"))
 }
 
-/// The server's maximum upload size in bytes, if it discloses one.
-async fn upload_limit(client: &Client) -> Option<u64> {
-    // Authenticated endpoint where supported; cached.
-    let size = client.load_or_fetch_max_upload_size().await.ok()?;
+/// The server's upload limit, only if already cached: a fetch here keeps the
+/// attachment out of the send queue for as long as the network is bad.
+fn upload_limit(client: &Client) -> Option<u64> {
+    let size = client.load_or_fetch_max_upload_size().now_or_never()?.ok()?;
     Some(u64::from(size))
+}
+
+/// Fills the cache `upload_limit` reads. Bounded; a miss means no check.
+pub async fn prefetch_upload_limit(client: &Client) {
+    const BOUND: Duration = Duration::from_secs(30);
+    let _ = tokio::time::timeout(BOUND, client.load_or_fetch_max_upload_size()).await;
 }
 
 /// Sends a file as an attachment, shown at once as a local echo. `caption` and
@@ -433,9 +443,9 @@ pub async fn send(
     let bytes = std::fs::read(path).map_err(|error| format!("could not read the file: {error}"))?;
     let size = bytes.len();
 
-    // Ask the server what it accepts before spending minutes uploading: the
-    // rejection arrives as a bare "failed sending attachment".
-    if let Some(limit) = upload_limit(&timeline.room().client()).await {
+    // Refused before minutes of uploading: the server's rejection arrives as a
+    // bare "failed sending attachment". Unknown limit: no check, never a wait.
+    if let Some(limit) = upload_limit(&timeline.room().client()) {
         if size as u64 > limit {
             return Err(format!(
                 "too large for this server: {} MiB, limit is {} MiB",
@@ -468,6 +478,8 @@ pub async fn send(
 
     timeline
         .send_attachment(AttachmentSource::Data { bytes, filename }, mime, config)
+        // Off by default in 0.19: a direct upload, no echo, lost with the network.
+        .use_send_queue()
         .await
         .map(|_| ())
         .map_err(|error| {

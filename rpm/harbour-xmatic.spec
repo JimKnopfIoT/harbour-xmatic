@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.46.2
+Version:    0.46.4
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -117,6 +117,11 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun Oct 11 2026 harbour-xmatic contributors 0.46.4-1
+- A picture sent on a bad connection is no longer lost: it goes into the send
+  queue at once, shows as pending and is sent when the network is back, also
+  after a restart. Forwarded messages and files go through the queue too.
+
 * Sat Oct 10 2026 harbour-xmatic contributors 0.46.2-1
 - Mentions work in an attachment's caption: `@` and `#` offer members and
   rooms there as in the message line, and the caption carries the pill and

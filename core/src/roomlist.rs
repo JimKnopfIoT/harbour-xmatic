@@ -642,6 +642,13 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
                     restart_in = FIRST_RESTART;
                     client.send_queue().set_enabled(true).await;
 
+                    // Cached once fetched; the send path never asks the network itself.
+                    let limit = client.clone();
+                    let handle = tokio::spawn(async move {
+                        crate::media::prefetch_upload_limit(&limit).await;
+                    });
+                    track_side_task(handle.abort_handle());
+
                     // A key backup is a question over the network and had no answer while the
                     // connection was down. Spawned: this loop must stay free for state changes.
                     if was_down {
