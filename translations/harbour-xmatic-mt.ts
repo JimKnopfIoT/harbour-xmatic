@@ -2474,6 +2474,10 @@
         <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
         <translation>Parti mid-data maħżuna f&apos;dan l-apparat ma tistax tinqara aktar, u xmatic ma rnexxielux isewwiha waqt li kien qed jaħdem — għalhekk waqqaf is-sinkronizzazzjoni minflok ma jiltaqa&apos; mal-istess ringiela mill-ġdid. Agħlaq l-app u erġa&apos; ibdieha. Jekk wara jkun għad hemm kmamar nieqsa, il-ħruġ u d-dħul mill-ġdid jerġgħu jibnu d-data lokali — imma jbiddlu wkoll iċ-ċwievet ta&apos; dan l-apparat: l-ewwel iċċekkja fil-paġna tal-kriptaġġ li l-backup taċ-ċwievet huwa mixgħul.</translation>
     </message>
+    <message>
+        <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
+        <translation>Dan is-server iwassal biss %1 mit-%2 kmamar tiegħek permezz ta&apos; sliding sync, is-sinkronizzazzjoni li teħtieġ din l-app. Dawk nieqsa – ħafna drabi chats permezz ta&apos; bridges – ma jistgħux jintwerew hawn; apps li jużaw is-sinkronizzazzjoni klassika għadhom jarawhom.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

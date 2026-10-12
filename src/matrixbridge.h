@@ -61,6 +61,9 @@ class MatrixBridge : public QObject
     /// Rooms the *server* counts, -1 until a sync answers. The window starts at
     /// twenty, so "fewer rooms than I have" has two causes; this tells them apart.
     Q_PROPERTY(int roomTotal READ roomTotal NOTIFY roomTotalChanged)
+    /// Rooms the server says the account is in, -1 unknown. Above `roomTotal`, its
+    /// sliding sync leaves rooms out.
+    Q_PROPERTY(int joinedRoomTotal READ joinedRoomTotal NOTIFY roomTotalChanged)
     Q_PROPERTY(QString userId READ userId NOTIFY sessionChanged)
     Q_PROPERTY(QString deviceId READ deviceId NOTIFY sessionChanged)
     Q_PROPERTY(bool ready READ ready CONSTANT)
@@ -192,6 +195,7 @@ public:
     bool serverSupported() const { return m_serverSupported; }
     bool storageDamaged() const { return m_storageDamaged; }
     int roomTotal() const { return m_roomTotal; }
+    int joinedRoomTotal() const { return m_joinedRoomTotal; }
     QString userId() const { return m_userId; }
     QString deviceId() const { return m_deviceId; }
     bool ready() const { return m_core != nullptr; }
@@ -1011,6 +1015,7 @@ private:
     /// Files that arrived but must not reach a decoder on this device.
     QSet<QString> m_oversized;
     int m_roomTotal = -1;
+    int m_joinedRoomTotal = -1;
     QString m_userId;
     QString m_deviceId;
     QString m_lastError;

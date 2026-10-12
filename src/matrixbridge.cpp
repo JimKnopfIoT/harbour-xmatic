@@ -3667,12 +3667,20 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
             m_roomTotal = count;
             emit roomTotalChanged();
         }
+    } else if (name == QLatin1String("roomlist.joined")) {
+        const int joined = data.value(QStringLiteral("joined")).toInt(-1);
+        if (joined != m_joinedRoomTotal) {
+            qInfo("xmatic: server says %d rooms joined", joined);
+            m_joinedRoomTotal = joined;
+            emit roomTotalChanged();
+        }
     } else if (name == QLatin1String("session.changed")) {
         setLoginRunning(false);
         if (data.value(QStringLiteral("state")).toString() != QLatin1String("signed-in")) {
             m_rooms.clear();
-            if (m_roomTotal != -1) {
+            if (m_roomTotal != -1 || m_joinedRoomTotal != -1) {
                 m_roomTotal = -1;
+                m_joinedRoomTotal = -1;
                 emit roomTotalChanged();
             }
             m_spaces.clear();

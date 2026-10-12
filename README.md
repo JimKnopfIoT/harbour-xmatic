@@ -170,6 +170,38 @@ its colours from the one you use.
 * A homeserver supporting Simplified Sliding Sync (MSC4186) — Synapse 1.114 or
   newer
 
+### Rooms missing from the list
+
+Symptom: xmatic shows only some of your rooms — typically your chats bridged
+from other networks are missing — while other clients show all of them with
+the same account.
+
+Cause: the server does not support sliding sync completely. Some hosted
+services keep bridged rooms on a separate backend that their sliding sync does
+not deliver, although the server advertises
+`org.matrix.simplified_msc3575`. The room list of matrix-rust-sdk is built on
+sliding sync; the SDK has no `/sync` v2 path for it, so xmatic cannot show
+those rooms. Clients that use the classic `/sync` are no comparison; clients
+built on sliding sync show the same gap. xmatic compares both counts itself
+and says so above the room list.
+
+To check a server, compare the rooms you are in with the count its sliding
+sync reports (replace `<server>` and `<token>`, never post the token):
+
+```sh
+curl -s -H "Authorization: Bearer <token>" \
+  https://<server>/_matrix/client/v3/joined_rooms | jq '.joined_rooms | length'
+
+curl -s -X POST -H "Authorization: Bearer <token>" -H "Content-Type: application/json" \
+  "https://<server>/_matrix/client/unstable/org.matrix.simplified_msc3575/sync?timeout=0" \
+  -d '{"lists":{"all":{"ranges":[[0,999]],"timeline_limit":0,"required_state":[]}}}' \
+  | jq '.lists.all.count'
+```
+
+If the second number is clearly lower (for example 318 and 14), the server
+does not support sliding sync completely, and xmatic cannot show the missing
+rooms.
+
 ## Building
 
 ```sh

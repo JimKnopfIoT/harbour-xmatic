@@ -2465,6 +2465,10 @@
         <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
         <translation>بخشی از داده‌های ذخیره‌شده روی این دستگاه دیگر خوانده نمی‌شود و xmatic نتوانست آن را در حین اجرا درست کند — به همین دلیل همگام‌سازی را متوقف کرد تا دوباره به همان ردیف برنخورد. برنامه را ببند و دوباره اجرا کن. اگر پس از آن هنوز اتاق‌هایی کم است، خروج و ورود دوباره داده‌های محلی را از نو می‌سازد — اما کلیدهای این دستگاه را هم جایگزین می‌کند: اول در صفحهٔ رمزگذاری بررسی کن که پشتیبان کلیدها روشن باشد.</translation>
     </message>
+    <message>
+        <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
+        <translation>این سرور از طریق sliding sync، همان همگام‌سازی‌ای که این برنامه لازم دارد، فقط %1 از %2 اتاق تو را می‌فرستد. اتاق‌های جاافتاده — اغلب گفتگوهایی از طریق پل — اینجا نمایش داده نمی‌شوند؛ برنامه‌هایی که همگام‌سازی کلاسیک دارند هنوز آن‌ها را می‌بینند.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>
