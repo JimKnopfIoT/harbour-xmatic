@@ -2471,6 +2471,10 @@
         <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
         <translation>O parte dintre datele stocate pe acest dispozitiv nu mai poate fi citită, iar xmatic nu a reușit să remedieze acest lucru în timpul funcționării — de aceea a oprit sincronizarea în loc să întâlnească din nou același rând. Închide aplicația și pornește-o din nou. Dacă după aceea tot lipsesc camere, deconectarea și reconectarea reconstruiesc datele locale — dar înlocuiesc și cheile acestui dispozitiv: verifică mai întâi pe pagina de criptare dacă backupul cheilor este activat.</translation>
     </message>
+    <message>
+        <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
+        <translation>Acest server livrează prin sliding sync, sincronizarea de care are nevoie această aplicație, doar %1 din cele %2 camere ale tale. Cele lipsă – adesea conversații prin punți – nu pot fi afișate aici; aplicațiile cu sincronizarea clasică încă le văd.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

@@ -2468,6 +2468,10 @@
         <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
         <translation>Une partie des données enregistrées sur cet appareil n&apos;est plus lisible, et xmatic n&apos;a pas pu y remédier en cours d&apos;exécution — il a donc arrêté la synchronisation plutôt que de rencontrer à nouveau la même ligne. Ferme l&apos;application et relance-la. S&apos;il manque encore des salons ensuite, se déconnecter puis se reconnecter reconstruit les données locales — mais cela remplace les clés de cet appareil : vérifie d&apos;abord sur la page de chiffrement que la sauvegarde de clés est activée.</translation>
     </message>
+    <message>
+        <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
+        <translation>Ce serveur ne fournit que %1 de tes %2 salons via sliding sync, la synchronisation dont cette appli a besoin. Ceux qui manquent – souvent des discussions passant par des passerelles – ne peuvent pas être affichés ici ; les applis utilisant la synchronisation classique les voient toujours.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

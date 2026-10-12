@@ -2471,6 +2471,10 @@
         <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
         <translation>Dalies šiame įrenginyje saugomų duomenų nebegalima perskaityti, o xmatic nepavyko to sutvarkyti veikimo metu — todėl jis sustabdė sinchronizavimą, užuot vėl susidūręs su ta pačia eilute. Užverk programėlę ir paleisk ją iš naujo. Jei po to vis dar trūksta kambarių, atsijungimas ir prisijungimas iš naujo atkuria vietinius duomenis — bet taip pat pakeičia šio įrenginio raktus: pirmiausia šifravimo puslapyje patikrink, ar raktų atsarginė kopija įjungta.</translation>
     </message>
+    <message>
+        <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
+        <translation>Šis serveris per sliding sync – sinchronizaciją, kurios reikia šiai programėlei – pateikia tik %1 iš tavo %2 kambarių. Trūkstamų – dažnai pokalbių per tiltus – čia parodyti negalima; programėlės, naudojančios klasikinę sinchronizaciją, juos vis dar mato.</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

@@ -1608,47 +1608,47 @@
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3972"/>
+        <location filename="../src/matrixbridge.cpp" line="3980"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3975"/>
+        <location filename="../src/matrixbridge.cpp" line="3983"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3978"/>
+        <location filename="../src/matrixbridge.cpp" line="3986"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3981"/>
+        <location filename="../src/matrixbridge.cpp" line="3989"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3984"/>
+        <location filename="../src/matrixbridge.cpp" line="3992"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3987"/>
+        <location filename="../src/matrixbridge.cpp" line="3995"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3987"/>
+        <location filename="../src/matrixbridge.cpp" line="3995"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3990"/>
+        <location filename="../src/matrixbridge.cpp" line="3998"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3993"/>
+        <location filename="../src/matrixbridge.cpp" line="4001"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -2966,7 +2966,7 @@
     </message>
     <message>
         <location filename="../qml/pages/RoomListPage.qml" line="86"/>
-        <location filename="../qml/pages/RoomListPage.qml" line="244"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
         <source>Rooms</source>
         <translation>聊天室</translation>
     </message>
@@ -3001,77 +3001,82 @@
         <translation>此设备上保存的部分数据已无法读取，xmatic 在运行中也未能修好，因此停止了同步，以免再次遇到同一行。请关闭应用并重新启动。如果之后仍缺少房间，退出登录再登录会重建本地数据——但这也会替换此设备的密钥：请先在加密页面确认密钥备份已开启。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="159"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="165"/>
+        <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
+        <translation>此服务器通过 sliding sync（本应用所需的同步方式）只提供了你 %2 个聊天室中的 %1 个。缺少的聊天室（通常是通过桥接的聊天）无法在此显示；使用传统同步的应用仍能看到它们。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomListPage.qml" line="173"/>
         <source>Search rooms</source>
         <translation>搜索聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="187"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="201"/>
         <source>Mark as read</source>
         <translation>标记为已读</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="194"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="208"/>
         <source>Remove from favourites</source>
         <translation>取消收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="194"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="208"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="202"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="216"/>
         <source>Normal priority</source>
         <translation>普通优先级</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="202"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="216"/>
         <source>Low priority</source>
         <translation>低优先级</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="209"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
         <source>Unmute</source>
         <translation>取消静音</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="209"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
         <source>Mute</source>
         <translation>静音</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="217"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="231"/>
         <source>Decline invitation</source>
         <translation>拒绝邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="217"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="231"/>
         <source>Leave room</source>
         <translation>离开聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="226"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="240"/>
         <source>No rooms</source>
         <translation>没有聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="241"/>
         <source>Rooms you join show up here once the first sync is through.</source>
         <translation>首次同步完成后，你加入的聊天室会显示在这里。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="232"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="246"/>
         <source>About xmatic</source>
         <translation>关于 xmatic</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="264"/>
         <source>Account</source>
         <translation>账户</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="237"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="251"/>
         <source>Verify user</source>
         <translation>验证用户</translation>
     </message>

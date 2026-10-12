@@ -14,6 +14,8 @@ use matrix_sdk::ruma::events::room::message::{MessageType, Relation};
 use matrix_sdk::ruma::events::{
     AnySyncMessageLikeEvent, AnySyncTimelineEvent, SyncMessageLikeEvent,
 };
+use matrix_sdk::config::RequestConfig;
+use matrix_sdk::ruma::api::client::membership::joined_rooms;
 use matrix_sdk::ruma::api::client::room::{create_room, Visibility};
 use matrix_sdk::ruma::events::{
     room::encryption::RoomEncryptionEventContent,
@@ -428,6 +430,24 @@ fn spawn_support_check(client: Client, sink: Arc<Sink>) {
     track_side_task(handle.abort_handle());
 }
 
+/// Rooms the server says the account is in. A server can advertise MSC4186 and
+/// still leave rooms out of it; set against `roomlist.total`, the UI can say so.
+fn spawn_joined_count(client: Client, sink: Arc<Sink>) {
+    let handle = tokio::spawn(async move {
+        let config = RequestConfig::new().disable_retry().timeout(Duration::from_secs(20));
+        // Could not ask: no event, so no claim.
+        if let Ok(response) = client
+            .send(joined_rooms::v3::Request::new())
+            .with_request_config(config)
+            .await
+        {
+            let joined = response.joined_rooms.len();
+            sink.emit(event("roomlist.joined", json!({ "joined": joined })));
+        }
+    });
+    track_side_task(handle.abort_handle());
+}
+
 /// The server's own room count, so a short list can say "20 of 412". The list
 /// range only grows past twenty once the service reaches `Running`.
 fn spawn_loading_state(room_list: &RoomList, client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
@@ -443,6 +463,9 @@ fn spawn_loading_state(room_list: &RoomList, client: Client, sink: Arc<Sink>) ->
                 } => maximum_number_of_rooms,
             };
             sink.emit(event("roomlist.total", json!({ "total": total })));
+            if total.is_some() {
+                spawn_joined_count(client.clone(), sink.clone());
+            }
 
             // Rooms a sync has just brought can be children of a space, and the chat
             // list marks them long before anyone opens the space page. This state
