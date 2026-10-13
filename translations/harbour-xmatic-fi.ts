@@ -366,14 +366,6 @@
         <translation>Huoneen tapahtumat</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Näytä liittymiset ja poistumiset</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Kutsut, poistot ja porttikiellot näytetään aina.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Näytä näyttönimen muutokset</translation>
     </message>
@@ -449,6 +441,14 @@
         <source>Space list order</source>
         <translation>Spacet-luettelon järjestys</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Näytä poistumiset</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Liittymiset, kutsut, poistot ja estot näytetään aina.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -511,6 +511,10 @@
     <message>
         <source>answered on another device</source>
         <translation>vastattu toisella laitteella</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>hylätty toisella laitteella</translation>
     </message>
 </context>
 <context>
@@ -794,6 +798,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Anna ensin salasanasi.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -959,6 +970,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Ongelmia avainsäilössä?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Tällä tilillä ei ole vielä ristiinvarmennusta, joten muut laitteet eivät voi varmentaa tätä. Anna salasanasi kerran ottaaksesi sen käyttöön; se lähetetään kotipalvelimellesi eikä sitä säilytetä.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Salasana</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Ota ristiinvarmennus käyttöön</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1043,6 +1066,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Tätä liitettä ei voitu ladata</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Tätä kuvaa ei näytetä tällä laitteella. Tallenna tai jaa se alasvetovalikosta.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1090,6 +1117,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Seuraa laitetta</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Poistutut huoneet</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Unohdetaan huone</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Nimetön huone</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Estetty</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Poistuttu</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Ei poistuttuja huoneita</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Huoneet, joista olet poistunut tai jotka olet hylännyt toisessa sovelluksessa, tai joista sinut on poistettu tai estetty. Tämä laite säilyttää ne, kunnes ne unohdetaan, ja siihen asti palvelin laskee mukaan huoneen, josta sinut on poistettu tai estetty. Napauta huonetta unohtaaksesi sen.</translation>
     </message>
 </context>
 <context>
@@ -1283,10 +1342,6 @@
         <translation>Istuntosi päättyi. Kirjaudu uudelleen.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Uusi viesti</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Kuva</translation>
     </message>
@@ -1325,6 +1380,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Yhdyskäytävän on oltava https-URL.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Tätä kuvaa ei voitu pienentää, ja se sisältää metatietoja, kuten kuvauspaikan, joten sitä ei lähetetty. Lähetä se alkuperäisellä tarkkuudella lähettääksesi sen sellaisenaan.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>Push-rekisteröintiä ei voitu poistaa kotipalvelimelta. Se poistetaan, kun tämä tili kirjautuu seuraavan kerran sisään täällä.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Toinen sovellus on sillä välin ottanut ristiinvarmennuksen käyttöön tälle tilille. Varmenna tämä laite sieltä.</translation>
     </message>
 </context>
 <context>
@@ -1789,10 +1856,6 @@
         <translation>Viestin teksti ilmoituksissa</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Kun tämä on pois päältä, ilmoitus kertoo vain, montako viestiä saapui. Päällä se näyttää uusimman viestin — myös lukitusnäytöllä.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Näytä muiden lukutila</translation>
     </message>
@@ -1964,6 +2027,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Pois päältä sitä, kuka on lukenut mitä, ei seurata eikä näytetä, mikä pitää keskustelun myös sujuvampana. Päällä omat viestisi kertovat, kuinka moni on lukenut ne.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Pois: ilmoitus kertoo vain, että viestejä on tullut, ei keneltä tai mitä. Päällä: se näyttää uusimman viestin – myös lukitusnäytöllä.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2010,10 +2077,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Mitä tältä laitteelta lähtee</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Kotipalvelimellesi kerrotaan osoite push-palvelussa, ja se lähettää yhdyskäytävälle jokaisesta ilmoituksesta huoneen ja viestin tunnisteen. Ei viestin tekstiä: push kantaa vain tunnisteita, ja tämä laite hakee ja purkaa viestin itse. Osoite on salaisuus — sen haltija voi lähettää tähän puhelimeen ilmoituksen.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2091,6 +2154,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Käytä julkista UnifiedPush-yhdyskäytävää</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Useita jakelijoita on asennettu. Valitse, mitä xmatic käyttää.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>Push-jakelijaa ei ole enää asennettu. Mitään ei tule ennen kuin se palaa. Asenna se uudelleen tai kytke push pois.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Kotipalvelimesi saa osoitteen push-palvelusta ja lähettää yhdyskäytävälle jokaisesta ilmoituksesta huoneen ja viestin tunnisteen sekä lukemattomien määrän. Ei viestin tekstiä: tämä laite hakee ja purkaa viestin itse. Osoite on salaisuus – kuka tahansa, jolla se on, voi lähettää tälle puhelimelle ilmoituksen.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Kytke push tästä pois ennen kuin poistat xmaticin. Muuten kotipalvelin pitää pusherin ja lähettää edelleen yhdyskäytävälle.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2101,6 +2180,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>Push-jakelija pudotti xmaticin. Ota push uudelleen käyttöön kohdassa Tili.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Avaa xmatic kerran viimeistelläksesi push-ilmoitusten käyttöönoton.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic käsittelee vielä ilmoitusta. Avaa se hetken päästä uudelleen.</translation>
     </message>
 </context>
 <context>
@@ -2155,6 +2242,10 @@
         <source>Discover rooms</source>
         <translation>Löydä huoneita</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Poistutut huoneet (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2169,6 +2260,10 @@
     <message>
         <source>Space</source>
         <translation>Space</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Ei lähetetty – avaa huone päättääksesi</translation>
     </message>
 </context>
 <context>
@@ -2465,12 +2560,16 @@
         <translation>Paikalliset tiedot ovat vioittuneet</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Osaa tähän laitteeseen tallennetuista tiedoista ei voi enää lukea, eikä xmatic saanut sitä korjattua käynnissä ollessaan — siksi se pysäytti synkronoinnin sen sijaan, että kohtaisi saman rivin uudelleen. Sulje sovellus ja käynnistä se uudelleen. Jos huoneita puuttuu vielä sen jälkeen, uloskirjautuminen ja sisäänkirjautuminen rakentavat paikalliset tiedot uudelleen — mutta ne myös korvaavat tämän laitteen avaimet: tarkista ensin salaussivulta, että avainten varmuuskopio on käytössä.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Tämä palvelin toimittaa sliding syncin kautta, jota tämä sovellus tarvitsee, vain %1 huonetta %2 huoneestasi. Puuttuvia – usein siltojen kautta kulkevia keskusteluja – ei voi näyttää täällä; perinteistä synkronointia käyttävät sovellukset näkevät ne edelleen.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Osaa tälle laitteelle tallennetuista tiedoista ei voi enää lukea, eikä xmatic pystynyt korjaamaan sitä käynnissä ollessaan – siksi se pysäytti synkronoinnin sen sijaan, että törmäisi samaan riviin uudelleen. Huonetietojen uudelleenrakentaminen hakee huoneet ja viestit uudelleen ja säilyttää tämän laitteen avaimet. Jos se ei auta, ulos- ja sisäänkirjautuminen rakentaa kaiken uudelleen – mutta korvaa tämän laitteen avaimet, joten tarkista ensin salaussivulta, että avainten varmuuskopio on päällä.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Rakenna huonetiedot uudelleen</translation>
     </message>
 </context>
 <context>
@@ -2972,6 +3071,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 vaihtoi profiilikuvansa</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 vaihtoi näyttönimekseen %2 ja vaihtoi profiilikuvansa</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 poisti näyttönimensä ja vaihtoi profiilikuvansa</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ei näytetä tällä laitteella. Avaa napauttamalla.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3358,6 +3469,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Pois päältä kuva pienennetään ennen lähetystä, eivätkä sen metatiedot – muun muassa kuvauspaikka – kulje mukana.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Animaatiot ja piirrokset lähtevät sellaisinaan, kaikkine metatietoineen.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3412,6 +3527,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Äänestystä ei voitu lähettää.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Liitettä ei voitu lähettää.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>Palvelin ei hyväksy näin suuria tiedostoja. Hylkää se ja lähetä pienempi.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>Yhteys katkesi useita kertoja lähetyksen aikana. Lähetä se uudelleen vakaammalla yhteydellä tai hylkää se.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>Palvelin ei ole ottanut sitä vastaan puoleen tuntiin. Lähetä se uudelleen tai hylkää se.</translation>
     </message>
 </context>
 <context>
@@ -3819,14 +3950,6 @@
     <message>
         <source>Event</source>
         <translation>Tapahtuma</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Ei voi purkaa salausta — tältä laitteelta puuttuu avain</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Viesti poistettu</translation>
     </message>
     <message>
         <source>Attachment</source>

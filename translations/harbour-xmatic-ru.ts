@@ -367,14 +367,6 @@
         <translation>События комнаты</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Показывать входы и выходы</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Приглашения, удаления и баны показываются всегда.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Показывать смену отображаемого имени</translation>
     </message>
@@ -450,6 +442,14 @@
         <source>Space list order</source>
         <translation>Порядок списка пространств</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Показывать выходы</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Входы, приглашения, удаления и блокировки показываются всегда.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -512,6 +512,10 @@
     <message>
         <source>answered on another device</source>
         <translation>отвечено на другом устройстве</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>отклонено на другом устройстве</translation>
     </message>
 </context>
 <context>
@@ -795,6 +799,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Сначала введи пароль.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -961,6 +972,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Проблемы с хранилищем ключей?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>У этой учётной записи ещё нет перекрёстной подписи, поэтому другие устройства не могут подтвердить это. Введи пароль один раз, чтобы настроить её; он отправляется на домашний сервер и не сохраняется.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Настроить перекрёстную подпись</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1045,6 +1068,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Это вложение не удалось загрузить</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Это изображение не показывается на этом устройстве. Сохрани его или поделись им из выпадающего меню.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1092,6 +1119,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Как на устройстве</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Покинутые комнаты</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Комната забывается</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Комната без названия</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Заблокирован</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Покинута</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Нет покинутых комнат</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Комнаты, которые ты покинул или отклонил в другом приложении, или из которых тебя удалили или заблокировали. Это устройство хранит их, пока они не забыты, а до тех пор сервер учитывает комнату, из которой тебя удалили или заблокировали. Нажми на одну, чтобы забыть её.</translation>
     </message>
 </context>
 <context>
@@ -1285,10 +1344,6 @@
         <translation>Твоя сессия завершена. Войди снова.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Новое сообщение</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Изображение</translation>
     </message>
@@ -1327,6 +1382,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Шлюз должен быть URL с https.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Это изображение не удалось уменьшить, и оно содержит метаданные, например место съёмки, поэтому оно не отправлено. Отправь его в исходном разрешении, чтобы отправить как есть.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>Не удалось удалить push-регистрацию с домашнего сервера. Она будет удалена при следующем входе этой учётной записи здесь.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Другое приложение тем временем настроило перекрёстную подпись для этой учётной записи. Подтверди это устройство оттуда.</translation>
     </message>
 </context>
 <context>
@@ -1792,10 +1859,6 @@
         <translation>Текст сообщения в уведомлениях</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Выключено — уведомление сообщает только, сколько сообщений пришло. Включено — показывает последнее сообщение, в том числе на экране блокировки.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Показывать статус прочтения других</translation>
     </message>
@@ -1967,6 +2030,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Выключено — никто не отслеживает и не показывает, кто что прочитал, и разговор остаётся более плавным. Включено — твои сообщения показывают, сколько человек их прочитали.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Выключено: уведомление сообщает только, что пришли сообщения, но не от кого и не какие. Включено: оно показывает последнее сообщение — и на экране блокировки.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2013,10 +2080,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Что покидает это устройство</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Твоему серверу сообщается адрес в службе push, и он отправляет шлюзу идентификатор комнаты и сообщения для каждого уведомления. Без текста сообщения: push несёт только идентификаторы, а само сообщение это устройство получает и расшифровывает само. Этот адрес — секрет: кто им владеет, может послать этому телефону уведомление.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2094,6 +2157,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Использовать публичный шлюз UnifiedPush</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Установлено несколько дистрибьюторов. Выбери тот, который использует xmatic.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>Push-дистрибьютор больше не установлен. Ничего не приходит, пока он не вернётся. Установи его снова или выключи push.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Твой домашний сервер получает адрес у push-сервиса и при каждом уведомлении отправляет шлюзу идентификатор комнаты и сообщения и твоё число непрочитанных. Без текста сообщения: это устройство само получает и расшифровывает сообщение. Этот адрес — секрет: у кого он есть, тот может отправить этому телефону уведомление.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Прежде чем удалить xmatic, выключи здесь push. Иначе домашний сервер сохранит pusher и продолжит отправлять на шлюз.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2104,6 +2183,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>Распространитель push отключил xmatic. Снова включи push в разделе «Учётная запись».</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Открой xmatic один раз, чтобы завершить настройку push-уведомлений.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic ещё обрабатывает уведомление. Открой его снова через мгновение.</translation>
     </message>
 </context>
 <context>
@@ -2158,6 +2245,10 @@
         <source>Discover rooms</source>
         <translation>Найти комнаты</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Покинутые комнаты (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2172,6 +2263,10 @@
     <message>
         <source>Space</source>
         <translation>Пространство</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Не отправлено – открой комнату, чтобы решить</translation>
     </message>
 </context>
 <context>
@@ -2468,12 +2563,16 @@
         <translation>Локальные данные повреждены</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Часть данных, сохранённых на этом устройстве, больше не читается, и xmatic не смог исправить это на ходу — поэтому он остановил синхронизацию, вместо того чтобы снова наткнуться на ту же строку. Закрой приложение и запусти его заново. Если комнаты после этого всё ещё отсутствуют, выход и повторный вход перестроят локальные данные — но заменят и ключи этого устройства: сначала проверь на странице шифрования, включена ли резервная копия ключей.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Этот сервер передаёт через sliding sync — синхронизацию, которая нужна этому приложению, — только %1 из твоих %2 комнат. Недостающие — часто чаты через мосты — здесь показать нельзя; приложения с классической синхронизацией по-прежнему их видят.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Часть данных, сохранённых на этом устройстве, больше не читается, и xmatic не смог исправить это во время работы — поэтому он остановил синхронизацию, вместо того чтобы снова наткнуться на ту же строку. Перестройка данных комнат заново загружает комнаты и сообщения и сохраняет ключи этого устройства. Если это не поможет, выход и повторный вход перестраивают всё — но заменяют ключи этого устройства; поэтому сначала проверь на странице шифрования, что резервное копирование ключей включено.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Перестроить данные комнат</translation>
     </message>
 </context>
 <context>
@@ -2976,6 +3075,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 сменил(а) фото профиля</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 изменил(а) отображаемое имя на %2 и фото профиля</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 удалил(а) отображаемое имя и изменил(а) фото профиля</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Не показывается на этом устройстве. Нажми, чтобы открыть.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3362,6 +3473,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Выключено — снимок уменьшается перед отправкой, и его метаданные, в том числе место съёмки, с ним не уходят.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Анимации и рисунки отправляются как есть, со всеми метаданными.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3416,6 +3531,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Не удалось отправить опрос.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Не удалось отправить вложение.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>Сервер не принимает такие большие файлы. Отмени его и отправь файл поменьше.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>Соединение несколько раз обрывалось при отправке. Отправь снова через более стабильное соединение или отмени.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>Сервер не принимает это уже полчаса. Отправь снова или отмени.</translation>
     </message>
 </context>
 <context>
@@ -3824,14 +3955,6 @@
     <message>
         <source>Event</source>
         <translation>Событие</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Не удаётся расшифровать — на устройстве нет ключа</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Сообщение удалено</translation>
     </message>
     <message>
         <source>Attachment</source>

@@ -365,14 +365,6 @@
         <translation>Szobaesemények</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Belépések és kilépések megjelenítése</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>A meghívások, eltávolítások és kitiltások mindig megjelennek.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Megjelenítendő név változásainak megjelenítése</translation>
     </message>
@@ -448,6 +440,14 @@
         <source>Space list order</source>
         <translation>A terek listájának sorrendje</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Kilépések megjelenítése</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>A belépések, meghívások, eltávolítások és kitiltások mindig megjelennek.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -510,6 +510,10 @@
     <message>
         <source>answered on another device</source>
         <translation>másik eszközön fogadva</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>elutasítva egy másik eszközön</translation>
     </message>
 </context>
 <context>
@@ -793,6 +797,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Előbb add meg a jelszavadat.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -957,6 +968,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Gond van a kulcstárolóval?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Ennek a fióknak még nincs keresztaláírása, így más eszközök nem tudják ellenőrizni ezt. Add meg egyszer a jelszavadat a beállításhoz; elküldjük a saját szerverednek, és nem tároljuk.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Jelszó</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Keresztaláírás beállítása</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1041,6 +1064,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Ezt a mellékletet nem sikerült betölteni</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Ez a kép ezen az eszközön nem jelenik meg. Mentsd vagy oszd meg a lenyíló menüből.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1088,6 +1115,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Az eszközt követi</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Elhagyott szobák</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Szoba elfelejtése</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Névtelen szoba</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Kitiltva</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Elhagyva</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Nincsenek elhagyott szobák</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Szobák, amelyeket egy másik alkalmazásban elhagytál vagy elutasítottál, vagy ahonnan eltávolítottak vagy kitiltottak. Ez az eszköz megtartja őket, amíg el nem felejted őket, és addig a szerver beszámítja azt a szobát, ahonnan eltávolítottak vagy kitiltottak. Koppints egyre, hogy elfelejtsd.</translation>
     </message>
 </context>
 <context>
@@ -1281,10 +1340,6 @@
         <translation>A munkameneted véget ért. Jelentkezz be újra.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Új üzenet</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Kép</translation>
     </message>
@@ -1323,6 +1378,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Az átjárónak https URL-nek kell lennie.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Ezt a képet nem sikerült kicsinyíteni, és metaadatokat tartalmaz, például a készítés helyét, ezért nem lett elküldve. Küldd el eredeti felbontásban, ha úgy akarod küldeni, ahogy van.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>A push-regisztrációt nem sikerült eltávolítani a saját szerverről. Akkor kerül eltávolításra, amikor ez a fiók legközelebb itt bejelentkezik.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Egy másik alkalmazás közben beállította a keresztaláírást ehhez a fiókhoz. Onnan ellenőrizd ezt az eszközt.</translation>
     </message>
 </context>
 <context>
@@ -1786,10 +1853,6 @@
         <translation>Üzenetszöveg az értesítésekben</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Kikapcsolva az értesítés csak azt mondja meg, hány üzenet érkezett. Bekapcsolva a legutóbbi üzenetet mutatja — a zárolt képernyőn is.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Mások olvasási állapotának mutatása</translation>
     </message>
@@ -1961,6 +2024,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Kikapcsolva nem követjük és nem mutatjuk, ki mit olvasott, ami a beszélgetést is gördülékenyebben tartja. Bekapcsolva a saját üzeneteid mutatják, hányan olvasták őket.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Kikapcsolva: az értesítés csak azt mondja, hogy üzenetek érkeztek, azt nem, hogy kitől vagy mi. Bekapcsolva: a legújabb üzenetet mutatja — a zárolási képernyőn is.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2007,10 +2074,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Mi hagyja el ezt az eszközt</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>A kiszolgálód megkapja a push szolgáltatásnál lévő címet, és minden értesítéshez elküldi az átjárónak a szoba- és üzenetazonosítót. Üzenetszöveget nem: a push csak azonosítókat visz, az üzenetet ez az eszköz tölti le és fejti vissza. Ez a cím titok — akinél megvan, értesítést küldhet erre a telefonra.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2088,6 +2151,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Nyilvános UnifiedPush-átjáró használata</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Több elosztó van telepítve. Válaszd ki, melyiket használja az xmatic.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>A push-elosztó már nincs telepítve. Semmi sem érkezik, amíg vissza nem kerül. Telepítsd újra, vagy kapcsold ki a pusht.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>A saját szervered kap egy címet a push-szolgáltatásnál, és minden értesítésnél elküldi az átjárónak a szoba és az üzenet azonosítóját, valamint az olvasatlanok számát. Üzenetszöveget nem: ez az eszköz maga kéri le és fejti vissza az üzenetet. Ez a cím titok — akinél megvan, értesítést küldhet erre a telefonra.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Mielőtt eltávolítod az xmaticot, itt kapcsold ki a pusht. Különben a saját szerver megtartja a pushert, és továbbra is küld az átjárónak.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2098,6 +2177,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>A push elosztó elengedte az xmaticot. Kapcsold vissza a pusht a Fiók alatt.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Nyisd meg egyszer az xmaticot a push-értesítések beállításának befejezéséhez.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>Az xmatic még egy értesítést kezel. Nyisd meg újra egy pillanat múlva.</translation>
     </message>
 </context>
 <context>
@@ -2152,6 +2239,10 @@
         <source>Discover rooms</source>
         <translation>Szobák felfedezése</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Elhagyott szobák (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2166,6 +2257,10 @@
     <message>
         <source>Space</source>
         <translation>Tér</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Nincs elküldve – nyisd meg a szobát a döntéshez</translation>
     </message>
 </context>
 <context>
@@ -2462,12 +2557,16 @@
         <translation>A helyi adatok sérültek</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Az ezen az eszközön tárolt adatok egy része már nem olvasható, és az xmatic futás közben nem tudta helyrehozni — ezért leállította a szinkronizálást ahelyett, hogy újra ugyanabba a sorba ütközne. Zárd be az alkalmazást, és indítsd újra. Ha utána még mindig hiányoznak szobák, a kijelentkezés és az újbóli bejelentkezés újraépíti a helyi adatokat — de lecseréli az eszköz kulcsait is: előbb ellenőrizd a titkosítási oldalon, hogy a kulcsmentés be van-e kapcsolva.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Ez a szerver a sliding syncen keresztül – amelyre ennek az alkalmazásnak szüksége van – csak %1 szobát szolgáltat a %2 szobádból. A hiányzókat – gyakran hidakon át érkező csevegéseket – itt nem lehet megjeleníteni; a klasszikus szinkronizálást használó alkalmazások továbbra is látják őket.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Az eszközön tárolt adatok egy része már nem olvasható, és az xmatic futás közben nem tudta kijavítani — ezért leállította a szinkronizálást, ahelyett hogy újra ugyanabba a sorba ütközzön. A szobaadatok újraépítése újra lekéri a szobákat és az üzeneteket, és megtartja ennek az eszköznek a kulcsait. Ha ez nem segít, a ki- és bejelentkezés mindent újraépít — de lecseréli az eszköz kulcsait; ezért előbb ellenőrizd a titkosítási oldalon, hogy a kulcsmentés be van-e kapcsolva.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Szobaadatok újraépítése</translation>
     </message>
 </context>
 <context>
@@ -2968,6 +3067,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 megváltoztatta a profilképét</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 megváltoztatta a megjelenítendő nevét erre: %2, és a profilképét</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 eltávolította a megjelenítendő nevét, és megváltoztatta a profilképét</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ezen az eszközön nem jelenik meg. Koppints a megnyitáshoz.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3354,6 +3465,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Kikapcsolva a kép küldés előtt kisebb lesz, és a metaadatai – köztük a készítés helye – nem mennek vele.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Az animációk és rajzok úgy mennek, ahogy vannak, minden metaadatukkal.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3408,6 +3523,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Egy szavazást nem sikerült elküldeni.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Egy mellékletet nem sikerült elküldeni.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>A szerver nem fogad el ilyen nagy fájlokat. Vesd el, és küldj kisebbet.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>A kapcsolat küldés közben többször megszakadt. Küldd el újra stabilabb kapcsolaton, vagy vesd el.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>A szerver fél órája nem fogadta el. Küldd el újra, vagy vesd el.</translation>
     </message>
 </context>
 <context>
@@ -3814,14 +3945,6 @@
     <message>
         <source>Event</source>
         <translation>Esemény</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Nem fejthető vissza — ezen az eszközön nincs meg a kulcs</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Üzenet törölve</translation>
     </message>
     <message>
         <source>Attachment</source>

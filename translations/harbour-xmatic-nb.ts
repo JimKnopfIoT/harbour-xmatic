@@ -366,14 +366,6 @@
         <translation>Romhendelser</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Vis når noen blir med eller forlater</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Invitasjoner, fjerninger og utestengelser vises alltid.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Vis endringer av visningsnavn</translation>
     </message>
@@ -449,6 +441,14 @@
         <source>Space list order</source>
         <translation>Rekkefølge i listen over romgrupper</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Vis når noen forlater</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Innmeldinger, invitasjoner, fjerninger og utestengelser vises alltid.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -511,6 +511,10 @@
     <message>
         <source>answered on another device</source>
         <translation>besvart på en annen enhet</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>avvist på en annen enhet</translation>
     </message>
 </context>
 <context>
@@ -794,6 +798,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Skriv inn passordet først.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -959,6 +970,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Problemer med nøkkellagringen?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Denne kontoen har ennå ikke kryssignering, så andre enheter kan ikke verifisere denne. Skriv inn passordet ditt én gang for å sette det opp; det sendes til hjemmeserveren og lagres ikke.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Passord</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Sett opp kryssignering</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1043,6 +1066,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Dette vedlegget kunne ikke lastes</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Bildet vises ikke på denne enheten. Lagre eller del det fra nedtrekksmenyen.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1090,6 +1117,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Følg enheten</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Forlatte rom</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Glemmer rommet</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Rom uten navn</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Utestengt</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Forlatt</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Ingen forlatte rom</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Rom du har forlatt eller avslått i en annen app, eller er fjernet eller utestengt fra. Denne enheten beholder dem til de er glemt, og til da teller serveren et rom du er fjernet eller utestengt fra. Trykk på ett for å glemme det.</translation>
     </message>
 </context>
 <context>
@@ -1283,10 +1342,6 @@
         <translation>Økten din er avsluttet. Logg inn på nytt.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Ny melding</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Bilde</translation>
     </message>
@@ -1325,6 +1380,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Gatewayen må være en https-URL.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Bildet kunne ikke gjøres mindre og inneholder metadata, for eksempel hvor det ble tatt, så det ble ikke sendt. Send det i original oppløsning for å sende det som det er.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>Push-registreringen kunne ikke fjernes fra hjemmeserveren. Den fjernes neste gang denne kontoen logger inn her.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>En annen app har i mellomtiden satt opp kryssignering for denne kontoen. Verifiser denne enheten derfra.</translation>
     </message>
 </context>
 <context>
@@ -1789,10 +1856,6 @@
         <translation>Meldingstekst i varsler</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Av: Et varsel viser kun hvor mange meldinger som har kommet. På: Det viser den nyeste meldingen — også på låseskjermen.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Vis andres lesestatus</translation>
     </message>
@@ -1964,6 +2027,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Av verken følges eller vises det hvem som har lest hva, noe som også holder samtalen jevnere. På viser dine egne meldinger hvor mange som har lest dem.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Av: Et varsel sier bare at meldinger har kommet, ikke fra hvem eller hva. På: Det viser den nyeste meldingen – også på låseskjermen.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2010,10 +2077,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Hva som forlater denne enheten</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Hjemmetjeneren din får en adresse hos push-tjenesten, og sender gatewayen en rom- og meldings-id for hvert varsel. Ingen meldingstekst: pushen bærer bare id-er, og denne enheten henter og dekrypterer meldingen selv. Den adressen er en hemmelighet — den som har den, kan sende et varsel til denne telefonen.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2091,6 +2154,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Bruk offentlig UnifiedPush-gateway</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Flere distributører er installert. Velg den xmatic bruker.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>Push-distributøren er ikke lenger installert. Ingenting kommer fram før den er tilbake. Installer den igjen eller slå av push.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Hjemmeserveren din får en adresse hos push-tjenesten og sender ved hvert varsel en rom- og meldings-ID og antallet uleste til gatewayen. Ingen meldingstekst: denne enheten henter og dekrypterer meldingen selv. Adressen er hemmelig – den som har den, kan sende denne telefonen et varsel.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Slå av push her før du avinstallerer xmatic. Ellers beholder hjemmeserveren pusheren og fortsetter å sende til gatewayen.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2101,6 +2180,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>Push-distributøren har droppet xmatic. Slå på push igjen under Konto.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Åpne xmatic én gang for å fullføre oppsettet av push-varsler.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic håndterer fortsatt et varsel. Åpne den igjen om et øyeblikk.</translation>
     </message>
 </context>
 <context>
@@ -2155,6 +2242,10 @@
         <source>Discover rooms</source>
         <translation>Utforsk rom</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Forlatte rom (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2169,6 +2260,10 @@
     <message>
         <source>Space</source>
         <translation>Romgruppe</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Ikke sendt – åpne rommet for å bestemme</translation>
     </message>
 </context>
 <context>
@@ -2465,12 +2560,16 @@
         <translation>Lokale data er skadet</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>En del av dataene som er lagret på denne enheten, kan ikke leses lenger, og xmatic klarte ikke å rette det opp mens den kjørte — derfor er synkroniseringen stoppet i stedet for å møte den samme raden igjen. Lukk appen og start den på nytt. Mangler det fortsatt rom etterpå, bygger en utlogging og innlogging opp de lokale dataene på nytt — men det erstatter også nøklene til denne enheten: sjekk først på krypteringssiden at nøkkelsikkerhetskopien er på.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Denne serveren leverer bare %1 av dine %2 rom via sliding sync, synkroniseringen denne appen trenger. De som mangler – ofte chatter via broer – kan ikke vises her; apper med den klassiske synkroniseringen ser dem fortsatt.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>En del av dataene som er lagret på denne enheten, kan ikke lenger leses, og xmatic klarte ikke å rette det mens appen kjørte – derfor har synkroniseringen stoppet i stedet for å møte den samme raden igjen. Å bygge romdataene på nytt henter rom og meldinger igjen og beholder enhetens nøkler. Hjelper ikke det, bygger ut- og innlogging alt på nytt – men erstatter enhetens nøkler, så sjekk først på krypteringssiden at nøkkelsikkerhetskopien er på.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Bygg romdata på nytt</translation>
     </message>
 </context>
 <context>
@@ -2972,6 +3071,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 endret profilbildet sitt</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 endret visningsnavnet til %2 og profilbildet</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 fjernet visningsnavnet og endret profilbildet</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Vises ikke på denne enheten. Trykk for å åpne.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3358,6 +3469,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Av blir bildet gjort mindre før det sendes, og metadataene – blant annet stedet det ble tatt – følger ikke med.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Animasjoner og tegninger sendes som de er, med alle metadata i dem.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3412,6 +3527,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>En avstemning kunne ikke sendes.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Et vedlegg kunne ikke sendes.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>Serveren tar ikke imot så store filer. Forkast det og send et mindre.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>Forbindelsen brøt flere ganger under sendingen. Send det igjen på en mer stabil forbindelse, eller forkast det.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>Serveren har ikke tatt imot det på en halvtime. Send det igjen, eller forkast det.</translation>
     </message>
 </context>
 <context>
@@ -3819,14 +3950,6 @@
     <message>
         <source>Event</source>
         <translation>Hendelse</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Kan ikke dekrypteres — denne enheten mangler nøkkelen</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Melding slettet</translation>
     </message>
     <message>
         <source>Attachment</source>

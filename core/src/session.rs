@@ -49,6 +49,9 @@ pub struct Paths {
     pub push_file: PathBuf,
     /// Leghorn's state and the banner record. Deleted at sign-out.
     pub push_state: [PathBuf; 2],
+    /// Salted marks of the pushers this installation set. Outlives a sign-out
+    /// whose pusher removal failed, so the next session removes them.
+    pub push_owned: PathBuf,
     /// Tantivy index per room. Beside the store rather than in the cache:
     /// expensive to rebuild, and it holds message text.
     pub search_index: PathBuf,
@@ -67,6 +70,7 @@ impl Paths {
                 data_dir.join("leghorn.json"),
                 data_dir.join("push-banners.json"),
             ],
+            push_owned: data_dir.join("push-pushers.json"),
             search_index: data_dir.join("search"),
         }
     }
@@ -277,6 +281,14 @@ pub async fn build_storeless_client(server: &str) -> Result<Client, String> {
         .map_err(|error| crate::text::scrub_ids(&error.to_string()))
 }
 
+/// Set in the woken process: one attempt per request, no retry, no server-named
+/// wait. A token refresh is a request of its own; the yield's abort ends the rest.
+pub static BOUNDED_REQUESTS: std::sync::atomic::AtomicBool =
+    std::sync::atomic::AtomicBool::new(false);
+
+/// One HTTP attempt; under `pushcmd::YIELD_FINISH`.
+pub const BOUNDED_REQUEST: std::time::Duration = std::time::Duration::from_secs(6);
+
 pub async fn build_client_at(
     target: Target<'_>,
     paths: &Paths,
@@ -299,6 +311,16 @@ pub async fn build_client_at(
     let builder = match target {
         Target::Discover(server) => Client::builder().server_name_or_homeserver_url(server),
         Target::Resolved(url) => Client::builder().homeserver_url(url),
+    };
+    let builder = if BOUNDED_REQUESTS.load(std::sync::atomic::Ordering::SeqCst) {
+        builder.request_config(
+            // `retry_limit(1)` is the SDK's "one attempt": it counts the first.
+            matrix_sdk::config::RequestConfig::new()
+                .timeout(BOUNDED_REQUEST)
+                .retry_limit(1),
+        )
+    } else {
+        builder
     };
     let client = builder
         .search_index_store(search_store)
@@ -334,6 +356,10 @@ pub async fn build_client_at(
     // device identity and the room keys.
     if client.is_ok() {
         restrict_store(paths);
+    }
+    // Before anything can load a room into the new client's event cache.
+    if let Ok(client) = &client {
+        crate::leftrooms::purge_forgotten_caches(client).await;
     }
     client
 }
@@ -547,6 +573,7 @@ pub fn reset_store(paths: &Paths) -> Result<(), std::io::Error> {
             std::fs::remove_file(file)?;
         }
     }
+    crate::push::remove_registration(&paths.push_state[0])?;
     paths.prepare()
 }
 

@@ -1,7 +1,7 @@
 //! OAuth 2.0 authorization code login. The redirect goes to a loopback
 //! listener (RFC 8252 §7.3), whose port is a request-time detail.
 
-use std::ops::Range;
+use std::{ops::Range, time::Duration};
 
 use matrix_sdk::{
     authentication::oauth::{
@@ -14,6 +14,7 @@ use matrix_sdk::{
         local_server::{LocalServerBuilder, LocalServerIpAddress, LocalServerRedirectHandle},
         UrlOrQuery,
     },
+    config::RequestConfig,
     Client, SessionMeta, SessionTokens,
 };
 use oauth2::{
@@ -35,6 +36,25 @@ const REDIRECT_URI: &str = "http://127.0.0.1/";
 /// consent screen. It does not have to resolve.
 const CLIENT_URI: &str = "https://github.com/JimKnopfIoT/harbour-xmatic";
 const CLIENT_NAME: &str = "xmatic";
+
+/// The device-code login's own requests: bounded, named, and no redirects,
+/// so a token or code never follows a 3xx to another host.
+/// A 3xx is not an error to reqwest; here it is one, and says so.
+fn refuse_redirect(response: reqwest::Response) -> Result<reqwest::Response, String> {
+    if response.status().is_redirection() {
+        return Err("the server redirected the request, which this sign-in does not follow".to_owned());
+    }
+    Ok(response)
+}
+
+fn login_http() -> reqwest::Client {
+    reqwest::Client::builder()
+        .timeout(std::time::Duration::from_secs(30))
+        .user_agent(CLIENT_NAME)
+        .redirect(reqwest::redirect::Policy::none())
+        .build()
+        .unwrap_or_default()
+}
 
 /// A login that has been started and is waiting for the user to finish in the
 /// browser.
@@ -116,12 +136,13 @@ pub async fn start_device(client: &Client) -> Result<PendingDeviceLogin, String>
         client_id: String,
     }
 
-    let registered: Registered = reqwest::Client::new()
+    let registered: Registered = login_http()
         .post(registration_endpoint)
         .json(&metadata)
         .send()
         .await
-        .map_err(|error| format!("client registration failed: {error}"))?
+        .map_err(|error| format!("client registration failed: {error}"))
+        .and_then(refuse_redirect)?
         .error_for_status()
         .map_err(|error| format!("client registration rejected: {error}"))?
         .json()
@@ -141,7 +162,7 @@ pub async fn start_device(client: &Client) -> Result<PendingDeviceLogin, String>
         Scope::new(format!("{SCOPE_DEVICE_PREFIX}{device_id}")),
     ];
 
-    let http: ReqwestClient = reqwest::Client::new().into();
+    let http: ReqwestClient = login_http().into();
     let response = OAuth2Client::new(registration_client_id.clone())
         .set_device_authorization_url(device_url)
         .exchange_device_code()
@@ -172,7 +193,7 @@ pub async fn finish_device(client: &Client, pending: PendingDeviceLogin) -> Resu
         .await
         .map_err(|error| format!("server metadata unavailable: {error}"))?;
 
-    let http: ReqwestClient = reqwest::Client::new().into();
+    let http: ReqwestClient = login_http().into();
     let token = OAuth2Client::new(pending.client_id.clone())
         .set_token_uri(TokenUrl::from_url(server_metadata.token_endpoint.clone()))
         .exchange_device_access_token(&pending.response)
@@ -193,12 +214,13 @@ pub async fn finish_device(client: &Client, pending: PendingDeviceLogin) -> Resu
         device_id: Option<OwnedDeviceId>,
     }
 
-    let who: WhoAmI = reqwest::Client::new()
+    let who: WhoAmI = login_http()
         .get(whoami_url)
         .bearer_auth(token.access_token().secret())
         .send()
         .await
-        .map_err(|error| format!("whoami request failed: {error}"))?
+        .map_err(|error| format!("whoami request failed: {error}"))
+        .and_then(refuse_redirect)?
         .error_for_status()
         .map_err(|error| format!("whoami request rejected: {error}"))?
         .json()
@@ -341,6 +363,135 @@ pub async fn password(client: &Client, user: &str, password: &str) -> Result<(),
         .map_err(|error| format!("sign-in failed: {error}"))?;
 
     Ok(())
+}
+
+/// The interactive-auth session the server opened for a cross-signing setup,
+/// kept until the user answers it with the password. Not a secret.
+static CROSS_SIGNING_UIA: std::sync::Mutex<Option<String>> = std::sync::Mutex::new(None);
+
+/// How long the password may wait on the setup request.
+const CROSS_SIGNING_LIMIT: Duration = Duration::from_secs(60);
+
+/// One setup at a time: two answers to the same check must not upload twice.
+static CROSS_SIGNING_SETUP: tokio::sync::Mutex<()> = tokio::sync::Mutex::const_new(());
+
+pub fn forget_cross_signing() {
+    if let Ok(mut guard) = CROSS_SIGNING_UIA.lock() {
+        *guard = None;
+    }
+}
+
+/// Whether the server holds a master key for this account - asked, not read
+/// from the store, which keeps the key a refused setup created locally.
+async fn server_has_identity(client: &Client) -> Result<bool, String> {
+    use matrix_sdk::ruma::api::client::keys::get_keys;
+
+    let user = client.user_id().ok_or("not signed in")?.to_owned();
+    let mut request = get_keys::v3::Request::new();
+    request.device_keys.insert(user.clone(), Vec::new());
+    // Bounded: the password waits on this answer.
+    let config = RequestConfig::new().disable_retry().timeout(Duration::from_secs(20));
+    let response = client
+        .send(request)
+        .with_request_config(config)
+        .await
+        .map_err(|error| crate::text::scrub_ids(&format!("could not ask for the keys: {error}")))?;
+    Ok(response.master_keys.contains_key(&user))
+}
+
+/// This device signed by the account's identity, where this device holds the
+/// signing key: a setup cut off between the two uploads leaves it unsigned.
+async fn sign_own_device(client: &Client) {
+    let encryption = client.encryption();
+    let has_key = encryption
+        .cross_signing_status()
+        .await
+        .is_some_and(|status| status.has_self_signing);
+    if !has_key {
+        return;
+    }
+    if let Ok(Some(device)) = encryption.get_own_device().await {
+        if !device.is_cross_signed_by_owner() {
+            if let Err(error) = device.verify().await {
+                log::warn!("{}", crate::text::scrub_ids(&format!("signing this device failed: {error}")));
+            }
+        }
+    }
+}
+
+/// `true` where the server wants the password to create the account's identity.
+/// Decided by the server each time, never replacing an identity it has.
+pub async fn cross_signing_without_password(client: &Client) -> Result<bool, String> {
+    let _setup = CROSS_SIGNING_SETUP.lock().await;
+    if server_has_identity(client).await? {
+        sign_own_device(client).await;
+        return Ok(false);
+    }
+    let Err(error) = client.encryption().bootstrap_cross_signing(None).await else {
+        return Ok(false);
+    };
+    let Some(response) = error.as_uiaa_response() else {
+        return Err(crate::text::scrub_ids(&format!("cross-signing setup failed: {error}")));
+    };
+    if let Ok(mut guard) = CROSS_SIGNING_UIA.lock() {
+        *guard = response.session.clone();
+    }
+    Ok(true)
+}
+
+/// Answers the server's check with the password the user just typed; one
+/// command, one request. Asks the server again first: an identity another
+/// client created meanwhile is kept, never overwritten.
+pub async fn cross_signing_with_password(
+    client: &Client,
+    password: crate::protocol::Secret,
+) -> Result<bool, String> {
+    use matrix_sdk::ruma::api::client::uiaa;
+
+    // Never queued behind another setup with the password in hand.
+    let Ok(_setup) = CROSS_SIGNING_SETUP.try_lock() else {
+        return Err("a setup is already running".to_owned());
+    };
+    if server_has_identity(client).await? {
+        drop(password);
+        forget_cross_signing();
+        // A setup cut off earlier: its keys arrived, its signature did not.
+        sign_own_device(client).await;
+        return Ok(false);
+    }
+    let user = client.user_id().ok_or("not signed in")?.to_string();
+    let session = CROSS_SIGNING_UIA.lock().ok().and_then(|guard| guard.clone());
+    let mut auth = uiaa::Password::new(
+        uiaa::UserIdentifier::Matrix(uiaa::MatrixUserIdentifier::new(user)),
+        password.as_str().to_owned(),
+    );
+    auth.session = session;
+    // The SDK's retry has no ceiling; a setup cut here is signed by the next start.
+    let outcome = tokio::time::timeout(
+        CROSS_SIGNING_LIMIT,
+        client.encryption().bootstrap_cross_signing(Some(uiaa::AuthData::Password(auth))),
+    )
+    .await;
+    drop(password);
+    let Ok(outcome) = outcome else {
+        return Err("the server did not answer in time".to_owned());
+    };
+    match outcome {
+        Ok(()) => {
+            forget_cross_signing();
+            sign_own_device(client).await;
+            Ok(true)
+        }
+        Err(error) => {
+            if let Some(response) = error.as_uiaa_response() {
+                if let Ok(mut guard) = CROSS_SIGNING_UIA.lock() {
+                    *guard = response.session.clone();
+                }
+                return Err("the password was not accepted".to_owned());
+            }
+            Err(crate::text::scrub_ids(&format!("cross-signing setup failed: {error}")))
+        }
+    }
 }
 
 #[cfg(test)]

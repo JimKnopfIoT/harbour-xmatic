@@ -29,6 +29,7 @@
 #include "emojiset.h"
 #include "emojistore.h"
 #include "instancelock.h"
+#include "pushbanners.h"
 #include "pushwake.h"
 #include "voicedecode.h"
 #include "languagesettings.h"
@@ -71,7 +72,9 @@ bool takeStoreFromWakeUp(const QString &dataDirectory)
         return false;
     }
     yield.close();
-    for (int attempt = 0; attempt < 40; ++attempt) {
+    // The wake-up finishes the push in hand and saves its tokens first.
+    const int attempts = (XMATIC_WAKE_YIELD_MS + 500) / 100;
+    for (int attempt = 0; attempt < attempts; ++attempt) {
         QThread::msleep(100);
         if (acquireInstanceLock(dataDirectory)) {
             return true;
@@ -85,6 +88,14 @@ bool takeStoreFromWakeUp(const QString &dataDirectory)
 
 int main(int argc, char *argv[])
 {
+    // One received voice message decoded, then gone: before Qt, before the
+    // store, never the instance lock, never the bus. See src/voicedecode.cpp.
+    if (qEnvironmentVariableIsSet(XMATIC_VOICE_DECODE_ENV)) {
+        prctl(PR_SET_DUMPABLE, 0);
+        umask(S_IRWXG | S_IRWXO);
+        return runVoiceDecode();
+    }
+
     // Before any thread starts.
     pushPrelude(argv[0]);
 
@@ -99,12 +110,6 @@ int main(int argc, char *argv[])
     // 0600 on everything this process creates. `restrict_store` runs once, and
     // SQLite's -wal and -shm are written after it.
     umask(S_IRWXG | S_IRWXO);
-
-    // One received voice message decoded, then gone: before Qt, before the
-    // store, never the instance lock. See src/voicedecode.cpp.
-    if (qEnvironmentVariableIsSet(XMATIC_VOICE_DECODE_ENV)) {
-        return runVoiceDecode();
-    }
 
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
@@ -141,8 +146,15 @@ int main(int argc, char *argv[])
     // Before anything opens the store: the core runs SQLite without the SDK's
     // cross-process lock, and nothing else guarantees one process per store.
     if (!acquireInstanceLock(dataDirectory) && !takeStoreFromWakeUp(dataDirectory)) {
-        qInfo("xmatic: another instance owns this store; handing over");
-        raiseRunningInstance();
+        if (instanceIsRunning()) {
+            qInfo("xmatic: another instance owns this store; handing over");
+            raiseRunningInstance();
+        } else {
+            // A wake-up past its yield: said, not a start that silently ends.
+            qWarning("xmatic: a push wake-up still holds the store; not starting");
+            LanguageSettings::applyWithDeviceLocale(app.data());
+            publishStoreBusyNotice(dataDirectory);
+        }
         return 0;
     }
     // Holding the store: a request to yield, ours or a leftover, is answered.
@@ -182,8 +194,7 @@ int main(int argc, char *argv[])
     service.publish();
 
     MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey, &settings);
-    bridge.setAnnouncePushes(true);
-    bridge.closePushBanners();
+    bridge.pushActions()->closeBanners();
     if (!storeKey.key.isEmpty()) {
         storeKey.key.fill(QChar('0'));
     }
@@ -199,10 +210,12 @@ int main(int argc, char *argv[])
 
     BehaviourSettings behaviour;
     const auto applyOrder = [&bridge, &behaviour]() {
+        const bool byName = behaviour.roomOrder() == QLatin1String("name");
         if (auto *rooms = qobject_cast<RoomSortModel *>(bridge.rooms())) {
-            rooms->setOrder(behaviour.roomOrder() == QLatin1String("name"),
-                            behaviour.unreadFirst());
+            rooms->setOrder(byName, behaviour.unreadFirst());
         }
+        // The proxy sorts what the core has loaded; the core loads it all for this.
+        bridge.setRoomOrder(byName, behaviour.unreadFirst());
         if (auto *spaces = qobject_cast<RoomSortModel *>(bridge.spaces())) {
             spaces->setOrder(behaviour.spaceOrder() == QLatin1String("name"), false);
         }

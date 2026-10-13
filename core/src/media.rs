@@ -29,9 +29,13 @@ use sha2::{Digest, Sha256};
 /// enough that scrolling does not pull megabytes per row.
 const THUMBNAIL_EDGE: u32 = 800;
 
-/// Largest attachment this app puts in memory to send: generous next to what a
-/// homeserver accepts, far below what a phone loses to one allocation.
+/// Largest attachment this app sends. The queue holds about three copies at
+/// once (file, store cipher, upload cipher); a 32-bit device has 3 GiB of address
+/// space and 2-4 GiB of memory, so it gets half of what a 64-bit one does.
+#[cfg(target_pointer_width = "64")]
 const MAX_ATTACHMENT_BYTES: u64 = 100 * 1024 * 1024;
+#[cfg(not(target_pointer_width = "64"))]
+const MAX_ATTACHMENT_BYTES: u64 = 50 * 1024 * 1024;
 
 /// Largest avatar. A profile picture is scaled down by everything that shows
 /// it, so anything past this is a mistake rather than an intention.
@@ -190,6 +194,20 @@ fn thumbnail_refused(status: Option<u16>) -> bool {
     matches!(status, Some(400) | Some(404))
 }
 
+/// The SDK's media store, read only: the send queue leaves every upload there
+/// under its final address. A thumbnail of one's own upload is the file itself.
+async fn stored(client: &Client, request: &MediaRequestParameters) -> Option<Vec<u8>> {
+    let store = client.media_store().lock().await.ok()?;
+    if let Ok(Some(bytes)) = store.get_media_content(request).await {
+        return Some(bytes);
+    }
+    if !matches!(request.format, MediaFormat::Thumbnail(_)) {
+        return None;
+    }
+    let file = MediaRequestParameters { source: request.source.clone(), format: MediaFormat::File };
+    store.get_media_content(&file).await.ok().flatten()
+}
+
 /// Downloads media and returns the path. Already downloaded files are reused,
 /// so the timeline can ask repeatedly while scrolling.
 pub async fn fetch(
@@ -241,7 +259,12 @@ pub async fn fetch(
         .await
         .map_err(|_| "the download queue is closed".to_owned())?;
 
-    let bytes = match client.media().get_media_content(&request, false).await {
+    // `use_cache` stays off: it would copy every download into the store as well.
+    let bytes = match stored(client, &request).await {
+        Some(bytes) => Ok(bytes),
+        None => client.media().get_media_content(&request, false).await,
+    };
+    let bytes = match bytes {
         Ok(bytes) => bytes,
         // A server with dynamic thumbnails switched off refuses the thumbnail, not
         // the media. One more request against a blank picture that stays blank.

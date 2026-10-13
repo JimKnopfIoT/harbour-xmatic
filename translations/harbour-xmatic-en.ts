@@ -366,14 +366,6 @@
         <translation>Room events</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Show join and leave messages</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Invitations, removals and bans are always shown.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Show display name changes</translation>
     </message>
@@ -449,6 +441,14 @@
         <source>Space list order</source>
         <translation>Space list order</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Show leave messages</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Joins, invitations, removals and bans are always shown.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -511,6 +511,10 @@
     <message>
         <source>answered on another device</source>
         <translation>answered on another device</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>declined on another device</translation>
     </message>
 </context>
 <context>
@@ -794,6 +798,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Enter your password first.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -959,6 +970,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Trouble with the key storage?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Set up cross-signing</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1043,6 +1066,10 @@
         <source>This attachment could not be loaded</source>
         <translation>This attachment could not be loaded</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>This picture is not shown on this device. Save or share it from the pull-down menu.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1090,6 +1117,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Follow the device</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Left rooms</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Forgetting room</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Unnamed room</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Banned</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Left</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>No left rooms</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</translation>
     </message>
 </context>
 <context>
@@ -1283,10 +1342,6 @@
         <translation>Your session has ended. Please sign in again.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>New message</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Picture</translation>
     </message>
@@ -1325,6 +1380,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>The gateway must be an https URL.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</translation>
     </message>
 </context>
 <context>
@@ -1789,10 +1856,6 @@
         <translation>Message text in notifications</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Show others&apos; read status</translation>
     </message>
@@ -1964,6 +2027,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2010,10 +2077,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>What leaves this device</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2091,6 +2154,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Use UnifiedPush public gateway</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Several distributors are installed. Pick the one xmatic uses.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2101,6 +2180,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>The push distributor dropped xmatic. Turn push back on under Account.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Open xmatic once to finish setting up push notifications.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic is still handling a notification. Open it again in a moment.</translation>
     </message>
 </context>
 <context>
@@ -2155,6 +2242,10 @@
         <source>Discover rooms</source>
         <translation>Discover rooms</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Left rooms (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2169,6 +2260,10 @@
     <message>
         <source>Space</source>
         <translation>Space</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Not sent - open the room to decide</translation>
     </message>
 </context>
 <context>
@@ -2465,12 +2560,16 @@
         <translation>Local data damaged</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Rebuild room data</translation>
     </message>
 </context>
 <context>
@@ -2972,6 +3071,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 changed their profile picture</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 changed their display name to %2 and their profile picture</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 removed their display name and changed their profile picture</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Not shown on this device. Tap to open.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3358,6 +3469,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Animations and drawings go as they are, with any metadata in them.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3412,6 +3527,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>A poll could not be sent.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>An attachment could not be sent.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>The server does not accept files this large. Discard it and send a smaller one.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>The server has not taken it for half an hour. Send it again, or discard it.</translation>
     </message>
 </context>
 <context>
@@ -3819,14 +3950,6 @@
     <message>
         <source>Event</source>
         <translation>Event</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Cannot be decrypted — this device is missing the key</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Message deleted</translation>
     </message>
     <message>
         <source>Attachment</source>

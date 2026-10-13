@@ -54,10 +54,14 @@ void DiffListModel::patchField(int row, const QString &field, const QJsonValue &
 
 /// An operation whose index the model cannot satisfy: dropped, because applying
 /// it would be worse - but never silently, every later index is then off.
-void DiffListModel::reportDrift(const QString &op, int index) const
+void DiffListModel::reportDrift(const QString &op, int index)
 {
     qWarning("xmatic: diff out of step (%s at %d, %d rows) - the model and the core disagree",
              qPrintable(op), index, m_rows.count());
+    if (!m_outOfStep) {
+        m_outOfStep = true;
+        emit outOfStep();
+    }
 }
 
 void DiffListModel::applyOperations(const QJsonArray &operations)
@@ -132,6 +136,7 @@ void DiffListModel::applyOperation(const QJsonObject &operation)
 
     if (op == QLatin1String("popBack")) {
         if (m_rows.isEmpty()) {
+            reportDrift(op, -1);
             return;
         }
         const int last = m_rows.count() - 1;
@@ -143,7 +148,12 @@ void DiffListModel::applyOperation(const QJsonObject &operation)
 
     if (op == QLatin1String("truncate")) {
         const int length = operation.value(QStringLiteral("length")).toInt();
-        if (length < 0 || length >= m_rows.count()) {
+        // Equal is a truncate to what is there already; past it is a model behind.
+        if (length < 0 || length > m_rows.count()) {
+            reportDrift(op, length);
+            return;
+        }
+        if (length == m_rows.count()) {
             return;
         }
         beginRemoveRows(QModelIndex(), length, m_rows.count() - 1);
@@ -164,13 +174,17 @@ void DiffListModel::applyOperation(const QJsonObject &operation)
         for (const QJsonValue &value : values) {
             m_rows.append(value.toObject());
         }
+        m_outOfStep = false;
         endResetModel();
         return;
     }
+
+    reportDrift(op, index);
 }
 
 void DiffListModel::clear()
 {
+    m_outOfStep = false;
     if (m_rows.isEmpty()) {
         return;
     }

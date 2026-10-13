@@ -46,6 +46,8 @@ SOURCES += \
     src/appsettings.cpp \
     src/instancelock.cpp \
     src/pushwake.cpp \
+    src/pushactions.cpp \
+    src/pushbanners.cpp \
     src/languagesettings.cpp \
     src/difflistmodel.cpp \
     src/emojiset.cpp \
@@ -61,6 +63,8 @@ SOURCES += \
     src/camerashots.cpp \
     src/readingpositions.cpp \
     src/roomsettings.cpp \
+    src/leftrooms.cpp \
+    src/crosssigning.cpp \
     src/spacemarkers.cpp \
     src/linkpreviews.cpp \
     src/mentions.cpp \
@@ -90,6 +94,8 @@ HEADERS += \
     src/emojiimageprovider.h \
     src/instancelock.h \
     src/pushwake.h \
+    src/pushactions.h \
+    src/pushbanners.h \
     src/languagesettings.h \
     src/matrixbridge.h \
     src/pollactions.h \
@@ -98,6 +104,8 @@ HEADERS += \
     src/camerashots.h \
     src/readingpositions.h \
     src/roomsettings.h \
+    src/leftrooms.h \
+    src/crosssigning.h \
     src/spacemarkers.h \
     src/linkpreviews.h \
     src/mentions.h \
@@ -168,6 +176,12 @@ SPEC_VERSION = $$system(grep ^Version: $$PWD/rpm/harbour-xmatic.spec)
 SPEC_VERSION = $$last(SPEC_VERSION)
 !equals(CORE_VERSION, $$SPEC_VERSION) {
     error("Rust core is $${CORE_VERSION} but rpm/harbour-xmatic.spec says $${SPEC_VERSION}. Re-run scripts/build-core.sh.")
+}
+# Same version, older sources: a core built before the last change to core/.
+CORE_SOURCE = $$cat($${CORE_LIB}.source)
+TREE_SOURCE = $$system(cd $$PWD/core && find src Cargo.toml Cargo.lock -type f | LC_ALL=C sort | xargs sha256sum | sha256sum | cut -c1-16)
+!equals(CORE_SOURCE, $$TREE_SOURCE) {
+    error("The Rust core was built from other sources than core/ holds now. Re-run scripts/build-core.sh.")
 }
 
 LIBS += $$CORE_LIB -lpthread -ldl -lm -lrt
@@ -252,15 +266,24 @@ TRANSLATIONS += \
 # The QML rule check runs with every build, not when somebody remembers it: a
 # second handler for one signal makes a page unloadable, and neither qmake nor
 # qmllint says a word about it.
-qmlcheck.commands = python3 $$PWD/scripts/qml-check.py $$PWD/qml
+qmlcheck.commands = python3 -B $$PWD/scripts/qml-check.py $$PWD/qml
 qmlcheck.depends =
 QMAKE_EXTRA_TARGETS += qmlcheck
 PRE_TARGETDEPS += qmlcheck
 
+# What the platform does not have fails here, not on the device: JavaScript past
+# ES5, and every property, handler and import against the target's type data.
+qmlplatform.commands = python3 -B $$PWD/tools/qmlplatform/es5.py $$PWD/qml && \
+    python3 -B $$PWD/tools/qmlplatform/check.py $$[QT_INSTALL_QML] $$PWD/qml && \
+    python3 -B $$PWD/tools/qmlplatform/connections.py $$PWD
+qmlplatform.depends =
+QMAKE_EXTRA_TARGETS += qmlplatform
+PRE_TARGETDEPS += qmlplatform
+
 # The link handler's sandbox profile must grant what the app's does. It said so
 # in a comment and was one entry short for two releases; the comment is now a
 # check that fails the build.
-desktopcheck.commands = python3 $$PWD/scripts/desktop-check.py $$PWD
+desktopcheck.commands = python3 -B $$PWD/scripts/desktop-check.py $$PWD
 desktopcheck.depends =
 QMAKE_EXTRA_TARGETS += desktopcheck
 PRE_TARGETDEPS += desktopcheck
@@ -334,6 +357,8 @@ DISTFILES += \
     qml/pages/MatrixLinks.js \
     qml/pages/LinkMarks.js \
     qml/pages/MessageBody.js \
+    qml/pages/Strings.js \
+    qml/pages/KeyboardHold.qml \
     qml/pages/Preview.js \
     qml/pages/ConfirmDialog.qml \
     qml/pages/ImageViewPage.qml \
@@ -358,6 +383,7 @@ DISTFILES += \
     qml/pages/MentionPicker.qml \
     qml/pages/MemberProfilePage.qml \
     qml/pages/IgnoredUsersPage.qml \
+    qml/pages/LeftRoomsPage.qml \
     qml/pages/ThreadPage.qml \
     qml/pages/CallPage.qml \
     qml/pages/SendMediaPage.qml

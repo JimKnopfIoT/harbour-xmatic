@@ -43,6 +43,11 @@ ListItem {
     readonly property string previewLine: Preview.line(model.previewKind || "",
                                                        model.previewText || "")
 
+    // Something parked in the room's send queue holds back everything after it;
+    // only the room's own banner shows it otherwise.
+    readonly property bool sendStuck: (matrix.sendQueue.roomsRevision,
+                                       matrix.sendQueue.roomStuck(model.id))
+
     contentHeight: Theme.itemSizeMedium
 
     Avatar {
@@ -179,7 +184,8 @@ ListItem {
 
             width: parent.width
             font.pixelSize: Theme.fontSizeExtraSmall
-            color: roomItem.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+            color: roomItem.highlighted || roomItem.sendStuck
+                   ? Theme.secondaryHighlightColor : Theme.secondaryColor
             truncationMode: TruncationMode.Fade
             textFormat: Text.PlainText
             // What the row is, before what was said in it: an invitation has no
@@ -190,7 +196,9 @@ ListItem {
                      ? qsTr("Replaced by a new room")
                      : (model.space
                         ? qsTr("Space")
-                        : roomItem.previewLine))
+                        : (roomItem.sendStuck
+                           ? qsTr("Not sent - open the room to decide")
+                           : roomItem.previewLine)))
         }
     }
 
@@ -223,7 +231,8 @@ ListItem {
         }
         y: infoColumn.y + previewLabel.y
            + Math.round((previewLabel.height - height) / 2)
-        visible: model.unread > 0 || model.mentions > 0
+        // Marked unread by hand with nothing counted: the pill without a number.
+        visible: model.unread > 0 || model.mentions > 0 || model.markedUnread === true
         // Sized from the number so pill and digits grow together: the fixed-height
         // form kept the count near the smallest font and read as a speck.
         width: Math.max(height, badgeLabel.implicitWidth + Theme.paddingMedium)
@@ -246,6 +255,9 @@ ListItem {
             // core knows only "at least". The ceiling lives in `LIST_TIMELINE_LIMIT`.
             text: {
                 var count = model.mentions > 0 ? model.mentions : model.unread
+                if (count <= 0) {
+                    return ""
+                }
                 return model.unreadCapped ? count + "+" : count
             }
         }

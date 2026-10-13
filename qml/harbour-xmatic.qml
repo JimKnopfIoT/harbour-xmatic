@@ -48,6 +48,13 @@ ApplicationWindow {
         openNotifiedRoom()
     }
 
+    // One turn of the event loop, so the root swap has happened.
+    Timer {
+        id: pushRoomLater
+        interval: 1
+        onTriggered: app.openPendingPushRoom()
+    }
+
     Timer {
         id: pendingPushRoomLife
         interval: 30000
@@ -197,7 +204,7 @@ ApplicationWindow {
         }
         // A link the app was started for. It waits for the session the restore
         // above is fetching - opening a room needs one.
-        app.queuePushRoom(matrix.pushBannerRoom(activation.takePendingPushBanner()))
+        matrix.push.openBanner(activation.takePendingPushBanner())
         app.startupLink = activation.takePendingLink()
         if (app.startupLink.length > 0) {
             startupLinkLife.restart()
@@ -223,7 +230,7 @@ ApplicationWindow {
         target: matrix
 
         onSessionChanged: {
-            Qt.callLater(app.openPendingPushRoom)
+            pushRoomLater.restart()
             if (app.startupLink.length === 0 || matrix.sessionState !== "signed-in") {
                 return
             }
@@ -232,6 +239,13 @@ ApplicationWindow {
             startupLinkLife.stop()
             app.openMatrixLink(link)
         }
+    }
+
+    // A push banner's key resolves once its room is known, often after the restore.
+    Connections {
+        target: matrix.push
+
+        onBannerRoomReady: app.queuePushRoom(roomId)
     }
 
     // The notification tap and the launcher's hand-over. Neither carries an
@@ -243,7 +257,7 @@ ApplicationWindow {
 
         onPushBannerRequested: {
             app.activate()
-            app.queuePushRoom(matrix.pushBannerRoom(key))
+            matrix.push.openBanner(key)
         }
 
         onNotifiedRoomRequested: {
@@ -280,7 +294,7 @@ ApplicationWindow {
             return
         }
         app.pendingLinkAddress = target.id
-        matrix.resolveRoom(target.id)
+        matrix.resolveRoom(target.id, true)
     }
 
     /// The address a link from outside asked about, until the core has answered.
@@ -312,7 +326,9 @@ ApplicationWindow {
         target: matrix
 
         onRoomResolved: {
-            if (app.pendingLinkAddress.length === 0) {
+            // Only the answer to this request: pages resolve links of their own.
+            if (!local || app.pendingLinkAddress.length === 0
+                    || address !== app.pendingLinkAddress.trim()) {
                 return
             }
             app.pendingLinkAddress = ""
@@ -330,13 +346,14 @@ ApplicationWindow {
         // Could not be looked up is not "does not exist": a cold start asks before
         // the first sync is through. The user asked for it, so the dialog comes up.
         onRoomResolveFailed: {
-            if (app.pendingLinkAddress.length === 0) {
+            if (!local || app.pendingLinkAddress.length === 0
+                    || address !== app.pendingLinkAddress.trim()) {
                 return
             }
-            var address = app.pendingLinkAddress
+            var asked = app.pendingLinkAddress
             app.pendingLinkAddress = ""
             console.warn("xmatic: link room could not be resolved")
-            app.pushWhenSettled("pages/JoinRoomDialog.qml", { prefill: address })
+            app.pushWhenSettled("pages/JoinRoomDialog.qml", { prefill: asked })
         }
     }
 
@@ -461,7 +478,7 @@ ApplicationWindow {
             if (Qt.application.state === Qt.ApplicationActive) {
                 backgroundSync.enabled = false
                 notification.close()
-                matrix.closePushBanners()
+                matrix.push.closeBanners()
                 app.notifiedRoomId = ""
             } else {
                 backgroundSync.enabled = matrix.sessionState === "signed-in"
@@ -547,8 +564,8 @@ ApplicationWindow {
         }
 
         // Answered, declined, or the caller gave up: the ring stops with the
-        // ringing state, whichever way it ended.
-        onStateChanged: {
+        // ringing state, whichever way it ended. The property's own notify signal.
+        onCallChanged: {
             if (matrix.calls.state !== "ringing") {
                 ringer.stop()
                 callNotification.close()
@@ -601,6 +618,8 @@ ApplicationWindow {
         onRoomActivity: {
             notification.close()
             app.notifiedRoomId = roomId
+            // Tone, vibration and LED hang off the category; a quiet push has none.
+            notification.category = audible ? "x-nemo.messaging.im" : ""
             // The room's name is content - in a direct chat it is the other person. Same
             // switch as the text, because the banner shows on the lock screen.
             notification.summary = settings.notificationPreview

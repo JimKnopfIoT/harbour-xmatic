@@ -79,6 +79,8 @@ QHash<int, QByteArray> RoomListModel::roleNames() const
     // names in its own words, and the text for the two kinds that have one.
     names.insert(PreviewKindRole, "previewKind");
     names.insert(PreviewTextRole, "previewText");
+    // Marked unread by hand, here or elsewhere: unread with nothing counted.
+    names.insert(MarkedUnreadRole, "markedUnread");
     return names;
 }
 
@@ -141,12 +143,14 @@ void RoomListModel::clearUnread(const QString &roomId)
         }
         if (row.value(QStringLiteral("unread")).toInt() == 0
             && row.value(QStringLiteral("notifications")).toInt() == 0
-            && row.value(QStringLiteral("mentions")).toInt() == 0) {
+            && row.value(QStringLiteral("mentions")).toInt() == 0
+            && !row.value(QStringLiteral("markedUnread")).toBool()) {
             return;
         }
         row.insert(QStringLiteral("unread"), 0);
         row.insert(QStringLiteral("notifications"), 0);
         row.insert(QStringLiteral("mentions"), 0);
+        row.insert(QStringLiteral("markedUnread"), false);
 
         QJsonObject operation;
         operation.insert(QStringLiteral("op"), QStringLiteral("set"));

@@ -5267,7 +5267,7 @@ dependencies = [
 
 [[package]]
 name = "xmatic-core"
-version = "0.46.5"
+version = "0.46.8"
 dependencies = [
  "base64 0.22.1",
  "futures-util",
@@ -5293,6 +5293,7 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "url",
+ "zbus",
  "zeroize",
 ]
 

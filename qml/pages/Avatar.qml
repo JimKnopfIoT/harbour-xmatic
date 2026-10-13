@@ -16,16 +16,16 @@ Item {
     width: size
     height: size
 
-    property string _path: ""
+    /// Only through the bridge: a refused file (SVG, oversized) answers empty.
+    property string _url: ""
 
     function _refresh() {
-        _path = ""
+        _url = ""
         if (source.length === 0) {
             return
         }
-        var known = matrix.mediaPath(source)
-        if (known.length > 0) {
-            _path = known
+        if (matrix.mediaPath(source).length > 0) {
+            _url = matrix.imageSource(source)
         } else {
             matrix.requestAvatar(source)
         }
@@ -38,7 +38,7 @@ Item {
         target: matrix
         onMediaReady: {
             if (key === avatar.source) {
-                avatar._path = path
+                avatar._url = matrix.imageSource(key)
             }
         }
     }
@@ -46,7 +46,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: width / 2
-        visible: avatar._path.length === 0
+        visible: avatar._url.length === 0
         color: Theme.rgba(Theme.highlightBackgroundColor, Theme.opacityFaint)
 
         Label {
@@ -69,12 +69,12 @@ Item {
         id: picture
 
         anchors.fill: parent
-        visible: avatar._path.length > 0
+        visible: avatar._url.length > 0
         asynchronous: true
         fillMode: Image.PreserveAspectCrop
         sourceSize.width: avatar.size
         sourceSize.height: avatar.size
-        source: avatar._path.length > 0 ? "file://" + avatar._path : ""
+        source: avatar._url
 
         layer.enabled: visible
         layer.effect: OpacityMask {

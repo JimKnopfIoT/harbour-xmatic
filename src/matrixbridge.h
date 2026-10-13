@@ -3,6 +3,7 @@
 
 #include <QElapsedTimer>
 #include <QHash>
+#include <QPair>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStandardPaths>
@@ -23,10 +24,13 @@
 #include "callengine.h"
 #include "linkpreviews.h"
 #include "pollactions.h"
+#include "pushactions.h"
 #include "sendqueueactions.h"
 #include "locationactions.h"
 #include "camerashots.h"
 #include "roomsettings.h"
+#include "leftrooms.h"
+#include "crosssigning.h"
 #include "spacemarkers.h"
 #include "voicetranscripts.h"
 #include "voicerecorder.h"
@@ -64,6 +68,13 @@ class MatrixBridge : public QObject
     /// Rooms the server says the account is in, -1 unknown. Above `roomTotal`, its
     /// sliding sync leaves rooms out.
     Q_PROPERTY(int joinedRoomTotal READ joinedRoomTotal NOTIFY roomTotalChanged)
+    /// Rooms on this device the server's list counts too; below `roomTotal` while the sync grows.
+    Q_PROPERTY(int knownRoomTotal READ knownRoomTotal NOTIFY roomTotalChanged)
+    /// Joined rooms the sync has brought to this device, -1 unknown. Set against
+    /// `joinedRoomTotal` once the window is complete.
+    Q_PROPERTY(int syncedJoinedTotal READ syncedJoinedTotal NOTIFY roomTotalChanged)
+    /// The chat list has rooms outside its loaded pages that a page can bring.
+    Q_PROPERTY(bool roomListHasMore READ roomListHasMore NOTIFY roomTotalChanged)
     Q_PROPERTY(QString userId READ userId NOTIFY sessionChanged)
     Q_PROPERTY(QString deviceId READ deviceId NOTIFY sessionChanged)
     Q_PROPERTY(bool ready READ ready CONSTANT)
@@ -90,12 +101,8 @@ class MatrixBridge : public QObject
     /// Everything that failed in this run, newest first: `time`, `command`,
     /// `message`. `lastError` is one string and the next failure overwrites it.
     Q_PROPERTY(QVariantList errorLog READ errorLog NOTIFY errorLogChanged)
-    /// UnifiedPush on this device: `state`, `distributors`, `distributor`,
-    /// `enabled`, `registered`, `gateway`, `serverGateway`, `error`.
-    Q_PROPERTY(QVariantMap pushStatus READ pushStatus NOTIFY pushStatusChanged)
-    /// The endpoint this device is reachable at. A secret: anyone holding it can
-    /// push to this phone, so it is never shown and never logged.
-    Q_PROPERTY(bool pushEndpointReady READ pushEndpointReady NOTIFY pushStatusChanged)
+    /// UnifiedPush on this device. See src/pushactions.cpp.
+    Q_PROPERTY(QObject *push READ push CONSTANT)
     Q_PROPERTY(QObject *rooms READ rooms CONSTANT)
     // Forwarded from the room list so the cover, which only sees the bridge,
     // can show "rooms with news / messages" without touching a model.
@@ -120,6 +127,8 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *cameraShots READ cameraShots CONSTANT)
     Q_PROPERTY(QObject *linkPreviews READ linkPreviews CONSTANT)
     Q_PROPERTY(QObject *roomSettings READ roomSettings CONSTANT)
+    Q_PROPERTY(QObject *leftRooms READ leftRooms CONSTANT)
+    Q_PROPERTY(QObject *crossSigning READ crossSigning CONSTANT)
     Q_PROPERTY(QObject *mentions READ mentions CONSTANT)
     Q_PROPERTY(QObject *transcripts READ transcripts CONSTANT)
     Q_PROPERTY(QString openRoomId READ openRoomId NOTIFY openRoomChanged)
@@ -129,6 +138,8 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QString replacementReason READ replacementReason NOTIFY tombstoneChanged)
     Q_PROPERTY(bool replacementJoined READ replacementJoined NOTIFY tombstoneChanged)
     Q_PROPERTY(bool timelineAtStart READ timelineAtStart NOTIFY timelineAtStartChanged)
+    /// A slice that has paged forward to the live edge; always true for live.
+    Q_PROPERTY(bool timelineAtEnd READ timelineAtEnd NOTIFY timelineAtEndChanged)
     Q_PROPERTY(bool timelineReady READ timelineReady NOTIFY timelineReadyChanged)
     Q_PROPERTY(QString verificationState READ verificationState NOTIFY verificationChanged)
     Q_PROPERTY(QString verificationUser READ verificationUser NOTIFY verificationChanged)
@@ -196,6 +207,9 @@ public:
     bool storageDamaged() const { return m_storageDamaged; }
     int roomTotal() const { return m_roomTotal; }
     int joinedRoomTotal() const { return m_joinedRoomTotal; }
+    int knownRoomTotal() const { return m_knownRoomTotal; }
+    int syncedJoinedTotal() const { return m_syncedJoinedTotal; }
+    bool roomListHasMore() const { return m_roomListHasMore; }
     QString userId() const { return m_userId; }
     QString deviceId() const { return m_deviceId; }
     bool ready() const { return m_core != nullptr; }
@@ -215,38 +229,12 @@ public:
     bool indexing() const { return m_indexRequest != 0; }
     QString lastError() const { return m_lastError; }
     QVariantList errorLog() const { return m_errorLog; }
-    QVariantMap pushStatus() const { return m_pushStatus; }
-    bool pushEndpointReady() const
-    {
-        return m_pushStatus.value(QStringLiteral("enabled")).toBool();
-    }
-
-    /// Asks the device what distributors it has. Changes nothing.
-    Q_INVOKABLE void refreshPushStatus();
-
-    Q_INVOKABLE void enablePush();
-
-    /// The gateway pick: "server", "public", or "other" with an https `gateway`.
-    /// `enable` turns push on with it once the pick is complete.
-    Q_INVOKABLE bool setPushGateway(const QString &mode, const QString &gateway = QString(),
-                                    bool enable = false);
+    QObject *push() { return m_push; }
+    PushActions *pushActions() { return m_push; }
 
     /// One banner line from a preview's kind and text, worded as `harbour-xmatic.qml`
     /// does it. Here as well because the woken process has no QML.
     static QString previewLine(const QString &kind, const QString &text);
-
-    Q_INVOKABLE void closePushBanners();
-
-    /// The room a push banner's action key stands for, or "".
-    Q_INVOKABLE QString pushBannerRoom(const QString &key);
-
-    void setAnnouncePushes(bool announce) { m_announcePushes = announce; }
-
-    /// Raises a banner for the push unless the sync already did.
-    void fetchPush(const QString &roomId, const QString &eventId);
-
-    /// Gives the registration back and removes the pusher.
-    Q_INVOKABLE void disablePush();
 
     /// Empties the log. The entries are this run's only copy; nothing is
     /// written to disk.
@@ -272,6 +260,8 @@ public:
     QObject *cameraShots() { return m_cameraShots; }
     QObject *linkPreviews() { return m_linkPreviews; }
     QObject *roomSettings() { return m_roomSettings; }
+    QObject *leftRooms() { return m_leftRooms; }
+    QObject *crossSigning() { return m_crossSigning; }
     QObject *mentions() { return m_mentions; }
     QObject *transcripts() { return m_transcripts; }
     QString openRoomId() const { return m_openRoomId; }
@@ -295,6 +285,7 @@ public:
     /// following the upgrade is navigation, not a join.
     bool replacementJoined() const { return m_replacementJoined; }
     bool timelineAtStart() const { return m_timelineAtStart; }
+    bool timelineAtEnd() const { return m_timelineAtEnd; }
 
     /// False between asking for a room's timeline and its first batch.
     bool timelineReady() const { return m_timelineReady; }
@@ -372,15 +363,16 @@ public:
     /// Starts syncing and streaming the room list.
     Q_INVOKABLE void startRoomList();
 
-    /// Stops syncing.
-    Q_INVOKABLE void stopRoomList();
-
     /// Narrows the room list; an empty pattern shows everything again.
     Q_INVOKABLE void setRoomFilter(const QString &pattern);
 
     /// Asks for one more page of rooms. The list holds one page and grows only on
     /// request; harmless once everything is loaded.
     Q_INVOKABLE void loadMoreRooms();
+
+    /// Tells the core how the chat list is sorted: any order but recency needs
+    /// every room loaded, not the first pages.
+    void setRoomOrder(bool byName, bool unreadFirst);
 
     /// Starts streaming the joined spaces into the `spaces` model.
     Q_INVOKABLE void startSpaces();
@@ -463,7 +455,8 @@ public:
 
     /// Asks which room an address means and whether this account is in it.
     /// Resolving only: a tapped link must never join anything.
-    Q_INVOKABLE void resolveRoom(const QString &address);
+    /// `local`: a link from another app, resolved without asking any server.
+    Q_INVOKABLE void resolveRoom(const QString &address, bool local = false);
 
     /// Turns on end-to-end encryption in a room; there is no way back, so the
     /// UI asks first.
@@ -551,6 +544,8 @@ public:
 
     /// Loads a page of older messages.
     Q_INVOKABLE void loadOlder();
+    /// Loads a page of newer messages into a slice.
+    Q_INVOKABLE void loadNewer();
 
     /// Opens one thread's timeline next to the room's; rows stream into
     /// `threadTimeline`.
@@ -674,8 +669,10 @@ public:
     Q_INVOKABLE void replyToMessage(const QString &eventId, const QString &body,
                                     const QStringList &mentions = QStringList());
 
-    /// Replaces the body of a message that was already sent.
-    Q_INVOKABLE void editMessage(const QString &eventId, const QString &body);
+    /// Replaces the body of a message that was already sent. `mentions` are the
+    /// ones picked while editing; the core keeps the original's that are still named.
+    Q_INVOKABLE void editMessage(const QString &eventId, const QString &body,
+                                 const QStringList &mentions = QStringList());
 
     /// Deletes a sent message, or discards one that never left: a send that failed
     /// for good has no event id and can only be named by its transaction id.
@@ -714,10 +711,16 @@ public:
 
     Q_INVOKABLE QString mediaPath(const QString &key) const { return m_media.value(key); }
 
-    /// Whether this file may be handed to an image decoder. False for a picture
-    /// whose header says it would not fit in memory: the file is there and can be
-    /// saved, forwarded and shared - it is only not drawn.
+    /// Whether this file may be handed to an image decoder: not for an SVG or a
+    /// header too large for memory. Such a file can still be saved and shared.
     Q_INVOKABLE bool mediaShowable(const QString &key) const { return !m_oversized.contains(key); }
+
+    /// The only `file://` a received picture reaches an `Image` by: empty while
+    /// unknown and for a file `mediaShowable` refuses (SVG, oversized).
+    Q_INVOKABLE QString imageSource(const QString &key) const;
+    /// The same gate for a file on this device: an SVG or a canvas past the
+    /// decode budget is not drawn, whatever folder it came from.
+    Q_INVOKABLE QString localImageSource(const QString &path) const;
 
     /// Downloads a profile picture, keyed by its address. Separate from
     /// requestMedia: a bare MXC address, and always wanted as a thumbnail.
@@ -774,13 +777,12 @@ signals:
     void searchFailed(const QString &error);
     void lastErrorChanged();
     void errorLogChanged();
-    void pushStatusChanged();
-
     void openRoomChanged();
     void timelineFocusChanged();
     void pinnedChanged();
     void tombstoneChanged();
     void timelineAtStartChanged();
+    void timelineAtEndChanged();
     void timelineReadyChanged();
     void verificationChanged();
     void encryptionChanged();
@@ -809,6 +811,8 @@ signals:
     /// A pagination came back. No row count on purpose: the rows arrive
     /// through the diff stream, regularly after this reply.
     void paginated();
+    /// The same for a page of newer messages in a slice.
+    void paginatedNewer();
 
     /// The timeline is ready, with where reading had stopped. `readReceipt` is the
     /// second guess: a marker can name an event this room has no row for.
@@ -817,9 +821,10 @@ signals:
                         bool rebuilt);
 
     /// A room address resolved: the room, and whether we are a member.
-    void roomResolved(const QString &address, const QString &roomId, bool joined);
+    /// `local`: the answer to a link from another app, which asked no server.
+    void roomResolved(const QString &address, const QString &roomId, bool joined, bool local);
     /// That address could not be resolved; the message says why.
-    void roomResolveFailed(const QString &address, const QString &message);
+    void roomResolveFailed(const QString &address, const QString &message, bool local);
 
     /// An attachment finished downloading.
     void mediaReady(const QString &key, const QString &path);
@@ -876,14 +881,16 @@ signals:
     void roomCreated(const QString &roomId, const QString &name, bool encrypted);
 
     /// Unread messages in a room that is not on screen. `previewKind` names the
-    /// event's kind, `previewText` is set for text and emote only.
+    /// event's kind, `previewText` is set for text and emote only. `audible`:
+    /// the push rules call it noisy, or the sync's count rose.
     void roomActivity(const QString &roomId,
                       const QString &roomName,
                       int unread,
                       int mentions,
                       const QString &previewKind,
                       const QString &previewText,
-                      const QString &previewSender);
+                      const QString &previewSender,
+                      bool audible);
 
     /// A room's notifying events dropped to zero - read here or elsewhere. A
     /// banner raised for it has nothing left to announce.
@@ -963,6 +970,14 @@ private:
 
     void setLoginRunning(bool running);
     void setTimelineAtStart(bool atStart);
+    void setTimelineAtEnd(bool atEnd);
+    QString metadataRefusal() const;
+    /// A model's rows no longer match the diffs: the core sends the view anew.
+    void requestResync(bool thread);
+    /// The open room built anew in its current view, a slice included.
+    void rebuildOpenTimeline(bool clear);
+    /// The core could not resend the view: emptied and opened anew instead.
+    void reopenOutOfStep(bool thread, quint64 generation);
     void setTimelineReady(bool ready);
 
     XmCore *m_core = nullptr;
@@ -1002,10 +1017,16 @@ private:
     /// One automatic repair per damage, not per run: a second round on damage
     /// that is still there would be the flap this mechanism exists to stop.
     bool m_repairTried = false;
+    /// Which lists the pages started, so a rebuild in a session can start them again.
+    bool m_roomListWanted = false;
+    bool m_spacesWanted = false;
+    bool m_restartListsAfterRebuild = false;
     quint64 m_repairId = 0;
     /// Whether the reply being handled is the pagination that is outstanding.
     /// The id is cleared before the handlers run, and they still have to know.
     bool m_paginateAnswered = false;
+    /// Whether the outstanding pagination goes towards the live edge.
+    bool m_paginateForwards = false;
     /// Video stills being decoded right now. A send is in flight from the moment
     /// the picker closes, and its command only goes out when the helper is done.
     int m_videoStillsRunning = 0;
@@ -1016,23 +1037,16 @@ private:
     QSet<QString> m_oversized;
     int m_roomTotal = -1;
     int m_joinedRoomTotal = -1;
+    int m_knownRoomTotal = -1;
+    int m_syncedJoinedTotal = -1;
+    bool m_roomListHasMore = false;
     QString m_userId;
     QString m_deviceId;
     QString m_lastError;
     QVariantList m_errorLog;
-    QVariantMap m_pushStatus;
-    bool m_announcePushes = false;
-    bool m_pushStatusAsked = false;
-    /// Last banner per room from each source, on `m_uptime`.
-    QHash<QString, qint64> m_pushBannerAt;
-    QHash<QString, qint64> m_syncBannerAt;
     /// Muted or low-priority rooms.
     QSet<QString> m_quietRooms;
-    /// Push banner action keys to room ids, kept after the banners are closed.
-    QHash<QString, QString> m_pushBannerRooms;
-    void announcePush(const QVariantMap &notification);
-    void sendPushGateway(bool enable = false);
-    QSet<quint64> m_pushNotifyRequests;
+    void announcePush(const QVariantMap &notification, bool audible);
     /// Enough for a session's worth of trouble, small enough to stay in memory
     /// without a thought.
     static const int ErrorLogSize = 100;
@@ -1046,12 +1060,15 @@ private:
     VoiceRecorder *m_recorder = nullptr;
     CallEngine *m_calls = nullptr;
     PollActions *m_polls = nullptr;
+    PushActions *m_push = nullptr;
     SendQueueActions *m_sendQueue = nullptr;
     LocationActions *m_locations = nullptr;
     CameraShots *m_cameraShots = nullptr;
     SpaceMarkers *m_spaceMarkers = nullptr;
     LinkPreviews *m_linkPreviews = nullptr;
     RoomSettings *m_roomSettings = nullptr;
+    LeftRooms *m_leftRooms = nullptr;
+    CrossSigning *m_crossSigning = nullptr;
     Mentions *m_mentions = nullptr;
     VoiceTranscripts *m_transcripts = nullptr;
     TimelineModel m_timeline;
@@ -1072,6 +1089,10 @@ private:
     /// Which open a `timeline.diff` belongs to. The room id alone cannot say:
     /// the pinned view is the same room under another focus.
     quint64 m_timelineGeneration = 0;
+    /// Resyncs in flight: thread or not, and the generation they were asked for.
+    QHash<quint64, QPair<bool, quint64>> m_resyncs;
+    /// Addresses being resolved, so a failure names the one it belongs to.
+    QHash<quint64, QPair<QString, bool>> m_resolveRequests;
     /// The last token whose diffs were dropped, so the warning is said once
     /// per view rather than once per diff.
     QString m_lastDroppedToken;
@@ -1098,6 +1119,9 @@ private:
     QString m_replacementReason;
     bool m_replacementJoined = false;
     bool m_timelineAtStart = false;
+    bool m_timelineAtEnd = true;
+    /// The room list's filter as last set, to ask for it again after a drift.
+    QString m_roomFilter;
     bool m_timelineReady = false;
     QString m_verificationState = QStringLiteral("none");
     QString m_verificationUser;

@@ -18,6 +18,7 @@
 
 #include <sailfishapp.h>
 
+#include "pushwake.h"
 #include "voicedecode.h"
 
 namespace {
@@ -283,7 +284,7 @@ void VoiceTranscripts::decode()
             + QStringLiteral(".wav");
 
     m_helper = new QProcess(this);
-    QProcessEnvironment environment = QProcessEnvironment::systemEnvironment();
+    QProcessEnvironment environment = helperEnvironment();
     environment.insert(QStringLiteral(XMATIC_VOICE_DECODE_ENV), QStringLiteral("1"));
     environment.insert(QStringLiteral(XMATIC_VOICE_IN_ENV), m_job.mediaPath);
     environment.insert(QStringLiteral(XMATIC_VOICE_OUT_ENV), m_job.wavPath);

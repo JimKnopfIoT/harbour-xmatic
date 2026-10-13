@@ -41,7 +41,9 @@ docs/*
 research/
 .claude/
 *.local.sh
-tools/
+# The QML platform checks run in every build; the rest of tools/ is local.
+tools/*
+!tools/qmlplatform/
 
 # Local data / captures
 *.log

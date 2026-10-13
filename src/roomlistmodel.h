@@ -35,6 +35,7 @@ public:
         TombstonedRole,
         PreviewKindRole,
         PreviewTextRole,
+        MarkedUnreadRole,
     };
 
     explicit RoomListModel(QObject *parent = nullptr);

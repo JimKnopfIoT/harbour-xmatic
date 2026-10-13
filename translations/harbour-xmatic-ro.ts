@@ -367,14 +367,6 @@
         <translation>Evenimente din cameră</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Arată intrările și ieșirile</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Invitațiile, eliminările și interdicțiile sunt afișate mereu.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Arată schimbările numelui afișat</translation>
     </message>
@@ -450,6 +442,14 @@
         <source>Space list order</source>
         <translation>Ordinea listei de spații</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Afișează plecările</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Intrările, invitațiile, eliminările și interdicțiile sunt afișate mereu.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -512,6 +512,10 @@
     <message>
         <source>answered on another device</source>
         <translation>răspuns pe alt dispozitiv</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>refuzat pe alt dispozitiv</translation>
     </message>
 </context>
 <context>
@@ -795,6 +799,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Introdu mai întâi parola.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -961,6 +972,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Probleme cu stocarea cheilor?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Acest cont nu are încă semnare încrucișată, așa că alte dispozitive nu îl pot verifica pe acesta. Introdu o dată parola pentru a o configura; este trimisă serverului tău și nu este păstrată.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Parolă</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Configurează semnarea încrucișată</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1045,6 +1068,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Acest atașament nu a putut fi încărcat</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Această imagine nu este afișată pe acest dispozitiv. Salveaz-o sau partajeaz-o din meniul derulant.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1092,6 +1119,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Urmează dispozitivul</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Camere părăsite</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Se uită camera</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Cameră fără nume</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Interzis</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Părăsită</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Nicio cameră părăsită</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Camere pe care le-ai părăsit sau refuzat în altă aplicație, ori din care ai fost eliminat sau interzis. Acest dispozitiv le păstrează până sunt uitate, iar până atunci serverul numără o cameră din care ai fost eliminat sau interzis. Atinge una ca s-o uiți.</translation>
     </message>
 </context>
 <context>
@@ -1285,10 +1344,6 @@
         <translation>Sesiunea ta s-a încheiat. Conectează-te din nou.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Mesaj nou</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Imagine</translation>
     </message>
@@ -1327,6 +1382,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Poarta trebuie să fie un URL https.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Imaginea nu a putut fi micșorată și conține metadate, de exemplu locul în care a fost făcută, așa că nu a fost trimisă. Trimite-o la rezoluția originală ca s-o trimiți așa cum este.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>Înregistrarea push nu a putut fi eliminată de pe server. Va fi eliminată data viitoare când acest cont se conectează aici.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>O altă aplicație a configurat între timp semnarea încrucișată pentru acest cont. Verifică acest dispozitiv de acolo.</translation>
     </message>
 </context>
 <context>
@@ -1792,10 +1859,6 @@
         <translation>Textul mesajului în notificări</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Dezactivat, notificarea spune doar câte mesaje au sosit. Activat, arată ultimul mesaj — și pe ecranul blocat.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Arată starea de citire a celorlalți</translation>
     </message>
@@ -1967,6 +2030,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Dezactivat, nu se urmărește și nu se afișează cine ce a citit, ceea ce păstrează conversația mai fluidă. Activat, mesajele tale arată câți oameni le-au citit.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Dezactivat: o notificare spune doar că au sosit mesaje, nu de la cine sau ce. Activat: arată cel mai nou mesaj — și pe ecranul de blocare.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2013,10 +2080,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Ce părăsește acest dispozitiv</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Serverul tău află o adresă la serviciul push și trimite porții un identificator de cameră și de mesaj pentru fiecare notificare. Fără text: push-ul poartă doar identificatori, iar mesajul este preluat și decriptat de acest dispozitiv. Adresa este un secret — cine o are poate trimite o notificare acestui telefon.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2094,6 +2157,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Folosește poarta publică UnifiedPush</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Sunt instalați mai mulți distribuitori. Alege-l pe cel folosit de xmatic.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>Distribuitorul push nu mai este instalat. Nu sosește nimic până nu revine. Instalează-l din nou sau dezactivează push.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Serverul tău primește o adresă la serviciul push și trimite gateway-ului, pentru fiecare notificare, un identificator de cameră și de mesaj și numărul tău de necitite. Fără textul mesajului: acest dispozitiv preia și decriptează singur mesajul. Adresa este secretă — cine o are poate trimite o notificare acestui telefon.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Înainte să dezinstalezi xmatic, dezactivează push aici. Altfel serverul păstrează pusher-ul și continuă să trimită către gateway.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2104,6 +2183,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>Distribuitorul push a renunțat la xmatic. Repornește push-ul din Cont.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Deschide xmatic o dată ca să termini configurarea notificărilor push.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic încă procesează o notificare. Deschide-l din nou peste o clipă.</translation>
     </message>
 </context>
 <context>
@@ -2158,6 +2245,10 @@
         <source>Discover rooms</source>
         <translation>Descoperă camere</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Camere părăsite (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2172,6 +2263,10 @@
     <message>
         <source>Space</source>
         <translation>Spațiu</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Netrimis – deschide camera ca să decizi</translation>
     </message>
 </context>
 <context>
@@ -2468,12 +2563,16 @@
         <translation>Date locale deteriorate</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>O parte dintre datele stocate pe acest dispozitiv nu mai poate fi citită, iar xmatic nu a reușit să remedieze acest lucru în timpul funcționării — de aceea a oprit sincronizarea în loc să întâlnească din nou același rând. Închide aplicația și pornește-o din nou. Dacă după aceea tot lipsesc camere, deconectarea și reconectarea reconstruiesc datele locale — dar înlocuiesc și cheile acestui dispozitiv: verifică mai întâi pe pagina de criptare dacă backupul cheilor este activat.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Acest server livrează prin sliding sync, sincronizarea de care are nevoie această aplicație, doar %1 din cele %2 camere ale tale. Cele lipsă – adesea conversații prin punți – nu pot fi afișate aici; aplicațiile cu sincronizarea clasică încă le văd.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>O parte din datele salvate pe acest dispozitiv nu mai poate fi citită, iar xmatic nu a reușit s-o repare în timpul rulării — de aceea a oprit sincronizarea, în loc să dea din nou peste același rând. Reconstruirea datelor camerelor preia din nou camerele și mesajele și păstrează cheile acestui dispozitiv. Dacă nu ajută, deconectarea și reconectarea reconstruiesc totul — dar înlocuiesc cheile acestui dispozitiv; verifică deci mai întâi pe pagina de criptare că backupul cheilor este activ.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Reconstruiește datele camerelor</translation>
     </message>
 </context>
 <context>
@@ -2976,6 +3075,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 și-a schimbat poza de profil</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 și-a schimbat numele afișat în %2 și poza de profil</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 și-a eliminat numele afișat și și-a schimbat poza de profil</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Nu este afișat pe acest dispozitiv. Atinge pentru a deschide.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3362,6 +3473,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Oprit, imaginea este micșorată înainte de a pleca, iar metadatele ei – printre care locul unde a fost făcută – nu călătoresc cu ea.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Animațiile și desenele pleacă așa cum sunt, cu toate metadatele lor.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3416,6 +3531,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Un sondaj nu a putut fi trimis.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Un atașament nu a putut fi trimis.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>Serverul nu acceptă fișiere atât de mari. Renunță la el și trimite unul mai mic.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>Conexiunea s-a întrerupt de mai multe ori în timpul trimiterii. Trimite-l din nou pe o conexiune mai stabilă sau renunță la el.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>Serverul nu l-a acceptat de o jumătate de oră. Trimite-l din nou sau renunță la el.</translation>
     </message>
 </context>
 <context>
@@ -3824,14 +3955,6 @@
     <message>
         <source>Event</source>
         <translation>Eveniment</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Nu poate fi decriptat — acestui dispozitiv îi lipsește cheia</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Mesaj șters</translation>
     </message>
     <message>
         <source>Attachment</source>

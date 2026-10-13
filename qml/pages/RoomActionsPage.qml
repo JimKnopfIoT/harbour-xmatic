@@ -65,6 +65,26 @@ Page {
             }
         }
 
+        // Only where there are any: nothing to forget is nothing to offer.
+        footer: ListItem {
+            width: parent.width
+            visible: matrix.leftRooms.count > 0
+            contentHeight: visible ? Theme.itemSizeSmall : 0
+            onClicked: pageStack.replace(Qt.resolvedUrl("LeftRoomsPage.qml"))
+
+            Label {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Theme.horizontalPageMargin
+                    rightMargin: Theme.horizontalPageMargin
+                    verticalCenter: parent.verticalCenter
+                }
+                truncationMode: TruncationMode.Fade
+                text: qsTr("Left rooms (%1)").arg(matrix.leftRooms.count)
+            }
+        }
+
         VerticalScrollDecorator {}
     }
 }

@@ -9,12 +9,16 @@
 struct OutgoingImage {
     QString path;
     QString mimeType;
+    /// Could not be cleaned and carries metadata: nothing is sent. Left out of
+    /// a `{ path, mime }` initialiser it is false.
+    bool refused;
 };
 
 /// Shrinks `path` towards `TargetBytes` unless `original` says otherwise.
 /// Anything that is not an image, is already small enough, or would not get
-/// smaller comes back unchanged. Never throws away the user's file: the copy
-/// is written into the cache.
+/// smaller comes back unchanged - unless it carries metadata. A picture that
+/// cannot be re-encoded and does carry some comes back `refused`. GIF and SVG
+/// go as they are, or are refused the same way. The copy is in the cache.
 OutgoingImage prepareOutgoingImage(const QString &path, const QString &mimeType,
                                    bool original);
 

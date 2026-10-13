@@ -494,6 +494,7 @@ void CallEngine::startOutgoing(bool withVideo)
     m_callId = freshId(QStringLiteral("c"));
     m_partyId = freshId(QStringLiteral("p"));
     m_isCaller = true;
+    m_selectedParty.clear();
     m_pendingRemoteOffer.clear();
     emit callChanged();
 
@@ -535,6 +536,8 @@ void CallEngine::onRemoteInvite(const QString &roomId,
     m_callId = callId;
     m_partyId = freshId(QStringLiteral("p"));
     m_isCaller = false;
+    m_selectedParty.clear();
+    m_inviteVersion.clear();
     // What was offered, not what will be answered: the camera opens when the user
     // picks the action. The core has already applied the privacy setting.
     m_videoOffered = videoAllowed && CameraSource::isAvailable();
@@ -593,7 +596,7 @@ void CallEngine::acceptCall(bool withVideo)
 }
 
 void CallEngine::onAnsweredElsewhere(const QString &roomId, const QString &callId,
-                                     const QString &partyId)
+                                     const QString &partyId, bool declined)
 {
     // Only while this device is still offering to answer, and only for the call
     // it is ringing about. Our own answer carries our own party id and must not
@@ -605,8 +608,35 @@ void CallEngine::onAnsweredElsewhere(const QString &roomId, const QString &callI
         return;
     }
 
-    qInfo("xmatic: the call was answered on another device");
+    qInfo("xmatic: the call was %s on another device", declined ? "declined" : "answered");
+    setStatus(declined ? tr("declined on another device") : tr("answered on another device"));
+    stopQuietly();
+}
+
+void CallEngine::onSelectAnswer(const QString &roomId, const QString &sender,
+                                const QString &callId, const QString &selectedPartyId)
+{
+    // Callee side only, and only the caller may choose: the call id is public.
+    if (m_isCaller || callId != m_callId || roomId != m_roomId || m_state == QLatin1String("idle")
+        || sender.isEmpty() || sender != m_peer
+        || selectedPartyId.isEmpty() || selectedPartyId == m_partyId) {
+        return;
+    }
+    qInfo("xmatic: the caller took the answer of another device");
     setStatus(tr("answered on another device"));
+    stopQuietly();
+}
+
+void CallEngine::noteInviteVersion(const QString &callId, const QString &version)
+{
+    if (callId == m_callId) {
+        m_inviteVersion = version;
+    }
+}
+
+/// Ends the call here without a word on the wire: another party already spoke.
+void CallEngine::stopQuietly()
+{
     tearDown();
     m_remoteVideo.stop();
     m_withVideo = false;
@@ -621,6 +651,7 @@ void CallEngine::onAnsweredElsewhere(const QString &roomId, const QString &callI
 void CallEngine::onRemoteAnswer(const QString &roomId,
                                const QString &sender,
                                const QString &callId,
+                               const QString &partyId,
                                const QString &sdp)
 {
     // The id alone is not authentication - everybody in the room sees it. The
@@ -631,7 +662,15 @@ void CallEngine::onRemoteAnswer(const QString &roomId,
     if (!m_peer.isEmpty() && sender != m_peer) {
         return;
     }
+    // A second answering device of the same person: the first one was taken.
+    if (!m_selectedParty.isEmpty()) {
+        return;
+    }
     m_peer = sender;
+    m_selectedParty = partyId.isEmpty() ? QStringLiteral("-") : partyId;
+    if (!partyId.isEmpty()) {
+        emit selectAnswerReady(m_roomId, m_callId, m_partyId, partyId);
+    }
     setState(QStringLiteral("connecting"));
     applyRemoteDescription(sdp, false);
 }
@@ -737,8 +776,20 @@ void CallEngine::onRemoteCandidates(const QString &roomId,
 
 void CallEngine::onRemoteHangup(const QString &roomId,
                                const QString &sender,
-                               const QString &callId)
+                               const QString &callId,
+                               const QString &partyId,
+                               bool reject)
 {
+    // Once an answer is taken, a reject is void and only that device may hang up.
+    if (m_isCaller && !m_selectedParty.isEmpty() && callId == m_callId) {
+        if (reject) {
+            return;
+        }
+        // A device without a party id (version 0) is not the chosen one either.
+        if (m_selectedParty != QLatin1String("-") && partyId != m_selectedParty) {
+            return;
+        }
+    }
     // Room and party, as for the answer: the call id is public to every member
     // of the room, so on its own it lets any bystander end the call.
     if (!roomId.isEmpty() && roomId != m_roomId) {
@@ -775,7 +826,14 @@ void CallEngine::hangUp()
     }
 
     if (!m_roomId.isEmpty() && !m_callId.isEmpty()) {
-        emit hangupReady(m_roomId, m_callId, m_partyId);
+        // Declining one that never rang through is a reject: it also stops the
+        // account's other devices ringing.
+        if (!m_isCaller && m_state == QLatin1String("ringing")
+            && m_inviteVersion != QLatin1String("0")) {
+            emit rejectReady(m_roomId, m_callId, m_partyId);
+        } else {
+            emit hangupReady(m_roomId, m_callId, m_partyId);
+        }
     }
 
     tearDown();

@@ -43,7 +43,6 @@ use matrix_sdk_ui::{
 };
 use serde_json::{json, Value};
 
-use crate::compose::to_formatted_body;
 use crate::protocol::event;
 use crate::runtime::Sink;
 use crate::text::{safe_file_name, scrub_ids, strip_bidi};
@@ -54,10 +53,12 @@ const REASON_CHARS: usize = 200;
 /// How many events one backwards pagination asks for.
 const PAGE_SIZE: u16 = 30;
 
-/// What a backwards pagination came to.
+/// What a pagination came to: more behind it, or the start (backwards) or the
+/// live edge (forwards) reached.
 pub enum Paginated {
     More,
     Start,
+    End,
 }
 
 /// An open timeline and the task streaming its updates.
@@ -76,6 +77,10 @@ pub struct TimelineHandle {
     /// Everything this timeline started: the quote-fetch lanes and a handle on
     /// every task. Closed with it, so nothing still holds the client or the store.
     tasks: TimelineTasks,
+    /// The view's generation, echoed in every diff; see `timeline.open`.
+    token: String,
+    /// Wakes the stream task to subscribe anew and send a reset.
+    resync: Arc<tokio::sync::Notify>,
 }
 
 impl TimelineHandle {
@@ -97,6 +102,17 @@ impl TimelineHandle {
     /// Whether it was built with receipt tracking on.
     pub fn tracks_receipts(&self) -> bool {
         self.receipts
+    }
+
+    /// The generation the front end gave this view.
+    pub fn token(&self) -> &str {
+        &self.token
+    }
+
+    /// The front end's rows drifted from the SDK's: a reset from a fresh
+    /// subscription, on the stream task, so no diff lands between the two.
+    pub fn resync(&self) {
+        self.resync.notify_one();
     }
 
     /// Pins a message to the room, or unpins it. Idempotent on the server —
@@ -141,6 +157,20 @@ impl TimelineHandle {
         Ok(if reached_start { Paginated::Start } else { Paginated::More })
     }
 
+    /// Loads newer events into a slice, answers whether the live edge was reached.
+    /// The live view and the pinned one have nothing ahead of them.
+    pub async fn paginate_forwards(&self) -> Result<Paginated, String> {
+        if self.live || self.pinned {
+            return Ok(Paginated::End);
+        }
+        let reached_end = self
+            .timeline
+            .paginate_forwards(PAGE_SIZE)
+            .await
+            .map_err(|error| format!("could not load newer messages: {error}"))?;
+        Ok(if reached_end { Paginated::End } else { Paginated::More })
+    }
+
     /// Sends a message the caller has already built: the mention module fills in
     /// the pill and `m.mentions`, the composer's markers the `formatted_body`.
     /// It shows up as a local echo immediately.
@@ -174,18 +204,36 @@ impl TimelineHandle {
 
     /// An attachment is edited as a *caption*: `EditedContent::RoomMessage` would
     /// turn an `m.image` into an `m.text` and the picture would be gone for good.
-    pub async fn edit(&self, event_id: &str, body: String) -> Result<(), String> {
+    /// An emote stays an emote, and the mentions go through the same rule as a send.
+    pub async fn edit(
+        &self,
+        client: Option<&Client>,
+        event_id: &str,
+        body: String,
+        picked: &[String],
+    ) -> Result<(), String> {
         let id = parse_event_id(event_id)?;
-        let content = match self.is_media_event(&id).await {
-            Some(true) => EditedContent::MediaCaption {
-                formatted_caption: to_formatted_body(&body).map(FormattedBody::html),
+        // Unknown kind: refusing costs an edit the UI could not have
+        // offered anyway, while guessing "text" on a picture destroys it.
+        let Some(original) = self.original(&id).await else {
+            return Err("this message is no longer loaded".to_owned());
+        };
+        let (formatted, mentions) =
+            crate::mention::edit_parts(client, &self.room_id, &body, picked, &original.mentions).await;
+        let content = match original.kind {
+            EditedKind::Media => EditedContent::MediaCaption {
+                formatted_caption: formatted.map(FormattedBody::html),
                 caption: Some(body).filter(|text| !text.is_empty()),
-                mentions: None,
+                mentions,
             },
-            Some(false) => EditedContent::RoomMessage(text_content(body).into()),
-            // Unknown kind: refusing costs an edit the UI could not have
-            // offered anyway, while guessing "text" on a picture destroys it.
-            None => return Err("this message is no longer loaded".to_owned()),
+            kind => {
+                let content = edited_message(kind, body, formatted);
+                let content = match mentions {
+                    Some(mentions) => content.add_mentions(mentions),
+                    None => content,
+                };
+                EditedContent::RoomMessage(content.into())
+            }
         };
         self.timeline
             .edit(&id, content)
@@ -193,27 +241,37 @@ impl TimelineHandle {
             .map_err(|error| format!("could not edit: {error}"))
     }
 
-    /// Whether that event carries an attachment. `None` when the timeline does
-    /// not hold the event, so the caller can refuse rather than guess.
-    async fn is_media_event(&self, id: &TimelineEventItemId) -> Option<bool> {
+    /// What the edited event is and whom it mentioned. `None` when the timeline
+    /// does not hold the event, so the caller can refuse rather than guess.
+    async fn original(&self, id: &TimelineEventItemId) -> Option<Original> {
         // A local echo has no event id yet, and cannot be edited either.
         let TimelineEventItemId::EventId(event_id) = id else {
             return None;
         };
         let item = self.timeline.item_by_event_id(event_id).await?;
-        match item.content() {
-            TimelineItemContent::MsgLike(content) => match &content.kind {
-                MsgLikeKind::Message(message) => Some(matches!(
-                    message.msgtype(),
-                    MessageType::Image(_)
-                        | MessageType::Video(_)
-                        | MessageType::Audio(_)
-                        | MessageType::File(_)
-                )),
-                _ => Some(false),
-            },
-            _ => Some(false),
+        let TimelineItemContent::MsgLike(content) = item.content() else {
+            return Some(Original { kind: EditedKind::Text, mentions: Vec::new() });
+        };
+        let MsgLikeKind::Message(message) = &content.kind else {
+            return Some(Original { kind: EditedKind::Text, mentions: Vec::new() });
+        };
+        let kind = match message.msgtype() {
+            MessageType::Image(_)
+            | MessageType::Video(_)
+            | MessageType::Audio(_)
+            | MessageType::File(_) => EditedKind::Media,
+            MessageType::Emote(_) => EditedKind::Emote,
+            MessageType::Notice(_) => EditedKind::Notice,
+            _ => EditedKind::Text,
+        };
+        let mut mentions: Vec<String> = Vec::new();
+        if let Some(previous) = message.mentions() {
+            mentions.extend(previous.user_ids.iter().map(|user| user.to_string()));
+            if previous.room {
+                mentions.push(crate::mention::ROOM_KEY.to_owned());
+            }
         }
+        Some(Original { kind, mentions })
     }
 
     /// Adds our reaction or takes it back. One command: the SDK decides from what
@@ -383,6 +441,15 @@ impl TimelineHandle {
         // Not only the diff stream: every quote fetch holds the timeline, the room and
         // the open store, and a `reset_store` must have no client on the directory.
         self.tasks.close().await;
+    }
+}
+
+/// A handle dropped without `close` - a command cut off mid-open - takes its
+/// tasks with it; otherwise they would hold the client over a store reset.
+impl Drop for TimelineHandle {
+    fn drop(&mut self) {
+        self.task.abort();
+        self.tasks.abort_all();
     }
 }
 
@@ -608,7 +675,8 @@ struct TimelineTasks {
     open: Arc<AtomicBool>,
     /// Every fetch that may still be running: closing the queue is not enough, a
     /// task holding a permit sits inside a request the SDK nurses for minutes.
-    running: Arc<tokio::sync::Mutex<Vec<tokio::task::JoinHandle<()>>>>,
+    /// Never held across an await, so a drop can always take it.
+    running: Arc<std::sync::Mutex<Vec<tokio::task::JoinHandle<()>>>>,
 }
 
 impl TimelineTasks {
@@ -617,7 +685,7 @@ impl TimelineTasks {
             permits: Arc::new(tokio::sync::Semaphore::new(DETAIL_LANES)),
             poll_permits: Arc::new(tokio::sync::Semaphore::new(POLL_LANES)),
             open: Arc::new(AtomicBool::new(true)),
-            running: Arc::new(tokio::sync::Mutex::new(Vec::new())),
+            running: Arc::new(std::sync::Mutex::new(Vec::new())),
         }
     }
 
@@ -627,25 +695,38 @@ impl TimelineTasks {
     where
         F: std::future::Future<Output = ()> + Send + 'static,
     {
+        // Checked and registered under one lock: a close cannot fall in between.
+        let mut running = self.running();
         if !self.open.load(Ordering::SeqCst) {
             return;
         }
-        let handle = tokio::spawn(future);
-        let mut running = self.running.lock().await;
         running.retain(|existing| !existing.is_finished());
-        running.push(handle);
+        running.push(tokio::spawn(future));
+    }
+
+    fn running(&self) -> std::sync::MutexGuard<'_, Vec<tokio::task::JoinHandle<()>>> {
+        self.running.lock().unwrap_or_else(|poisoned| poisoned.into_inner())
+    }
+
+    /// Synchronous half of `close`, for a drop: no new task, every running one aborted.
+    fn abort_all(&self) {
+        let running = self.running();
+        self.open.store(false, Ordering::SeqCst);
+        for task in running.iter() {
+            task.abort();
+        }
     }
 
     /// Ends everything and waits: `abort()` only marks a task, and the caller
     /// deletes the store next. The SDK's own pagination task is out of reach.
     async fn close(&self) {
-        self.open.store(false, Ordering::SeqCst);
         // Wakes everything waiting; `acquire_owned` then fails and the task drops its
         // handle instead of holding it for the next quarter of an hour.
         self.permits.close();
         self.poll_permits.close();
         let handles: Vec<_> = {
-            let mut running = self.running.lock().await;
+            let mut running = self.running();
+            self.open.store(false, Ordering::SeqCst);
             running.drain(..).collect()
         };
         for handle in &handles {
@@ -1349,16 +1430,21 @@ pub async fn own_read_marker(client: &Client, room_id: &str) -> (Option<String>,
     }
 }
 
-/// Opens the timeline of `room_id` and streams updates. `focus`: empty for
-/// live, `"pinned"`, or an event id for the permalink jump.
-pub async fn open(
+/// A view built and not started: dropped at any await, it leaves no task and
+/// no client behind. Building is the half that may wait on the server.
+pub struct BuiltView {
+    room: matrix_sdk::Room,
+    timeline: matrix_sdk_ui::timeline::Timeline,
+}
+
+/// The request half of opening `room_id`. `focus`: empty for live, `"pinned"`,
+/// or an event id for a slice around it.
+pub async fn build(
     client: &Client,
     room_id: &str,
     focus: &str,
     receipts: bool,
-    token: &str,
-    sink: Arc<Sink>,
-) -> Result<TimelineHandle, String> {
+) -> Result<BuiltView, String> {
     use matrix_sdk_ui::timeline::{TimelineEventFocusThreadMode, TimelineFocus};
 
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
@@ -1412,6 +1498,22 @@ pub async fn open(
             .await
             .map_err(|error| format!("timeline unavailable: {error}"))?
     };
+    Ok(BuiltView { room, timeline })
+}
+
+/// The local half: streams `timeline.diff` and starts the view's tasks. Asks
+/// the server nothing itself, so it is never cut off halfway.
+pub async fn start(
+    client: &Client,
+    room_id: &str,
+    focus: &str,
+    receipts: bool,
+    token: &str,
+    sink: Arc<Sink>,
+    built: BuiltView,
+) -> TimelineHandle {
+    let BuiltView { room, timeline } = built;
+    let live = focus.is_empty();
     let timeline = Arc::new(timeline);
     // Everything spawned here is registered and dies with the timeline. Declared
     // before the first spawn: a task above this line is one nobody can stop.
@@ -1530,6 +1632,8 @@ pub async fn open(
     let task_tasks = detail_tasks.clone();
     let detail_source = timeline.clone();
     let initial_empty = initial.is_empty();
+    let resync = Arc::new(tokio::sync::Notify::new());
+    let resync_wait = resync.clone();
     let task = tokio::spawn(async move {
         // How often each reply target was asked for, so a row that is
         // rewritten several times does not send the same request again.
@@ -1553,7 +1657,27 @@ pub async fn open(
         )
         .await;
 
-        while let Some(diffs) = stream.next().await {
+        loop {
+            let diffs = tokio::select! {
+                next = stream.next() => match next {
+                    Some(diffs) => diffs,
+                    None => break,
+                },
+                _ = resync_wait.notified() => {
+                    // A fresh subscription and its first batch agree by construction.
+                    let (fresh, next_stream) = detail_source.subscribe().await;
+                    stream = next_stream;
+                    sink.emit(event(
+                        "timeline.diff",
+                        json!({
+                            "roomId": room_id_owned,
+                            "token": token_owned,
+                            "ops": [{ "op": "reset", "values": encode_items(&room_id_owned, &fresh, own.as_deref()) }],
+                        }),
+                    ));
+                    continue;
+                }
+            };
             let ops: Vec<Value> = diffs.iter().map(|diff| encode(&room_id_owned, diff, own.as_deref())).collect();
             sink.emit(event(
                 "timeline.diff",
@@ -1591,7 +1715,7 @@ pub async fn open(
         .await;
     }
 
-    Ok(TimelineHandle {
+    TimelineHandle {
         room_id: room_id.to_owned(),
         live,
         pinned: focus == "pinned",
@@ -1600,18 +1724,14 @@ pub async fn open(
         thread_root: String::new(),
         receipts,
         tasks: detail_tasks,
-    })
+        token: token.to_owned(),
+        resync,
+    }
 }
 
-/// Opens one thread (`TimelineFocus::Thread`) as `thread.diff`, next to the
-/// room's live timeline. Sending on this handle threads automatically.
-pub async fn open_thread(
-    client: &Client,
-    room_id: &str,
-    root: &str,
-    token: &str,
-    sink: Arc<Sink>,
-) -> Result<TimelineHandle, String> {
+/// The request half of one thread (`TimelineFocus::Thread`), streamed as
+/// `thread.diff` next to the room's view. Sending on its handle threads.
+pub async fn build_thread(client: &Client, room_id: &str, root: &str) -> Result<BuiltView, String> {
     use matrix_sdk_ui::timeline::TimelineFocus;
 
     let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
@@ -1627,6 +1747,19 @@ pub async fn open_thread(
         .build()
         .await
         .map_err(|error| format!("thread unavailable: {error}"))?;
+    Ok(BuiltView { room, timeline })
+}
+
+/// The local half of a thread, as `start` is for a room view.
+pub async fn start_thread(
+    client: &Client,
+    room_id: &str,
+    root: &str,
+    token: &str,
+    sink: Arc<Sink>,
+    built: BuiltView,
+) -> TimelineHandle {
+    let BuiltView { timeline, .. } = built;
     let timeline = Arc::new(timeline);
     // Everything spawned here is registered and dies with the timeline. Declared
     // before the first spawn: a task above this line is one nobody can stop.
@@ -1655,6 +1788,8 @@ pub async fn open_thread(
     let detail_source = timeline.clone();
     let initial_empty = initial.is_empty();
     let error_sink = sink.clone();
+    let resync = Arc::new(tokio::sync::Notify::new());
+    let resync_wait = resync.clone();
     let task = tokio::spawn(async move {
         let mut requested: HashMap<OwnedEventId, u8> = HashMap::new();
         request_reply_details(
@@ -1665,7 +1800,27 @@ pub async fn open_thread(
             &task_tasks,
         )
         .await;
-        while let Some(diffs) = stream.next().await {
+        loop {
+            let diffs = tokio::select! {
+                next = stream.next() => match next {
+                    Some(diffs) => diffs,
+                    None => break,
+                },
+                _ = resync_wait.notified() => {
+                    let (fresh, next_stream) = detail_source.subscribe().await;
+                    stream = next_stream;
+                    sink.emit(event(
+                        "thread.diff",
+                        json!({
+                            "roomId": room_id_owned,
+                            "root": root_owned,
+                            "token": token_owned,
+                            "ops": [{ "op": "reset", "values": encode_items(&room_id_owned, &fresh, own.as_deref()) }],
+                        }),
+                    ));
+                    continue;
+                }
+            };
             let ops: Vec<Value> = diffs.iter().map(|diff| encode(&room_id_owned, diff, own.as_deref())).collect();
             sink.emit(event(
                 "thread.diff",
@@ -1706,7 +1861,7 @@ pub async fn open_thread(
         .await;
     }
 
-    Ok(TimelineHandle {
+    TimelineHandle {
         room_id: room_id.to_owned(),
         live: false,
         pinned: false,
@@ -1715,7 +1870,9 @@ pub async fn open_thread(
         thread_root: root.to_owned(),
         receipts: false,
         tasks: detail_tasks,
-    })
+        token: token.to_owned(),
+        resync,
+    }
 }
 
 
@@ -2082,12 +2239,68 @@ pub async fn follow_successor(client: &Client, room_id: &str) -> Result<String, 
     Ok(joined.room_id().as_str().to_owned())
 }
 
-/// One place decides whether a message ships a formatted copy: the markers in
-/// the text. The plain body keeps them, which is what a client without HTML
-/// shows and what an edit reads back.
-fn text_content(body: String) -> RoomMessageEventContent {
-    match to_formatted_body(&body) {
-        Some(html) => RoomMessageEventContent::text_html(body, html),
-        None => RoomMessageEventContent::text_plain(body),
+/// What an edited message was, as far as the edit has to keep it.
+#[derive(Clone, Copy, Debug, PartialEq)]
+enum EditedKind {
+    Media,
+    Emote,
+    Notice,
+    Text,
+}
+
+struct Original {
+    kind: EditedKind,
+    mentions: Vec<String>,
+}
+
+/// The replacement body in the original's own type: an `/me` stays an action.
+fn edited_message(kind: EditedKind, body: String, formatted: Option<String>) -> RoomMessageEventContent {
+    match (kind, formatted) {
+        (EditedKind::Emote, Some(html)) => RoomMessageEventContent::emote_html(body, html),
+        (EditedKind::Emote, None) => RoomMessageEventContent::emote_plain(body),
+        (EditedKind::Notice, Some(html)) => RoomMessageEventContent::notice_html(body, html),
+        (EditedKind::Notice, None) => RoomMessageEventContent::notice_plain(body),
+        (_, Some(html)) => RoomMessageEventContent::text_html(body, html),
+        (_, None) => RoomMessageEventContent::text_plain(body),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{edited_message, EditedKind, TimelineTasks};
+    use matrix_sdk::ruma::events::room::message::MessageType;
+
+    #[tokio::test]
+    async fn a_drop_aborts_every_task_and_starts_none_after() {
+        let tasks = TimelineTasks::new();
+        tasks.spawn_tracked(std::future::pending::<()>()).await;
+        let first = tasks.running().first().map(|task| task.abort_handle()).unwrap();
+        tasks.abort_all();
+        tasks.spawn_tracked(std::future::pending::<()>()).await;
+        assert_eq!(tasks.running().len(), 1);
+        for _ in 0..10 {
+            tokio::task::yield_now().await;
+        }
+        assert!(first.is_finished());
+    }
+
+    #[test]
+    fn an_edited_emote_stays_an_emote() {
+        let plain = edited_message(EditedKind::Emote, "waves".to_owned(), None);
+        assert!(matches!(plain.msgtype, MessageType::Emote(_)));
+        let html = edited_message(EditedKind::Emote, "*waves*".to_owned(), Some("<em>waves</em>".to_owned()));
+        assert!(matches!(html.msgtype, MessageType::Emote(_)));
+    }
+
+    #[test]
+    fn a_notice_and_a_text_keep_their_types() {
+        assert!(matches!(
+            edited_message(EditedKind::Notice, "n".to_owned(), None).msgtype,
+            MessageType::Notice(_)
+        ));
+        assert!(matches!(
+            edited_message(EditedKind::Text, "t".to_owned(), None).msgtype,
+            MessageType::Text(_)
+        ));
     }
 }

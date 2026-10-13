@@ -365,14 +365,6 @@
         <translation>رویدادهای اتاق</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>پیوستن و ترک کردن را نشان بده</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>دعوت‌ها، حذف‌ها و مسدودسازی‌ها همیشه نشان داده می‌شوند.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>تغییرات نام نمایشی را نشان بده</translation>
     </message>
@@ -448,6 +440,14 @@
         <source>Space list order</source>
         <translation>ترتیب فهرست Spaceها</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>نمایش ترک‌کردن‌ها</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>پیوستن‌ها، دعوت‌ها، حذف‌ها و مسدودسازی‌ها همیشه نمایش داده می‌شوند.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -510,6 +510,10 @@
     <message>
         <source>answered on another device</source>
         <translation>روی دستگاه دیگری پاسخ داده شد</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>در دستگاه دیگری رد شد</translation>
     </message>
 </context>
 <context>
@@ -793,6 +797,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>اول گذرواژه‌ات را وارد کن.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -957,6 +968,18 @@
         <source>Trouble with the key storage?</source>
         <translation>مشکلی با انبارهٔ کلیدها؟</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>این حساب هنوز امضای متقابل ندارد، پس دستگاه‌های دیگر نمی‌توانند این دستگاه را تأیید کنند. یک بار گذرواژه‌ات را وارد کن تا راه‌اندازی شود؛ به سرور خانگی‌ات فرستاده می‌شود و نگه داشته نمی‌شود.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>گذرواژه</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>راه‌اندازی امضای متقابل</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1041,6 +1064,10 @@
         <source>Could not save</source>
         <translation>ذخیره نشد</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>این تصویر روی این دستگاه نمایش داده نمی‌شود. از منوی کشویی ذخیره یا هم‌رسانی‌اش کن.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1088,6 +1115,38 @@
     <message>
         <source>Follow the device</source>
         <translation>پیروی از دستگاه</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>اتاق‌های ترک‌شده</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>در حال فراموش کردن اتاق</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>اتاق بی‌نام</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>مسدود</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>ترک‌شده</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>هیچ اتاق ترک‌شده‌ای نیست</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>اتاق‌هایی که در برنامهٔ دیگری ترک یا رد کردی، یا از آن‌ها حذف یا مسدود شدی. این دستگاه آن‌ها را تا وقتی فراموش شوند نگه می‌دارد، و تا آن زمان سرور اتاقی را که از آن حذف یا مسدود شدی می‌شمارد. روی یکی بزن تا فراموشش کنی.</translation>
     </message>
 </context>
 <context>
@@ -1269,10 +1328,6 @@
         <translation>پرونده ذخیره نشد.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>پیام تازه</translation>
-    </message>
-    <message>
         <source>The homeserver did not return a login page.</source>
         <translation>کارساز خانگی صفحهٔ ورود بازنگرداند.</translation>
     </message>
@@ -1323,6 +1378,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>دروازه باید یک نشانی https باشد.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>این تصویر کوچک نشد و فراداده‌هایی مانند محل گرفتنش را دارد، پس فرستاده نشد. آن را با وضوح اصلی بفرست تا همان‌طور که هست فرستاده شود.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>ثبت پوش از سرور خانگی حذف نشد. دفعهٔ بعد که این حساب اینجا وارد شود حذف می‌شود.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>برنامهٔ دیگری در این فاصله امضای متقابل را برای این حساب راه‌اندازی کرده است. این دستگاه را از آنجا تأیید کن.</translation>
     </message>
 </context>
 <context>
@@ -1762,10 +1829,6 @@
         <translation>متن پیام در اعلان‌ها</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>خاموش، اعلان تنها می‌گوید چند پیام رسیده است. روشن، تازه‌ترین پیام را نشان می‌دهد - روی صفحهٔ قفل هم.</translation>
-    </message>
-    <message>
         <source>Send read receipts</source>
         <translation>فرستادن رسید خواندن</translation>
     </message>
@@ -1961,6 +2024,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>خاموش، اینکه چه کسی چه چیزی خوانده نه دنبال می‌شود و نه نشان داده می‌شود و گفت‌وگو هم روان‌تر می‌ماند. روشن، پیام‌های خودت می‌گویند چند نفر آن‌ها را خوانده‌اند.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>خاموش: اعلان فقط می‌گوید پیام‌هایی رسیده‌اند، نه از چه کسی یا چه چیزی. روشن: آخرین پیام را نشان می‌دهد — روی صفحهٔ قفل هم.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2007,10 +2074,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>آنچه از این دستگاه بیرون می‌رود</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>به کارساز خانگی‌ات نشانی‌ای در سرویس Push گفته می‌شود و برای هر اعلان، شناسهٔ اتاق و پیام به دروازه فرستاده می‌شود. متن پیام نه: Push تنها شناسه می‌برد و خودِ این دستگاه پیام را می‌گیرد و رمزگشایی می‌کند. آن نشانی رازی است - هرکه داشته باشد می‌تواند به این گوشی اعلان بفرستد.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2088,6 +2151,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>استفاده از دروازهٔ عمومی UnifiedPush</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>چند توزیع‌کننده نصب شده است. آن را که xmatic استفاده می‌کند انتخاب کن.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>توزیع‌کنندهٔ پوش دیگر نصب نیست. تا برنگردد چیزی نمی‌رسد. دوباره نصبش کن یا پوش را خاموش کن.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>سرور خانگی‌ات نشانی‌ای نزد سرویس پوش می‌گیرد و برای هر اعلان شناسهٔ اتاق و پیام و شمار پیام‌های نخوانده‌ات را به درگاه می‌فرستد. بدون متن پیام: این دستگاه خودش پیام را می‌گیرد و رمزگشایی می‌کند. این نشانی یک راز است — هر کس آن را داشته باشد می‌تواند به این گوشی اعلان بفرستد.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>پیش از حذف xmatic، پوش را اینجا خاموش کن. وگرنه سرور خانگی pusher را نگه می‌دارد و همچنان به درگاه می‌فرستد.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2098,6 +2177,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>توزیع‌کنندهٔ Push، xmatic را کنار گذاشت. Push را دوباره در حساب روشن کن.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>xmatic را یک بار باز کن تا راه‌اندازی اعلان‌های پوش تمام شود.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic هنوز در حال رسیدگی به یک اعلان است. کمی بعد دوباره بازش کن.</translation>
     </message>
 </context>
 <context>
@@ -2152,6 +2239,10 @@
         <source>Discover rooms</source>
         <translation>کشف اتاق‌ها</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>اتاق‌های ترک‌شده (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2166,6 +2257,10 @@
     <message>
         <source>Space</source>
         <translation>Space</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>فرستاده نشد – اتاق را باز کن تا تصمیم بگیری</translation>
     </message>
 </context>
 <context>
@@ -2462,12 +2557,16 @@
         <translation>داده‌های محلی آسیب‌دیده</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>بخشی از داده‌های ذخیره‌شده روی این دستگاه دیگر خوانده نمی‌شود و xmatic نتوانست آن را در حین اجرا درست کند — به همین دلیل همگام‌سازی را متوقف کرد تا دوباره به همان ردیف برنخورد. برنامه را ببند و دوباره اجرا کن. اگر پس از آن هنوز اتاق‌هایی کم است، خروج و ورود دوباره داده‌های محلی را از نو می‌سازد — اما کلیدهای این دستگاه را هم جایگزین می‌کند: اول در صفحهٔ رمزگذاری بررسی کن که پشتیبان کلیدها روشن باشد.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>این سرور از طریق sliding sync، همان همگام‌سازی‌ای که این برنامه لازم دارد، فقط %1 از %2 اتاق تو را می‌فرستد. اتاق‌های جاافتاده — اغلب گفتگوهایی از طریق پل — اینجا نمایش داده نمی‌شوند؛ برنامه‌هایی که همگام‌سازی کلاسیک دارند هنوز آن‌ها را می‌بینند.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>بخشی از داده‌های ذخیره‌شده در این دستگاه دیگر خوانده نمی‌شود و xmatic نتوانست هنگام اجرا درستش کند — برای همین به‌جای برخورد دوباره با همان ردیف، همگام‌سازی را متوقف کرد. بازسازی داده‌های اتاق‌ها اتاق‌ها و پیام‌ها را دوباره می‌گیرد و کلیدهای این دستگاه را نگه می‌دارد. اگر کمک نکرد، خروج و ورود دوباره همه‌چیز را بازسازی می‌کند — اما کلیدهای این دستگاه را جایگزین می‌کند؛ پس اول در صفحهٔ رمزنگاری بررسی کن که پشتیبان کلیدها روشن باشد.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>بازسازی داده‌های اتاق‌ها</translation>
     </message>
 </context>
 <context>
@@ -2968,6 +3067,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 تصویر نمایه خود را تغییر داد</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 نام نمایشی را به %2 و تصویر نمایه را تغییر داد</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 نام نمایشی را حذف کرد و تصویر نمایه را تغییر داد</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>روی این دستگاه نمایش داده نمی‌شود. برای باز کردن بزن.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3354,6 +3465,10 @@
         <source>Caption (optional)</source>
         <translation>شرح (اختیاری)</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>پویانمایی‌ها و نقاشی‌ها همان‌طور که هستند، با همهٔ فراداده‌هایشان فرستاده می‌شوند.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3408,6 +3523,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>یک نظرسنجی فرستاده نشد.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>پیوستی فرستاده نشد.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>سرور فایل‌هایی به این بزرگی را نمی‌پذیرد. کنارش بگذار و فایل کوچک‌تری بفرست.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>اتصال هنگام فرستادن چند بار قطع شد. با اتصال پایدارتری دوباره بفرست یا کنارش بگذار.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>سرور نیم ساعت است آن را نپذیرفته. دوباره بفرست یا کنارش بگذار.</translation>
     </message>
 </context>
 <context>
@@ -3846,14 +3977,6 @@
     <message>
         <source>Event</source>
         <translation>رویداد</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>رمزگشایی نمی‌شود - این دستگاه کلید را ندارد</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>پیام حذف شد</translation>
     </message>
     <message>
         <source>Attachment</source>

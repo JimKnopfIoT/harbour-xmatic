@@ -9,6 +9,7 @@ mod call;
 mod compose;
 mod directory;
 mod gate;
+mod leftrooms;
 mod linkpreview;
 mod location;
 mod login;
@@ -23,6 +24,7 @@ mod private;
 mod protocol;
 mod markup;
 mod recovery;
+mod roomcount;
 mod roomlist;
 mod runtime;
 mod sdklog;
@@ -103,6 +105,8 @@ pub extern "C" fn xm_version() -> *mut c_char {
 #[no_mangle]
 pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore {
     let result = catch_unwind(AssertUnwindSafe(|| {
+        // Before any TLS in either process.
+        push::install_crypto_provider();
         let raw = unsafe { borrow_str(config_json) }?;
         let mut config: CoreConfig = serde_json::from_str(raw).ok()?;
 

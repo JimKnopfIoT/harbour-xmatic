@@ -83,14 +83,13 @@ Item {
                 if (!card.hasImage) {
                     return ""
                 }
-                var known = matrix.mediaPath(card.mediaKey)
-                return known.length > 0 ? "file://" + known : ""
+                return matrix.imageSource(card.mediaKey)
             }
 
             // Asked when the card shows and when it was already showing at
             // creation: a remembered preview never changes `visible`.
             function fetch() {
-                if (visible && source == "") {
+                if (visible && matrix.mediaPath(card.mediaKey).length === 0) {
                     matrix.requestMedia(card.mediaKey, card.preview.image, true,
                                         card.preview.imageSize || 0)
                 }
@@ -102,7 +101,7 @@ Item {
                 target: matrix
                 onMediaReady: {
                     if (key === card.mediaKey) {
-                        thumb.source = "file://" + path
+                        thumb.source = matrix.imageSource(key)
                     }
                 }
             }

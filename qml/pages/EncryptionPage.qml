@@ -28,6 +28,7 @@ Page {
         }
         page.generatedKey = ""
         recoveryField.text = ""
+        crossSigningPassword.text = ""
     }
 
     Connections {
@@ -52,7 +53,15 @@ Page {
     onAppForegroundChanged: {
         if (!appForeground) {
             recoveryField.text = ""
+            crossSigningPassword.text = ""
         }
+    }
+
+    /// Sends the password once and wipes the field, like the sign-in.
+    function setUpCrossSigning() {
+        matrix.crossSigning.setUp(crossSigningPassword.text)
+        crossSigningPassword.text = ""
+        crossSigningPassword.focus = false
     }
 
     SilicaFlickable {
@@ -70,6 +79,40 @@ Page {
             }
 
             SecurityRows { }
+
+            // A password account that never had another client has no identity to
+            // verify against; the server wants the password once to create it.
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.highlightColor
+                visible: matrix.crossSigning.needsPassword
+                text: qsTr("This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.")
+            }
+
+            PasswordField {
+                id: crossSigningPassword
+
+                width: parent.width
+                visible: matrix.crossSigning.needsPassword
+                label: qsTr("Password")
+                placeholderText: qsTr("Password")
+                inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhSensitiveData | Qt.ImhNoAutoUppercase
+                enabled: !matrix.encryptionBusy
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept"
+                EnterKey.enabled: text.length > 0
+                EnterKey.onClicked: page.setUpCrossSigning()
+            }
+
+            WrapButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: matrix.crossSigning.needsPassword
+                label: qsTr("Set up cross-signing")
+                enabled: !matrix.encryptionBusy && crossSigningPassword.text.length > 0
+                onClicked: page.setUpCrossSigning()
+            }
 
             // The only way an existing store changes side: it is created encrypted or not
             // at all. Offered where it can work, behind a dialog that says the cost.

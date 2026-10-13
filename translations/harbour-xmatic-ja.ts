@@ -365,14 +365,6 @@
         <translation>ルームのイベント</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>参加と退出を表示</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>招待、削除、追放は常に表示されます。</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>表示名の変更を表示</translation>
     </message>
@@ -448,6 +440,14 @@
         <source>Space list order</source>
         <translation>Space リストの並び順</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>退出を表示</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>参加、招待、削除、追放は常に表示されます。</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -510,6 +510,10 @@
     <message>
         <source>answered on another device</source>
         <translation>別の端末で応答しました</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>別のデバイスで拒否されました</translation>
     </message>
 </context>
 <context>
@@ -793,6 +797,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>先にパスワードを入力してください。</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -957,6 +968,18 @@
         <source>Trouble with the key storage?</source>
         <translation>鍵の保管領域に問題？</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>このアカウントにはまだクロス署名がないため、ほかのデバイスはこのデバイスを検証できません。設定するにはパスワードを一度入力してください。ホームサーバーに送信され、保存はされません。</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>パスワード</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>クロス署名を設定</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1041,6 +1064,10 @@
         <source>Could not save</source>
         <translation>保存できませんでした</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>この画像はこのデバイスでは表示されません。プルダウンメニューから保存または共有してください。</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1088,6 +1115,38 @@
     <message>
         <source>Follow the device</source>
         <translation>デバイスに合わせる</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>退出したルーム</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>ルームを忘れています</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>名前のないルーム</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>追放</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>退出済み</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>退出したルームはありません</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>別のアプリで退出または拒否したルーム、削除または追放されたルームです。このデバイスは忘れるまでそれらを保持し、それまでの間、削除または追放されたルームはサーバーにも数えられます。タップすると忘れます。</translation>
     </message>
 </context>
 <context>
@@ -1269,10 +1328,6 @@
         <translation>ファイルを保存できませんでした。</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>新しいメッセージ</translation>
-    </message>
-    <message>
         <source>The homeserver did not return a login page.</source>
         <translation>ホームサーバーがログインページを返しませんでした。</translation>
     </message>
@@ -1323,6 +1378,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>ゲートウェイは https の URL にしてください。</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>この画像は縮小できず、撮影場所などのメタデータを含んでいるため送信されませんでした。そのまま送るにはオリジナル解像度で送信してください。</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>ホームサーバーからプッシュ登録を削除できませんでした。このアカウントが次にここでサインインしたときに削除されます。</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>この間に別のアプリがこのアカウントのクロス署名を設定しました。そちらからこのデバイスを検証してください。</translation>
     </message>
 </context>
 <context>
@@ -1762,10 +1829,6 @@
         <translation>通知にメッセージ本文を表示</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>オフのとき、通知は届いた件数だけを伝えます。オンのときは最新のメッセージを表示します - ロック画面でも同じです。</translation>
-    </message>
-    <message>
         <source>Send read receipts</source>
         <translation>既読を送る</translation>
     </message>
@@ -1961,6 +2024,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>オフのとき、誰が何を読んだかは記録も表示もせず、会話も軽くなります。オンのときは自分のメッセージに何人が読んだか表示されます。</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>オフ：通知はメッセージが届いたことだけを伝え、誰から何が届いたかは伝えません。オン：最新のメッセージを表示します（ロック画面にも）。</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2007,10 +2074,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>このデバイスから出るもの</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>ホームサーバーにはプッシュサービス上のアドレスが伝えられ、通知ごとにルームとメッセージの識別子がゲートウェイへ送られます。本文は送りません: プッシュが運ぶのは識別子だけで、メッセージの取得と復号はこのデバイスが自分で行います。そのアドレスは秘密です - 持っている人は誰でもこの端末に通知を送れます。</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2088,6 +2151,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>UnifiedPush の公開ゲートウェイを使う</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>複数のディストリビューターがインストールされています。xmatic が使うものを選んでください。</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>プッシュのディストリビューターがインストールされていません。戻るまで何も届きません。再インストールするか、プッシュをオフにしてください。</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>ホームサーバーはプッシュサービスのアドレスを受け取り、通知のたびにルームとメッセージの識別子と未読数をゲートウェイに送ります。本文は送りません。このデバイスがメッセージを自分で取得して復号します。このアドレスは秘密です。持っている人は誰でもこの電話に通知を送れます。</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>xmatic をアンインストールする前に、ここでプッシュをオフにしてください。そうしないとホームサーバーがプッシャーを保持し、ゲートウェイへの送信を続けます。</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2098,6 +2177,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>プッシュディストリビューターが xmatic を外しました。アカウントからプッシュをオンにし直してください。</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>プッシュ通知の設定を完了するには、xmatic を一度開いてください。</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic はまだ通知を処理しています。少ししてからもう一度開いてください。</translation>
     </message>
 </context>
 <context>
@@ -2152,6 +2239,10 @@
         <source>Discover rooms</source>
         <translation>ルームを探す</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>退出したルーム (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2166,6 +2257,10 @@
     <message>
         <source>Space</source>
         <translation>Space</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>未送信 - ルームを開いて決めてください</translation>
     </message>
 </context>
 <context>
@@ -2462,12 +2557,16 @@
         <translation>ローカルデータが壊れています</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>この端末に保存されたデータの一部が読み取れなくなり、xmatic は動作中に直すことができませんでした。そのため、同じ行に再び行き当たるのを避けて同期を止めています。アプリを閉じて起動し直してください。その後もルームが足りない場合は、サインアウトしてサインインし直すとローカルデータが作り直されます。ただしこの端末の鍵も置き換わるため、先に暗号化ページで鍵のバックアップが有効か確認してください。</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>このサーバーは、このアプリが必要とする同期 sliding sync で、%2 件のルームのうち %1 件しか提供していません。足りないルーム（多くはブリッジ経由のチャット）はここでは表示できません。従来の同期を使うアプリでは引き続き表示されます。</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>このデバイスに保存されたデータの一部が読めなくなり、xmatic は実行中に修復できませんでした。そのため同じ行に再びぶつかる代わりに同期を停止しました。ルームデータを再構築すると、ルームとメッセージを再取得し、このデバイスの鍵は保持されます。それでも解決しない場合、サインアウトして再度サインインするとすべてが再構築されますが、このデバイスの鍵が置き換わります。先に暗号化のページで鍵のバックアップがオンになっていることを確認してください。</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>ルームデータを再構築</translation>
     </message>
 </context>
 <context>
@@ -2968,6 +3067,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 がプロフィール画像を変更しました</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 が表示名を %2 に、プロフィール画像も変更しました</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 が表示名を削除し、プロフィール画像を変更しました</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>このデバイスでは表示されません。タップして開きます。</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3354,6 +3465,10 @@
         <source>Caption (optional)</source>
         <translation>説明文 (任意)</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>アニメーションと図はそのまま、含まれるメタデータごと送信されます。</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3408,6 +3523,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>アンケートを送信できませんでした。</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>添付ファイルを送信できませんでした。</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>サーバーはこのサイズのファイルを受け付けません。破棄して小さいファイルを送ってください。</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>送信中に接続が何度か切れました。より安定した接続で再送するか、破棄してください。</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>サーバーが30分間受け付けていません。再送するか破棄してください。</translation>
     </message>
 </context>
 <context>
@@ -3846,14 +3977,6 @@
     <message>
         <source>Event</source>
         <translation>イベント</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>復号できません - このデバイスに鍵がありません</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>メッセージは削除されました</translation>
     </message>
     <message>
         <source>Attachment</source>

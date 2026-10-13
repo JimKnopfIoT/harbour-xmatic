@@ -1,6 +1,103 @@
 //! The open room and thread: timeline, sending, media, receipts.
 
 use super::*;
+use std::sync::atomic::Ordering;
+
+/// How long building a view may wait for the server. `/context`, the pinned
+/// events and the encryption state go out with the SDK's unbounded retry.
+const OPEN_LIMIT: std::time::Duration = std::time::Duration::from_secs(30);
+
+/// A view still being built outside the lock, so a later open or a close can
+/// stop it. `key` is the room, or for a thread its root.
+pub(super) struct PendingOpen {
+    key: String,
+    token: String,
+    cancel: Arc<tokio::sync::Notify>,
+}
+
+/// What building a view came to.
+enum Built {
+    View(timeline::TimelineHandle),
+    Failed(String),
+    TimedOut,
+    Cancelled,
+}
+
+/// Runs the request half under the time limit and the cancel signal, then the
+/// local half to its end: a task cut off there would leak streams holding the client.
+fn spawn_view<B, S>(
+    cancel: Arc<tokio::sync::Notify>,
+    build: B,
+    start: impl FnOnce(timeline::BuiltView) -> S + Send + 'static,
+) -> tokio::task::JoinHandle<Built>
+where
+    B: std::future::Future<Output = Result<timeline::BuiltView, String>> + Send + 'static,
+    S: std::future::Future<Output = timeline::TimelineHandle> + Send + 'static,
+{
+    tokio::spawn(async move {
+        let built = tokio::select! {
+            built = tokio::time::timeout(OPEN_LIMIT, build) => built,
+            _ = cancel.notified() => return Built::Cancelled,
+        };
+        match built {
+            Err(_) => Built::TimedOut,
+            Ok(Err(message)) => Built::Failed(message),
+            Ok(Ok(view)) => Built::View(start(view).await),
+        }
+    })
+}
+
+/// The handle, or the reply that says why there is none.
+fn built_handle(built: Result<Built, tokio::task::JoinError>) -> Result<timeline::TimelineHandle, String> {
+    match built {
+        Ok(Built::View(handle)) => Ok(handle),
+        Ok(Built::Failed(message)) => Err(message),
+        Ok(Built::TimedOut) => Err("the server did not answer in time".to_owned()),
+        Ok(Built::Cancelled) => Err(SUPERSEDED.to_owned()),
+        Err(_) => Err("the command failed unexpectedly".to_owned()),
+    }
+}
+
+/// Whether a close meant this view. The token decides; a close without one
+/// (an older front end) goes by the key, and an empty key means any.
+fn same_view(close_key: &str, close_token: &str, key: &str, token: &str) -> bool {
+    if !close_token.is_empty() {
+        close_token == token
+    } else {
+        close_key.is_empty() || close_key == key
+    }
+}
+
+fn pending(slot: &std::sync::Mutex<Option<PendingOpen>>) -> std::sync::MutexGuard<'_, Option<PendingOpen>> {
+    slot.lock().unwrap_or_else(|poisoned| poisoned.into_inner())
+}
+
+/// Stops whatever is still building, room and thread; nothing builds into a
+/// session that is ending.
+pub(super) fn abandon_opens(state: &Arc<State>) {
+    state.open_generation.fetch_add(1, Ordering::SeqCst);
+    state.thread_generation.fetch_add(1, Ordering::SeqCst);
+    for slot in [&state.pending_open, &state.pending_thread] {
+        if let Some(previous) = pending(slot).take() {
+            previous.cancel.notify_one();
+        }
+    }
+}
+
+/// Closes the thread and stops one still building, under the lock its install takes.
+async fn drop_thread(state: &Arc<State>) {
+    let _opening = state.opening_thread.lock().await;
+    state.thread_generation.fetch_add(1, Ordering::SeqCst);
+    if let Some(building) = pending(&state.pending_thread).take() {
+        building.cancel.notify_one();
+    }
+    if let Some(handle) = state.thread.lock().await.take() {
+        handle.close().await;
+    }
+}
+
+/// Answer for an open a later one replaced: the front end has moved on.
+pub(super) const SUPERSEDED: &str = "superseded by a later open";
 
 pub(super) async fn open_timeline(
     state: &Arc<State>,
@@ -16,9 +113,19 @@ pub(super) async fn open_timeline(
         return;
     };
 
+    // A later open wins: what an earlier one is still fetching stops here.
+    let generation = state.open_generation.fetch_add(1, Ordering::SeqCst) + 1;
+    if let Some(previous) = pending(&state.pending_open).take() {
+        previous.cancel.notify_one();
+    }
+
     // One open at a time: leaving a room and stepping back in puts a close and an
     // open in flight together. Its own lock, so timeline commands stay free.
-    let _opening = state.opening.lock().await;
+    let opening = state.opening.lock().await;
+    if state.open_generation.load(Ordering::SeqCst) != generation {
+        state.sink.emit(reply_error(id, SUPERSEDED));
+        return;
+    }
 
     // Opening another room replaces the timeline. The guard is bound to a name:
     // as an `if let` temporary it lives to the end of the body and deadlocks.
@@ -35,30 +142,32 @@ pub(super) async fn open_timeline(
         ),
         None => (json!({}), None),
     };
+    let opened = json!({
+        "open": true,
+        "readMarker": marker,
+        "readReceipt": fallback_marker,
+        "rebuilt": true,
+        "can": permissions,
+        "directWith": direct_peer,
+    });
 
     {
         let mut open = state.timeline.lock().await;
         if let Some(previous) = open.take() {
             // The receipt setting is chosen when the timeline is built, so a
-            // changed one has to rebuild even for the room already open.
+            // changed one has to rebuild even for the room already open. Another
+            // token is another view: its stream would be dropped as foreign.
             if previous.room_id() == room_id
                 && focus.is_empty()
                 && !rebuild
                 && previous.is_live()
                 && previous.tracks_receipts() == receipts
+                && previous.token() == token
             {
                 open.replace(previous);
-                state.sink.emit(reply_ok(
-                    id,
-                    json!({
-                        "open": true,
-                        "readMarker": marker,
-                        "readReceipt": fallback_marker,
-                        "rebuilt": false,
-                        "can": permissions,
-                        "directWith": direct_peer,
-                    }),
-                ));
+                let mut kept = opened;
+                kept["rebuilt"] = json!(false);
+                state.sink.emit(reply_ok(id, kept));
                 return;
             }
             previous.close().await;
@@ -67,9 +176,7 @@ pub(super) async fn open_timeline(
 
     // Past the early return, so re-entering a room keeps its thread - a stream
     // left running would emit `thread.diff` for the room just left.
-    if let Some(handle) = state.thread.lock().await.take() {
-        handle.close().await;
-    }
+    drop_thread(state).await;
 
     // Sliding sync sends one event per response for rooms in the list. A room
     // being read has to be subscribed, or newer messages never arrive.
@@ -79,35 +186,63 @@ pub(super) async fn open_timeline(
             .await;
     }
 
-    match timeline::open(&client, &room_id, &focus, receipts, &token, state.sink.clone()).await {
-        Ok(handle) => {
-            *state.timeline.lock().await = Some(Arc::new(handle));
-            // Rebuilt, so the view starts from nothing and may open where
-            // reading stopped; the branch above kept the rows it had.
-            state.sink.emit(reply_ok(
-                id,
-                json!({
-                    "open": true,
-                    "readMarker": marker,
-                    // The branch that matters: a room opened for the first time rebuilds, and
-                    // only a re-entered one took the branch that already carried this.
-                    "readReceipt": fallback_marker,
-                    "rebuilt": true,
-                    "can": permissions,
-                    "directWith": direct_peer,
-                }),
-            ));
+    // A slice or the pinned view is a request, and so is the live view of a room
+    // whose encryption state is unknown: built outside the lock, bounded, stoppable.
+    let cancel = Arc::new(tokio::sync::Notify::new());
+    let build = {
+        let (client, room_id, focus) = (client.clone(), room_id.clone(), focus.clone());
+        async move { timeline::build(&client, &room_id, &focus, receipts).await }
+    };
+    let start = {
+        let (client, room_id, focus, token) =
+            (client.clone(), room_id.clone(), focus.clone(), token.clone());
+        let sink = state.sink.clone();
+        move |view| async move {
+            timeline::start(&client, &room_id, &focus, receipts, &token, sink, view).await
         }
-        Err(message) => state.sink.emit(reply_error(id, message)),
+    };
+    let build = spawn_view(cancel.clone(), build, start);
+    {
+        let mut slot = pending(&state.pending_open);
+        // Replaced between the bump and here: this one is already stale.
+        if state.open_generation.load(Ordering::SeqCst) != generation {
+            cancel.notify_one();
+        } else {
+            *slot = Some(PendingOpen { key: room_id.clone(), token: token.clone(), cancel });
+        }
     }
+    // Registered before the lock goes, so a close that follows finds it.
+    drop(opening);
+    let outcome = build.await;
+
+    let _opening = state.opening.lock().await;
+    let current = state.open_generation.load(Ordering::SeqCst) == generation;
+    if current {
+        pending(&state.pending_open).take();
+    }
+    // Replaced meanwhile: whatever came of it, nobody is waiting for it.
+    let handle = match (built_handle(outcome), current) {
+        (Ok(handle), true) => handle,
+        (Ok(handle), false) => {
+            handle.close().await;
+            state.sink.emit(reply_error(id, SUPERSEDED));
+            return;
+        }
+        (Err(message), current) => {
+            state.sink.emit(reply_error(id, if current { message } else { SUPERSEDED.to_owned() }));
+            return;
+        }
+    };
+    *state.timeline.lock().await = Some(Arc::new(handle));
+    state.sink.emit(reply_ok(id, opened));
 }
 /// A tapped Matrix link: which room is meant, and are we in it.
-pub(super) async fn resolve_room(state: &Arc<State>, id: u64, address: String) {
+pub(super) async fn resolve_room(state: &Arc<State>, id: u64, address: String, local: bool) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));
         return;
     };
-    match roomlist::resolve(&client, &address).await {
+    match roomlist::resolve(&client, &address, local).await {
         Ok(mut data) => {
             if let Some(object) = data.as_object_mut() {
                 object.insert("address".to_owned(), json!(address));
@@ -131,21 +266,35 @@ pub(super) async fn mark_room_read(state: &Arc<State>, id: u64, room_id: String,
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
-pub(super) async fn close_timeline(state: &Arc<State>, id: u64, room_id: String) {
+pub(super) async fn close_timeline(state: &Arc<State>, id: u64, room_id: String, token: String) {
     // The lock the open takes: leaving one room and entering another puts both
     // in flight, and the close used to take the fresh handle away.
     let _opening = state.opening.lock().await;
-    if !room_id.is_empty() {
-        let open_room = state
-            .timeline
-            .lock()
-            .await
-            .as_ref()
-            .map(|handle| handle.room_id.clone());
-        if let Some(open_room) = open_room {
-            if open_room != room_id {
+    let open = state
+        .timeline
+        .lock()
+        .await
+        .as_ref()
+        .map(|handle| (handle.room_id.clone(), handle.token().to_owned()));
+    match open {
+        Some((open_room, open_token)) => {
+            if !same_view(&room_id, &token, &open_room, &open_token) {
                 state.sink.emit(reply_ok(id, json!({ "open": true })));
                 return;
+            }
+        }
+        // Nothing installed; a view still building is stopped only if it is this one.
+        None => {
+            let mut slot = pending(&state.pending_open);
+            let meant = slot
+                .as_ref()
+                .map(|building| same_view(&room_id, &token, &building.key, &building.token))
+                .unwrap_or(false);
+            if meant {
+                state.open_generation.fetch_add(1, Ordering::SeqCst);
+                if let Some(building) = slot.take() {
+                    building.cancel.notify_one();
+                }
             }
         }
     }
@@ -153,9 +302,7 @@ pub(super) async fn close_timeline(state: &Arc<State>, id: u64, room_id: String)
         handle.close().await;
     }
     // A thread never outlives its room's view.
-    if let Some(handle) = state.thread.lock().await.take() {
-        handle.close().await;
-    }
+    drop_thread(state).await;
     state.sink.emit(reply_ok(id, json!({ "open": false })));
 }
 pub(super) async fn open_thread(
@@ -170,24 +317,82 @@ pub(super) async fn open_thread(
         return;
     };
 
-    let _opening = state.opening_thread.lock().await;
-
+    // Same shape as a focused room open: the thread's history is a request.
+    let generation = state.thread_generation.fetch_add(1, Ordering::SeqCst) + 1;
+    if let Some(previous) = pending(&state.pending_thread).take() {
+        previous.cancel.notify_one();
+    }
+    let opening = state.opening_thread.lock().await;
     if let Some(previous) = state.thread.lock().await.take() {
         previous.close().await;
     }
 
-    match timeline::open_thread(&client, &room_id, &root_event_id, &token, state.sink.clone()).await
-    {
-        Ok(handle) => {
-            *state.thread.lock().await = Some(Arc::new(handle));
-            state.sink.emit(reply_ok(id, json!({ "open": true })));
+    let cancel = Arc::new(tokio::sync::Notify::new());
+    let build = {
+        let (client, room_id, root) = (client.clone(), room_id.clone(), root_event_id.clone());
+        async move { timeline::build_thread(&client, &room_id, &root).await }
+    };
+    let start = {
+        let (client, room_id, root, token) =
+            (client.clone(), room_id.clone(), root_event_id.clone(), token.clone());
+        let sink = state.sink.clone();
+        move |view| async move {
+            timeline::start_thread(&client, &room_id, &root, &token, sink, view).await
         }
-        Err(message) => state.sink.emit(reply_error(id, message)),
+    };
+    let build = spawn_view(cancel.clone(), build, start);
+    {
+        let mut slot = pending(&state.pending_thread);
+        if state.thread_generation.load(Ordering::SeqCst) != generation {
+            cancel.notify_one();
+        } else {
+            *slot = Some(PendingOpen { key: root_event_id.clone(), token: token.clone(), cancel });
+        }
     }
+    drop(opening);
+    let outcome = build.await;
+
+    let _opening = state.opening_thread.lock().await;
+    let current = state.thread_generation.load(Ordering::SeqCst) == generation;
+    if current {
+        pending(&state.pending_thread).take();
+    }
+    // Another thread, the room's close or a new room came first.
+    let handle = match (built_handle(outcome), current) {
+        (Ok(handle), true) => handle,
+        (Ok(handle), false) => {
+            handle.close().await;
+            state.sink.emit(reply_error(id, SUPERSEDED));
+            return;
+        }
+        (Err(message), current) => {
+            state.sink.emit(reply_error(id, if current { message } else { SUPERSEDED.to_owned() }));
+            return;
+        }
+    };
+    if let Some(previous) = state.thread.lock().await.replace(Arc::new(handle)) {
+        previous.close().await;
+    }
+    state.sink.emit(reply_ok(id, json!({ "open": true })));
 }
 /// Closes the open thread. A close naming another thread is ignored: commands
 /// are independent tasks and can arrive in either order.
 pub(super) async fn close_thread(state: &Arc<State>, id: u64, root_event_id: String) {
+    // The lock the open installs under, so a close cannot slip between its check and it.
+    let _opening = state.opening_thread.lock().await;
+    {
+        let mut slot = pending(&state.pending_thread);
+        let meant = slot
+            .as_ref()
+            .map(|building| same_view(&root_event_id, "", &building.key, &building.token))
+            .unwrap_or(false);
+        if meant {
+            state.thread_generation.fetch_add(1, Ordering::SeqCst);
+            if let Some(building) = slot.take() {
+                building.cancel.notify_one();
+            }
+        }
+    }
     let mut open = state.thread.lock().await;
     let matches = open
         .as_ref()
@@ -234,7 +439,7 @@ pub(super) async fn paginate_thread(state: &Arc<State>, id: u64) {
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
-pub(super) async fn paginate_timeline(state: &Arc<State>, id: u64, room_id: String) {
+pub(super) async fn paginate_timeline(state: &Arc<State>, id: u64, room_id: String, forwards: bool) {
     // Room and handle from the same guard: a switch while this was in flight
     // otherwise paginated the room the user had just moved to, on behalf of the
     // one they left - one uninvited history request per switch, against a server
@@ -247,6 +452,7 @@ pub(super) async fn paginate_timeline(state: &Arc<State>, id: u64, room_id: Stri
         Some((open_room, _)) if !room_id.is_empty() && open_room != room_id => {
             Err("the room this was asked for is no longer open".to_owned())
         }
+        Some((_, handle)) if forwards => handle.paginate_forwards().await,
         Some((_, handle)) => handle.paginate().await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -255,11 +461,32 @@ pub(super) async fn paginate_timeline(state: &Arc<State>, id: u64, room_id: Stri
         Ok(paginated) => state.sink.emit(reply_ok(
             id,
             json!({
+                "forwards": forwards,
                 "reachedStart": matches!(paginated, timeline::Paginated::Start),
+                "reachedEnd": matches!(paginated, timeline::Paginated::End),
             }),
         )),
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
+}
+/// The front end's rows drifted from the core's: the view named by its token
+/// sends a full reset. Another view's token is ignored, not an error.
+pub(super) async fn resync_timeline(
+    state: &Arc<State>,
+    id: u64,
+    room_id: String,
+    token: String,
+    thread: bool,
+) {
+    let handle = if thread { state.thread().await } else { state.timeline().await };
+    let meant = handle
+        .as_ref()
+        .map(|handle| handle.room_id() == room_id && handle.token() == token)
+        .unwrap_or(false);
+    if let (true, Some(handle)) = (meant, handle) {
+        handle.resync();
+    }
+    state.sink.emit(reply_ok(id, json!({ "resync": meant })));
 }
 pub(super) async fn send_message(state: &Arc<State>, id: u64, body: String, mentions: Vec<String>) {
     if body.trim().is_empty() {
@@ -305,14 +532,23 @@ pub(super) async fn reply_message(
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
-pub(super) async fn edit_message(state: &Arc<State>, id: u64, event_id: String, body: String) {
+pub(super) async fn edit_message(
+    state: &Arc<State>,
+    id: u64,
+    event_id: String,
+    body: String,
+    mentions: Vec<String>,
+) {
     if body.trim().is_empty() {
         state.sink.emit(reply_error(id, "an edit cannot be empty"));
         return;
     }
 
     let outcome = match state.timeline().await {
-        Some(handle) => handle.edit(&event_id, body).await,
+        Some(handle) => {
+            let client = state.client().await;
+            handle.edit(client.as_ref(), &event_id, body, &mentions).await
+        }
         None => Err("no timeline is open".to_owned()),
     };
 
@@ -500,5 +736,25 @@ pub(super) async fn mark_read(state: &Arc<State>, id: u64, receipt: bool) {
             .sink
             .emit(reply_ok(id, json!({ "read": read, "roomId": room_id }))),
         Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::same_view;
+
+    #[test]
+    fn a_close_with_a_token_means_only_that_view() {
+        assert!(same_view("!a:x", "6", "!a:x", "6"));
+        // Leaving and re-entering one room: the late close of the old view
+        // must not take the new one, although the room is the same.
+        assert!(!same_view("!a:x", "5", "!a:x", "6"));
+    }
+
+    #[test]
+    fn a_close_without_a_token_goes_by_the_room() {
+        assert!(same_view("!a:x", "", "!a:x", "6"));
+        assert!(!same_view("!b:x", "", "!a:x", "6"));
+        assert!(same_view("", "", "!a:x", "6"));
     }
 }

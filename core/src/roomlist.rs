@@ -2,7 +2,8 @@
 //! diffs out to the Qt model. Nothing here reimplements sync or ordering.
 
 use std::collections::HashSet;
-use std::sync::{Arc, Mutex};
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, LazyLock, Mutex};
 use std::time::Duration;
 
 use futures_util::StreamExt;
@@ -14,17 +15,17 @@ use matrix_sdk::ruma::events::room::message::{MessageType, Relation};
 use matrix_sdk::ruma::events::{
     AnySyncMessageLikeEvent, AnySyncTimelineEvent, SyncMessageLikeEvent,
 };
-use matrix_sdk::config::RequestConfig;
-use matrix_sdk::ruma::api::client::membership::joined_rooms;
 use matrix_sdk::ruma::api::client::room::{create_room, Visibility};
 use matrix_sdk::ruma::events::{
     room::encryption::RoomEncryptionEventContent,
     room::history_visibility::{HistoryVisibility, RoomHistoryVisibilityEventContent},
-    space::child::SpaceChildEventContent, InitialStateEvent, SyncStateEvent,
+    space::child::SpaceChildEventContent, space::parent::SpaceParentEventContent,
+    InitialStateEvent, StateEventType, SyncStateEvent,
 };
 use matrix_sdk::ruma::room::RoomType;
 use matrix_sdk::ruma::serde::Raw;
 use matrix_sdk::ruma::{Int, OwnedRoomId, OwnedServerName, RoomAliasId, RoomId, UserId};
+use matrix_sdk::send_queue::RoomSendQueueUpdate;
 use matrix_sdk::{Client, RoomState};
 use matrix_sdk_ui::{
     eyeball_im::VectorDiff,
@@ -39,9 +40,9 @@ use matrix_sdk_ui::{
 };
 use serde_json::{json, Value};
 use tokio::sync::broadcast::error::RecvError;
-use tokio::sync::mpsc;
+use tokio::sync::{mpsc, watch};
 use tokio::task::JoinHandle;
-use tokio::time::{sleep, Instant};
+use tokio::time::sleep;
 
 use crate::protocol::event;
 use crate::text::scrub_ids;
@@ -54,21 +55,37 @@ const PAGE_SIZE: usize = 50;
 
 /// Tasks the room list started that hold a client. Same reason as
 /// `TimelineTasks`: a held client keeps the pool open under a `reset_store`.
-static SIDE_TASKS: std::sync::Mutex<Vec<tokio::task::AbortHandle>> =
-    std::sync::Mutex::new(Vec::new());
+struct SideTasks {
+    /// False between `stop()` and the next `start()`: a late registration is
+    /// aborted on the spot instead of outliving the sign-out.
+    open: bool,
+    running: Vec<tokio::task::AbortHandle>,
+}
+
+static SIDE_TASKS: std::sync::Mutex<SideTasks> =
+    std::sync::Mutex::new(SideTasks { open: false, running: Vec::new() });
 
 /// Registers such a task and forgets the ones that have finished.
 fn track_side_task(handle: tokio::task::AbortHandle) {
-    let mut running = SIDE_TASKS.lock().unwrap_or_else(|error| error.into_inner());
-    running.retain(|existing| !existing.is_finished());
-    running.push(handle);
+    let mut tasks = SIDE_TASKS.lock().unwrap_or_else(|error| error.into_inner());
+    if !tasks.open {
+        handle.abort();
+        return;
+    }
+    tasks.running.retain(|existing| !existing.is_finished());
+    tasks.running.push(handle);
+}
+
+fn open_side_tasks() {
+    SIDE_TASKS.lock().unwrap_or_else(|error| error.into_inner()).open = true;
 }
 
 /// Ends them. Called from `stop()`, which the sign-out runs before the store is
 /// cleared.
 fn stop_side_tasks() {
-    let mut running = SIDE_TASKS.lock().unwrap_or_else(|error| error.into_inner());
-    for handle in running.drain(..) {
+    let mut tasks = SIDE_TASKS.lock().unwrap_or_else(|error| error.into_inner());
+    tasks.open = false;
+    for handle in tasks.running.drain(..) {
         handle.abort();
     }
 }
@@ -83,6 +100,8 @@ pub struct RoomListHandle {
     states: tokio::task::JoinHandle<()>,
     queue: tokio::task::JoinHandle<()>,
     loading: tokio::task::JoinHandle<()>,
+    census: tokio::task::JoinHandle<()>,
+    notify: tokio::task::JoinHandle<()>,
 }
 
 impl RoomListHandle {
@@ -107,6 +126,8 @@ impl RoomListHandle {
         self.states.abort();
         self.queue.abort();
         self.loading.abort();
+        self.census.abort();
+        self.notify.abort();
         // The two loose ones as well - the name lookup holds a `Room`, the sync probe
         // a `Client` - and both outlived every handle this struct knows.
         stop_side_tasks();
@@ -134,11 +155,22 @@ pub(crate) fn room_avatar(room: &matrix_sdk::Room) -> Option<String> {
 }
 
 /// Resolves `#alias:server` or `!id:server` to a room id and says whether this
-/// account is in it. It answers, it never joins.
-pub async fn resolve(client: &Client, address: &str) -> Result<Value, String> {
+/// account is in it. It answers, it never joins. `local` asks nobody: an alias
+/// of no joined room comes back unresolved, for the join dialog to ask.
+pub async fn resolve(client: &Client, address: &str, local: bool) -> Result<Value, String> {
     let address = address.trim();
     let room_id = if address.starts_with('!') {
         OwnedRoomId::try_from(address).map_err(|_| "not a room identifier".to_owned())?
+    } else if local {
+        let alias = RoomAliasId::parse(address).map_err(|_| "not a room address".to_owned())?;
+        let known = client.joined_rooms().into_iter().find(|room| {
+            room.canonical_alias().as_deref() == Some(&*alias)
+                || room.alt_aliases().iter().any(|other| *other == alias)
+        });
+        match known {
+            Some(room) => room.room_id().to_owned(),
+            None => return Ok(json!({ "roomId": "", "joined": false })),
+        }
     } else {
         let alias = RoomAliasId::parse(address).map_err(|_| "not a room address".to_owned())?;
         client
@@ -164,11 +196,12 @@ pub async fn mark_read(client: &Client, room_id: &str, receipt: bool) -> Result<
         .get_room(&parsed)
         .ok_or_else(|| "room is not known yet".to_owned())?;
 
+    // Nothing to put a receipt on: the manual flag can still be what makes it unread.
     let LatestEventValue::Remote(event) = room.latest_event() else {
-        return Ok(false);
+        return clear_unread_flag(&room).await;
     };
     let Ok(parsed_event) = event.raw().deserialize() else {
-        return Ok(false);
+        return clear_unread_flag(&room).await;
     };
     let event_id = parsed_event.event_id().to_owned();
 
@@ -188,6 +221,16 @@ pub async fn mark_read(client: &Client, room_id: &str, receipt: bool) -> Result<
     // The flag is what a manual "unread" sets; a receipt alone would leave it
     // standing and the room would look unread with nothing in it to read.
     let _ = room.set_unread_flag(false).await;
+    Ok(true)
+}
+
+async fn clear_unread_flag(room: &matrix_sdk::Room) -> Result<bool, String> {
+    if !room.is_marked_unread() {
+        return Ok(false);
+    }
+    room.set_unread_flag(false)
+        .await
+        .map_err(|error| format!("could not mark it read: {}", scrub_ids(&error.to_string())))?;
     Ok(true)
 }
 
@@ -299,7 +342,7 @@ pub fn forget_name_requests() {
 
 /// The room's name, and a request for one where the SDK has none: the cache is
 /// filled by a sync alone, so an unseen room has no name at all, not a wrong one.
-fn display_name(item: &RoomListItem) -> String {
+fn display_name(item: &RoomListItem, sink: &Arc<Sink>) -> String {
     if let Some(name) = item.cached_display_name() {
         return strip_bidi(&name.to_string());
     }
@@ -314,13 +357,21 @@ fn display_name(item: &RoomListItem) -> String {
     if !asked {
         let room = std::ops::Deref::deref(item).clone();
         let room_id = item.room_id().to_string();
+        let sink = sink.clone();
         let handle = tokio::spawn(async move {
-            if room.display_name().await.is_err() {
+            match room.display_name().await {
+                // The SDK caches it without a notable update, so no diff carries it.
+                Ok(name) => sink.emit(event(
+                    "roomlist.name",
+                    json!({ "id": room_id, "name": strip_bidi(&name.to_string()) }),
+                )),
                 // Marked before the attempt so two syncs do not both ask; on failure the mark
                 // goes, or one bad moment costs the room its name for the process.
-                if let Ok(mut guard) = NAMES_REQUESTED.lock() {
-                    if let Some(rooms) = guard.as_mut() {
-                        rooms.remove(&room_id);
+                Err(_) => {
+                    if let Ok(mut guard) = NAMES_REQUESTED.lock() {
+                        if let Some(rooms) = guard.as_mut() {
+                            rooms.remove(&room_id);
+                        }
                     }
                 }
             }
@@ -336,7 +387,7 @@ pub const LIST_TIMELINE_LIMIT: u32 = 20;
 
 /// One room as the UI needs it. Deliberately flat and small — this crosses the
 /// FFI on every change.
-fn summarize(item: &RoomListItem) -> Value {
+fn summarize(item: &RoomListItem, sink: &Arc<Sink>) -> Value {
     let (preview_kind, preview_text, preview_sender) = latest_preview(item);
     // Held to what the window can show: at the ceiling the count is a floor, and
     // the UI adds the "+". Above it the number would be arbitrary anyway.
@@ -345,7 +396,7 @@ fn summarize(item: &RoomListItem) -> Value {
     let mentions = item.num_unread_mentions();
     json!({
         "id": item.room_id().as_str(),
-        "name": display_name(item),
+        "name": display_name(item, sink),
         // A floor, not a repair - the window above is what makes it right. The larger
         // of the two counters, because the badge is meant to count every message.
         "unread": unread.min(cap),
@@ -355,6 +406,9 @@ fn summarize(item: &RoomListItem) -> Value {
         // `unread` counts everything and would ignore a mentions-only room.
         "notifications": item.num_unread_notifications(),
         "mentions": mentions.min(cap),
+        // Set by hand (`m.marked_unread`), here or in another client: unread with
+        // nothing counted, so the badge shows a dot.
+        "markedUnread": item.is_marked_unread(),
         "encrypted": item.encryption_state().is_encrypted(),
         "space": item.is_space(),
         // The user's tags (m.favourite / m.lowpriority): the list groups on them, and
@@ -388,15 +442,9 @@ fn summarize(item: &RoomListItem) -> Value {
     })
 }
 
-/// The diff stream carries immutable vectors, not slices, so this takes
-/// anything iterable over items.
-fn summarize_all<'a>(items: impl IntoIterator<Item = &'a RoomListItem>) -> Vec<Value> {
-    items.into_iter().map(summarize).collect()
-}
-
 /// Translates one diff into the JSON the Qt model applies.
-fn encode(diff: &VectorDiff<RoomListItem>) -> Value {
-    crate::protocol::encode_diff(diff, summarize)
+fn encode(diff: &VectorDiff<RoomListItem>, sink: &Arc<Sink>) -> Value {
+    crate::protocol::encode_diff(diff, |item| summarize(item, sink))
 }
 
 /// Asks whether the homeserver speaks simplified sliding sync (MSC4186). The
@@ -430,41 +478,32 @@ fn spawn_support_check(client: Client, sink: Arc<Sink>) {
     track_side_task(handle.abort_handle());
 }
 
-/// Rooms the server says the account is in. A server can advertise MSC4186 and
-/// still leave rooms out of it; set against `roomlist.total`, the UI can say so.
-fn spawn_joined_count(client: Client, sink: Arc<Sink>) {
-    let handle = tokio::spawn(async move {
-        let config = RequestConfig::new().disable_retry().timeout(Duration::from_secs(20));
-        // Could not ask: no event, so no claim.
-        if let Ok(response) = client
-            .send(joined_rooms::v3::Request::new())
-            .with_request_config(config)
-            .await
-        {
-            let joined = response.joined_rooms.len();
-            sink.emit(event("roomlist.joined", json!({ "joined": joined })));
-        }
-    });
-    track_side_task(handle.abort_handle());
+/// Asks `/joined_rooms` once more, folded into a request already running.
+fn ask_joined(client: Client, sink: Arc<Sink>) {
+    if let Some(handle) = crate::roomcount::ask_joined_count(client, sink) {
+        track_side_task(handle.abort_handle());
+    }
 }
 
 /// The server's own room count, so a short list can say "20 of 412". The list
 /// range only grows past twenty once the service reaches `Running`.
-fn spawn_loading_state(room_list: &RoomList, client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
+fn spawn_loading_state(
+    room_list: &RoomList,
+    client: Client,
+    sink: Arc<Sink>,
+    live: Arc<AtomicBool>,
+) -> JoinHandle<()> {
     let mut states = room_list.loading_state();
     tokio::spawn(async move {
         while let Some(state) = states.next().await {
             // `NotLoaded` is "no sync has answered", not zero - the front end must be
             // able to tell those apart or it reports "0 of 0" for a young list.
-            let total = match state {
-                RoomListLoadingState::NotLoaded => None,
-                RoomListLoadingState::Loaded {
-                    maximum_number_of_rooms,
-                } => maximum_number_of_rooms,
-            };
+            let total = maximum_rooms(&state);
             sink.emit(event("roomlist.total", json!({ "total": total })));
-            if total.is_some() {
-                spawn_joined_count(client.clone(), sink.clone());
+            // Before the first answer the total is the cached one; set against a fresh
+            // joined count it would claim a gap. `Running` asks then.
+            if total.is_some() && live.load(Ordering::Acquire) {
+                ask_joined(client.clone(), sink.clone());
             }
 
             // Rooms a sync has just brought can be children of a space, and the chat
@@ -477,11 +516,88 @@ fn spawn_loading_state(room_list: &RoomList, client: Client, sink: Arc<Sink>) ->
     })
 }
 
+fn maximum_rooms(state: &RoomListLoadingState) -> Option<u32> {
+    match state {
+        RoomListLoadingState::NotLoaded => None,
+        RoomListLoadingState::Loaded {
+            maximum_number_of_rooms,
+        } => *maximum_number_of_rooms,
+    }
+}
+
+/// How the user orders the chat list. Anything but the SDK's recency order
+/// needs every room in the model, not the first pages.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct Order {
+    pub by_name: bool,
+    pub unread_first: bool,
+}
+
+/// Kept outside the list: the front end sets it before the list starts.
+static ORDER: LazyLock<watch::Sender<Order>> =
+    LazyLock::new(|| watch::channel(Order::default()).0);
+
+pub fn set_order(order: Order) {
+    ORDER.send_replace(order);
+}
+
+/// The dynamic adapter's limit, mirrored: the SDK keeps its own private and
+/// grows it only below the server's room count.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+struct Pages {
+    limit: usize,
+}
+
+impl Pages {
+    const fn new() -> Self {
+        Self { limit: PAGE_SIZE }
+    }
+
+    /// The rule of `RoomListDynamicEntriesController::add_one_page`.
+    fn grow(&mut self, max: Option<u32>) -> bool {
+        match max {
+            Some(max) if self.limit < max as usize => {
+                self.limit += PAGE_SIZE;
+                true
+            }
+            _ => false,
+        }
+    }
+
+    /// Matching rooms outside the head, and a page that can still bring them.
+    fn has_more(&self, matching: usize, max: Option<u32>) -> bool {
+        matching > self.limit && max.is_some_and(|max| self.limit < max as usize)
+    }
+
+    /// Grows until every matching room fits, as far as the SDK lets it.
+    fn fill(&mut self, matching: usize, max: Option<u32>, mut add_page: impl FnMut()) {
+        while matching > self.limit && self.grow(max) {
+            add_page();
+        }
+    }
+}
+
+/// Rooms on this device the filter lets through, and whether one is a favourite:
+/// that group sorts first whatever the order. Local objects, no request.
+fn matching_rooms(client: &Client, filter: &BoxedFilterFn) -> (usize, bool) {
+    let mut matching = 0;
+    let mut favourite = false;
+    for room in client.rooms() {
+        let item = RoomListItem::from(room);
+        if filter(&item) {
+            matching += 1;
+            favourite = favourite || item.is_favourite();
+        }
+    }
+    (matching, favourite)
+}
+
 pub async fn start(
     client: &Client,
     sink: Arc<Sink>,
     connection_id: String,
 ) -> Result<RoomListHandle, String> {
+    open_side_tasks();
     // Asked once per start, next to the sync service rather than before it:
     // the answer is a diagnosis, not a gate.
     spawn_support_check(client.clone(), sink.clone());
@@ -503,8 +619,12 @@ pub async fn start(
     let sync = Arc::new(sync);
     sync.start().await;
 
-    let states = spawn_sync_state(sync.clone(), client.clone(), sink.clone());
+    // Set at the first `Running`: from then on the server's counts are fresh.
+    let live = Arc::new(AtomicBool::new(false));
+    let states = spawn_sync_state(sync.clone(), client.clone(), sink.clone(), live.clone());
     let queue = spawn_send_queue_recovery(client.clone(), sink.clone());
+    let census = crate::roomcount::spawn_census(client.clone(), sink.clone());
+    let notify = spawn_notify_modes(client.clone(), sink.clone());
 
     let room_list = sync
         .room_list_service()
@@ -514,15 +634,23 @@ pub async fn start(
 
     // Subscribed before the list is moved into the task below; the subscriber
     // keeps receiving as long as that task holds the list alive.
-    let loading = spawn_loading_state(&room_list, client.clone(), sink.clone());
+    let loading = spawn_loading_state(&room_list, client.clone(), sink.clone(), live);
 
     let (filters, mut filter_updates) = mpsc::unbounded_channel::<String>();
     // The dynamic adapter starts at one page and grows only when asked, and only
     // the front end knows the list was scrolled to its end.
     let (more, mut more_requests) = mpsc::unbounded_channel::<()>();
 
+    let list_client = client.clone();
     let task = tokio::spawn(async move {
         let (stream, controller) = room_list.entries_with_dynamic_adapters(PAGE_SIZE);
+        let mut loading = room_list.loading_state();
+        let mut max = maximum_rooms(&loading.get());
+        let mut orders = ORDER.subscribe();
+        let mut rooms = crate::roomcount::subscribe();
+        let mut pages = Pages::new();
+        let mut pattern = String::new();
+        let mut reported: Option<bool> = None;
 
         // Nothing is emitted until a filter is set. Spaces are excluded: they have no
         // timeline and live on their own level.
@@ -530,20 +658,53 @@ pub async fn start(
 
         futures_util::pin_mut!(stream);
 
+        let mut settle = true;
         loop {
+            if settle {
+                let order = *orders.borrow_and_update();
+                let (matching, favourite) =
+                    matching_rooms(&list_client, &main_list_filter(&pattern));
+                // The proxy sorts what it holds: by name, unread first or with favourites
+                // on top, a room outside the head would be missing from its place.
+                if order.by_name || order.unread_first || favourite {
+                    pages.fill(matching, max, || controller.add_one_page());
+                }
+                let more = pages.has_more(matching, max);
+                if reported != Some(more) {
+                    reported = Some(more);
+                    sink.emit(event("roomlist.page", json!({ "more": more })));
+                }
+            }
+            settle = true;
+
             tokio::select! {
                 diffs = stream.next() => {
                     let Some(diffs) = diffs else { break };
-                    let ops: Vec<Value> = diffs.iter().map(encode).collect();
+                    let ops: Vec<Value> = diffs.iter().map(|diff| encode(diff, &sink)).collect();
                     sink.emit(event("roomlist.diff", json!({ "ops": ops })));
+                    // What matches changes with the room set, which the census reports.
+                    settle = false;
                 }
-                pattern = filter_updates.recv() => {
-                    let Some(pattern) = pattern else { break };
-                    controller.set_filter(main_list_filter(pattern.trim()));
+                update = filter_updates.recv() => {
+                    let Some(update) = update else { break };
+                    pattern = update.trim().to_owned();
+                    controller.set_filter(main_list_filter(&pattern));
                 }
                 request = more_requests.recv() => {
                     let Some(()) = request else { break };
-                    controller.add_one_page();
+                    if pages.grow(max) {
+                        controller.add_one_page();
+                    }
+                }
+                changed = orders.changed() => {
+                    if changed.is_err() { break }
+                }
+                changed = rooms.changed() => {
+                    if changed.is_err() { break }
+                }
+                state = loading.next() => {
+                    let Some(state) = state else { break };
+                    max = maximum_rooms(&state);
                 }
             }
         }
@@ -557,67 +718,145 @@ pub async fn start(
         states,
         queue,
         loading,
+        census,
+        notify,
     })
 }
 
-/// Re-enables the queue after a recoverable failure; reports a parked request.
-fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
-    /// Long enough not to wake into a network that is still gone, short enough to
-    /// be over before anyone reaches for the app menu.
-    const FIRST_DELAY: Duration = Duration::from_secs(5);
-
-    /// Ceiling for the doubling, so a long outage settles at one attempt a
-    /// minute instead of hammering a dead network.
-    const MAX_DELAY: Duration = Duration::from_secs(60);
-
-    /// A failure this long after the previous one counts as a new problem
-    /// rather than the same one still going, so the waiting starts over.
-    const SETTLED: Duration = Duration::from_secs(180);
-
+/// Follows the account's push rules: a room muted in another client is no
+/// notable change to the SDK, so no diff would carry it.
+fn spawn_notify_modes(client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
     tokio::spawn(async move {
-        let mut errors = client.send_queue().subscribe_errors();
-        let mut delay = FIRST_DELAY;
-        let mut previous: Option<Instant> = None;
-
+        let settings = client.notification_settings().await;
+        let mut changes = settings.subscribe_to_changes();
         loop {
-            let failure = match errors.recv().await {
-                Ok(failure) => failure,
-                // Lagged means failures were missed while this task waited. Nothing changes -
-                // the queue still needs switching back on.
-                Err(RecvError::Lagged(_)) => continue,
+            match changes.recv().await {
+                Ok(()) | Err(RecvError::Lagged(_)) => {}
                 Err(RecvError::Closed) => break,
-            };
-
-            let now = Instant::now();
-            if previous.map_or(true, |last| now.duration_since(last) > SETTLED) {
-                delay = FIRST_DELAY;
             }
-            previous = Some(now);
-
-            // Parked: blocks the room until resent or discarded.
-            if !failure.is_recoverable {
-                sink.emit(event("send.stuck", json!({ "roomId": failure.room_id.as_str() })));
-                continue;
+            let mut changed = Vec::new();
+            for room in client.rooms() {
+                let mode = settings
+                    .get_user_defined_room_notification_mode(room.room_id())
+                    .await;
+                if mode == room.cached_user_defined_notification_mode() {
+                    continue;
+                }
+                match mode.clone() {
+                    Some(mode) => room.update_cached_user_defined_notification_mode(mode),
+                    None => room.clear_user_defined_notification_mode(),
+                }
+                changed.push(json!({
+                    "id": room.room_id().as_str(),
+                    "notifyMode": notify_mode_string(mode),
+                }));
             }
-            sink.emit(event(
-                "send.queue",
-                json!({
-                    "state": "retrying",
-                    "recoverable": failure.is_recoverable,
-                    "inSeconds": delay.as_secs(),
-                }),
-            ));
-
-            sleep(delay).await;
-            client.send_queue().set_enabled(true).await;
-            delay = (delay * 2).min(MAX_DELAY);
+            if !changed.is_empty() {
+                sink.emit(event("roomlist.notify", json!({ "rooms": changed })));
+            }
         }
     })
 }
 
+/// Re-enables a room's queue after a recoverable failure, on a timer per room,
+/// until a request has used up its attempts (`sendqueue`); reports a parked request.
+fn spawn_send_queue_recovery(client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
+    tokio::spawn(async move {
+        // The room's own `SendError` names the failing request; the error
+        // channel names only the room.
+        let mut updates = client.send_queue().subscribe();
+        // Dropped with this task, so no timer outlives the session.
+        let mut timers = tokio::task::JoinSet::new();
+        // Rooms with a wake on its way: at most one timer each.
+        // Shared with the timers: each lets go of its room before the wake, so a
+        // failure right after it always gets a timer of its own.
+        let pending: Arc<std::sync::Mutex<HashSet<String>>> = Arc::default();
+
+        // Refused in an earlier run: the chat list says so before anything fails again.
+        for room_id in crate::sendqueue::rooms_with_wedged(&client).await {
+            sink.emit(event("send.stuck", json!({ "roomId": room_id })));
+        }
+
+        loop {
+            let update = tokio::select! {
+                Some(_) = timers.join_next(), if !timers.is_empty() => continue,
+                update = updates.recv() => update,
+            };
+            let update = match update {
+                Ok(update) => update,
+                // Missed failures: which rooms are off is unknown. Each goes on once its
+                // own wait is over; parked ones are not in the list.
+                Err(RecvError::Lagged(_)) => {
+                    for (room_id, delay) in crate::sendqueue::rooms_to_wake(&client).await {
+                        wake_later(&mut timers, &pending, &client, room_id, delay);
+                    }
+                    continue;
+                }
+                Err(RecvError::Closed) => break,
+            };
+            let RoomSendQueueUpdate::SendError { transaction_id, error, is_recoverable } = update.update
+            else {
+                continue;
+            };
+            let room_id = update.room_id.to_string();
+
+            // Parked: blocks the room until resent or discarded.
+            if !is_recoverable {
+                sink.emit(event("send.stuck", json!({ "roomId": room_id })));
+                continue;
+            }
+            // Recoverable for the SDK, for ever: a large file on a weak line is
+            // uploaded whole on every attempt. Past its share it waits for the user.
+            if crate::sendqueue::recoverable_failure(&client, &room_id, transaction_id.as_str(), &error).await {
+                sink.emit(event("send.stuck", json!({ "roomId": room_id })));
+                continue;
+            }
+            // Counted, but the wake already on its way serves this failure too.
+            if pending.lock().unwrap_or_else(|p| p.into_inner()).contains(&room_id) {
+                continue;
+            }
+            let delay = crate::sendqueue::retry_delay(&room_id);
+            sink.emit(event(
+                "send.queue",
+                json!({
+                    "state": "retrying",
+                    "recoverable": is_recoverable,
+                    "inSeconds": delay.as_secs(),
+                }),
+            ));
+            wake_later(&mut timers, &pending, &client, room_id, delay);
+        }
+    })
+}
+
+/// One timer per room: a room that has one keeps it.
+fn wake_later(
+    timers: &mut tokio::task::JoinSet<String>,
+    pending: &Arc<std::sync::Mutex<HashSet<String>>>,
+    client: &Client,
+    room_id: String,
+    delay: Duration,
+) {
+    if !pending.lock().unwrap_or_else(|p| p.into_inner()).insert(room_id.clone()) {
+        return;
+    }
+    let (client, pending) = (client.clone(), pending.clone());
+    timers.spawn(async move {
+        sleep(delay).await;
+        pending.lock().unwrap_or_else(|p| p.into_inner()).remove(&room_id);
+        crate::sendqueue::wake_room(&client, &room_id);
+        room_id
+    });
+}
+
 /// Forwards the sync state as `sync.state` so the user sees a recovery happen.
 /// Reaching `Running` also re-enables the send queue.
-fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> JoinHandle<()> {
+fn spawn_sync_state(
+    sync: Arc<SyncService>,
+    client: Client,
+    sink: Arc<Sink>,
+    live: Arc<AtomicBool>,
+) -> JoinHandle<()> {
     fn name(state: &SyncState) -> &'static str {
         match state {
             SyncState::Idle => "idle",
@@ -663,7 +902,12 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
             match current {
                 SyncState::Running => {
                     restart_in = FIRST_RESTART;
-                    client.send_queue().set_enabled(true).await;
+                    // Every room with something queued, not only those already woken once;
+                    // a parked request stays parked when the line comes back.
+                    crate::sendqueue::wake_running(&client).await;
+                    client.send_queue().respawn_tasks_for_rooms_with_unsent_requests().await;
+                    // A pusher that did not reach the homeserver tries again.
+                    crate::push::note_sync_running();
 
                     // Cached once fetched; the send path never asks the network itself.
                     let limit = client.clone();
@@ -671,6 +915,10 @@ fn spawn_sync_state(sync: Arc<SyncService>, client: Client, sink: Arc<Sink>) -> 
                         crate::media::prefetch_upload_limit(&limit).await;
                     });
                     track_side_task(handle.abort_handle());
+
+                    // Against the server's fresh total; a start without network asks here.
+                    live.store(true, Ordering::Release);
+                    ask_joined(client.clone(), sink.clone());
 
                     // A key backup is a question over the network and had no answer while the
                     // connection was down. Spawned: this loop must stay free for state changes.
@@ -724,20 +972,46 @@ fn main_list_filter(pattern: &str) -> BoxedFilterFn {
 }
 
 /// A filtered view over the same rooms under `event_name`. Spaces and a single
-/// space's rooms are the room list with another filter.
+/// space's rooms are the room list with another filter. Never paged: both are a
+/// slice of the rooms, and the space overview sorts by name when asked.
 fn spawn_filtered(
     room_list: RoomList,
-    filter: BoxedFilterFn,
+    client: Client,
+    make_filter: impl Fn() -> BoxedFilterFn + Send + 'static,
     event_name: &'static str,
     sink: Arc<Sink>,
 ) -> JoinHandle<()> {
     tokio::spawn(async move {
         let (stream, controller) = room_list.entries_with_dynamic_adapters(PAGE_SIZE);
-        controller.set_filter(filter);
+        let mut loading = room_list.loading_state();
+        let mut max = maximum_rooms(&loading.get());
+        let mut rooms = crate::roomcount::subscribe();
+        let mut pages = Pages::new();
+        controller.set_filter(make_filter());
         futures_util::pin_mut!(stream);
-        while let Some(diffs) = stream.next().await {
-            let ops: Vec<Value> = diffs.iter().map(encode).collect();
-            sink.emit(event(event_name, json!({ "ops": ops })));
+
+        let mut settle = true;
+        loop {
+            if settle {
+                let (matching, _) = matching_rooms(&client, &make_filter());
+                pages.fill(matching, max, || controller.add_one_page());
+            }
+            settle = true;
+            tokio::select! {
+                diffs = stream.next() => {
+                    let Some(diffs) = diffs else { break };
+                    let ops: Vec<Value> = diffs.iter().map(|diff| encode(diff, &sink)).collect();
+                    sink.emit(event(event_name, json!({ "ops": ops })));
+                    settle = false;
+                }
+                changed = rooms.changed() => {
+                    if changed.is_err() { break }
+                }
+                state = loading.next() => {
+                    let Some(state) = state else { break };
+                    max = maximum_rooms(&state);
+                }
+            }
         }
     })
 }
@@ -753,12 +1027,15 @@ pub async fn spawn_spaces(
         .await
         .map_err(|error| format!("room list unavailable: {error}"))?;
 
-    let filter: BoxedFilterFn = Box::new(new_filter_all(vec![
-        Box::new(new_filter_non_left()),
-        Box::new(new_filter_space()),
-    ]));
+    let filter = || -> BoxedFilterFn {
+        Box::new(new_filter_all(vec![
+            Box::new(new_filter_non_left()),
+            Box::new(new_filter_space()),
+        ]))
+    };
 
-    Ok(spawn_filtered(room_list, filter, "spaces.diff", sink))
+    let client = service.client().clone();
+    Ok(spawn_filtered(room_list, client, filter, "spaces.diff", sink))
 }
 
 /// Streams a space's rooms as `space.diff`, from its `m.space.child` state.
@@ -781,12 +1058,14 @@ pub async fn spawn_space_children(
         .await
         .map_err(|error| format!("room list unavailable: {error}"))?;
 
-    let filter: BoxedFilterFn = Box::new(new_filter_all(vec![
-        Box::new(new_filter_non_left()),
-        Box::new(new_filter_identifiers(children)),
-    ]));
+    let filter = move || -> BoxedFilterFn {
+        Box::new(new_filter_all(vec![
+            Box::new(new_filter_non_left()),
+            Box::new(new_filter_identifiers(children.clone())),
+        ]))
+    };
 
-    Ok(spawn_filtered(room_list, filter, "space.diff", sink))
+    Ok(spawn_filtered(room_list, client.clone(), filter, "space.diff", sink))
 }
 
 /// Creates an empty space - a room with `room_type` `m.space` - and returns its
@@ -1048,7 +1327,7 @@ async fn leave_and_forget(client: &Client, room_id: &str, what: &str) -> Result<
         .await
         .map_err(|error| format!("could not leave the {what}: {error}"))?;
     // Forgetting is cleanup; failing at it must not fail the leave.
-    let _ = room.forget().await;
+    let _ = crate::leftrooms::forget_room(&room).await;
     Ok(())
 }
 
@@ -1069,41 +1348,80 @@ async fn space_and_child(
     Ok((space, child_parsed))
 }
 
-/// Adds a room to a space through `m.space.child`, with a `via` list so the
-/// child can be joined. It appears once the change syncs back.
+/// Whether this account may set the child's `m.space.parent`. Store only; a
+/// room it cannot read is left alone.
+async fn may_set_parent(child: &matrix_sdk::Room) -> bool {
+    let Some(user) = child.client().user_id().map(ToOwned::to_owned) else {
+        return false;
+    };
+    child
+        .power_levels()
+        .await
+        .map(|levels| levels.user_can_send_state(&user, StateEventType::SpaceParent))
+        .unwrap_or(false)
+}
+
+/// Adds a room to a space as the SDK's `SpaceService` does: `m.space.child` with
+/// the child's route, and `m.space.parent` on the child where allowed.
 pub async fn add_child(client: &Client, space_id: &str, child_id: &str) -> Result<(), String> {
     let (space, child) = space_and_child(client, space_id, child_id).await?;
+    let child_room = client.get_room(&child);
 
-    // `via` must name at least one server that can join the child: its own
-    // server, the user's as fallback - an empty list means "removed".
-    let mut via: Vec<OwnedServerName> = Vec::new();
-    if let Some(server) = child.server_name() {
-        via.push(server.to_owned());
-    }
+    // `via` must name a server that can join the child; an empty one means removed.
+    let mut via: Vec<OwnedServerName> = match &child_room {
+        Some(room) => room.route().await.unwrap_or_default(),
+        None => Vec::new(),
+    };
     if via.is_empty() {
-        if let Some(user) = client.user_id() {
+        if let Some(server) = child.server_name() {
+            via.push(server.to_owned());
+        } else if let Some(user) = client.user_id() {
             via.push(user.server_name().to_owned());
         }
     }
 
-    let content = SpaceChildEventContent::new(via);
     space
-        .send_state_event_for_key(&child, content)
+        .send_state_event_for_key(&child, SpaceChildEventContent::new(via))
         .await
         .map_err(|error| format!("could not add the room to the space: {error}"))?;
+
+    // The parent link is the other half, not the one the space list reads:
+    // failing at it must not report the add as failed.
+    if let Some(child_room) = child_room {
+        if may_set_parent(&child_room).await {
+            if let Ok(route) = space.route().await {
+                let _ = child_room
+                    .send_state_event_for_key(space.room_id(), SpaceParentEventContent::new(route))
+                    .await;
+            }
+        }
+    }
     Ok(())
 }
 
-/// Removes a room from a space. An `m.space.child` with an empty `via` is not a
-/// valid child, so this unlinks the room without needing to redact anything.
+/// Removes a room from a space with an empty `{}`, as the SDK does: an empty
+/// `via` still parses as a child there. The child's parent link goes too.
 pub async fn remove_child(client: &Client, space_id: &str, child_id: &str) -> Result<(), String> {
     let (space, child) = space_and_child(client, space_id, child_id).await?;
 
-    let content = SpaceChildEventContent::new(Vec::new());
     space
-        .send_state_event_for_key(&child, content)
+        .send_state_event_raw("m.space.child", child.as_str(), json!({}))
         .await
         .map_err(|error| format!("could not remove the room from the space: {error}"))?;
+
+    if let Some(child_room) = client.get_room(&child) {
+        let linked = matches!(
+            child_room
+                .get_state_event_static_for_key::<SpaceParentEventContent, _>(space.room_id())
+                .await,
+            Ok(Some(_))
+        );
+        if linked && may_set_parent(&child_room).await {
+            let _ = child_room
+                .send_state_event_raw("m.space.parent", space.room_id().as_str(), json!({}))
+                .await;
+        }
+    }
     Ok(())
 }
 
@@ -1265,4 +1583,46 @@ pub async fn space_hierarchy(client: &Client, space_id: &str) -> Result<Value, S
         .collect();
 
     Ok(json!({ "rooms": rooms }))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn pages_grow_like_the_adapter() {
+        let mut pages = Pages::new();
+        // No server count yet: the SDK refuses, and so does the mirror.
+        assert!(!pages.grow(None));
+        assert_eq!(pages.limit, PAGE_SIZE);
+        assert!(pages.grow(Some(120)));
+        assert!(pages.grow(Some(120)));
+        assert_eq!(pages.limit, 3 * PAGE_SIZE);
+        // Past the server count it stops, even above it.
+        assert!(!pages.grow(Some(120)));
+    }
+
+    #[test]
+    fn more_only_where_a_page_can_bring_rooms() {
+        let pages = Pages::new();
+        // Exactly one page of chats: nothing more, whatever the server counts.
+        assert!(!pages.has_more(PAGE_SIZE, Some(57)));
+        assert!(pages.has_more(PAGE_SIZE + 1, Some(57)));
+        assert!(!pages.has_more(PAGE_SIZE + 1, None));
+        // The adapter will not grow past the server count.
+        assert!(!pages.has_more(PAGE_SIZE + 1, Some(PAGE_SIZE as u32)));
+    }
+
+    #[test]
+    fn fill_adds_pages_until_everything_matches() {
+        let mut pages = Pages::new();
+        let mut added = 0;
+        pages.fill(260, Some(300), || added += 1);
+        assert_eq!(added, 5);
+        assert_eq!(pages.limit, 6 * PAGE_SIZE);
+        assert!(!pages.has_more(260, Some(300)));
+        let mut again = 0;
+        pages.fill(260, Some(300), || again += 1);
+        assert_eq!(again, 0);
+    }
 }

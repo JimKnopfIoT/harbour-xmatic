@@ -140,7 +140,8 @@ Page {
         target: matrix
 
         onRoomResolved: {
-            if (page.pendingAddress.length === 0) {
+            if (local || page.pendingAddress.length === 0
+                    || address !== page.pendingAddress.trim()) {
                 return
             }
             page.pendingAddress = ""
@@ -152,7 +153,11 @@ Page {
             pageStack.push(Qt.resolvedUrl("JoinRoomDialog.qml"), { prefill: address })
         }
 
-        onRoomResolveFailed: page.pendingAddress = ""
+        onRoomResolveFailed: {
+            if (!local && address === page.pendingAddress.trim()) {
+                page.pendingAddress = ""
+            }
+        }
     }
 
     SilicaListView {
@@ -386,9 +391,14 @@ Page {
                     font.italic: model.kind !== "message"
                     color: model.kind === "message" ? Theme.primaryColor
                                                     : Theme.secondaryColor
+                    readonly property string captionText: model.caption || ""
                     // The room's own rule and settings: links, emoji pictures, the core's markup.
-                    readonly property string richBody: model.kind === "message" && !model.media
-                                                       ? MessageBody.rich(model.body, model.formatted,
+                    // A file row has only its caption to render.
+                    readonly property string richBody: model.kind === "message"
+                                                       && (!model.media || captionText.length > 0)
+                                                       ? MessageBody.rich(!!model.media ? captionText
+                                                                                        : model.body,
+                                                                          model.formatted,
                                                                           settings,
                                                                           Theme.highlightColor,
                                                                           Math.round(Theme.fontSizeSmall * 1.3),
@@ -396,21 +406,17 @@ Page {
                                                        : ""
                     textFormat: richBody.length > 0 ? Text.StyledText : Text.PlainText
                     linkColor: Theme.highlightColor
-                    text: {
-                        if (model.kind === "undecryptable") {
-                            return qsTr("Cannot be decrypted — this device is missing the key")
-                        }
-                        if (model.kind === "redacted") {
-                            return qsTr("Message deleted")
-                        }
-                        if (model.media) {
-                            return "📎 " + (model.body || qsTr("Attachment"))
-                        }
-                        if (richBody.length > 0) {
-                            return richBody
-                        }
-                        return model.body || ""
-                    }
+                    // The room's rule; a thread draws no picture, so every file is a line.
+                    text: MessageBody.rowText({
+                        "kind": model.kind,
+                        "utdCause": model.utdCause || "",
+                        "body": model.body || "",
+                        "caption": captionText,
+                        "media": model.kind === "message" && !!model.media,
+                        "image": model.msgtype === "m.image",
+                        "drawn": false,
+                        "rich": richBody
+                    })
                 }
 
                 // The linked page, under the same Privacy setting as in the room.

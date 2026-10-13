@@ -17,6 +17,7 @@ Column {
     function what(kind) {
         switch (kind) {
         case "message": return qsTr("A message could not be sent.")
+        case "attachment": return qsTr("An attachment could not be sent.")
         case "edit": return qsTr("An edit could not be sent.")
         case "deletion": return qsTr("A deletion could not be sent. The message is still there for everyone else.")
         case "reaction": return qsTr("A reaction could not be sent.")
@@ -34,6 +35,12 @@ Column {
             return qsTr("This device has to be verified first.")
         case "insecureDevices":
             return qsTr("Some devices in this room are not verified.")
+        case "tooLarge":
+            return qsTr("The server does not accept files this large. Discard it and send a smaller one.")
+        case "unsteady":
+            return qsTr("The connection broke off several times while sending. Send it again on a steadier one, or discard it.")
+        case "lingering":
+            return qsTr("The server has not taken it for half an hour. Send it again, or discard it.")
         default:
             return row.detail || ""
         }
@@ -86,8 +93,9 @@ Column {
                 leftMargin: Theme.horizontalPageMargin
             }
             width: (parent.width - 2 * Theme.horizontalPageMargin - Theme.paddingMedium) / 2
-            // A reaction is withdrawn by its chip, not resent.
+            // A reaction is withdrawn by its chip, not resent; a refused size is refused again.
             enabled: !banner.acting && banner.head !== null && banner.head.kind !== "reaction"
+                     && banner.head.reason !== "tooLarge"
             text: qsTr("Send again")
             onClicked: {
                 banner.acting = true

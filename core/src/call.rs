@@ -14,6 +14,8 @@ use matrix_sdk::{
                 candidates::{CallCandidatesEventContent, Candidate, SyncCallCandidatesEvent},
                 hangup::{CallHangupEventContent, SyncCallHangupEvent},
                 invite::{CallInviteEventContent, SyncCallInviteEvent},
+                reject::{CallRejectEventContent, SyncCallRejectEvent},
+                select_answer::{CallSelectAnswerEventContent, SyncCallSelectAnswerEvent},
                 SessionDescription,
             },
             AnyMessageLikeEventContent,
@@ -201,12 +203,53 @@ pub async fn hangup(
         .map_err(|error| format!("could not hang up: {error}"))
 }
 
+/// Declines a call that was never answered (v1): unlike a hangup, it also
+/// stops this account's other devices ringing.
+pub async fn reject(
+    client: &Client,
+    room_id: &str,
+    call_id: &str,
+    party_id: &str,
+) -> Result<(), String> {
+    let room = room_of(client, room_id)?;
+    let content = CallRejectEventContent::new(
+        OwnedVoipId::from(call_id.to_owned()),
+        OwnedVoipId::from(party_id.to_owned()),
+        VoipVersionId::V1,
+    );
+    room.send(AnyMessageLikeEventContent::CallReject(content))
+        .await
+        .map(|_| ())
+        .map_err(|error| format!("could not decline the call: {error}"))
+}
+
+/// The caller names the answer it took, so the other devices that answered stop.
+pub async fn select_answer(
+    client: &Client,
+    room_id: &str,
+    call_id: &str,
+    party_id: &str,
+    selected_party_id: &str,
+) -> Result<(), String> {
+    let room = room_of(client, room_id)?;
+    let content = CallSelectAnswerEventContent::new(
+        OwnedVoipId::from(call_id.to_owned()),
+        OwnedVoipId::from(party_id.to_owned()),
+        OwnedVoipId::from(selected_party_id.to_owned()),
+        VoipVersionId::V1,
+    );
+    room.send(AnyMessageLikeEventContent::CallSelectAnswer(content))
+        .await
+        .map(|_| ())
+        .map_err(|error| format!("could not select the answer: {error}"))
+}
+
 /// Credentials for the homeserver's TURN server: without a relay two devices
 /// behind NAT negotiate happily and then hear nothing.
 pub async fn turn_servers(client: &Client) -> Result<Value, String> {
     let response = match client.send(get_turn_server_info::v3::Request::new()).await {
         Ok(response) => response,
-        // No TURN configured: Synapse answers `{}`, others 404 or unrecognized.
+        // No TURN configured: the reference homeserver answers `{}`, others 404 or unrecognized.
         Err(error) if no_relay_configured(&error) => return Ok(json!({ "uris": [] })),
         Err(error) => return Err(format!("no relay available: {error}")),
     };
@@ -423,6 +466,7 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                         "sender": ev.sender.as_str(),
                         "callId": ev.content.call_id.as_str(),
                         "partyId": ev.content.party_id.as_ref().map(|id| id.as_str()),
+                        "version": ev.content.version.as_str(),
                         "sdp": ev.content.offer.sdp,
                         "video": offers_video && policy().video,
                         "videoOffered": offers_video,
@@ -460,6 +504,7 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                         "roomId": room.room_id().as_str(),
                         "sender": ev.sender.as_str(),
                         "callId": ev.content.call_id.as_str(),
+                        "partyId": ev.content.party_id.as_ref().map(|id| id.as_str()),
                         "sdp": ev.content.answer.sdp,
                     }),
                 ));
@@ -517,6 +562,53 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                         "roomId": room.room_id().as_str(),
                         "sender": ev.sender.as_str(),
                         "callId": ev.content.call_id.as_str(),
+                        "partyId": ev.content.party_id.as_ref().map(|id| id.as_str()),
+                    }),
+                ));
+            }
+        }
+    });
+
+    // A decline: from the other side it ends our offer, from another of our
+    // devices it ends the ringing here.
+    client.add_event_handler({
+        let sink = sink.clone();
+        move |ev: SyncCallRejectEvent, room: Room, client: Client| {
+            let sink = sink.clone();
+            async move {
+                let Some(ev) = ev.as_original() else { return };
+                let own = Some(&*ev.sender) == client.user_id();
+                sink.emit(event(
+                    if own { "call.answeredElsewhere" } else { "call.hangup" },
+                    json!({
+                        "roomId": room.room_id().as_str(),
+                        "sender": ev.sender.as_str(),
+                        "callId": ev.content.call_id.as_str(),
+                        "partyId": ev.content.party_id.as_str(),
+                        "declined": true,
+                    }),
+                ));
+            }
+        }
+    });
+
+    // The caller's choice among several answering devices.
+    client.add_event_handler({
+        let sink = sink.clone();
+        move |ev: SyncCallSelectAnswerEvent, room: Room, client: Client| {
+            let sink = sink.clone();
+            async move {
+                let Some(ev) = ev.as_original() else { return };
+                if Some(&*ev.sender) == client.user_id() {
+                    return;
+                }
+                sink.emit(event(
+                    "call.selectAnswer",
+                    json!({
+                        "roomId": room.room_id().as_str(),
+                        "sender": ev.sender.as_str(),
+                        "callId": ev.content.call_id.as_str(),
+                        "selectedPartyId": ev.content.selected_party_id.as_str(),
                     }),
                 ));
             }

@@ -366,14 +366,6 @@
         <translation>Kamergebeurtenissen</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Binnenkomen en vertrekken tonen</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Uitnodigingen, verwijderingen en bans worden altijd getoond.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Wijzigingen van weergavenaam tonen</translation>
     </message>
@@ -449,6 +441,14 @@
         <source>Space list order</source>
         <translation>Volgorde van de spaces-lijst</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Vertrekmeldingen tonen</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Binnenkomst, uitnodigingen, verwijderingen en verbanningen worden altijd getoond.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -511,6 +511,10 @@
     <message>
         <source>answered on another device</source>
         <translation>op een ander apparaat beantwoord</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>geweigerd op een ander apparaat</translation>
     </message>
 </context>
 <context>
@@ -794,6 +798,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Voer eerst je wachtwoord in.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -959,6 +970,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Problemen met de sleutelopslag?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Dit account heeft nog geen kruislingse ondertekening, dus andere apparaten kunnen dit apparaat niet verifiëren. Voer je wachtwoord één keer in om het in te stellen; het gaat naar je homeserver en wordt niet bewaard.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Kruislingse ondertekening instellen</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1043,6 +1066,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Deze bijlage kon niet geladen worden</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Deze afbeelding wordt op dit apparaat niet getoond. Bewaar of deel haar via het uitklapmenu.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1090,6 +1117,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Het apparaat volgen</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Verlaten ruimtes</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Ruimte wordt vergeten</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Naamloze ruimte</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Verbannen</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Verlaten</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Geen verlaten ruimtes</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Ruimtes die je in een andere app hebt verlaten of geweigerd, of waaruit je bent verwijderd of verbannen. Dit apparaat bewaart ze tot ze vergeten zijn, en tot dan telt de server een ruimte waaruit je bent verwijderd of verbannen mee. Tik op een ruimte om haar te vergeten.</translation>
     </message>
 </context>
 <context>
@@ -1283,10 +1342,6 @@
         <translation>Je sessie is beëindigd. Log opnieuw in.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Nieuw bericht</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Afbeelding</translation>
     </message>
@@ -1325,6 +1380,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>De gateway moet een https-URL zijn.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Deze afbeelding kon niet worden verkleind en bevat metadata, zoals waar ze is gemaakt, dus is ze niet verzonden. Verstuur haar in originele resolutie om haar te versturen zoals ze is.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>De pushregistratie kon niet van de homeserver worden verwijderd. Ze wordt verwijderd wanneer dit account zich hier de volgende keer aanmeldt.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Een andere app heeft intussen kruislingse ondertekening voor dit account ingesteld. Verifieer dit apparaat vanaf daar.</translation>
     </message>
 </context>
 <context>
@@ -1789,10 +1856,6 @@
         <translation>Berichttekst in meldingen</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Uit, een melding zegt alleen hoeveel berichten er zijn. Aan, toont het laatste bericht — ook op het vergrendelscherm.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Leesstatus van anderen tonen</translation>
     </message>
@@ -1964,6 +2027,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Uit wordt niet bijgehouden of getoond wie wat gelezen heeft, wat het gesprek ook soepeler houdt. Aan vermelden je eigen berichten hoeveel mensen ze gelezen hebben.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Uit: een melding zegt alleen dat er berichten zijn, niet van wie of wat. Aan: ze toont het nieuwste bericht — ook op het vergrendelscherm.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2010,10 +2077,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Wat dit apparaat verlaat</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Je thuisserver krijgt een adres bij de pushdienst te horen en stuurt de gateway voor elke melding een kamer- en berichtidentificatie. Geen berichttekst: de push draagt alleen identificaties en dit apparaat haalt en ontsleutelt het bericht zelf. Dat adres is een geheim — wie het heeft, kan deze telefoon een melding sturen.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2091,6 +2154,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Openbare UnifiedPush-gateway gebruiken</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Er zijn meerdere distributeurs geïnstalleerd. Kies welke xmatic gebruikt.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>De push-distributeur is niet meer geïnstalleerd. Er komt niets aan tot hij terug is. Installeer hem opnieuw of zet push uit.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Je homeserver krijgt een adres bij de pushdienst en stuurt de gateway bij elke melding een ruimte- en berichtkenmerk en je aantal ongelezen. Geen berichttekst: dit apparaat haalt en ontsleutelt het bericht zelf. Dat adres is geheim — wie het heeft, kan deze telefoon een melding sturen.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Zet push hier uit voordat je xmatic verwijdert. Anders houdt de homeserver de pusher en blijft hij naar de gateway sturen.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2101,6 +2180,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>De pushdistributeur heeft xmatic laten vallen. Zet push weer aan onder Account.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Open xmatic één keer om het instellen van pushmeldingen af te ronden.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic verwerkt nog een melding. Open het zo nog eens.</translation>
     </message>
 </context>
 <context>
@@ -2155,6 +2242,10 @@
         <source>Discover rooms</source>
         <translation>Kamers ontdekken</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Verlaten ruimtes (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2169,6 +2260,10 @@
     <message>
         <source>Space</source>
         <translation>Space</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Niet verzonden – open de ruimte om te beslissen</translation>
     </message>
 </context>
 <context>
@@ -2465,12 +2560,16 @@
         <translation>Lokale gegevens beschadigd</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Een deel van de gegevens op dit apparaat is niet meer leesbaar, en xmatic kon het tijdens het draaien niet herstellen — daarom is het synchroniseren gestopt in plaats van dezelfde rij opnieuw tegen te komen. Sluit de app en start hem opnieuw. Ontbreken er daarna nog kamers, dan bouwt afmelden en weer aanmelden de lokale gegevens opnieuw op — maar het vervangt ook de sleutels van dit apparaat: kijk eerst op de versleutelingspagina of de sleutelback-up aanstaat.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Deze server levert via sliding sync, de synchronisatie die deze app nodig heeft, maar %1 van je %2 kamers. De ontbrekende – vaak chats via bridges – kunnen hier niet worden getoond; apps met de klassieke synchronisatie zien ze nog wel.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Een deel van de gegevens op dit apparaat is niet meer leesbaar, en xmatic kon het tijdens het draaien niet herstellen — daarom is de synchronisatie gestopt in plaats van opnieuw op dezelfde rij te stuiten. Het opnieuw opbouwen van de ruimtegegevens haalt ruimtes en berichten opnieuw op en behoudt de sleutels van dit apparaat. Helpt dat niet, dan bouwt af- en weer aanmelden alles opnieuw op — maar vervangt het de sleutels van dit apparaat; controleer dus eerst op de versleutelingspagina dat de sleutelback-up aan staat.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Ruimtegegevens opnieuw opbouwen</translation>
     </message>
 </context>
 <context>
@@ -2972,6 +3071,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 heeft de profielfoto gewijzigd</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 heeft de weergavenaam gewijzigd in %2 en de profielfoto gewijzigd</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 heeft de weergavenaam verwijderd en de profielfoto gewijzigd</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Niet getoond op dit apparaat. Tik om te openen.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3358,6 +3469,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Uit wordt de foto vóór het versturen verkleind en gaan de metagegevens – waaronder de plaats van opname – niet mee.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Animaties en tekeningen gaan zoals ze zijn, met alle metadata erin.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3412,6 +3527,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Een peiling kon niet worden verzonden.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Een bijlage kon niet worden verzonden.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>De server accepteert zulke grote bestanden niet. Verwijder hem en stuur een kleinere.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>De verbinding viel tijdens het verzenden meerdere keren weg. Verstuur hem opnieuw via een stabielere verbinding of verwijder hem.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>De server heeft het al een half uur niet aangenomen. Verstuur het opnieuw of verwijder het.</translation>
     </message>
 </context>
 <context>
@@ -3819,14 +3950,6 @@
     <message>
         <source>Event</source>
         <translation>Gebeurtenis</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Kan niet worden ontsleuteld — dit apparaat mist de sleutel</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Bericht verwijderd</translation>
     </message>
     <message>
         <source>Attachment</source>

@@ -95,9 +95,12 @@ Page {
                     if (matrix.storageDamaged) {
                         return qsTr("Local data damaged")
                     }
-                    // Rows held against rooms the server counts: an ungrown sync window and one
-                    // page asked for look identical. Not while searching - filtered count.
-                    var counted = searchField.text.length > 0
+                    // Only while the sync window grows or the core holds a page back: the
+                    // server's count includes spaces and invitations the list never shows.
+                    var growing = matrix.roomTotal < 0
+                            || matrix.knownRoomTotal < matrix.roomTotal
+                            || matrix.roomListHasMore
+                    var counted = searchField.text.length > 0 || !growing
                             ? ""
                             : qsTr("%1 of %2 rooms").arg(roomList.count)
                                     .arg(matrix.roomTotal >= 0
@@ -149,11 +152,18 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.errorColor
                 visible: matrix.storageDamaged
-                text: qsTr("Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device's keys, so check on the encryption page that the key backup is on before you do.")
+                text: qsTr("Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device's keys. If that does not help, signing out and in rebuilds everything — but it replaces this device's keys, so check on the encryption page that the key backup is on before you do.")
             }
 
-            // Server advertises MSC4186 but serves part of the account through it.
-            // Margin of two: a room joined between the two counts is no gap.
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: matrix.storageDamaged
+                text: qsTr("Rebuild room data")
+                onClicked: matrix.rebuildLocalData()
+            }
+
+            // Server advertises MSC4186 but serves part of the account through it. Joined
+            // against joined, once the window is complete; margin of two for a join between.
             Label {
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
@@ -161,9 +171,11 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.highlightColor
                 visible: matrix.roomTotal >= 0
-                         && matrix.joinedRoomTotal > matrix.roomTotal + 2
+                         && matrix.knownRoomTotal >= matrix.roomTotal
+                         && matrix.syncedJoinedTotal >= 0
+                         && matrix.joinedRoomTotal > matrix.syncedJoinedTotal + 2
                 text: qsTr("This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.")
-                      .arg(matrix.roomTotal).arg(matrix.joinedRoomTotal)
+                      .arg(matrix.syncedJoinedTotal).arg(matrix.joinedRoomTotal)
             }
 
             SearchField {
@@ -199,7 +211,7 @@ Page {
                     // Without opening it: the point of the entry is not having
                     // to read the room at all.
                     text: qsTr("Mark as read")
-                    visible: model.unread > 0 || model.mentions > 0
+                    visible: model.unread > 0 || model.mentions > 0 || model.markedUnread
                     onClicked: matrix.markRoomRead(model.id)
                 }
 

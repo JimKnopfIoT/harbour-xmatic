@@ -1,9 +1,18 @@
 //! UnifiedPush through Leghorn. See docs/PUSH.md.
 
+use std::collections::BTreeMap;
+use std::path::Path;
+use std::sync::OnceLock;
+use std::time::Duration;
+
 use leghorn::matrix::{Notification, Pusher as LeghornPusher};
 use leghorn::{Config as PushConfig, Event as PushEvent, Leghorn};
+use matrix_sdk::config::RequestConfig;
+use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
+use sha2::{Digest, Sha256};
 use tokio::sync::mpsc::{unbounded_channel, UnboundedReceiver};
+use tokio::sync::watch;
 
 /// Org and app must match the desktop file's [X-Sailjail] names. No fallback
 /// gateway; the user picks one.
@@ -16,13 +25,17 @@ pub const PUSH: PushConfig = PushConfig::new("org.xmatic", "xmatic")
 /// Must not change: existing pushers on homeservers are filed under it.
 const APP_ID: &str = "org.xmatic.xmatic";
 
+/// aws-lc as rustls' provider, before anything speaks TLS: Leghorn's gateway
+/// probe would otherwise install ring as a second one.
+pub fn install_crypto_provider() {
+    let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
+}
+
 pub async fn start() -> (
     Result<Leghorn, String>,
     UnboundedReceiver<PushEvent>,
 ) {
-    // Otherwise Leghorn's gateway probe installs ring.
-    let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
-
+    install_crypto_provider();
     let (events, receiver) = unbounded_channel();
     let handler = move |push: PushEvent| {
         let events = events.clone();
@@ -35,6 +48,66 @@ pub async fn start() -> (
         .await
         .map_err(|error| crate::text::scrub_ids(&error.to_string()));
     (started, receiver)
+}
+
+/// Pusher requests: one retry, not the SDK's fifteen minutes. A 429's
+/// Retry-After is still taken as given; `PUSHER_LIMIT` bounds the whole call.
+fn bounded() -> RequestConfig {
+    RequestConfig::new()
+        .retry_limit(2)
+        .timeout(Duration::from_secs(20))
+}
+
+/// One pusher request, its retry and any wait the server named included.
+const PUSHER_LIMIT: Duration = Duration::from_secs(45);
+
+fn timed_out(context: &str) -> PusherError {
+    PusherError::failed(format!("{context}: no answer in time"))
+}
+
+static SYNC_RUNNING: OnceLock<watch::Sender<u64>> = OnceLock::new();
+
+fn sync_running_sender() -> &'static watch::Sender<u64> {
+    SYNC_RUNNING.get_or_init(|| watch::channel(0).0)
+}
+
+/// The sync reached `Running`; a pusher that failed to register tries again.
+pub fn note_sync_running() {
+    sync_running_sender().send_modify(|count| *count = count.wrapping_add(1));
+}
+
+pub fn sync_running_changes() -> watch::Receiver<u64> {
+    sync_running_sender().subscribe()
+}
+
+/// What `push.state` says, from what is known. A distributor list that could
+/// not be read is `None` and decides nothing.
+pub struct Facts {
+    pub pusher: bool,
+    pub registered: bool,
+    pub gateway: bool,
+    pub endpoint: bool,
+    pub distributors: Option<usize>,
+}
+
+pub fn derive_state(facts: &Facts) -> &'static str {
+    // A registration with an uninstalled distributor receives nothing.
+    if facts.distributors == Some(0) {
+        return "no-distributor";
+    }
+    if facts.pusher {
+        if facts.registered {
+            "on"
+        } else if !facts.gateway {
+            "needs-gateway"
+        } else {
+            "registering"
+        }
+    } else if facts.endpoint {
+        "registering"
+    } else {
+        "off"
+    }
 }
 
 /// Whether `gateway` is an https URL.
@@ -182,6 +255,229 @@ mod tests {
         assert_eq!(Gateway::parse("public", "").map(|pick| pick.mode()), Ok("public"));
     }
 
+    fn scratch(name: &str) -> std::path::PathBuf {
+        let dir = std::env::temp_dir().join(format!(
+            "xmatic-push-{name}-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .map(|elapsed| elapsed.as_nanos())
+                .unwrap_or(0)
+        ));
+        std::fs::create_dir_all(&dir).expect("scratch directory");
+        dir
+    }
+
+    #[test]
+    fn another_devices_pusher_is_never_ours() {
+        let mut owned = Owned::with_salt("salt".to_owned(), "@a:example.org");
+        owned.note("https://push.example/up/mine-old");
+        let server = [
+            "https://push.example/up/mine-old",
+            "https://push.example/up/mine-now",
+            "https://push.example/up/other-phone",
+        ];
+        assert_eq!(
+            to_remove(&server, &owned, &[], Some("https://push.example/up/mine-now")),
+            vec!["https://push.example/up/mine-old"]
+        );
+        assert_eq!(
+            to_remove(&server, &owned, &["https://push.example/up/mine-now"], None),
+            vec!["https://push.example/up/mine-old", "https://push.example/up/mine-now"]
+        );
+        let empty = Owned::with_salt("salt".to_owned(), "@a:example.org");
+        assert!(to_remove(&server, &empty, &[], None).is_empty());
+    }
+
+    #[test]
+    fn the_record_keeps_no_pushkey_and_forgets_what_went() {
+        let mut owned = Owned::with_salt("salt".to_owned(), "@a:example.org");
+        owned.note("https://push.example/up/a");
+        owned.note("https://push.example/up/a");
+        owned.note("https://push.example/up/b");
+        owned.note("https://push.example/up/gone");
+        assert_eq!(owned.own().len(), 3);
+        let raw = serde_json::to_string(&owned).unwrap();
+        assert!(!raw.contains("push.example") && !raw.contains("example.org"));
+        owned.settle(
+            &["https://push.example/up/a", "https://push.example/up/b"],
+            &["https://push.example/up/a"],
+        );
+        assert!(!owned.holds("https://push.example/up/a"));
+        assert!(owned.holds("https://push.example/up/b"));
+        assert!(!owned.holds("https://push.example/up/gone"));
+    }
+
+    #[test]
+    fn the_salt_changes_the_marks() {
+        let one = Owned::with_salt("one".to_owned(), "@a:example.org");
+        let two = Owned::with_salt("two".to_owned(), "@a:example.org");
+        assert_ne!(one.mark("https://push.example/up/a"), two.mark("https://push.example/up/a"));
+        assert_ne!(one.account, two.account);
+        assert_ne!(one.digest(PUSHKEY, "x"), one.digest(ACCOUNT, "x"));
+        assert_eq!(fresh_salt().len(), 32);
+    }
+
+    #[test]
+    fn the_record_survives_a_reload_and_an_empty_one_is_no_file() {
+        let dir = scratch("owned");
+        let path = dir.join("push-pushers.json");
+        let user = "@a:example.org";
+        assert!(!owns_any(&path, user));
+        update_owned(&path, user, &|| true, |owned| owned.note("https://push.example/up/a"));
+        assert!(path.exists());
+        assert!(owns(&path, user, "https://push.example/up/a"));
+        assert!(!owns(&path, user, "https://push.example/up/b"));
+        update_owned(&path, user, &|| true, |owned| owned.settle(&[], &[]));
+        assert!(!path.exists());
+        std::fs::write(&path, b"{ not json").unwrap();
+        assert!(!owns_any(&path, user));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn one_accounts_settling_keeps_anothers_pushers() {
+        let dir = scratch("accounts");
+        let path = dir.join("push-pushers.json");
+        let (a, b) = ("@a:example.org", "@b:example.org");
+        update_owned(&path, a, &|| true, |owned| owned.note("https://push.example/up/a"));
+        // B signs in, finds nothing of its own on its server, settles.
+        assert!(!owns_any(&path, b));
+        update_owned(&path, b, &|| true, |owned| owned.note("https://push.example/up/b"));
+        update_owned(&path, b, &|| true, |owned| owned.settle(&[], &[]));
+        assert!(!owns_any(&path, b));
+        assert!(owns(&path, a, "https://push.example/up/a"));
+        // A's next session removes it.
+        update_owned(&path, a, &|| true, |owned| {
+            owned.settle(&["https://push.example/up/a"], &["https://push.example/up/a"])
+        });
+        assert!(!path.exists());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_session_that_ended_writes_nothing() {
+        let dir = scratch("live");
+        let path = dir.join("push-pushers.json");
+        update_owned(&path, "@a:example.org", &|| false, |owned| {
+            owned.note("https://push.example/up/a")
+        });
+        assert!(!path.exists());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn the_old_pusher_is_claimed_by_its_auth_secret() {
+        let raw = br#"{"distributor":"org.unifiedpush.Distributor.Foghorn",
+                       "registrations":[{"token":"t1","instance":"default"}],
+                       "keys":{"default":"c2VjcmV0|YXV0aC1vbmU","x":"broken"}}"#;
+        assert_eq!(legacy_auths(raw), vec!["YXV0aC1vbmU".to_owned()]);
+        assert!(legacy_auths(b"garbage").is_empty());
+
+        let dir = scratch("legacy");
+        let legacy = dir.join("push.json");
+        let path = dir.join("push-pushers.json");
+        std::fs::write(&legacy, raw).unwrap();
+        note_legacy_pushers(&legacy, &path);
+        let user = "@a:example.org";
+        assert!(owns_any(&path, user));
+        let mut owned = Owned::load(&path, user);
+        owned.claim_legacy(&[
+            ("https://push.example/up/old", Some("YXV0aC1vbmU")),
+            ("https://push.example/up/other-phone", Some("b3RoZXI")),
+            ("https://push.example/up/leghorn", None),
+        ]);
+        assert!(owned.holds("https://push.example/up/old"));
+        assert!(!owned.holds("https://push.example/up/other-phone"));
+        assert!(owned.legacy.is_empty());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn a_refusal_is_told_from_a_hiccup() {
+        assert!(refusing_status(400));
+        assert!(refusing_status(403));
+        assert!(!refusing_status(401));
+        assert!(!refusing_status(429));
+        assert!(!refusing_status(500));
+        assert!(!refusing_status(502));
+    }
+
+    #[test]
+    fn an_event_the_server_does_not_give_is_absent() {
+        use matrix_sdk::ruma::api::error::ErrorKind;
+        assert!(absent_answer(404, None));
+        assert!(absent_answer(403, Some(&ErrorKind::Forbidden)));
+        assert!(absent_answer(400, Some(&ErrorKind::NotFound)));
+        assert!(!absent_answer(500, None));
+        assert!(!absent_answer(429, None));
+    }
+
+    #[test]
+    fn leghorns_files_go_whatever_the_distributor_said() {
+        let dir = scratch("leghorn");
+        let file = dir.join("leghorn.json");
+        std::fs::write(&file, b"{}").unwrap();
+        std::fs::write(dir.join("leghorn.json.tmp"), b"{").unwrap();
+        remove_registration(&file).unwrap();
+        assert!(!file.exists());
+        assert!(!dir.join("leghorn.json.tmp").exists());
+        remove_registration(&file).unwrap();
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn the_old_connectors_tokens_are_read() {
+        let raw = br#"{"distributor":"org.unifiedpush.Distributor.Foghorn","distributor_ack":true,
+                       "registrations":[{"token":"t1","instance":"default"},{"token":"","instance":"x"}],
+                       "keys":{}}"#;
+        assert_eq!(
+            legacy_registration(raw),
+            Some(("org.unifiedpush.Distributor.Foghorn".to_owned(), vec!["t1".to_owned()]))
+        );
+        assert_eq!(legacy_registration(br#"{"distributor":"d","registrations":[]}"#), None);
+        assert_eq!(legacy_registration(br#"{"registrations":[{"token":"t"}]}"#), None);
+        assert_eq!(legacy_registration(b"garbage"), None);
+    }
+
+    #[test]
+    fn a_missing_distributor_is_said_even_with_a_pusher() {
+        let on = Facts {
+            pusher: true,
+            registered: true,
+            gateway: true,
+            endpoint: true,
+            distributors: Some(1),
+        };
+        assert_eq!(derive_state(&on), "on");
+        assert_eq!(derive_state(&Facts { distributors: Some(0), ..on }), "no-distributor");
+        let unknown = Facts { distributors: None, ..on };
+        assert_eq!(derive_state(&unknown), "on");
+        let off = Facts {
+            pusher: false,
+            registered: false,
+            gateway: false,
+            endpoint: false,
+            distributors: Some(2),
+        };
+        assert_eq!(derive_state(&off), "off");
+        assert_eq!(derive_state(&Facts { gateway: false, registered: false, ..on }), "needs-gateway");
+    }
+
+    #[test]
+    fn only_a_failure_owes_a_banner() {
+        assert!(Unshown::FilteredOut.silent());
+        assert!(Unshown::Redacted.silent());
+        assert!(Unshown::NotFound.silent());
+        assert!(!Unshown::Failed("offline".to_owned()).silent());
+    }
+
+    #[test]
+    fn aws_lc_is_the_provider_before_leghorn_asks() {
+        install_crypto_provider();
+        assert!(rustls::crypto::ring::default_provider().install_default().is_err());
+    }
+
     #[test]
     fn leghorns_pusher_reads_as_ruma_s() {
         use matrix_sdk::ruma::api::client::push::{Pusher, PusherKind};
@@ -209,89 +505,469 @@ mod tests {
     }
 }
 
-/// Sets the pusher with `gateway` unless already present, and deletes this app's others.
+/// The pushkeys this installation set, as salted hashes, per account under a
+/// salted hash of its user id: other devices and other accounts are not ours.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Owned {
+    salt: String,
+    #[serde(default)]
+    accounts: BTreeMap<String, Vec<String>>,
+    /// Marks of 0.45's Web Push auth secrets; the next account to read its pushers claims them.
+    #[serde(default)]
+    legacy: Vec<String>,
+    #[serde(skip)]
+    account: String,
+}
+
+/// Separators of the three kinds of mark.
+const PUSHKEY: u8 = 0;
+const ACCOUNT: u8 = 1;
+const LEGACY_AUTH: u8 = 2;
+
+impl Owned {
+    fn with_salt(salt: String, user: &str) -> Self {
+        let mut owned = Self { salt, ..Self::default() };
+        owned.account = owned.digest(ACCOUNT, user);
+        owned
+    }
+
+    /// An unreadable record reads as empty: nothing is then deleted.
+    pub fn load(path: &Path, user: &str) -> Self {
+        let read = std::fs::read(path)
+            .ok()
+            .and_then(|raw| serde_json::from_slice::<Owned>(&raw).ok())
+            .filter(|owned| !owned.salt.is_empty());
+        match read {
+            Some(mut owned) => {
+                owned.account = owned.digest(ACCOUNT, user);
+                owned
+            }
+            None => Self::with_salt(fresh_salt(), user),
+        }
+    }
+
+    /// Through a temporary file; a record that keeps nothing removes the file.
+    pub fn save(&self, path: &Path) -> std::io::Result<()> {
+        if self.accounts.values().all(Vec::is_empty) && self.legacy.is_empty() {
+            return match std::fs::remove_file(path) {
+                Err(error) if error.kind() != std::io::ErrorKind::NotFound => Err(error),
+                _ => Ok(()),
+            };
+        }
+        let mut kept = self.clone();
+        kept.accounts.retain(|_, marks| !marks.is_empty());
+        let temporary = path.with_extension("json.new");
+        std::fs::write(&temporary, serde_json::to_vec(&kept)?)?;
+        std::fs::rename(&temporary, path)
+    }
+
+    fn digest(&self, kind: u8, value: &str) -> String {
+        let mut hash = Sha256::new();
+        hash.update(self.salt.as_bytes());
+        hash.update([kind]);
+        hash.update(value.as_bytes());
+        hex::encode(hash.finalize())
+    }
+
+    fn mark(&self, pushkey: &str) -> String {
+        self.digest(PUSHKEY, pushkey)
+    }
+
+    fn own(&self) -> &[String] {
+        self.accounts.get(&self.account).map_or(&[], Vec::as_slice)
+    }
+
+    pub fn holds(&self, pushkey: &str) -> bool {
+        let mark = self.mark(pushkey);
+        self.own().iter().any(|own| *own == mark)
+    }
+
+    /// Nothing for this account to remove, 0.45's marks included.
+    pub fn is_empty(&self) -> bool {
+        self.own().is_empty() && self.legacy.is_empty()
+    }
+
+    pub fn note(&mut self, pushkey: &str) {
+        if !self.holds(pushkey) {
+            let mark = self.mark(pushkey);
+            self.accounts.entry(self.account.clone()).or_default().push(mark);
+        }
+    }
+
+    /// This account's marks of `present` pushkeys that were not `removed`;
+    /// other accounts' marks stay.
+    pub fn settle(&mut self, present: &[&str], removed: &[&str]) {
+        let keep: Vec<String> = present
+            .iter()
+            .filter(|pushkey| !removed.contains(pushkey))
+            .map(|pushkey| self.mark(pushkey))
+            .collect();
+        if let Some(own) = self.accounts.get_mut(&self.account) {
+            own.retain(|own| keep.contains(own));
+        }
+    }
+
+    pub fn note_legacy(&mut self, auth: &str) {
+        let mark = self.digest(LEGACY_AUTH, auth);
+        if !self.legacy.contains(&mark) {
+            self.legacy.push(mark);
+        }
+    }
+
+    /// 0.45's pushers among `server` (pushkey, auth secret) become this account's.
+    pub fn claim_legacy(&mut self, server: &[(&str, Option<&str>)]) {
+        if self.legacy.is_empty() {
+            return;
+        }
+        let found: Vec<&str> = server
+            .iter()
+            .filter(|(_, auth)| {
+                auth.is_some_and(|auth| self.legacy.contains(&self.digest(LEGACY_AUTH, auth)))
+            })
+            .map(|(pushkey, _)| *pushkey)
+            .collect();
+        for pushkey in found {
+            self.note(pushkey);
+        }
+        self.legacy.clear();
+    }
+}
+
+/// Never fails: the salt keeps the marks from being looked up, it is no key.
+fn fresh_salt() -> String {
+    use std::io::Read;
+    let mut bytes = [0u8; 16];
+    let read = std::fs::File::open("/dev/urandom")
+        .and_then(|mut source| source.read_exact(&mut bytes))
+        .is_ok();
+    if !read {
+        let now = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default();
+        let mut hash = Sha256::new();
+        hash.update(now.as_nanos().to_le_bytes());
+        hash.update(std::process::id().to_le_bytes());
+        bytes.copy_from_slice(&hash.finalize()[..16]);
+    }
+    hex::encode(bytes)
+}
+
+/// One read-modify-write of the record at a time in this process.
+static OWNED_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+/// Writes only while `live` holds: a session torn down meanwhile writes nothing.
+fn update_owned(
+    path: &Path,
+    user: &str,
+    live: &(dyn Fn() -> bool + Sync),
+    change: impl FnOnce(&mut Owned),
+) {
+    let _serial = OWNED_LOCK.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    if !live() {
+        return;
+    }
+    let mut owned = Owned::load(path, user);
+    change(&mut owned);
+    if let Err(error) = owned.save(path) {
+        log::warn!("the record of this device's pushers was not saved: {error}");
+    }
+}
+
+/// Whether the record still names a pusher of `user` to delete.
+pub fn owns_any(path: &Path, user: &str) -> bool {
+    !Owned::load(path, user).is_empty()
+}
+
+pub fn owns(path: &Path, user: &str, pushkey: &str) -> bool {
+    Owned::load(path, user).holds(pushkey)
+}
+
+/// The pushkeys on the server that are ours by the record or by name, `keep` excepted.
+pub fn to_remove<'a>(
+    server: &[&'a str],
+    owned: &Owned,
+    named: &[&str],
+    keep: Option<&str>,
+) -> Vec<&'a str> {
+    server
+        .iter()
+        .copied()
+        .filter(|pushkey| Some(*pushkey) != keep)
+        .filter(|pushkey| owned.holds(pushkey) || named.contains(pushkey))
+        .collect()
+}
+
+/// A pusher request that failed. `rejected`: the homeserver refused it, and
+/// asking again unchanged gets the same answer.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PusherError {
+    pub message: String,
+    pub rejected: bool,
+}
+
+impl PusherError {
+    pub fn failed(message: impl Into<String>) -> Self {
+        Self { message: message.into(), rejected: false }
+    }
+
+    fn http(context: &str, error: &matrix_sdk::HttpError) -> Self {
+        let rejected = error
+            .as_client_api_error()
+            .is_some_and(|answer| refusing_status(answer.status_code.as_u16()));
+        Self {
+            message: crate::text::scrub_ids(&format!("{context}: {error}")),
+            rejected,
+        }
+    }
+}
+
+impl From<PusherError> for String {
+    fn from(error: PusherError) -> String {
+        error.message
+    }
+}
+
+/// A 4xx about the request itself: not a lapsed token, a timeout or a rate limit.
+fn refusing_status(status: u16) -> bool {
+    (400..500).contains(&status) && !matches!(status, 401 | 408 | 429)
+}
+
+/// The account whose pushers these are.
+pub fn account_of(client: &matrix_sdk::Client) -> Result<String, PusherError> {
+    client
+        .user_id()
+        .map(|user| user.to_string())
+        .ok_or_else(|| PusherError::failed("no account for the pushers"))
+}
+
+/// One of this app's pushers on the server.
+struct ServerPusher {
+    pushkey: String,
+    url: Option<String>,
+    /// 0.45 put the Web Push auth secret into the pusher's data.
+    auth: Option<String>,
+}
+
+async fn server_pushers(client: &matrix_sdk::Client) -> Result<Vec<ServerPusher>, PusherError> {
+    use matrix_sdk::ruma::api::client::push::{get_pushers, PusherKind};
+
+    let context = "could not read the pushers";
+    let current = tokio::time::timeout(
+        PUSHER_LIMIT,
+        client.send(get_pushers::v3::Request::new()).with_request_config(bounded()),
+    )
+    .await
+    .map_err(|_| timed_out(context))?
+    .map_err(|error| PusherError::http(context, &error))?;
+    Ok(current
+        .pushers
+        .into_iter()
+        .filter(|existing| existing.ids.app_id == APP_ID)
+        .map(|existing| {
+            let (url, auth) = match &existing.kind {
+                PusherKind::Http(data) => (
+                    Some(data.url.clone()),
+                    data.data.get("auth").and_then(Value::as_str).map(str::to_owned),
+                ),
+                _ => (None, None),
+            };
+            ServerPusher { pushkey: existing.ids.pushkey, url, auth }
+        })
+        .collect())
+}
+
+/// 0.45's pushers become this account's before anything is compared.
+fn claim_legacy(
+    owned_path: &Path,
+    user: &str,
+    live: &(dyn Fn() -> bool + Sync),
+    ours: &[ServerPusher],
+) {
+    if Owned::load(owned_path, user).legacy.is_empty() {
+        return;
+    }
+    let server: Vec<(&str, Option<&str>)> = ours
+        .iter()
+        .map(|pusher| (pusher.pushkey.as_str(), pusher.auth.as_deref()))
+        .collect();
+    update_owned(owned_path, user, live, |owned| owned.claim_legacy(&server));
+}
+
+async fn delete_pusher(client: &matrix_sdk::Client, pushkey: &str) -> Result<(), PusherError> {
+    use matrix_sdk::ruma::api::client::push::{set_pusher, PusherIds};
+
+    let request =
+        set_pusher::v3::Request::delete(PusherIds::new(pushkey.to_owned(), APP_ID.to_owned()));
+    let context = "could not remove the pusher";
+    tokio::time::timeout(PUSHER_LIMIT, client.send(request).with_request_config(bounded()))
+        .await
+        .map_err(|_| timed_out(context))?
+        .map(drop)
+        .map_err(|error| PusherError::http(context, &error))
+}
+
+/// Sets the pusher with `gateway` unless already present, then deletes the ones
+/// this installation set before for this account. `live` gates every write.
 pub async fn register(
     client: &matrix_sdk::Client,
     pusher: &LeghornPusher,
     gateway: &str,
-) -> Result<(), String> {
-    use matrix_sdk::ruma::api::client::push::{get_pushers, Pusher, PusherIds, PusherKind};
+    owned_path: &Path,
+    live: &(dyn Fn() -> bool + Sync),
+) -> Result<(), PusherError> {
+    use matrix_sdk::ruma::api::client::push::{set_pusher, Pusher};
 
     if !gateway_is_sound(gateway) || !gateway_is_sound(&pusher.pushkey) {
-        return Err("the push gateway and address have to be https".to_owned());
+        return Err(PusherError {
+            message: "the push gateway and address have to be https".to_owned(),
+            rejected: true,
+        });
     }
-    let current = client
-        .send(get_pushers::v3::Request::new())
-        .await
-        .map_err(|error| crate::text::scrub_ids(&format!("could not read the pushers: {error}")))?;
-    let ours: Vec<_> = current
-        .pushers
-        .into_iter()
-        .filter(|existing| existing.ids.app_id == APP_ID)
-        .collect();
-
+    let user = account_of(client)?;
+    let ours = server_pushers(client).await?;
+    claim_legacy(owned_path, &user, live, &ours);
     let in_place = ours.iter().any(|existing| {
-        existing.ids.pushkey == pusher.pushkey
-            && matches!(&existing.kind, PusherKind::Http(data) if data.url == gateway)
+        existing.pushkey == pusher.pushkey && existing.url.as_deref() == Some(gateway)
+    });
+    // Noted before the request: a set that lands unanswered is still ours.
+    update_owned(owned_path, &user, live, |owned| {
+        owned.note(&pusher.pushkey);
+        if let Some(old) = &pusher.replaces {
+            owned.note(old);
+        }
     });
     if !in_place {
         let mut chosen = pusher.clone();
         chosen.gateway = Some(gateway.to_owned());
-        let wanted: Pusher = chosen
-            .convert()
-            .map_err(|error| format!("Leghorn's pusher did not parse: {error}"))?;
-        client
-            .pusher()
-            .set(wanted, false)
-            .await
-            .map_err(|error| {
-                crate::text::scrub_ids(&format!("could not register the pusher: {error}"))
-            })?;
+        let wanted: Pusher = chosen.convert().map_err(|error| {
+            PusherError::failed(format!("Leghorn's pusher did not parse: {error}"))
+        })?;
+        // `append` stays false, as with the SDK's own setter.
+        let context = "could not register the pusher";
+        tokio::time::timeout(
+            PUSHER_LIMIT,
+            client.send(set_pusher::v3::Request::post(wanted)).with_request_config(bounded()),
+        )
+        .await
+        .map_err(|_| timed_out(context))?
+        .map_err(|error| PusherError::http(context, &error))?;
     }
 
-    for stale in ours {
-        if stale.ids.pushkey == pusher.pushkey {
-            continue;
+    let mut present: Vec<&str> = ours.iter().map(|existing| existing.pushkey.as_str()).collect();
+    present.push(&pusher.pushkey);
+    let owned = Owned::load(owned_path, &user);
+    let mut removed = Vec::new();
+    for stale in to_remove(&present, &owned, &[], Some(&pusher.pushkey)) {
+        if !live() {
+            break;
         }
-        let _ = client
-            .pusher()
-            .delete(PusherIds::new(stale.ids.pushkey, APP_ID.to_owned()))
-            .await;
+        // Kept in the record on failure; the next registration tries again.
+        if delete_pusher(client, stale).await.is_ok() {
+            removed.push(stale);
+        }
     }
+    update_owned(owned_path, &user, live, |owned| owned.settle(&present, &removed));
     Ok(())
 }
 
-/// Removes every pusher this app registered.
-pub async fn clear_own_pushers(client: &matrix_sdk::Client) -> Result<(), String> {
-    use matrix_sdk::ruma::api::client::push::{get_pushers, PusherIds};
-
-    let response = client
-        .send(get_pushers::v3::Request::new())
-        .await
-        .map_err(|error| {
-            crate::text::scrub_ids(&format!("could not read the pushers: {error}"))
-        })?;
-
-    let mut failure = None;
-    for pusher in response.pushers {
-        if pusher.ids.app_id != APP_ID {
-            continue;
+/// Removes this account's pushers this installation set, `named` ones included.
+/// What fails stays in the record for the account's next session.
+pub async fn clear_own_pushers(
+    client: &matrix_sdk::Client,
+    owned_path: &Path,
+    named: &[String],
+    live: &(dyn Fn() -> bool + Sync),
+) -> Result<(), PusherError> {
+    let user = account_of(client)?;
+    // Recorded first: an answer that never comes must not lose them.
+    update_owned(owned_path, &user, live, |owned| {
+        for pushkey in named {
+            owned.note(pushkey);
         }
-        let ids = PusherIds::new(pusher.ids.pushkey, APP_ID.to_owned());
-        if let Err(error) = client.pusher().delete(ids).await {
-            failure = Some(crate::text::scrub_ids(&format!(
-                "could not remove the pusher: {error}"
-            )));
+    });
+    let ours = server_pushers(client).await?;
+    claim_legacy(owned_path, &user, live, &ours);
+    let present: Vec<&str> = ours.iter().map(|existing| existing.pushkey.as_str()).collect();
+    let owned = Owned::load(owned_path, &user);
+    let mut removed = Vec::new();
+    let mut failure = None;
+    for stale in to_remove(&present, &owned, &[], None) {
+        if !live() {
+            break;
+        }
+        match delete_pusher(client, stale).await {
+            Ok(()) => removed.push(stale),
+            Err(error) => failure = Some(error),
         }
     }
+    update_owned(owned_path, &user, live, |owned| owned.settle(&present, &removed));
     match failure {
-        Some(message) => Err(message),
+        Some(error) => Err(error),
         None => Ok(()),
     }
 }
 
+/// The Web Push auth secrets of the old connector's registrations: 0.45's
+/// pushers carry them in their data, and nothing else there names them.
+pub fn legacy_auths(raw: &[u8]) -> Vec<String> {
+    let Ok(state) = serde_json::from_slice::<Value>(raw) else {
+        return Vec::new();
+    };
+    state
+        .get("keys")
+        .and_then(Value::as_object)
+        .map(|keys| {
+            keys.values()
+                .filter_map(|key| key.as_str()?.split('|').nth(1))
+                .filter(|auth| !auth.is_empty())
+                .map(str::to_owned)
+                .collect()
+        })
+        .unwrap_or_default()
+}
+
+/// Before `push.json` goes: its pushers' marks, for the next session to remove.
+pub fn note_legacy_pushers(legacy_path: &Path, owned_path: &Path) {
+    let auths = std::fs::read(legacy_path)
+        .map(|raw| legacy_auths(&raw))
+        .unwrap_or_default();
+    if auths.is_empty() {
+        return;
+    }
+    update_owned(owned_path, "", &|| true, |owned| {
+        for auth in &auths {
+            owned.note_legacy(auth);
+        }
+    });
+}
+
+/// Leghorn's file and its temporary sibling, whatever the distributor answered.
+pub fn remove_registration(leghorn_file: &Path) -> std::io::Result<()> {
+    for path in [leghorn_file.to_path_buf(), leghorn_file.with_extension("json.tmp")] {
+        match std::fs::remove_file(&path) {
+            Err(error) if error.kind() != std::io::ErrorKind::NotFound => return Err(error),
+            _ => {}
+        }
+    }
+    Ok(())
+}
+
+/// Distributor and tokens of the old connector's push.json, if it has any.
+pub fn legacy_registration(raw: &[u8]) -> Option<(String, Vec<String>)> {
+    let state: Value = serde_json::from_slice(raw).ok()?;
+    let distributor = state.get("distributor")?.as_str()?.to_owned();
+    let tokens: Vec<String> = state
+        .get("registrations")?
+        .as_array()?
+        .iter()
+        .filter_map(|entry| entry.get("token")?.as_str().map(str::to_owned))
+        .filter(|token| !token.is_empty())
+        .collect();
+    (!tokens.is_empty()).then_some((distributor, tokens))
+}
+
 /// Whether a `push.json` from the old connector holds a registration.
-pub fn legacy_enabled(path: &std::path::Path) -> bool {
+pub fn legacy_enabled(path: &Path) -> bool {
     std::fs::read(path)
         .ok()
         .and_then(|raw| serde_json::from_slice::<Value>(&raw).ok())
@@ -299,21 +975,90 @@ pub fn legacy_enabled(path: &std::path::Path) -> bool {
         .unwrap_or(false)
 }
 
+/// Gives the old connector's tokens back to its distributor. One no longer
+/// installed has nothing to give back to.
+pub async fn legacy_unregister(path: &Path) -> Result<(), String> {
+    use std::collections::HashMap;
+    use zbus::zvariant::Value as BusValue;
+
+    let Some((distributor, tokens)) =
+        std::fs::read(path).ok().and_then(|raw| legacy_registration(&raw))
+    else {
+        return Ok(());
+    };
+    let installed = leghorn::distributors()
+        .await
+        .map_err(|error| crate::text::scrub_ids(&error.to_string()))?;
+    if !installed.contains(&distributor) {
+        return Ok(());
+    }
+    let connection = zbus::Connection::session()
+        .await
+        .map_err(|error| format!("no session bus: {error}"))?;
+    for token in &tokens {
+        let mut args: HashMap<&str, BusValue<'_>> = HashMap::new();
+        args.insert("token", BusValue::from(token.as_str()));
+        let body = (args,);
+        let call = connection.call_method(
+            Some(distributor.as_str()),
+            "/org/unifiedpush/Distributor",
+            Some("org.unifiedpush.Distributor2"),
+            "Unregister",
+            &body,
+        );
+        match tokio::time::timeout(Duration::from_secs(5), call).await {
+            Ok(Ok(_)) => {}
+            Ok(Err(error)) => {
+                return Err(format!("the old registration was not given back: {error}"))
+            }
+            Err(_) => return Err("the distributor did not answer for the old registration".to_owned()),
+        }
+    }
+    Ok(())
+}
+
+/// Why a push gets no banner of its own. Only `Failed` still owes one.
+#[derive(Debug, PartialEq, Eq)]
+pub enum Unshown {
+    /// The push rules say not to show it.
+    FilteredOut,
+    Redacted,
+    /// Not on the server, or in a room this account does not have.
+    NotFound,
+    Failed(String),
+}
+
+impl Unshown {
+    pub fn silent(&self) -> bool {
+        !matches!(self, Unshown::Failed(_))
+    }
+
+    pub fn reason(&self) -> String {
+        match self {
+            Unshown::FilteredOut => "filtered out".to_owned(),
+            Unshown::Redacted => "redacted".to_owned(),
+            Unshown::NotFound => "event not found".to_owned(),
+            Unshown::Failed(reason) => reason.clone(),
+        }
+    }
+}
+
 /// Fetches the message a push named. `NotificationClient` reaches an event no
-/// sync brought in; `MultipleProcesses`, because a woken process may be second.
+/// sync brought in; `MultipleProcesses` only where no sync service runs.
 pub async fn notification_for(
     client: &matrix_sdk::Client,
     room_id: &str,
     event_id: &str,
     sync: Option<std::sync::Arc<matrix_sdk_ui::sync_service::SyncService>>,
-) -> Result<Value, String> {
+) -> Result<Value, Unshown> {
     use matrix_sdk::ruma::{EventId, RoomId};
     use matrix_sdk_ui::notification_client::{
-        NotificationClient, NotificationProcessSetup, NotificationStatus,
+        Error as NotificationError, NotificationClient, NotificationEvent,
+        NotificationProcessSetup, NotificationStatus,
     };
 
-    let room = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
-    let event = EventId::parse(event_id).map_err(|_| "not an event identifier".to_owned())?;
+    let room = RoomId::parse(room_id).map_err(|_| Unshown::NotFound)?;
+    let event = EventId::parse(event_id).map_err(|_| Unshown::NotFound)?;
 
     // One process: `MultipleProcesses` mints a dummy permit and starts a second
     // encryption sync beside the running one, both claiming to-device events.
@@ -321,16 +1066,23 @@ pub async fn notification_for(
         Some(sync_service) => NotificationProcessSetup::SingleProcess { sync_service },
         None => NotificationProcessSetup::MultipleProcesses,
     };
-    let notifications =
-        NotificationClient::new(client.clone(), setup)
-            .await
-            .map_err(|error| {
-                crate::text::scrub_ids(&format!("could not open the notification client: {error}"))
-            })?;
+    let notifications = NotificationClient::new(client.clone(), setup)
+        .await
+        .map_err(|error| {
+            Unshown::Failed(crate::text::scrub_ids(&format!(
+                "could not open the notification client: {error}"
+            )))
+        })?;
 
     match notifications.get_notification(&room, &event).await {
         Ok(NotificationStatus::Event(item)) => {
             let (kind, text) = notification_body(&item.event);
+            let timestamp = match &item.event {
+                NotificationEvent::Timeline(timeline) => {
+                    u64::from(timeline.origin_server_ts().get())
+                }
+                NotificationEvent::Invite(_) => 0,
+            };
             Ok(json!({
                 "roomId": room_id,
                 "roomName": crate::text::strip_bidi(&item.room_computed_display_name),
@@ -345,17 +1097,43 @@ pub async fn notification_for(
                 // again: a second opinion would only disagree with the account's own rules.
                 "noisy": item.is_noisy.unwrap_or(false),
                 "mention": item.has_mention.unwrap_or(false),
+                // A room tag, not a push rule; the banner decision reads it.
+                "lowPriority": client.get_room(&room).is_some_and(|room| room.is_low_priority()),
+                // Which message this banner announces, for the sync's banner.
+                "timestamp": timestamp,
             }))
         }
-        // Real answers, not failures: the rules say do not show it, the event is gone,
-        // or the server never had it. Silence is correct.
-        Ok(NotificationStatus::EventFilteredOut) => Err("filtered out".to_owned()),
-        Ok(NotificationStatus::EventRedacted) => Err("redacted".to_owned()),
-        Ok(NotificationStatus::EventNotFound) => Err("event not found".to_owned()),
-        Err(error) => Err(crate::text::scrub_ids(&format!(
+        Ok(NotificationStatus::EventFilteredOut) => Err(Unshown::FilteredOut),
+        Ok(NotificationStatus::EventRedacted) => Err(Unshown::Redacted),
+        Ok(NotificationStatus::EventNotFound) => Err(Unshown::NotFound),
+        Err(
+            NotificationError::UnknownRoom
+            | NotificationError::SlidingSyncEmptyRoom
+            | NotificationError::ContextMissingEvent,
+        ) => Err(Unshown::NotFound),
+        // The SDK's `/context` fallback: a forged event id ends here, not above.
+        Err(NotificationError::SdkError(error)) if absent_on_server(&error) => {
+            Err(Unshown::NotFound)
+        }
+        Err(error) => Err(Unshown::Failed(crate::text::scrub_ids(&format!(
             "could not fetch the message: {error}"
-        ))),
+        )))),
     }
+}
+
+/// The homeserver does not have the event, or not for this account.
+fn absent_on_server(error: &matrix_sdk::Error) -> bool {
+    error
+        .as_client_api_error()
+        .is_some_and(|answer| absent_answer(answer.status_code.as_u16(), answer.error_kind()))
+}
+
+fn absent_answer(
+    status: u16,
+    kind: Option<&matrix_sdk::ruma::api::error::ErrorKind>,
+) -> bool {
+    use matrix_sdk::ruma::api::error::ErrorKind;
+    status == 404 || matches!(kind, Some(ErrorKind::NotFound | ErrorKind::Forbidden))
 }
 
 /// The preview a banner shows, in the same two fields the room list produces —
