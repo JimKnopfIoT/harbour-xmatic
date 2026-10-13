@@ -15,7 +15,7 @@ QT += network dbus multimedia concurrent positioning
 # pkg-config is queried directly rather than through link_pkgconfig: enabling
 # that feature here resolves PKGCONFIG before sailfishapp.prf has added its own
 # entry, which silently drops -lsailfishapp from the link line.
-GST_MODULES = gstreamer-1.0 gstreamer-sdp-1.0 gstreamer-webrtc-1.0 gstreamer-video-1.0
+GST_MODULES = gstreamer-1.0 gstreamer-sdp-1.0 gstreamer-webrtc-1.0 gstreamer-video-1.0 nice
 QMAKE_CXXFLAGS += $$system(pkg-config --cflags $$GST_MODULES)
 QMAKE_CXXFLAGS += $$system(pkg-config --cflags libpulse)
 

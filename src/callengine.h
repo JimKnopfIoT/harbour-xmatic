@@ -6,6 +6,7 @@
 #include <QByteArray>
 #include <QTimer>
 #include <QImage>
+#include <QMap>
 #include <QString>
 #include <QVariantList>
 
@@ -91,8 +92,10 @@ public:
     bool gpuCapture() const { return m_gpuCapture; }
 
     /// Relay credentials, applied to the next call. Without them two devices
-    /// behind NAT connect and stay silent.
-    void setTurnServers(const QVariantList &servers);
+    /// behind NAT connect and stay silent. `ttl` in seconds, 0 when none given.
+    void setTurnServers(const QVariantList &servers, int ttl);
+    /// The relay answer failed: a waiting call goes on without.
+    void relayUnavailable();
 
     // Fed from the core's signalling events.
     void onRemoteInvite(const QString &roomId,
@@ -150,6 +153,8 @@ signals:
 
     /// Someone is calling; the UI should show the incoming call screen.
     void incomingCall(const QString &roomId, const QString &peer);
+    /// The relay credentials are expired or were never read.
+    void relayRefreshNeeded();
 
 // Every slot taking `generation` is queued from a GStreamer thread; one from a
 // torn-down pipeline is dropped.
@@ -168,6 +173,7 @@ private slots:
     Q_INVOKABLE void reportPipelineFailure(int generation, const QString &reason);
     void markConnected(int generation);
     void markDisconnected(int generation);
+    void markFailed(int generation);
     /// webrtcbin's signal, moved off its own thread: the decision reads and
     /// writes call state and starts timers.
     void handleNegotiationNeeded(int generation);
@@ -188,6 +194,13 @@ private:
 
     bool buildPipeline();
     void applyTurnServers();
+    bool relayStale() const;
+    /// Holds a call until fresh credentials arrive, bounded by `m_relayWait`.
+    bool waitForRelay(int next);
+    void resumeAfterRelay();
+    void answerOffer();
+    void addRemoteCandidate(const QVariantMap &candidate);
+    void logCandidates(const char *moment) const;
     void applyRemoteDescription(const QString &sdp, bool isOffer);
     void tearDown();
     void stopQuietly();
@@ -235,7 +248,20 @@ private:
     QString m_callId;
     QString m_partyId;
     QString m_pendingRemoteOffer;
+    /// Candidates that came while it rang: the pipeline exists only once answered.
+    QVariantList m_earlyCandidates;
     QVariantList m_turnServers;
+    bool m_relayKnown = false;
+    /// Wall clock: a monotonic one stops while the phone sleeps.
+    qint64 m_relayExpiresAt = 0;
+    QTimer m_relayRefresh;
+    QTimer m_relayWait;
+    /// ICE that fails before it ever connected waits for late candidates.
+    QTimer m_iceGrace;
+    int m_afterRelay = 0;
+    /// Candidate kinds of this call, "type/transport/family" - never addresses.
+    QMap<QString, int> m_localKinds;
+    QMap<QString, int> m_remoteKinds;
     VideoStream m_remoteVideo;
     VideoStream m_selfVideo;
     CallAudioRouter m_audioRouter;

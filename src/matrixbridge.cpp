@@ -320,6 +320,13 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
 
     // The engine produces what has to be signalled and is fed what arrives;
     // neither half knows about the other.
+    connect(m_calls, &CallEngine::relayRefreshNeeded, this, [this]() {
+        if (m_sessionState == QLatin1String("signed-in")) {
+            send(QStringLiteral("call.turnServers"));
+        } else {
+            m_calls->relayUnavailable();
+        }
+    });
     connect(m_calls, &CallEngine::inviteReady, this,
             [this](const QString &room, const QString &call, const QString &party,
                    const QString &sdp) {
@@ -2739,9 +2746,12 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         }
         // Asked on sign-in, not by the user; the call page is where it matters.
         // A goodbye after the session ended has no one left to tell.
-        if (command == QLatin1String("call.turnServers")
-            || ((command == QLatin1String("call.hangup") || command == QLatin1String("call.reject"))
-                && error == QLatin1String("not signed in"))) {
+        if (command == QLatin1String("call.turnServers")) {
+            m_calls->relayUnavailable();
+            return;
+        }
+        if ((command == QLatin1String("call.hangup") || command == QLatin1String("call.reject"))
+            && error == QLatin1String("not signed in")) {
             return;
         }
         // Cut off by a sign-out or an expiry, which says so itself.
@@ -3383,8 +3393,14 @@ bool MatrixBridge::replyCall(const QString &command, const QJsonObject &data)
 
     if (command == QLatin1String("call.turnServers")) {
         QVariantList servers;
+        QStringList kinds;
         const QJsonArray uris = data.value(QStringLiteral("uris")).toArray();
         for (const QJsonValue &uri : uris) {
+            // Scheme and transport only; the host is the server's business.
+            const QString text = uri.toString();
+            const int query = text.indexOf(QLatin1String("transport="));
+            kinds.append(text.section(QLatin1Char(':'), 0, 0)
+                         + (query < 0 ? QString() : QLatin1Char('/') + text.mid(query + 10)));
             QVariantMap server;
             server.insert(QStringLiteral("uri"), uri.toString());
             server.insert(QStringLiteral("username"),
@@ -3393,8 +3409,10 @@ bool MatrixBridge::replyCall(const QString &command, const QJsonObject &data)
                           data.value(QStringLiteral("password")).toString());
             servers.append(server);
         }
-        m_calls->setTurnServers(servers);
-        qInfo("xmatic: %d relay servers available", servers.size());
+        const int ttl = data.value(QStringLiteral("ttl")).toInt();
+        m_calls->setTurnServers(servers, ttl);
+        qInfo("xmatic: %d relay servers available (%s), valid %d s",
+              servers.size(), qPrintable(kinds.join(QLatin1Char(' '))), ttl);
         return true;
     }
     return false;

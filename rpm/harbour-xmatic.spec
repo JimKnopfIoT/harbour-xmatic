@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.46.8
+Version:    0.46.13
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -68,6 +68,7 @@ BuildRequires: pkgconfig(sailfishsecrets)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-sdp-1.0)
 BuildRequires: pkgconfig(gstreamer-webrtc-1.0)
+BuildRequires: pkgconfig(nice)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(keepalive)
 BuildRequires: desktop-file-utils
@@ -121,6 +122,23 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Oct 13 2026 harbour-xmatic contributors 0.46.13-1
+- Calls across mobile networks: the caller's connection candidates that
+  arrive while the phone is still ringing are kept and used once the call
+  is answered. They were dropped, so only a caller that could reach the
+  answering phone directly - the same Wi-Fi - ever connected.
+- Calls over mobile data: the relay credentials are renewed before they
+  expire and checked again before a call, instead of being read once at
+  sign-in and used long after the server stopped accepting them.
+- A call that ends gives its relay allocations back, so a server with few
+  relay ports is not left full until they time out.
+- A call whose connection checks fail before it ever connected waits a
+  little longer for the other side's addresses, which on a phone network
+  can arrive after the checks gave up.
+- A call asks the relay server for one allocation per transport instead of
+  one for every relay address the server lists, so it fits a server with
+  few relay ports.
+
 * Tue Oct 13 2026 harbour-xmatic contributors 0.46.8-1
 - Leaving a room, declining an invitation or forgetting a left room no longer
   empties the stored history of every other room.
