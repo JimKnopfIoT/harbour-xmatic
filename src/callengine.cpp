@@ -144,9 +144,9 @@ QString candidateKind(const QString &line)
         return QStringLiteral("unreadable");
     }
     const QString &address = parts.at(4);
-    const QString family = address.endsWith(QLatin1String(".local"))
-        ? QStringLiteral("mdns")
-        : address.contains(QLatin1Char(':')) ? QStringLiteral("v6") : QStringLiteral("v4");
+    const QString family = address.contains(QLatin1Char(':')) ? QStringLiteral("v6")
+        : !address.isEmpty() && address.at(0).isDigit() ? QStringLiteral("v4")
+        : QStringLiteral("name");
     return parts.at(typ + 1) + QLatin1Char('/') + parts.at(2).toLower() + QLatin1Char('/') + family;
 }
 

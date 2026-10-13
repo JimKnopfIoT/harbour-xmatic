@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.46.13
+Version:    0.46.14
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -122,7 +122,7 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
-* Tue Oct 13 2026 harbour-xmatic contributors 0.46.13-1
+* Tue Oct 13 2026 harbour-xmatic contributors 0.46.14-1
 - Calls across mobile networks: the caller's connection candidates that
   arrive while the phone is still ringing are kept and used once the call
   is answered. They were dropped, so only a caller that could reach the
