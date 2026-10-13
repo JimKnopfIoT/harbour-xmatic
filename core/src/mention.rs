@@ -315,6 +315,41 @@ pub async fn text_content(
     }
 }
 
+/// An edit's formatted copy and full `m.mentions`. Picked ids count as on a
+/// send; the original's only where the new text still names them.
+pub async fn edit_parts(
+    client: Option<&Client>,
+    room_id: &str,
+    body: &str,
+    picked: &[String],
+    previous: &[String],
+) -> (Option<String>, Option<Mentions>) {
+    let mut ids: Vec<String> = picked.to_vec();
+    if let Some(client) = client {
+        for id in previous {
+            if ids.contains(id) {
+                continue;
+            }
+            let (pills, _, room) = needles(client, room_id, std::slice::from_ref(id)).await;
+            let named = if room {
+                still_named(body, ROOM_KEY)
+            } else {
+                pills.iter().any(|(needle, _)| still_named(body, needle))
+            };
+            if named {
+                ids.push(id.clone());
+            }
+        }
+    }
+    let resolved = resolve(client, room_id, body, &ids).await;
+    (resolved.formatted, resolved.mentions)
+}
+
+/// Whether the text still carries a mention's text.
+fn still_named(body: &str, needle: &str) -> bool {
+    !needle.is_empty() && body.contains(needle)
+}
+
 /// An attachment's caption with its mentions: the same pills and `m.mentions`
 /// a text message gets, handed to the attachment instead.
 pub async fn caption_content(
@@ -333,7 +368,14 @@ pub async fn caption_content(
 
 #[cfg(test)]
 mod tests {
-    use super::{insert_pills, matches};
+    use super::{insert_pills, matches, still_named};
+
+    #[test]
+    fn an_edit_keeps_a_mention_only_while_its_name_is_there() {
+        assert!(still_named("thanks @Anna Wolf", "@Anna Wolf"));
+        assert!(!still_named("thanks everyone", "@Anna Wolf"));
+        assert!(!still_named("anything", ""));
+    }
 
     fn pill() -> Vec<(String, String)> {
         vec![("@Anna Wolf".to_owned(), "https://matrix.to/#/@anna:example.invalid".to_owned())]

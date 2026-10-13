@@ -58,7 +58,8 @@ pub(super) async fn load_more_rooms(state: &Arc<State>, id: u64) {
         state.sink.emit(reply_error(id, "the room list is not running"));
     }
 }
-pub(super) async fn stop_room_list(state: &Arc<State>, id: u64) {
+/// Stops the room list with the space streams that borrow its service.
+pub(super) async fn drop_room_list(state: &Arc<State>) {
     // The space streams borrow the same room list service, so they go first.
     if let Some(task) = state.open_space.lock().await.take() {
         task.abort();
@@ -66,10 +67,11 @@ pub(super) async fn stop_room_list(state: &Arc<State>, id: u64) {
     if let Some(task) = state.spaces.lock().await.take() {
         task.abort();
     }
-    if let Some(handle) = state.rooms.lock().await.take() {
+    // Taken out first: the guard must not be held across the sync's stop.
+    let rooms = state.rooms.lock().await.take();
+    if let Some(handle) = rooms {
         handle.stop().await;
     }
-    state.sink.emit(reply_ok(id, json!({ "running": false })));
 }
 pub(super) async fn start_spaces(state: &Arc<State>, id: u64) {
     if state.spaces.lock().await.is_some() {

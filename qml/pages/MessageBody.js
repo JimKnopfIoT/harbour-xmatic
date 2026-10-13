@@ -223,3 +223,55 @@ function previewUrl(body, linkPreviews, encrypted) {
     // must not come back as a card, nor be fetched by the homeserver.
     return safeHref(lowerScheme(address))
 }
+
+/// What the row says instead of "not decryptable": withheld key or older than
+/// this device is what decides whether anything can be done about it.
+/// Under the room page's context, which carries the translations.
+function undecryptableText(cause) {
+    switch (cause) {
+    case "withheldInsecure":
+        return qsTranslate("RoomPage", "The sender did not share the key: they consider this device insecure. Verify this device.")
+    case "withheldBySender":
+        return qsTranslate("RoomPage", "The sender could not deliver the key to this device.")
+    case "verificationViolation":
+        return qsTranslate("RoomPage", "The sender's identity has changed since you verified them, so the key was withheld.")
+    case "unsignedDevice":
+        return qsTranslate("RoomPage", "The sender's device is not signed by its owner.")
+    case "unknownDevice":
+        return qsTranslate("RoomPage", "The sender's device is unknown here.")
+    case "sentBeforeJoin":
+        return qsTranslate("RoomPage", "Sent before you joined the room.")
+    case "historicalNoBackup":
+        return qsTranslate("RoomPage", "Older than this device, and there is no key backup.")
+    case "historicalUnverifiedDevice":
+        return qsTranslate("RoomPage", "Older than this device. Verify this device to read it.")
+    default:
+        return qsTranslate("RoomPage", "Cannot be decrypted — this device is missing the key")
+    }
+}
+
+/// The text line of a message row, for the room and the thread alike. `row`:
+/// kind, utdCause, body, caption, media and image (bools), drawn (the row shows
+/// the picture or player itself), rich (rich() of the caption or body, or "").
+function rowText(row) {
+    if (row.kind === "undecryptable") {
+        return undecryptableText(row.utdCause)
+    }
+    if (row.kind === "redacted") {
+        return qsTranslate("RoomPage", "Message deleted")
+    }
+    if (row.media) {
+        if (row.drawn) {
+            return row.rich.length > 0 ? row.rich : row.caption
+        }
+        // No preview, so the row says what it is; the caption goes under it.
+        var label = row.image ? "🖼 " + (row.body || qsTranslate("RoomPage", "Picture"))
+                              : "📎 " + (row.body || qsTranslate("ThreadPage", "Attachment"))
+        if (row.caption.length === 0) {
+            return label
+        }
+        return row.rich.length > 0 ? escapeText(label) + "<br>" + row.rich
+                                   : label + "\n" + row.caption
+    }
+    return row.rich.length > 0 ? row.rich : (row.body || "")
+}

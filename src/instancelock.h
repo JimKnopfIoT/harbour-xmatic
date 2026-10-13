@@ -5,7 +5,9 @@
 
 /// Takes the single-instance lock, or reports that another process holds it.
 /// Held for the life of the process and released by the kernel, however it dies.
-bool acquireInstanceLock(const QString &dataDirectory);
+/// `failOpen`: a lock that cannot be taken at all counts as taken - the app's
+/// choice, never the woken process's.
+bool acquireInstanceLock(const QString &dataDirectory, bool failOpen = true);
 
 /// Whether the app proper runs: it owns the bus name, a push wake-up does not.
 bool instanceIsRunning();

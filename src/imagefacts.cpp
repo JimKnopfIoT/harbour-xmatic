@@ -96,12 +96,6 @@ qint64 canvasPixels(const QString &path, bool *decodesScaled = nullptr)
     // JPEG: walk the markers to the frame header, skipping every segment by its
     // declared length rather than reading it.
     if (head.size() >= 2 && bytes[0] == 0xff && bytes[1] == 0xd8) {
-        // libjpeg decodes to a fraction of the full size when a target size is
-        // given, and both places that draw a picture give one. A ceiling on the
-        // stored measurements would only refuse honest photographs.
-        if (decodesScaled) {
-            *decodesScaled = true;
-        }
         file.seek(2);
         // Bounded: a header this far in is a file playing for time.
         const qint64 Ceiling = 4 * 1024 * 1024;
@@ -136,6 +130,11 @@ qint64 canvasPixels(const QString &path, bool *decodesScaled = nullptr)
                     return 0;
                 }
                 const uchar *shape = reinterpret_cast<const uchar *>(frameHeader.constData());
+                // Sequential frames decode to a fraction when a size is given, as
+                // every drawing place does; a progressive one holds every coefficient.
+                if (decodesScaled) {
+                    *decodesScaled = kind == 0xc0 || kind == 0xc1;
+                }
                 return qint64(beU16(shape + 1)) * qint64(beU16(shape + 3));
             }
             file.seek(file.pos() + length - 2);
@@ -204,20 +203,38 @@ bool imageBeyondDecodeBudget(const QString &path)
         local = QUrl(local).toLocalFile();
     }
 
+    // A received SVG is a program for QtSvg, not a picture with a size; by
+    // content, not by name, so a renamed one is caught too.
+    const QByteArray format = QImageReader::imageFormat(local).toLower();
+    if (format == "svg" || format == "svgz") {
+        return true;
+    }
+
     bool decodesScaled = false;
     const qint64 pixels = canvasPixels(local, &decodesScaled);
     if (decodesScaled) {
-        // A fifty-megapixel photograph is ordinary and costs this device nothing
-        // it is not already paying for a small one.
+        // libjpeg shrinks a sequential frame by an eighth per side at most.
+        return pixels / 64 > MaxStillPixels;
+    }
+    if (format == "gif") {
+        // A zero screen sends the reader to the first frame's size, not the canvas.
+        return pixels <= 0 || pixels > MaxStillPixels;
+    }
+    if (pixels > 0) {
+        return pixels > MaxStillPixels;
+    }
+    // Not one of the formats walked above (BMP, TIFF, TGA, ICO): their handler
+    // states the canvas without decoding, and cannot decode it smaller.
+    QImageReader reader(local);
+    const QSize canvas = reader.size();
+    if (!canvas.isValid()) {
+        // A header that answers nothing; refusing would hide ordinary files.
         return false;
     }
-    if (pixels <= 0) {
-        // Not one of the formats this knows, or a header that answers nothing.
-        // Refusing here would hide ordinary files; the ceiling is a decoder
-        // question and this is the only place that can answer it cheaply.
+    if (reader.supportsOption(QImageIOHandler::ScaledSize)) {
         return false;
     }
-    return pixels > MaxStillPixels;
+    return qint64(canvas.width()) * canvas.height() > MaxStillPixels;
 }
 
 QStringList animatableFormats()

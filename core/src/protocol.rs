@@ -60,7 +60,8 @@ pub enum Command {
     },
 
     /// Drop the part of the store the next sync rebuilds and restore again. The
-    /// way out of `unreadable`; session and crypto store stay.
+    /// way out of `unreadable` and of damage the repair could not take out;
+    /// session and crypto store stay.
     #[serde(rename = "session.rebuildStore")]
     SessionRebuildStore { id: u64 },
 
@@ -83,6 +84,11 @@ pub enum Command {
         user: String,
         password: Secret,
     },
+
+    /// Answer the server's check for a cross-signing setup with the password.
+    /// Transit only, like `login.password`.
+    #[serde(rename = "crossSigning.setup")]
+    CrossSigningSetup { id: u64, password: Secret },
 
     /// Ask where accounts can be created on `homeserver`.
     #[serde(rename = "login.registrationUrl")]
@@ -118,9 +124,16 @@ pub enum Command {
     #[serde(rename = "roomlist.more")]
     RoomListMore { id: u64 },
 
-    /// Stop syncing and drop the room list stream.
-    #[serde(rename = "roomlist.stop")]
-    RoomListStop { id: u64 },
+    /// How the front end sorts the chat list. Any order but recency loads every
+    /// room into the list, or the sort sees only the first pages.
+    #[serde(rename = "roomlist.order")]
+    RoomListOrder {
+        id: u64,
+        #[serde(rename = "byName", default)]
+        by_name: bool,
+        #[serde(rename = "unreadFirst", default)]
+        unread_first: bool,
+    },
 
     /// Stream the joined spaces as their own list. The main room list stays
     /// running; this is a second filtered view over the same rooms.
@@ -204,6 +217,9 @@ pub enum Command {
     RoomResolve {
         id: u64,
         address: String,
+        /// From another app: no request before the user has said yes.
+        #[serde(default)]
+        local: bool,
     },
 
     /// Mark a room read from the list, without opening it.
@@ -226,9 +242,13 @@ pub enum Command {
         /// open is ignored: commands are independent tasks.
         #[serde(default, rename = "roomId")]
         room_id: String,
+        /// The generation of the view being left. Leaving a room and entering it
+        /// again puts two views of one room in flight; the room cannot tell them apart.
+        #[serde(default)]
+        token: String,
     },
 
-    /// Load a page of older events.
+    /// Load a page of older events, or in a slice newer ones (`forwards`).
     #[serde(rename = "timeline.paginate")]
     TimelinePaginate {
         id: u64,
@@ -237,6 +257,20 @@ pub enum Command {
         /// request itself - belong to the wrong conversation.
         #[serde(rename = "roomId", default)]
         room_id: String,
+        #[serde(default)]
+        forwards: bool,
+    },
+
+    /// The front end's rows no longer match the diffs: ask the view with this
+    /// token for a full reset. `thread` names the thread view instead of the room's.
+    #[serde(rename = "timeline.resync")]
+    TimelineResync {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        token: String,
+        #[serde(default)]
+        thread: bool,
     },
 
     /// Send a plain text message to the open room. `mentions` carries the user
@@ -249,13 +283,16 @@ pub enum Command {
         mentions: Vec<String>,
     },
 
-    /// Replace the body of a message that was already sent.
+    /// Replace the body of a message that was already sent. `mentions` are those
+    /// picked while editing; the original's own are kept where the text still names them.
     #[serde(rename = "timeline.edit")]
     TimelineEdit {
         id: u64,
         #[serde(rename = "eventId")]
         event_id: String,
         body: String,
+        #[serde(default)]
+        mentions: Vec<String>,
     },
 
     /// Reply to an earlier message.
@@ -456,11 +493,33 @@ pub enum Command {
 
     /// What UnifiedPush looks like here; the page asks on every visit. `quiet` is
     /// the start-up question, answered without the bus while push is off.
+    /// `legacyWanted`: the setting of 0.45 and before still says push was on.
     #[serde(rename = "push.status")]
     PushStatus {
         id: u64,
         #[serde(default)]
         quiet: bool,
+        #[serde(rename = "legacyWanted", default)]
+        legacy_wanted: bool,
+    },
+
+    /// The distributor to register with, where several are installed. `enable`
+    /// turns push on with it.
+    #[serde(rename = "push.distributor")]
+    PushDistributor {
+        id: u64,
+        distributor: String,
+        #[serde(default)]
+        enable: bool,
+    },
+
+    /// The woken process's answer to `push.unlock`: the store key, read only
+    /// once a push came in. Restores the session; answers like `session.restore`.
+    #[serde(rename = "push.unlock")]
+    PushUnlock {
+        id: u64,
+        #[serde(rename = "storeKey", default)]
+        store_key: Option<String>,
     },
 
     /// Register with a distributor and set the pusher.
@@ -596,6 +655,32 @@ pub enum Command {
         party_id: String,
     },
 
+    /// Decline a call that was never answered.
+    #[serde(rename = "call.reject")]
+    CallReject {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "callId")]
+        call_id: String,
+        #[serde(rename = "partyId")]
+        party_id: String,
+    },
+
+    /// Name the answer the caller took.
+    #[serde(rename = "call.selectAnswer")]
+    CallSelectAnswer {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "callId")]
+        call_id: String,
+        #[serde(rename = "partyId")]
+        party_id: String,
+        #[serde(rename = "selectedPartyId")]
+        selected_party_id: String,
+    },
+
     /// Fetch relay credentials for media that cannot travel directly.
     #[serde(rename = "call.turnServers")]
     CallTurnServers { id: u64 },
@@ -675,6 +760,18 @@ pub enum Command {
     /// declines the invitation.
     #[serde(rename = "room.leave")]
     RoomLeave {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
+    /// Rooms left or banned from but not forgotten.
+    #[serde(rename = "leftRooms.list")]
+    LeftRoomsList { id: u64 },
+
+    /// Forget a left room, so the server stops counting it.
+    #[serde(rename = "leftRooms.forget")]
+    LeftRoomsForget {
         id: u64,
         #[serde(rename = "roomId")]
         room_id: String,
@@ -1095,6 +1192,25 @@ pub enum Command {
 }
 
 impl Command {
+    /// The commands a teardown serves or that own the session's lifecycle.
+    pub fn survives_teardown(&self) -> bool {
+        matches!(
+            self,
+            Command::SessionRestore { .. }
+                | Command::SessionRebuildStore { .. }
+                | Command::LoginStart { .. }
+                | Command::LoginDeviceCode { .. }
+                | Command::LoginPassword { .. }
+                | Command::LoginRegistrationUrl { .. }
+                | Command::LoginAbort { .. }
+                | Command::Logout { .. }
+                | Command::StorageRepair { .. }
+                | Command::PushWake { .. }
+                | Command::PushYield { .. }
+                | Command::PushUnlock { .. }
+        )
+    }
+
     /// The `id` this command must be answered with.
     pub fn id(&self) -> u64 {
         match self {
@@ -1105,6 +1221,7 @@ impl Command {
             | Command::LoginDeviceCode { id, .. }
             | Command::LoginRegistrationUrl { id, .. }
             | Command::LoginAbort { id }
+            | Command::CrossSigningSetup { id, .. }
             | Command::RoomEnableEncryption { id, .. }
             | Command::RoomMarkRead { id, .. }
             | Command::RoomResolve { id, .. }
@@ -1118,8 +1235,10 @@ impl Command {
             | Command::PushWake { id }
             | Command::PushYield { id }
             | Command::PushNotify { id, .. }
+            | Command::PushDistributor { id, .. }
+            | Command::PushUnlock { id, .. }
             | Command::RoomListMore { id }
-            | Command::RoomListStop { id }
+            | Command::RoomListOrder { id, .. }
             | Command::SpacesStart { id }
             | Command::SpacesStop { id }
             | Command::SpaceOpen { id, .. }
@@ -1131,6 +1250,7 @@ impl Command {
             | Command::TimelineOpen { id, .. }
             | Command::TimelineClose { id, .. }
             | Command::TimelinePaginate { id, .. }
+            | Command::TimelineResync { id, .. }
             | Command::TimelineSend { id, .. }
             | Command::TimelineMarkRead { id, .. }
             | Command::TimelineReaders { id, .. }
@@ -1155,6 +1275,8 @@ impl Command {
             | Command::CallAnswer { id, .. }
             | Command::CallCandidates { id, .. }
             | Command::CallHangup { id, .. }
+            | Command::CallReject { id, .. }
+            | Command::CallSelectAnswer { id, .. }
             | Command::CallTurnServers { id }
             | Command::VerificationRequest { id, .. }
             | Command::VerificationAccept { id }
@@ -1208,6 +1330,8 @@ impl Command {
             | Command::RoomResetKeys { id, .. }
             | Command::RoomCreate { id, .. }
             | Command::RoomLeave { id, .. }
+            | Command::LeftRoomsList { id }
+            | Command::LeftRoomsForget { id, .. }
             | Command::RoomInvite { id, .. }
             | Command::SpaceHierarchy { id, .. }
             | Command::ThreadOpen { id, .. }
@@ -1302,12 +1426,31 @@ mod tests {
         let raw = r#"{"cmd":"push.status","id":3}"#;
         assert!(matches!(
             serde_json::from_str::<Command>(raw).expect("parses"),
-            Command::PushStatus { id: 3, quiet: false }
+            Command::PushStatus { id: 3, quiet: false, legacy_wanted: false }
         ));
-        let raw = r#"{"cmd":"push.status","id":4,"quiet":true}"#;
+        let raw = r#"{"cmd":"push.status","id":4,"quiet":true,"legacyWanted":true}"#;
         assert!(matches!(
             serde_json::from_str::<Command>(raw).expect("parses"),
-            Command::PushStatus { id: 4, quiet: true }
+            Command::PushStatus { id: 4, quiet: true, legacy_wanted: true }
+        ));
+    }
+
+    #[test]
+    fn push_unlock_and_distributor_parse() {
+        let raw = r#"{"cmd":"push.unlock","id":5,"storeKey":"a2V5"}"#;
+        match serde_json::from_str::<Command>(raw).expect("parses") {
+            Command::PushUnlock { id: 5, store_key } => assert_eq!(store_key.as_deref(), Some("a2V5")),
+            _ => panic!("not push.unlock"),
+        }
+        let raw = r#"{"cmd":"push.unlock","id":6}"#;
+        assert!(matches!(
+            serde_json::from_str::<Command>(raw).expect("parses"),
+            Command::PushUnlock { id: 6, store_key: None }
+        ));
+        let raw = r#"{"cmd":"push.distributor","id":7,"distributor":"org.unifiedpush.Distributor.A"}"#;
+        assert!(matches!(
+            serde_json::from_str::<Command>(raw).expect("parses"),
+            Command::PushDistributor { id: 7, enable: false, .. }
         ));
     }
 

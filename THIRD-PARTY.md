@@ -5,18 +5,19 @@ binary links a static Rust library that compiles 525 further crates into
 it, and it bundles SQLite. Their terms are listed here because a binary
 that carries them has to carry their notices too.
 
-Every crate below is fetched from crates.io by exact version, recorded in
-`core/Cargo.lock` with a checksum, except leghorn, leghorn-build and foghorn-common,
-which come from the Foghorn git repository at the commit named below. Its source is available at
-`https://crates.io/crates/<name>/<version>`; the licence text of each is
-in the crate's own source tree.
+Every crate below is fetched by exact version, recorded in
+`core/Cargo.lock`. A crate with a git address in its row comes from that
+repository at the commit named there; every other one comes from crates.io
+with a checksum, its source at `https://crates.io/crates/<name>/<version>`.
+The licence text of each is in the crate's own source tree.
 
 ## Weak-copyleft components (MPL-2.0)
 
 These are covered by the Mozilla Public License 2.0. Its section 3.2
 requires that anyone receiving this binary is told how to obtain the
-source of these files: each is published unmodified at the crates.io
-address above, and no file of theirs has been changed for this project.
+source of these files: each is published unmodified at the address
+above (crates.io, or the git repository and commit in its row), and no
+file of theirs has been changed for this project.
 
 - as_variant 1.3.0 — MPL-2.0
 - async-rx 0.2.1 — MPL-2.0

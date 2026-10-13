@@ -370,14 +370,6 @@
         <translation>أحداث الغرفة</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>اعرض الانضمام والمغادرة</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>تُعرض الدعوات والإزالات والحظر دائمًا.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>اعرض تغييرات الاسم المعروض</translation>
     </message>
@@ -453,6 +445,14 @@
         <source>Space list order</source>
         <translation>ترتيب قائمة المساحات</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>إظهار المغادرات</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>تُعرض دائمًا عمليات الانضمام والدعوات والإزالة والحظر.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -515,6 +515,10 @@
     <message>
         <source>answered on another device</source>
         <translation>تمت الإجابة على جهاز آخر</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>رُفض على جهاز آخر</translation>
     </message>
 </context>
 <context>
@@ -798,6 +802,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>أدخل كلمة المرور أولًا.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -967,6 +978,18 @@
         <source>Trouble with the key storage?</source>
         <translation>مشكلة في مخزن المفاتيح؟</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>لا يملك هذا الحساب توقيعًا متقاطعًا بعد، لذلك لا تستطيع الأجهزة الأخرى التحقق من هذا الجهاز. أدخل كلمة المرور مرة واحدة لإعداده؛ تُرسل إلى خادمك المنزلي ولا تُحفظ.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>كلمة المرور</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>إعداد التوقيع المتقاطع</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1051,6 +1074,10 @@
         <source>Could not save</source>
         <translation>تعذّر الحفظ</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>لا تُعرض هذه الصورة على هذا الجهاز. احفظها أو شاركها من القائمة المنسدلة.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1098,6 +1125,38 @@
     <message>
         <source>Follow the device</source>
         <translation>اتّباع الجهاز</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>الغرف المغادَرة</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>جارٍ نسيان الغرفة</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>غرفة بلا اسم</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>محظور</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>مغادَرة</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>لا توجد غرف مغادَرة</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>غرف غادرتها أو رفضتها في تطبيق آخر، أو أُزلت أو حُظرت منها. يحتفظ بها هذا الجهاز إلى أن تُنسى، وحتى ذلك الحين يحتسب الخادم الغرفة التي أُزلت أو حُظرت منها. انقر على واحدة لنسيانها.</translation>
     </message>
 </context>
 <context>
@@ -1279,10 +1338,6 @@
         <translation>تعذّر حفظ الملف.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>رسالة جديدة</translation>
-    </message>
-    <message>
         <source>The homeserver did not return a login page.</source>
         <translation>لم يُعِد الخادم المنزلي صفحة ولوج.</translation>
     </message>
@@ -1333,6 +1388,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>يجب أن تكون البوابة عنوان URL يبدأ بـ https.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>تعذّر تصغير هذه الصورة وهي تحمل بيانات وصفية مثل مكان التقاطها، لذلك لم تُرسل. أرسلها بالدقة الأصلية لترسلها كما هي.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>تعذّر حذف تسجيل الدفع من الخادم المنزلي. سيُحذف في المرة التالية التي يسجّل فيها هذا الحساب الدخول هنا.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>أعدّ تطبيق آخر في هذه الأثناء التوقيع المتقاطع لهذا الحساب. تحقّق من هذا الجهاز من هناك.</translation>
     </message>
 </context>
 <context>
@@ -1777,10 +1844,6 @@
         <translation>نص الرسالة في الإشعارات</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>عند الإيقاف، يقول الإشعار عدد الرسائل الواردة فقط. عند التشغيل، يعرض أحدث رسالة - على شاشة القفل أيضًا.</translation>
-    </message>
-    <message>
         <source>Send read receipts</source>
         <translation>إرسال إيصالات القراءة</translation>
     </message>
@@ -1976,6 +2039,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>عند الإيقاف، لا يُتتبَّع ولا يُعرض من قرأ ماذا، وهذا يبقي المحادثة أسلس. عند التشغيل، تقول رسائلك كم شخصًا قرأها.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>إيقاف: يقول الإشعار فقط إن رسائل وصلت، لا ممن ولا ما هي. تشغيل: يعرض أحدث رسالة — على شاشة القفل أيضًا.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2022,10 +2089,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>ما يغادر هذا الجهاز</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>يُخبَر خادمك المنزلي بعنوان لدى خدمة الإشعارات، ويرسل إلى البوابة معرّف الغرفة والرسالة مع كل إشعار. لا نص رسالة: يحمل الدفع معرّفات فقط، وهذا الجهاز يجلب الرسالة ويفكّ تعميتها بنفسه. ذلك العنوان سرّ - من يملكه يستطيع إرسال إشعار إلى هذا الهاتف.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2103,6 +2166,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>استخدم بوابة UnifiedPush العامة</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>عدة موزّعين مثبّتون. اختر الذي يستخدمه xmatic.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>لم يعد موزّع الدفع مثبّتًا. لن يصل شيء حتى يعود. ثبّته من جديد أو أوقف الدفع.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>يحصل خادمك المنزلي على عنوان لدى خدمة الدفع، ويرسل إلى البوابة مع كل إشعار معرّف الغرفة والرسالة وعدد رسائلك غير المقروءة. لا نص للرسالة: يجلب هذا الجهاز الرسالة ويفك تعميتها بنفسه. هذا العنوان سرّ — من يملكه يستطيع إرسال إشعار إلى هذا الهاتف.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>قبل إلغاء تثبيت xmatic أوقف الدفع هنا. وإلا احتفظ الخادم المنزلي بالـ pusher وواصل الإرسال إلى البوابة.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2113,6 +2192,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>أسقط موزّع الإشعارات xmatic. أعد تشغيل الإشعارات الفورية من الحساب.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>افتح xmatic مرة واحدة لإكمال إعداد إشعارات الدفع.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>لا يزال xmatic يعالج إشعارًا. افتحه مرة أخرى بعد لحظة.</translation>
     </message>
 </context>
 <context>
@@ -2167,6 +2254,10 @@
         <source>Discover rooms</source>
         <translation>اكتشاف الغرف</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>الغرف المغادَرة (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2181,6 +2272,10 @@
     <message>
         <source>Space</source>
         <translation>مساحة</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>لم يُرسل – افتح الغرفة لتقرّر</translation>
     </message>
 </context>
 <context>
@@ -2477,12 +2572,16 @@
         <translation>البيانات المحلية تالفة</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>لم يعد من الممكن قراءة جزء من البيانات المخزَّنة على هذا الجهاز، ولم يتمكن xmatic من إصلاحه أثناء التشغيل — لذلك أوقف المزامنة بدلًا من مواجهة الصف نفسه من جديد. أغلق التطبيق وشغّله مرة أخرى. إذا بقيت غرف ناقصة بعد ذلك، فإن تسجيل الخروج ثم الدخول يعيد بناء البيانات المحلية — لكنه يستبدل أيضًا مفاتيح هذا الجهاز: تحقّق أولًا في صفحة التعمية من أن النسخة الاحتياطية للمفاتيح مفعّلة.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>يقدّم هذا الخادم عبر sliding sync، وهي المزامنة التي يحتاجها هذا التطبيق، %1 فقط من غرفك البالغ عددها %2. لا يمكن عرض الغرف الناقصة هنا، وهي غالبًا محادثات عبر جسور؛ أما التطبيقات التي تستخدم المزامنة التقليدية فما زالت تراها.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>لم يعد ممكنًا قراءة جزء من البيانات المخزّنة على هذا الجهاز، ولم يتمكن xmatic من إصلاحه أثناء التشغيل — لذلك أوقف المزامنة بدلًا من مواجهة الصف نفسه من جديد. إعادة بناء بيانات الغرف تجلب الغرف والرسائل من جديد وتحتفظ بمفاتيح هذا الجهاز. إن لم يُجدِ ذلك، فإن تسجيل الخروج ثم الدخول يعيد بناء كل شيء — لكنه يستبدل مفاتيح هذا الجهاز: تحقّق أولًا في صفحة التعمية من أن النسخة الاحتياطية للمفاتيح مفعّلة.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>إعادة بناء بيانات الغرف</translation>
     </message>
 </context>
 <context>
@@ -2988,6 +3087,18 @@
         <source>%1 changed their profile picture</source>
         <translation>غيّر %1 صورة ملفه الشخصي</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>غيّر %1 اسم العرض إلى %2 وغيّر صورة الملف الشخصي</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>أزال %1 اسم العرض وغيّر صورة الملف الشخصي</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>لا يُعرض على هذا الجهاز. انقر للفتح.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3374,6 +3485,10 @@
         <source>Caption (optional)</source>
         <translation>تعليق (اختياري)</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>تُرسل الرسوم المتحركة والرسومات كما هي، مع كل بياناتها الوصفية.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3428,6 +3543,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>تعذّر إرسال استطلاع.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>تعذّر إرسال مرفق.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>لا يقبل الخادم ملفات بهذا الحجم. تجاهله وأرسل ملفًا أصغر.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>انقطع الاتصال عدة مرات أثناء الإرسال. أرسله من جديد عبر اتصال أكثر ثباتًا أو تجاهله.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>لم يقبله الخادم منذ نصف ساعة. أرسله من جديد أو تجاهله.</translation>
     </message>
 </context>
 <context>
@@ -3871,14 +4002,6 @@
     <message>
         <source>Event</source>
         <translation>حدث</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>تتعذّر فكّ تعميتها - المفتاح ناقص على هذا الجهاز</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>حُذفت الرسالة</translation>
     </message>
     <message>
         <source>Attachment</source>

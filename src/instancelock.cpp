@@ -22,12 +22,12 @@ int lockDescriptor = -1;
 
 } // namespace
 
-bool acquireInstanceLock(const QString &dataDirectory)
+bool acquireInstanceLock(const QString &dataDirectory, bool failOpen)
 {
     if (dataDirectory.isEmpty()) {
         // Without a data directory there is no store to protect either; the
         // caller already warned about it.
-        return true;
+        return failOpen;
     }
 
     const QByteArray path = QFile::encodeName(dataDirectory + QStringLiteral("/instance.lock"));
@@ -35,9 +35,9 @@ bool acquireInstanceLock(const QString &dataDirectory)
     if (fd < 0) {
         // A sandbox or a full filesystem must not keep the app from starting: the risk
         // needs a second process, this failure is certain.
-        qWarning("xmatic: instance lock cannot be opened (%s); starting unguarded",
-                 strerror(errno));
-        return true;
+        qWarning("xmatic: instance lock cannot be opened (%s)%s", strerror(errno),
+                 failOpen ? "; starting unguarded" : "");
+        return failOpen;
     }
 
     if (::flock(fd, LOCK_EX | LOCK_NB) != 0) {
@@ -46,10 +46,10 @@ bool acquireInstanceLock(const QString &dataDirectory)
             return false;
         }
         // Some filesystems have no flock at all. Same reasoning as above.
-        qWarning("xmatic: instance lock cannot be taken (%s); starting unguarded",
-                 strerror(errno));
+        qWarning("xmatic: instance lock cannot be taken (%s)%s", strerror(errno),
+                 failOpen ? "; starting unguarded" : "");
         ::close(fd);
-        return true;
+        return failOpen;
     }
 
     lockDescriptor = fd;

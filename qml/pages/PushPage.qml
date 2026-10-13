@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 import "SecurityStatus.js" as SecurityStatus
+import "Strings.js" as Strings
 
 // Push through a UnifiedPush distributor - the daemon is the distributor, this
 // is where the arrangement is turned on and says what it is doing.
@@ -10,10 +11,13 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    readonly property var pushStatus: matrix.pushStatus
+    readonly property var pushStatus: matrix.push.status
     readonly property string pushState: pushStatus.state || ""
     readonly property var distributors: pushStatus.distributors || []
-    readonly property bool pushOn: matrix.pushEndpointReady
+    readonly property bool pushOn: matrix.push.endpointReady
+    // The bus name, while the connector runs; "" before a pick.
+    readonly property string chosenDistributor: pushStatus.distributor || ""
+    readonly property bool choosingDistributor: pushState === "choose-distributor"
     readonly property string gateway: pushStatus.gateway || ""
     readonly property var gatewayModes: ["server", "public", "other"]
     // "Other" picked in the list before an address was entered.
@@ -24,9 +28,10 @@ Page {
     readonly property string gatewayMode: choosingOther ? "other" : settings.pushGatewayMode
     // "yes", "no", "unknown", or "" before registering.
     readonly property string serverGateway: pushStatus.serverGateway || ""
-    readonly property string distributorName: distributors.length > 0
-                                              ? String(distributors[0]).split(".").pop()
-                                              : qsTr("the distributor")
+    readonly property string distributorName: chosenDistributor.length > 0
+                                              ? tail(chosenDistributor)
+                                              : (distributors.length === 1 ? tail(distributors[0])
+                                                                           : qsTr("the distributor"))
     // Set whenever the gateway answer is: both come with the push address.
     readonly property string pushService: pushStatus.pushService || ""
     readonly property bool serviceLacksGateway: pushOn && gatewayMode === "server"
@@ -34,20 +39,25 @@ Page {
 
     onGatewayModeChanged: gatewayBox.currentIndex = gatewayModes.indexOf(gatewayMode)
 
+    // A bus name's last segment: `org.unifiedpush.Distributor.<app>` names the app last.
+    function tail(name) {
+        return String(name).split(".").pop()
+    }
+
     function host(url) {
         return String(url).replace(/^https:\/\//i, "").split("/")[0]
     }
 
     Component.onCompleted: {
         gatewayBox.currentIndex = gatewayModes.indexOf(gatewayMode)
-        matrix.refreshPushStatus()
+        matrix.push.refresh()
     }
 
     // On every visit, not once: a distributor can be installed or removed while
     // this app runs, and a cached answer would be wrong exactly then.
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            matrix.refreshPushStatus()
+            matrix.push.refresh()
         }
     }
 
@@ -57,12 +67,14 @@ Page {
             choosingOther = false
             // Clearing the pick drops the registration; without one, disable does.
             if (settings.pushGatewayMode.length > 0) {
-                matrix.setPushGateway("")
+                matrix.push.setGateway("")
             } else if (pushOn || pushState === "registering") {
-                matrix.disablePush()
+                matrix.push.disable()
             }
         } else if (settings.pushGatewayMode.length > 0) {
-            matrix.enablePush()
+            // Several distributors and none picked: the pick finishes it.
+            wanted = distributors.length > 1 && chosenDistributor.length === 0
+            matrix.push.enable()
         } else {
             wanted = true
         }
@@ -70,7 +82,7 @@ Page {
 
     // A new pick drops the registration and, if complete, registers again.
     function pick(mode, address) {
-        if (!matrix.setPushGateway(mode, address, wanted || pushOn)) {
+        if (!matrix.push.setGateway(mode, address, wanted || pushOn)) {
             return false
         }
         choosingOther = false
@@ -114,6 +126,32 @@ Page {
             }
 
             ComboBox {
+                id: distributorBox
+
+                visible: page.distributors.length > 1
+                width: parent.width
+                label: qsTr("Distributor")
+                automaticSelection: false
+                currentIndex: -1
+                value: page.chosenDistributor.length > 0 ? page.tail(page.chosenDistributor)
+                                                         : qsTr("None")
+                description: page.choosingDistributor
+                             ? qsTr("Several distributors are installed. Pick the one xmatic uses.")
+                             : ""
+
+                menu: ContextMenu {
+                    Repeater {
+                        model: page.distributors
+
+                        MenuItem {
+                            text: page.tail(modelData)
+                            onClicked: matrix.push.selectDistributor(modelData, page.switchedOn)
+                        }
+                    }
+                }
+            }
+
+            ComboBox {
                 id: gatewayBox
 
                 visible: page.switchedOn
@@ -128,8 +166,10 @@ Page {
                     switch (page.gatewayMode) {
                     case "server":
                         if (page.serverGateway === "yes") {
-                            return qsTr("Provided via %1: %2").arg(page.distributorName)
-                                .arg(page.host(page.pushStatus.serverGatewayUrl))
+                            // The distributor names itself: one pass, so its name stays a name.
+                            return Strings.fill(qsTr("Provided via %1: %2"),
+                                                [page.distributorName,
+                                                 page.host(page.pushStatus.serverGatewayUrl)])
                         }
                         if (page.serverGateway === "no") {
                             return qsTr("%1 has no Matrix gateway.").arg(page.pushService)
@@ -217,18 +257,26 @@ Page {
 
             SecurityRow {
                 label: qsTr("Distributor")
-                level: page.distributors.length > 0 ? SecurityStatus.GREEN
-                                                    : SecurityStatus.RED
-                detail: page.distributors.length > 0
-                        // The bus name's last segment: the whole name is
-                        // `org.unifiedpush.Distributor.<something>` and only the tail names the app.
-                        ? String(page.distributors[0]).split(".").pop()
-                        : qsTr("No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.")
+                level: page.distributors.length === 0
+                       ? SecurityStatus.RED
+                       : (page.choosingDistributor ? SecurityStatus.ORANGE : SecurityStatus.GREEN)
+                detail: {
+                    if (page.distributors.length === 0) {
+                        return page.pushOn
+                                ? qsTr("The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.")
+                                : qsTr("No push distributor is installed. Without one there is nothing to hold the connection, and this stays off.")
+                    }
+                    if (page.chosenDistributor.length > 0 || page.distributors.length === 1) {
+                        return page.distributorName
+                    }
+                    return qsTr("Several distributors are installed. Pick the one xmatic uses.")
+                }
             }
 
             SecurityRow {
                 label: qsTr("Registration")
-                level: page.pushStatus.registered
+                // Registered with nothing left to deliver is not green.
+                level: page.pushStatus.registered && page.pushState !== "no-distributor"
                        ? SecurityStatus.GREEN
                        : (page.pushOn || page.pushState === "registering"
                           ? SecurityStatus.ORANGE : SecurityStatus.RED)
@@ -271,7 +319,16 @@ Page {
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor
-                text: qsTr("Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.")
+                text: qsTr("Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.")
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryColor
+                text: qsTr("Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.")
             }
 
             Label {

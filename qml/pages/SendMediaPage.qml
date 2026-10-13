@@ -30,10 +30,6 @@ Dialog {
     property string roomId: ""
     property var mentionsPicked: ({})
 
-    /// Called once the attachment is on its way, so the room can drop the
-    /// reply it was holding without losing a half-typed message.
-    property var afterSend: null
-
     /// Called when the send was called off, with the caption and its mentions as
     /// they stand, so the conversation can put the text back where it was typed.
     property var afterCancel: null
@@ -43,6 +39,19 @@ Dialog {
     property bool original: false
 
     readonly property bool isImage: mimeType.indexOf("image/") === 0
+    /// Empty for an SVG or a canvas past the decode budget: named, not drawn.
+    readonly property string previewSource: isImage ? matrix.localImageSource(plainPath) : ""
+    /// Sent as they are, like the bridge does: re-encoding loses every frame
+    /// but one, or the point of being a drawing.
+    readonly property bool keptAsIs: {
+        for (var i = 0; i < files.length; i++) {
+            var type = files[i].mimeType || ""
+            if (type === "image/gif" || type.indexOf("svg") >= 0) {
+                return true
+            }
+        }
+        return false
+    }
     // The picker speaks URLs, the core wants a path, and the preview wants a
     // URL again. Normalised once here instead of at each of the three uses.
     readonly property string plainPath: path.indexOf("file://") === 0
@@ -52,7 +61,8 @@ Dialog {
         return parts.length > 0 ? parts[parts.length - 1] : plainPath
     }
 
-    canAccept: path.length > 0
+    // Nothing to hand it to is nothing to accept: there is no second way out.
+    canAccept: path.length > 0 && dialog.send !== null
 
     onRejected: {
         if (dialog.afterCancel) {
@@ -60,8 +70,8 @@ Dialog {
         }
     }
 
-    /// Who actually sends. Set by the room, which owns the unverified-recipient
-    /// warning - a closing dialog cannot put another one over itself.
+    /// Who actually sends, and the only way out: set by the room, which owns the
+    /// unverified-recipient warning - a closing dialog cannot put another over itself.
     property var send: null
 
     /// The files with their prefixes taken off, in the order they were picked.
@@ -78,41 +88,19 @@ Dialog {
         return out
     }
 
-    onAccepted: {
-        if (dialog.send) {
-            // Handed over, not sent: what follows a send belongs after it. Calling
-            // `afterSend` here cleared the reply before anything was established.
-            dialog.send(dialog.plainFiles(), captionField.text, dialog.replyTo,
-                        dialog.original, captionMentions.ids())
-            return
-        }
-        var picked = dialog.plainFiles()
-        for (var i = 0; i < picked.length; i++) {
-            matrix.sendMedia(picked[i].path, picked[i].mimeType,
-                             i === 0 ? captionField.text : "",
-                             i === 0 ? dialog.replyTo : "",
-                             0, dialog.original,
-                             i === 0 ? captionMentions.ids() : [])
-        }
-        if (dialog.afterSend) {
-            dialog.afterSend()
-        }
-    }
+    // Handed over, not sent: what follows a send belongs after it.
+    onAccepted: dialog.send(dialog.plainFiles(), captionField.text, dialog.replyTo,
+                            dialog.original, captionMentions.ids())
 
-    /// Open while a press on the picker is under way: Silica clears a field's
-    /// focus on every press outside it, and the keyboard would go with it.
-    property bool keepKeyboard: false
+    /// Open while a press on the picker is under way.
+    property alias keepKeyboard: keyboardHold.active
 
-    Timer {
-        id: keepKeyboardWindow
-
-        interval: 400
-        onTriggered: dialog.keepKeyboard = false
+    KeyboardHold {
+        id: keyboardHold
     }
 
     function holdKeyboard() {
-        dialog.keepKeyboard = true
-        keepKeyboardWindow.restart()
+        keyboardHold.hold()
     }
 
     MentionInput {
@@ -186,7 +174,7 @@ Dialog {
             // A picture is shown, anything else is named. Guessing at a
             // preview for a PDF would only produce an empty grey box.
             Image {
-                visible: dialog.isImage && status === Image.Ready
+                visible: dialog.previewSource.length > 0 && status === Image.Ready
                 // As the re-encode will bake it in.
                 autoTransform: true
                 x: Theme.horizontalPageMargin
@@ -196,11 +184,12 @@ Dialog {
                 // caption field ends up below the fold.
                 height: Math.min(implicitHeight, dialog.height / 2)
                 asynchronous: true
-                source: dialog.isImage ? "file://" + dialog.plainPath : ""
+                sourceSize.width: width
+                source: dialog.previewSource
             }
 
             Item {
-                visible: !dialog.isImage
+                visible: dialog.previewSource.length === 0
                 x: Theme.horizontalPageMargin
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 height: fileRow.height
@@ -243,12 +232,23 @@ Dialog {
             // Only where one picture is at stake: several at full size is what
             // the shrinking is there to prevent.
             TextSwitch {
-                visible: dialog.isImage && dialog.files.length === 1
+                visible: dialog.isImage && dialog.files.length === 1 && !dialog.keptAsIs
                 text: qsTr("Send at original resolution")
                 description: qsTr("Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.")
                 checked: dialog.original
                 automaticCheck: false
                 onClicked: dialog.original = !dialog.original
+            }
+
+            // The one case the promise above does not cover, said before the send.
+            Label {
+                visible: dialog.keptAsIs
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryHighlightColor
+                text: qsTr("Animations and drawings go as they are, with any metadata in them.")
             }
 
             MentionPicker {

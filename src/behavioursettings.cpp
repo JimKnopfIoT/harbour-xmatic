@@ -18,7 +18,18 @@ BehaviourSettings::BehaviourSettings(QObject *parent)
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);
     settings.beginGroup(QStringLiteral("behaviour"));
-    m_showJoinLeaves = settings.value(QStringLiteral("showJoinLeaves"), false).toBool();
+    // One switch governed joins and leaves; joins show always now, so its choice
+    // carries over to leaves alone, once.
+    const QString leaves = QStringLiteral("showLeaves");
+    const QString joinLeaves = QStringLiteral("showJoinLeaves");
+    if (settings.contains(leaves)) {
+        m_showLeaves = settings.value(leaves, false).toBool();
+    } else if (settings.contains(joinLeaves)) {
+        m_showLeaves = settings.value(joinLeaves, false).toBool();
+        settings.setValue(leaves, m_showLeaves);
+        settings.remove(joinLeaves);
+        settings.sync();
+    }
     m_showDisplayNameChanges =
         settings.value(QStringLiteral("showDisplayNameChanges"), false).toBool();
     m_showAvatarChanges = settings.value(QStringLiteral("showAvatarChanges"), false).toBool();
@@ -41,11 +52,11 @@ void BehaviourSettings::store(const QString &key, const QVariant &value)
     emit changed();
 }
 
-void BehaviourSettings::setShowJoinLeaves(bool shown)
+void BehaviourSettings::setShowLeaves(bool shown)
 {
-    if (shown != m_showJoinLeaves) {
-        m_showJoinLeaves = shown;
-        store(QStringLiteral("showJoinLeaves"), shown);
+    if (shown != m_showLeaves) {
+        m_showLeaves = shown;
+        store(QStringLiteral("showLeaves"), shown);
     }
 }
 

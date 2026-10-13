@@ -42,8 +42,10 @@ bool RoomSortModel::lessThan(const QModelIndex &left, const QModelIndex &right) 
         return leftGroup < rightGroup;
     }
     if (m_unreadFirst) {
-        const bool leftUnread = left.data(RoomListModel::UnreadRole).toInt() > 0;
-        const bool rightUnread = right.data(RoomListModel::UnreadRole).toInt() > 0;
+        const bool leftUnread = left.data(RoomListModel::UnreadRole).toInt() > 0
+                || left.data(RoomListModel::MarkedUnreadRole).toBool();
+        const bool rightUnread = right.data(RoomListModel::UnreadRole).toInt() > 0
+                || right.data(RoomListModel::MarkedUnreadRole).toBool();
         if (leftUnread != rightUnread) {
             return leftUnread;
         }

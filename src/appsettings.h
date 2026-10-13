@@ -177,6 +177,9 @@ public:
     QString pushGatewayMode() const;
     QString pushGateway() const;
     void setPushGateway(const QString &mode, const QString &gateway);
+    /// The push switch of 0.45 and before; read once to carry push over.
+    bool legacyPushWanted() const;
+    void forgetLegacyPush();
     bool voiceMessages() const;
     void setVoiceMessages(bool enabled);
     bool voiceTranscripts() const;

@@ -430,23 +430,14 @@ pub async fn set_power(client: &Client, room_id: &str, user_id: &str, level: i64
 
 /// The ignore list from the server, not the store: an empty local copy is
 /// indistinguishable from an empty list and would drop everybody else's entries.
+/// No answer is no list: a write on top of a guess would overwrite the server's.
 async fn ignore_list(client: &Client) -> Result<IgnoredUserListEventContent, String> {
-    let account = client.account();
-
-    if let Ok(Some(raw)) = account
+    let raw = client
+        .account()
         .fetch_account_data_static::<IgnoredUserListEventContent>()
         .await
-    {
-        if let Ok(content) = raw.deserialize() {
-            return Ok(content);
-        }
-    }
-
-    match account
-        .account_data::<IgnoredUserListEventContent>()
-        .await
-        .map_err(|error| format!("could not read the ignore list: {}", scrub_ids(&error.to_string())))?
-    {
+        .map_err(|error| format!("could not read the ignore list: {}", scrub_ids(&error.to_string())))?;
+    match raw {
         Some(raw) => raw
             .deserialize()
             .map_err(|error| format!("could not read the ignore list: {}", scrub_ids(&error.to_string()))),

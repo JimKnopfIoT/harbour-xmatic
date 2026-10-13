@@ -104,17 +104,25 @@ public:
     /// Another device of this account picked the call up. The party id says
     /// which one, so this device can tell it apart from its own answer.
     void onAnsweredElsewhere(const QString &roomId, const QString &callId,
-                             const QString &partyId);
+                             const QString &partyId, bool declined);
+    /// The caller took another device's answer: this one stops.
+    void onSelectAnswer(const QString &roomId, const QString &sender, const QString &callId,
+                        const QString &selectedPartyId);
+    /// The ringing invite's spec version: a version 0 caller knows no reject.
+    void noteInviteVersion(const QString &callId, const QString &version);
 
     void onRemoteAnswer(const QString &roomId,
                         const QString &sender,
                         const QString &callId,
+                        const QString &partyId,
                         const QString &sdp);
     void onRemoteCandidates(const QString &roomId,
                             const QString &sender,
                             const QString &callId,
                             const QVariantList &candidates);
-    void onRemoteHangup(const QString &roomId, const QString &sender, const QString &callId);
+    /// `reject`: an m.call.reject from the other side, void once an answer was taken.
+    void onRemoteHangup(const QString &roomId, const QString &sender, const QString &callId,
+                        const QString &partyId, bool reject);
 
 signals:
     void statusChanged();
@@ -136,6 +144,9 @@ signals:
                          const QString &partyId,
                          const QVariantList &candidates);
     void hangupReady(const QString &roomId, const QString &callId, const QString &partyId);
+    void rejectReady(const QString &roomId, const QString &callId, const QString &partyId);
+    void selectAnswerReady(const QString &roomId, const QString &callId, const QString &partyId,
+                           const QString &selectedPartyId);
 
     /// Someone is calling; the UI should show the incoming call screen.
     void incomingCall(const QString &roomId, const QString &peer);
@@ -179,6 +190,7 @@ private:
     void applyTurnServers();
     void applyRemoteDescription(const QString &sdp, bool isOffer);
     void tearDown();
+    void stopQuietly();
     void setStatus(const QString &status);
     void setFailure(const QString &failure);
     /// Asks webrtcbin for the offer. Called from the negotiation signal, or
@@ -199,6 +211,9 @@ private:
     bool m_muted = false;
     /// True while this side is the caller, which decides offer versus answer.
     bool m_isCaller = false;
+    /// The answering party the caller took; later answers are ignored.
+    QString m_selectedParty;
+    QString m_inviteVersion;
     /// Whether this call negotiated a camera stream.
     bool m_withVideo = false;
     bool m_videoOffered = false;

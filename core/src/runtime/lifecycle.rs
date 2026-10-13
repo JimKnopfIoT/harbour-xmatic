@@ -174,10 +174,19 @@ async fn restore_stored_session(
 pub(super) async fn rebuild_store(state: &Arc<State>, id: u64) {
     {
         // Released before the restore below.
-        let _gate = state.session_gate.lock().await;
+        let gate = state.session_gate.lock().await;
+        // From a running session too: a damaged row the repair could not take out
+        // otherwise leaves only a sign-out, which costs the device's keys.
         if state.client.lock().await.is_some() {
-            state.sink.emit(reply_error(id, "the local data is in use"));
-            return;
+            // The sync ran until the teardown stopped it: a refresh in that
+            // window is on the client only, and the restore reads the file.
+            if let Some(client) = teardown(state, &gate).await {
+                if let session::LoadOutcome::Session(stored) =
+                    session::load(&state.paths.session_file, state.store_key().as_ref())
+                {
+                    persist(state, &gate, &client, stored.homeserver().to_owned()).await;
+                }
+            }
         }
         if let Err(error) = session::rebuild_store(&state.paths) {
             state.sink.emit(reply_error(
@@ -280,15 +289,19 @@ async fn begin_session(
     let recovery_task = recovery::watch(client, state.sink.clone());
     let session_task = watch_session(state, client, homeserver.clone(), generation);
     persist(state, gate, client, homeserver).await;
-    state
-        .observers
-        .lock()
-        .await
-        .extend([recovery_task, session_task]);
+    let mut observers = vec![recovery_task, session_task];
+    // Not in the woken process: nobody is there to be asked.
+    if !super::pushcmd::woken(state) {
+        let (checker, account) = (state.clone(), client.clone());
+        observers.push(tokio::spawn(async move { check_cross_signing(&checker, &account).await }));
+    }
+    state.observers.lock().await.extend(observers);
     state.with_slot(gate, |slot| slot.advance(generation, Phase::Session));
     // After the gate is released; it checks the generation itself.
     let push = state.clone();
-    tokio::spawn(async move { super::pushcmd::push_session_started(&push, generation).await });
+    super::pushcmd::spawn_push_task(state, async move {
+        super::pushcmd::push_session_started(&push, generation).await
+    });
 }
 
 /// Saves tokens and drops the client without signing out. For the woken process.
@@ -513,6 +526,8 @@ pub(super) async fn password_login(
     spawn_login(state, &gate, id, move |answered| async move {
         let reply = |value: Value| answer_once(&worker.sink, &answered, value);
         let outcome = password_attempt(&client, &user, &password).await;
+        // Transit ends with the request; nothing below sees it.
+        drop(password);
         let gate = worker.session_gate.lock().await;
         if !worker.slot().holds(generation) {
             drop(gate);
@@ -665,7 +680,9 @@ fn watch_session(
     tokio::spawn(async move {
         loop {
             match changes.recv().await {
-                Ok(SessionChange::TokensRefreshed) => {
+                // A lag may have swallowed a refresh: writing once more is cheap, a
+                // spent refresh token on disk costs the device.
+                Ok(SessionChange::TokensRefreshed) | Err(RecvError::Lagged(_)) => {
                     // Said out loud: a refresh is invisible, and a request in flight across one
                     // comes back as "token is not active", which reads as an ended session.
                     state.sink.emit(event("session.refreshed", json!({})));
@@ -690,14 +707,15 @@ fn watch_session(
                             "session.expired",
                             json!({ "message": "the session has expired, please sign in again" }),
                         ));
+                        // The same reset in the front end as after a sign-out.
+                        teardown
+                            .sink
+                            .emit(event("session.changed", json!({ "state": "none" })));
                     });
                     // Nothing more can arrive on this subscription, and this task's clone is the
                     // last thing keeping the old client alive.
                     break;
                 }
-                // Missing a refresh notification only costs a redundant write
-                // next time; keep listening.
-                Err(RecvError::Lagged(_)) => continue,
                 Err(RecvError::Closed) => break,
             }
         }
@@ -768,9 +786,6 @@ async fn stop_observers(state: &Arc<State>) {
     }
 }
 
-/// The teardown of a sign-out, minus telling the server and minus the stores:
-/// the account is unchanged. The session file goes, or the next start fails.
-/// Only for the client that expired: a late one leaves a newer sign-in alone.
 /// The rooms an account asked to follow go with it: the next account's server
 /// must not be sent the old one's room IDs.
 async fn forget_subscriptions(state: &Arc<State>) {
@@ -778,35 +793,90 @@ async fn forget_subscriptions(state: &Arc<State>) {
     *state.call_subscribed.lock().unwrap_or_else(|poisoned| poisoned.into_inner()) = None;
 }
 
+/// A password account with no cross-signing identity: set up where the server
+/// asks nothing, otherwise the user is asked for the password, never kept from here.
+pub(super) async fn check_cross_signing(state: &Arc<State>, client: &Client) {
+    if client.oauth().full_session().is_some() {
+        return;
+    }
+    // No deadline: no password waits on it, and a cut between the uploads is
+    // signed by the next check. An observer, so a teardown ends it.
+    match login::cross_signing_without_password(client).await {
+        Ok(true) => state.sink.emit(event("crossSigning.needsPassword", json!({}))),
+        Ok(false) => {}
+        Err(message) => log(state, "warn", message),
+    }
+}
+
+/// The password the encryption page asked for: one request, then dropped.
+pub(super) async fn cross_signing_setup(state: &Arc<State>, id: u64, password: Secret) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    let outcome = login::cross_signing_with_password(&client, password).await;
+    match outcome {
+        Ok(created) => state.sink.emit(reply_ok(id, json!({ "created": created }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
+
+/// The one teardown of a session, for a sign-out and an expiry alike. Closing
+/// first: from here no command gets the client, so nothing can put a handle back.
+async fn teardown(state: &Arc<State>, gate: &Gate<'_>) -> Option<Client> {
+    state.with_slot(gate, |slot| slot.closing());
+    // A sign-in in progress holds a client clone and would write the session
+    // file back over a reset.
+    cancel_login(state, gate).await;
+    stop_observers(state).await;
+    // Pusher work holds client clones for minutes and would write for a session that is gone.
+    super::pushcmd::stop_push_tasks(state).await;
+    // Before the drain: a view still being built is told to stop, not cut off.
+    abandon_opens(state);
+    state.drain_commands(std::time::Duration::from_secs(3)).await;
+    forget_subscriptions(state).await;
+    if let Some(handle) = state.timeline.lock().await.take() {
+        handle.close().await;
+    }
+    // A thread handle holds the timeline, and through it the client and the pool.
+    if let Some(handle) = state.thread.lock().await.take() {
+        handle.close().await;
+    }
+    // The request holds a client of its own; the cancel is a network call.
+    let _ = tokio::time::timeout(
+        std::time::Duration::from_secs(3),
+        verification::cancel_active(&state.verification),
+    )
+    .await;
+    drop(state.verification.lock().await.take());
+    if let Some(handle) = state.directory.lock().await.take() {
+        handle.task.abort();
+    }
+    super::lists::drop_room_list(state).await;
+    // What is only in memory belongs to the account too: names, the call
+    // policy with its allow list, poll verdicts, forgotten rooms.
+    timeline::forget_senders();
+    linkpreview::forget();
+    poll::forget();
+    roomlist::forget_name_requests();
+    members::forget_asked();
+    call::forget_state();
+    crate::leftrooms::forget_session();
+    login::forget_cross_signing();
+    crate::roomcount::forget();
+    crate::sendqueue::forget();
+    state.unassign(gate).await
+}
+
+/// The teardown of a sign-out, minus telling the server and minus the stores:
+/// the account is unchanged. The session file goes, or the next start fails.
+/// Only for the client that expired: a late one leaves a newer sign-in alone.
 async fn session_expired(state: &Arc<State>, generation: u64) -> bool {
     let gate = state.session_gate.lock().await;
     if !state.slot().holds(generation) {
         return false;
     }
-    stop_observers(state).await;
-    forget_subscriptions(state).await;
-    if let Some(handle) = state.timeline.lock().await.take() {
-        handle.close().await;
-    }
-    if let Some(handle) = state.thread.lock().await.take() {
-        handle.close().await;
-    }
-    // Same as in `logout`: the verification request holds a client.
-    verification::cancel_active(&state.verification).await;
-    drop(state.verification.lock().await.take());
-    if let Some(handle) = state.directory.lock().await.take() {
-        handle.task.abort();
-    }
-    if let Some(task) = state.open_space.lock().await.take() {
-        task.abort();
-    }
-    if let Some(task) = state.spaces.lock().await.take() {
-        task.abort();
-    }
-    if let Some(handle) = state.rooms.lock().await.take() {
-        handle.stop().await;
-    }
-    drop(state.unassign(&gate).await);
+    drop(teardown(state, &gate).await);
     session::forget(&state.paths.session_file);
     true
 }
@@ -814,52 +884,24 @@ async fn session_expired(state: &Arc<State>, generation: u64) -> bool {
 pub(super) async fn logout(state: &Arc<State>, id: u64) {
     // A restore would build a client over the deleted store.
     let gate = state.session_gate.lock().await;
-    // A sign-in in progress holds a client clone and would write the session
-    // file back over the reset below.
-    cancel_login(state, &gate).await;
-    // First, because everything below assumes nothing else is holding the
-    // client - the store is deleted at the end of this function.
-    stop_observers(state).await;
-    forget_subscriptions(state).await;
-    if let Some(handle) = state.timeline.lock().await.take() {
-        handle.close().await;
-    }
-    // A thread handle holds the timeline, and through it the client and the open
-    // pool - `reset_store` below would delete the directory under it.
-    if let Some(handle) = state.thread.lock().await.take() {
-        handle.close().await;
-    }
-    // A verification in progress holds a `Client` of its own: signing out during
-    // one left the store open under `reset_store`.
-    verification::cancel_active(&state.verification).await;
-    drop(state.verification.lock().await.take());
-    if let Some(handle) = state.directory.lock().await.take() {
-        handle.task.abort();
-    }
-    if let Some(task) = state.open_space.lock().await.take() {
-        task.abort();
-    }
-    if let Some(task) = state.spaces.lock().await.take() {
-        task.abort();
-    }
-    if let Some(handle) = state.rooms.lock().await.take() {
-        handle.stop().await;
-    }
-    // The handles above are ours to close, the command tasks are not - they get a
-    // moment before the store goes. Bounded, see `drain_commands`.
-    state.drain_commands(std::time::Duration::from_secs(2)).await;
-    let client = state.unassign(&gate).await;
+    let client = teardown(state, &gate).await;
     // A pusher update already under way lands before the pushers are cleared.
     let push_serial =
         tokio::time::timeout(std::time::Duration::from_secs(5), state.push_sync.lock()).await;
+    let mut push_failure = None;
     if let Some(client) = client {
         // Before the session, or the homeserver keeps posting to an endpoint
-        // nothing can name. Bounded and best effort, like the sign-out.
-        let _ = tokio::time::timeout(
+        // nothing can name. What fails stays in the record for the next session.
+        let named = super::pushcmd::own_pushkeys(state).await;
+        push_failure = match tokio::time::timeout(
             std::time::Duration::from_secs(5),
-            crate::push::clear_own_pushers(&client),
+            crate::push::clear_own_pushers(&client, &state.paths.push_owned, &named, &|| true),
         )
-        .await;
+        .await
+        {
+            Ok(outcome) => outcome.err().map(String::from),
+            Err(_) => Some("the homeserver did not answer".to_owned()),
+        };
         // Best effort and bounded: the local session must go even where the server
         // cannot be reached, and an unanswered logout used to hold up the whole wipe.
         let _ = tokio::time::timeout(std::time::Duration::from_secs(10), client.logout()).await;
@@ -869,18 +911,21 @@ pub(super) async fn logout(state: &Arc<State>, id: u64) {
     }
     drop(push_serial);
     // Unregister and delete Leghorn's state.
-    super::pushcmd::push_forget(state).await;
+    let forget_failure = super::pushcmd::push_forget(state).await;
+    if let Some(error) = &push_failure {
+        log(state, "warn", format!("pusher not removed at sign-out: {error}"));
+        // Translated by the front end; the record keeps it for this account only.
+        state.sink.emit(event(
+            "session.warning",
+            json!({ "code": "pusher-kept", "message": "pusher not removed" }),
+        ));
+    }
+    if push_failure.is_some() || forget_failure.is_some() {
+        super::pushcmd::push_report(state, None, push_failure.or(forget_failure)).await;
+    }
     session::forget(&state.paths.session_file);
     // The lists that name people belong to the account that is leaving.
     session::forget(&state.paths.private_file);
-    // Same for what is only in memory: remembered display names, the call
-    // policy with its allow list, and who rang when.
-    timeline::forget_senders();
-    linkpreview::forget();
-    poll::forget();
-    roomlist::forget_name_requests();
-    members::forget_asked();
-    call::forget_state();
     // The latch outlived the store it was about: it stops the sync, and the
     // store the next sign-in builds is not the one that was damaged.
     storehealth::clear();

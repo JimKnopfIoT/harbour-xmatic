@@ -51,7 +51,9 @@ repository.
   folders that exist, and the file system from the home folder down. Both
   select several files at once, into one list
 * Pictures are made smaller before they go out and lose their metadata with it,
-  the place a photograph was taken included. A screenshot keeps every pixel it
+  the place a photograph was taken included; one that cannot be made smaller
+  and carries metadata is not sent unasked. Animations and drawings (GIF, SVG)
+  go as they are, and the send page says so. A screenshot keeps every pixel it
   has. A switch on the send page keeps a single picture as it lies
 * A switch for the return key: it sends, or it breaks the line. Where it sends,
   holding the send arrow breaks the line instead, and the keyboard stays up
@@ -105,7 +107,7 @@ repository.
 | <img src="screenshots/01-security-status.jpg" alt="Security at a glance" width="240"> | <img src="screenshots/02-verification.jpg" alt="Verification" width="240"> | <img src="screenshots/03-encryption.jpg" alt="Encryption" width="240"> |
 | What is not in order yet, and what to do about it | Seven emoji, in the same order on both devices | Backup, recovery, cross-signing, local storage |
 | <img src="screenshots/04-account.jpg" alt="The account" width="240"> | <img src="screenshots/05_1-appearance-colours.jpg" alt="Colours" width="240"> | <img src="screenshots/05_2-appearance-options.jpg" alt="More appearance" width="240"> |
-| The account, the device and this app | Every bubble, name and text colour is yours to set | Opacity, the return key, the keyboard, reactions as pictures |
+| The account, the device and this app | Every bubble, name and text colour is yours to set | Opacity, reactions as pictures |
 | <img src="screenshots/06-privacy.jpg" alt="Privacy" width="240"> | <img src="screenshots/07-privacy-device.jpg" alt="On this device" width="240"> | <img src="screenshots/08-languages.jpg" alt="Languages" width="240"> |
 | Who may call, and what others learn | What stays here, and for how long | Thirty-two languages, switchable in the app |
 | <img src="screenshots/09-rooms.jpg" alt="The room list" width="240"> | <img src="screenshots/10-conversation.jpg" alt="A conversation" width="240"> | <img src="screenshots/11-room-menu.jpg" alt="The room's menu" width="240"> |
@@ -136,7 +138,7 @@ its colours from the one you use.
   The feature exists because users asked for it. It needs a UnifiedPush
   distributor installed separately (Foghorn, best with ntfy) and a Matrix
   gateway (ntfy has one), and
-  it discloses metadata — which rooms, at what times — to the push server and
+  it discloses metadata — which rooms, at what times, how much is unread — to the push server and
   the Matrix gateway, parties that otherwise know nothing about you. Read
   [docs/PUSH.md](docs/PUSH.md) before turning it on. Leaving it off changes
   nothing: no address is created and your homeserver is told nothing.

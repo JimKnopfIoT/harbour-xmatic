@@ -234,6 +234,22 @@ void AppSettings::setPushGateway(const QString &mode, const QString &gateway)
     emit pushChanged();
 }
 
+bool AppSettings::legacyPushWanted() const
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    return settings.value(QStringLiteral("push/enabled"), false).toBool();
+}
+
+void AppSettings::forgetLegacyPush()
+{
+    QSettings settings(writablePath(), QSettings::IniFormat);
+    if (!settings.contains(QStringLiteral("push/enabled"))) {
+        return;
+    }
+    settings.remove(QStringLiteral("push/enabled"));
+    settings.sync();
+}
+
 bool AppSettings::voiceMessages() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);

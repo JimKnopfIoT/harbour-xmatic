@@ -6,12 +6,12 @@
 #include <QVariant>
 
 /// Which room events the timeline shows, and how the room and space lists sort.
-/// Events off by default: a history is read for its messages, not for who came and went.
+/// Joins always show; leaves and profile changes are off by default.
 class BehaviourSettings : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool showJoinLeaves READ showJoinLeaves WRITE setShowJoinLeaves NOTIFY changed)
+    Q_PROPERTY(bool showLeaves READ showLeaves WRITE setShowLeaves NOTIFY changed)
     Q_PROPERTY(bool showDisplayNameChanges READ showDisplayNameChanges
                WRITE setShowDisplayNameChanges NOTIFY changed)
     Q_PROPERTY(bool showAvatarChanges READ showAvatarChanges WRITE setShowAvatarChanges
@@ -24,14 +24,14 @@ class BehaviourSettings : public QObject
 public:
     explicit BehaviourSettings(QObject *parent = nullptr);
 
-    bool showJoinLeaves() const { return m_showJoinLeaves; }
+    bool showLeaves() const { return m_showLeaves; }
     bool showDisplayNameChanges() const { return m_showDisplayNameChanges; }
     bool showAvatarChanges() const { return m_showAvatarChanges; }
     QString roomOrder() const { return m_roomOrder; }
     bool unreadFirst() const { return m_unreadFirst; }
     QString spaceOrder() const { return m_spaceOrder; }
 
-    void setShowJoinLeaves(bool shown);
+    void setShowLeaves(bool shown);
     void setShowDisplayNameChanges(bool shown);
     void setShowAvatarChanges(bool shown);
     void setRoomOrder(const QString &order);
@@ -44,7 +44,7 @@ signals:
 private:
     void store(const QString &key, const QVariant &value);
 
-    bool m_showJoinLeaves = false;
+    bool m_showLeaves = false;
     bool m_showDisplayNameChanges = false;
     bool m_showAvatarChanges = false;
     QString m_roomOrder;

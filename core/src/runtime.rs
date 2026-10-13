@@ -23,6 +23,7 @@ use crate::login;
 use crate::profile;
 use crate::linkpreview;
 use crate::location;
+use crate::leftrooms;
 use crate::poll;
 use crate::roomsettings;
 use crate::sendqueue;
@@ -64,6 +65,7 @@ use calls::*;
 mod lists;
 use lists::*;
 use lifecycle::{
+    cross_signing_setup,
     abort_login, logout, password_login, rebuild_store, registration_url, restore_session,
     start_device_login, start_login,
 };
@@ -85,18 +87,67 @@ struct CallbackSlot {
 unsafe impl Send for CallbackSlot {}
 unsafe impl Sync for CallbackSlot {}
 
+/// Who still gets an answer. One lock for both sets, so a reply cannot fall
+/// between a stand-in answer and its note.
+#[derive(Default)]
+struct Debts {
+    /// Command ids in flight and not yet answered; a reply takes its id out.
+    unanswered: std::collections::HashSet<u64>,
+    /// Answered by a stand-in; the late real reply is dropped and the id let go.
+    settled: std::collections::HashSet<u64>,
+}
+
 /// Delivers JSON messages to the front end.
 pub struct Sink {
     slot: std::sync::RwLock<CallbackSlot>,
+    debts: std::sync::Mutex<Debts>,
 }
 
 impl Sink {
+    fn debts(&self) -> std::sync::MutexGuard<'_, Debts> {
+        self.debts.lock().unwrap_or_else(|p| p.into_inner())
+    }
+
+    fn expect_reply(&self, id: u64) {
+        let mut debts = self.debts();
+        debts.settled.remove(&id);
+        debts.unanswered.insert(id);
+    }
+
+    /// Whether `id` is still owed an answer; forgets it either way.
+    #[cfg(test)]
+    fn owed(&self, id: u64) -> bool {
+        self.debts().unanswered.remove(&id)
+    }
+
+    /// Answers `id` in the command's place if it is still owed; a reply the
+    /// command sends later is then dropped. True if this answered.
+    fn stand_in(&self, id: u64, reply: Value) -> bool {
+        {
+            let mut debts = self.debts();
+            if !debts.unanswered.remove(&id) {
+                return false;
+            }
+            debts.settled.insert(id);
+        }
+        self.deliver(&reply);
+        true
+    }
+
+    /// Answers `id` only if nothing has yet; for a command that cannot reply later.
+    fn answer_if_owed(&self, id: u64, reply: Value) {
+        if self.debts().unanswered.remove(&id) {
+            self.deliver(&reply);
+        }
+    }
+
     pub fn new() -> Self {
         Self {
             slot: std::sync::RwLock::new(CallbackSlot {
                 func: None,
                 user_data: std::ptr::null_mut(),
             }),
+            debts: std::sync::Mutex::new(Debts::default()),
         }
     }
 
@@ -111,7 +162,20 @@ impl Sink {
     /// Serialises `value` and hands it to the front end. Messages sent before a
     /// callback is registered are dropped.
     pub fn emit(&self, value: Value) {
-        let Ok(text) = serde_json::to_string(&value) else { return };
+        if value.get("type").and_then(Value::as_str) == Some("reply") {
+            if let Some(id) = value.get("id").and_then(Value::as_u64) {
+                let mut debts = self.debts();
+                if debts.settled.remove(&id) {
+                    return;
+                }
+                debts.unanswered.remove(&id);
+            }
+        }
+        self.deliver(&value);
+    }
+
+    fn deliver(&self, value: &Value) {
+        let Ok(text) = serde_json::to_string(value) else { return };
         let Ok(message) = CString::new(text) else { return };
 
         // Read guard across the call: emitters run side by side, `set_callback`
@@ -197,6 +261,16 @@ struct State {
     /// The woken process's connector, for `push.yield`.
     push_wake: std::sync::Mutex<Option<tokio::task::AbortHandle>>,
     push_yielded: std::sync::atomic::AtomicBool,
+    /// The woken process asked the front end for the store key.
+    push_unlock_asked: std::sync::atomic::AtomicBool,
+    /// Set once that question has an answer, session or not.
+    push_unlocked: tokio::sync::watch::Sender<bool>,
+    /// A pusher the homeserver did not get; retried when the sync runs again.
+    push_dirty: std::sync::atomic::AtomicBool,
+    /// A waiter for the next `Running` is out, to pay that debt.
+    push_waiting: std::sync::atomic::AtomicBool,
+    /// Push work that may hold the client; `teardown` aborts and awaits it.
+    push_tasks: std::sync::Mutex<Vec<tokio::task::AbortHandle>>,
     spaces: Mutex<Option<tokio::task::JoinHandle<()>>>,
     open_space: Mutex<Option<tokio::task::JoinHandle<()>>>,
     /// Behind an `Arc` so a command can clone the handle out and release the
@@ -204,12 +278,19 @@ struct State {
     timeline: Mutex<Option<Arc<TimelineHandle>>>,
     /// The open thread's timeline, next to the room's — same locking rules.
     thread: Mutex<Option<Arc<TimelineHandle>>>,
-    /// Serialises `open_timeline` against itself. Held for the whole open,
-    /// including the network part, which is why it cannot be `timeline`.
+    /// Serialises `open_timeline` and `close_timeline`. Never held across a
+    /// request: a build runs outside it, see `pending_open`.
     opening: Mutex<()>,
-    /// The same for `open_thread`, and deliberately not `opening`: a thread
+    /// The same for the thread, and deliberately not `opening`: a thread
     /// that is slow to build must not hold up a room switch.
     opening_thread: Mutex<()>,
+    /// Raised by every open and every close that meant the view building; a
+    /// build whose number is no longer current is thrown away.
+    open_generation: std::sync::atomic::AtomicU64,
+    thread_generation: std::sync::atomic::AtomicU64,
+    /// The room view or thread being built, stoppable.
+    pending_open: std::sync::Mutex<Option<conversation::PendingOpen>>,
+    pending_thread: std::sync::Mutex<Option<conversation::PendingOpen>>,
     /// Serialises `direct_chat`: a second tap waits and finds the first room.
     opening_direct: Mutex<()>,
     /// Held for every change to the client, the store, the store key and
@@ -225,9 +306,9 @@ struct State {
     /// SQLite pool open, so they are stopped before `reset_store` runs.
     observers: Mutex<Vec<tokio::task::JoinHandle<()>>>,
     verification: verification::Slot,
-    /// How many command tasks are in flight. They cannot be aborted mid-send, so
-    /// they are counted and the sign-out waits briefly for the count to fall.
-    running: std::sync::atomic::AtomicUsize,
+    /// Command tasks in flight. A teardown waits for them briefly, then aborts
+    /// the rest: a straggler in the SDK's retry holds a client over the store.
+    commands: std::sync::Mutex<std::collections::HashMap<tokio::task::Id, (tokio::task::AbortHandle, u64)>>,
     sink: Arc<Sink>,
 }
 
@@ -321,14 +402,33 @@ impl State {
         }
     }
 
-    /// Waits briefly for running commands. Bounded: a command in the SDK's retry
-    /// budget must not hold a sign-out for a quarter of an hour.
+    /// Commands other than the caller that are still running.
+    fn others_running(&self) -> Vec<(tokio::task::AbortHandle, u64)> {
+        let own = tokio::task::try_id();
+        let mut commands = self.commands.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+        commands.retain(|_, (handle, _)| !handle.is_finished());
+        commands
+            .iter()
+            .filter(|(id, _)| Some(**id) != own)
+            .map(|(_, entry)| entry.clone())
+            .collect()
+    }
+
+    /// Waits for running commands, then aborts what is left. Bounded: a command
+    /// in the SDK's retry budget must not hold a sign-out for a quarter of an hour.
     async fn drain_commands(&self, limit: std::time::Duration) {
         let deadline = tokio::time::Instant::now() + limit;
-        while self.running.load(std::sync::atomic::Ordering::SeqCst) > 1
-            && tokio::time::Instant::now() < deadline
-        {
+        while !self.others_running().is_empty() && tokio::time::Instant::now() < deadline {
             tokio::time::sleep(std::time::Duration::from_millis(20)).await;
+        }
+        for (straggler, id) in self.others_running() {
+            straggler.abort();
+            // Aborted before its first poll it has no guard; whoever takes the debt answers.
+            self.sink.stand_in(id, reply_error(id, "signed out"));
+        }
+        let settle = tokio::time::Instant::now() + std::time::Duration::from_secs(2);
+        while !self.others_running().is_empty() && tokio::time::Instant::now() < settle {
+            tokio::time::sleep(std::time::Duration::from_millis(5)).await;
         }
     }
 
@@ -376,16 +476,8 @@ impl State {
     }
 }
 
-/// Starts the dispatcher on `runtime` and returns the channel commands go into.
-pub fn spawn(
-    runtime: &tokio::runtime::Runtime,
-    paths: Paths,
-    store_key: Option<session::StoreKey>,
-    sink: Arc<Sink>,
-) -> mpsc::UnboundedSender<Command> {
-    let (sender, mut receiver) = mpsc::unbounded_channel::<Command>();
-
-    let state = Arc::new(State {
+fn new_state(paths: Paths, store_key: Option<session::StoreKey>, sink: Arc<Sink>) -> Arc<State> {
+    Arc::new(State {
         paths,
         store_key: std::sync::RwLock::new(store_key),
         client: Mutex::new(None),
@@ -400,12 +492,21 @@ pub fn spawn(
         push_gateway: std::sync::Mutex::new(crate::push::Gateway::Unset),
         push_wake: std::sync::Mutex::new(None),
         push_yielded: std::sync::atomic::AtomicBool::new(false),
+        push_unlock_asked: std::sync::atomic::AtomicBool::new(false),
+        push_unlocked: tokio::sync::watch::channel(false).0,
+        push_dirty: std::sync::atomic::AtomicBool::new(false),
+        push_waiting: std::sync::atomic::AtomicBool::new(false),
+        push_tasks: std::sync::Mutex::new(Vec::new()),
         spaces: Mutex::new(None),
         open_space: Mutex::new(None),
         timeline: Mutex::new(None),
         thread: Mutex::new(None),
         opening: Mutex::new(()),
         opening_thread: Mutex::new(()),
+        open_generation: std::sync::atomic::AtomicU64::new(0),
+        thread_generation: std::sync::atomic::AtomicU64::new(0),
+        pending_open: std::sync::Mutex::new(None),
+        pending_thread: std::sync::Mutex::new(None),
         opening_direct: Mutex::new(()),
         session_gate: Mutex::new(()),
         subscriptions: Mutex::new(Subscriptions::default()),
@@ -413,36 +514,82 @@ pub fn spawn(
         directory: Mutex::new(None),
         observers: Mutex::new(Vec::new()),
         verification: Arc::new(Mutex::new(None)),
-        running: std::sync::atomic::AtomicUsize::new(0),
+        commands: std::sync::Mutex::new(std::collections::HashMap::new()),
         sink,
-    });
+    })
+}
+
+/// Starts the dispatcher on `runtime` and returns the channel commands go into.
+pub fn spawn(
+    runtime: &tokio::runtime::Runtime,
+    paths: Paths,
+    store_key: Option<session::StoreKey>,
+    sink: Arc<Sink>,
+) -> mpsc::UnboundedSender<Command> {
+    let (sender, mut receiver) = mpsc::unbounded_channel::<Command>();
+    let state = new_state(paths, store_key, sink);
 
     runtime.spawn(async move {
         while let Some(command) = receiver.recv().await {
             let state = state.clone();
             // Boxed: the combined future of all command arms is large, and
             // moving it to the heap keeps the task allocation small.
-            state.running.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            tokio::spawn(Box::pin(async move {
-                let counted = state.clone();
+            let registry = state.clone();
+            // The session's own commands are what a teardown runs for: never aborted.
+            let abortable = !command.survives_teardown();
+            let command_id = command.id();
+            state.sink.expect_reply(command_id);
+            let task = tokio::spawn(Box::pin(async move {
                 let id = command.id();
-                // A panic here would take the reply and the counter with it, and
-                // the protocol promises exactly one answer per id.
+                // Answers an aborted command and unregisters it, on every way out.
+                let mut guard = CommandGuard { state: state.clone(), id, completed: false };
+                // A panic here would take the reply with it, and the protocol
+                // promises exactly one answer per id.
                 let outcome = futures_util::FutureExt::catch_unwind(
                     std::panic::AssertUnwindSafe(handle(state, command)),
                 )
                 .await;
                 if outcome.is_err() {
-                    counted
+                    guard
+                        .state
                         .sink
-                        .emit(reply_error(id, "the command failed unexpectedly"));
+                        .answer_if_owed(id, reply_error(id, "the command failed unexpectedly"));
                 }
-                counted.running.fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+                guard.completed = true;
             }));
+            if abortable {
+                let mut commands =
+                    registry.commands.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+                if !task.is_finished() {
+                    commands.insert(task.id(), (task.abort_handle(), command_id));
+                }
+            }
         }
     });
 
     sender
+}
+
+/// One answer per id, also for a command a teardown aborted - and only one:
+/// a command that answered before it was cut off is not answered again.
+struct CommandGuard {
+    state: Arc<State>,
+    id: u64,
+    completed: bool,
+}
+
+impl Drop for CommandGuard {
+    fn drop(&mut self) {
+        // Owed after completion too where a worker answers later; only an abort answers here.
+        if !self.completed {
+            self.state.sink.stand_in(self.id, reply_error(self.id, "signed out"));
+        }
+        if let Some(own) = tokio::task::try_id() {
+            let mut commands =
+                self.state.commands.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+            commands.remove(&own);
+        }
+    }
 }
 
 async fn handle(state: Arc<State>, command: Command) {
@@ -464,6 +611,9 @@ async fn handle(state: Arc<State>, command: Command) {
             registration_url(&state, id, homeserver).await
         }
         Command::LoginAbort { .. } => abort_login(&state, id).await,
+        Command::CrossSigningSetup { password, .. } => {
+            cross_signing_setup(&state, id, password).await
+        }
         Command::RoomEnableEncryption { room_id, .. } => {
             enable_room_encryption(&state, id, room_id).await
         }
@@ -471,7 +621,14 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::RoomListStart { .. } => start_room_list(&state, id).await,
         Command::RoomListFilter { pattern, .. } => filter_room_list(&state, id, pattern).await,
         Command::RoomListMore { .. } => load_more_rooms(&state, id).await,
-        Command::RoomListStop { .. } => stop_room_list(&state, id).await,
+        Command::RoomListOrder {
+            by_name,
+            unread_first,
+            ..
+        } => {
+            roomlist::set_order(roomlist::Order { by_name, unread_first });
+            state.sink.emit(reply_ok(id, json!({ "ordered": true })));
+        }
         Command::SpacesStart { .. } => start_spaces(&state, id).await,
         Command::SpacesStop { .. } => stop_spaces(&state, id).await,
         Command::SpaceOpen { room_id, .. } => open_space(&state, id, room_id).await,
@@ -495,10 +652,17 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::RoomMarkRead { room_id, receipt, .. } => {
             mark_room_read(&state, id, room_id, receipt).await
         }
-        Command::RoomResolve { address, .. } => resolve_room(&state, id, address).await,
-        Command::TimelineClose { room_id, .. } => close_timeline(&state, id, room_id).await,
-        Command::TimelinePaginate { room_id, .. } => {
-            paginate_timeline(&state, id, room_id).await
+        Command::RoomResolve { address, local, .. } => {
+            resolve_room(&state, id, address, local).await
+        }
+        Command::TimelineClose { room_id, token, .. } => {
+            close_timeline(&state, id, room_id, token).await
+        }
+        Command::TimelinePaginate { room_id, forwards, .. } => {
+            paginate_timeline(&state, id, room_id, forwards).await
+        }
+        Command::TimelineResync { room_id, token, thread, .. } => {
+            resync_timeline(&state, id, room_id, token, thread).await
         }
         Command::TimelineSend { body, mentions, .. } => {
             send_message(&state, id, body, mentions).await
@@ -615,7 +779,9 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::TimelineReply { event_id, body, mentions, .. } => {
             reply_message(&state, id, event_id, body, mentions).await
         }
-        Command::TimelineEdit { event_id, body, .. } => edit_message(&state, id, event_id, body).await,
+        Command::TimelineEdit { event_id, body, mentions, .. } => {
+            edit_message(&state, id, event_id, body, mentions).await
+        }
         Command::TimelineReact { event_id, key, .. } => react(&state, id, event_id, key).await,
         Command::LinkPreview { url, .. } => {
             linkpreview::handle(state.client().await, &state.sink, id, url).await
@@ -627,6 +793,10 @@ async fn handle(state: Arc<State>, command: Command) {
         | Command::RoomSettingsSetAvatar { .. }
         | Command::RoomSettingsRemoveAvatar { .. } => {
             roomsettings::handle(command, state.client().await, &state.sink).await
+        }
+        // core/src/leftrooms.rs.
+        Command::LeftRoomsList { .. } | Command::LeftRoomsForget { .. } => {
+            leftrooms::handle(command, state.client().await, &state.sink).await
         }
         // Routed, not handled: the poll rules live in core/src/poll.rs.
         // A new poll could take a slice's thread; vote and end carry their relation.
@@ -806,6 +976,31 @@ async fn handle(state: Arc<State>, command: Command) {
             // a busy reply or a replaced call must not unsubscribe the live one.
             release_call_room(&state, &ended).await;
         }
+        Command::CallReject {
+            room_id,
+            call_id,
+            party_id,
+            ..
+        } => {
+            let ended = call_id.clone();
+            call_step(&state, id, move |client| async move {
+                call::reject(&client, &room_id, &call_id, &party_id).await
+            })
+            .await;
+            release_call_room(&state, &ended).await;
+        }
+        Command::CallSelectAnswer {
+            room_id,
+            call_id,
+            party_id,
+            selected_party_id,
+            ..
+        } => {
+            call_step(&state, id, move |client| async move {
+                call::select_answer(&client, &room_id, &call_id, &party_id, &selected_party_id).await
+            })
+            .await
+        }
         Command::CallTurnServers { .. } => turn_servers(&state, id).await,
         Command::VerificationRequest { user_id, .. } => {
             request_verification(&state, id, user_id).await
@@ -819,7 +1014,17 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::EncryptionStatus { .. } => encryption_status(&state, id).await,
         Command::StorageStatus { .. } => storage_status(&state, id),
         Command::StorageRepair { .. } => repair_storage(&state, id).await,
-        Command::PushStatus { quiet, .. } => push_status(&state, id, quiet).await,
+        Command::PushStatus {
+            quiet,
+            legacy_wanted,
+            ..
+        } => push_status(&state, id, quiet, legacy_wanted).await,
+        Command::PushDistributor {
+            distributor,
+            enable,
+            ..
+        } => push_select(&state, id, distributor, enable).await,
+        Command::PushUnlock { store_key, .. } => push_unlock(&state, id, store_key).await,
         Command::PushEnable { .. } => push_enable(&state, id).await,
         Command::PushDisable { .. } => push_disable(&state, id).await,
         Command::PushGateway {
@@ -954,5 +1159,206 @@ mod sink_tests {
         sink.set_callback(None, std::ptr::null_mut());
         assert_eq!(PHASE.load(Ordering::SeqCst), 2);
         emitter.join().unwrap();
+    }
+}
+
+#[cfg(test)]
+mod reply_tests {
+    use super::*;
+    use std::ffi::CStr;
+    use std::time::Duration;
+
+    type Heard = std::sync::Mutex<Vec<Value>>;
+
+    extern "C" fn record(user_data: *mut c_void, message: *const c_char) {
+        let heard = unsafe { &*(user_data as *const Heard) };
+        let text = unsafe { CStr::from_ptr(message) }.to_string_lossy();
+        heard.lock().unwrap().push(serde_json::from_str(&text).unwrap());
+    }
+
+    /// A sink that records; the box lives as long as the test.
+    fn recording_sink() -> (Arc<Sink>, Box<Heard>) {
+        let heard = Box::new(Heard::default());
+        let sink = Arc::new(Sink::new());
+        sink.set_callback(Some(record), &*heard as *const Heard as *mut c_void);
+        (sink, heard)
+    }
+
+    fn replies(heard: &Heard, id: u64) -> Vec<Value> {
+        heard
+            .lock()
+            .unwrap()
+            .iter()
+            .filter(|message| message["type"] == "reply" && message["id"] == id)
+            .cloned()
+            .collect()
+    }
+
+    fn scratch(name: &str) -> Paths {
+        let dir = std::env::temp_dir().join(format!("xmatic-reply-{name}-{}", std::process::id()));
+        Paths::new(&dir, &dir)
+    }
+
+    #[test]
+    fn a_reply_settles_the_debt_and_an_event_does_not() {
+        let sink = Sink::new();
+        sink.expect_reply(1);
+        sink.emit(event("roomlist.known", json!({})));
+        assert!(sink.owed(1));
+        assert!(!sink.owed(1), "owed forgets");
+        sink.expect_reply(2);
+        sink.emit(reply_ok(2, json!({})));
+        assert!(!sink.owed(2));
+    }
+
+    #[tokio::test]
+    async fn an_aborted_command_is_answered_once() {
+        let (sink, heard) = recording_sink();
+        let state = new_state(scratch("abort"), None, sink.clone());
+        sink.expect_reply(7);
+        let (started, running) = tokio::sync::oneshot::channel();
+        let task = tokio::spawn(async move {
+            let _guard = CommandGuard { state, id: 7, completed: false };
+            let _ = started.send(());
+            std::future::pending::<()>().await;
+        });
+        running.await.unwrap();
+        task.abort();
+        assert!(task.await.unwrap_err().is_cancelled());
+        let answers = replies(&heard, 7);
+        assert_eq!(answers.len(), 1);
+        assert_eq!(answers[0]["ok"], false);
+        assert!(!sink.owed(7));
+    }
+
+    #[tokio::test]
+    async fn an_answered_command_is_not_answered_again() {
+        let (sink, heard) = recording_sink();
+        let state = new_state(scratch("answered"), None, sink.clone());
+        // Completed normally.
+        sink.expect_reply(8);
+        {
+            let mut guard = CommandGuard { state: state.clone(), id: 8, completed: false };
+            sink.emit(reply_ok(8, json!({})));
+            guard.completed = true;
+        }
+        // Answered, then cut off before completing.
+        sink.expect_reply(9);
+        let (started, running) = tokio::sync::oneshot::channel();
+        let inner = sink.clone();
+        let task = tokio::spawn(async move {
+            let _guard = CommandGuard { state, id: 9, completed: false };
+            inner.emit(reply_ok(9, json!({})));
+            let _ = started.send(());
+            std::future::pending::<()>().await;
+        });
+        running.await.unwrap();
+        task.abort();
+        let _ = task.await;
+        assert_eq!(replies(&heard, 8).len(), 1);
+        let answers = replies(&heard, 9);
+        assert_eq!(answers.len(), 1);
+        assert_eq!(answers[0]["ok"], true);
+    }
+
+    #[test]
+    fn a_late_reply_after_a_stand_in_is_dropped() {
+        let (sink, heard) = recording_sink();
+        sink.expect_reply(21);
+        assert!(sink.stand_in(21, reply_error(21, "signed out")));
+        // The straggler answers after all: dropped, and the id let go.
+        sink.emit(reply_ok(21, json!({})));
+        let answers = replies(&heard, 21);
+        assert_eq!(answers.len(), 1);
+        assert_eq!(answers[0]["ok"], false);
+        // A later reuse of the id is delivered again.
+        sink.emit(reply_ok(21, json!({})));
+        assert_eq!(replies(&heard, 21).len(), 2);
+    }
+
+    #[test]
+    fn a_stand_in_for_an_answered_command_says_nothing() {
+        let (sink, heard) = recording_sink();
+        sink.expect_reply(22);
+        sink.emit(reply_ok(22, json!({})));
+        assert!(!sink.stand_in(22, reply_error(22, "signed out")));
+        assert_eq!(replies(&heard, 22).len(), 1);
+        assert_eq!(replies(&heard, 22)[0]["ok"], true);
+    }
+
+    #[test]
+    fn a_panic_after_the_reply_adds_no_second() {
+        let (sink, heard) = recording_sink();
+        sink.expect_reply(25);
+        sink.emit(reply_ok(25, json!({})));
+        sink.answer_if_owed(25, reply_error(25, "the command failed unexpectedly"));
+        assert_eq!(replies(&heard, 25).len(), 1);
+        sink.expect_reply(26);
+        sink.answer_if_owed(26, reply_error(26, "the command failed unexpectedly"));
+        assert_eq!(replies(&heard, 26).len(), 1);
+    }
+
+    #[test]
+    fn a_worker_reply_never_owed_goes_through() {
+        let (sink, heard) = recording_sink();
+        sink.emit(reply_ok(23, json!({})));
+        sink.emit(reply_ok(23, json!({})));
+        assert_eq!(replies(&heard, 23).len(), 2);
+    }
+
+    #[tokio::test]
+    async fn an_aborted_commands_late_worker_reply_is_dropped() {
+        let (sink, heard) = recording_sink();
+        let state = new_state(scratch("late"), None, sink.clone());
+        sink.expect_reply(24);
+        let (started, running) = tokio::sync::oneshot::channel();
+        let task = tokio::spawn(async move {
+            let _guard = CommandGuard { state, id: 24, completed: false };
+            let _ = started.send(());
+            std::future::pending::<()>().await;
+        });
+        running.await.unwrap();
+        task.abort();
+        let _ = task.await;
+        sink.emit(reply_ok(24, json!({})));
+        let answers = replies(&heard, 24);
+        assert_eq!(answers.len(), 1);
+        assert_eq!(answers[0]["ok"], false);
+    }
+
+    #[test]
+    fn the_dispatcher_answers_every_command_once() {
+        let runtime = tokio::runtime::Builder::new_multi_thread()
+            .worker_threads(2)
+            .enable_all()
+            .build()
+            .unwrap();
+        let (sink, heard) = recording_sink();
+        let commands = spawn(&runtime, scratch("dispatch"), None, sink.clone());
+        for text in [
+            r#"{"cmd":"roomlist.filter","id":11,"pattern":""}"#,
+            r#"{"cmd":"roomlist.order","id":12,"byName":true}"#,
+            r#"{"cmd":"roomlist.more","id":13}"#,
+        ] {
+            commands.send(serde_json::from_str(text).unwrap()).unwrap();
+        }
+        let deadline = std::time::Instant::now() + Duration::from_secs(5);
+        while [11, 12, 13].iter().any(|id| replies(&heard, *id).is_empty())
+            && std::time::Instant::now() < deadline
+        {
+            std::thread::sleep(Duration::from_millis(10));
+        }
+        std::thread::sleep(Duration::from_millis(50));
+        assert_eq!(replies(&heard, 11).len(), 1);
+        assert_eq!(replies(&heard, 11)[0]["ok"], false);
+        assert_eq!(replies(&heard, 12).len(), 1);
+        assert_eq!(replies(&heard, 12)[0]["ok"], true);
+        assert_eq!(replies(&heard, 13).len(), 1);
+        for id in [11, 12, 13] {
+            assert!(!sink.owed(id));
+        }
+        sink.set_callback(None, std::ptr::null_mut());
+        drop(commands);
+        runtime.shutdown_timeout(Duration::from_secs(1));
     }
 }

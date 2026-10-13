@@ -10,6 +10,8 @@ pub enum Phase {
     /// A sign-in owns it; its network part runs outside the gate.
     LoggingIn,
     Session,
+    /// Being torn down: no command gets the client any more.
+    Closing,
 }
 
 /// The slot's state. Every assignment and every removal raises the
@@ -31,6 +33,12 @@ impl Slot {
         self.generation += 1;
         self.phase = phase;
         self.generation
+    }
+
+    /// Raises the generation so stale holders see they lost the client.
+    pub fn closing(&mut self) {
+        self.generation += 1;
+        self.phase = Phase::Closing;
     }
 
     pub fn cleared(&mut self) {

@@ -9,7 +9,12 @@ Page {
 
     /// Cache key of the full size image; the thumbnail uses a different one.
     property string mediaKey
+    /// What the picture is drawn from: only `matrix.imageSource`, never a path.
     property string source: ""
+    /// The file on disk, for saving, sharing and forwarding; set while `source`
+    /// stays empty for a picture that is not drawn (SVG, oversized).
+    property string filePath: ""
+    readonly property bool refused: page.filePath.length > 0 && page.source.length === 0
     /// The fetch failed - refused, dropped, given up on. Without it the indicator
     /// turns for the life of the page over something that is not coming.
     property bool mediaFailed: false
@@ -32,6 +37,16 @@ Page {
 
     onSourceChanged: page.playing = false
 
+    function take(key) {
+        var path = matrix.mediaPath(key)
+        if (path.length > 0) {
+            page.filePath = "file://" + path
+            page.source = matrix.imageSource(key)
+        }
+    }
+
+    Component.onCompleted: take(page.mediaKey)
+
     allowedOrientations: Orientation.All
 
     Connections {
@@ -45,13 +60,8 @@ Page {
         onMediaReady: {
             if (key === page.mediaKey) {
                 // The file is here either way - "Save" and "Share" work from the
-                // pulley. It is only not handed to a decoder that would have to
-                // hold it whole.
-                if (matrix.mediaShowable(key)) {
-                    page.source = "file://" + path
-                } else {
-                    page.mediaFailed = true
-                }
+                // pulley. A refused one is only not handed to a decoder.
+                page.take(key)
             }
         }
     }
@@ -65,27 +75,27 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Forward")
-                enabled: page.source.length > 0
+                enabled: page.filePath.length > 0
                 onClicked: pageStack.push(Qt.resolvedUrl("ForwardPage.qml"), {
-                                              path: page.source,
+                                              path: page.filePath,
                                               mimeType: page.mimeType
                                           })
             }
 
             MenuItem {
                 text: qsTr("Share")
-                enabled: page.source.length > 0
+                enabled: page.filePath.length > 0
                 onClicked: {
-                    shareAction.resources = [page.source]
+                    shareAction.resources = [page.filePath]
                     shareAction.trigger()
                 }
             }
 
             MenuItem {
                 text: qsTr("Save to gallery")
-                enabled: page.source.length > 0
+                enabled: page.filePath.length > 0
                 onClicked: {
-                    var saved = matrix.saveToPictures(page.source, page.fileName)
+                    var saved = matrix.saveToPictures(page.filePath, page.fileName)
                     page.savedTo = saved
                     savedBanner.restart()
                 }
@@ -219,7 +229,7 @@ Page {
     BusyIndicator {
         anchors.centerIn: parent
         size: BusyIndicatorSize.Large
-        running: page.source.length === 0 && !page.mediaFailed
+        running: page.filePath.length === 0 && !page.mediaFailed
     }
 
     // A state with no action and no explanation is a dead end. The attachment is
@@ -233,6 +243,17 @@ Page {
         color: Theme.secondaryColor
         textFormat: Text.PlainText
         text: qsTr("This attachment could not be loaded")
+    }
+
+    Label {
+        anchors.centerIn: parent
+        width: parent.width - 4 * Theme.horizontalPageMargin
+        visible: page.refused && !page.mediaFailed
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.Wrap
+        color: Theme.secondaryColor
+        textFormat: Text.PlainText
+        text: qsTr("This picture is not shown on this device. Save or share it from the pull-down menu.")
     }
 
     ShareAction {

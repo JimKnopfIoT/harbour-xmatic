@@ -367,14 +367,6 @@
         <translation>Istabas notikumi</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Rādīt pievienošanos un aiziešanu</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Ielūgumi, izraidīšanas un aizliegumi tiek rādīti vienmēr.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Rādīt attēlojamā vārda maiņas</translation>
     </message>
@@ -450,6 +442,14 @@
         <source>Space list order</source>
         <translation>Telpu saraksta secība</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Rādīt aiziešanas</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Pievienošanās, ielūgumi, izņemšanas un aizliegumi vienmēr tiek rādīti.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -512,6 +512,10 @@
     <message>
         <source>answered on another device</source>
         <translation>atbildēts citā ierīcē</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>noraidīts citā ierīcē</translation>
     </message>
 </context>
 <context>
@@ -795,6 +799,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Vispirms ievadi paroli.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -961,6 +972,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Problēmas ar atslēgu krātuvi?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Šim kontam vēl nav šķērsparakstīšanas, tāpēc citas ierīces nevar verificēt šo. Ievadi paroli vienreiz, lai to iestatītu; tā tiek nosūtīta tavam mājas serverim un netiek glabāta.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Parole</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Iestatīt šķērsparakstīšanu</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1045,6 +1068,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Šo pielikumu neizdevās ielādēt</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Šis attēls šajā ierīcē netiek rādīts. Saglabā vai kopīgo to no nolaižamās izvēlnes.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1092,6 +1119,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Sekot ierīcei</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Pamestās istabas</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Istaba tiek aizmirsta</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Istaba bez nosaukuma</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Aizliegts</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Pamesta</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Nav pamestu istabu</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Istabas, kuras pameti vai noraidīji citā lietotnē vai no kurām tevi izņēma vai aizliedza. Šī ierīce tās patur, līdz tās tiek aizmirstas, un līdz tam serveris ieskaita istabu, no kuras tevi izņēma vai aizliedza. Pieskaries vienai, lai to aizmirstu.</translation>
     </message>
 </context>
 <context>
@@ -1285,10 +1344,6 @@
         <translation>Tava sesija ir beigusies. Piesakies vēlreiz.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Jauna ziņa</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Attēls</translation>
     </message>
@@ -1327,6 +1382,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Vārtejai jābūt https URL.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Šo attēlu neizdevās samazināt, un tas satur metadatus, piemēram, uzņemšanas vietu, tāpēc tas netika nosūtīts. Sūti to oriģinālajā izšķirtspējā, lai nosūtītu to, kāds tas ir.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>Push reģistrāciju neizdevās noņemt no mājas servera. Tā tiks noņemta, kad šis konts nākamreiz pierakstīsies šeit.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Cita lietotne pa to laiku ir iestatījusi šķērsparakstīšanu šim kontam. Verificē šo ierīci no turienes.</translation>
     </message>
 </context>
 <context>
@@ -1792,10 +1859,6 @@
         <translation>Ziņas teksts paziņojumos</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Izslēgts: paziņojums saka tikai, cik ziņu pienācis. Ieslēgts: rāda jaunāko ziņu — arī bloķēšanas ekrānā.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Rādīt citu lasīšanas statusu</translation>
     </message>
@@ -1967,6 +2030,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Izslēgts netiek ne sekots, ne rādīts, kurš ko izlasījis, kas arī notur sarunu plūstošāku. Ieslēgts tavas ziņas rāda, cik cilvēku tās izlasījuši.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Izslēgts: paziņojums saka tikai, ka ir pienākuši ziņojumi, nevis no kā vai kas. Ieslēgts: tas rāda jaunāko ziņojumu — arī bloķēšanas ekrānā.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2013,10 +2080,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Kas atstāj šo ierīci</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Tavam serverim tiek paziņota adrese push pakalpojumā, un tas katram paziņojumam sūta vārtejai istabas un ziņas identifikatoru. Bez teksta: push nes tikai identifikatorus, bet ziņu šī ierīce iegūst un atšifrē pati. Šī adrese ir noslēpums — kam tā ir, var sūtīt šim tālrunim paziņojumu.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2094,6 +2157,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Izmantot UnifiedPush publisko vārteju</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Ir instalēti vairāki izplatītāji. Izvēlies to, ko izmanto xmatic.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>Push izplatītājs vairs nav instalēts. Nekas nepienāk, kamēr tas nav atpakaļ. Instalē to vēlreiz vai izslēdz push.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tavs mājas serveris saņem adresi push pakalpojumā un katram paziņojumam nosūta vārtejai istabas un ziņojuma identifikatoru un tavu nelasīto skaitu. Bez ziņojuma teksta: šī ierīce pati iegūst un atšifrē ziņojumu. Šī adrese ir noslēpums — kam tā ir, tas var nosūtīt šim tālrunim paziņojumu.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Pirms atinstalē xmatic, izslēdz šeit push. Citādi mājas serveris patur pusher un turpina sūtīt uz vārteju.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2104,6 +2183,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>Push izplatītājs atmeta xmatic. Ieslēdz push no jauna sadaļā Konts.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Atver xmatic vienreiz, lai pabeigtu push paziņojumu iestatīšanu.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic vēl apstrādā paziņojumu. Atver to vēlreiz pēc brīža.</translation>
     </message>
 </context>
 <context>
@@ -2158,6 +2245,10 @@
         <source>Discover rooms</source>
         <translation>Atklāt istabas</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Pamestās istabas (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2172,6 +2263,10 @@
     <message>
         <source>Space</source>
         <translation>Telpa</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Nav nosūtīts – atver istabu, lai izlemtu</translation>
     </message>
 </context>
 <context>
@@ -2468,12 +2563,16 @@
         <translation>Vietējie dati ir bojāti</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Daļu šajā ierīcē saglabāto datu vairs nevar izlasīt, un xmatic nespēja to darbības laikā izlabot — tāpēc tas apturēja sinhronizāciju, nevis atkal sastaptos ar to pašu rindu. Aizver lietotni un palaid to no jauna. Ja pēc tam joprojām trūkst istabu, izrakstīšanās un atkārtota pierakstīšanās izveido vietējos datus no jauna — bet tā arī nomaina šīs ierīces atslēgas: vispirms šifrēšanas lapā pārbaudi, vai atslēgu rezerves kopija ir ieslēgta.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Šis serveris caur sliding sync – sinhronizāciju, kas vajadzīga šai lietotnei – piegādā tikai %1 no tavām %2 istabām. Trūkstošās – bieži tērzēšanas caur tiltiem – šeit nevar parādīt; lietotnes ar klasisko sinhronizāciju tās joprojām redz.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Daļu šajā ierīcē saglabāto datu vairs nevar nolasīt, un xmatic to nevarēja izlabot darbības laikā — tāpēc tas apturēja sinhronizāciju, nevis atkal saskārās ar to pašu rindu. Istabu datu pārbūvēšana vēlreiz iegūst istabas un ziņojumus un patur šīs ierīces atslēgas. Ja tas nepalīdz, izrakstīšanās un pierakstīšanās pārbūvē visu — bet aizstāj šīs ierīces atslēgas; tāpēc vispirms šifrēšanas lapā pārbaudi, ka atslēgu dublējums ir ieslēgts.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Pārbūvēt istabu datus</translation>
     </message>
 </context>
 <context>
@@ -2976,6 +3075,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 nomainīja profila attēlu</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 nomainīja attēlojamo vārdu uz %2 un profila attēlu</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 noņēma attēlojamo vārdu un nomainīja profila attēlu</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Šajā ierīcē netiek rādīts. Pieskaries, lai atvērtu.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3362,6 +3473,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Izslēgts, attēls pirms nosūtīšanas tiek samazināts, un tā metadati – tostarp uzņemšanas vieta – līdzi neceļo.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Animācijas un zīmējumi tiek sūtīti, kādi tie ir, ar visiem metadatiem.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3416,6 +3531,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Aptauju neizdevās nosūtīt.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Pielikumu neizdevās nosūtīt.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>Serveris nepieņem tik lielus failus. Atmet to un nosūti mazāku.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>Savienojums sūtīšanas laikā vairākas reizes pārtrūka. Nosūti to vēlreiz ar stabilāku savienojumu vai atmet to.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>Serveris to nav pieņēmis pusstundu. Nosūti to vēlreiz vai atmet.</translation>
     </message>
 </context>
 <context>
@@ -3824,14 +3955,6 @@
     <message>
         <source>Event</source>
         <translation>Notikums</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Nevar atšifrēt — šai ierīcei trūkst atslēgas</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Ziņa izdzēsta</translation>
     </message>
     <message>
         <source>Attachment</source>

@@ -39,7 +39,7 @@ pass without a native speaker — usable, not verified.
 | el hu ro et lv lt is | | machine | |
 | ga mt | Irish, Maltese | machine, low confidence | 3 and 4 plural forms; smallest corpora |
 | zh_CN | Simplified Chinese | machine | one plural form; `Space` kept as the English term |
-| hi | Hindi | machine, low confidence | one plural form; informal (तुम) throughout, as everywhere else |
+| hi | Hindi | machine, low confidence | two plural forms; informal (तुम) throughout, as everywhere else |
 | ja | Japanese | machine | one plural form; polite plain form (ですます) for sentences, bare nouns on buttons |
 | fa | Persian | machine, low confidence | one plural form by Qt's rule - a second one is dropped by lupdate; **right-to-left, and the layout does not mirror yet** |
 | ar | Arabic | machine, low confidence | six plural forms; **right-to-left, and the layout does not mirror yet** |

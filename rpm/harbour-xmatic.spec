@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.46.5
+Version:    0.46.8
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -27,6 +27,8 @@ Requires:   qt5-qtdocgallery
 Requires:   qt5-qtdeclarative-import-folderlistmodel
 # The photo page reads the device's rotation for the picture's orientation.
 Requires:   qt5-qtdeclarative-import-sensors
+# The root window imports QtMultimedia (ringer, recorder): without it no page loads.
+Requires:   qt5-qtdeclarative-import-multimedia
 Requires:   sailfish-content-graphics
 Requires:   nemo-qml-plugin-notifications-qt5
 # Calls load these at run time rather than linking them, so they have to be
@@ -53,6 +55,8 @@ Requires:   sailfishsecretsdaemon-secretsplugin-common
 Requires:   sailfishsecretsdaemon-secretsplugins-default
 Requires:   sailfishsecretsdaemon-cryptoplugins-default
 BuildRequires: pkgconfig(sailfishapp)
+# The QML platform checks in the .pro run at build time.
+BuildRequires: /usr/bin/python3
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(Qt5Quick)
@@ -117,6 +121,64 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Oct 13 2026 harbour-xmatic contributors 0.46.8-1
+- Leaving a room, declining an invitation or forgetting a left room no longer
+  empties the stored history of every other room.
+- Push: only this device's pushers are touched, so two devices on one
+  account no longer switch each other's push off. The woken app takes the
+  storage key only after a push has arrived, saves refreshed sign-in tokens
+  before handing over, shows banners in the app's language and keeps rooms
+  out of its files. Several distributors can be chosen between; a missing
+  one is shown; an old 0.45 setup carries over.
+- Jumping to a search hit, quote or pin no longer freezes room switching on a
+  slow line, and the slice can be read forward to the newest message.
+- A large attachment on a weak line stops after a few attempts and asks,
+  instead of uploading again and again; a file the server refuses as too
+  large says so.
+- Signing out and an expired session share one teardown; nothing of the old
+  account survives into the next.
+- Password accounts without cross-signing get it when the session starts,
+  where the server asks for nothing more.
+- Calls: declining stops the account's other devices ringing; with several
+  answering devices the caller picks one.
+- Room list: sorting by name, unread first and favourites covers every room;
+  the counter and the missing-rooms hint compare what can be compared; marked
+  unread, mutes from other clients and late room names show up.
+- Joins are always shown; edits keep emotes and mentions.
+- The ignore list is never overwritten from a guess. Links from other apps
+  ask no server before you say yes. The voice decoder gets no socket. Space
+  colours are kept encrypted. A received SVG is not decoded.
+- Damaged local data offers a rebuild that keeps this device's keys.
+- The build checks every QML file against the platform's Qt, and every
+  handler on the bridge against its signals.
+- A password account without cross-signing is asked for its password once on
+  the encryption page; it is dropped once that one request is answered,
+  and waits for nothing else.
+- Voice messages are decoded in a process that can read but neither write
+  files nor open a connection.
+- Received SVG pictures, and pictures too large to decode, are not drawn
+  anywhere: avatars, quotes, link previews and the attachment picker
+  included; they can still be saved or shared. GIF and SVG with metadata
+  are not sent unasked; PNG text blocks are stripped.
+- A text costs no try where the server never answered: a dead connection
+  never sets it aside. An attachment stops after three failed attempts and
+  asks; a text only after the server has refused it ten times over half an
+  hour. A room with nothing waiting for a decision resumes when the
+  connection is back; the chat list marks the others.
+- Cross-signing is never set up over an identity another app created, and a
+  setup cut off half way is completed at the next start.
+- Push: switching off and signing out remove the registration even when the
+  distributor does not answer; a pusher left behind is removed at the next
+  sign-in of that account; the woken app no longer reads the key for a
+  distributor's own messages.
+- A Matrix link that starts the app opens again: a call newer than the
+  platform's Qt stopped the start-up handler before it reached the link.
+- The room count above the chat list shows only while the list is still
+  loading; the server's number includes spaces and left rooms, which the
+  list never shows, and read as rooms gone missing.
+- Left rooms: rooms left elsewhere, or removed or banned from, are listed
+  under Rooms and can be forgotten, so the server stops counting them.
+
 * Sun Oct 11 2026 harbour-xmatic contributors 0.46.5-1
 - Rooms the server leaves out of sliding sync are named: where it delivers
   fewer rooms than the account is in - typically bridged chats on some hosted

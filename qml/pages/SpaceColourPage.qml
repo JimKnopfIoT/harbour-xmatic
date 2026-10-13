@@ -47,6 +47,16 @@ Page {
                 text: qsTr("Marking the space on a room's picture is switched off under Account, Appearance. Until it is on, this colour is drawn nowhere.")
             }
 
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                visible: !matrix.spaceMarkers.editable
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryHighlightColor
+                text: qsTranslate("MatrixBridge", "The stored lists cannot be read right now.")
+            }
+
             // The row as the chat list draws it, so the choice is made against
             // what it will look like rather than against a swatch.
             Item {
@@ -91,6 +101,7 @@ Page {
                 text: qsTr("Automatic colour")
                 description: qsTr("Taken from the space itself, a different one for each")
                 checked: !page.chosen
+                enabled: matrix.spaceMarkers.editable
                 automaticCheck: false
                 onClicked: {
                     if (page.chosen) {
@@ -105,6 +116,7 @@ Page {
             ColorField {
                 id: colorField
 
+                enabled: matrix.spaceMarkers.editable
                 onEdited: matrix.spaceMarkers.setSpaceColour(page.spaceId, colour)
             }
         }

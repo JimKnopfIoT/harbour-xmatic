@@ -31,6 +31,9 @@ public:
 
 signals:
     void countChanged();
+    /// An operation could not be applied, so every later index is suspect. Once
+    /// until the next reset: the owner asks the core for one.
+    void outOfStep();
 
 protected:
     /// Reads one role from a row. The default takes the JSON member named like
@@ -48,10 +51,12 @@ protected:
 private:
     void applyOperation(const QJsonObject &operation);
     /// Says that a diff could not be applied. See the definition.
-    void reportDrift(const QString &op, int index) const;
+    void reportDrift(const QString &op, int index);
     const QByteArray &fieldFor(int role) const;
 
     QVector<QJsonObject> m_rows;
+    /// Drift was reported and no reset has come since.
+    bool m_outOfStep = false;
     /// roleNames() builds its table anew on every call, and data() is asked
     /// once per role per row per repaint. Built once here instead.
     mutable QHash<int, QByteArray> m_fields;

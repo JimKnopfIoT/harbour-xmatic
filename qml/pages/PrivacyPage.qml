@@ -101,7 +101,7 @@ Page {
 
             TextSwitch {
                 text: qsTr("Message text in notifications")
-                description: qsTr("Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.")
+                description: qsTr("Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.")
                 checked: settings.notificationPreview
                 automaticCheck: false
                 onClicked: settings.notificationPreview = !settings.notificationPreview

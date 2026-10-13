@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.46.5"
+version = "0.46.8"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -62,6 +62,9 @@ matrix-sdk-ui = "=0.19.1"
 leghorn = { git = "https://git.agnos.is/projectmoon/foghorn.git", rev = "853d6e35720e5e0eccfa9c1a3a68a0e128335b73", default-features = false, features = ["matrix"] }
 # Installs aws-lc-rs as the default provider before Leghorn would install ring.
 rustls = { version = "0.23", default-features = false, features = ["aws_lc_rs"] }
+# Gives the old connector's registration back to its distributor. Already in
+# the tree through Leghorn, pinned to what the lock file resolved, same features.
+zbus = { version = "=5.19.0", default-features = false, features = ["tokio"] }
 # Only for `UtdCause`: the timeline hands the reason a message could not be
 # decrypted over as this type, and neither matrix-sdk nor matrix-sdk-ui
 # re-exports it. The crate is already in the tree as a dependency of both, and

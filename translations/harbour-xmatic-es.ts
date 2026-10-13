@@ -366,14 +366,6 @@
         <translation>Eventos de la sala</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Mostrar entradas y salidas</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Las invitaciones, expulsiones y bloqueos se muestran siempre.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Mostrar cambios de nombre visible</translation>
     </message>
@@ -449,6 +441,14 @@
         <source>Space list order</source>
         <translation>Orden de la lista de espacios</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Mostrar salidas</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Las entradas, invitaciones, expulsiones y vetos se muestran siempre.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -511,6 +511,10 @@
     <message>
         <source>answered on another device</source>
         <translation>contestada en otro dispositivo</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>rechazada en otro dispositivo</translation>
     </message>
 </context>
 <context>
@@ -794,6 +798,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Introduce primero tu contraseña.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -959,6 +970,18 @@
         <source>Trouble with the key storage?</source>
         <translation>¿Problemas con el almacén de claves?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Esta cuenta aún no tiene firma cruzada, así que otros dispositivos no pueden verificar este. Introduce tu contraseña una vez para configurarla; se envía a tu servidor y no se guarda.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Contraseña</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Configurar firma cruzada</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1043,6 +1066,10 @@
         <source>This attachment could not be loaded</source>
         <translation>No se ha podido cargar este adjunto</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Esta imagen no se muestra en este dispositivo. Guárdala o compártela desde el menú desplegable.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1090,6 +1117,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Seguir al dispositivo</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Salas abandonadas</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Olvidando la sala</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Sala sin nombre</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Vetado</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Abandonada</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>No hay salas abandonadas</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Salas que abandonaste o rechazaste en otra aplicación, o de las que te expulsaron o vetaron. Este dispositivo las guarda hasta que se olvidan, y hasta entonces el servidor cuenta una sala de la que te expulsaron o vetaron. Toca una para olvidarla.</translation>
     </message>
 </context>
 <context>
@@ -1283,10 +1342,6 @@
         <translation>Tu sesión ha terminado. Inicia sesión de nuevo.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Mensaje nuevo</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Imagen</translation>
     </message>
@@ -1325,6 +1380,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>La pasarela debe ser una URL https.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Esta imagen no se pudo reducir y contiene metadatos, como dónde se tomó, así que no se envió. Envíala en resolución original para enviarla tal cual.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>No se pudo eliminar el registro push del servidor. Se eliminará la próxima vez que esta cuenta inicie sesión aquí.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Otra aplicación ha configurado entretanto la firma cruzada para esta cuenta. Verifica este dispositivo desde allí.</translation>
     </message>
 </context>
 <context>
@@ -1789,10 +1856,6 @@
         <translation>Texto del mensaje en las notificaciones</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Desactivado, una notificación solo dice cuántos mensajes llegaron. Activado, muestra el último mensaje — también en la pantalla de bloqueo.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Mostrar el estado de lectura de otros</translation>
     </message>
@@ -1964,6 +2027,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Desactivado, no se sigue ni se muestra quién ha leído qué, lo que además mantiene la conversación más fluida. Activado, tus mensajes indican cuántas personas los han leído.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Desactivado, una notificación solo dice que llegaron mensajes, no de quién ni qué. Activado, muestra el último mensaje, también en la pantalla de bloqueo.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2010,10 +2077,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Qué sale de este dispositivo</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>A tu servidor se le indica una dirección en el servicio push, y envía a la pasarela un identificador de sala y de mensaje por cada notificación. Sin texto del mensaje: el push lleva solo identificadores y este dispositivo obtiene y descifra el mensaje por su cuenta. Esa dirección es un secreto: quien la tenga puede enviar una notificación a este teléfono.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2091,6 +2154,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Usar la pasarela pública de UnifiedPush</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Hay varios distribuidores instalados. Elige el que usa xmatic.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>El distribuidor push ya no está instalado. No llega nada hasta que vuelva. Instálalo de nuevo o desactiva el push.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tu servidor recibe una dirección en el servicio push y envía a la pasarela, por cada notificación, un identificador de sala y de mensaje y tu número de no leídos. Ningún texto de mensaje: este dispositivo obtiene y descifra el mensaje por sí mismo. Esa dirección es un secreto: quien la tenga puede enviar una notificación a este teléfono.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Antes de desinstalar xmatic, desactiva aquí el push. Si no, el servidor conserva el pusher y sigue enviando a la pasarela.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2101,6 +2180,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>El distribuidor push ha dado de baja a xmatic. Vuelve a activar el push en Cuenta.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Abre xmatic una vez para terminar de configurar las notificaciones push.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic todavía está procesando una notificación. Vuelve a abrirlo en un momento.</translation>
     </message>
 </context>
 <context>
@@ -2155,6 +2242,10 @@
         <source>Discover rooms</source>
         <translation>Descubrir salas</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Salas abandonadas (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2169,6 +2260,10 @@
     <message>
         <source>Space</source>
         <translation>Espacio</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>No enviado: abre la sala para decidir</translation>
     </message>
 </context>
 <context>
@@ -2465,12 +2560,16 @@
         <translation>Datos locales dañados</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Parte de los datos guardados en este dispositivo ya no se puede leer, y xmatic no ha podido arreglarlo en marcha, así que ha detenido la sincronización en lugar de volver a encontrarse con la misma fila. Cierra la aplicación y vuelve a abrirla. Si después siguen faltando salas, cerrar sesión y volver a iniciarla reconstruye los datos locales, pero también sustituye las claves de este dispositivo: comprueba antes en la página de cifrado que la copia de seguridad de claves está activada.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Este servidor solo entrega %1 de tus %2 salas mediante sliding sync, la sincronización que necesita esta app. Las que faltan —a menudo chats a través de puentes— no se pueden mostrar aquí; las apps con la sincronización clásica sí las siguen viendo.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Parte de los datos guardados en este dispositivo ya no se puede leer, y xmatic no ha podido arreglarlo mientras funcionaba, así que ha detenido la sincronización en lugar de volver a toparse con la misma fila. Reconstruir los datos de las salas vuelve a obtener salas y mensajes y conserva las claves de este dispositivo. Si eso no ayuda, cerrar sesión y volver a entrar lo reconstruye todo, pero sustituye las claves de este dispositivo; comprueba antes en la página de cifrado que la copia de seguridad de claves está activada.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Reconstruir datos de las salas</translation>
     </message>
 </context>
 <context>
@@ -2972,6 +3071,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 cambió su foto de perfil</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 cambió su nombre visible a %2 y su foto de perfil</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 eliminó su nombre visible y cambió su foto de perfil</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>No se muestra en este dispositivo. Toca para abrir.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3358,6 +3469,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Desactivado, la imagen se reduce antes de salir y sus metadatos —entre ellos el lugar donde se tomó— no viajan con ella.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Las animaciones y los dibujos se envían tal cual, con todos sus metadatos.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3412,6 +3527,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>No se pudo enviar una encuesta.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>No se pudo enviar un archivo adjunto.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>El servidor no acepta archivos tan grandes. Descártalo y envía uno más pequeño.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>La conexión se cortó varias veces durante el envío. Vuelve a enviarlo con una conexión más estable o descártalo.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>El servidor no lo ha aceptado en media hora. Envíalo de nuevo o descártalo.</translation>
     </message>
 </context>
 <context>
@@ -3819,14 +3950,6 @@
     <message>
         <source>Event</source>
         <translation>Evento</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>No se puede descifrar — a este dispositivo le falta la clave</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Mensaje borrado</translation>
     </message>
     <message>
         <source>Attachment</source>

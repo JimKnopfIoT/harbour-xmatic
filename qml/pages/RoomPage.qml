@@ -6,6 +6,7 @@ import "Formatting.js" as Formatting
 import "MatrixLinks.js" as MatrixLinks
 import "LinkMarks.js" as LinkMarks
 import "MessageBody.js" as MessageBody
+import "Strings.js" as Strings
 import "Composing.js" as Composing
 import "SecurityStatus.js" as SecurityStatus
 
@@ -72,11 +73,11 @@ Page {
     // Which room events get a line; the switches are on the behaviour page.
     function systemShown(kind) {
         switch (kind) {
-        case "member.joined":
-        case "member.left":     return behaviour.showJoinLeaves
+        case "member.joined":   return true
+        case "member.left":     return behaviour.showLeaves
         case "profile.name":    return behaviour.showDisplayNameChanges
         case "profile.avatar":  return behaviour.showAvatarChanges
-        case "profile.both":    return behaviour.showDisplayNameChanges && behaviour.showAvatarChanges
+        case "profile.both":    return behaviour.showDisplayNameChanges || behaviour.showAvatarChanges
         case "profile":
         case "member.none":     return false
         default:                return true
@@ -755,31 +756,6 @@ Page {
                     })
     }
 
-    // What the row says instead of "not decryptable": withheld key or older than
-    // this device is what decides whether anything can be done about it.
-    function undecryptableText(cause) {
-        switch (cause) {
-        case "withheldInsecure":
-            return qsTr("The sender did not share the key: they consider this device insecure. Verify this device.")
-        case "withheldBySender":
-            return qsTr("The sender could not deliver the key to this device.")
-        case "verificationViolation":
-            return qsTr("The sender's identity has changed since you verified them, so the key was withheld.")
-        case "unsignedDevice":
-            return qsTr("The sender's device is not signed by its owner.")
-        case "unknownDevice":
-            return qsTr("The sender's device is unknown here.")
-        case "sentBeforeJoin":
-            return qsTr("Sent before you joined the room.")
-        case "historicalNoBackup":
-            return qsTr("Older than this device, and there is no key backup.")
-        case "historicalUnverifiedDevice":
-            return qsTr("Older than this device. Verify this device to read it.")
-        default:
-            return qsTr("Cannot be decrypted — this device is missing the key")
-        }
-    }
-
     /// The row a restored reading position sits on, held by event id while the list
     /// re-estimates its height: one positioning lands on the geometry of that frame,
     /// and delegates coming into being move everything under them.
@@ -1010,17 +986,48 @@ Page {
         matrix.loadOlder()
     }
 
+    // A slice reads on towards the live edge once its end is reached by hand.
+    // Not from the tail logic: following new rows to the end would page it all.
+    property int newerEmptyRounds: 0
+    property real newerLastHeight: -1
+
+    function loadNewerAtEnd(byHand) {
+        if (!page.inSlice || !matrix.timelineReady || matrix.paginating
+                || matrix.timelineAtEnd || timelineView.count === 0) {
+            return
+        }
+        if (byHand) {
+            page.newerEmptyRounds = 0
+        } else if (!timelineView.atYEnd
+                   || timelineView.contentHeight > page.newerLastHeight
+                   || ++page.newerEmptyRounds >= page.fillEmptyLimit) {
+            // After an answer, again only where the page added nothing to see.
+            return
+        }
+        page.newerLastHeight = timelineView.contentHeight
+        matrix.loadNewer()
+    }
+
     Connections {
         target: matrix
 
         // The round is over, and where it brought nothing no diff will arrive to
         // trigger the fill. Not `busyChanged`: a downloading avatar drove history.
-        onPaginated: page.fillScreen()
+        onPaginated: {
+            page.fillScreen()
+            // A slice shorter than the screen cannot be scrolled to its end by hand.
+            if (page.inSlice && timelineView.contentHeight <= timelineView.height) {
+                page.loadNewerAtEnd(true)
+            }
+        }
+        onPaginatedNewer: page.loadNewerAtEnd(false)
 
         // A different room, a fresh start.
         onTimelineReadyChanged: {
             page.fillEmptyRounds = 0
             page.fillLastHeight = -1
+            page.newerEmptyRounds = 0
+            page.newerLastHeight = -1
             page.fillScreen()
         }
     }
@@ -1533,9 +1540,6 @@ Page {
                 readonly property int reactionsHidden: Math.max(0, reactionList.length - 6)
                 readonly property string captionText: model.caption || ""
                 readonly property bool hasCaption: captionText.length > 0
-                // Where the label is the caption: under a preview or a voice message.
-                readonly property bool showsCaption: !!model.media && hasCaption
-                                                     && (hasPreview || isAudio)
                 readonly property bool isImage: model.kind === "message"
                                                 && model.msgtype === "m.image"
                                                 && !!model.media
@@ -1595,9 +1599,9 @@ Page {
                 // The body as markup, or empty where plain text will do. One property for
                 // format and text, so a Label can never parse what was not built for it.
                 readonly property int emojiPixels: Math.round(Theme.fontSizeSmall * 1.3)
-                // A file row: only the caption, and only where the label shows it.
+                // A file row: only its caption.
                 readonly property string richBody: model.kind !== "message"
-                                                   || (!!model.media && !row.showsCaption)
+                                                   || (!!model.media && !row.hasCaption)
                                                    ? ""
                                                    : MessageBody.rich(!!model.media ? row.captionText
                                                                                     : model.body,
@@ -1627,27 +1631,44 @@ Page {
                     case "call":            return qsTr("Call", "timeline system line, a noun")
                     case "member.joined":   line = qsTr("%1 joined").arg(who); break
                     case "member.left":     line = qsTr("%1 left").arg(who); break
-                    case "member.invited":  line = qsTr("%1 invited %2").arg(by).arg(who); break
-                    case "member.kicked":   line = qsTr("%1 removed %2").arg(by).arg(who); break
-                    case "member.banned":   line = qsTr("%1 banned %2").arg(by).arg(who); break
-                    case "member.unbanned": line = qsTr("%1 unbanned %2").arg(by).arg(who); break
-                    case "member.revoked":  line = qsTr("%1 withdrew the invitation for %2").arg(by).arg(who); break
+                    // One pass over the template: a name that reads "%2" stays a name.
+                    case "member.invited":  line = Strings.fill(qsTr("%1 invited %2"), [by, who]); break
+                    case "member.kicked":   line = Strings.fill(qsTr("%1 removed %2"), [by, who]); break
+                    case "member.banned":   line = Strings.fill(qsTr("%1 banned %2"), [by, who]); break
+                    case "member.unbanned": line = Strings.fill(qsTr("%1 unbanned %2"), [by, who]); break
+                    case "member.revoked":  line = Strings.fill(qsTr("%1 withdrew the invitation for %2"), [by, who]); break
                     case "member.declined": line = qsTr("%1 declined the invitation").arg(who); break
                     case "member.knocked":  line = qsTr("%1 asked to join").arg(who); break
                     case "member":          line = qsTr("%1 changed membership").arg(who); break
                     case "profile.name":
                     case "profile.both":
-                        line = model.name && model.name.length > 0
-                               ? qsTr("%1 changed their display name to %2").arg(before).arg(model.name)
-                               : qsTr("%1 removed their display name").arg(before)
+                        // Both changed: said as far as the switches show it.
+                        var nameShown = model.system === "profile.name"
+                                        || behaviour.showDisplayNameChanges
+                        var pictureShown = model.system === "profile.both"
+                                           && behaviour.showAvatarChanges
+                        var named = model.name && model.name.length > 0
+                        if (!nameShown) {
+                            line = qsTr("%1 changed their profile picture").arg(by)
+                        } else if (pictureShown) {
+                            line = named
+                                   ? Strings.fill(qsTr("%1 changed their display name to %2 and their profile picture"),
+                                                  [before, model.name])
+                                   : qsTr("%1 removed their display name and changed their profile picture").arg(before)
+                        } else {
+                            line = named
+                                   ? Strings.fill(qsTr("%1 changed their display name to %2"),
+                                                  [before, model.name])
+                                   : qsTr("%1 removed their display name").arg(before)
+                        }
                         break
                     case "profile.avatar":  line = qsTr("%1 changed their profile picture").arg(by); break
                     default:                return ""
                     }
                     // Only where the core vouches for one - see member_reason().
                     if (model.reason && model.reason.length > 0) {
-                        line = qsTr("%1: %2", "system line and the reason given for it")
-                               .arg(line).arg(model.reason)
+                        line = Strings.fill(qsTr("%1: %2", "system line and the reason given for it"),
+                                            [line, model.reason])
                     }
                     return line
                 }
@@ -2216,9 +2237,8 @@ Page {
                                                 || mediaKey.length === 0) {
                                             return
                                         }
-                                        var known = matrix.mediaPath(mediaKey)
-                                        if (known.length > 0) {
-                                            source = "file://" + known
+                                        if (matrix.mediaPath(mediaKey).length > 0) {
+                                            source = matrix.imageSource(mediaKey)
                                         } else if (!settings.autoLoadMedia) {
                                             // "Load pictures: off" covers quotes.
                                             return
@@ -2235,7 +2255,7 @@ Page {
                                         target: matrix
                                         onMediaReady: {
                                             if (key === quoteThumb.mediaKey) {
-                                                quoteThumb.source = "file://" + path
+                                                quoteThumb.source = matrix.imageSource(key)
                                             }
                                         }
                                     }
@@ -2391,17 +2411,17 @@ Page {
                                     if (!row.hasPreview) {
                                         return ""
                                     }
-                                    var known = matrix.mediaPath(model.id)
-                                    if (known.length === 0) {
-                                        return ""
-                                    }
-                                    // Measured from the file that arrived, not
-                                    // from what the sender declared. The file is
-                                    // there and can be saved; it is only too big
-                                    // to hand to a decoder on this device.
-                                    return matrix.mediaShowable(model.id)
-                                            ? "file://" + known : ""
+                                    // Measured from the file that arrived; a refused
+                                    // one (SVG, oversized) is still there to save.
+                                    return matrix.imageSource(model.id)
                                 }
+
+                                /// On disk but not handed to a decoder; a tap opens the viewer.
+                                /// `arrivals` re-reads it: the bridge's answers carry no signal.
+                                property int arrivals: 0
+                                property bool refused: arrivals >= 0 && row.hasPreview
+                                                       && matrix.mediaPath(model.id).length > 0
+                                                       && !matrix.mediaShowable(model.id)
 
                                 // A request is out; the spinner belongs to it.
                                 property bool requested: false
@@ -2410,7 +2430,7 @@ Page {
 
                                 // `asked`: a tap, which overrides "load pictures: off".
                                 function fetch(asked) {
-                                    if (!row.hasPreview || source != "") {
+                                    if (!row.hasPreview || source != "" || refused) {
                                         return
                                     }
                                     // Only when asked, where the user said so: scrolling past a picture
@@ -2469,7 +2489,8 @@ Page {
                                     target: matrix
                                     onMediaReady: {
                                         if (key === model.id) {
-                                            attachment.source = "file://" + path
+                                            attachment.source = matrix.imageSource(key)
+                                            attachment.arrivals += 1
                                         }
                                     }
                                 }
@@ -2485,14 +2506,14 @@ Page {
                                     // Not while waiting for something that is not coming: a refused or failed
                                     // download left this turning for the life of the page.
                                     running: attachment.visible && attachment.source == ""
-                                             && attachment.requested
+                                             && attachment.requested && !attachment.refused
                                              && !page.failedMedia[model.id]
                                 }
 
                                 // Failed or not yet asked for: the frame says what a tap does.
                                 readonly property bool waitsForTap: visible && source == ""
                                                                      && (!!page.failedMedia[model.id]
-                                                                         || !requested)
+                                                                         || !requested || refused)
 
                                 Image {
                                     id: retryIcon
@@ -2522,16 +2543,18 @@ Page {
                                     wrapMode: Text.Wrap
                                     font.pixelSize: Theme.fontSizeExtraSmall
                                     color: Theme.secondaryColor
-                                    text: page.failedMedia[model.id]
-                                          ? qsTr("Could not load. Tap to try again.")
-                                          : qsTr("Tap to load")
+                                    text: attachment.refused
+                                          ? qsTr("Not shown on this device. Tap to open.")
+                                          : page.failedMedia[model.id]
+                                            ? qsTr("Could not load. Tap to try again.")
+                                            : qsTr("Tap to load")
                                 }
 
                                 MouseArea {
                                     anchors.fill: parent
                                     enabled: row.hasPreview
                                     onClicked: {
-                                        if (attachment.source == "") {
+                                        if (attachment.source == "" && !attachment.refused) {
                                             page.forgetFailedMedia(model.id)
                                             attachment.fetch(true)
                                             return
@@ -2714,30 +2737,17 @@ Page {
                                 onPressAndHold: row.holdMenu()
                             }
 
-                            text: {
-                                if (row.hasPreview || row.isAudio) {
-                                    return row.richBody.length > 0 ? row.richBody
-                                                                    : row.captionText
-                                }
-                                if (model.kind === "undecryptable") {
-                                    return page.undecryptableText(model.utdCause)
-                                }
-                                if (model.kind === "redacted") {
-                                    return qsTr("Message deleted")
-                                }
-                                if (row.isImage) {
-                                    // No preview, so the row says what it is
-                                    // and that it can be opened.
-                                    return "🖼 " + (model.body || qsTr("Picture"))
-                                }
-                                if (row.isFile) {
-                                    return "📎 " + (model.body || "")
-                                }
-                                if (row.richBody.length > 0) {
-                                    return row.richBody
-                                }
-                                return model.body || ""
-                            }
+                            // The thread asks the same function.
+                            text: MessageBody.rowText({
+                                "kind": model.kind,
+                                "utdCause": model.utdCause || "",
+                                "body": model.body || "",
+                                "caption": row.captionText,
+                                "media": model.kind === "message" && !!model.media,
+                                "image": row.isImage,
+                                "drawn": row.hasPreview || row.isAudio,
+                                "rich": row.richBody
+                            })
                         }
 
                         Label {
@@ -3287,6 +3297,9 @@ Page {
 
             onMovementEnded: {
                 page.followTail = atYEnd
+                if (atYEnd) {
+                    page.loadNewerAtEnd(true)
+                }
                 // A hand on the list outranks the marker search: being carried off to a jump
                 // one has just scrolled away from is worse than not being taken there.
                 page.unreadFromId = ""
@@ -3718,12 +3731,6 @@ Page {
                             "original": original
                         }
                     },
-                    // Only reached where this page does not take the send over itself; kept so
-                    // the dialog still works for any other caller.
-                    afterSend: function () {
-                        page.clearReplyState()
-                        page.followTail = true
-                    },
                     afterCancel: function (text, mentions) {
                         messageComposer.text = text
                         messageComposer.mentionsPicked = mentions
@@ -3780,9 +3787,9 @@ Page {
 
     function doSubmit() {
         if (page.editingEventId.length > 0) {
-            // An edit carries no mentions: it replaces a body, and the ping
-            // went out with the original.
-            matrix.editMessage(page.editingEventId, messageComposer.text)
+            // Those picked while editing; the core keeps the original's still named.
+            matrix.editMessage(page.editingEventId, messageComposer.text,
+                               messageComposer.mentionIds())
             // cancelEdit drops the focus by itself - an edit that is done is
             // done, whatever the setting says.
             page.cancelEdit()
@@ -4211,7 +4218,9 @@ Page {
         target: matrix
 
         onRoomResolved: {
-            if (page.pendingAddress.length === 0) {
+            // Only the answer to this page's request, not another page's link.
+            if (local || page.pendingAddress.length === 0
+                    || address !== page.pendingAddress.trim()) {
                 return
             }
             page.pendingAddress = ""
@@ -4227,10 +4236,9 @@ Page {
         }
 
         onRoomResolveFailed: {
-            if (page.pendingAddress.length === 0) {
-                return
+            if (!local && address === page.pendingAddress.trim()) {
+                page.pendingAddress = ""
             }
-            page.pendingAddress = ""
         }
     }
 
@@ -4253,11 +4261,9 @@ Page {
         // A separate cache key: the timeline holds the thumbnail under the
         // plain item id, and both are worth keeping.
         var key = itemId + "/full"
-        var known = matrix.mediaPath(key)
         matrix.requestMedia(key, media.source, false, media.size || 0)
         pageStack.push(Qt.resolvedUrl("ImageViewPage.qml"), {
                            mediaKey: key,
-                           source: known.length > 0 ? "file://" + known : "",
                            fileName: media.filename || "",
                            mimeType: media.mimetype || "image/jpeg"
                        })
@@ -4265,6 +4271,7 @@ Page {
 
     function beginEdit(eventId, body) {
         page.editingEventId = eventId
+        messageComposer.clearMentions()
         messageComposer.text = body
         messageComposer.focusField()
     }
@@ -4272,6 +4279,7 @@ Page {
     function cancelEdit() {
         page.editingEventId = ""
         messageComposer.clearField()
+        messageComposer.clearMentions()
         messageComposer.releaseField()
     }
 

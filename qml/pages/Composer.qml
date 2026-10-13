@@ -39,11 +39,9 @@ Column {
     /// A recording is on its way: the conversation should follow its tail again.
     signal recordingStopped()
 
-    /// Open while an action outside the field is under way. Silica clears a
-    /// field's focus on every press outside it - the arrow, the clip and the
-    /// format bar are all outside it - and the answer has to still be true one
-    /// tick after the press, which is when it asks.
-    property bool keepKeyboard: false
+    /// Open while an action outside the field is under way: the arrow, the clip
+    /// and the format bar are all outside it. See `KeyboardHold`.
+    property alias keepKeyboard: keyboardHold.active
 
     // Hands-free also ends by itself; the conversation follows as after a tap.
     Connections {
@@ -62,8 +60,7 @@ Column {
     }
 
     function holdKeyboard() {
-        composer.keepKeyboard = true
-        keepKeyboardWindow.restart()
+        keyboardHold.hold()
     }
 
     function focusField() {
@@ -147,11 +144,8 @@ Column {
         mentionInput.clear()
     }
 
-    Timer {
-        id: keepKeyboardWindow
-
-        interval: 400
-        onTriggered: composer.keepKeyboard = false
+    KeyboardHold {
+        id: keyboardHold
     }
 
     MentionInput {

@@ -46,7 +46,6 @@ bool preferred(const QString &name, const QString &id,
 SpaceMarkers::SpaceMarkers(QObject *parent)
     : QObject(parent)
 {
-    loadColours();
 }
 
 void SpaceMarkers::update(const QJsonObject &spaces)
@@ -124,8 +123,22 @@ bool SpaceMarkers::colourChosen(const QString &spaceId) const
     return m_chosen.contains(colourKey(spaceId));
 }
 
+void SpaceMarkers::setEditable(bool editable)
+{
+    if (m_editable == editable) {
+        return;
+    }
+    m_editable = editable;
+    ++m_revision;
+    emit changed();
+}
+
 void SpaceMarkers::setSpaceColour(const QString &spaceId, const QString &colour)
 {
+    if (!m_editable) {
+        emit editRefused();
+        return;
+    }
     const QColor wanted(colour);
     if (spaceId.isEmpty() || !wanted.isValid()) {
         return;
@@ -137,54 +150,91 @@ void SpaceMarkers::setSpaceColour(const QString &spaceId, const QString &colour)
     }
     m_chosen.insert(key, value);
 
-    const QString path = appSettingsPath();
-    QDir().mkpath(QFileInfo(path).absolutePath());
-    QSettings settings(path, QSettings::IniFormat);
-    settings.setValue(QStringLiteral("%1/%2").arg(QLatin1String(GROUP), key), value);
-    settings.sync();
-    if (settings.status() != QSettings::NoError) {
-        qWarning("xmatic: could not save a space colour (status %d)",
-                 static_cast<int>(settings.status()));
-    }
-
     ++m_revision;
     emit changed();
+    emit coloursEdited();
 }
 
 void SpaceMarkers::resetSpaceColour(const QString &spaceId)
 {
+    if (!m_editable) {
+        emit editRefused();
+        return;
+    }
     const QString key = colourKey(spaceId);
     if (!m_chosen.contains(key)) {
         return;
     }
     m_chosen.remove(key);
 
-    QSettings settings(appSettingsPath(), QSettings::IniFormat);
-    settings.remove(QStringLiteral("%1/%2").arg(QLatin1String(GROUP), key));
-    settings.sync();
+    ++m_revision;
+    emit changed();
+    emit coloursEdited();
+}
 
+QStringList SpaceMarkers::storedEntries() const
+{
+    QStringList entries;
+    for (auto it = m_chosen.constBegin(); it != m_chosen.constEnd(); ++it) {
+        entries.append(it.key() + QLatin1Char('=') + it.value());
+    }
+    entries.sort();
+    return entries;
+}
+
+void SpaceMarkers::adoptStored(const QStringList &entries)
+{
+    QHash<QString, QString> chosen;
+    for (const QString &entry : entries) {
+        const int split = entry.indexOf(QLatin1Char('='));
+        const QColor colour(entry.mid(split + 1));
+        if (split > 0 && colour.isValid()) {
+            chosen.insert(entry.left(split), colour.name());
+        }
+    }
+    if (chosen == m_chosen) {
+        return;
+    }
+    m_chosen = chosen;
     ++m_revision;
     emit changed();
 }
 
-void SpaceMarkers::loadColours()
+QStringList SpaceMarkers::legacyEntries() const
 {
     QSettings settings(appSettingsPath(), QSettings::IniFormat);
     settings.beginGroup(QLatin1String(GROUP));
-    const QStringList keys = settings.childKeys();
-    for (const QString &key : keys) {
+    QStringList entries;
+    for (const QString &key : settings.childKeys()) {
         const QColor colour(settings.value(key).toString());
         if (colour.isValid()) {
-            m_chosen.insert(key, colour.name());
+            entries.append(key + QLatin1Char('=') + colour.name());
         }
     }
-    settings.endGroup();
+    return entries;
+}
+
+void SpaceMarkers::dropLegacy()
+{
+    QSettings settings(appSettingsPath(), QSettings::IniFormat);
+    settings.remove(QLatin1String(GROUP));
+    settings.sync();
+}
+
+void SpaceMarkers::clear()
+{
+    if (m_chosen.isEmpty()) {
+        return;
+    }
+    m_chosen.clear();
+    ++m_revision;
+    emit changed();
 }
 
 QString SpaceMarkers::colourKey(const QString &spaceId)
 {
-    // Digest, not identifier: the settings file is the one place a room id has
-    // no business being, and an id is no good as an ini key either.
+    // Digest, not identifier: even inside the encrypted lists a room id is
+    // more than a colour needs.
     return QString::fromLatin1(
         QCryptographicHash::hash(spaceId.toUtf8(), QCryptographicHash::Sha256)
             .toHex()

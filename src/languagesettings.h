@@ -5,7 +5,7 @@
 #include <QString>
 #include <QVariantList>
 
-class QGuiApplication;
+class QCoreApplication;
 
 /// The UI language, chosen instead of followed. Empty means "follow the
 /// device"; anything else overrides, English included - hence an `en` catalogue.
@@ -26,7 +26,11 @@ public:
 
     /// Installs the chosen catalogue. After the view exists: the translator
     /// installed last is asked first, so this comes after libsailfishapp's.
-    static void applyTo(QGuiApplication *app);
+    static void applyTo(QCoreApplication *app);
+
+    /// For a process without SailfishApp: the device locale's catalogue first,
+    /// which libsailfishapp would install, then the chosen one over it.
+    static void applyWithDeviceLocale(QCoreApplication *app);
 
 signals:
     void changed();

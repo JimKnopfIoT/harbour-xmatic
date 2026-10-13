@@ -368,14 +368,6 @@
         <translation>Dogodki v sobi</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Prikaži pridružitve in odhode</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Povabila, odstranitve in prepovedi so vedno prikazani.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Prikaži spremembe prikaznega imena</translation>
     </message>
@@ -451,6 +443,14 @@
         <source>Space list order</source>
         <translation>Vrstni red seznama prostorov</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Prikaži odhode</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Pridružitve, povabila, odstranitve in izobčenja so vedno prikazani.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -513,6 +513,10 @@
     <message>
         <source>answered on another device</source>
         <translation>odgovorjeno na drugi napravi</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>zavrnjeno na drugi napravi</translation>
     </message>
 </context>
 <context>
@@ -796,6 +800,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Najprej vnesi geslo.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -963,6 +974,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Težave s shrambo ključev?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Ta račun še nima navzkrižnega podpisovanja, zato druge naprave te ne morejo preveriti. Enkrat vnesi geslo, da ga nastaviš; pošlje se tvojemu domačemu strežniku in se ne shrani.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Geslo</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Nastavi navzkrižno podpisovanje</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1047,6 +1070,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Te priloge ni bilo mogoče naložiti</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Ta slika na tej napravi ni prikazana. Shrani ali deli jo iz spustnega menija.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1094,6 +1121,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Sledi napravi</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Zapuščene sobe</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Pozabljam sobo</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Soba brez imena</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Izobčen</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Zapuščena</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Ni zapuščenih sob</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Sobe, ki si jih zapustil ali zavrnil v drugi aplikaciji ali iz katerih si bil odstranjen ali izobčen. Ta naprava jih hrani, dokler niso pozabljene, do takrat pa strežnik šteje sobo, iz katere si bil odstranjen ali izobčen. Tapni eno, da jo pozabiš.</translation>
     </message>
 </context>
 <context>
@@ -1287,10 +1346,6 @@
         <translation>Tvoja seja se je končala. Prijavi se znova.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Novo sporočilo</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Slika</translation>
     </message>
@@ -1329,6 +1384,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Prehod mora biti URL s https.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Te slike ni bilo mogoče pomanjšati in vsebuje metapodatke, na primer kraj fotografiranja, zato ni bila poslana. Pošlji jo v izvirni ločljivosti, da jo pošlješ takšno, kot je.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>Registracije push ni bilo mogoče odstraniti z domačega strežnika. Odstranjena bo, ko se bo ta račun naslednjič prijavil tukaj.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Druga aplikacija je medtem nastavila navzkrižno podpisovanje za ta račun. Preveri to napravo od tam.</translation>
     </message>
 </context>
 <context>
@@ -1795,10 +1862,6 @@
         <translation>Besedilo sporočila v obvestilih</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Izklopljeno: obvestilo pove le, koliko sporočil je prišlo. Vklopljeno: pokaže zadnje sporočilo — tudi na zaklenjenem zaslonu.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Prikaži stanje branja drugih</translation>
     </message>
@@ -1970,6 +2033,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Izklopljeno se ne sledi in ne prikazuje, kdo je kaj prebral, kar ohranja pogovor tudi bolj tekoč. Vklopljeno tvoja sporočila povedo, koliko ljudi jih je prebralo.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Izklopljeno: obvestilo pove le, da so prispela sporočila, ne od koga ali kaj. Vklopljeno: prikaže najnovejše sporočilo — tudi na zaklenjenem zaslonu.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2016,10 +2083,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Kaj zapusti to napravo</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Tvoj strežnik izve naslov pri potisni storitvi in za vsako obvestilo prehodu pošlje določilnik sobe in sporočila. Brez besedila: potisk nosi le določilnike, sporočilo pa ta naprava pridobi in odšifrira sama. Ta naslov je skrivnost — kdor ga ima, lahko temu telefonu pošlje obvestilo.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2097,6 +2160,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Uporabi javni prehod UnifiedPush</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Nameščenih je več distributerjev. Izberi tistega, ki ga uporablja xmatic.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>Distributer push ni več nameščen. Nič ne pride, dokler se ne vrne. Namesti ga znova ali izklopi push.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tvoj domači strežnik dobi naslov pri storitvi push in ob vsakem obvestilu pošlje prehodu oznako sobe in sporočila ter število neprebranih. Brez besedila sporočila: ta naprava sama pridobi in dešifrira sporočilo. Ta naslov je skrivnost — kdor ga ima, lahko temu telefonu pošlje obvestilo.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Preden odstraniš xmatic, tukaj izklopi push. Sicer domači strežnik obdrži pusher in še naprej pošilja prehodu.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2107,6 +2186,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>Razpečevalnik je odstranil xmatic. Potisna obvestila znova vklopi v razdelku Račun.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Enkrat odpri xmatic, da dokončaš nastavitev obvestil push.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic še obdeluje obvestilo. Odpri ga čez trenutek znova.</translation>
     </message>
 </context>
 <context>
@@ -2161,6 +2248,10 @@
         <source>Discover rooms</source>
         <translation>Odkrij sobe</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Zapuščene sobe (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2175,6 +2266,10 @@
     <message>
         <source>Space</source>
         <translation>Prostor</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Ni poslano – odpri sobo, da se odločiš</translation>
     </message>
 </context>
 <context>
@@ -2471,12 +2566,16 @@
         <translation>Lokalni podatki so poškodovani</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Dela podatkov, shranjenih v tej napravi, ni več mogoče prebrati, in xmatic tega med delovanjem ni mogel popraviti — zato je ustavil sinhronizacijo, namesto da bi znova naletel na isto vrstico. Zapri aplikacijo in jo znova zaženi. Če sobe še vedno manjkajo, odjava in ponovna prijava na novo zgradita krajevne podatke — a tudi zamenjata ključe te naprave: najprej na strani za šifriranje preveri, ali je varnostna kopija ključev vklopljena.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Ta strežnik prek sliding synca, sinhronizacije, ki jo ta aplikacija potrebuje, dostavi samo %1 od tvojih %2 sob. Manjkajočih – pogosto klepetov prek mostov – tu ni mogoče prikazati; aplikacije s klasično sinhronizacijo jih še vedno vidijo.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Dela podatkov, shranjenih na tej napravi, ni več mogoče prebrati, in xmatic tega med delovanjem ni mogel popraviti — zato je ustavil sinhronizacijo, namesto da bi znova naletel na isto vrstico. Ponovna izgradnja podatkov sob znova pridobi sobe in sporočila ter ohrani ključe te naprave. Če to ne pomaga, odjava in prijava znova zgradita vse — a zamenjata ključe te naprave; zato najprej na strani šifriranja preveri, da je varnostna kopija ključev vklopljena.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Znova zgradi podatke sob</translation>
     </message>
 </context>
 <context>
@@ -2980,6 +3079,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 je spremenil(a) profilno sliko</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 je spremenil prikazno ime v %2 in profilno sliko</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 je odstranil prikazno ime in spremenil profilno sliko</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Na tej napravi ni prikazano. Tapni za odpiranje.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3366,6 +3477,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Izklopljeno se slika pred pošiljanjem pomanjša, njeni metapodatki – med njimi kraj posnetka – pa ne potujejo z njo.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Animacije in risbe gredo takšne, kot so, z vsemi metapodatki.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3420,6 +3535,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Ankete ni bilo mogoče poslati.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Priloge ni bilo mogoče poslati.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>Strežnik ne sprejema tako velikih datotek. Zavrzi jo in pošlji manjšo.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>Povezava se je med pošiljanjem večkrat prekinila. Pošlji znova prek stabilnejše povezave ali zavrzi.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>Strežnik tega že pol ure ni sprejel. Pošlji znova ali zavrzi.</translation>
     </message>
 </context>
 <context>
@@ -3829,14 +3960,6 @@
     <message>
         <source>Event</source>
         <translation>Dogodek</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Ni mogoče dešifrirati — tej napravi manjka ključ</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Sporočilo izbrisano</translation>
     </message>
     <message>
         <source>Attachment</source>

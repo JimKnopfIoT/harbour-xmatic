@@ -326,17 +326,25 @@ Dialog {
 
             readonly property bool isCamera: index < grid.offset
             readonly property var entry: isCamera ? null : grid.gallery.get(index - grid.offset)
+            // The thumbnailer decodes in this process: the same gate as every picture.
+            readonly property bool drawable: !!entry && matrix.localImageSource(entry.filePath).length > 0
 
             width: grid.cellWidth
             height: grid.cellHeight
 
             ThumbnailImage {
                 visible: !cell.isCamera
-                source: cell.entry ? cell.entry.url : ""
+                source: cell.drawable ? cell.entry.url : ""
                 size: grid.cellWidth
                 // The platform's own selection look comes with the component.
                 selected: !!cell.entry && dialog.indexOfPath(cell.entry.filePath) >= 0
                 onClicked: dialog.toggle(cell.entry.filePath, cell.entry.mimeType)
+
+                Image {
+                    anchors.centerIn: parent
+                    visible: !cell.isCamera && !cell.drawable
+                    source: "image://theme/icon-m-file-image"
+                }
             }
 
             BackgroundItem {
@@ -462,7 +470,11 @@ Dialog {
                     }
                     var kind = matrix.mimeTypeForPath(model.filePath)
                     if (kind.indexOf("image/") === 0) {
-                        return "file://" + model.filePath
+                        var shown = matrix.localImageSource(model.filePath)
+                        if (shown.length > 0) {
+                            return shown
+                        }
+                        return "image://theme/icon-m-file-image"
                     }
                     if (kind.indexOf("video/") === 0) {
                         return "image://theme/icon-m-file-video"

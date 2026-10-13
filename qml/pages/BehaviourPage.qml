@@ -110,11 +110,11 @@ Page {
             }
 
             TextSwitch {
-                text: qsTr("Show join and leave messages")
-                description: qsTr("Invitations, removals and bans are always shown.")
-                checked: behaviour.showJoinLeaves
+                text: qsTr("Show leave messages")
+                description: qsTr("Joins, invitations, removals and bans are always shown.")
+                checked: behaviour.showLeaves
                 automaticCheck: false
-                onClicked: behaviour.showJoinLeaves = !behaviour.showJoinLeaves
+                onClicked: behaviour.showLeaves = !behaviour.showLeaves
             }
 
             TextSwitch {

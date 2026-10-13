@@ -367,14 +367,6 @@
         <translation>Udalosti miestnosti</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Zobrazovať príchody a odchody</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>Pozvánky, odstránenia a zákazy sa zobrazujú vždy.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Zobrazovať zmeny zobrazovaného mena</translation>
     </message>
@@ -450,6 +442,14 @@
         <source>Space list order</source>
         <translation>Poradie zoznamu priestorov</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Zobrazovať odchody</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Príchody, pozvánky, odstránenia a zákazy sa zobrazujú vždy.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -512,6 +512,10 @@
     <message>
         <source>answered on another device</source>
         <translation>prijaté na inom zariadení</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>odmietnuté na inom zariadení</translation>
     </message>
 </context>
 <context>
@@ -795,6 +799,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>Najprv zadaj heslo.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -961,6 +972,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Problémy s úložiskom kľúčov?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Tento účet ešte nemá krížové podpisovanie, takže ostatné zariadenia nemôžu overiť toto. Zadaj raz heslo, aby si ho nastavil; odošle sa tvojmu domovskému serveru a neuloží sa.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Heslo</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Nastaviť krížové podpisovanie</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1045,6 +1068,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Túto prílohu sa nepodarilo načítať</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Tento obrázok sa na tomto zariadení nezobrazuje. Ulož ho alebo zdieľaj z rozbaľovacej ponuky.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1092,6 +1119,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Podľa zariadenia</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Opustené miestnosti</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Zabúdam miestnosť</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Miestnosť bez názvu</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Zablokované</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Opustené</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>Žiadne opustené miestnosti</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Miestnosti, ktoré si opustil alebo odmietol v inej aplikácii, alebo z ktorých ťa odstránili či zablokovali. Toto zariadenie si ich ponecháva, kým nie sú zabudnuté, a dovtedy server započítava miestnosť, z ktorej ťa odstránili alebo zablokovali. Ťukni na niektorú, aby si ju zabudol.</translation>
     </message>
 </context>
 <context>
@@ -1285,10 +1344,6 @@
         <translation>Tvoja relácia sa skončila. Prihlás sa znova.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Nová správa</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Obrázok</translation>
     </message>
@@ -1327,6 +1382,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Brána musí byť URL s https.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Tento obrázok sa nepodarilo zmenšiť a obsahuje metadáta, napríklad miesto odfotenia, preto nebol odoslaný. Pošli ho v pôvodnom rozlíšení, ak ho chceš poslať tak, ako je.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>Registráciu push sa nepodarilo odstrániť z domovského servera. Odstráni sa, keď sa tento účet tu nabudúce prihlási.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>Iná aplikácia medzitým nastavila krížové podpisovanie pre tento účet. Over toto zariadenie odtiaľ.</translation>
     </message>
 </context>
 <context>
@@ -1792,10 +1859,6 @@
         <translation>Text správy v oznámeniach</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Vypnuté: oznámenie povie len, koľko správ prišlo. Zapnuté: ukáže poslednú správu — aj na uzamknutej obrazovke.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Zobrazovať stav prečítania ostatných</translation>
     </message>
@@ -1967,6 +2030,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Vypnuté sa nesleduje ani nezobrazuje, kto čo prečítal, čo udrží konverzáciu plynulejšou. Zapnuté tvoje správy ukazujú, koľko ľudí ich prečítalo.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Vypnuté: upozornenie hovorí len, že prišli správy, nie od koho ani čo. Zapnuté: ukazuje najnovšiu správu — aj na uzamknutej obrazovke.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2013,10 +2080,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>Čo opúšťa toto zariadenie</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Tvoj server sa dozvie adresu v službe push a ku každému oznámeniu pošle bráne identifikátor miestnosti a správy. Žiadny text: push nesie len identifikátory a správu si toto zariadenie stiahne a rozšifruje samo. Tá adresa je tajomstvo — kto ju má, môže tomuto telefónu poslať oznámenie.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2094,6 +2157,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Použiť verejnú bránu UnifiedPush</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Je nainštalovaných viacero distribútorov. Vyber ten, ktorý xmatic používa.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>Distribútor push už nie je nainštalovaný. Nič nepríde, kým sa nevráti. Nainštaluj ho znova alebo push vypni.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Tvoj domovský server dostane adresu v službe push a pri každom upozornení posiela bráne identifikátor miestnosti a správy a tvoj počet neprečítaných. Žiadny text správy: toto zariadenie si správu samo stiahne a dešifruje. Tá adresa je tajomstvo — kto ju má, môže tomuto telefónu poslať upozornenie.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Skôr ako xmatic odinštaluješ, vypni tu push. Inak si domovský server ponechá pusher a bude ďalej posielať na bránu.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2104,6 +2183,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>Distribútor push odhlásil xmatic. Zapni push znova v sekcii Účet.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Otvor xmatic raz, aby si dokončil nastavenie upozornení push.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic ešte spracúva upozornenie. Otvor ho o chvíľu znova.</translation>
     </message>
 </context>
 <context>
@@ -2158,6 +2245,10 @@
         <source>Discover rooms</source>
         <translation>Objavovať miestnosti</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Opustené miestnosti (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2172,6 +2263,10 @@
     <message>
         <source>Space</source>
         <translation>Priestor</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Neodoslané – otvor miestnosť a rozhodni</translation>
     </message>
 </context>
 <context>
@@ -2468,12 +2563,16 @@
         <translation>Poškodené lokálne údaje</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Časť údajov uložených v tomto zariadení sa už nedá prečítať a xmatic to počas behu nedokázal napraviť — preto zastavil synchronizáciu, namiesto toho, aby na ten istý riadok narazil znova. Zavri aplikáciu a spusti ju znova. Ak potom stále chýbajú miestnosti, odhlásenie a opätovné prihlásenie obnoví miestne údaje — ale nahradí aj kľúče tohto zariadenia: najskôr na stránke šifrovania skontroluj, či je záloha kľúčov zapnutá.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Tento server cez sliding sync, synchronizáciu, ktorú táto aplikácia potrebuje, doručuje len %1 z tvojich %2 miestností. Chýbajúce – často chaty cez mosty – tu nemožno zobraziť; aplikácie s klasickou synchronizáciou ich stále vidia.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Časť dát uložených v tomto zariadení sa už nedá prečítať a xmatic to nedokázal počas behu napraviť — preto zastavil synchronizáciu, namiesto aby znova narazil na ten istý riadok. Obnovenie dát miestností znova stiahne miestnosti a správy a ponechá kľúče tohto zariadenia. Ak to nepomôže, odhlásenie a prihlásenie obnoví všetko — ale nahradí kľúče tohto zariadenia; najprv preto na stránke šifrovania skontroluj, že je záloha kľúčov zapnutá.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Obnoviť dáta miestností</translation>
     </message>
 </context>
 <context>
@@ -2976,6 +3075,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 zmenil(a) profilový obrázok</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 zmenil zobrazované meno na %2 a profilový obrázok</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 odstránil zobrazované meno a zmenil profilový obrázok</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Na tomto zariadení sa nezobrazuje. Ťuknutím otvoríš.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3362,6 +3473,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Vypnuté sa obrázok pred odoslaním zmenší a jeho metaúdaje – okrem iného miesto vzniku – s ním nejdú.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>Animácie a kresby sa posielajú tak, ako sú, so všetkými metadátami.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3416,6 +3531,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Anketu sa nepodarilo odoslať.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Prílohu sa nepodarilo odoslať.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>Server také veľké súbory neprijíma. Zahoď ho a pošli menší.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>Spojenie sa pri odosielaní niekoľkokrát prerušilo. Pošli to znova cez stabilnejšie spojenie alebo to zahoď.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>Server to už pol hodiny neprijal. Pošli to znova alebo to zahoď.</translation>
     </message>
 </context>
 <context>
@@ -3824,14 +3955,6 @@
     <message>
         <source>Event</source>
         <translation>Udalosť</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Nedá sa dešifrovať — tomuto zariadeniu chýba kľúč</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Správa zmazaná</translation>
     </message>
     <message>
         <source>Attachment</source>

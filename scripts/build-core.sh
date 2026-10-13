@@ -89,17 +89,28 @@ export RUSTFLAGS="--remap-path-prefix=$HOME/.cargo/registry=/cargo \
 export "CFLAGS_${TARGET_UNDER}=--sysroot=${SFOS_SYSROOT} \
 -ffile-prefix-map=$HOME/.cargo/registry=/cargo -ffile-prefix-map=$ROOT=/build"
 
+source_digest() {
+    (cd "$ROOT/core" && find src Cargo.toml Cargo.lock -type f | LC_ALL=C sort | xargs sha256sum | sha256sum | cut -c1-16)
+}
+# Taken before cargo, written after it: the stamp names what was compiled.
+SOURCE_DIGEST="$(source_digest)"
+LIB="$ROOT/core/target/$RUST_TARGET/$PROFILE/libxmatic_core.a"
+# Any way out before the end leaves the archive unstamped, and the .pro refuses it.
+rm -f "$LIB.version" "$LIB.source"
+
 echo "→ cargo build ($PROFILE) for $RUST_TARGET"
-cargo build "${CARGO_PROFILE_FLAG[@]}" \
+# Locked: the lock file is what was audited; a build never resolves anew.
+cargo build --locked "${CARGO_PROFILE_FLAG[@]}" \
     --target "$RUST_TARGET" \
     --manifest-path "$ROOT/core/Cargo.toml"
 
-LIB="$ROOT/core/target/$RUST_TARGET/$PROFILE/libxmatic_core.a"
 [ -f "$LIB" ] || { echo "error: expected $LIB to exist" >&2; exit 1; }
 
-# Stamp the archive with the version it carries; the .pro refuses to link a
-# stale core against a newer spec (the mb2-only half of the mismatch guard).
-printf '%s\n' "$CARGO_VERSION" > "$LIB.version"
+# Sources changed during the build: the archive is from neither state.
+if [ "$(source_digest)" != "$SOURCE_DIGEST" ]; then
+    echo "error: core/ changed while cargo ran — build again" >&2
+    exit 1
+fi
 
 echo "→ cbindgen → src/generated/xmatic_core.h"
 if ! command -v cbindgen >/dev/null; then
@@ -112,5 +123,9 @@ cbindgen --quiet \
     --crate xmatic-core \
     --output "$ROOT/src/generated/xmatic_core.h" \
     "$ROOT/core"
+
+# Stamps last: the .pro refuses a core whose version or sources differ.
+printf '%s\n' "$CARGO_VERSION" > "$LIB.version"
+printf '%s\n' "$SOURCE_DIGEST" > "$LIB.source"
 
 echo "→ done: $(du -h "$LIB" | cut -f1)  $LIB"

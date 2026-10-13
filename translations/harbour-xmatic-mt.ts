@@ -368,14 +368,6 @@
         <translation>Avvenimenti tal-kamra</translation>
     </message>
     <message>
-        <source>Show join and leave messages</source>
-        <translation>Uri meta xi ħadd jidħol jew joħroġ</translation>
-    </message>
-    <message>
-        <source>Invitations, removals and bans are always shown.</source>
-        <translation>L-istediniet, it-tneħħijiet u l-projbizzjonijiet jintwerew dejjem.</translation>
-    </message>
-    <message>
         <source>Show display name changes</source>
         <translation>Uri l-bidliet fl-isem muri</translation>
     </message>
@@ -451,6 +443,14 @@
         <source>Space list order</source>
         <translation>Ordni tal-lista tal-ispazji</translation>
     </message>
+    <message>
+        <source>Show leave messages</source>
+        <translation>Uri meta xi ħadd jitlaq</translation>
+    </message>
+    <message>
+        <source>Joins, invitations, removals and bans are always shown.</source>
+        <translation>Id-dħul, l-istediniet, it-tneħħijiet u l-projbizzjonijiet jintwerew dejjem.</translation>
+    </message>
 </context>
 <context>
     <name>CallEngine</name>
@@ -513,6 +513,10 @@
     <message>
         <source>answered on another device</source>
         <translation>imwieġba fuq apparat ieħor</translation>
+    </message>
+    <message>
+        <source>declined on another device</source>
+        <translation>miċħud fuq apparat ieħor</translation>
     </message>
 </context>
 <context>
@@ -796,6 +800,13 @@
     </message>
 </context>
 <context>
+    <name>CrossSigning</name>
+    <message>
+        <source>Enter your password first.</source>
+        <translation>L-ewwel daħħal il-password.</translation>
+    </message>
+</context>
+<context>
     <name>DirectoryPage</name>
     <message>
         <source>Remove this server</source>
@@ -963,6 +974,18 @@
         <source>Trouble with the key storage?</source>
         <translation>Problemi bil-ħażna taċ-ċwievet?</translation>
     </message>
+    <message>
+        <source>This account has no cross-signing yet, so other devices cannot verify this one. Enter your password once to set it up; it is sent to your homeserver and not kept.</source>
+        <translation>Dan il-kont għad m&apos;għandux iffirmar inkroċjat, għalhekk apparati oħra ma jistgħux jivverifikaw dan. Daħħal il-password darba biex tissettjah; tintbagħat lis-server tad-dar tiegħek u ma tinżammx.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>Set up cross-signing</source>
+        <translation>Issettja l-iffirmar inkroċjat</translation>
+    </message>
 </context>
 <context>
     <name>ErrorLogPage</name>
@@ -1047,6 +1070,10 @@
         <source>This attachment could not be loaded</source>
         <translation>Dan l-anness ma setax jitniżżel</translation>
     </message>
+    <message>
+        <source>This picture is not shown on this device. Save or share it from the pull-down menu.</source>
+        <translation>Din l-istampa ma tintweriex fuq dan l-apparat. Issejvjaha jew aqsamha mill-menu.</translation>
+    </message>
 </context>
 <context>
     <name>InviteToRoomDialog</name>
@@ -1094,6 +1121,38 @@
     <message>
         <source>Follow the device</source>
         <translation>Segwi l-apparat</translation>
+    </message>
+</context>
+<context>
+    <name>LeftRoomsPage</name>
+    <message>
+        <source>Left rooms</source>
+        <translation>Kmamar li tlaqt</translation>
+    </message>
+    <message>
+        <source>Forgetting room</source>
+        <translation>Il-kamra qed tintesa</translation>
+    </message>
+    <message>
+        <source>Unnamed room</source>
+        <translation>Kamra mingħajr isem</translation>
+    </message>
+    <message>
+        <source>Banned</source>
+        <extracomment>State of a room the account is no longer in</extracomment>
+        <translation>Projbit</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Tlaqt</translation>
+    </message>
+    <message>
+        <source>No left rooms</source>
+        <translation>L-ebda kamra li tlaqt</translation>
+    </message>
+    <message>
+        <source>Rooms you left or declined in another app, or were removed or banned from. This device keeps them until they are forgotten, and the server counts a room you were removed or banned from until then. Tap one to forget it.</source>
+        <translation>Kmamar li tlaqt jew ċħadt f&apos;app oħra, jew li tneħħejt jew ġejt projbit minnhom. Dan l-apparat iżommhom sakemm jintesew, u sa dakinhar is-server jgħodd kamra li tneħħejt jew ġejt projbit minnha. Agħfas waħda biex tinsieha.</translation>
     </message>
 </context>
 <context>
@@ -1287,10 +1346,6 @@
         <translation>Is-sessjoni tiegħek intemmet. Idħol mill-ġdid.</translation>
     </message>
     <message>
-        <source>New message</source>
-        <translation>Messaġġ ġdid</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Ritratt</translation>
     </message>
@@ -1329,6 +1384,18 @@
     <message>
         <source>The gateway must be an https URL.</source>
         <translation>Il-gateway irid ikun URL https.</translation>
+    </message>
+    <message>
+        <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
+        <translation>Din l-istampa ma setgħetx issir iżgħar u fiha metadata, bħal fejn ittieħdet, għalhekk ma ntbagħtitx. Ibgħatha fir-riżoluzzjoni oriġinali biex tibgħatha kif inhi.</translation>
+    </message>
+    <message>
+        <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
+        <translation>Ir-reġistrazzjoni push ma setgħetx titneħħa mis-server tad-dar. Se titneħħa l-darba li jmiss li dan il-kont jidħol hawn.</translation>
+    </message>
+    <message>
+        <source>Another app has set up cross-signing for this account meanwhile. Verify this device from there.</source>
+        <translation>App oħra sadanittant issettjat l-iffirmar inkroċjat għal dan il-kont. Ivverifika dan l-apparat minn hemm.</translation>
     </message>
 </context>
 <context>
@@ -1795,10 +1862,6 @@
         <translation>It-test tal-messaġġ fin-notifiki</translation>
     </message>
     <message>
-        <source>Off, a notification says only how many messages arrived. On, it shows the latest message — also on the lock screen.</source>
-        <translation>Mitfi, in-notifika tgħid biss kemm waslu messaġġi. Mixgħul, turi l-aħħar messaġġ — anke fuq l-iskrin imsakkar.</translation>
-    </message>
-    <message>
         <source>Show others&apos; read status</source>
         <translation>Uri l-istat tal-qari ta&apos; oħrajn</translation>
     </message>
@@ -1970,6 +2033,10 @@
         <source>Off, who read what is neither tracked nor shown, which also keeps the conversation smoother. On, your own messages say how many people have read them.</source>
         <translation>Mitfi, la jiġi segwit u lanqas muri min qara xiex, li jżomm ukoll il-konversazzjoni aktar bla xkiel. Mixgħul, il-messaġġi tiegħek juru kemm-il persuna qrathom.</translation>
     </message>
+    <message>
+        <source>Off, a notification says only that messages arrived, not from whom or what. On, it shows the latest message — also on the lock screen.</source>
+        <translation>Mitfi: notifika tgħid biss li waslu messaġġi, mhux mingħand min jew x&apos;inhuma. Mixgħul: turi l-aħħar messaġġ — anki fuq l-iskrin imsakkar.</translation>
+    </message>
 </context>
 <context>
     <name>PushPage</name>
@@ -2016,10 +2083,6 @@
     <message>
         <source>What leaves this device</source>
         <translation>X&apos;jitlaq minn dan l-apparat</translation>
-    </message>
-    <message>
-        <source>Your homeserver is told an address at the push service, and posts a room and message identifier to the gateway for every notification. No message text: the push carries identifiers only and this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
-        <translation>Is-server tiegħek jingħata indirizz mas-servizz push, u għal kull notifika jibgħat lill-gateway identifikatur tal-kamra u tal-messaġġ. Ebda test: il-push iġorr identifikaturi biss u dan l-apparat iġib u jiddeċifra l-messaġġ waħdu. Dak l-indirizz huwa sigriet — min għandu jista&apos; jibgħat notifika lil dan it-telefon.</translation>
     </message>
     <message>
         <source>UnifiedPush (public)</source>
@@ -2097,6 +2160,22 @@
         <source>Use UnifiedPush public gateway</source>
         <translation>Uża l-gateway pubbliku ta&apos; UnifiedPush</translation>
     </message>
+    <message>
+        <source>Several distributors are installed. Pick the one xmatic uses.</source>
+        <translation>Hemm diversi distributuri installati. Agħżel dak li juża xmatic.</translation>
+    </message>
+    <message>
+        <source>The push distributor is no longer installed. Nothing arrives until it is back. Install it again or switch push off.</source>
+        <translation>Id-distributur push m&apos;għadux installat. Ma jasal xejn sakemm jerġa&apos; lura. Erġa&apos; installah jew itfi l-push.</translation>
+    </message>
+    <message>
+        <source>Your homeserver is told an address at the push service, and posts a room and message identifier and your unread count to the gateway for every notification. No message text: this device fetches and decrypts the message itself. That address is a secret — whoever holds it can send this phone a notification.</source>
+        <translation>Is-server tad-dar tiegħek jingħata indirizz fis-servizz push u, għal kull notifika, jibgħat lill-gateway identifikatur tal-kamra u tal-messaġġ u n-numru ta&apos; messaġġi mhux moqrija. L-ebda test: dan l-apparat iġib u jiddekripta l-messaġġ waħdu. Dak l-indirizz huwa sigriet — min għandu jista&apos; jibgħat notifika lil dan it-telefon.</translation>
+    </message>
+    <message>
+        <source>Before you uninstall xmatic, switch push off here. Otherwise the homeserver keeps the pusher and goes on posting to the gateway.</source>
+        <translation>Qabel ma tneħħi xmatic, itfi l-push hawn. Inkella s-server tad-dar iżomm il-pusher u jibqa&apos; jibgħat lill-gateway.</translation>
+    </message>
 </context>
 <context>
     <name>PushWake</name>
@@ -2107,6 +2186,14 @@
     <message>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>Id-distributur push waqqa&apos; lil xmatic. Erġa&apos; ixgħel il-push taħt Kont.</translation>
+    </message>
+    <message>
+        <source>Open xmatic once to finish setting up push notifications.</source>
+        <translation>Iftaħ xmatic darba biex tlesti l-konfigurazzjoni tan-notifiki push.</translation>
+    </message>
+    <message>
+        <source>xmatic is still handling a notification. Open it again in a moment.</source>
+        <translation>xmatic għadu qed jieħu ħsieb notifika. Erġa&apos; iftaħu ftit wara.</translation>
     </message>
 </context>
 <context>
@@ -2161,6 +2248,10 @@
         <source>Discover rooms</source>
         <translation>Skopri kmamar</translation>
     </message>
+    <message>
+        <source>Left rooms (%1)</source>
+        <translation>Kmamar li tlaqt (%1)</translation>
+    </message>
 </context>
 <context>
     <name>RoomDelegate</name>
@@ -2175,6 +2266,10 @@
     <message>
         <source>Space</source>
         <translation>Spazju</translation>
+    </message>
+    <message>
+        <source>Not sent - open the room to decide</source>
+        <translation>Mhux mibgħut – iftaħ il-kamra biex tiddeċiedi</translation>
     </message>
 </context>
 <context>
@@ -2471,12 +2566,16 @@
         <translation>Dejta lokali bil-ħsara</translation>
     </message>
     <message>
-        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Close the app and start it again. If rooms are still missing afterwards, signing out and in rebuilds the local data — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
-        <translation>Parti mid-data maħżuna f&apos;dan l-apparat ma tistax tinqara aktar, u xmatic ma rnexxielux isewwiha waqt li kien qed jaħdem — għalhekk waqqaf is-sinkronizzazzjoni minflok ma jiltaqa&apos; mal-istess ringiela mill-ġdid. Agħlaq l-app u erġa&apos; ibdieha. Jekk wara jkun għad hemm kmamar nieqsa, il-ħruġ u d-dħul mill-ġdid jerġgħu jibnu d-data lokali — imma jbiddlu wkoll iċ-ċwievet ta&apos; dan l-apparat: l-ewwel iċċekkja fil-paġna tal-kriptaġġ li l-backup taċ-ċwievet huwa mixgħul.</translation>
-    </message>
-    <message>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>Dan is-server iwassal biss %1 mit-%2 kmamar tiegħek permezz ta&apos; sliding sync, is-sinkronizzazzjoni li teħtieġ din l-app. Dawk nieqsa – ħafna drabi chats permezz ta&apos; bridges – ma jistgħux jintwerew hawn; apps li jużaw is-sinkronizzazzjoni klassika għadhom jarawhom.</translation>
+    </message>
+    <message>
+        <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
+        <translation>Parti mid-data maħżuna fuq dan l-apparat ma tistax tinqara aktar, u xmatic ma rnexxilux isewwiha waqt li kien qed jaħdem — għalhekk waqqaf is-sinkronizzazzjoni minflok ma jerġa&apos; jiltaqa&apos; mal-istess ringiela. Il-bini mill-ġdid tad-data tal-kmamar iġib il-kmamar u l-messaġġi mill-ġdid u jżomm iċ-ċwievet ta&apos; dan l-apparat. Jekk dan ma jgħinx, il-ħruġ u d-dħul mill-ġdid jibnu kollox mill-ġdid — iżda jissostitwixxu ċ-ċwievet ta&apos; dan l-apparat; għalhekk iċċekkja l-ewwel fil-paġna tal-kriptaġġ li l-backup taċ-ċwievet huwa mixgħul.</translation>
+    </message>
+    <message>
+        <source>Rebuild room data</source>
+        <translation>Ibni mill-ġdid id-data tal-kmamar</translation>
     </message>
 </context>
 <context>
@@ -2980,6 +3079,18 @@
         <source>%1 changed their profile picture</source>
         <translation>%1 biddel l-istampa tal-profil</translation>
     </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 biddel l-isem tiegħu għal %2 u l-istampa tal-profil</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 neħħa l-isem tiegħu u biddel l-istampa tal-profil</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ma jintweriex fuq dan l-apparat. Agħfas biex tiftaħ.</translation>
+    </message>
 </context>
 <context>
     <name>RoomSettingsPage</name>
@@ -3366,6 +3477,10 @@
         <source>Off, the picture is made smaller before it goes out and its metadata - the place it was taken, among them - does not travel with it.</source>
         <translation>Mitfi, ir-ritratt jiċċekken qabel jintbagħat u l-metadata tiegħu – fosthom fejn ittieħed – ma tivvjaġġax miegħu.</translation>
     </message>
+    <message>
+        <source>Animations and drawings go as they are, with any metadata in them.</source>
+        <translation>L-animazzjonijiet u t-tpinġijiet jintbagħtu kif inhuma, bil-metadata kollha tagħhom.</translation>
+    </message>
 </context>
 <context>
     <name>SendQueueBanner</name>
@@ -3420,6 +3535,22 @@
     <message>
         <source>A poll could not be sent.</source>
         <translation>Stħarriġ ma setax jintbagħat.</translation>
+    </message>
+    <message>
+        <source>An attachment could not be sent.</source>
+        <translation>Ma setax jintbagħat anness.</translation>
+    </message>
+    <message>
+        <source>The server does not accept files this large. Discard it and send a smaller one.</source>
+        <translation>Is-server ma jaċċettax fajls daqshekk kbar. Armih u ibgħat wieħed iżgħar.</translation>
+    </message>
+    <message>
+        <source>The connection broke off several times while sending. Send it again on a steadier one, or discard it.</source>
+        <translation>Il-konnessjoni nqatgħet diversi drabi waqt il-bgħit. Erġa&apos; ibgħatu fuq konnessjoni aktar stabbli jew armih.</translation>
+    </message>
+    <message>
+        <source>The server has not taken it for half an hour. Send it again, or discard it.</source>
+        <translation>Is-server ilu nofs siegħa ma jaċċettahx. Erġa&apos; ibgħatu jew armih.</translation>
     </message>
 </context>
 <context>
@@ -3829,14 +3960,6 @@
     <message>
         <source>Event</source>
         <translation>Avveniment</translation>
-    </message>
-    <message>
-        <source>Cannot be decrypted — this device is missing the key</source>
-        <translation>Ma jistax jiġi deċifrat — lil dan l-apparat tonqsu ċ-ċavetta</translation>
-    </message>
-    <message>
-        <source>Message deleted</source>
-        <translation>Messaġġ imħassar</translation>
     </message>
     <message>
         <source>Attachment</source>

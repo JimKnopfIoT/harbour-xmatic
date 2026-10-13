@@ -2,7 +2,8 @@
 
 #include "appsettings.h"
 
-#include <QGuiApplication>
+#include <QCoreApplication>
+#include <QLocale>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QTranslator>
@@ -82,7 +83,7 @@ QVariantList LanguageSettings::available() const
     return list;
 }
 
-void LanguageSettings::applyTo(QGuiApplication *app)
+void LanguageSettings::applyTo(QCoreApplication *app)
 {
     const QString code = storedCode();
     if (code.isEmpty()) {
@@ -97,4 +98,16 @@ void LanguageSettings::applyTo(QGuiApplication *app)
         qWarning("xmatic: no catalogue for the chosen language; following the device");
         delete translator;
     }
+}
+
+void LanguageSettings::applyWithDeviceLocale(QCoreApplication *app)
+{
+    QTranslator *device = new QTranslator(app);
+    if (device->load(QLocale::system(), QStringLiteral("harbour-xmatic"), QStringLiteral("-"),
+                     QStringLiteral("/usr/share/harbour-xmatic/translations"))) {
+        app->installTranslator(device);
+    } else {
+        delete device;
+    }
+    applyTo(app);
 }
