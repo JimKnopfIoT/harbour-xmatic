@@ -18,6 +18,12 @@
 #define GST_USE_UNSTABLE_API
 #include <gst/webrtc/webrtc.h>
 
+// GIO names a struct member `signals`, which Qt defines as a keyword.
+#pragma push_macro("signals")
+#undef signals
+#include <nice/agent.h>
+#pragma pop_macro("signals")
+
 #include <gst/video/video.h>
 
 namespace {
@@ -128,6 +134,107 @@ QString freshId(const QString &prefix)
     return QString();
 }
 
+/// "relay/udp/v4" from an ICE candidate line: what the trace may say about
+/// it. The address itself stays out of the journal.
+QString candidateKind(const QString &line)
+{
+    const QStringList parts = line.trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts);
+    const int typ = parts.indexOf(QStringLiteral("typ"));
+    if (parts.size() < 6 || typ < 0 || typ + 1 >= parts.size()) {
+        return QStringLiteral("unreadable");
+    }
+    const QString &address = parts.at(4);
+    const QString family = address.endsWith(QLatin1String(".local"))
+        ? QStringLiteral("mdns")
+        : address.contains(QLatin1Char(':')) ? QStringLiteral("v6") : QStringLiteral("v4");
+    return parts.at(typ + 1) + QLatin1Char('/') + parts.at(2).toLower() + QLatin1Char('/') + family;
+}
+
+QString describeKinds(const QMap<QString, int> &kinds)
+{
+    if (kinds.isEmpty()) {
+        return QStringLiteral("none");
+    }
+    QStringList out;
+    for (auto it = kinds.constBegin(); it != kinds.constEnd(); ++it) {
+        out.append(QStringLiteral("%1 x%2").arg(it.key()).arg(it.value()));
+    }
+    return out.join(QStringLiteral(", "));
+}
+
+/// A pipeline kept alive until its TURN allocations are given back; dropped
+/// at once they hold the server's relay ports until they time out.
+struct RelayRelease
+{
+    GstElement *pipeline = nullptr;
+    guint timer = 0;
+    int pending = 2;
+};
+
+void finishRelease(RelayRelease *release)
+{
+    if (release->pipeline) {
+        gst_element_set_state(release->pipeline, GST_STATE_NULL);
+        gst_object_unref(release->pipeline);
+        release->pipeline = nullptr;
+    }
+}
+
+void relaysReleased(GObject *, GAsyncResult *, gpointer user)
+{
+    auto *release = static_cast<RelayRelease *>(user);
+    finishRelease(release);
+    if (release->timer != 0) {
+        g_source_remove(release->timer);
+        release->timer = 0;
+        --release->pending;
+    }
+    if (--release->pending == 0) {
+        delete release;
+    }
+}
+
+gboolean relayReleaseTimedOut(gpointer user)
+{
+    auto *release = static_cast<RelayRelease *>(user);
+    release->timer = 0;
+    finishRelease(release);
+    if (--release->pending == 0) {
+        delete release;
+    }
+    return G_SOURCE_REMOVE;
+}
+
+/// Takes the pipeline's reference. The agent is reached through properties
+/// older GStreamer lacks; there the pipeline simply stops.
+void releaseRelays(GstElement *pipeline, GstElement *webrtc)
+{
+    NiceAgent *agent = nullptr;
+    if (webrtc && g_object_class_find_property(G_OBJECT_GET_CLASS(webrtc), "ice-agent")) {
+        GObject *ice = nullptr;
+        g_object_get(webrtc, "ice-agent", &ice, nullptr);
+        if (ice) {
+            if (g_object_class_find_property(G_OBJECT_GET_CLASS(ice), "agent")) {
+                g_object_get(ice, "agent", &agent, nullptr);
+            }
+            g_object_unref(ice);
+        }
+    }
+    if (!agent) {
+        gst_element_set_state(pipeline, GST_STATE_NULL);
+        gst_object_unref(pipeline);
+        return;
+    }
+
+    // Paused: no more sound either way while the agent says goodbye.
+    gst_element_set_state(pipeline, GST_STATE_PAUSED);
+    auto *release = new RelayRelease;
+    release->pipeline = pipeline;
+    release->timer = g_timeout_add(3000, relayReleaseTimedOut, release);
+    nice_agent_close_async(agent, relaysReleased, release);
+    g_object_unref(agent);
+}
+
 } // namespace
 
 CallEngine::CallEngine(QObject *parent)
@@ -192,6 +299,23 @@ CallEngine::CallEngine(QObject *parent)
             qWarning("xmatic: nothing received for 15 s, ending the call");
             markDisconnected(m_generation.load());
         }
+    });
+
+    m_relayRefresh.setSingleShot(true);
+    connect(&m_relayRefresh, &QTimer::timeout, this, &CallEngine::relayRefreshNeeded);
+    m_iceGrace.setSingleShot(true);
+    m_iceGrace.setInterval(12000);
+    connect(&m_iceGrace, &QTimer::timeout, this, [this]() {
+        if (m_state == QLatin1String("connecting")) {
+            markDisconnected(m_generation.load());
+        }
+    });
+
+    m_relayWait.setSingleShot(true);
+    m_relayWait.setInterval(4000);
+    connect(&m_relayWait, &QTimer::timeout, this, [this]() {
+        qWarning("xmatic: no fresh relay credentials, calling with what there is");
+        resumeAfterRelay();
     });
 
     m_candidateTimer.setSingleShot(true);
@@ -261,9 +385,60 @@ void CallEngine::setState(const QString &state)
     emit callChanged();
 }
 
-void CallEngine::setTurnServers(const QVariantList &servers)
+void CallEngine::setTurnServers(const QVariantList &servers, int ttl)
 {
     m_turnServers = servers;
+    m_relayKnown = true;
+    m_relayExpiresAt = ttl > 0 ? QDateTime::currentMSecsSinceEpoch() + qint64(ttl) * 1000 : 0;
+    if (ttl > 0) {
+        m_relayRefresh.start(qMax(60, ttl * 3 / 4) * 1000);
+    }
+    resumeAfterRelay();
+}
+
+void CallEngine::relayUnavailable()
+{
+    resumeAfterRelay();
+}
+
+bool CallEngine::relayStale() const
+{
+    if (!m_relayKnown) {
+        return true;
+    }
+    return m_relayExpiresAt != 0
+        && QDateTime::currentMSecsSinceEpoch() > m_relayExpiresAt - 60000;
+}
+
+bool CallEngine::waitForRelay(int next)
+{
+    if (!relayStale()) {
+        return false;
+    }
+    m_afterRelay = next;
+    m_relayWait.start();
+    emit relayRefreshNeeded();
+    return true;
+}
+
+void CallEngine::resumeAfterRelay()
+{
+    const int next = m_afterRelay;
+    m_afterRelay = 0;
+    m_relayWait.stop();
+    if (next == 1 && m_state == QLatin1String("calling")) {
+        startOutgoing(m_withVideo);
+    } else if (next == 2 && m_state == QLatin1String("connecting")) {
+        answerOffer();
+    }
+}
+
+void CallEngine::logCandidates(const char *moment) const
+{
+    qInfo("xmatic: ICE %s; local: %s; remote: %s",
+          moment,
+          qPrintable(describeKinds(m_localKinds)),
+          qPrintable(describeKinds(m_remoteKinds)));
 }
 
 void CallEngine::tearDown()
@@ -285,9 +460,11 @@ void CallEngine::tearDown()
     }
     m_cameraFeed = nullptr;
     m_cameraFlip = nullptr;
+    m_afterRelay = 0;
+    m_relayWait.stop();
+    m_iceGrace.stop();
     if (m_pipeline) {
-        gst_element_set_state(m_pipeline, GST_STATE_NULL);
-        gst_object_unref(m_pipeline);
+        releaseRelays(m_pipeline, m_webrtc);
         m_pipeline = nullptr;
     }
     m_webrtc = nullptr;
@@ -299,6 +476,8 @@ void CallEngine::tearDown()
 bool CallEngine::buildPipeline()
 {
     tearDown();
+    m_localKinds.clear();
+    m_remoteKinds.clear();
 
     GError *error = nullptr;
     const QByteArray video = videoPipelineDescription();
@@ -392,7 +571,31 @@ bool CallEngine::buildPipeline()
 
 void CallEngine::applyTurnServers()
 {
+    // One URI per transport: libnice allocates per URI and local address, and
+    // a server with the default 21 relay ports runs dry within one call.
+    // UDP prefers plain `turn:`, TCP prefers `turns:`.
+    QVariant udp;
+    QVariant tcp;
+    bool udpPlain = false;
+    bool tcpTls = false;
     for (const QVariant &entry : m_turnServers) {
+        const QString uri = entry.toMap().value(QStringLiteral("uri")).toString();
+        const bool tls = uri.startsWith(QLatin1String("turns:"), Qt::CaseInsensitive);
+        if (uri.contains(QLatin1String("transport=tcp"), Qt::CaseInsensitive)) {
+            if (!tcp.isValid() || (tls && !tcpTls)) {
+                tcp = entry;
+                tcpTls = tls;
+            }
+        } else if (!udp.isValid() || (!tls && !udpPlain)) {
+            udp = entry;
+            udpPlain = !tls;
+        }
+    }
+
+    for (const QVariant &entry : {udp, tcp}) {
+        if (!entry.isValid()) {
+            continue;
+        }
         const QVariantMap server = entry.toMap();
         const QString uri = server.value(QStringLiteral("uri")).toString();
         const QString user = server.value(QStringLiteral("username")).toString();
@@ -483,7 +686,9 @@ void CallEngine::placeCall(const QString &roomId, bool withVideo)
     m_roomId = roomId;
     m_peer.clear();
     setState(QStringLiteral("calling"));
-    startOutgoing(m_withVideo);
+    if (!waitForRelay(1)) {
+        startOutgoing(m_withVideo);
+    }
 }
 
 void CallEngine::startOutgoing(bool withVideo)
@@ -551,9 +756,14 @@ void CallEngine::onRemoteInvite(const QString &roomId,
           CameraSource::isAvailable() ? 1 : 0);
     m_withVideo = false;
     m_pendingRemoteOffer = sdp;
+    m_earlyCandidates.clear();
     emit callChanged();
 
     setState(QStringLiteral("ringing"));
+    // Fetched while it rings, so the answer rarely has to wait.
+    if (relayStale()) {
+        emit relayRefreshNeeded();
+    }
     // A ring that nobody answers ends by itself. Without this the ringtone
     // loops until the caller gives up - and a caller can choose not to.
     m_ringTimeout.start();
@@ -577,6 +787,13 @@ void CallEngine::acceptCall(bool withVideo)
     }
 
     setState(QStringLiteral("connecting"));
+    if (!waitForRelay(2)) {
+        answerOffer();
+    }
+}
+
+void CallEngine::answerOffer()
+{
     if (!buildPipeline()) {
         return;
     }
@@ -593,6 +810,15 @@ void CallEngine::acceptCall(bool withVideo)
     // Answering means taking their offer first; the answer follows from it.
     applyRemoteDescription(m_pendingRemoteOffer, true);
     m_pendingRemoteOffer.clear();
+
+    const QVariantList early = m_earlyCandidates;
+    m_earlyCandidates.clear();
+    if (!early.isEmpty()) {
+        qInfo("xmatic: %d candidates held while it rang", early.size());
+    }
+    for (const QVariant &entry : early) {
+        addRemoteCandidate(entry.toMap());
+    }
 }
 
 void CallEngine::onAnsweredElsewhere(const QString &roomId, const QString &callId,
@@ -696,6 +922,11 @@ void CallEngine::applyRemoteDescription(const QString &sdp, bool isOffer)
         reportFailure(tr("the other side sent an unreadable session description"));
         return;
     }
+    for (const QString &line : sdp.split(QLatin1Char('\n'))) {
+        if (line.startsWith(QLatin1String("a=candidate:"))) {
+            ++m_remoteKinds[candidateKind(line.mid(2))];
+        }
+    }
 
     // Which lines carry video, read before the description takes the message
     // over: answering an offer we have no video pipeline for needs them below,
@@ -755,23 +986,36 @@ void CallEngine::onRemoteCandidates(const QString &roomId,
 {
     // Same rule as the answer: an injected candidate makes this device probe an
     // address of somebody else's choosing. Before the party is known, the room is the check.
-    if (callId != m_callId || !m_webrtc || roomId != m_roomId) {
+    if (callId != m_callId || roomId != m_roomId) {
         return;
     }
     if (!m_peer.isEmpty() && sender != m_peer) {
         return;
     }
+    // The caller sends them right after the invite; dropped, only a peer that
+    // can reach this one directly ever connects - the same Wi-Fi, never two carriers.
+    if (!m_webrtc) {
+        if (!m_isCaller && m_state != QLatin1String("idle")) {
+            m_earlyCandidates.append(candidates);
+        }
+        return;
+    }
 
     for (const QVariant &entry : candidates) {
-        const QVariantMap candidate = entry.toMap();
-        const QString value = candidate.value(QStringLiteral("candidate")).toString();
-        if (value.isEmpty()) {
-            // The end-of-candidates marker; nothing to add.
-            continue;
-        }
-        const unsigned index = candidate.value(QStringLiteral("sdpMLineIndex")).toUInt();
-        g_signal_emit_by_name(m_webrtc, "add-ice-candidate", index, value.toUtf8().constData());
+        addRemoteCandidate(entry.toMap());
     }
+}
+
+void CallEngine::addRemoteCandidate(const QVariantMap &candidate)
+{
+    const QString value = candidate.value(QStringLiteral("candidate")).toString();
+    if (value.isEmpty() || !m_webrtc) {
+        // The end-of-candidates marker; nothing to add.
+        return;
+    }
+    const unsigned index = candidate.value(QStringLiteral("sdpMLineIndex")).toUInt();
+    ++m_remoteKinds[candidateKind(value)];
+    g_signal_emit_by_name(m_webrtc, "add-ice-candidate", index, value.toUtf8().constData());
 }
 
 void CallEngine::onRemoteHangup(const QString &roomId,
@@ -808,6 +1052,9 @@ void CallEngine::onRemoteHangup(const QString &roomId,
         qInfo("xmatic: ignoring hangup for another call");
         return;
     }
+    if (m_state == QLatin1String("connecting")) {
+        logCandidates("ended by the other side");
+    }
     setStatus(tr("the other side hung up"));
     tearDown();
     m_remoteVideo.stop();
@@ -823,6 +1070,9 @@ void CallEngine::hangUp()
 {
     if (m_state == QLatin1String("idle")) {
         return;
+    }
+    if (m_state == QLatin1String("connecting")) {
+        logCandidates("given up");
     }
 
     if (!m_roomId.isEmpty() && !m_callId.isEmpty()) {
@@ -1450,10 +1700,14 @@ void CallEngine::connectionStateChanged(GstElement *webrtc, void *, void *user)
         return;
     }
 
+    if (state == GST_WEBRTC_PEER_CONNECTION_STATE_FAILED) {
+        QMetaObject::invokeMethod(engine, "markFailed", Qt::QueuedConnection,
+                                  Q_ARG(int, engine->m_generation.load()));
+        return;
+    }
     // A failed or closed connection has to return the engine to idle, or the call
     // never ends here and every later one is refused as busy.
-    if (state == GST_WEBRTC_PEER_CONNECTION_STATE_FAILED
-        || state == GST_WEBRTC_PEER_CONNECTION_STATE_CLOSED) {
+    if (state == GST_WEBRTC_PEER_CONNECTION_STATE_CLOSED) {
         QMetaObject::invokeMethod(engine, "markDisconnected", Qt::QueuedConnection,
                                   Q_ARG(int, engine->m_generation.load()));
     }
@@ -1551,9 +1805,27 @@ void CallEngine::markDisconnected(int generation)
         return;
     }
     qInfo("xmatic: call connection lost");
+    logCandidates("failed");
     setStatus(tr("the connection was lost"));
     setFailure(tr("the connection was lost"));
     hangUp();
+}
+
+void CallEngine::markFailed(int generation)
+{
+    if (!current(generation) || m_state == QLatin1String("idle")) {
+        return;
+    }
+    // The other side's candidates travel through the homeserver; on a phone
+    // network they can land after libnice gave up, and new ones restart the checks.
+    if (m_state == QLatin1String("connecting")) {
+        if (!m_iceGrace.isActive()) {
+            logCandidates("failed, waiting for late candidates");
+            m_iceGrace.start();
+        }
+        return;
+    }
+    markDisconnected(generation);
 }
 
 void CallEngine::markConnected(int generation)
@@ -1561,10 +1833,12 @@ void CallEngine::markConnected(int generation)
     if (!current(generation) || m_state == QLatin1String("idle")) {
         return;
     }
+    m_iceGrace.stop();
     if (m_withVideo && m_cameraFrames.load() == 0) {
         qWarning("xmatic: connected but the camera has produced nothing");
     }
 
+    logCandidates("connected");
     m_audioRouter.start();
     m_silentTicks = 0;
     m_lastRemotePackets = m_remotePackets.load();
@@ -1594,6 +1868,7 @@ void CallEngine::deliverCandidate(int generation, const QString &candidate,
         return;
     }
 
+    ++m_localKinds[candidateKind(candidate)];
     QVariantMap entry;
     entry.insert(QStringLiteral("candidate"), candidate);
     entry.insert(QStringLiteral("sdpMLineIndex"), mediaLineIndex);
