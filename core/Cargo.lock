@@ -5267,12 +5267,13 @@ dependencies = [
 
 [[package]]
 name = "xmatic-core"
-version = "0.46.14"
+version = "0.46.16"
 dependencies = [
  "base64 0.22.1",
  "futures-util",
  "hex",
  "leghorn",
+ "libc",
  "log",
  "matrix-sdk",
  "matrix-sdk-base",

@@ -563,86 +563,86 @@
 <context>
     <name>CallEngine</name>
     <message>
-        <location filename="../src/callengine.cpp" line="160"/>
+        <location filename="../src/callengine.cpp" line="267"/>
         <source>the camera did not start — continuing without video</source>
         <translation>摄像头未启动——将以无视频方式继续</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="208"/>
+        <location filename="../src/callengine.cpp" line="332"/>
         <source>GStreamer could not be started: %1</source>
         <translation>无法启动 GStreamer：%1</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="218"/>
+        <location filename="../src/callengine.cpp" line="342"/>
         <source>This device has no WebRTC support.</source>
         <translation>此设备不支持 WebRTC。</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="224"/>
+        <location filename="../src/callengine.cpp" line="348"/>
         <source>ready</source>
         <translation>就绪</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="311"/>
-        <location filename="../src/callengine.cpp" line="1628"/>
+        <location filename="../src/callengine.cpp" line="490"/>
+        <location filename="../src/callengine.cpp" line="1903"/>
         <source>pipeline failed: %1</source>
         <translation>管线失败：%1</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="318"/>
+        <location filename="../src/callengine.cpp" line="497"/>
         <source>webrtcbin is missing</source>
         <translation>缺少 webrtcbin</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="480"/>
+        <location filename="../src/callengine.cpp" line="683"/>
         <source>no camera — placing a voice call</source>
         <translation>没有摄像头——将发起语音通话</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="513"/>
-        <location filename="../src/callengine.cpp" line="589"/>
+        <location filename="../src/callengine.cpp" line="718"/>
+        <location filename="../src/callengine.cpp" line="806"/>
         <source>the microphone could not be opened</source>
         <translation>无法打开麦克风</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="612"/>
-        <location filename="../src/callengine.cpp" line="626"/>
+        <location filename="../src/callengine.cpp" line="838"/>
+        <location filename="../src/callengine.cpp" line="852"/>
         <source>answered on another device</source>
         <translation>已在其他设备上接听</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="612"/>
+        <location filename="../src/callengine.cpp" line="838"/>
         <source>declined on another device</source>
         <translation>已在另一台设备上拒绝</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="686"/>
+        <location filename="../src/callengine.cpp" line="912"/>
         <source>the session description could not be read</source>
         <translation>无法读取会话描述</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="696"/>
+        <location filename="../src/callengine.cpp" line="922"/>
         <source>the other side sent an unreadable session description</source>
         <translation>对方发来的会话描述无法读取</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="811"/>
+        <location filename="../src/callengine.cpp" line="1058"/>
         <source>the other side hung up</source>
         <translation>对方挂断了</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1554"/>
-        <location filename="../src/callengine.cpp" line="1555"/>
+        <location filename="../src/callengine.cpp" line="1809"/>
+        <location filename="../src/callengine.cpp" line="1810"/>
         <source>the connection was lost</source>
         <translation>连接已断开</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1573"/>
+        <location filename="../src/callengine.cpp" line="1847"/>
         <source>connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1627"/>
+        <location filename="../src/callengine.cpp" line="1902"/>
         <source>the call could not be carried on</source>
         <translation>通话无法继续</translation>
     </message>
@@ -1628,27 +1628,27 @@
         <translation>在此期间，另一个应用已为此账户设置了交叉签名。请从那里验证此设备。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="500"/>
+        <location filename="../src/matrixbridge.cpp" line="507"/>
         <source>The protocol core is not available.</source>
         <translation>协议内核不可用。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="773"/>
-        <location filename="../src/matrixbridge.cpp" line="812"/>
-        <location filename="../src/matrixbridge.cpp" line="828"/>
+        <location filename="../src/matrixbridge.cpp" line="780"/>
+        <location filename="../src/matrixbridge.cpp" line="819"/>
+        <location filename="../src/matrixbridge.cpp" line="835"/>
         <source>Enter a homeserver first.</source>
         <translation>请先输入主服务器。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="794"/>
+        <location filename="../src/matrixbridge.cpp" line="801"/>
         <source>Enter username and password first.</source>
         <translation>请先输入用户名和密码。</translation>
     </message>
     <message>
         <location filename="../qml/pages/SpaceColourPage.qml" line="57"/>
         <location filename="../src/matrixbridge.cpp" line="258"/>
-        <location filename="../src/matrixbridge.cpp" line="1807"/>
-        <location filename="../src/matrixbridge.cpp" line="1822"/>
+        <location filename="../src/matrixbridge.cpp" line="1814"/>
+        <location filename="../src/matrixbridge.cpp" line="1829"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>暂时无法读取已保存的名单。</translation>
     </message>
@@ -1658,83 +1658,83 @@
         <translation>网关必须是 https URL。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2057"/>
+        <location filename="../src/matrixbridge.cpp" line="2064"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2279"/>
+        <location filename="../src/matrixbridge.cpp" line="2286"/>
         <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
         <translation>这张图片无法缩小，且包含元数据（例如拍摄地点），因此未发送。若要按原样发送，请以原始分辨率发送。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2428"/>
-        <location filename="../src/matrixbridge.cpp" line="2456"/>
+        <location filename="../src/matrixbridge.cpp" line="2435"/>
+        <location filename="../src/matrixbridge.cpp" line="2463"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2835"/>
+        <location filename="../src/matrixbridge.cpp" line="2845"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2860"/>
+        <location filename="../src/matrixbridge.cpp" line="2870"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3778"/>
+        <location filename="../src/matrixbridge.cpp" line="3796"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3927"/>
+        <location filename="../src/matrixbridge.cpp" line="3945"/>
         <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
         <translation>无法从主服务器移除推送注册。此账户下次在这里登录时会将其移除。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4192"/>
+        <location filename="../src/matrixbridge.cpp" line="4210"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4195"/>
+        <location filename="../src/matrixbridge.cpp" line="4213"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4198"/>
+        <location filename="../src/matrixbridge.cpp" line="4216"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4201"/>
+        <location filename="../src/matrixbridge.cpp" line="4219"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4204"/>
+        <location filename="../src/matrixbridge.cpp" line="4222"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4207"/>
+        <location filename="../src/matrixbridge.cpp" line="4225"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4207"/>
+        <location filename="../src/matrixbridge.cpp" line="4225"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4210"/>
+        <location filename="../src/matrixbridge.cpp" line="4228"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4213"/>
+        <location filename="../src/matrixbridge.cpp" line="4231"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -2739,7 +2739,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/callengine.cpp" line="1043"/>
+        <location filename="../src/callengine.cpp" line="1293"/>
         <source>no session description</source>
         <translation>没有会话描述</translation>
     </message>
