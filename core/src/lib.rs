@@ -16,6 +16,7 @@ mod login;
 mod media;
 mod members;
 mod mention;
+mod netwatch;
 mod profile;
 mod push;
 mod poll;
@@ -133,6 +134,7 @@ pub unsafe extern "C" fn xm_core_new(config_json: *const c_char) -> *mut XmCore 
 
         let sink = Arc::new(Sink::new());
         sdklog::install(sink.clone());
+        netwatch::start(sink.clone());
         let commands = runtime::spawn(&runtime, paths, store_key, sink.clone());
 
         Some(Box::into_raw(Box::new(XmCore {

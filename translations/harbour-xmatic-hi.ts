@@ -564,86 +564,86 @@
 <context>
     <name>CallEngine</name>
     <message>
-        <location filename="../src/callengine.cpp" line="160"/>
+        <location filename="../src/callengine.cpp" line="267"/>
         <source>the camera did not start — continuing without video</source>
         <translation>कैमरा शुरू नहीं हुआ — वीडियो के बिना जारी</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="208"/>
+        <location filename="../src/callengine.cpp" line="332"/>
         <source>GStreamer could not be started: %1</source>
         <translation>GStreamer शुरू नहीं हो सका: %1</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="218"/>
+        <location filename="../src/callengine.cpp" line="342"/>
         <source>This device has no WebRTC support.</source>
         <translation>इस उपकरण में WebRTC समर्थन नहीं है।</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="224"/>
+        <location filename="../src/callengine.cpp" line="348"/>
         <source>ready</source>
         <translation>तैयार</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="311"/>
-        <location filename="../src/callengine.cpp" line="1628"/>
+        <location filename="../src/callengine.cpp" line="490"/>
+        <location filename="../src/callengine.cpp" line="1903"/>
         <source>pipeline failed: %1</source>
         <translation>पाइपलाइन विफल: %1</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="318"/>
+        <location filename="../src/callengine.cpp" line="497"/>
         <source>webrtcbin is missing</source>
         <translation>webrtcbin मौजूद नहीं है</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="480"/>
+        <location filename="../src/callengine.cpp" line="683"/>
         <source>no camera — placing a voice call</source>
         <translation>कैमरा नहीं — वॉइस कॉल की जा रही है</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="513"/>
-        <location filename="../src/callengine.cpp" line="589"/>
+        <location filename="../src/callengine.cpp" line="718"/>
+        <location filename="../src/callengine.cpp" line="806"/>
         <source>the microphone could not be opened</source>
         <translation>माइक्रोफ़ोन नहीं खोला जा सका</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="612"/>
-        <location filename="../src/callengine.cpp" line="626"/>
+        <location filename="../src/callengine.cpp" line="838"/>
+        <location filename="../src/callengine.cpp" line="852"/>
         <source>answered on another device</source>
         <translation>दूसरे उपकरण पर उत्तर दिया गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="612"/>
+        <location filename="../src/callengine.cpp" line="838"/>
         <source>declined on another device</source>
         <translation>दूसरे डिवाइस पर अस्वीकार किया गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="686"/>
+        <location filename="../src/callengine.cpp" line="912"/>
         <source>the session description could not be read</source>
         <translation>सत्र विवरण पढ़ा नहीं जा सका</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="696"/>
+        <location filename="../src/callengine.cpp" line="922"/>
         <source>the other side sent an unreadable session description</source>
         <translation>दूसरी ओर से आया सत्र विवरण पढ़ा नहीं जा सका</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="811"/>
+        <location filename="../src/callengine.cpp" line="1058"/>
         <source>the other side hung up</source>
         <translation>दूसरी ओर से कॉल काट दी गई</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1554"/>
-        <location filename="../src/callengine.cpp" line="1555"/>
+        <location filename="../src/callengine.cpp" line="1809"/>
+        <location filename="../src/callengine.cpp" line="1810"/>
         <source>the connection was lost</source>
         <translation>कनेक्शन टूट गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1573"/>
+        <location filename="../src/callengine.cpp" line="1847"/>
         <source>connected</source>
         <translation>जुड़ गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1627"/>
+        <location filename="../src/callengine.cpp" line="1902"/>
         <source>the call could not be carried on</source>
         <translation>कॉल जारी नहीं रखी जा सकी</translation>
     </message>
@@ -1630,27 +1630,27 @@
         <translation>इस बीच किसी दूसरे ऐप ने इस खाते के लिए क्रॉस-साइनिंग सेट कर दी है। इस डिवाइस को वहीं से सत्यापित करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="500"/>
+        <location filename="../src/matrixbridge.cpp" line="507"/>
         <source>The protocol core is not available.</source>
         <translation>प्रोटोकॉल कोर उपलब्ध नहीं है।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="773"/>
-        <location filename="../src/matrixbridge.cpp" line="812"/>
-        <location filename="../src/matrixbridge.cpp" line="828"/>
+        <location filename="../src/matrixbridge.cpp" line="780"/>
+        <location filename="../src/matrixbridge.cpp" line="819"/>
+        <location filename="../src/matrixbridge.cpp" line="835"/>
         <source>Enter a homeserver first.</source>
         <translation>पहले कोई होमसर्वर दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="794"/>
+        <location filename="../src/matrixbridge.cpp" line="801"/>
         <source>Enter username and password first.</source>
         <translation>पहले उपयोगकर्ता नाम और पासवर्ड दर्ज करो।</translation>
     </message>
     <message>
         <location filename="../qml/pages/SpaceColourPage.qml" line="57"/>
         <location filename="../src/matrixbridge.cpp" line="258"/>
-        <location filename="../src/matrixbridge.cpp" line="1807"/>
-        <location filename="../src/matrixbridge.cpp" line="1822"/>
+        <location filename="../src/matrixbridge.cpp" line="1814"/>
+        <location filename="../src/matrixbridge.cpp" line="1829"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>सहेजी सूचियाँ अभी पढ़ी नहीं जा सकतीं।</translation>
     </message>
@@ -1660,83 +1660,83 @@
         <translation>गेटवे एक https URL होना चाहिए।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2057"/>
+        <location filename="../src/matrixbridge.cpp" line="2064"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2279"/>
+        <location filename="../src/matrixbridge.cpp" line="2286"/>
         <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
         <translation>यह तस्वीर छोटी नहीं की जा सकी और इसमें मेटाडेटा है, जैसे यह कहाँ ली गई, इसलिए इसे नहीं भेजा गया। इसे जैसी है वैसी भेजने के लिए मूल रिज़ॉल्यूशन में भेजो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2428"/>
-        <location filename="../src/matrixbridge.cpp" line="2456"/>
+        <location filename="../src/matrixbridge.cpp" line="2435"/>
+        <location filename="../src/matrixbridge.cpp" line="2463"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2835"/>
+        <location filename="../src/matrixbridge.cpp" line="2845"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2860"/>
+        <location filename="../src/matrixbridge.cpp" line="2870"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3778"/>
+        <location filename="../src/matrixbridge.cpp" line="3796"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3927"/>
+        <location filename="../src/matrixbridge.cpp" line="3945"/>
         <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
         <translation>पुश पंजीकरण होमसर्वर से हटाया नहीं जा सका। अगली बार जब यह खाता यहाँ साइन इन करेगा, तब इसे हटा दिया जाएगा।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4192"/>
+        <location filename="../src/matrixbridge.cpp" line="4210"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4195"/>
+        <location filename="../src/matrixbridge.cpp" line="4213"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4198"/>
+        <location filename="../src/matrixbridge.cpp" line="4216"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4201"/>
+        <location filename="../src/matrixbridge.cpp" line="4219"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4204"/>
+        <location filename="../src/matrixbridge.cpp" line="4222"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4207"/>
+        <location filename="../src/matrixbridge.cpp" line="4225"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4207"/>
+        <location filename="../src/matrixbridge.cpp" line="4225"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4210"/>
+        <location filename="../src/matrixbridge.cpp" line="4228"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4213"/>
+        <location filename="../src/matrixbridge.cpp" line="4231"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -2742,7 +2742,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/callengine.cpp" line="1043"/>
+        <location filename="../src/callengine.cpp" line="1293"/>
         <source>no session description</source>
         <translation>कोई सत्र विवरण नहीं</translation>
     </message>

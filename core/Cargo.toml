@@ -4,7 +4,7 @@ name = "xmatic-core"
 # this out and the app logs it at startup, so a tester's first log line names
 # the build they are on — it read "0.2.0" for eleven releases because this was
 # never moved, which cost a round of chasing a version that was not the problem.
-version = "0.46.14"
+version = "0.46.16"
 edition = "2021"
 license = "Apache-2.0"
 publish = false
@@ -88,6 +88,8 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", default-features = false, features = ["registry", "std"] }
 # Leghorn logs through `log`.
 log = { version = "0.4", features = ["std"] }
+# Netlink and /proc for `netwatch`; already in the tree through the SDK.
+libc = "0.2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 futures-util = "0.3"
