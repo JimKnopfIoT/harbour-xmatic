@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.46.16
+Version:    0.46.17
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -122,6 +122,10 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Oct 17 2026 harbour-xmatic contributors 0.46.17-1
+- Links: xmatic is offered only for matrix.to and matrix: links, no longer in
+  the "open with" list of every web address.
+
 * Wed Oct 14 2026 harbour-xmatic contributors 0.46.16-1
 - Switching between Wi-Fi and mobile data: connections the switch cut off are
   closed at once - those whose address is gone, and those whose route now

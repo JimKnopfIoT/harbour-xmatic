@@ -13,14 +13,9 @@ X-Nemo-Application-Type=generic
 # one. Measured on the device with `sailjail -D`: this file prints the full
 # firejail line ending in the link, the main file prints nothing.
 Exec=harbour-xmatic %u
-# A Matrix link comes in two shapes, and only one has a scheme of its own.
-# `matrix:` is the specified one (MSC2312) and almost nobody sends it; what
-# people actually share is a matrix.to address, which is an ordinary https
-# link. There is no way to register for one host only - a desktop file knows
-# schemes, not hosts - so taking matrix.to means being offered for every web
-# address. xmatic then appears in the "open with" list for links it has nothing
-# to do with, and drops them: see AppService::requestLink.
-MimeType=x-scheme-handler/matrix;x-scheme-handler/https;
+# `matrix:` per MSC2312; matrix.to by host, so xmatic is not offered for every
+# web address. x-url-handler matches the exact host, no wildcards.
+MimeType=x-scheme-handler/matrix;x-url-handler/matrix.to;x-url-handler/www.matrix.to;
 
 [X-Sailjail]
 # Without this block the start goes through a compatibility mode that runs the
