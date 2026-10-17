@@ -5267,7 +5267,7 @@ dependencies = [
 
 [[package]]
 name = "xmatic-core"
-version = "0.46.16"
+version = "0.46.17"
 dependencies = [
  "base64 0.22.1",
  "futures-util",
