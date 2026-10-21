@@ -256,6 +256,8 @@ streams map one-to-one onto `QAbstractListModel` insert/remove/change signals â€
 that mapping is the whole reason for this design. The FFI surface is six C
 functions; everything else is a JSON message type.
 
+AI assisted development
+
 ## Licence
 
 Copyright 2026 JimKnopfIoT. Apache-2.0, matching matrix-rust-sdk. The Rust core
