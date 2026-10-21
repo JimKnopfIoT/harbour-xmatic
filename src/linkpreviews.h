@@ -15,9 +15,13 @@
 class LinkPreviews : public QObject
 {
     Q_OBJECT
+    /// What a card's picture may weigh, passed with every fetch of one.
+    Q_PROPERTY(qint64 maximumImageBytes READ maximumImageBytes CONSTANT)
 
 public:
     explicit LinkPreviews(QObject *parent = nullptr);
+
+    qint64 maximumImageBytes() const;
 
     /// The preview for this address, or an empty map while it is being fetched.
     /// Asking is what starts the fetch; `previewReady` says when it landed.

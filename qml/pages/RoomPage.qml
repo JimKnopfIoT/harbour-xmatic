@@ -2820,6 +2820,7 @@ Page {
                                 // it "links stay plain text" left the card openable.
                                 tappable: settings.clickableLinks
                                 onActivated: row.holdLink(link)
+                                onHeld: row.holdMenu()
                             }
                         }
 

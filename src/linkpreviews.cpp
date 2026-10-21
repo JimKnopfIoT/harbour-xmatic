@@ -2,6 +2,8 @@
 
 #include <QTimer>
 
+#include "xmatic_core.h"
+
 /// How long a "could not ask" stands before the same address is tried again,
 /// and how long an unanswered ask holds the address.
 static const qint64 RetryAfterMs = 60 * 1000;
@@ -14,6 +16,11 @@ LinkPreviews::LinkPreviews(QObject *parent)
     : QObject(parent)
 {
     m_clock.start();
+}
+
+qint64 LinkPreviews::maximumImageBytes() const
+{
+    return MAX_PREVIEW_IMAGE_BYTES;
 }
 
 QVariantMap LinkPreviews::preview(const QString &url)

@@ -248,9 +248,9 @@ pub async fn fetch(
         return Ok(path.to_string_lossy().into_owned());
     }
 
-    // The event's own figure, before anything is asked for - the SDK has no way
-    // to stream. A gate, not a guarantee: what arrives is weighed below.
-    check_size(declared, ceiling, "attachment")?;
+    // The declared figure is the original's: it gates the original only, a
+    // thumbnail is weighed below. The SDK has no way to stream.
+    declared_gate(&request.format, declared, ceiling)?;
 
     // Held for the request and released with it. A closed semaphore never
     // happens here - nothing closes it - so the error is mapped, not expected.
@@ -278,6 +278,7 @@ pub async fn fetch(
                 source,
                 format: MediaFormat::File,
             };
+            declared_gate(&original.format, declared, ceiling)?;
             client
                 .media()
                 .get_media_content(&original, false)
@@ -316,6 +317,14 @@ pub async fn fetch(
     }
 
     Ok(path.to_string_lossy().into_owned())
+}
+
+/// Weighs a declared size against the ceiling where the original is wanted.
+fn declared_gate(format: &MediaFormat, declared: u64, ceiling: u64) -> Result<(), String> {
+    if matches!(format, MediaFormat::Thumbnail(_)) {
+        return Ok(());
+    }
+    check_size(declared, ceiling, "attachment")
 }
 
 /// What this app can say about a file it sends. The SDK writes an empty `info`
@@ -554,6 +563,15 @@ mod tests {
         let mine = format!("mxc://example.org/{}", "c".repeat(200));
         let theirs = format!("{mine}x");
         assert_ne!(cache_name(&plain(&mine, false)), cache_name(&plain(&theirs, false)));
+    }
+
+    #[test]
+    fn a_declared_size_gates_the_original_only() {
+        let big = 8 * 1024 * 1024;
+        let limit = 5 * 1024 * 1024;
+        assert!(declared_gate(&plain("mxc://example.org/a", true).format, big, limit).is_ok());
+        assert!(declared_gate(&plain("mxc://example.org/a", false).format, big, limit).is_err());
+        assert!(declared_gate(&plain("mxc://example.org/a", false).format, limit, limit).is_ok());
     }
 
     #[test]

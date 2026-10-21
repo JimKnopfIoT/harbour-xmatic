@@ -26,10 +26,25 @@ Item {
     readonly property string mediaKey: "preview:" + url
 
     signal activated(string link)
+    /// A long press anywhere on the card: the row's menu, not the card's.
+    signal held()
 
     width: availableWidth
     height: available ? frame.height : 0
     visible: available
+
+    // The file the card already holds, under its key: no second download,
+    // nothing a decoder has not seen. Re-asked in case the sweep took it.
+    function openImage() {
+        matrix.requestMedia(card.mediaKey, card.preview.image, true,
+                            card.preview.imageSize || 0,
+                            matrix.linkPreviews.maximumImageBytes)
+        pageStack.push(Qt.resolvedUrl("ImageViewPage.qml"), {
+                           mediaKey: card.mediaKey,
+                           fileName: "",
+                           mimeType: "image/jpeg"
+                       })
+    }
 
     function load() {
         if (card.url.length === 0) {
@@ -91,7 +106,8 @@ Item {
             function fetch() {
                 if (visible && matrix.mediaPath(card.mediaKey).length === 0) {
                     matrix.requestMedia(card.mediaKey, card.preview.image, true,
-                                        card.preview.imageSize || 0)
+                                        card.preview.imageSize || 0,
+                                        matrix.linkPreviews.maximumImageBytes)
                 }
             }
             onVisibleChanged: fetch()
@@ -161,6 +177,14 @@ Item {
             anchors.fill: parent
             enabled: card.tappable
             onClicked: card.activated(card.url)
+            onPressAndHold: card.held()
+        }
+
+        MouseArea {
+            anchors.fill: thumb
+            enabled: thumb.visible
+            onClicked: card.openImage()
+            onPressAndHold: card.held()
         }
     }
 }

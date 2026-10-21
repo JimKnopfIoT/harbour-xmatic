@@ -18,6 +18,11 @@ use crate::protocol::reply_ok;
 use crate::runtime::Sink;
 use crate::text::strip_bidi;
 
+/// Largest preview picture: a thumbnail is a few hundred KiB, and the
+/// original where a server makes none is still only a card's picture.
+#[allow(dead_code)] // read by the front end, through cbindgen
+pub const MAX_PREVIEW_IMAGE_BYTES: u64 = 5 * 1024 * 1024;
+
 /// What a card holds at most. Both are a stranger's text about a page.
 const TITLE_CHARS: usize = 120;
 const DESCRIPTION_CHARS: usize = 300;

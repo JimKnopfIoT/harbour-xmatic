@@ -3647,203 +3647,203 @@
         <translation>और दिखाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2850"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2851"/>
         <source>What do these marks mean?</source>
         <translation>इन चिह्नों का क्या मतलब है?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2875"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2876"/>
         <source>Thread · %1</source>
         <translation>सूत्र · %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2876"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2877"/>
         <source>In thread</source>
         <translation>सूत्र में</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="2928"/>
+        <location filename="../qml/pages/RoomPage.qml" line="2929"/>
         <source>This reaction hides text and was not sent</source>
         <translation>यह प्रतिक्रिया छिपा हुआ पाठ रखती है और भेजी नहीं गई</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3067"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3068"/>
         <source>not sent</source>
         <translation>भेजा नहीं गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3070"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3071"/>
         <source>deletion not sent</source>
         <translation>हटाना भेजा नहीं गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3072"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3073"/>
         <source>edit not sent</source>
         <translation>संपादन भेजा नहीं गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3073"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3074"/>
         <source>edited</source>
         <translation>संपादित</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3393"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3394"/>
         <source>The conversation could not be loaded</source>
         <translation>बातचीत लोड नहीं की जा सकी</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3394"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3395"/>
         <source>No messages</source>
         <translation>कोई संदेश नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3421"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3422"/>
         <source>Room link copied</source>
         <translation>रूम लिंक कॉपी हो गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3484"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3485"/>
         <source>Accept invitation</source>
         <translation>निमंत्रण स्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3506"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3507"/>
         <source>Back to the latest messages</source>
         <translation>नवीनतम संदेशों पर वापस जाओ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3541"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3542"/>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>रिकॉर्ड हो रहा है… %1 से। भेजने के लिए माइक्रोफ़ोन पर टैप करो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3543"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3544"/>
         <source>Recording… %1 s</source>
         <translation>रिकॉर्ड हो रहा है… %1 से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3572"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3573"/>
         <source>Reply to %1</source>
         <translation>%1 को उत्तर</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3595"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3596"/>
         <source>Editing message</source>
         <translation>संदेश संपादित हो रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3622"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3623"/>
         <source>New text</source>
         <translation>नया पाठ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3622"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3623"/>
         <source>Message</source>
         <translation>संदेश</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3669"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3670"/>
         <source>Select files</source>
         <translation>फ़ाइलें चुनें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="3831"/>
+        <location filename="../qml/pages/RoomPage.qml" line="3832"/>
         <source>The text could not be written as a file</source>
         <translation>टेक्स्ट को फ़ाइल के रूप में नहीं लिखा जा सका</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4168"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4169"/>
         <source>Sent unencrypted</source>
         <translation>बिना एन्क्रिप्शन भेजा गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4169"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4170"/>
         <source>Not sent by the account it names</source>
         <translation>जिस खाते का नाम है, उसने नहीं भेजा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4170"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4171"/>
         <source>The sender&apos;s keys changed</source>
         <translation>भेजने वाले की कुंजियाँ बदल गईं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4172"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4173"/>
         <source>From an unverified device</source>
         <translation>अपुष्ट उपकरण से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4173"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4174"/>
         <source>From an unverified person</source>
         <translation>अपुष्ट व्यक्ति से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4174"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4175"/>
         <source>Authenticity not confirmed</source>
         <translation>प्रामाणिकता की पुष्टि नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4190"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4191"/>
         <source>Open this address?</source>
         <translation>यह पता खोलें?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4192"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4193"/>
         <source>Open</source>
         <translation>खोलें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4253"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4254"/>
         <source>Saved to gallery</source>
         <translation>गैलरी में सहेजा गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4253"/>
-        <location filename="../qml/pages/RoomPage.qml" line="4256"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4254"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4257"/>
         <source>Could not save</source>
         <translation>सहेजा नहीं जा सका</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4256"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4257"/>
         <source>Saved to Downloads</source>
         <translation>डाउनलोड में सहेजा गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4299"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4300"/>
         <source>Nothing was said, so nothing was sent.</source>
         <translation>कुछ नहीं कहा गया, इसलिए कुछ नहीं भेजा गया।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4316"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4317"/>
         <source>Voting failed</source>
         <translation>मतदान विफल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4318"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4319"/>
         <source>The poll could not be ended</source>
         <translation>मतदान समाप्त नहीं किया जा सका</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4320"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4321"/>
         <source>The poll could not be sent</source>
         <translation>मतदान भेजा नहीं जा सका</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4323"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4324"/>
         <source>Your vote was not sent</source>
         <translation>तुम्हारा मत भेजा नहीं गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4330"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4331"/>
         <source>It is no longer waiting to be sent.</source>
         <translation>यह अब भेजे जाने की प्रतीक्षा में नहीं है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4331"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4332"/>
         <source>That did not work. Try again in a moment.</source>
         <translation>यह नहीं हुआ। थोड़ी देर बाद फिर कोशिश करो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomPage.qml" line="4339"/>
+        <location filename="../qml/pages/RoomPage.qml" line="4340"/>
         <source>Live location could not be started</source>
         <translation>लाइव लोकेशन शुरू नहीं हो सका</translation>
     </message>
