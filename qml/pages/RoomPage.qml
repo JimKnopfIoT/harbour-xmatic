@@ -84,6 +84,19 @@ Page {
         }
     }
 
+    // The tokens above that can be off, as the model needs them to join a sender's run.
+    readonly property var hiddenSystems: {
+        var tokens = ["member.left", "profile.name", "profile.avatar", "profile.both",
+                      "profile", "member.none"]
+        return tokens.filter(function(token) { return !page.systemShown(token) })
+    }
+
+    Binding {
+        target: matrix.timeline
+        property: "hiddenSystems"
+        value: page.hiddenSystems
+    }
+
     // Whether new messages should scroll the view along.
     property bool followTail: true
 
@@ -1532,6 +1545,10 @@ Page {
                 // The text an attachment was sent with. Empty for one sent
                 // without, where `body` holds the file name instead.
                 readonly property string rowEventId: model.eventId || ""
+                // Same sender as the message above, same day: no picture, no name. The
+                // line where the new messages start ends a run.
+                readonly property bool continues: (model.continuesFrom || "").length > 0
+                                                  && model.continuesFrom !== page.markerEventId
                 readonly property var reactionList: model.reactions || []
                 readonly property bool hasReactions: reactionList.length > 0
                 // Six fit next to each other on the narrow device; the rest are
@@ -1754,7 +1771,7 @@ Page {
                 width: timelineView.width
                 contentHeight: (isBubble
                                 ? Math.max(bubble.height,
-                                           row.isOwn ? 0 : page.avatarSize)
+                                           row.isOwn || row.continues ? 0 : page.avatarSize)
                                   + Theme.paddingMedium
                                 : (model.kind === "date"
                                    ? dayLabel.height + Theme.paddingLarge
@@ -1990,7 +2007,7 @@ Page {
                 Avatar {
                     id: senderAvatar
 
-                    visible: row.isBubble && (!row.isOwn || page.flatLayout)
+                    visible: row.isBubble && (!row.isOwn || page.flatLayout) && !row.continues
                     anchors {
                         left: parent.left
                         leftMargin: Theme.horizontalPageMargin
@@ -2122,7 +2139,7 @@ Page {
                                             bubbleColumn.maxTextWidth - bubbleColumn.senderInset)
                             height: page.flatLayout ? page.avatarSize : implicitHeight
                             verticalAlignment: Text.AlignVCenter
-                            visible: !row.isOwn || page.flatLayout
+                            visible: (!row.isOwn || page.flatLayout) && !row.continues
                             font.pixelSize: Theme.fontSizeExtraSmall
                             color: appearance.nameColor.length > 0
                                    ? appearance.nameColor : Theme.highlightColor

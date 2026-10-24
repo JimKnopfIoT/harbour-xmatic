@@ -516,7 +516,7 @@ linking the device's library. SQLite itself is in the public domain.
 | web-sys | 0.3.106 | MIT OR Apache-2.0 |
 | web-time | 1.1.0 | MIT OR Apache-2.0 |
 | web_atoms | 0.2.5 | MIT OR Apache-2.0 |
-| webpki-root-certs | 1.0.9 | CDLA-Permissive-2.0 |
+| webpki-root-certs | 1.0.10 | CDLA-Permissive-2.0 |
 | wide | 0.7.33 | Zlib OR Apache-2.0 OR MIT |
 | wildmatch | 2.6.1 | MIT |
 | winapi | 0.3.9 | MIT/Apache-2.0 |

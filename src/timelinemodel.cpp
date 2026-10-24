@@ -1,7 +1,25 @@
 #include "timelinemodel.h"
 
+#include <QDateTime>
 #include <QJsonArray>
 #include <QSet>
+
+namespace {
+
+bool isBubbleKind(const QString &kind)
+{
+    return kind == QLatin1String("message") || kind == QLatin1String("undecryptable")
+           || kind == QLatin1String("redacted");
+}
+
+/// The local day, or null without a timestamp - which then never matches.
+QDate localDay(const QJsonObject &row)
+{
+    const double stamp = row.value(QStringLiteral("timestamp")).toDouble();
+    return stamp > 0 ? QDateTime::fromMSecsSinceEpoch(qint64(stamp)).date() : QDate();
+}
+
+} // namespace
 
 TimelineModel::TimelineModel(QObject *parent)
     : DiffListModel(parent)
@@ -15,10 +33,27 @@ TimelineModel::TimelineModel(QObject *parent)
     connect(this, &QAbstractItemModel::rowsInserted, this, [this] { scheduleReadCounts(); });
     connect(this, &QAbstractItemModel::rowsRemoved, this, [this] { scheduleReadCounts(); });
     connect(this, &QAbstractItemModel::dataChanged, this, [this] { scheduleReadCounts(); });
+
+    connect(this, &QAbstractItemModel::modelReset, this, [this] { scheduleContinues(); });
+    connect(this, &QAbstractItemModel::rowsInserted, this, [this] { scheduleContinues(); });
+    connect(this, &QAbstractItemModel::rowsRemoved, this, [this] { scheduleContinues(); });
+    connect(this, &QAbstractItemModel::dataChanged, this,
+            [this](const QModelIndex &, const QModelIndex &, const QVector<int> &roles) {
+                // Our own emit and the read marks come back here; neither moves a run.
+                if (roles.isEmpty() || roles.contains(KindRole) || roles.contains(SenderRole)
+                    || roles.contains(TimestampRole) || roles.contains(SystemRole)
+                    || roles.contains(EventIdRole)) {
+                    scheduleContinues();
+                }
+            });
 }
 
 QVariant TimelineModel::data(const QModelIndex &index, int role) const
 {
+    if (role == ContinuesFromRole) {
+        return index.isValid() && index.row() < rows().count() ? continuesFrom(index.row())
+                                                                : QString();
+    }
     if (role == ReadMarkRole || role == ReadMarkByRole) {
         // Looked up by the row's own event id: by row number it was one off after
         // every page of older messages, and the mark stood under the wrong message.
@@ -52,6 +87,67 @@ void TimelineModel::setThreadRoots(const QHash<QString, int> &roots)
     m_threadRoots = roots;
     if (rowCount() > 0) {
         emit dataChanged(index(0), index(rowCount() - 1), QVector<int>() << ThreadCountRole);
+    }
+}
+
+QString TimelineModel::continuesFrom(int row) const
+{
+    const QJsonObject &own = rows().at(row);
+    if (!isBubbleKind(own.value(QStringLiteral("kind")).toString())) {
+        return QString();
+    }
+    const QString sender = own.value(QStringLiteral("sender")).toString();
+    const QDate day = localDay(own);
+    if (sender.isEmpty() || !day.isValid()) {
+        return QString();
+    }
+    // Back to the previous row that draws something: marker, start and hidden lines do not.
+    for (int i = row - 1; i >= 0; --i) {
+        const QJsonObject &prev = rows().at(i);
+        const QString kind = prev.value(QStringLiteral("kind")).toString();
+        if (isBubbleKind(kind)) {
+            if (prev.value(QStringLiteral("sender")).toString() != sender
+                || localDay(prev) != day) {
+                return QString();
+            }
+            const QString eventId = prev.value(QStringLiteral("eventId")).toString();
+            return eventId.isEmpty() ? prev.value(QStringLiteral("id")).toString() : eventId;
+        }
+        if (kind == QLatin1String("date")
+            || (kind == QLatin1String("system")
+                && !m_hiddenSystems.contains(prev.value(QStringLiteral("system")).toString()))) {
+            return QString();
+        }
+    }
+    return QString();
+}
+
+void TimelineModel::setHiddenSystems(const QStringList &tokens)
+{
+    const QSet<QString> hidden = tokens.toSet();
+    if (hidden == m_hiddenSystems) {
+        return;
+    }
+    m_hiddenSystems = hidden;
+    emit hiddenSystemsChanged();
+    scheduleContinues();
+}
+
+void TimelineModel::scheduleContinues()
+{
+    if (m_continuesQueued) {
+        return;
+    }
+    m_continuesQueued = true;
+    QMetaObject::invokeMethod(this, "refreshContinues", Qt::QueuedConnection);
+}
+
+void TimelineModel::refreshContinues()
+{
+    m_continuesQueued = false;
+    if (!rows().isEmpty()) {
+        emit dataChanged(index(0, 0), index(rows().count() - 1, 0),
+                         QVector<int> { ContinuesFromRole });
     }
 }
 
@@ -141,6 +237,7 @@ QHash<int, QByteArray> TimelineModel::roleNames() const
     names.insert(ReadMarkRole, "readMark");
     names.insert(ReadMarkByRole, "readMarkBy");
     names.insert(ShieldRole, "shield");
+    names.insert(ContinuesFromRole, "continuesFrom");
     return names;
 }
 

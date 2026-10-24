@@ -2,7 +2,9 @@
 #define TIMELINEMODEL_H
 
 #include <QHash>
+#include <QSet>
 #include <QString>
+#include <QStringList>
 #include <QVector>
 
 #include "difflistmodel.h"
@@ -12,6 +14,10 @@
 class TimelineModel : public DiffListModel
 {
     Q_OBJECT
+
+    /// System tokens the page draws as nothing; they do not break a sender's run.
+    Q_PROPERTY(QStringList hiddenSystems READ hiddenSystems WRITE setHiddenSystems
+               NOTIFY hiddenSystemsChanged)
 
 public:
     enum Role {
@@ -59,6 +65,9 @@ public:
         ReadMarkRole,
         ReadMarkByRole,
         ShieldRole,
+        /// The row this message continues - same sender, same day, nothing drawn
+        /// between - by event id, else row id. Empty where a header is due.
+        ContinuesFromRole,
     };
 
     explicit TimelineModel(QObject *parent = nullptr);
@@ -80,12 +89,23 @@ public:
     /// threading has no SDK summary, so the way in would depend on the store.
     void setThreadRoots(const QHash<QString, int> &roots);
 
+    QStringList hiddenSystems() const { return m_hiddenSystems.toList(); }
+    void setHiddenSystems(const QStringList &tokens);
+
+signals:
+    void hiddenSystemsChanged();
+
 private slots:
     /// How many others have read each own message. A receipt sits on the other
     /// side's own latest message, so reading it off its row showed nothing.
     void updateReadCounts();
+    /// Re-reads ContinuesFromRole everywhere: one inserted row moves the next one's.
+    void refreshContinues();
 
 private:
+    QString continuesFrom(int row) const;
+    void scheduleContinues();
+
     /// Asks for a recount after the current signal: a `dataChanged` emitted while
     /// the view works through another is dropped, and the mark stood one row off.
     void scheduleReadCounts();
@@ -96,6 +116,8 @@ private:
     bool m_updatingReadCounts = false;
     bool m_readCountsQueued = false;
     QHash<QString, int> m_threadRoots;
+    QSet<QString> m_hiddenSystems;
+    bool m_continuesQueued = false;
 };
 
 #endif // TIMELINEMODEL_H

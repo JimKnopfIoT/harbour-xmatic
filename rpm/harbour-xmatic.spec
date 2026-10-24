@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.46.19
+Version:    0.47.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -122,6 +122,11 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Oct 24 2026 harbour-xmatic contributors 0.47.0-1
+- Conversation: consecutive messages of one sender on the same day share one
+  picture and one name - only the first carries them. Room events that are
+  shown, a new day and the line where the new messages start begin a new run.
+
 * Wed Oct 21 2026 harbour-xmatic contributors 0.46.19-1
 - Link previews: tapping the picture opens it in the image viewer - the copy
   the card already holds, no second download; a long press opens the
