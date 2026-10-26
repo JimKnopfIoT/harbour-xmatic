@@ -80,6 +80,7 @@ SOURCES += \
     src/camerasource.cpp \
     src/callaudiorouter.cpp \
     src/echocanceller.cpp \
+    src/feedbacksuppressor.cpp \
     src/videostream.cpp \
     src/voicerecorder.cpp \
     src/secretskeeper.cpp
@@ -126,6 +127,7 @@ HEADERS += \
     src/camerasource.h \
     src/callaudiorouter.h \
     src/echocanceller.h \
+    src/feedbacksuppressor.h \
     src/videostream.h \
     src/voicerecorder.h
 

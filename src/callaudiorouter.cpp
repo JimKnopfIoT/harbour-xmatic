@@ -11,6 +11,11 @@ namespace {
 // only call audio is matched, not a notification sound.
 const char *kCallStreamName = "xmatic call";
 
+void portSetCb(pa_context *, int success, void *userdata)
+{
+    qInfo("xmatic: audio port %s %s", static_cast<const char *>(userdata), success ? "set" : "refused");
+}
+
 void contextStateCb(pa_context *, void *userdata)
 {
     pa_threaded_mainloop_signal(static_cast<pa_threaded_mainloop *>(userdata), 0);
@@ -123,7 +128,22 @@ CallAudioRouter::~CallAudioRouter()
 void CallAudioRouter::ensureConnection()
 {
     if (m_context) {
-        return;
+        auto *ml = static_cast<pa_threaded_mainloop *>(m_mainloop);
+        auto *ctx = static_cast<pa_context *>(m_context);
+        pa_threaded_mainloop_lock(ml);
+        const pa_context_state_t st = pa_context_get_state(ctx);
+        if (st != PA_CONTEXT_FAILED && st != PA_CONTEXT_TERMINATED) {
+            pa_threaded_mainloop_unlock(ml);
+            return;
+        }
+        // The sound server restarted: a dead context never comes back.
+        pa_context_set_state_callback(ctx, nullptr, nullptr);
+        pa_context_unref(ctx);
+        pa_threaded_mainloop_unlock(ml);
+        pa_threaded_mainloop_stop(ml);
+        pa_threaded_mainloop_free(ml);
+        m_context = nullptr;
+        m_mainloop = nullptr;
     }
     pa_threaded_mainloop *ml = pa_threaded_mainloop_new();
     if (!ml) {
@@ -166,6 +186,12 @@ void CallAudioRouter::ensureConnection()
     m_sink = scan.sink;
     m_speakerPort = scan.speaker;
     m_earpiecePort = scan.earpiece;
+    if (m_sink.isEmpty()) {
+        qWarning("xmatic: audio router found no sink with speaker and earpiece");
+    } else {
+        qInfo("xmatic: audio router uses %s (%s, %s)", qPrintable(m_sink),
+              qPrintable(m_speakerPort), qPrintable(m_earpiecePort));
+    }
 }
 
 bool CallAudioRouter::routeCallStream()
@@ -182,6 +208,7 @@ bool CallAudioRouter::routeCallStream()
     pa_threaded_mainloop_lock(ml);
     if (pa_context_get_state(ctx) != PA_CONTEXT_READY) {
         pa_threaded_mainloop_unlock(ml);
+        qWarning("xmatic: audio router lost its sound server connection");
         return false;
     }
     pa_operation *op = pa_context_get_sink_input_info_list(ctx, &sinkInputInfoCb, &scan);
@@ -213,6 +240,7 @@ bool CallAudioRouter::routeCallStream()
                 pa_context_set_sink_input_volume(ctx, scan.index, &cv, nullptr, nullptr)) {
             pa_operation_unref(o);
         }
+        qInfo("xmatic: call stream %u moved to %s", scan.index, qPrintable(m_sink));
         // Setting the port also wakes the sink, so a moved-in stream plays.
         applyPort(m_speakerOn);
     }
@@ -226,6 +254,7 @@ void CallAudioRouter::setSpeaker(bool on)
     m_speakerOn = on;
     auto *ml = static_cast<pa_threaded_mainloop *>(m_mainloop);
     if (!ml || (!m_retryTimer->isActive() && !m_routed)) {
+        qInfo("xmatic: %s kept for when the call is routed", on ? "speaker" : "earpiece");
         return;
     }
     pa_threaded_mainloop_lock(ml);
@@ -242,8 +271,11 @@ void CallAudioRouter::applyPort(bool speaker)
         || pa_context_get_state(ctx) != PA_CONTEXT_READY) {
         return;
     }
+    // The callback only names the port: these two strings outlive every call.
+    const char *label = speaker ? "speaker" : "earpiece";
     if (pa_operation *o = pa_context_set_sink_port_by_name(
-            ctx, m_sink.toUtf8().constData(), port.toUtf8().constData(), nullptr, nullptr)) {
+            ctx, m_sink.toUtf8().constData(), port.toUtf8().constData(), &portSetCb,
+            const_cast<char *>(label))) {
         pa_operation_unref(o);
     }
 }

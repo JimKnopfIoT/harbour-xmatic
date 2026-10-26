@@ -585,7 +585,7 @@
     </message>
     <message>
         <location filename="../src/callengine.cpp" line="493"/>
-        <location filename="../src/callengine.cpp" line="1957"/>
+        <location filename="../src/callengine.cpp" line="1960"/>
         <source>pipeline failed: %1</source>
         <translation>पाइपलाइन विफल: %1</translation>
     </message>
@@ -632,18 +632,18 @@
         <translation>दूसरी ओर से कॉल काट दी गई</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1863"/>
-        <location filename="../src/callengine.cpp" line="1864"/>
+        <location filename="../src/callengine.cpp" line="1866"/>
+        <location filename="../src/callengine.cpp" line="1867"/>
         <source>the connection was lost</source>
         <translation>कनेक्शन टूट गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1901"/>
+        <location filename="../src/callengine.cpp" line="1904"/>
         <source>connected</source>
         <translation>जुड़ गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1956"/>
+        <location filename="../src/callengine.cpp" line="1959"/>
         <source>the call could not be carried on</source>
         <translation>कॉल जारी नहीं रखी जा सकी</translation>
     </message>

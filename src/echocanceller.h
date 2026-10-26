@@ -6,7 +6,8 @@
 #include <memory>
 
 /// Echo cancellation (the system's speexdsp) between the call's playback and microphone.
-/// Both sides run S16LE, 48 kHz, mono; the pipeline pins that with caps.
+/// Both sides run S16LE, 48 kHz, mono; the pipeline pins that with caps. The
+/// delay between them is learnt from the audio, since the device misreports it.
 /// Without it two loudspeaker phones feed each other until they howl.
 class EchoCanceller
 {

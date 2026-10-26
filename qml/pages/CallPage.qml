@@ -226,11 +226,16 @@ Page {
             onClicked: matrix.calls.setMuted(!matrix.calls.muted)
         }
 
+        // Loudspeaker filled and sounding, earpiece hollow and quiet: both still
+        // play, so nothing here is struck through.
         IconButton {
             visible: matrix.calls.state === "active"
             icon.source: matrix.calls.speaker
-                         ? "image://theme/icon-m-speaker-on"
-                         : "image://theme/icon-m-speaker"
+                         ? Qt.resolvedUrl("../images/speaker-loud.svg")
+                         : Qt.resolvedUrl("../images/speaker-quiet.svg")
+            icon.sourceSize: Qt.size(Theme.iconSizeMedium, Theme.iconSizeMedium)
+            icon.color: Theme.primaryColor
+            icon.highlightColor: Theme.highlightColor
             onClicked: matrix.calls.setSpeaker(!matrix.calls.speaker)
         }
 

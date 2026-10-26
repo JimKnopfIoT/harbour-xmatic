@@ -1555,6 +1555,9 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
                                                     nullptr);
             g_object_set(sink, "stream-properties", props, nullptr);
             gst_structure_free(props);
+            // Its drift correction skips or repeats tens of milliseconds at a
+            // time, and every jump throws the echo canceller off.
+            gst_util_set_object_arg(G_OBJECT(sink), "slave-method", "none");
         }
         if (!queue || !convert || !resample || !format || !sink) {
             return;

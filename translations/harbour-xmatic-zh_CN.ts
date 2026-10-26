@@ -584,7 +584,7 @@
     </message>
     <message>
         <location filename="../src/callengine.cpp" line="493"/>
-        <location filename="../src/callengine.cpp" line="1957"/>
+        <location filename="../src/callengine.cpp" line="1960"/>
         <source>pipeline failed: %1</source>
         <translation>管线失败：%1</translation>
     </message>
@@ -631,18 +631,18 @@
         <translation>对方挂断了</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1863"/>
-        <location filename="../src/callengine.cpp" line="1864"/>
+        <location filename="../src/callengine.cpp" line="1866"/>
+        <location filename="../src/callengine.cpp" line="1867"/>
         <source>the connection was lost</source>
         <translation>连接已断开</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1901"/>
+        <location filename="../src/callengine.cpp" line="1904"/>
         <source>connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1956"/>
+        <location filename="../src/callengine.cpp" line="1959"/>
         <source>the call could not be carried on</source>
         <translation>通话无法继续</translation>
     </message>

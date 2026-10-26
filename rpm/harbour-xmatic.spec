@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.47.1
+Version:    0.47.2
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -30,6 +30,8 @@ Requires:   qt5-qtdeclarative-import-sensors
 # The root window imports QtMultimedia (ringer, recorder): without it no page loads.
 Requires:   qt5-qtdeclarative-import-multimedia
 Requires:   sailfish-content-graphics
+# The call page's loudspeaker and earpiece icons are SVG.
+Requires:   qt5-qtsvg-plugin-imageformat-svg
 Requires:   nemo-qml-plugin-notifications-qt5
 # Calls load these at run time rather than linking them, so they have to be
 # named explicitly: webrtcbin and DTLS live in plugins-bad, the RTP session
@@ -123,6 +125,14 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Oct 26 2026 harbour-xmatic contributors 0.47.2-1
+- Calls on loudspeaker no longer howl. The echo canceller now learns how far
+  the far end trails in the microphone instead of trusting what the device
+  reports (between 300 and 530 ms, different each call), and a guard puts a
+  narrow notch on any single tone that stands and grows.
+- The call page's loudspeaker button shows which of the two plays: filled and
+  sounding for the loudspeaker, hollow with three dots for the earpiece.
+
 * Mon Oct 26 2026 harbour-xmatic contributors 0.47.1-1
 - Calls: echo cancellation. Two phones on loudspeaker no longer feed each
   other until the sound howls; the system's speexdsp removes the far end from
