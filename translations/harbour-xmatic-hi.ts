@@ -584,66 +584,66 @@
         <translation>तैयार</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="490"/>
-        <location filename="../src/callengine.cpp" line="1903"/>
+        <location filename="../src/callengine.cpp" line="493"/>
+        <location filename="../src/callengine.cpp" line="1957"/>
         <source>pipeline failed: %1</source>
         <translation>पाइपलाइन विफल: %1</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="497"/>
+        <location filename="../src/callengine.cpp" line="507"/>
         <source>webrtcbin is missing</source>
         <translation>webrtcbin मौजूद नहीं है</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="683"/>
+        <location filename="../src/callengine.cpp" line="693"/>
         <source>no camera — placing a voice call</source>
         <translation>कैमरा नहीं — वॉइस कॉल की जा रही है</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="718"/>
-        <location filename="../src/callengine.cpp" line="806"/>
+        <location filename="../src/callengine.cpp" line="729"/>
+        <location filename="../src/callengine.cpp" line="818"/>
         <source>the microphone could not be opened</source>
         <translation>माइक्रोफ़ोन नहीं खोला जा सका</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="838"/>
-        <location filename="../src/callengine.cpp" line="852"/>
+        <location filename="../src/callengine.cpp" line="850"/>
+        <location filename="../src/callengine.cpp" line="864"/>
         <source>answered on another device</source>
         <translation>दूसरे उपकरण पर उत्तर दिया गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="838"/>
+        <location filename="../src/callengine.cpp" line="850"/>
         <source>declined on another device</source>
         <translation>दूसरे डिवाइस पर अस्वीकार किया गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="912"/>
+        <location filename="../src/callengine.cpp" line="924"/>
         <source>the session description could not be read</source>
         <translation>सत्र विवरण पढ़ा नहीं जा सका</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="922"/>
+        <location filename="../src/callengine.cpp" line="934"/>
         <source>the other side sent an unreadable session description</source>
         <translation>दूसरी ओर से आया सत्र विवरण पढ़ा नहीं जा सका</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1058"/>
+        <location filename="../src/callengine.cpp" line="1070"/>
         <source>the other side hung up</source>
         <translation>दूसरी ओर से कॉल काट दी गई</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1809"/>
-        <location filename="../src/callengine.cpp" line="1810"/>
+        <location filename="../src/callengine.cpp" line="1863"/>
+        <location filename="../src/callengine.cpp" line="1864"/>
         <source>the connection was lost</source>
         <translation>कनेक्शन टूट गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1847"/>
+        <location filename="../src/callengine.cpp" line="1901"/>
         <source>connected</source>
         <translation>जुड़ गया</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1902"/>
+        <location filename="../src/callengine.cpp" line="1956"/>
         <source>the call could not be carried on</source>
         <translation>कॉल जारी नहीं रखी जा सकी</translation>
     </message>
@@ -651,52 +651,52 @@
 <context>
     <name>CallPage</name>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="150"/>
+        <location filename="../qml/pages/CallPage.qml" line="136"/>
         <source>Call</source>
         <translation>कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="161"/>
+        <location filename="../qml/pages/CallPage.qml" line="147"/>
         <source>Ringing…</source>
         <translation>घंटी बज रही है…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="163"/>
+        <location filename="../qml/pages/CallPage.qml" line="149"/>
         <source>Incoming call</source>
         <translation>आती हुई कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="163"/>
+        <location filename="../qml/pages/CallPage.qml" line="149"/>
         <source>Incoming video call</source>
         <translation>आने वाला वीडियो कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="164"/>
+        <location filename="../qml/pages/CallPage.qml" line="150"/>
         <source>Connecting…</source>
         <translation>जोड़ा जा रहा है…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="165"/>
+        <location filename="../qml/pages/CallPage.qml" line="151"/>
         <source>Connected</source>
         <translation>जुड़ा हुआ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="184"/>
+        <location filename="../qml/pages/CallPage.qml" line="170"/>
         <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
         <translation>निजता में वीडियो कॉल बंद हैं; इसे वॉइस कॉल के रूप में स्वीकारा जाता है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="214"/>
+        <location filename="../qml/pages/CallPage.qml" line="200"/>
         <source>Accept without camera</source>
         <translation>कैमरे के बिना स्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="215"/>
+        <location filename="../qml/pages/CallPage.qml" line="201"/>
         <source>Accept</source>
         <translation>स्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="204"/>
+        <location filename="../qml/pages/CallPage.qml" line="190"/>
         <source>Accept with camera</source>
         <translation>कैमरे के साथ स्वीकारें</translation>
     </message>
@@ -2742,7 +2742,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/callengine.cpp" line="1293"/>
+        <location filename="../src/callengine.cpp" line="1333"/>
         <source>no session description</source>
         <translation>कोई सत्र विवरण नहीं</translation>
     </message>

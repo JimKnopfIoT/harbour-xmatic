@@ -29,11 +29,11 @@
 namespace {
 
 /// Audio only. The volume element sits before the encoder, so a muted call
-/// keeps sending silence rather than stopping.
+/// keeps sending silence rather than stopping. The caps are the echo canceller's.
 const char *kAudioPipeline =
     "webrtcbin name=sendrecv bundle-policy=max-bundle latency=100 "
     "autoaudiosrc ! queue leaky=downstream max-size-time=200000000 ! audioconvert ! audioresample ! "
-    "volume name=micvolume ! opusenc ! rtpopuspay pt=111 ! "
+    "audio/x-raw,format=S16LE,rate=48000,channels=1 ! volume name=micvolume ! opusenc ! rtpopuspay pt=111 ! "
     "application/x-rtp,media=audio,encoding-name=OPUS,payload=111 ! sendrecv.";
 
 /// The same plus a camera, VP8: the device has no H.264 encoder and Matrix
@@ -57,7 +57,7 @@ QByteArray videoPipelineDescription()
     return QStringLiteral(
                "webrtcbin name=sendrecv bundle-policy=max-bundle latency=100 "
                "autoaudiosrc ! queue leaky=downstream max-size-time=200000000 ! audioconvert ! audioresample ! "
-               "volume name=micvolume ! opusenc ! rtpopuspay pt=111 ! "
+               "audio/x-raw,format=S16LE,rate=48000,channels=1 ! volume name=micvolume ! opusenc ! rtpopuspay pt=111 ! "
                "application/x-rtp,media=audio,encoding-name=OPUS,payload=111 ! sendrecv. "
                "appsrc name=camsrc is-live=true do-timestamp=true format=time "
                "max-bytes=2000000 ! "
@@ -458,6 +458,8 @@ void CallEngine::tearDown()
         m_gpuCapture = false;
         emit callChanged();
     }
+    m_grab.reset();
+    m_grabPending = false;
     m_cameraFeed = nullptr;
     m_cameraFlip = nullptr;
     m_afterRelay = 0;
@@ -469,6 +471,7 @@ void CallEngine::tearDown()
     }
     m_webrtc = nullptr;
     m_audioSource = nullptr;
+    m_echo.reset();
     // After NULL: its threads are joined, whatever they queued is stale now.
     m_generation.ref();
 }
@@ -493,6 +496,13 @@ bool CallEngine::buildPipeline()
 
     m_webrtc = gst_bin_get_by_name(GST_BIN(m_pipeline), "sendrecv");
     m_audioSource = gst_bin_get_by_name(GST_BIN(m_pipeline), "micvolume");
+    m_echo.reset(new EchoCanceller);
+    if (m_audioSource) {
+        if (GstPad *mic = gst_element_get_static_pad(m_audioSource, "sink")) {
+            m_echo->processCapture(mic);
+            gst_object_unref(mic);
+        }
+    }
     if (!m_webrtc) {
         reportFailure(tr("webrtcbin is missing"));
         return false;
@@ -694,6 +704,7 @@ void CallEngine::placeCall(const QString &roomId, bool withVideo)
 void CallEngine::startOutgoing(bool withVideo)
 {
     m_withVideo = withVideo;
+    setSpeaker(withVideo);
     m_offerWaits = 0;
     m_offerDeferred = false;
     m_callId = freshId(QStringLiteral("c"));
@@ -786,6 +797,7 @@ void CallEngine::acceptCall(bool withVideo)
         return;
     }
 
+    setSpeaker(m_withVideo);
     setState(QStringLiteral("connecting"));
     if (!waitForRelay(2)) {
         answerOffer();
@@ -1130,6 +1142,25 @@ void CallEngine::setOrientation(int orientation)
     qInfo("xmatic: camera rotation method %d for orientation %d", method, orientation);
 }
 
+bool CallEngine::grabFrame(QQuickItem *item)
+{
+    if (!item || m_grabPending) {
+        return false;
+    }
+    // Replacing the last result frees it; its ready signal is long past.
+    m_grab = item->grabToImage(QSize(480, 640));
+    if (!m_grab) {
+        return false;
+    }
+    m_grabPending = true;
+    QQuickItemGrabResult *grab = m_grab.data();
+    connect(grab, &QQuickItemGrabResult::ready, this, [this, grab]() {
+        m_grabPending = false;
+        pushGrabbedFrame(grab->image());
+    });
+    return true;
+}
+
 void CallEngine::pushGrabbedFrame(const QImage &image)
 {
     if (!m_gpuCapture || image.isNull()) {
@@ -1155,6 +1186,15 @@ void CallEngine::setMuted(bool muted)
         g_object_set(m_audioSource, "mute", muted ? TRUE : FALSE, nullptr);
     }
     emit mutedChanged();
+}
+
+void CallEngine::setSpeaker(bool on)
+{
+    m_audioRouter.setSpeaker(on);
+    if (m_speaker != on) {
+        m_speaker = on;
+        emit speakerChanged();
+    }
 }
 
 void CallEngine::negotiationNeeded(GstElement *, void *user)
@@ -1445,7 +1485,7 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
     GstElement *last = nullptr;
     // The branch elements, started only after everything is linked: pushing into
     // an unlinked pad surfaces as "internal data stream error" and kills the call.
-    GstElement *chain[4] = {nullptr, nullptr, nullptr, nullptr};
+    GstElement *chain[5] = {nullptr, nullptr, nullptr, nullptr, nullptr};
     int chainN = 0;
 
     if (isVideo) {
@@ -1495,6 +1535,13 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
         GstElement *queue = gst_element_factory_make("queue", nullptr);
         GstElement *convert = gst_element_factory_make("audioconvert", nullptr);
         GstElement *resample = gst_element_factory_make("audioresample", nullptr);
+        // The echo canceller's format; it reads what leaves this filter.
+        GstElement *format = gst_element_factory_make("capsfilter", nullptr);
+        if (format) {
+            GstCaps *caps = gst_caps_from_string("audio/x-raw,format=S16LE,rate=48000,channels=1");
+            g_object_set(format, "caps", caps, nullptr);
+            gst_caps_unref(caps);
+        }
         // pulsesink, not autoaudiosink: the default sink on these devices is
         // sink.null, so received audio played into nothing.
         GstElement *sink = gst_element_factory_make("pulsesink", nullptr);
@@ -1509,17 +1556,24 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
             g_object_set(sink, "stream-properties", props, nullptr);
             gst_structure_free(props);
         }
-        if (!queue || !convert || !resample || !sink) {
+        if (!queue || !convert || !resample || !format || !sink) {
             return;
         }
-        gst_bin_add_many(GST_BIN(engine->m_pipeline), queue, convert, resample, sink, nullptr);
-        gst_element_link_many(queue, convert, resample, sink, nullptr);
+        gst_bin_add_many(GST_BIN(engine->m_pipeline), queue, convert, resample, format, sink, nullptr);
+        gst_element_link_many(queue, convert, resample, format, sink, nullptr);
+        if (engine->m_echo) {
+            if (GstPad *played = gst_element_get_static_pad(format, "src")) {
+                engine->m_echo->watchPlayback(played);
+                gst_object_unref(played);
+            }
+        }
 
         first = queue;
         last = sink;
         chain[chainN++] = queue;
         chain[chainN++] = convert;
         chain[chainN++] = resample;
+        chain[chainN++] = format;
         chain[chainN++] = sink;
     }
 

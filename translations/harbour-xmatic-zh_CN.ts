@@ -583,66 +583,66 @@
         <translation>就绪</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="490"/>
-        <location filename="../src/callengine.cpp" line="1903"/>
+        <location filename="../src/callengine.cpp" line="493"/>
+        <location filename="../src/callengine.cpp" line="1957"/>
         <source>pipeline failed: %1</source>
         <translation>管线失败：%1</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="497"/>
+        <location filename="../src/callengine.cpp" line="507"/>
         <source>webrtcbin is missing</source>
         <translation>缺少 webrtcbin</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="683"/>
+        <location filename="../src/callengine.cpp" line="693"/>
         <source>no camera — placing a voice call</source>
         <translation>没有摄像头——将发起语音通话</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="718"/>
-        <location filename="../src/callengine.cpp" line="806"/>
+        <location filename="../src/callengine.cpp" line="729"/>
+        <location filename="../src/callengine.cpp" line="818"/>
         <source>the microphone could not be opened</source>
         <translation>无法打开麦克风</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="838"/>
-        <location filename="../src/callengine.cpp" line="852"/>
+        <location filename="../src/callengine.cpp" line="850"/>
+        <location filename="../src/callengine.cpp" line="864"/>
         <source>answered on another device</source>
         <translation>已在其他设备上接听</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="838"/>
+        <location filename="../src/callengine.cpp" line="850"/>
         <source>declined on another device</source>
         <translation>已在另一台设备上拒绝</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="912"/>
+        <location filename="../src/callengine.cpp" line="924"/>
         <source>the session description could not be read</source>
         <translation>无法读取会话描述</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="922"/>
+        <location filename="../src/callengine.cpp" line="934"/>
         <source>the other side sent an unreadable session description</source>
         <translation>对方发来的会话描述无法读取</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1058"/>
+        <location filename="../src/callengine.cpp" line="1070"/>
         <source>the other side hung up</source>
         <translation>对方挂断了</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1809"/>
-        <location filename="../src/callengine.cpp" line="1810"/>
+        <location filename="../src/callengine.cpp" line="1863"/>
+        <location filename="../src/callengine.cpp" line="1864"/>
         <source>the connection was lost</source>
         <translation>连接已断开</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1847"/>
+        <location filename="../src/callengine.cpp" line="1901"/>
         <source>connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/callengine.cpp" line="1902"/>
+        <location filename="../src/callengine.cpp" line="1956"/>
         <source>the call could not be carried on</source>
         <translation>通话无法继续</translation>
     </message>
@@ -650,52 +650,52 @@
 <context>
     <name>CallPage</name>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="150"/>
+        <location filename="../qml/pages/CallPage.qml" line="136"/>
         <source>Call</source>
         <translation>通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="161"/>
+        <location filename="../qml/pages/CallPage.qml" line="147"/>
         <source>Ringing…</source>
         <translation>正在响铃…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="163"/>
+        <location filename="../qml/pages/CallPage.qml" line="149"/>
         <source>Incoming call</source>
         <translation>来电</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="163"/>
+        <location filename="../qml/pages/CallPage.qml" line="149"/>
         <source>Incoming video call</source>
         <translation>来电视频通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="164"/>
+        <location filename="../qml/pages/CallPage.qml" line="150"/>
         <source>Connecting…</source>
         <translation>正在连接…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="165"/>
+        <location filename="../qml/pages/CallPage.qml" line="151"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="184"/>
+        <location filename="../qml/pages/CallPage.qml" line="170"/>
         <source>Video calls are switched off in Privacy; this one is answered as a voice call.</source>
         <translation>视频通话已在隐私中关闭；此来电按语音通话接听。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="214"/>
+        <location filename="../qml/pages/CallPage.qml" line="200"/>
         <source>Accept without camera</source>
         <translation>不用摄像头接听</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="215"/>
+        <location filename="../qml/pages/CallPage.qml" line="201"/>
         <source>Accept</source>
         <translation>接听</translation>
     </message>
     <message>
-        <location filename="../qml/pages/CallPage.qml" line="204"/>
+        <location filename="../qml/pages/CallPage.qml" line="190"/>
         <source>Accept with camera</source>
         <translation>用摄像头接听</translation>
     </message>
@@ -2739,7 +2739,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/callengine.cpp" line="1293"/>
+        <location filename="../src/callengine.cpp" line="1333"/>
         <source>no session description</source>
         <translation>没有会话描述</translation>
     </message>

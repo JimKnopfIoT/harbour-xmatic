@@ -22,6 +22,7 @@ struct SinkScan {
     pa_threaded_mainloop *ml = nullptr;
     QString sink;
     QString speaker;
+    QString earpiece;
 };
 
 void sinkInfoCb(pa_context *, const pa_sink_info *info, int eol, void *userdata)
@@ -35,7 +36,7 @@ void sinkInfoCb(pa_context *, const pa_sink_info *info, int eol, void *userdata)
         return;
     }
     QString speaker;
-    bool hasEarpiece = false;
+    QString earpiece;
     for (uint32_t p = 0; p < info->n_ports; ++p) {
         const pa_sink_port_info *port = info->ports[p];
         if (!port || !port->name) {
@@ -45,14 +46,16 @@ void sinkInfoCb(pa_context *, const pa_sink_info *info, int eol, void *userdata)
         if (speaker.isEmpty() && name.contains(QLatin1String("speaker"))) {
             speaker = QString::fromUtf8(port->name);
         }
-        if (name.contains(QLatin1String("earpiece")) || name.contains(QLatin1String("handset"))
-            || name.contains(QLatin1String("receiver"))) {
-            hasEarpiece = true;
+        if (earpiece.isEmpty()
+            && (name.contains(QLatin1String("earpiece")) || name.contains(QLatin1String("handset"))
+                || name.contains(QLatin1String("receiver")))) {
+            earpiece = QString::fromUtf8(port->name);
         }
     }
-    if (!speaker.isEmpty() && hasEarpiece) {
+    if (!speaker.isEmpty() && !earpiece.isEmpty()) {
         scan->sink = QString::fromUtf8(info->name);
         scan->speaker = speaker;
+        scan->earpiece = earpiece;
     }
 }
 
@@ -90,6 +93,7 @@ CallAudioRouter::CallAudioRouter(QObject *parent)
     m_retryTimer->setInterval(500);
     connect(m_retryTimer, &QTimer::timeout, this, [this]() {
         if (routeCallStream()) {
+            m_routed = true;
             m_retryTimer->stop();
         }
     });
@@ -161,6 +165,7 @@ void CallAudioRouter::ensureConnection()
     m_context = ctx;
     m_sink = scan.sink;
     m_speakerPort = scan.speaker;
+    m_earpiecePort = scan.earpiece;
 }
 
 bool CallAudioRouter::routeCallStream()
@@ -208,29 +213,58 @@ bool CallAudioRouter::routeCallStream()
                 pa_context_set_sink_input_volume(ctx, scan.index, &cv, nullptr, nullptr)) {
             pa_operation_unref(o);
         }
-        // Wake the sink onto its speaker port, so a moved-in stream is heard
-        // hands-free (a video call sits on a desk, not against the ear).
-        if (!m_sink.isEmpty() && !m_speakerPort.isEmpty()) {
-            if (pa_operation *o = pa_context_set_sink_port_by_name(
-                    ctx, m_sink.toUtf8().constData(), m_speakerPort.toUtf8().constData(),
-                    nullptr, nullptr)) {
-                pa_operation_unref(o);
-            }
-        }
+        // Setting the port also wakes the sink, so a moved-in stream plays.
+        applyPort(m_speakerOn);
     }
 
     pa_threaded_mainloop_unlock(ml);
     return scan.found;
 }
 
+void CallAudioRouter::setSpeaker(bool on)
+{
+    m_speakerOn = on;
+    auto *ml = static_cast<pa_threaded_mainloop *>(m_mainloop);
+    if (!ml || (!m_retryTimer->isActive() && !m_routed)) {
+        return;
+    }
+    pa_threaded_mainloop_lock(ml);
+    applyPort(on);
+    pa_threaded_mainloop_unlock(ml);
+}
+
+// Under the loop's lock.
+void CallAudioRouter::applyPort(bool speaker)
+{
+    auto *ctx = static_cast<pa_context *>(m_context);
+    const QString &port = speaker ? m_speakerPort : m_earpiecePort;
+    if (!ctx || m_sink.isEmpty() || port.isEmpty()
+        || pa_context_get_state(ctx) != PA_CONTEXT_READY) {
+        return;
+    }
+    if (pa_operation *o = pa_context_set_sink_port_by_name(
+            ctx, m_sink.toUtf8().constData(), port.toUtf8().constData(), nullptr, nullptr)) {
+        pa_operation_unref(o);
+    }
+}
+
 void CallAudioRouter::start()
 {
+    m_routed = false;
     ensureConnection();
-    routeCallStream();
+    m_routed = routeCallStream();
     m_retryTimer->start();
 }
 
 void CallAudioRouter::stop()
 {
     m_retryTimer->stop();
+    // The sink is the system's: leave it on the loudspeaker, as found.
+    auto *ml = static_cast<pa_threaded_mainloop *>(m_mainloop);
+    if (ml && m_routed && !m_speakerOn) {
+        pa_threaded_mainloop_lock(ml);
+        applyPort(true);
+        pa_threaded_mainloop_unlock(ml);
+    }
+    m_routed = false;
 }

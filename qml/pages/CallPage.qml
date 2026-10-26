@@ -110,24 +110,10 @@ Page {
     Timer {
         id: grabTimer
 
-        property bool grabbing: false
-
         interval: 66
         repeat: true
         running: matrix.calls.gpuCapture && gpuCamera.cameraStatus === Camera.ActiveStatus
-        onTriggered: {
-            if (grabbing) {
-                return
-            }
-            grabbing = true
-            var started = gpuView.grabToImage(function(result) {
-                grabTimer.grabbing = false
-                matrix.calls.pushGrabbedFrame(result.image)
-            }, Qt.size(480, 640))
-            if (!started) {
-                grabbing = false
-            }
-        }
+        onTriggered: matrix.calls.grabFrame(gpuView)
     }
 
     // The other side's picture hides the name and the status in the middle.
@@ -238,6 +224,14 @@ Page {
                          ? "image://theme/icon-m-mic-mute"
                          : "image://theme/icon-m-mic"
             onClicked: matrix.calls.setMuted(!matrix.calls.muted)
+        }
+
+        IconButton {
+            visible: matrix.calls.state === "active"
+            icon.source: matrix.calls.speaker
+                         ? "image://theme/icon-m-speaker-on"
+                         : "image://theme/icon-m-speaker"
+            onClicked: matrix.calls.setSpeaker(!matrix.calls.speaker)
         }
 
         // Hangs up, and declines while ringing.

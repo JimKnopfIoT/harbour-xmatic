@@ -17,7 +17,7 @@ QT += network dbus multimedia concurrent positioning
 # entry, which silently drops -lsailfishapp from the link line.
 GST_MODULES = gstreamer-1.0 gstreamer-sdp-1.0 gstreamer-webrtc-1.0 gstreamer-video-1.0 nice
 QMAKE_CXXFLAGS += $$system(pkg-config --cflags $$GST_MODULES)
-QMAKE_CXXFLAGS += $$system(pkg-config --cflags libpulse)
+QMAKE_CXXFLAGS += $$system(pkg-config --cflags libpulse speexdsp)
 
 # The store key lives in Sailfish Secrets; same direct pkg-config route as
 # GStreamer, for the same sailfishapp.prf reason.
@@ -35,7 +35,7 @@ QMAKE_CXXFLAGS += -ffile-prefix-map=$$PWD=/build
 QMAKE_CXXFLAGS += -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 QMAKE_LFLAGS += -Wl,-z,relro -Wl,-z,now
 LIBS += $$system(pkg-config --libs $$GST_MODULES)
-LIBS += $$system(pkg-config --libs libpulse)
+LIBS += $$system(pkg-config --libs libpulse speexdsp)
 LIBS += $$system(pkg-config --libs sailfishsecrets)
 
 SOURCES += \
@@ -79,6 +79,7 @@ SOURCES += \
     src/callengine.cpp \
     src/camerasource.cpp \
     src/callaudiorouter.cpp \
+    src/echocanceller.cpp \
     src/videostream.cpp \
     src/voicerecorder.cpp \
     src/secretskeeper.cpp
@@ -124,6 +125,7 @@ HEADERS += \
     src/callengine.h \
     src/camerasource.h \
     src/callaudiorouter.h \
+    src/echocanceller.h \
     src/videostream.h \
     src/voicerecorder.h
 

@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.47.0
+Version:    0.47.1
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -70,6 +70,7 @@ BuildRequires: pkgconfig(gstreamer-sdp-1.0)
 BuildRequires: pkgconfig(gstreamer-webrtc-1.0)
 BuildRequires: pkgconfig(nice)
 BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(speexdsp)
 BuildRequires: pkgconfig(keepalive)
 BuildRequires: desktop-file-utils
 
@@ -122,6 +123,16 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Oct 26 2026 harbour-xmatic contributors 0.47.1-1
+- Calls: echo cancellation. Two phones on loudspeaker no longer feed each
+  other until the sound howls; the system's speexdsp removes the far end from
+  the microphone, with noise reduction on top.
+- Calls: a voice call starts on the earpiece, a video call on the
+  loudspeaker; a button on the call page switches between the two.
+- Video calls on phones whose camera only works through the GPU path: each
+  grabbed frame was kept until memory ran out, and after about three minutes
+  the system closed the app.
+
 * Sat Oct 24 2026 harbour-xmatic contributors 0.47.0-1
 - Conversation: consecutive messages of one sender on the same day share one
   picture and one name - only the first carries them. Room events that are

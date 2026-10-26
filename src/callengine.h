@@ -2,16 +2,21 @@
 #define CALLENGINE_H
 
 #include <QAtomicInt>
+#include <memory>
 #include <QObject>
 #include <QByteArray>
 #include <QTimer>
 #include <QImage>
 #include <QMap>
+#include <QQuickItem>
+#include <QQuickItemGrabResult>
+#include <QSharedPointer>
 #include <QString>
 #include <QVariantList>
 
 #include "camerasource.h"
 #include "callaudiorouter.h"
+#include "echocanceller.h"
 #include "videostream.h"
 
 typedef struct _GstElement GstElement;
@@ -35,6 +40,7 @@ class CallEngine : public QObject
     Q_PROPERTY(QString roomId READ roomId NOTIFY callChanged)
     Q_PROPERTY(QString peer READ peer NOTIFY callChanged)
     Q_PROPERTY(bool muted READ muted NOTIFY mutedChanged)
+    Q_PROPERTY(bool speaker READ speaker NOTIFY speakerChanged)
     Q_PROPERTY(bool video READ video NOTIFY callChanged)
     Q_PROPERTY(bool videoOffered READ videoOffered NOTIFY callChanged)
     Q_PROPERTY(bool videoRefused READ videoRefused NOTIFY callChanged)
@@ -55,6 +61,7 @@ public:
     QString roomId() const { return m_roomId; }
     QString peer() const { return m_peer; }
     bool muted() const { return m_muted; }
+    bool speaker() const { return m_speaker; }
     bool video() const { return m_withVideo; }
     /// Whether the ringing call offered video. Says what the two accept
     /// actions mean; it does not by itself open anything.
@@ -83,12 +90,17 @@ public:
     /// Silences the microphone without ending the call.
     Q_INVOKABLE void setMuted(bool muted);
 
+    /// Loudspeaker or earpiece. Each call starts on the earpiece, a video call
+    /// on the loudspeaker.
+    Q_INVOKABLE void setSpeaker(bool on);
+
     /// Tells the engine how the phone is being held, so the picture it sends
     /// stays upright. Takes a Silica Orientation value.
     Q_INVOKABLE void setOrientation(int orientation);
 
-    /// One picture of the page's viewfinder, upright as shown; sent like a camera frame.
-    Q_INVOKABLE void pushGrabbedFrame(const QImage &image);
+    /// Grabs the page's viewfinder and sends it like a camera frame. One grab
+    /// at a time; false while the last is still in flight.
+    Q_INVOKABLE bool grabFrame(QQuickItem *item);
     bool gpuCapture() const { return m_gpuCapture; }
 
     /// Relay credentials, applied to the next call. Without them two devices
@@ -132,6 +144,7 @@ signals:
     void failureChanged();
     void callChanged();
     void mutedChanged();
+    void speakerChanged();
 
     // What the core has to put on the wire.
     void inviteReady(const QString &roomId,
@@ -166,6 +179,7 @@ private slots:
     void deliverSelfYuv(int generation, const QByteArray &planes, int width, int height);
     void flushCandidates();
     void pushCameraFrame(const QByteArray &data, int width, int height, const QString &format);
+    void pushGrabbedFrame(const QImage &image);
     void deliverCandidate(int generation, const QString &candidate, int mediaLineIndex);
     void reportFailure(const QString &message);
     void reportFailureFor(int generation, const QString &message);
@@ -222,6 +236,7 @@ private:
 
     bool m_available = false;
     bool m_muted = false;
+    bool m_speaker = false;
     /// True while this side is the caller, which decides offer versus answer.
     bool m_isCaller = false;
     /// The answering party the caller took; later answers are ignored.
@@ -265,6 +280,8 @@ private:
     VideoStream m_remoteVideo;
     VideoStream m_selfVideo;
     CallAudioRouter m_audioRouter;
+    /// One per pipeline: its state belongs to one pair of streams.
+    std::unique_ptr<EchoCanceller> m_echo;
     QVariantList m_pendingCandidates;
     QTimer m_candidateTimer;
     CameraSource m_camera;
@@ -281,6 +298,9 @@ private:
     int m_orientation = 1;
     int m_flipMethod = 3;
     bool m_gpuCapture = false;
+    // Held here, not by QML: the JS collector never saw the image it carries.
+    QSharedPointer<QQuickItemGrabResult> m_grab;
+    bool m_grabPending = false;
     QString m_cameraFormat;
 
     /// The bus watch's source id, so it can be taken off the main context
