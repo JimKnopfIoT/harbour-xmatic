@@ -1587,6 +1587,10 @@
         <source>Mention</source>
         <translation>Nevn</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Angi tilgangsnivå</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1736,6 +1740,25 @@
     <message>
         <source>End poll</source>
         <translation>Avslutt avstemning</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Angi</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Tilgangsnivå</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 er medlem, 50 moderator, 100 administrator. Under 0 mister personen det rommet tillater alle. Høyst ditt eget nivå, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>På ditt eget nivå kan dette ikke angres: etterpå kan bare personen selv senke det.</translation>
     </message>
 </context>
 <context>

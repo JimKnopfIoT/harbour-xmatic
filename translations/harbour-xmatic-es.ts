@@ -1587,6 +1587,10 @@
         <source>Mention</source>
         <translation>Mencionar</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Establecer nivel de poder</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1736,6 +1740,25 @@
     <message>
         <source>End poll</source>
         <translation>Terminar encuesta</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Establecer</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Nivel de poder</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 es miembro, 50 moderador, 100 administrador. Por debajo de 0 pierde lo que la sala permite a todos. Como máximo tu propio nivel, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>En tu propio nivel esto no se puede deshacer: después solo esa persona podrá bajarlo.</translation>
     </message>
 </context>
 <context>

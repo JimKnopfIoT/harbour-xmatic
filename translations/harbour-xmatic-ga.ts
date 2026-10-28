@@ -1589,6 +1589,10 @@
         <source>Mention</source>
         <translation>Luaigh</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Socraigh leibhéal cumhachta</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1739,6 +1743,25 @@
     <message>
         <source>End poll</source>
         <translation>Cuir deireadh leis an bpobalbhreith</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Socraigh</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Leibhéal cumhachta</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>Is ball é 0, modhnóir 50, riarthóir 100. Faoi 0 cailleann siad an méid a cheadaíonn an seomra do chách. Do leibhéal féin ar a mhéad, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Ag do leibhéal féin ní féidir é seo a chealú: ina dhiaidh sin ní féidir ach leo féin é a ísliú.</translation>
     </message>
 </context>
 <context>

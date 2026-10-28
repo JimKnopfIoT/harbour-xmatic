@@ -1595,6 +1595,10 @@
         <source>Mention</source>
         <translation>إشارة</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>تعيين مستوى الصلاحيات</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1748,6 +1752,25 @@
     <message>
         <source>End poll</source>
         <translation>إنهاء الاستطلاع</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>تعيين</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>مستوى الصلاحيات</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 عضو، 50 مشرف، 100 مدير. تحت 0 يفقد ما تسمح به الغرفة للجميع. بحد أقصى مستواك أنت، %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>عند مستواك أنت لا يمكن التراجع عن ذلك: بعدها لا يستطيع خفضه إلا الشخص نفسه.</translation>
     </message>
 </context>
 <context>

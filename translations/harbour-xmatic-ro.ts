@@ -1589,6 +1589,10 @@
         <source>Mention</source>
         <translation>Menționează</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Setează nivelul de putere</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1739,6 +1743,25 @@
     <message>
         <source>End poll</source>
         <translation>Încheie sondajul</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Setează</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Nivel de putere</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 înseamnă membru, 50 moderator, 100 administrator. Sub 0 persoana pierde ce camera permite tuturor. Cel mult propriul tău nivel, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>La propriul tău nivel acest lucru nu mai poate fi anulat: apoi doar persoana însăși îl poate coborî.</translation>
     </message>
 </context>
 <context>

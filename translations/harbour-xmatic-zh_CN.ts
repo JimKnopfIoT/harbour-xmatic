@@ -1780,12 +1780,12 @@
         <translation>管理员</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="88"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="86"/>
         <source>Moderator</source>
         <translation>协管员</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="90"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="86"/>
         <source>Member</source>
         <translation>成员</translation>
     </message>
@@ -1836,147 +1836,152 @@
         <translation>降为普通成员</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="193"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="192"/>
+        <source>Set power level</source>
+        <translation>设置权限等级</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="205"/>
         <source>Revoke invitation</source>
         <translation>撤回邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="193"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="205"/>
         <source>Remove from room</source>
         <translation>移出聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="195"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="207"/>
         <source>Removing</source>
         <translation>正在移出</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="202"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="214"/>
         <source>Ban from room</source>
         <translation>封禁出聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="208"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="220"/>
         <source>Really ban this member?</source>
         <translation>确定要封禁这位成员吗？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="210"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="222"/>
         <source>%1 is removed from the room and cannot come back until the ban is lifted.</source>
         <translation>%1 会被移出聊天室，并且在解除封禁之前无法回来。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="211"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="223"/>
         <source>Ban</source>
         <translation>封禁</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="214"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="226"/>
         <source>Banning</source>
         <translation>正在封禁</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="222"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="234"/>
         <source>Lift ban</source>
         <translation>解除封禁</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="313"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="325"/>
         <source>Address copied</source>
         <translation>地址已复制</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="331"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="343"/>
         <source>Role</source>
         <translation>角色</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="339"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="351"/>
         <source>Member since</source>
         <translation>加入时间</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="347"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="359"/>
         <source>Invited by</source>
         <translation>邀请者</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="353"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="365"/>
         <source>Devices</source>
         <translation>设备</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="361"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="373"/>
         <source>Identity</source>
         <translation>身份</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="379"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="391"/>
         <source>verified</source>
         <translation>已验证</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="382"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="394"/>
         <source>changed since it was verified — verify again or withdraw</source>
         <translation>验证后已更改 — 请重新验证或撤销</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="384"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="396"/>
         <source>not verified</source>
         <translation>未验证</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="395"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="407"/>
         <source>none</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="420"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="432"/>
         <source>Send direct message</source>
         <translation>发送私聊消息</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="428"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="440"/>
         <source>Mention</source>
         <translation>提及</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="439"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="451"/>
         <source>Verify</source>
         <translation>验证</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="452"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="464"/>
         <source>Withdraw verification</source>
         <translation>撤回验证</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="466"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="478"/>
         <source>Forbid calls</source>
         <translation>禁止通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="466"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="478"/>
         <source>Allow calls</source>
         <translation>允许通话</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="482"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="494"/>
         <source>Stop ignoring</source>
         <translation>取消忽略</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="482"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="494"/>
         <source>Ignore</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="487"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="499"/>
         <source>Ignoring</source>
         <translation>正在忽略</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="391"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="403"/>
         <source>Shared rooms</source>
         <translation>共同的聊天室</translation>
     </message>
@@ -2161,6 +2166,29 @@
         <location filename="../qml/pages/PollBlock.qml" line="244"/>
         <source>End poll</source>
         <translation>结束投票</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <location filename="../qml/pages/PowerLevelDialog.qml" line="37"/>
+        <source>Set</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PowerLevelDialog.qml" line="54"/>
+        <source>Power level</source>
+        <translation>权限等级</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PowerLevelDialog.qml" line="73"/>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 为成员，50 为协管员，100 为管理员。低于 0 将失去房间允许所有人的权限。最高为你自己的等级 %1。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PowerLevelDialog.qml" line="83"/>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>设为你自己的等级后无法撤回：之后只有对方本人可以降低。</translation>
     </message>
 </context>
 <context>

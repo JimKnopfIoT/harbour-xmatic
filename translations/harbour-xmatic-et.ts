@@ -1587,6 +1587,10 @@
         <source>Mention</source>
         <translation>Maini</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Määra õiguste tase</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1736,6 +1740,25 @@
     <message>
         <source>End poll</source>
         <translation>Lõpeta küsitlus</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Määra</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Õiguste tase</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 on liige, 50 moderaator, 100 administraator. Alla 0 kaotab inimene selle, mida jututuba kõigile lubab. Kõige rohkem sinu enda tase, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Sinu enda tasemel ei saa seda tagasi võtta: hiljem saab seda langetada ainult inimene ise.</translation>
     </message>
 </context>
 <context>

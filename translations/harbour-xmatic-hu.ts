@@ -1585,6 +1585,10 @@
         <source>Mention</source>
         <translation>Említés</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Jogosultsági szint beállítása</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1733,6 +1737,25 @@
     <message>
         <source>End poll</source>
         <translation>Szavazás lezárása</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Beállítás</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Jogosultsági szint</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 a tag, 50 a moderátor, 100 az adminisztrátor. 0 alatt elveszíti, amit a szoba mindenkinek megenged. Legfeljebb a saját szinted, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>A saját szinteden ez nem vonható vissza: utána csak ő maga csökkentheti.</translation>
     </message>
 </context>
 <context>

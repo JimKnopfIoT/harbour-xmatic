@@ -1591,6 +1591,10 @@
         <source>Mention</source>
         <translation>Omeni</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Nastavi raven pooblastil</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1742,6 +1746,25 @@
     <message>
         <source>End poll</source>
         <translation>Končaj anketo</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Nastavi</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Raven pooblastil</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 je član, 50 moderator, 100 skrbnik. Pod 0 oseba izgubi, kar soba dovoli vsem. Največ tvoja lastna raven, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Na tvoji lastni ravni tega ni mogoče preklicati: pozneje jo lahko zniža le oseba sama.</translation>
     </message>
 </context>
 <context>

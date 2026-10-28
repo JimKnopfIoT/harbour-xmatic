@@ -1782,12 +1782,12 @@
         <translation>प्रशासक</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="88"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="86"/>
         <source>Moderator</source>
         <translation>संचालक</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="90"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="86"/>
         <source>Member</source>
         <translation>सदस्य</translation>
     </message>
@@ -1838,147 +1838,152 @@
         <translation>सदस्य बना दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="193"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="192"/>
+        <source>Set power level</source>
+        <translation>अधिकार स्तर तय करो</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="205"/>
         <source>Revoke invitation</source>
         <translation>निमंत्रण वापस लें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="193"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="205"/>
         <source>Remove from room</source>
         <translation>कक्ष से हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="195"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="207"/>
         <source>Removing</source>
         <translation>हटाया जा रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="202"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="214"/>
         <source>Ban from room</source>
         <translation>कक्ष से प्रतिबंधित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="208"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="220"/>
         <source>Really ban this member?</source>
         <translation>सचमुच इस सदस्य को प्रतिबंधित करना है?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="210"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="222"/>
         <source>%1 is removed from the room and cannot come back until the ban is lifted.</source>
         <translation>%1 को कक्ष से हटा दिया जाता है और प्रतिबंध हटने तक वे लौट नहीं सकते।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="211"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="223"/>
         <source>Ban</source>
         <translation>प्रतिबंधित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="214"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="226"/>
         <source>Banning</source>
         <translation>प्रतिबंधित किया जा रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="222"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="234"/>
         <source>Lift ban</source>
         <translation>प्रतिबंध हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="313"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="325"/>
         <source>Address copied</source>
         <translation>पता कॉपी हो गया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="331"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="343"/>
         <source>Role</source>
         <translation>भूमिका</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="339"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="351"/>
         <source>Member since</source>
         <translation>सदस्य कब से</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="347"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="359"/>
         <source>Invited by</source>
         <translation>किसने आमंत्रित किया</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="353"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="365"/>
         <source>Devices</source>
         <translation>उपकरण</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="361"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="373"/>
         <source>Identity</source>
         <translation>पहचान</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="379"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="391"/>
         <source>verified</source>
         <translation>सत्यापित</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="382"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="394"/>
         <source>changed since it was verified — verify again or withdraw</source>
         <translation>सत्यापन के बाद बदल गई — फिर से सत्यापित करो या वापस लो</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="384"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="396"/>
         <source>not verified</source>
         <translation>असत्यापित</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="395"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="407"/>
         <source>none</source>
         <translation>कोई नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="420"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="432"/>
         <source>Send direct message</source>
         <translation>सीधा संदेश भेजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="428"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="440"/>
         <source>Mention</source>
         <translation>उल्लेख करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="439"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="451"/>
         <source>Verify</source>
         <translation>सत्यापित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="452"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="464"/>
         <source>Withdraw verification</source>
         <translation>सत्यापन वापस लें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="466"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="478"/>
         <source>Forbid calls</source>
         <translation>कॉल मना करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="466"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="478"/>
         <source>Allow calls</source>
         <translation>कॉल की अनुमति दें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="482"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="494"/>
         <source>Stop ignoring</source>
         <translation>अनदेखा करना बंद करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="482"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="494"/>
         <source>Ignore</source>
         <translation>अनदेखा करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="487"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="499"/>
         <source>Ignoring</source>
         <translation>अनदेखा किया जा रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MemberProfilePage.qml" line="391"/>
+        <location filename="../qml/pages/MemberProfilePage.qml" line="403"/>
         <source>Shared rooms</source>
         <translation>साझा कक्ष</translation>
     </message>
@@ -2164,6 +2169,29 @@
         <location filename="../qml/pages/PollBlock.qml" line="244"/>
         <source>End poll</source>
         <translation>मतदान समाप्त करें</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <location filename="../qml/pages/PowerLevelDialog.qml" line="37"/>
+        <source>Set</source>
+        <translation>तय करो</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PowerLevelDialog.qml" line="54"/>
+        <source>Power level</source>
+        <translation>अधिकार स्तर</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PowerLevelDialog.qml" line="73"/>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 सदस्य है, 50 मॉडरेटर, 100 एडमिन। 0 से नीचे वे वह खो देते हैं जो रूम सबको देता है। ज़्यादा से ज़्यादा तुम्हारा अपना स्तर, %1।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PowerLevelDialog.qml" line="83"/>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>अपने ही स्तर पर यह वापस नहीं लिया जा सकता: बाद में केवल वे स्वयं इसे घटा सकते हैं।</translation>
     </message>
 </context>
 <context>

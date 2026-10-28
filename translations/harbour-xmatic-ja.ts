@@ -1585,6 +1585,10 @@
         <source>Mention</source>
         <translation>メンション</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>権限レベルを設定</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1733,6 +1737,25 @@
     <message>
         <source>End poll</source>
         <translation>アンケートを終了</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>設定</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>権限レベル</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 はメンバー、50 はモデレーター、100 は管理者です。0 未満にすると、ルームが全員に許可していることもできなくなります。最大で自分のレベル（%1）までです。</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>自分と同じレベルにすると取り消せません。以後は本人しか下げられません。</translation>
     </message>
 </context>
 <context>

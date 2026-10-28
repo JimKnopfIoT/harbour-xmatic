@@ -1591,6 +1591,10 @@
         <source>Mention</source>
         <translation>Semmi</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Issettja l-livell tal-poter</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1742,6 +1746,25 @@
     <message>
         <source>End poll</source>
         <translation>Temm l-istħarriġ</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Issettja</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Livell tal-poter</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 huwa membru, 50 moderatur, 100 amministratur. Taħt 0 jitilfu dak li l-kamra tippermetti lil kulħadd. L-aktar il-livell tiegħek, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Fil-livell tiegħek stess dan ma jistax jitreġġa&apos; lura: wara jistgħu jbaxxuh huma biss.</translation>
     </message>
 </context>
 <context>

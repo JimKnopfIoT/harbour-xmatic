@@ -1589,6 +1589,10 @@
         <source>Mention</source>
         <translation>Упомянуть</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Задать уровень прав</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1739,6 +1743,25 @@
     <message>
         <source>End poll</source>
         <translation>Завершить опрос</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Задать</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Уровень прав</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 — участник, 50 — модератор, 100 — администратор. Ниже 0 человек теряет то, что комната разрешает всем. Не выше твоего уровня, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>На твоём уровне это нельзя отменить: потом понизить его сможет только сам человек.</translation>
     </message>
 </context>
 <context>

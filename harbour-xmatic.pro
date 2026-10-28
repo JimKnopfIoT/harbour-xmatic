@@ -386,6 +386,7 @@ DISTFILES += \
     qml/pages/MentionInput.qml \
     qml/pages/MentionPicker.qml \
     qml/pages/MemberProfilePage.qml \
+    qml/pages/PowerLevelDialog.qml \
     qml/pages/IgnoredUsersPage.qml \
     qml/pages/LeftRoomsPage.qml \
     qml/pages/ThreadPage.qml \

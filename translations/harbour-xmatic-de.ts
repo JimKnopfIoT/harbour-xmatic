@@ -1587,6 +1587,10 @@
         <source>Mention</source>
         <translation>Erwähnen</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Berechtigungsstufe festlegen</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1736,6 +1740,25 @@
     <message>
         <source>End poll</source>
         <translation>Umfrage beenden</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Festlegen</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Berechtigungsstufe</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 ist Mitglied, 50 Moderator, 100 Admin. Unter 0 verliert die Person, was der Raum allen erlaubt. Höchstens deine eigene Stufe, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Auf deiner eigenen Stufe lässt sich das nicht zurücknehmen: Danach kann nur die Person selbst sie senken.</translation>
     </message>
 </context>
 <context>

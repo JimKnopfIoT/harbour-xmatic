@@ -1587,6 +1587,10 @@
         <source>Mention</source>
         <translation>Mainitse</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Aseta oikeustaso</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1736,6 +1740,25 @@
     <message>
         <source>End poll</source>
         <translation>Päätä kysely</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Aseta</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Oikeustaso</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 on jäsen, 50 valvoja, 100 ylläpitäjä. Alle 0 henkilö menettää sen, minkä huone sallii kaikille. Enintään oma tasosi, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Omalla tasollasi tätä ei voi perua: sen jälkeen vain henkilö itse voi laskea sitä.</translation>
     </message>
 </context>
 <context>

@@ -1589,6 +1589,10 @@
         <source>Mention</source>
         <translation>Paminėti</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Nustatyti teisių lygį</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1739,6 +1743,25 @@
     <message>
         <source>End poll</source>
         <translation>Baigti apklausą</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Nustatyti</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Teisių lygis</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 – narys, 50 – moderatorius, 100 – administratorius. Žemiau 0 asmuo netenka to, ką kambarys leidžia visiems. Ne daugiau nei tavo lygis, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Tavo paties lygiu to nebegalima atšaukti: vėliau jį sumažinti gali tik pats asmuo.</translation>
     </message>
 </context>
 <context>

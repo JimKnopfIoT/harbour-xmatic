@@ -1103,7 +1103,7 @@ pub enum Command {
         user_id: String,
     },
 
-    /// Set a member's power level: 0 member, 50 moderator, 100 admin.
+    /// Set a member's power level: any integer up to one's own.
     #[serde(rename = "member.setPower")]
     MemberSetPower {
         id: u64,

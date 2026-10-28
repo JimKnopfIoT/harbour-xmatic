@@ -76,18 +76,18 @@ Page {
         return copy
     }
 
-    // 0 member, 50 moderator, 100 admin — the same reading as the list rows.
+    // 0 member, 50 moderator, 100 admin — the same reading as the list rows;
+    // any other level carries its number.
     function roleText() {
         if (!loaded) {
             return ""
         }
-        if (profile.power >= 100) {
-            return qsTr("Admin")
+        var role = profile.power >= 100 ? qsTr("Admin")
+                 : profile.power >= 50 ? qsTr("Moderator") : qsTr("Member")
+        if (profile.power !== 0 && profile.power !== 50 && profile.power !== 100) {
+            role += " (" + profile.power + ")"
         }
-        if (profile.power >= 50) {
-            return qsTr("Moderator")
-        }
-        return qsTr("Member")
+        return role
     }
 
     function membershipText() {
@@ -186,6 +186,18 @@ Page {
                 text: qsTr("Demote to member")
                 visible: page.loaded && profile.canSetPower && profile.power > 0
                 onClicked: matrix.setMemberPower(page.roomId, page.userId, 0)
+            }
+
+            MenuItem {
+                text: qsTr("Set power level")
+                visible: page.loaded && profile.canSetPower
+                onClicked: pageStack.push(Qt.resolvedUrl("PowerLevelDialog.qml"), {
+                                              roomId: page.roomId,
+                                              userId: page.userId,
+                                              subject: profile.displayName || page.userId,
+                                              current: profile.power,
+                                              ownPower: profile.ownPower
+                                          })
             }
 
             MenuItem {

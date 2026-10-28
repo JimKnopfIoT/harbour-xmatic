@@ -1585,6 +1585,10 @@
         <source>Mention</source>
         <translation>اشاره کردن</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>تنظیم سطح دسترسی</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1733,6 +1737,25 @@
     <message>
         <source>End poll</source>
         <translation>پایان نظرسنجی</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>تنظیم</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>سطح دسترسی</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 عضو است، 50 ناظر، 100 مدیر. زیر 0 آنچه اتاق به همه اجازه می‌دهد را از دست می‌دهد. حداکثر سطح خودت، %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>در سطح خودت این قابل بازگشت نیست: بعد از آن فقط خود آن شخص می‌تواند آن را پایین بیاورد.</translation>
     </message>
 </context>
 <context>

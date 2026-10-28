@@ -1587,6 +1587,10 @@
         <source>Mention</source>
         <translation>Vermelden</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Machtsniveau instellen</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1736,6 +1740,25 @@
     <message>
         <source>End poll</source>
         <translation>Peiling beëindigen</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Instellen</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Machtsniveau</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 is lid, 50 moderator, 100 beheerder. Onder 0 verliest iemand wat de ruimte iedereen toestaat. Hoogstens je eigen niveau, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Op je eigen niveau kan dit niet worden teruggedraaid: daarna kan alleen die persoon het zelf verlagen.</translation>
     </message>
 </context>
 <context>

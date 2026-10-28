@@ -1587,6 +1587,10 @@
         <source>Mention</source>
         <translation>Nefna</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Stilla valdastig</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1736,6 +1740,25 @@
     <message>
         <source>End poll</source>
         <translation>Ljúka könnun</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Stilla</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Valdastig</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 er meðlimur, 50 umsjónarmaður, 100 stjórnandi. Undir 0 missir viðkomandi það sem spjallrásin leyfir öllum. Mest þitt eigið stig, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Á þínu eigin stigi er ekki hægt að afturkalla þetta: eftir það getur aðeins viðkomandi sjálfur lækkað það.</translation>
     </message>
 </context>
 <context>

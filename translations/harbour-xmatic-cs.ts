@@ -1589,6 +1589,10 @@
         <source>Mention</source>
         <translation>Zmínit</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Nastavit úroveň oprávnění</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1739,6 +1743,25 @@
     <message>
         <source>End poll</source>
         <translation>Ukončit anketu</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Nastavit</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Úroveň oprávnění</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 je člen, 50 moderátor, 100 správce. Pod 0 osoba ztrácí to, co místnost dovoluje všem. Nejvýše tvá vlastní úroveň, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Na tvé vlastní úrovni to nelze vrátit: poté ji může snížit jen ta osoba sama.</translation>
     </message>
 </context>
 <context>

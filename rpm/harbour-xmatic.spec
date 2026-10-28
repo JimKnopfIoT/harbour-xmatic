@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.47.2
+Version:    0.47.4
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -125,6 +125,11 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Oct 28 2026 harbour-xmatic contributors 0.47.4-1
+- A member's power level can be set to any number from their profile's
+  pull-down, negative ones included, up to one's own. The role line shows
+  the number wherever it is not 0, 50 or 100.
+
 * Mon Oct 26 2026 harbour-xmatic contributors 0.47.2-1
 - Calls on loudspeaker no longer howl. The echo canceller now learns how far
   the far end trails in the microphone instead of trusting what the device

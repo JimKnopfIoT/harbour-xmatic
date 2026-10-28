@@ -1589,6 +1589,10 @@
         <source>Mention</source>
         <translation>Pieminēt</translation>
     </message>
+    <message>
+        <source>Set power level</source>
+        <translation>Iestatīt pilnvaru līmeni</translation>
+    </message>
 </context>
 <context>
     <name>MessageActionsPage</name>
@@ -1739,6 +1743,25 @@
     <message>
         <source>End poll</source>
         <translation>Beigt aptauju</translation>
+    </message>
+</context>
+<context>
+    <name>PowerLevelDialog</name>
+    <message>
+        <source>Set</source>
+        <translation>Iestatīt</translation>
+    </message>
+    <message>
+        <source>Power level</source>
+        <translation>Pilnvaru līmenis</translation>
+    </message>
+    <message>
+        <source>0 is a member, 50 a moderator, 100 an admin. Below 0 they lose what the room allows everyone. At most your own level, %1.</source>
+        <translation>0 ir dalībnieks, 50 moderators, 100 administrators. Zem 0 cilvēks zaudē to, ko istaba atļauj visiem. Ne vairāk kā tavs līmenis, %1.</translation>
+    </message>
+    <message>
+        <source>At your own level this cannot be taken back: only they themselves can lower it afterwards.</source>
+        <translation>Tavā līmenī to vairs nevar atsaukt: pēc tam to var pazemināt tikai pats cilvēks.</translation>
     </message>
 </context>
 <context>

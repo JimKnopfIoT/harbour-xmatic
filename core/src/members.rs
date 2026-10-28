@@ -417,10 +417,17 @@ pub async fn unban(client: &Client, room_id: &str, user_id: &str) -> Result<(), 
         .map_err(|error| format!("could not lift the ban: {}", scrub_ids(&error.to_string())))
 }
 
-/// Sets a member's power level (0 member, 50 moderator, 100 admin).
+/// Sets a member's power level, any integer up to one's own (negative too).
 pub async fn set_power(client: &Client, room_id: &str, user_id: &str, level: i64) -> Result<(), String> {
     let room = known_room(client, room_id)?;
     let user = parsed_user(user_id)?;
+    let own = client.user_id().ok_or_else(|| "not signed in".to_owned())?;
+    let levels = room.power_levels_or_default().await;
+    if let UserPowerLevel::Int(own_level) = levels.for_user(own) {
+        if level > i64::from(own_level) {
+            return Err("above your own power level".to_owned());
+        }
+    }
     let level = Int::new(level).ok_or_else(|| "not a power level".to_owned())?;
     room.update_power_levels(vec![(user, level)])
         .await
