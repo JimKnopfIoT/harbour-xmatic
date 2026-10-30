@@ -2600,6 +2600,10 @@
         <source>Rebuild room data</source>
         <translation>Znova zgradi podatke sob</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Označi kot neprebrano</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

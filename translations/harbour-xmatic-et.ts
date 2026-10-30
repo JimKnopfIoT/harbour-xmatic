@@ -2594,6 +2594,10 @@
         <source>Rebuild room data</source>
         <translation>Ehita jututubade andmed uuesti</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Märgi lugemata</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

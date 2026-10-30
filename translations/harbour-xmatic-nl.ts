@@ -2594,6 +2594,10 @@
         <source>Rebuild room data</source>
         <translation>Ruimtegegevens opnieuw opbouwen</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Als ongelezen markeren</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

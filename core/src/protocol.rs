@@ -234,6 +234,14 @@ pub enum Command {
         receipt: bool,
     },
 
+    /// Mark a room unread by hand, the flag other clients set and show.
+    #[serde(rename = "room.markUnread")]
+    RoomMarkUnread {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
     /// Close the open timeline.
     #[serde(rename = "timeline.close")]
     TimelineClose {
@@ -1224,6 +1232,7 @@ impl Command {
             | Command::CrossSigningSetup { id, .. }
             | Command::RoomEnableEncryption { id, .. }
             | Command::RoomMarkRead { id, .. }
+            | Command::RoomMarkUnread { id, .. }
             | Command::RoomResolve { id, .. }
             | Command::Logout { id }
             | Command::RoomListStart { id }

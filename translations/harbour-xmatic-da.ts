@@ -2594,6 +2594,10 @@
         <source>Rebuild room data</source>
         <translation>Genopbyg rumdata</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Markér som ulæst</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

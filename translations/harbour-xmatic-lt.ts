@@ -2597,6 +2597,10 @@
         <source>Rebuild room data</source>
         <translation>Atkurti kambarių duomenis</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Žymėti kaip neskaitytą</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

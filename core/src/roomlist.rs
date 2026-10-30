@@ -10,6 +10,7 @@ use futures_util::StreamExt;
 use matrix_sdk::deserialized_responses::{SyncOrStrippedState, TimelineEventKind};
 use matrix_sdk::latest_events::LatestEventValue;
 use matrix_sdk::room::Receipts;
+use matrix_sdk::ruma::events::marked_unread::MarkedUnreadEventContent;
 use matrix_sdk::ruma::events::poll::unstable_start::UnstablePollStartEventContent;
 use matrix_sdk::ruma::events::room::message::{MessageType, Relation};
 use matrix_sdk::ruma::events::{
@@ -220,18 +221,62 @@ pub async fn mark_read(client: &Client, room_id: &str, receipt: bool) -> Result<
     .map_err(|error| format!("could not mark it read: {}", scrub_ids(&error.to_string())))?;
     // The flag is what a manual "unread" sets; a receipt alone would leave it
     // standing and the room would look unread with nothing in it to read.
-    let _ = room.set_unread_flag(false).await;
+    let _ = clear_unread_flag(&room).await;
     Ok(true)
 }
 
-async fn clear_unread_flag(room: &matrix_sdk::Room) -> Result<bool, String> {
-    if !room.is_marked_unread() {
+/// Rooms flagged unread by this process whose flag no sync has brought back yet.
+/// The SDK's own setter checks the store and would skip the clear.
+static FLAGGED_HERE: Mutex<Option<HashSet<OwnedRoomId>>> = Mutex::new(None);
+
+fn flagged_here(room_id: &RoomId) -> bool {
+    FLAGGED_HERE
+        .lock()
+        .ok()
+        .and_then(|guard| guard.as_ref().map(|rooms| rooms.contains(room_id)))
+        .unwrap_or(false)
+}
+
+fn note_flag(room_id: &RoomId, unread: bool) {
+    if let Ok(mut guard) = FLAGGED_HERE.lock() {
+        let rooms = guard.get_or_insert_with(HashSet::new);
+        if unread {
+            rooms.insert(room_id.to_owned());
+        } else {
+            rooms.remove(room_id);
+        }
+    }
+}
+
+async fn write_unread_flag(room: &matrix_sdk::Room, unread: bool) -> Result<(), String> {
+    room.set_account_data(MarkedUnreadEventContent::new(unread))
+        .await
+        .map_err(|error| scrub_ids(&error.to_string()))?;
+    note_flag(room.room_id(), unread);
+    Ok(())
+}
+
+/// Takes a manual "unread" off where one stands. Answers whether it did.
+pub async fn clear_unread_flag(room: &matrix_sdk::Room) -> Result<bool, String> {
+    if !room.is_marked_unread() && !flagged_here(room.room_id()) {
         return Ok(false);
     }
-    room.set_unread_flag(false)
+    write_unread_flag(room, false)
         .await
-        .map_err(|error| format!("could not mark it read: {}", scrub_ids(&error.to_string())))?;
+        .map_err(|error| format!("could not mark it read: {error}"))?;
     Ok(true)
+}
+
+/// Marks a room unread by hand (`m.marked_unread`): a reminder that holds on every
+/// client of the account, and goes with the next read.
+pub async fn mark_unread(client: &Client, room_id: &str) -> Result<(), String> {
+    let parsed = RoomId::parse(room_id).map_err(|_| "not a room identifier".to_owned())?;
+    let room = client
+        .get_room(&parsed)
+        .ok_or_else(|| "room is not known yet".to_owned())?;
+    write_unread_flag(&room, true)
+        .await
+        .map_err(|error| format!("could not mark it unread: {error}"))
 }
 
 /// A matrix.to link: the address where the room has one, else the id plus the

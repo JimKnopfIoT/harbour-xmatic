@@ -266,6 +266,16 @@ pub(super) async fn mark_room_read(state: &Arc<State>, id: u64, room_id: String,
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
+pub(super) async fn mark_room_unread(state: &Arc<State>, id: u64, room_id: String) {
+    let Some(client) = state.client().await else {
+        state.sink.emit(reply_error(id, "not signed in"));
+        return;
+    };
+    match roomlist::mark_unread(&client, &room_id).await {
+        Ok(()) => state.sink.emit(reply_ok(id, json!({ "roomId": room_id }))),
+        Err(message) => state.sink.emit(reply_error(id, message)),
+    }
+}
 pub(super) async fn close_timeline(state: &Arc<State>, id: u64, room_id: String, token: String) {
     // The lock the open takes: leaving one room and entering another puts both
     // in flight, and the close used to take the fresh handle away.

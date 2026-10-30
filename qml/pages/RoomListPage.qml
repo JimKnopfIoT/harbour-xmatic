@@ -208,11 +208,14 @@ Page {
 
             menu: ContextMenu {
                 MenuItem {
-                    // Without opening it: the point of the entry is not having
-                    // to read the room at all.
-                    text: qsTr("Mark as read")
-                    visible: model.unread > 0 || model.mentions > 0 || model.markedUnread
-                    onClicked: matrix.markRoomRead(model.id)
+                    // One entry for both ways: the menu holds no more in landscape.
+                    // Read without opening it, unread as a reminder on every client.
+                    readonly property bool unread: model.unread > 0 || model.mentions > 0
+                                                   || model.markedUnread === true
+                    text: unread ? qsTr("Mark as read") : qsTr("Mark as unread")
+                    visible: model.membership === "joined"
+                    onClicked: unread ? matrix.markRoomRead(model.id)
+                                      : matrix.markRoomUnread(model.id)
                 }
 
                 MenuItem {

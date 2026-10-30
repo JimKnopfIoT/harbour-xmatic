@@ -2591,6 +2591,10 @@
         <source>Rebuild room data</source>
         <translation>ルームデータを再構築</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>未読にする</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

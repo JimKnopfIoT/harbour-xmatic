@@ -2606,6 +2606,10 @@
         <source>Rebuild room data</source>
         <translation>إعادة بناء بيانات الغرف</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>تعليم كغير مقروء</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

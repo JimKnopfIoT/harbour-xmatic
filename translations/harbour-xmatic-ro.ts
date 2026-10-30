@@ -2597,6 +2597,10 @@
         <source>Rebuild room data</source>
         <translation>Reconstruiește datele camerelor</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Marchează ca necitit</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

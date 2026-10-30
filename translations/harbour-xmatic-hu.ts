@@ -2591,6 +2591,10 @@
         <source>Rebuild room data</source>
         <translation>Szobaadatok újraépítése</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Megjelölés olvasatlanként</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

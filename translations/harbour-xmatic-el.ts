@@ -2594,6 +2594,10 @@
         <source>Rebuild room data</source>
         <translation>Εκ νέου δημιουργία δεδομένων δωματίων</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Σήμανση ως μη αναγνωσμένο</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

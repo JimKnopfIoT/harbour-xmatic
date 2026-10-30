@@ -2597,6 +2597,10 @@
         <source>Rebuild room data</source>
         <translation>Ponovno izgradi podatke soba</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Označi kao nepročitano</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

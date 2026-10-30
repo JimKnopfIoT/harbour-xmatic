@@ -2597,6 +2597,10 @@
         <source>Rebuild room data</source>
         <translation>Obnovit data místností</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Označit jako nepřečtené</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

@@ -652,6 +652,7 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::RoomMarkRead { room_id, receipt, .. } => {
             mark_room_read(&state, id, room_id, receipt).await
         }
+        Command::RoomMarkUnread { room_id, .. } => mark_room_unread(&state, id, room_id).await,
         Command::RoomResolve { address, local, .. } => {
             resolve_room(&state, id, address, local).await
         }

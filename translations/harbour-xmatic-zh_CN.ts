@@ -1647,8 +1647,8 @@
     <message>
         <location filename="../qml/pages/SpaceColourPage.qml" line="57"/>
         <location filename="../src/matrixbridge.cpp" line="258"/>
-        <location filename="../src/matrixbridge.cpp" line="1814"/>
-        <location filename="../src/matrixbridge.cpp" line="1829"/>
+        <location filename="../src/matrixbridge.cpp" line="1821"/>
+        <location filename="../src/matrixbridge.cpp" line="1836"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>暂时无法读取已保存的名单。</translation>
     </message>
@@ -1658,83 +1658,83 @@
         <translation>网关必须是 https URL。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2064"/>
+        <location filename="../src/matrixbridge.cpp" line="2071"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2286"/>
+        <location filename="../src/matrixbridge.cpp" line="2293"/>
         <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
         <translation>这张图片无法缩小，且包含元数据（例如拍摄地点），因此未发送。若要按原样发送，请以原始分辨率发送。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2435"/>
-        <location filename="../src/matrixbridge.cpp" line="2463"/>
+        <location filename="../src/matrixbridge.cpp" line="2442"/>
+        <location filename="../src/matrixbridge.cpp" line="2470"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2845"/>
+        <location filename="../src/matrixbridge.cpp" line="2852"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2870"/>
+        <location filename="../src/matrixbridge.cpp" line="2877"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3796"/>
+        <location filename="../src/matrixbridge.cpp" line="3812"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3945"/>
+        <location filename="../src/matrixbridge.cpp" line="3961"/>
         <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
         <translation>无法从主服务器移除推送注册。此账户下次在这里登录时会将其移除。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4210"/>
+        <location filename="../src/matrixbridge.cpp" line="4226"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4213"/>
+        <location filename="../src/matrixbridge.cpp" line="4229"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4216"/>
+        <location filename="../src/matrixbridge.cpp" line="4232"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4219"/>
+        <location filename="../src/matrixbridge.cpp" line="4235"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4222"/>
+        <location filename="../src/matrixbridge.cpp" line="4238"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4225"/>
+        <location filename="../src/matrixbridge.cpp" line="4241"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4225"/>
+        <location filename="../src/matrixbridge.cpp" line="4241"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4228"/>
+        <location filename="../src/matrixbridge.cpp" line="4244"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4231"/>
+        <location filename="../src/matrixbridge.cpp" line="4247"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -3118,7 +3118,7 @@
     </message>
     <message>
         <location filename="../qml/pages/RoomListPage.qml" line="86"/>
-        <location filename="../qml/pages/RoomListPage.qml" line="270"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="273"/>
         <source>Rooms</source>
         <translation>聊天室</translation>
     </message>
@@ -3168,72 +3168,77 @@
         <translation>搜索聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="213"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="215"/>
         <source>Mark as read</source>
         <translation>标记为已读</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="220"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="215"/>
+        <source>Mark as unread</source>
+        <translation>标记为未读</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
         <source>Remove from favourites</source>
         <translation>取消收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="220"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="228"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="231"/>
         <source>Normal priority</source>
         <translation>普通优先级</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="228"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="231"/>
         <source>Low priority</source>
         <translation>低优先级</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="238"/>
         <source>Unmute</source>
         <translation>取消静音</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="238"/>
         <source>Mute</source>
         <translation>静音</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="246"/>
         <source>Decline invitation</source>
         <translation>拒绝邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="246"/>
         <source>Leave room</source>
         <translation>离开聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="252"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="255"/>
         <source>No rooms</source>
         <translation>没有聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="253"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="256"/>
         <source>Rooms you join show up here once the first sync is through.</source>
         <translation>首次同步完成后，你加入的聊天室会显示在这里。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="261"/>
         <source>About xmatic</source>
         <translation>关于 xmatic</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="276"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="279"/>
         <source>Account</source>
         <translation>账户</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="263"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="266"/>
         <source>Verify user</source>
         <translation>验证用户</translation>
     </message>

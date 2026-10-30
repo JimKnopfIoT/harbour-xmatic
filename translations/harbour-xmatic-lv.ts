@@ -2597,6 +2597,10 @@
         <source>Rebuild room data</source>
         <translation>Pārbūvēt istabu datus</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Atzīmēt kā neizlasītu</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

@@ -2600,6 +2600,10 @@
         <source>Rebuild room data</source>
         <translation>Ibni mill-ġdid id-data tal-kmamar</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Immarka bħala mhux moqri</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

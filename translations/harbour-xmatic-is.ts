@@ -2594,6 +2594,10 @@
         <source>Rebuild room data</source>
         <translation>Endurbyggja gögn spjallrása</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Merkja sem ólesið</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

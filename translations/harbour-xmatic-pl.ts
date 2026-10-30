@@ -2597,6 +2597,10 @@
         <source>Rebuild room data</source>
         <translation>Odbuduj dane pokoi</translation>
     </message>
+    <message>
+        <source>Mark as unread</source>
+        <translation>Oznacz jako nieprzeczytane</translation>
+    </message>
 </context>
 <context>
     <name>RoomPage</name>

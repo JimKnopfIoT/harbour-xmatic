@@ -1389,6 +1389,13 @@ void MatrixBridge::markRoomRead(const QString &roomId)
     send(QStringLiteral("room.markRead"), arguments);
 }
 
+void MatrixBridge::markRoomUnread(const QString &roomId)
+{
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("roomId"), roomId);
+    send(QStringLiteral("room.markUnread"), arguments);
+}
+
 void MatrixBridge::resolveRoom(const QString &address, bool local)
 {
     if (address.trimmed().isEmpty()) {
@@ -2985,6 +2992,15 @@ bool MatrixBridge::replyRoom(quint64 id, const QString &command, const QJsonObje
         const QString roomId = data.value(QStringLiteral("roomId")).toString();
         m_rooms.clearUnread(roomId);
         m_spaceRooms.clearUnread(roomId);
+        return true;
+    }
+
+    if (command == QLatin1String("room.markUnread")) {
+        // The flag returns with a sync at the earliest; the dot belongs on the tap.
+        const QString roomId = data.value(QStringLiteral("roomId")).toString();
+        const QJsonObject fields { { QStringLiteral("markedUnread"), true } };
+        m_rooms.setFields(roomId, fields);
+        m_spaceRooms.setFields(roomId, fields);
         return true;
     }
 

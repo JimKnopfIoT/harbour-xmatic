@@ -452,6 +452,7 @@ public:
 
     /// Marks a room read from the chat list, without opening it.
     Q_INVOKABLE void markRoomRead(const QString &roomId);
+    Q_INVOKABLE void markRoomUnread(const QString &roomId);
 
     /// Asks which room an address means and whether this account is in it.
     /// Resolving only: a tapped link must never join anything.

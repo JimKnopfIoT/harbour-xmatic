@@ -312,8 +312,13 @@ impl TimelineHandle {
         if !self.live {
             return Ok(false);
         }
+        // A manual "unread" ends with reading, as in other clients. First, so a
+        // slow receipt does not hold it behind a later "mark unread".
+        let cleared = crate::roomlist::clear_unread_flag(self.timeline.room())
+            .await
+            .unwrap_or(false);
         let Some(event_id) = self.timeline.latest_event_id().await else {
-            return Ok(false);
+            return Ok(cleared);
         };
         let mut receipts = Receipts::new().fully_read_marker(event_id.clone());
         if receipt {
