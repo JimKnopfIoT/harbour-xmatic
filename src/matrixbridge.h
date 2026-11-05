@@ -166,9 +166,8 @@ class MatrixBridge : public QObject
     /// line stays orange long enough that testers paste the key twice.
     Q_PROPERTY(bool recoverySettling READ recoverySettling NOTIFY encryptionChanged)
     /// What the user may do in the open room: `pin`, `invite`, `redactOthers`,
-    /// `topic`, `name`, `avatar`, plus `direct` — the room's kind, which qualifies
-    /// `redactOthers`. A missing entry is "not answered yet", so menus show;
-    /// the two that gate deleting someone else's message are read strictly.
+    /// `topic`, `name`, `avatar`. A missing entry is "not answered yet", so menus
+    /// show; `redactOthers`, which gates deleting someone else's message, is read strictly.
     Q_PROPERTY(QVariantMap roomPermissions READ roomPermissions NOTIFY roomPermissionsChanged)
     /// The other person in the open room where it is an encrypted two-party chat.
     /// The one place where a person to verify is already on screen.

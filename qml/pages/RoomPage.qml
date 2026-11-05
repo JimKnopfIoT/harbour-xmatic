@@ -747,11 +747,9 @@ Page {
     // Asked once for the page: the plugin set does not change while it is open.
     readonly property var animatableFormats: matrix.animatableImageFormats()
 
-    // Someone else's message: only in a two-party chat and only where the room
-    // says this account may redact for others. `=== true` on both, not the
-    // `!== false` the pin entry uses - an unanswered room offers nothing here.
+    // Someone else's message, where the room's power levels allow it. `=== true`, not
+    // the pin entry's `!== false`: an unanswered room offers nothing here.
     readonly property bool canRedactOthers: matrix.roomPermissions.redactOthers === true
-                                            && matrix.roomPermissions.direct === true
 
     // Deleting is not undoable and used to be one tap away. The countdown runs on
     // this page; a failed send is discarded rather than deleted.
@@ -1611,8 +1609,11 @@ Page {
                 // A sent message of someone else's, where the room allows it.
                 readonly property bool canDeleteForOther: !row.isOwn
                         && page.canRedactOthers
-                        && model.kind === "message"
+                        && (model.kind === "message" || model.kind === "undecryptable")
                         && (model.eventId || "").length > 0
+                // An undecryptable row's one action: spam in an encrypted room reads like this.
+                readonly property bool hasMenu: model.kind === "message"
+                        || (model.kind === "undecryptable" && (row.isOwn || row.canDeleteForOther))
                 // The body as markup, or empty where plain text will do. One property for
                 // format and text, so a Label can never parse what was not built for it.
                 readonly property int emojiPixels: Math.round(Theme.fontSizeSmall * 1.3)
@@ -1730,6 +1731,9 @@ Page {
                 }
 
                 function holdMenu() {
+                    if (!row.hasMenu) {
+                        return
+                    }
                     if (row.tall) {
                         row.showActions()
                     } else {
@@ -1797,10 +1801,11 @@ Page {
                     }
                 }
                 onPressAndHold: {
-                    if (model.kind !== "message" || !row.down) {
+                    if (!row.down) {
                         return
                     }
-                    var link = LinkMarks.linkAt(bodyLabel, row, mouse.x, mouse.y)
+                    var link = model.kind === "message"
+                            ? LinkMarks.linkAt(bodyLabel, row, mouse.x, mouse.y) : ""
                     if (link.length > 0) {
                         row.holdLink(link, mouse.x, mouse.y)
                         return
@@ -1856,7 +1861,7 @@ Page {
                         text: model.sendState === "failed"
                               ? qsTr("Discard") : qsTr("Delete")
                         visible: row.heldLink.length === 0
-                                 && !page.isLandscape
+                                 && (!page.isLandscape || model.kind === "undecryptable")
                                  && (row.isOwn || row.canDeleteForOther)
                         onClicked: page.confirmDelete(model.eventId || "",
                                                       model.txnId || "",
@@ -1990,6 +1995,7 @@ Page {
                     MenuItem {
                         text: qsTr("More…")
                         visible: row.heldLink.length === 0
+                                 && model.kind === "message"
                                  && page.isLandscape
                         onClicked: row.showActions()
                     }
