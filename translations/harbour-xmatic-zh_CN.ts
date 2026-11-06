@@ -3077,168 +3077,168 @@
 <context>
     <name>RoomListPage</name>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="44"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="54"/>
         <source>Really decline this invitation?</source>
         <translation>确定要拒绝这个邀请吗？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="45"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="55"/>
         <source>Really leave this room?</source>
         <translation>确定要离开这个聊天室吗？</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="48"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="58"/>
         <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
         <translation>之后邀请就没有了。只有别人再次邀请你，你才能进去。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="49"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="59"/>
         <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
         <translation>聊天室会被离开并遗忘。它从聊天列表中消失，再进去需要新的邀请或公开地址。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="50"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="60"/>
         <source>Decline</source>
         <translation>拒接</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="50"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="60"/>
         <source>Leave</source>
         <translation>离开</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="54"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="64"/>
         <source>Declining</source>
         <translation>正在拒绝</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="54"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="64"/>
         <source>Leaving room</source>
         <translation>正在离开聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="86"/>
-        <location filename="../qml/pages/RoomListPage.qml" line="273"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="98"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="285"/>
         <source>Rooms</source>
         <translation>聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="91"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="103"/>
         <source>This homeserver is not supported</source>
         <translation>不支持此主服务器</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="96"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="108"/>
         <source>Local data damaged</source>
         <translation>本地数据已损坏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="105"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="117"/>
         <source>%1 of %2 rooms</source>
         <translation>%2 个聊天室中的 %1 个</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="109"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="121"/>
         <source>Offline — waiting for the network</source>
         <translation>离线——正在等待网络</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="143"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="155"/>
         <source>Your homeserver does not offer the sync this app needs (simplified sliding sync, MSC4186). Rooms cannot be loaded from it. A newer server version, or an account on a server that supports it, is required.</source>
         <translation>你的主服务器不提供本应用所需的同步方式（simplified sliding sync，MSC4186）。无法从它加载聊天室。需要更新版本的服务器，或一个在支持它的服务器上的账户。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="155"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="167"/>
         <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
         <translation>此设备上存储的部分数据已无法读取，xmatic 在运行时无法修复——因此它停止了同步，而不是再次碰到同一行。重建房间数据会重新获取房间和消息，并保留此设备的密钥。如果仍无效，退出后重新登录会重建一切——但会替换此设备的密钥；因此请先在加密页面确认密钥备份已开启。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="161"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="173"/>
         <source>Rebuild room data</source>
         <translation>重建房间数据</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="177"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="189"/>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>此服务器通过 sliding sync（本应用所需的同步方式）只提供了你 %2 个聊天室中的 %1 个。缺少的聊天室（通常是通过桥接的聊天）无法在此显示；使用传统同步的应用仍能看到它们。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="185"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="197"/>
         <source>Search rooms</source>
         <translation>搜索聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="215"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
         <source>Mark as read</source>
         <translation>标记为已读</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="215"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
         <source>Mark as unread</source>
         <translation>标记为未读</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
         <source>Remove from favourites</source>
         <translation>取消收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="231"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
         <source>Normal priority</source>
         <translation>普通优先级</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="231"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
         <source>Low priority</source>
         <translation>低优先级</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="238"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
         <source>Unmute</source>
         <translation>取消静音</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="238"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
         <source>Mute</source>
         <translation>静音</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="246"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
         <source>Decline invitation</source>
         <translation>拒绝邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="246"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
         <source>Leave room</source>
         <translation>离开聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="255"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="267"/>
         <source>No rooms</source>
         <translation>没有聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="256"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="268"/>
         <source>Rooms you join show up here once the first sync is through.</source>
         <translation>首次同步完成后，你加入的聊天室会显示在这里。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="261"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="273"/>
         <source>About xmatic</source>
         <translation>关于 xmatic</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="279"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="291"/>
         <source>Account</source>
         <translation>账户</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="266"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="278"/>
         <source>Verify user</source>
         <translation>验证用户</translation>
     </message>

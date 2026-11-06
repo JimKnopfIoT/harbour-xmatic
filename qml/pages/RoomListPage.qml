@@ -28,6 +28,16 @@ Page {
     Component.onCompleted: matrix.startRoomList()
 
     onStatusChanged: {
+        // Silica keeps the field's focus when another page takes it first; the
+        // page scope then hands it back, keyboard included. Return to an empty search.
+        if ((status === PageStatus.Deactivating || status === PageStatus.Activating)
+                && roomList.headerItem) {
+            var search = roomList.headerItem.search
+            search.focus = false
+            if (search.text !== "") {
+                search.text = ""
+            }
+        }
         // Re-attach on every activation: opening a room replaces the attached
         // page, so it has to be restored when coming back.
         if (status === PageStatus.Active && isHome && !pageStack.nextPage(page)) {
@@ -80,6 +90,8 @@ Page {
         }
 
         header: Column {
+            property alias search: searchField
+
             width: roomList.width
 
             PageHeader {

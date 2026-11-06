@@ -2992,7 +2992,7 @@
     <message>
         <source>%1: %2</source>
         <comment>system line and the reason given for it</comment>
-        <translation>%1&#xa0;: %2</translation>
+        <translation>%1 : %2</translation>
     </message>
     <message>
         <source>Convert to text</source>
@@ -3650,7 +3650,7 @@
     </message>
     <message>
         <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
-        <translation>xmatic continue d&apos;essayer tout seul. Ne te reconnecte pas&#xa0;: cela créerait un nouvel appareil et coûterait les clés de ton historique chiffré.</translation>
+        <translation>xmatic continue d&apos;essayer tout seul. Ne te reconnecte pas : cela créerait un nouvel appareil et coûterait les clés de ton historique chiffré.</translation>
     </message>
     <message>
         <source>Try again</source>

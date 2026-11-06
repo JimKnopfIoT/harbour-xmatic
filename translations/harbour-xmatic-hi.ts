@@ -3080,168 +3080,168 @@
 <context>
     <name>RoomListPage</name>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="44"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="54"/>
         <source>Really decline this invitation?</source>
         <translation>सचमुच यह निमंत्रण अस्वीकार करना है?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="45"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="55"/>
         <source>Really leave this room?</source>
         <translation>सचमुच यह कक्ष छोड़ना है?</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="48"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="58"/>
         <source>The invitation is gone afterwards. You can only get back in if somebody invites you again.</source>
         <translation>उसके बाद निमंत्रण नहीं रहेगा। तुम तभी लौट सकते हो जब कोई फिर से बुलाए।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="49"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="59"/>
         <source>The room is left and forgotten. It disappears from the chat list, and getting back in needs a new invitation or a public address.</source>
         <translation>कक्ष छोड़ा और भुला दिया जाता है। वह चैट सूची से गायब हो जाता है, और वापस आने के लिए नया निमंत्रण या सार्वजनिक पता चाहिए।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="50"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="60"/>
         <source>Decline</source>
         <translation>अस्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="50"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="60"/>
         <source>Leave</source>
         <translation>छोड़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="54"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="64"/>
         <source>Declining</source>
         <translation>अस्वीकार किया जा रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="54"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="64"/>
         <source>Leaving room</source>
         <translation>कक्ष छोड़ा जा रहा है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="86"/>
-        <location filename="../qml/pages/RoomListPage.qml" line="273"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="98"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="285"/>
         <source>Rooms</source>
         <translation>कक्ष</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="91"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="103"/>
         <source>This homeserver is not supported</source>
         <translation>यह होमसर्वर समर्थित नहीं है</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="96"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="108"/>
         <source>Local data damaged</source>
         <translation>स्थानीय डेटा क्षतिग्रस्त</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="105"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="117"/>
         <source>%1 of %2 rooms</source>
         <translation>%2 में से %1 कक्ष</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="109"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="121"/>
         <source>Offline — waiting for the network</source>
         <translation>ऑफ़लाइन — नेटवर्क की प्रतीक्षा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="143"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="155"/>
         <source>Your homeserver does not offer the sync this app needs (simplified sliding sync, MSC4186). Rooms cannot be loaded from it. A newer server version, or an account on a server that supports it, is required.</source>
         <translation>तुम्हारा होमसर्वर वह सिंक नहीं देता जो इस ऐप को चाहिए (simplified sliding sync, MSC4186)। उससे कक्ष नहीं लाए जा सकते। नया सर्वर संस्करण चाहिए, या ऐसे सर्वर पर खाता जो इसे देता हो।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="155"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="167"/>
         <source>Part of the data stored on this device cannot be read any more, and xmatic has not been able to put it right while running — so it has stopped syncing rather than meet the same row again. Rebuilding the room data fetches rooms and messages again and keeps this device&apos;s keys. If that does not help, signing out and in rebuilds everything — but it replaces this device&apos;s keys, so check on the encryption page that the key backup is on before you do.</source>
         <translation>इस डिवाइस पर रखे डेटा का एक हिस्सा अब पढ़ा नहीं जा सकता, और xmatic चलते हुए इसे ठीक नहीं कर पाया — इसलिए उसने उसी पंक्ति से फिर टकराने के बजाय सिंक रोक दिया। कमरों का डेटा दोबारा बनाने से कमरे और संदेश फिर से लाए जाते हैं और इस डिवाइस की कुंजियाँ बनी रहती हैं। अगर इससे मदद न मिले, तो साइन आउट करके फिर साइन इन करने से सब कुछ दोबारा बनता है — लेकिन इस डिवाइस की कुंजियाँ बदल जाती हैं; इसलिए पहले एन्क्रिप्शन पेज पर जाँच लो कि कुंजी बैकअप चालू है।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="161"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="173"/>
         <source>Rebuild room data</source>
         <translation>कमरों का डेटा दोबारा बनाओ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="177"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="189"/>
         <source>This server delivers only %1 of your %2 rooms over sliding sync, the sync this app needs. The missing ones — often bridged chats — cannot be shown here; apps using the classic sync still see them.</source>
         <translation>यह सर्वर sliding sync के ज़रिए, जिसकी इस ऐप को ज़रूरत है, तुम्हारे %2 रूम में से सिर्फ़ %1 देता है। जो रूम नहीं आते — अक्सर ब्रिज के ज़रिए चैट — वे यहाँ नहीं दिखाए जा सकते; क्लासिक सिंक वाले ऐप उन्हें अब भी देखते हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="185"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="197"/>
         <source>Search rooms</source>
         <translation>कक्ष खोजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="215"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
         <source>Mark as read</source>
         <translation>पढ़ा हुआ चिह्नित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="215"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
         <source>Mark as unread</source>
         <translation>अपठित चिह्नित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
         <source>Remove from favourites</source>
         <translation>पसंदीदा से हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="223"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
         <source>Favourite</source>
         <translation>पसंदीदा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="231"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
         <source>Normal priority</source>
         <translation>सामान्य प्राथमिकता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="231"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
         <source>Low priority</source>
         <translation>कम प्राथमिकता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="238"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
         <source>Unmute</source>
         <translation>मौन हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="238"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
         <source>Mute</source>
         <translation>मौन करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="246"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
         <source>Decline invitation</source>
         <translation>निमंत्रण अस्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="246"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
         <source>Leave room</source>
         <translation>कक्ष छोड़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="255"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="267"/>
         <source>No rooms</source>
         <translation>कोई कक्ष नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="256"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="268"/>
         <source>Rooms you join show up here once the first sync is through.</source>
         <translation>पहला सिंक पूरा होते ही तुम्हारे जुड़े कक्ष यहाँ दिखते हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="261"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="273"/>
         <source>About xmatic</source>
         <translation>xmatic के बारे में</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="279"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="291"/>
         <source>Account</source>
         <translation>खाता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="266"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="278"/>
         <source>Verify user</source>
         <translation>उपयोगकर्ता सत्यापित करें</translation>
     </message>
