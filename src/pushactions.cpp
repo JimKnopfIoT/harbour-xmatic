@@ -15,7 +15,7 @@ const int MaxQueued = 16;
 /// A banner tap whose room never shows up is dropped.
 const qint64 PendingLimitMs = 30000;
 
-/// A woken process's room mark under the salt it was made with.
+/// A room mark under the salt it was made with.
 QString tagged(const QString &salt, const QString &mark)
 {
     return salt + QLatin1Char(':') + mark;
@@ -107,19 +107,55 @@ void PushActions::start()
     sendGateway(false);
 }
 
-void PushActions::closeBanners()
+void PushActions::adoptBanners()
 {
-    const ClosedPushBanners closed = ::closePushBanners(m_dataDirectory);
-    if (closed.keys.isEmpty()) {
+    closePushNotices(m_dataDirectory);
+    readBanners();
+}
+
+void PushActions::readBanners()
+{
+    const PushBannerRecord standing = readPushBanners(m_dataDirectory);
+    m_bannerSalt = standing.salt;
+    m_bannerKeys = standing.keys;
+    // Kept past the banner: the sync may still bring the message it announced.
+    for (auto it = standing.announced.constBegin(); it != standing.announced.constEnd(); ++it) {
+        const QString mark = tagged(standing.salt, it.key());
+        m_bannerAnnounced.insert(mark, qMax(it.value(), m_bannerAnnounced.value(mark)));
+    }
+}
+
+void PushActions::raiseBanner(const QString &roomId, const QString &summary,
+                              const QString &body, bool audible, int count)
+{
+    if (roomId.isEmpty()) {
         return;
     }
-    // Rooms are marks under the record's salt; each record had its own.
-    for (auto it = closed.announced.constBegin(); it != closed.announced.constEnd(); ++it) {
-        m_wakeAnnounced.insert(tagged(closed.salt, it.key()), it.value());
+    const qint64 timestamp = qMax(m_synced.value(roomId), m_pushed.value(roomId));
+    publishPushBanner(m_dataDirectory, roomId, QString(), summary, body, audible, timestamp,
+                      count);
+    readBanners();
+}
+
+void PushActions::roomSettled(const QString &roomId, qint64 timestamp, bool dropped)
+{
+    if (m_bannerKeys.isEmpty()) {
+        return;
     }
-    for (auto it = closed.keys.constBegin(); it != closed.keys.constEnd(); ++it) {
-        m_wakeKeys.insert(it.key(), tagged(closed.salt, it.value()));
+    const QString mark = pushRoomMark(m_bannerSalt, roomId);
+    if (m_bannerKeys.key(mark).isEmpty()) {
+        return;
     }
+    if (!dropped && m_bannerAnnounced.value(tagged(m_bannerSalt, mark)) >= timestamp) {
+        return;
+    }
+    dropBanner(roomId);
+}
+
+void PushActions::dropBanner(const QString &roomId)
+{
+    closePushBanner(m_dataDirectory, roomId);
+    readBanners();
 }
 
 void PushActions::openBanner(const QString &key)
@@ -127,22 +163,22 @@ void PushActions::openBanner(const QString &key)
     if (key.isEmpty()) {
         return;
     }
-    if (!m_wakeKeys.contains(key)) {
-        closeBanners();
+    if (!m_bannerKeys.contains(key)) {
+        readBanners();
     }
-    const QString wanted = m_wakeKeys.value(key);
-    if (wanted.isEmpty()) {
+    const QString mark = m_bannerKeys.value(key);
+    if (mark.isEmpty()) {
         return;
     }
-    const QString salt = wanted.section(QLatin1Char(':'), 0, 0);
     for (const QString &roomId : m_rooms) {
-        if (tagged(salt, pushRoomMark(salt, roomId)) == wanted) {
+        if (pushRoomMark(m_bannerSalt, roomId) == mark) {
+            dropBanner(roomId);
             emit bannerRoomReady(roomId);
             return;
         }
     }
     // Before the room list: answered from `noteRoom`.
-    m_pendingMark = wanted;
+    m_pendingMark = tagged(m_bannerSalt, mark);
     m_pendingSince = m_clock.elapsed();
 }
 
@@ -159,6 +195,7 @@ void PushActions::noteRoom(const QString &roomId)
     const QString salt = m_pendingMark.section(QLatin1Char(':'), 0, 0);
     if (tagged(salt, pushRoomMark(salt, roomId)) == m_pendingMark) {
         m_pendingMark.clear();
+        dropBanner(roomId);
         emit bannerRoomReady(roomId);
     }
 }
@@ -169,14 +206,14 @@ bool PushActions::syncBannerCovered(const QString &roomId, qint64 timestamp) con
         return false;
     }
     qint64 announced = m_pushed.value(roomId);
-    if (!m_wakeAnnounced.isEmpty()) {
+    if (!m_bannerAnnounced.isEmpty()) {
         QSet<QString> salts;
-        for (auto it = m_wakeKeys.constBegin(); it != m_wakeKeys.constEnd(); ++it) {
-            salts.insert(it.value().section(QLatin1Char(':'), 0, 0));
+        for (auto it = m_bannerAnnounced.constBegin(); it != m_bannerAnnounced.constEnd(); ++it) {
+            salts.insert(it.key().section(QLatin1Char(':'), 0, 0));
         }
         for (const QString &salt : salts) {
             announced = qMax(announced,
-                             m_wakeAnnounced.value(tagged(salt, pushRoomMark(salt, roomId))));
+                             m_bannerAnnounced.value(tagged(salt, pushRoomMark(salt, roomId))));
         }
     }
     // Only the message a push announced; a later one is the sync's to announce.
@@ -199,8 +236,9 @@ void PushActions::forget()
     m_queued.clear();
     m_pushed.clear();
     m_synced.clear();
-    m_wakeAnnounced.clear();
-    m_wakeKeys.clear();
+    m_bannerAnnounced.clear();
+    m_bannerKeys.clear();
+    m_bannerSalt.clear();
     m_pendingMark.clear();
     m_rooms.clear();
 }

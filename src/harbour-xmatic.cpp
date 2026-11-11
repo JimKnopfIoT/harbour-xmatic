@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
     service.publish();
 
     MatrixBridge bridge(dataDirectory, cacheDirectory, storeKey, &settings);
-    bridge.pushActions()->closeBanners();
+    bridge.pushActions()->adoptBanners();
     if (!storeKey.key.isEmpty()) {
         storeKey.key.fill(QChar('0'));
     }
@@ -274,10 +274,6 @@ int main(int argc, char *argv[])
     // A notification tap works because lipstick activates the app, but a call
     // arriving while the app sits in the switcher has to raise its own window.
     QObject::connect(&service, &AppService::raiseRequested, view.data(), [&view]() {
-        view->raise();
-        view->requestActivate();
-    });
-    QObject::connect(&service, &AppService::notifiedRoomRequested, view.data(), [&view]() {
         view->raise();
         view->requestActivate();
     });

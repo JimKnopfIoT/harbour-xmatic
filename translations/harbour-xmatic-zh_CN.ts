@@ -1694,47 +1694,47 @@
         <translation>无法从主服务器移除推送注册。此账户下次在这里登录时会将其移除。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4226"/>
+        <location filename="../src/matrixbridge.cpp" line="4229"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4229"/>
+        <location filename="../src/matrixbridge.cpp" line="4232"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4232"/>
+        <location filename="../src/matrixbridge.cpp" line="4235"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4235"/>
+        <location filename="../src/matrixbridge.cpp" line="4238"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4238"/>
+        <location filename="../src/matrixbridge.cpp" line="4241"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4241"/>
+        <location filename="../src/matrixbridge.cpp" line="4244"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4241"/>
+        <location filename="../src/matrixbridge.cpp" line="4244"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4244"/>
+        <location filename="../src/matrixbridge.cpp" line="4247"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4247"/>
+        <location filename="../src/matrixbridge.cpp" line="4250"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -2749,17 +2749,17 @@
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="191"/>
+        <location filename="../src/pushbanners.cpp" line="253"/>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>推送分发器移除了 xmatic。请在“账户”中重新开启推送。</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="201"/>
+        <location filename="../src/pushbanners.cpp" line="263"/>
         <source>xmatic is still handling a notification. Open it again in a moment.</source>
         <translation>xmatic 仍在处理一条通知。请稍后再打开。</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="211"/>
+        <location filename="../src/pushbanners.cpp" line="273"/>
         <source>Open xmatic once to finish setting up push notifications.</source>
         <translation>打开 xmatic 一次以完成推送通知的设置。</translation>
     </message>
@@ -5357,30 +5357,30 @@
 <context>
     <name>harbour-xmatic</name>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="555"/>
+        <location filename="../qml/harbour-xmatic.qml" line="519"/>
         <source>Incoming video call</source>
         <translation>来电视频通话</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="552"/>
-        <location filename="../qml/harbour-xmatic.qml" line="556"/>
+        <location filename="../qml/harbour-xmatic.qml" line="516"/>
+        <location filename="../qml/harbour-xmatic.qml" line="520"/>
         <source>Incoming call</source>
         <translation>来电</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="626"/>
+        <location filename="../qml/harbour-xmatic.qml" line="576"/>
         <source>New message</source>
         <translation>新消息</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="632"/>
+        <location filename="../qml/harbour-xmatic.qml" line="582"/>
         <source>%n mention(s)</source>
         <translation>
             <numerusform>%n 条提及</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="633"/>
+        <location filename="../qml/harbour-xmatic.qml" line="583"/>
         <source>%n new message(s)</source>
         <translation>
             <numerusform>%n 条新消息</numerusform>

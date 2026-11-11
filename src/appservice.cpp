@@ -58,11 +58,6 @@ void AppService::requestRaise()
     emit raiseRequested();
 }
 
-void AppService::requestNotifiedRoom()
-{
-    emit notifiedRoomRequested();
-}
-
 bool AppService::requestLink(const QString &link)
 {
     if (!looksLikeMatrixLink(link)) {
@@ -111,11 +106,6 @@ AppServiceAdaptor::AppServiceAdaptor(AppService *service)
 void AppServiceAdaptor::activate()
 {
     m_service->requestRaise();
-}
-
-void AppServiceAdaptor::openNotified()
-{
-    m_service->requestNotifiedRoom();
 }
 
 void AppServiceAdaptor::openPushBanner(const QString &key)

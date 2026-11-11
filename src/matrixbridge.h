@@ -892,10 +892,6 @@ signals:
                       const QString &previewSender,
                       bool audible);
 
-    /// A room's notifying events dropped to zero - read here or elsewhere. A
-    /// banner raised for it has nothing left to announce.
-    void roomRead(const QString &roomId);
-
     /// The URL that has to be opened in the browser to continue a login.
     void loginUrlReady(const QString &url);
 

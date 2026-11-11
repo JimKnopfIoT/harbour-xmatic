@@ -1696,47 +1696,47 @@
         <translation>पुश पंजीकरण होमसर्वर से हटाया नहीं जा सका। अगली बार जब यह खाता यहाँ साइन इन करेगा, तब इसे हटा दिया जाएगा।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4226"/>
+        <location filename="../src/matrixbridge.cpp" line="4229"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4229"/>
+        <location filename="../src/matrixbridge.cpp" line="4232"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4232"/>
+        <location filename="../src/matrixbridge.cpp" line="4235"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4235"/>
+        <location filename="../src/matrixbridge.cpp" line="4238"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4238"/>
+        <location filename="../src/matrixbridge.cpp" line="4241"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4241"/>
+        <location filename="../src/matrixbridge.cpp" line="4244"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4241"/>
+        <location filename="../src/matrixbridge.cpp" line="4244"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4244"/>
+        <location filename="../src/matrixbridge.cpp" line="4247"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4247"/>
+        <location filename="../src/matrixbridge.cpp" line="4250"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -2752,17 +2752,17 @@
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="191"/>
+        <location filename="../src/pushbanners.cpp" line="253"/>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>पुश वितरक ने xmatic को हटा दिया। खाता में जाकर पुश फिर से चालू करो।</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="201"/>
+        <location filename="../src/pushbanners.cpp" line="263"/>
         <source>xmatic is still handling a notification. Open it again in a moment.</source>
         <translation>xmatic अभी भी एक सूचना संभाल रहा है। थोड़ी देर में इसे फिर से खोलो।</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="211"/>
+        <location filename="../src/pushbanners.cpp" line="273"/>
         <source>Open xmatic once to finish setting up push notifications.</source>
         <translation>पुश सूचनाओं की सेटिंग पूरी करने के लिए xmatic एक बार खोलो।</translation>
     </message>
@@ -5363,23 +5363,23 @@
 <context>
     <name>harbour-xmatic</name>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="555"/>
+        <location filename="../qml/harbour-xmatic.qml" line="519"/>
         <source>Incoming video call</source>
         <translation>आने वाला वीडियो कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="552"/>
-        <location filename="../qml/harbour-xmatic.qml" line="556"/>
+        <location filename="../qml/harbour-xmatic.qml" line="516"/>
+        <location filename="../qml/harbour-xmatic.qml" line="520"/>
         <source>Incoming call</source>
         <translation>आती हुई कॉल</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-xmatic.qml" line="626"/>
+        <location filename="../qml/harbour-xmatic.qml" line="576"/>
         <source>New message</source>
         <translation>नया संदेश</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="632"/>
+        <location filename="../qml/harbour-xmatic.qml" line="582"/>
         <source>%n mention(s)</source>
         <translation>
             <numerusform>%n उल्लेख</numerusform>
@@ -5387,7 +5387,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/harbour-xmatic.qml" line="633"/>
+        <location filename="../qml/harbour-xmatic.qml" line="583"/>
         <source>%n new message(s)</source>
         <translation>
             <numerusform>%n नया संदेश</numerusform>

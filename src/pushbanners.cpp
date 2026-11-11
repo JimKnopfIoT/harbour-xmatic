@@ -33,6 +33,8 @@ struct Record {
     QString salt;
     /// Room mark, or a slot name for banners without a room, to `{id, key, ts}`.
     QJsonObject banners;
+    /// Minted on this read: the salt is not on disk yet.
+    bool fresh = false;
 };
 
 Record readRecord(const QString &dataDirectory)
@@ -48,6 +50,7 @@ Record readRecord(const QString &dataDirectory)
     }
     if (record.salt.isEmpty()) {
         record.salt = freshSalt();
+        record.fresh = true;
         // The record of 0.46 named rooms in clear: marks from here on.
         if (!root.contains(QStringLiteral("banners"))) {
             for (auto it = root.constBegin(); it != root.constEnd(); ++it) {
@@ -103,7 +106,7 @@ QString pushRoomMark(const QString &salt, const QString &roomId)
 /// makes it audible; a banner with a room opens it, one without opens the app.
 void publishPushBanner(const QString &dataDirectory, const QString &roomId,
                        const QString &slot, const QString &summary, const QString &body,
-                       bool audible, qint64 timestamp)
+                       bool audible, qint64 timestamp, int count)
 {
     QVariantMap hints;
     // Tone, vibration and LED hang off the category. Left off where the push
@@ -116,6 +119,9 @@ void publishPushBanner(const QString &dataDirectory, const QString &roomId,
     hints.insert(QStringLiteral("x-nemo-preview-summary"), summary);
     hints.insert(QStringLiteral("x-nemo-preview-body"), body);
     hints.insert(QStringLiteral("x-nemo-owner"), QStringLiteral("xmatic"));
+    if (count > 0) {
+        hints.insert(QStringLiteral("x-nemo-item-count"), count);
+    }
 
     Record record = readRecord(dataDirectory);
     const QString name = roomId.isEmpty() ? slot : pushRoomMark(record.salt, roomId);
@@ -161,27 +167,83 @@ void publishPushBanner(const QString &dataDirectory, const QString &roomId,
     writeRecord(dataDirectory, record);
 }
 
-ClosedPushBanners closePushBanners(const QString &dataDirectory)
+PushBannerRecord readPushBanners(const QString &dataDirectory)
 {
-    ClosedPushBanners closed;
+    PushBannerRecord standing;
     if (!QFile::exists(recordPath(dataDirectory))) {
-        return closed;
+        return standing;
     }
     const Record record = readRecord(dataDirectory);
-    closed.salt = record.salt;
+    // Marks made under a salt that is not kept would never match again.
+    if (record.fresh) {
+        writeRecord(dataDirectory, record);
+    }
+    standing.salt = record.salt;
     for (auto it = record.banners.constBegin(); it != record.banners.constEnd(); ++it) {
         const QJsonObject entry = it.value().toObject();
-        callNotifications(QStringLiteral("CloseNotification"),
-                          QVariantList{uint(entry.value(QStringLiteral("id")).toDouble())});
         const QString key = entry.value(QStringLiteral("key")).toString();
         if (key.isEmpty()) {
             continue;
         }
-        closed.keys.insert(key, it.key());
-        closed.announced.insert(it.key(), qint64(entry.value(QStringLiteral("ts")).toDouble()));
+        standing.keys.insert(key, it.key());
+        standing.announced.insert(it.key(), qint64(entry.value(QStringLiteral("ts")).toDouble()));
+    }
+    return standing;
+}
+
+bool closePushBanner(const QString &dataDirectory, const QString &roomId)
+{
+    if (roomId.isEmpty() || !QFile::exists(recordPath(dataDirectory))) {
+        return false;
+    }
+    Record record = readRecord(dataDirectory);
+    const QString name = pushRoomMark(record.salt, roomId);
+    if (!record.banners.contains(name)) {
+        return false;
+    }
+    callNotifications(QStringLiteral("CloseNotification"),
+                      QVariantList{uint(record.banners.value(name).toObject()
+                                                .value(QStringLiteral("id")).toDouble())});
+    record.banners.remove(name);
+    writeRecord(dataDirectory, record);
+    return true;
+}
+
+void closePushNotices(const QString &dataDirectory)
+{
+    if (!QFile::exists(recordPath(dataDirectory))) {
+        return;
+    }
+    Record record = readRecord(dataDirectory);
+    const QStringList names = record.banners.keys();
+    bool closed = false;
+    for (const QString &name : names) {
+        const QJsonObject entry = record.banners.value(name).toObject();
+        if (!entry.value(QStringLiteral("key")).toString().isEmpty()) {
+            continue;
+        }
+        callNotifications(QStringLiteral("CloseNotification"),
+                          QVariantList{uint(entry.value(QStringLiteral("id")).toDouble())});
+        record.banners.remove(name);
+        closed = true;
+    }
+    if (closed) {
+        writeRecord(dataDirectory, record);
+    }
+}
+
+void closePushBanners(const QString &dataDirectory)
+{
+    if (!QFile::exists(recordPath(dataDirectory))) {
+        return;
+    }
+    const Record record = readRecord(dataDirectory);
+    for (auto it = record.banners.constBegin(); it != record.banners.constEnd(); ++it) {
+        callNotifications(QStringLiteral("CloseNotification"),
+                          QVariantList{uint(it.value().toObject()
+                                                    .value(QStringLiteral("id")).toDouble())});
     }
     QFile::remove(recordPath(dataDirectory));
-    return closed;
 }
 
 void publishPushNotice(const QString &dataDirectory)

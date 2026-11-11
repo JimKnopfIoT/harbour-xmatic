@@ -19,7 +19,6 @@ public:
     bool publish();
 
     void requestRaise();
-    void requestNotifiedRoom();
     /// Takes a link from outside. Answers whether it was one this app can mean
     /// anything by; anything else is dropped without a trace, not logged - a
     /// matrix.to link carries a room address and often a user id.
@@ -40,8 +39,6 @@ public:
 signals:
     /// Bring the window forward.
     void raiseRequested();
-    /// Bring the window forward and open the notified room.
-    void notifiedRoomRequested();
     /// A Matrix link arrived from outside; the UI decides what it means.
     void linkRequested(const QString &link);
     /// A push banner was tapped; `key` maps to its room in the bridge.
@@ -67,7 +64,6 @@ public slots:
     // handover calls blocking, and a silent method would make it wait out the
     // timeout.
     void activate();
-    void openNotified();
     /// The link handler's way in, and the one method here that takes something
     /// from the caller. What it accepts is decided in AppService::requestLink.
     void openUrl(const QString &link);

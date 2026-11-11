@@ -21,9 +21,6 @@ ApplicationWindow {
     // app start — it leads, it does not nag.
     property bool securityShown: false
 
-    // The room the standing notification is about, or "" if none stands.
-    property string notifiedRoomId: ""
-
     // A room from a tapped push banner, opened once the home page is up.
     property string pendingPushRoom: ""
 
@@ -44,8 +41,7 @@ ApplicationWindow {
         var roomId = pendingPushRoom
         pendingPushRoom = ""
         pendingPushRoomLife.stop()
-        notifiedRoomId = roomId
-        openNotifiedRoom()
+        openBannerRoom(roomId)
     }
 
     // One turn of the event loop, so the root swap has happened.
@@ -248,8 +244,8 @@ ApplicationWindow {
         onBannerRoomReady: app.queuePushRoom(roomId)
     }
 
-    // The notification tap and the launcher's hand-over. Neither carries an
-    // argument: which room is meant is this app's knowledge, not the caller's.
+    // The banner tap and the launcher's hand-over. A banner carries an opaque
+    // key: which room is meant is this app's knowledge, not the caller's.
     Connections {
         target: activation
 
@@ -258,11 +254,6 @@ ApplicationWindow {
         onPushBannerRequested: {
             app.activate()
             matrix.push.openBanner(key)
-        }
-
-        onNotifiedRoomRequested: {
-            app.activate()
-            app.openNotifiedRoom()
         }
 
         // A link tapped in another app. What it may be was narrowed in
@@ -357,15 +348,11 @@ ApplicationWindow {
         }
     }
 
-    // Opens the room the standing notification is about, once - a repeated call
-    // cannot walk the user through rooms. Not while the session is restoring.
-    function openNotifiedRoom() {
-        var roomId = app.notifiedRoomId
+    // Opens the room of a tapped banner. Not while the session is restoring.
+    function openBannerRoom(roomId) {
         if (roomId.length === 0 || matrix.sessionState !== "signed-in") {
             return
         }
-        app.notifiedRoomId = ""
-        notification.close()
         var current = pageStack.currentPage
         // A call takes precedence over everything; the room can wait.
         if (current && current.objectName === "callPage") {
@@ -388,28 +375,6 @@ ApplicationWindow {
         }
         pageStack.push(Qt.resolvedUrl("pages/RoomPage.qml"),
                        { roomId: roomId, roomName: "", invited: invited })
-    }
-
-    Notification {
-        id: notification
-
-        appName: "xmatic"
-        // Without a category a notification is silent - tone, vibration and LED all
-        // hang off it. This one plays the IM tone and turns the display on.
-        category: "x-nemo.messaging.im"
-        // The category brings its own icon, so the app's has to be named or the
-        // banner would not say who is talking.
-        appIcon: "/usr/share/icons/hicolor/86x86/apps/harbour-xmatic.png"
-        isTransient: false
-        // Tapping opens the room this banner is about. The method takes no argument,
-        // so nothing about the room stays in the system's notification store.
-        remoteActions: [{
-            "name": "default",
-            "service": "org.xmatic.xmatic",
-            "path": "/org/xmatic/xmatic",
-            "iface": "org.xmatic.xmatic",
-            "method": "openNotified"
-        }]
     }
 
     // Incoming shares from other apps. The dialog finds xmatic through the
@@ -477,9 +442,8 @@ ApplicationWindow {
         onStateChanged: {
             if (Qt.application.state === Qt.ApplicationActive) {
                 backgroundSync.enabled = false
-                notification.close()
-                matrix.push.closeBanners()
-                app.notifiedRoomId = ""
+                // Room banners stay until their room is read; notices go.
+                matrix.push.adoptBanners()
             } else {
                 backgroundSync.enabled = matrix.sessionState === "signed-in"
             }
@@ -606,37 +570,19 @@ ApplicationWindow {
         // loopback listener for the redirect.
         onLoginUrlReady: Qt.openUrlExternally(url)
 
-        // A room read elsewhere clears the counter here too, and the banner goes with
-        // it. Only for this room: the notification object is a single one.
-        onRoomRead: {
-            if (roomId === app.notifiedRoomId) {
-                notification.close()
-                app.notifiedRoomId = ""
-            }
-        }
-
         onRoomActivity: {
-            notification.close()
-            app.notifiedRoomId = roomId
-            // Tone, vibration and LED hang off the category; a quiet push has none.
-            notification.category = audible ? "x-nemo.messaging.im" : ""
             // The room's name is content - in a direct chat it is the other person. Same
             // switch as the text, because the banner shows on the lock screen.
-            notification.summary = settings.notificationPreview
-                                   ? roomName : qsTr("New message")
+            var summary = settings.notificationPreview ? roomName : qsTr("New message")
             // The count is the default, the message only where the user allowed it.
             // Non-text events are named by kind, and an undecryptable one says so.
             var preview = settings.notificationPreview ? Preview.line(previewKind, previewText) : ""
-            notification.body = preview.length > 0 ? preview
+            var body = preview.length > 0 ? preview
                     : mentions > 0
                       ? qsTr("%n mention(s)", "", mentions)
                       : qsTr("%n new message(s)", "", unread)
-            // summary and body alone fill only the event feed; the banner that slides in
-            // is the preview pair.
-            notification.previewSummary = notification.summary
-            notification.previewBody = notification.body
-            notification.itemCount = unread
-            notification.publish()
+            // One banner per room; tone, vibration and LED only where `audible`.
+            matrix.push.raiseBanner(roomId, summary, body, audible, unread)
         }
 
         // A direct chat is requested from several places, so the navigation lives

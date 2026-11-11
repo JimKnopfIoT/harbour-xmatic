@@ -4034,11 +4034,14 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
 
         // Reading the room elsewhere clears the counter here too. Before the mute and
         // on-screen tests: those govern raising a banner, not taking one down.
-        if (notifications == 0 && previous > 0) {
+        if (notifications == 0) {
             // A banner still waiting for its text is pointless now: the room
             // was read somewhere else, and what it would announce is gone.
-            m_pendingBanners.remove(id);
-            emit roomRead(id);
+            if (previous > 0) {
+                m_pendingBanners.remove(id);
+            }
+            m_push->roomSettled(id, qint64(room.value(QStringLiteral("timestamp")).toDouble()),
+                                previous > 0);
         }
 
         // Muted and low-priority rooms count their badge but never notify. Honoured

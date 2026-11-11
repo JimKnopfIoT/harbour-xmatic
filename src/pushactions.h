@@ -44,8 +44,11 @@ public:
                                 bool enable = false);
     /// One of several installed distributors; `enable` turns push on with it.
     Q_INVOKABLE void selectDistributor(const QString &distributor, bool enable);
-    /// Closes the banners woken processes raised, keeping what they announced.
-    Q_INVOKABLE void closeBanners();
+    /// Takes over the banners standing from before; closes those that name no room.
+    Q_INVOKABLE void adoptBanners();
+    /// A room's banner, replacing that room's last one. `count` its notifying events.
+    Q_INVOKABLE void raiseBanner(const QString &roomId, const QString &summary,
+                                 const QString &body, bool audible, int count);
     /// The room a banner's action key stands for, answered by `bannerRoomReady`
     /// once the room is known here.
     Q_INVOKABLE void openBanner(const QString &key);
@@ -67,6 +70,9 @@ public:
 
     /// A room the room list carries; resolves a banner tap waiting for it.
     void noteRoom(const QString &roomId);
+    /// A room with nothing left to notify, its latest event at `timestamp`. Without
+    /// `dropped` (the count just fell) only a later event proves it: counts lag the event.
+    void roomSettled(const QString &roomId, qint64 timestamp, bool dropped);
     /// Whether a push banner already announced the room's message at `timestamp`.
     bool syncBannerCovered(const QString &roomId, qint64 timestamp) const;
     /// The sync's banner announced the room's message at `timestamp`.
@@ -88,6 +94,8 @@ private:
     void fetch(const QString &roomId, const QString &eventId);
     void fetchQueued();
     void finishFetch(quint64 id);
+    void readBanners();
+    void dropBanner(const QString &roomId);
 
     QString m_dataDirectory;
     AppSettings *m_settings = nullptr;
@@ -103,9 +111,11 @@ private:
     QHash<QString, qint64> m_pushed;
     QHash<QString, qint64> m_synced;
 
-    /// From the woken process's banners: `salt:mark` per room.
-    QHash<QString, qint64> m_wakeAnnounced;
-    QHash<QString, QString> m_wakeKeys;
+    /// The record of standing banners as last read: its salt, action key to room mark.
+    QString m_bannerSalt;
+    QHash<QString, QString> m_bannerKeys;
+    /// What every banner seen announced, by `salt:mark`.
+    QHash<QString, qint64> m_bannerAnnounced;
     /// A tap waiting for its room to appear, and since when.
     QString m_pendingMark;
     qint64 m_pendingSince = 0;
