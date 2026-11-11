@@ -256,7 +256,7 @@ streams map one-to-one onto `QAbstractListModel` insert/remove/change signals â€
 that mapping is the whole reason for this design. The FFI surface is six C
 functions; everything else is a JSON message type.
 
-AI assisted development
+LLM assisted development
 
 ## Licence
 
