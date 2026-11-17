@@ -357,6 +357,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Tai nėra galiojantis Matrix adresas. Jis atrodo taip: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Negali užblokuoti savęs.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Priežastis per ilga.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Matrix adresas atrodo taip: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Priežastis (neprivaloma)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Asmuo nebegalės patekti į šį kambarį. Jei dabar yra narys, jis bus pašalintas. Visi kambaryje mato blokavimą ir jo priežastį.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Užblokuoti ką nors…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Užblokuoti asmenys</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Tavo vaidmuo šiame kambaryje neleidžia nei blokuoti, nei panaikinti blokavimo. Sąrašą galima tik skaityti.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Priežastis: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Užblokavo %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Niekas neužblokuotas</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -449,6 +506,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Prisijungimai, kvietimai, pašalinimai ir užblokavimai rodomi visada.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Pranešimai</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Pranešimų taisyklės</translation>
     </message>
 </context>
 <context>
@@ -1422,6 +1487,10 @@
         <source>The people in this room show up here.</source>
         <translation>Šio kambario žmonės atsiranda čia.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Užblokuoti…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1650,6 +1719,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Skambutis</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 prisijungė</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 išėjo</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 pakvietė %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 pašalino %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 užblokavo %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 atblokavo %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 atšaukė kvietimą %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 atmetė pakvietimą</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 paprašė prisijungti</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 pakeitė narystę</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 pakeitė profilio nuotrauką</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 pakeitė rodomą vardą į %2 ir profilio nuotrauką</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 pašalino rodomą vardą ir pakeitė profilio nuotrauką</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 pakeitė rodomą vardą į %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 pašalino rodomą vardą</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Atverti nuorodą?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopijuoti nuorodą</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Persiųsti nuorodą</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Atmesti</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ištrinti</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Prisegti</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Atsakyti gijoje</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Siųsti dar kartą</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Įrašyti</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Paversti tekstu</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopijuoti</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Persiųsti</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Redaguoti</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reaguoti</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Atsakyti</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Daugiau…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Cituojamos žinutės įkelti negalima: jos nebėra arba tau neleidžiama jos matyti.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Šiame įrenginyje nerodoma. Paliesk, kad atidarytum.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Nepavyko įkelti. Bakstelėk, kad bandytum dar kartą.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Bakstelėk, kad įkeltum</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Balso žinutė</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Verčiama tekstu…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Atpažinta automatiškai, gali būti klaidų</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Rodyti mažiau</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Rodyti daugiau</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Ką reiškia šie ženklai?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Gija · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Gijoje</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Ši reakcija slepia tekstą ir nebuvo išsiųsta</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>neišsiųsta</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>ištrynimas neišsiųstas</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>pataisymas neišsiųstas</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>redaguota</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1677,6 +1951,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Kita pusė gauna pakvietimą, o pokalbis iš karto atsiranda tavo sąraše. Žinutės šifruojamos nuo pat pradžios.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Pranešimų taisyklės</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Tiesioginės žinutės</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Grupės žinutės</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Tavo paminėjimai</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Viso kambario paminėjimai</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Pakvietimai</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Skambučiai</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Išjungta</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Serveris atmetė pakeitimą: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Be garso</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Su garsu</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Saugomos tavo paskyroje, todėl jų laikosi visos programos. Su garsu skamba, Be garso rodo pranešimą ir mirksi LED, Išjungta tik padidina kambario neperskaitytų skaitiklį. Kambarys su savo nustatymu informacijoje jį išlaiko. Paminėjimas, nustatytas į Išjungta, laikomas įprasta savo kambario žinute.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Laukiama serverio…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Iš dalies nustatyta skirtingai. Pasirink lygį, kad jis galiotų visur.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Nepavyko perskaityti taisyklių iš serverio: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Serveris neatsakė laiku.</translation>
     </message>
 </context>
 <context>
@@ -2745,89 +3086,8 @@
         <translation>Pokalbio pradžia</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Skambutis</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 prisijungė</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 išėjo</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 atmetė pakvietimą</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 paprašė prisijungti</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 pakeitė narystę</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopijuoti</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Atsakyti</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Įrašyti</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Persiųsti</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Redaguoti</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Prisegti</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Ištrinti</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Daugiau…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Cituojamos žinutės įkelti negalima: jos nebėra arba tau neleidžiama jos matyti.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Balso žinutė</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Žinutė ištrinta</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Gija · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Gijoje</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>neišsiųsta</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>redaguota</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2862,52 +3122,12 @@
         <translation>Šios žinutės nėra įkeltoje istorijoje</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Atmesti</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Siųsti dar kartą</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reaguoti</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Atsakyti gijoje</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopijuoti kambario nuorodą</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Kambario nuoroda nukopijuota</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Išsiųsta neužšifruota</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Išsiuntė ne nurodyta paskyra</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Siuntėjo raktai pasikeitė</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Iš nepatvirtinto įrenginio</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Iš nepatvirtinto asmens</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Autentiškumas nepatvirtintas</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2918,20 +3138,12 @@
         <translation>Trinama</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Ši reakcija slepia tekstą ir nebuvo išsiųsta</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Paveikslėlis</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Ieškoti žinutėse</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Ką reiškia šie ženklai?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2974,43 +3186,6 @@
         <translation>Tavo balsas nebuvo išsiųstas</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 pakvietė %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 pašalino %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 užblokavo %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 atblokavo %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 atšaukė kvietimą %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Paversti tekstu</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Verčiama tekstu…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Atpažinta automatiškai, gali būti klaidų</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Įrašoma… %1 s. Paliesk mikrofoną, kad išsiųstum.</translation>
     </message>
@@ -3019,40 +3194,12 @@
         <translation>Nieko nepasakyta, todėl nieko neišsiųsta.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Įrašyta į galeriją</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Nepavyko įrašyti</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Įrašyta į aplanką „Atsisiuntimai“</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Rodyti mažiau</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Rodyti daugiau</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Nepavyko įrašyti teksto kaip failo</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Bendrinti vietą</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>ištrynimas neišsiųstas</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>pataisymas neišsiųstas</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3069,50 +3216,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Tai nebelaukia išsiuntimo.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Nepavyko įkelti. Bakstelėk, kad bandytum dar kartą.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Bakstelėk, kad įkeltum</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Atverti nuorodą?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopijuoti nuorodą</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Persiųsti nuorodą</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 pakeitė rodomą vardą į %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 pašalino rodomą vardą</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 pakeitė profilio nuotrauką</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 pakeitė rodomą vardą į %2 ir profilio nuotrauką</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 pašalino rodomą vardą ir pakeitė profilio nuotrauką</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Šiame įrenginyje nerodoma. Paliesk, kad atidarytum.</translation>
     </message>
 </context>
 <context>
@@ -3970,6 +4073,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Pasirinkti failus</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3978,10 +4088,6 @@
     <message>
         <source>Thread</source>
         <translation>Gija</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Įvykis</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3999,6 +4105,33 @@
         <source>Reply in thread</source>
         <translation>Atsakyti gijoje</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Atmetama</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Trinama</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Atsakymas %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Redaguojama žinutė</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Naujas tekstas</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Įrašų nėra</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Išsiųsta neužšifruota</translation>
@@ -4024,28 +4157,16 @@
         <translation>Autentiškumas nepatvirtintas</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Atverti šį adresą?</translation>
+        <source>Saved to gallery</source>
+        <translation>Įrašyta į galeriją</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Atverti</translation>
+        <source>Could not save</source>
+        <translation>Nepavyko įrašyti</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Atverti nuorodą?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopijuoti nuorodą</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Persiųsti nuorodą</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Prisegti</translation>
+        <source>Saved to Downloads</source>
+        <translation>Įrašyta į aplanką „Atsisiuntimai“</translation>
     </message>
 </context>
 <context>

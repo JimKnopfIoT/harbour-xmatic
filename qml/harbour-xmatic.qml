@@ -523,8 +523,12 @@ ApplicationWindow {
             callNotification.body = settings.notificationPreview ? peer : ""
             callNotification.previewSummary = callNotification.summary
             callNotification.previewBody = callNotification.body
+            // The tone hangs off the category; the push rules may want none.
+            callNotification.category = audible ? "x-nemo.messaging.im" : "im.received"
             callNotification.publish()
-            ringer.play()
+            if (audible) {
+                ringer.play()
+            }
         }
 
         // Answered, declined, or the caller gave up: the ring stops with the

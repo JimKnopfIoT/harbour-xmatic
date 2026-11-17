@@ -38,6 +38,22 @@ file of theirs has been changed for this project.
 SQLite is compiled from bundled sources (`libsqlite3-sys`) instead of
 linking the device's library. SQLite itself is in the public domain.
 
+## Echo canceller (C++)
+
+Calls cancel the echo with two C++ libraries, built from their sources by
+`scripts/build-aec.sh` and linked statically:
+
+- webrtc-audio-processing 2.1 (the WebRTC audio processing module, packaged
+  by the PulseAudio project) — BSD-3-Clause, with the WebRTC patent grant.
+  It carries, and the binary contains:
+  - PFFFT (Julien Pommier, after FFTPACK by NCAR) — FFTPACK-style BSD licence
+  - RNNoise weights (Xiph.Org, Mozilla) — BSD-3-Clause
+  - Ooura FFT (Takuya Ooura) — free use, attribution on modification
+  - `spl_sqrt_floor` — public domain
+- Abseil C++ 20240722.0 — Apache-2.0
+
+The licence texts ship under `licenses/` in the package.
+
 ## All linked crates
 
 | Crate | Version | Licence |
@@ -128,7 +144,7 @@ linking the device's library. SQLite itself is in the public domain.
 | crypto-common | 0.2.2 | MIT OR Apache-2.0 |
 | ctr | 0.10.1 | MIT OR Apache-2.0 |
 | ctr | 0.9.2 | MIT OR Apache-2.0 |
-| ctutils | 0.4.2 | Apache-2.0 OR MIT |
+| ctutils | 0.4.8 | Apache-2.0 OR MIT |
 | curve25519-dalek | 5.0.0 | BSD-3-Clause |
 | curve25519-dalek-derive | 0.1.1 | MIT/Apache-2.0 |
 | darling | 0.24.1 | MIT |
@@ -347,8 +363,8 @@ linking the device's library. SQLite itself is in the public domain.
 | prost | 0.14.4 | Apache-2.0 |
 | prost-derive | 0.14.4 | Apache-2.0 |
 | quinn | 0.11.11 | MIT OR Apache-2.0 |
-| quinn-proto | 0.11.16 | MIT OR Apache-2.0 |
-| quinn-udp | 0.5.15 | MIT OR Apache-2.0 |
+| quinn-proto | 0.11.19 | MIT OR Apache-2.0 |
+| quinn-udp | 0.5.16 | MIT OR Apache-2.0 |
 | quote | 1.0.47 | MIT OR Apache-2.0 |
 | r-efi | 6.0.0 | MIT OR Apache-2.0 OR LGPL-2.1-or-later |
 | rand | 0.10.2 | MIT OR Apache-2.0 |
@@ -383,13 +399,13 @@ linking the device's library. SQLite itself is in the public domain.
 | rust-stemmers | 1.2.0 | MIT/BSD-3-Clause |
 | rustc-hash | 2.1.3 | Apache-2.0 OR MIT |
 | rustc_version | 0.4.1 | MIT OR Apache-2.0 |
-| rustix | 1.1.4 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
-| rustls | 0.23.45 | Apache-2.0 OR ISC OR MIT |
+| rustix | 1.1.6 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
+| rustls | 0.23.46 | Apache-2.0 OR ISC OR MIT |
 | rustls-native-certs | 0.8.4 | Apache-2.0 OR ISC OR MIT |
 | rustls-pki-types | 1.15.1 | MIT OR Apache-2.0 |
 | rustls-platform-verifier | 0.7.0 | MIT OR Apache-2.0 |
 | rustls-platform-verifier-android | 0.1.1 | MIT OR Apache-2.0 |
-| rustls-webpki | 0.103.15 | ISC |
+| rustls-webpki | 0.103.17 | ISC |
 | rustversion | 1.0.23 | MIT OR Apache-2.0 |
 | ryu | 1.0.23 | Apache-2.0 OR BSL-1.0 |
 | safe_arch | 0.7.4 | Zlib OR Apache-2.0 OR MIT |
@@ -462,7 +478,7 @@ linking the device's library. SQLite itself is in the public domain.
 | tinystr | 0.8.3 | Unicode-3.0 |
 | tinyvec | 1.12.0 | Zlib OR Apache-2.0 OR MIT |
 | tinyvec_macros | 0.1.1 | MIT OR Apache-2.0 OR Zlib |
-| tokio | 1.53.1 | MIT |
+| tokio | 1.54.1 | MIT |
 | tokio-macros | 2.7.1 | MIT |
 | tokio-rustls | 0.26.4 | MIT OR Apache-2.0 |
 | tokio-stream | 0.1.19 | MIT |
@@ -502,7 +518,7 @@ linking the device's library. SQLite itself is in the public domain.
 | valuable | 0.1.1 | MIT |
 | vcpkg | 0.2.15 | MIT/Apache-2.0 |
 | version_check | 0.9.5 | MIT/Apache-2.0 |
-| vodozemac | 0.11.0 | Apache-2.0 |
+| vodozemac | 0.11.2 | Apache-2.0 |
 | walkdir | 2.5.0 | Unlicense/MIT |
 | want | 0.3.1 | MIT |
 | wasi | 0.11.1+wasi-snapshot-preview1 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT |
@@ -561,9 +577,9 @@ linking the device's library. SQLite itself is in the public domain.
 | zerovec | 0.11.6 | Unicode-3.0 |
 | zerovec-derive | 0.11.3 | Unicode-3.0 |
 | zmij | 1.0.23 | MIT |
-| zstd | 0.13.3 | MIT |
-| zstd-safe | 7.2.4 | MIT OR Apache-2.0 |
-| zstd-sys | 2.0.16+zstd.1.5.7 | MIT/Apache-2.0 |
+| zstd | 0.13.5 | BSD-3-Clause |
+| zstd-safe | 7.4.1 | BSD-3-Clause |
+| zstd-sys | 2.1.3+zstd.1.5.7 | BSD-3-Clause AND BSD-2-Clause |
 | zvariant | 5.15.0 | MIT |
 | zvariant_derive | 5.15.0 | MIT |
 | zvariant_utils | 4.2.0 | MIT |

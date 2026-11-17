@@ -356,6 +356,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>See ei ole kehtiv Matrixi aadress. See näeb välja nii: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Sa ei saa iseennast keelata.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Põhjus on liiga pikk.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Matrixi aadress näeb välja nii: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Põhjus (valikuline)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Inimene ei saa enam sellesse tuppa siseneda. Kui ta on praegu liige, eemaldatakse ta. Kõik toas näevad keeldu ja selle põhjust.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Keela kedagi…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Keelatud inimesed</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Sinu roll selles toas ei luba keelata ega keeldu tühistada. Loend on ainult lugemiseks.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Põhjus: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Keelas %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Kedagi pole keelatud</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -448,6 +505,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Liitumised, kutsed, eemaldamised ja blokeerimised kuvatakse alati.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Teavitused</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Teavitusreeglid</translation>
     </message>
 </context>
 <context>
@@ -1420,6 +1485,10 @@
         <source>The people in this room show up here.</source>
         <translation>Selle toa inimesed ilmuvad siia.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Keela…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1648,6 +1717,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Kõne</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 liitus</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 lahkus</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 kutsus kasutaja %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 eemaldas kasutaja %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 keelas kasutaja %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 tühistas kasutaja %2 keelu</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 võttis tagasi kutse kasutajale %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 keeldus kutsest</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 palus liituda</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 muutis liikmesust</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 muutis oma profiilipilti</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 muutis kuvanime nimeks %2 ja profiilipilti</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 eemaldas kuvanime ja muutis profiilipilti</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 muutis oma kuvatava nime: %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 eemaldas oma kuvatava nime</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Ava link?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopeeri link</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Edasta link</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Loobu</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Kustuta</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kinnita üles</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vasta lõimes</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Saada uuesti</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Salvesta</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Teisenda tekstiks</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopeeri</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Edasta</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Muuda</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reageeri</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Vasta</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Rohkem…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Tsiteeritud sõnumit ei saa laadida: seda pole enam olemas või sul pole lubatud seda näha.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Selles seadmes ei kuvata. Puuduta avamiseks.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Laadimine ebaõnnestus. Puuduta, et uuesti proovida.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Puuduta laadimiseks</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Häälsõnum</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Tekstiks teisendamine…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Automaatselt tuvastatud, võib sisaldada vigu</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Näita vähem</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Näita rohkem</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Mida need märgid tähendavad?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Lõim · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Lõimes</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>See reaktsioon peidab teksti ja seda ei saadetud</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>saatmata</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>kustutamine saatmata</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>muutmine saatmata</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>muudetud</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1675,6 +1949,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Teine pool saab kutse ja vestlus ilmub kohe sinu nimekirja. Sõnumid on algusest peale krüptitud.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Teavitusreeglid</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Otsesõnumid</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Grupisõnumid</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Sinu mainimised</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Kogu toa mainimised</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Kutsed</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Kõned</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Väljas</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Server keeldus muudatusest: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Helita</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Heliga</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Salvestatud sinu kontole, nii et kõik kliendid järgivad neid. Heliga heliseb, Helita näitab teavitust ja vilgutab LED-i, Väljas suurendab ainult toa lugemata sõnumite loendurit. Tuba, millel on oma üksikasjades oma seade, jääb selle juurde. Väljas olekus mainimine loetakse oma toa tavaliseks sõnumiks.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Ootan serverit…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Osaliselt erinevalt seatud. Vali tase, et seda kõikjal rakendada.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Reegleid ei õnnestunud serverist lugeda: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Server ei vastanud õigel ajal.</translation>
     </message>
 </context>
 <context>
@@ -2741,89 +3082,8 @@
         <translation>Vestluse algus</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Kõne</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 liitus</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 lahkus</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 keeldus kutsest</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 palus liituda</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 muutis liikmesust</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopeeri</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Vasta</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Salvesta</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Edasta</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Muuda</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Kinnita üles</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Kustuta</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Rohkem…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Tsiteeritud sõnumit ei saa laadida: seda pole enam olemas või sul pole lubatud seda näha.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Häälsõnum</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Sõnum kustutatud</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Lõim · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Lõimes</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>saatmata</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>muudetud</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2858,52 +3118,12 @@
         <translation>Seda sõnumit pole laaditud ajaloos</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Loobu</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Saada uuesti</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reageeri</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Vasta lõimes</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopeeri ruumi link</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Ruumi link on kopeeritud</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Saadetud krüptimata</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Ei saatnud see konto, mida nimetatakse</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Saatja võtmed muutusid</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Kinnitamata seadmest</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Kinnitamata inimeselt</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Ehtsus kinnitamata</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2914,20 +3134,12 @@
         <translation>Kustutan</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>See reaktsioon peidab teksti ja seda ei saadetud</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Pilt</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Otsi sõnumeid</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Mida need märgid tähendavad?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2970,43 +3182,6 @@
         <translation>Sinu häält ei saadetud</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 kutsus kasutaja %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 eemaldas kasutaja %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 keelas kasutaja %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 tühistas kasutaja %2 keelu</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 võttis tagasi kutse kasutajale %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Teisenda tekstiks</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Tekstiks teisendamine…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Automaatselt tuvastatud, võib sisaldada vigu</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Salvestan… %1 s. Saatmiseks puuduta mikrofoni.</translation>
     </message>
@@ -3015,40 +3190,12 @@
         <translation>Midagi ei öeldud, seega midagi ei saadetud.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Galeriisse salvestatud</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Salvestamine ebaõnnestus</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Salvestatud kausta Allalaadimised</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Näita vähem</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Näita rohkem</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Teksti ei õnnestunud failina kirjutada</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Jaga asukohta</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>kustutamine saatmata</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>muutmine saatmata</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3065,50 +3212,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>See ei oota enam saatmist.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Laadimine ebaõnnestus. Puuduta, et uuesti proovida.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Puuduta laadimiseks</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Ava link?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopeeri link</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Edasta link</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 muutis oma kuvatava nime: %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 eemaldas oma kuvatava nime</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 muutis oma profiilipilti</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 muutis kuvanime nimeks %2 ja profiilipilti</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 eemaldas kuvanime ja muutis profiilipilti</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Selles seadmes ei kuvata. Puuduta avamiseks.</translation>
     </message>
 </context>
 <context>
@@ -3965,6 +4068,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Vali failid</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3973,10 +4083,6 @@
     <message>
         <source>Thread</source>
         <translation>Lõim</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Sündmus</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3994,6 +4100,33 @@
         <source>Reply in thread</source>
         <translation>Vasta lõimes</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Loobun</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Kustutan</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Vastus kasutajale %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Muudan sõnumit</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Uus tekst</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Postitusi pole</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Saadetud krüptimata</translation>
@@ -4019,28 +4152,16 @@
         <translation>Ehtsus kinnitamata</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Kas avada see aadress?</translation>
+        <source>Saved to gallery</source>
+        <translation>Galeriisse salvestatud</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Ava</translation>
+        <source>Could not save</source>
+        <translation>Salvestamine ebaõnnestus</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Ava link?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopeeri link</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Edasta link</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Kinnita üles</translation>
+        <source>Saved to Downloads</source>
+        <translation>Salvestatud kausta Allalaadimised</translation>
     </message>
 </context>
 <context>

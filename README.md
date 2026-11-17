@@ -144,11 +144,8 @@ its colours from the one you use.
   nothing: no address is created and your homeserver is told nothing.
 * Spoilers are marked rather than hidden: the text renderer available here
   cannot hide a run of text.
-* **A thread shows attachments by kind, not as pictures.** Answering in one and
-  starting one work, and thread replies stay in the room's timeline as well,
-  but inside the thread view a picture is a line saying there is a picture —
-  tap the message in the room to open it. Polls and reactions likewise live in
-  the room view only.
+* **A thread has no locations, polls or voice messages of its own.** Everything
+  else works there as in the room; those three are for the room itself.
 * **A space badge counts its own rooms.** Unread messages in a sub-space are
   not rolled up into the parent: a space whose traffic is all one level down
   shows how many sub-spaces carry something, not how many messages wait.
@@ -169,6 +166,8 @@ its colours from the one you use.
   `gstreamer1.0-devel`, `gstreamer1.0-plugins-base-devel` and
   `gstreamer1.0-plugins-bad-devel` installed into it
 * Rust via rustup (version pinned in `rust-toolchain.toml`) and `cbindgen`
+* cmake, meson, ninja, pkg-config and curl on the host, for the call echo
+  canceller (webrtc-audio-processing and abseil, fetched at pinned hashes)
 * A homeserver supporting Simplified Sliding Sync (MSC4186) — Synapse 1.114 or
   newer
 
@@ -209,6 +208,7 @@ rooms.
 ```sh
 cargo install cbindgen                     # once
 scripts/build-core.sh                      # cross-build the Rust core
+scripts/build-aec.sh                       # echo canceller, once per architecture
 mb2 -t SailfishOS-5.0.0.62-aarch64 build   # build the RPM
 ```
 
@@ -216,6 +216,7 @@ mb2 -t SailfishOS-5.0.0.62-aarch64 build   # build the RPM
 
 ```sh
 SFOS_RELEASE=4.6.0.13 SFOS_ARCH=armv7hl scripts/build-core.sh
+SFOS_RELEASE=4.6.0.13 SFOS_ARCH=armv7hl scripts/build-aec.sh
 mb2 -t SailfishOS-4.6.0.13-armv7hl build
 ```
 
@@ -256,10 +257,10 @@ streams map one-to-one onto `QAbstractListModel` insert/remove/change signals �
 that mapping is the whole reason for this design. The FFI surface is six C
 functions; everything else is a JSON message type.
 
-LLM assisted development
-
 ## Licence
 
 Copyright 2026 JimKnopfIoT. Apache-2.0, matching matrix-rust-sdk. The Rust core
 links a number of upstream crates, each under its own licence - mostly
 permissive, a few weak copyleft (MPL-2.0); `THIRD-PARTY.md` lists every one.
+
+LLM assisted development

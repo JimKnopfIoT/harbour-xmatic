@@ -67,6 +67,10 @@ pub async fn load(client: &Client, room_id: &str) -> Result<Vec<Value>, String> 
                     .as_deref()
                     .map(|own| levels.user_can_kick_user(own, member.user_id()))
                     .unwrap_or(false);
+            let can_ban = !is_self
+                && own_id
+                    .as_deref()
+                    .is_some_and(|own| levels.user_can_ban_user(own, member.user_id()));
             // The sort key falls back to the id so nameless members still land
             // in a stable place.
             let key = if name.is_empty() { user_id.clone() } else { name.clone() };
@@ -77,6 +81,7 @@ pub async fn load(client: &Client, room_id: &str) -> Result<Vec<Value>, String> 
                 "power": level,
                 "isSelf": is_self,
                 "canRemove": can_remove,
+                "canBan": can_ban,
                 // The picture itself is fetched by the UI on demand; this is
                 // only where to find it.
                 "avatar": member.avatar_url().map(|url| url.to_string()),
@@ -388,24 +393,6 @@ pub async fn profile(client: &Client, room_id: &str, user_id: &str) -> Result<Va
         "canSetPower": can_set_power,
         "ownPower": own_power,
     }))
-}
-
-/// Bans a member from a room.
-pub async fn ban(client: &Client, room_id: &str, user_id: &str) -> Result<(), String> {
-    let room = known_room(client, room_id)?;
-    let user = parsed_user(user_id)?;
-    room.ban_user(user, None)
-        .await
-        .map_err(|error| format!("could not ban the member: {}", scrub_ids(&error.to_string())))
-}
-
-/// Lifts a ban.
-pub async fn unban(client: &Client, room_id: &str, user_id: &str) -> Result<(), String> {
-    let room = known_room(client, room_id)?;
-    let user = parsed_user(user_id)?;
-    room.unban_user(user, None)
-        .await
-        .map_err(|error| format!("could not lift the ban: {}", scrub_ids(&error.to_string())))
 }
 
 /// Sets a member's power level, any integer up to one's own (negative too).

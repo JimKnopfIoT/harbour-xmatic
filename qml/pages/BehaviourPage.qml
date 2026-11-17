@@ -72,6 +72,17 @@ Page {
             }
 
             SectionHeader {
+                text: qsTr("Notifications")
+            }
+
+            // Which kinds notify, and which with a tone, is the account's push rules.
+            WrapButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                label: qsTr("Notification rules")
+                onClicked: pageStack.push(Qt.resolvedUrl("NotificationRulesPage.qml"))
+            }
+
+            SectionHeader {
                 text: qsTr("Reading")
             }
 

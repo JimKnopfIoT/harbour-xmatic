@@ -149,12 +149,36 @@ impl TimelineHandle {
             return Ok(Paginated::Start);
         }
 
-        let reached_start = self
-            .timeline
-            .paginate_backwards(PAGE_SIZE)
-            .await
-            .map_err(|error| format!("could not load older messages: {error}"))?;
+        let reached_start = if self.thread_root.is_empty() {
+            self.timeline
+                .paginate_backwards(PAGE_SIZE)
+                .await
+                .map_err(|error| format!("could not load older messages: {error}"))?
+        } else {
+            paginate_thread(&self.timeline, &self.thread_root).await?
+        };
         Ok(if reached_start { Paginated::Start } else { Paginated::More })
+    }
+
+    /// `paginate` for a thread, on this view's tasks: a close ends it, answered as
+    /// "no thread is open".
+    pub async fn paginate_thread_tracked(&self) -> Result<Paginated, String> {
+        if self.thread_root.is_empty() {
+            return self.paginate().await;
+        }
+        let (done, answer) = tokio::sync::oneshot::channel();
+        let (timeline, root) = (self.timeline.clone(), self.thread_root.clone());
+        self.tasks
+            .spawn_tracked(async move {
+                let _ = done.send(paginate_thread(&timeline, &root).await);
+            })
+            .await;
+        match answer.await {
+            Ok(Ok(true)) => Ok(Paginated::Start),
+            Ok(Ok(false)) => Ok(Paginated::More),
+            Ok(Err(message)) => Err(message),
+            Err(_) => Err("no thread is open".to_owned()),
+        }
     }
 
     /// Loads newer events into a slice, answers whether the live edge was reached.
@@ -581,14 +605,15 @@ fn media_info(message_type: &MessageType) -> Option<Value> {
 
 /// The event id if this is a reply whose quote still has to be asked for:
 /// `Unavailable` was never requested, `Error` failed and is worth one more try.
-fn reply_needing_details(item: &TimelineItem) -> Option<OwnedEventId> {
+fn reply_needing_details(item: &TimelineItem, in_thread: bool) -> Option<OwnedEventId> {
     let event = item.as_event()?;
     let TimelineItemContent::MsgLike(content) = event.content() else {
         return None;
     };
     // The SDK marks every threaded event a reply to the previous one, for clients
-    // without threads. In the room that is one fetch per reply for nothing.
-    if content.thread_root.is_some() {
+    // without threads. In the room that is one fetch per reply for nothing; a
+    // thread's own view keeps only the real replies.
+    if content.thread_root.is_some() && !in_thread {
         return None;
     }
     let in_reply_to = content.in_reply_to.as_ref()?;
@@ -603,15 +628,15 @@ fn reply_needing_details(item: &TimelineItem) -> Option<OwnedEventId> {
 
 /// Event ids of the reply rows in `diff` whose quoted message was never loaded,
 /// so their details can be asked for.
-fn replies_needing_details(diff: &VectorDiff<Arc<TimelineItem>>) -> Vec<OwnedEventId> {
+fn replies_needing_details(diff: &VectorDiff<Arc<TimelineItem>>, in_thread: bool) -> Vec<OwnedEventId> {
     match diff {
         VectorDiff::Append { values } | VectorDiff::Reset { values } => {
-            values.iter().filter_map(|item| reply_needing_details(item)).collect()
+            values.iter().filter_map(|item| reply_needing_details(item, in_thread)).collect()
         }
         VectorDiff::PushBack { value }
         | VectorDiff::PushFront { value }
         | VectorDiff::Insert { value, .. }
-        | VectorDiff::Set { value, .. } => reply_needing_details(value).into_iter().collect(),
+        | VectorDiff::Set { value, .. } => reply_needing_details(value, in_thread).into_iter().collect(),
         _ => Vec::new(),
     }
 }
@@ -1647,7 +1672,7 @@ pub async fn start(
         // The initial batch arrived as a reset before this task started and needs the
         // same treatment: a reopened room's reply rows never pass the stream.
         request_reply_details(
-            initial.iter().filter_map(|item| reply_needing_details(item)).collect(),
+            initial.iter().filter_map(|item| reply_needing_details(item, false)).collect(),
             &mut requested,
             &detail_source,
             &sink,
@@ -1700,7 +1725,7 @@ pub async fn start(
             // `Unavailable` means "not requested", and nothing fetches them by itself -
             // without this the quote box stayed empty for good.
             request_reply_details(
-                diffs.iter().flat_map(replies_needing_details).collect(),
+                diffs.iter().flat_map(|diff| replies_needing_details(diff, false)).collect(),
                 &mut requested,
                 &detail_source,
                 &sink,
@@ -1756,6 +1781,67 @@ pub async fn build_thread(client: &Client, room_id: &str, root: &str) -> Result<
 }
 
 /// The local half of a thread, as `start` is for a room view.
+/// One pagination per thread: 0.19 gives every caller its own status, so two on one
+/// thread walk the same gaps twice. Another thread's cache has gaps of its own.
+static THREAD_PAGINATION: std::sync::Mutex<Vec<(String, std::sync::Weak<tokio::sync::Mutex<()>>)>> =
+    std::sync::Mutex::new(Vec::new());
+/// `run_backwards_until` has no bound of its own, and every gap is a request.
+const THREAD_PAGINATION_LIMIT: std::time::Duration = std::time::Duration::from_secs(20);
+const THREAD_PAGINATION_TIMEOUT: &str = "could not load the thread: the server did not answer in time";
+
+/// The lock of one thread's pagination, alive while somebody holds or waits for it.
+fn thread_pagination_lock(root: &str) -> Arc<tokio::sync::Mutex<()>> {
+    let mut locks = THREAD_PAGINATION.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    locks.retain(|(_, lock)| lock.strong_count() > 0);
+    if let Some(lock) = locks.iter().find(|(key, _)| key == root).and_then(|(_, lock)| lock.upgrade()) {
+        return lock;
+    }
+    let lock = Arc::new(tokio::sync::Mutex::new(()));
+    locks.push((root.to_owned(), Arc::downgrade(&lock)));
+    lock
+}
+
+/// `work` under `lock`, the wait for the lock inside the deadline. A timeout is an error.
+async fn bounded_one_at_a_time<T>(
+    lock: &tokio::sync::Mutex<()>,
+    limit: std::time::Duration,
+    work: impl std::future::Future<Output = Result<T, String>>,
+) -> Result<T, String> {
+    let held = async {
+        let _one = lock.lock().await;
+        work.await
+    };
+    tokio::time::timeout(limit, held)
+        .await
+        .unwrap_or_else(|_| Err(THREAD_PAGINATION_TIMEOUT.to_owned()))
+}
+
+/// A thread's history the way its cache means it. `Timeline::paginate_backwards`
+/// runs one stored chunk for a thread, often a single reaction; this runs until a page.
+async fn paginate_thread(
+    timeline: &matrix_sdk_ui::timeline::Timeline,
+    root: &str,
+) -> Result<bool, String> {
+    let root_id = EventId::parse(root).map_err(|_| "not an event identifier".to_owned())?;
+    let room = timeline.room();
+    let lock = thread_pagination_lock(root);
+    bounded_one_at_a_time(&lock, THREAD_PAGINATION_LIMIT, async {
+        let (cache, _handles) = room
+            .client()
+            .event_cache()
+            .thread(room.room_id(), &root_id)
+            .await
+            .map_err(|error| format!("could not load the thread: {error}"))?;
+        let pagination = cache.pagination();
+        pagination
+            .run_backwards_until(PAGE_SIZE)
+            .await
+            .map(|outcome| outcome.reached_start)
+            .map_err(|error| format!("could not load the thread: {error}"))
+    })
+    .await
+}
+
 pub async fn start_thread(
     client: &Client,
     room_id: &str,
@@ -1791,14 +1877,13 @@ pub async fn start_thread(
     let token_owned = token.to_owned();
     let task_tasks = detail_tasks.clone();
     let detail_source = timeline.clone();
-    let initial_empty = initial.is_empty();
     let error_sink = sink.clone();
     let resync = Arc::new(tokio::sync::Notify::new());
     let resync_wait = resync.clone();
     let task = tokio::spawn(async move {
         let mut requested: HashMap<OwnedEventId, u8> = HashMap::new();
         request_reply_details(
-            initial.iter().filter_map(|item| reply_needing_details(item)).collect(),
+            initial.iter().filter_map(|item| reply_needing_details(item, true)).collect(),
             &mut requested,
             &detail_source,
             &sink,
@@ -1837,7 +1922,7 @@ pub async fn start_thread(
                 }),
             ));
             request_reply_details(
-                diffs.iter().flat_map(replies_needing_details).collect(),
+                diffs.iter().flat_map(|diff| replies_needing_details(diff, true)).collect(),
                 &mut requested,
                 &detail_source,
                 &sink,
@@ -1847,21 +1932,30 @@ pub async fn start_thread(
         }
     });
 
-    // A thread not in the cache arrives empty; one page fills it. A failure has
-    // to be reported or the view sits on "loading" for good.
-    if initial_empty {
+    // The cache opens on its last chunk only - empty, or a single reply - so one
+    // page is always asked for. A failure has to be reported or the view sits on
+    // "loading" for good.
+    {
         let timeline = timeline.clone();
         let root_owned = root.to_owned();
+        // The open's token: a reopen of the same root must not take this answer.
+        let token_owned = token.to_owned();
         detail_tasks.spawn_tracked(async move {
-            if let Err(error) = timeline.paginate_backwards(PAGE_SIZE).await {
-                error_sink.emit(event(
-                    "thread.error",
-                    json!({
-                        "root": root_owned,
-                        "message": scrub_ids(&error.to_string()),
-                    }),
-                ));
-            }
+            let at_start = match paginate_thread(&timeline, &root_owned).await {
+                Ok(at_start) => at_start,
+                Err(message) => {
+                    error_sink.emit(event(
+                        "thread.error",
+                        json!({ "root": root_owned, "token": token_owned, "message": scrub_ids(&message) }),
+                    ));
+                    return;
+                }
+            };
+            // At the start, an empty thread stays empty: the page says so.
+            error_sink.emit(event(
+                "thread.paged",
+                json!({ "root": root_owned, "token": token_owned, "atStart": at_start }),
+            ));
         })
         .await;
     }
@@ -2272,8 +2366,46 @@ fn edited_message(kind: EditedKind, body: String, formatted: Option<String>) -> 
 
 #[cfg(test)]
 mod tests {
-    use super::{edited_message, EditedKind, TimelineTasks};
+    use super::{
+        bounded_one_at_a_time, edited_message, thread_pagination_lock, EditedKind, TimelineTasks,
+        THREAD_PAGINATION_TIMEOUT,
+    };
     use matrix_sdk::ruma::events::room::message::MessageType;
+    use std::sync::Arc;
+    use std::time::Duration;
+
+    #[test]
+    fn one_thread_shares_its_lock_and_another_has_its_own() {
+        let first = thread_pagination_lock("$test-root-a");
+        let again = thread_pagination_lock("$test-root-a");
+        let other = thread_pagination_lock("$test-root-b");
+        assert!(Arc::ptr_eq(&first, &again));
+        assert!(!Arc::ptr_eq(&first, &other));
+    }
+
+    #[tokio::test]
+    async fn waiting_for_a_held_lock_runs_out_as_an_error() {
+        let lock = tokio::sync::Mutex::new(());
+        let _held = lock.lock().await;
+        let outcome =
+            bounded_one_at_a_time(&lock, Duration::from_millis(20), async { Ok::<bool, String>(true) })
+                .await;
+        assert_eq!(outcome, Err(THREAD_PAGINATION_TIMEOUT.to_owned()));
+    }
+
+    #[tokio::test]
+    async fn slow_work_runs_out_as_an_error_and_a_free_lock_does_not_wait() {
+        let lock = tokio::sync::Mutex::new(());
+        let slow = bounded_one_at_a_time(&lock, Duration::from_millis(20), async {
+            std::future::pending::<Result<bool, String>>().await
+        })
+        .await;
+        assert_eq!(slow, Err(THREAD_PAGINATION_TIMEOUT.to_owned()));
+        let quick =
+            bounded_one_at_a_time(&lock, Duration::from_millis(20), async { Ok::<bool, String>(false) })
+                .await;
+        assert_eq!(quick, Ok(false));
+    }
 
     #[tokio::test]
     async fn a_drop_aborts_every_task_and_starts_none_after() {

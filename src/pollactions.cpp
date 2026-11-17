@@ -18,19 +18,26 @@ void PollActions::create(const QString &question, const QStringList &answers,
     emit commandReady(QStringLiteral("poll.start"), arguments);
 }
 
-void PollActions::vote(const QString &eventId, const QStringList &answers)
+void PollActions::vote(const QString &eventId, const QStringList &answers,
+                       const QString &threadRoot)
 {
     QJsonObject arguments;
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("answers"), QJsonArray::fromStringList(answers));
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     emit commandReady(QStringLiteral("poll.vote"), arguments);
 }
 
-void PollActions::end(const QString &eventId, const QString &text)
+void PollActions::end(const QString &eventId, const QString &text, const QString &threadRoot)
 {
     QJsonObject arguments;
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("text"), text);
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     emit commandReady(QStringLiteral("poll.end"), arguments);
 }
 

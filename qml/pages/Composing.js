@@ -12,3 +12,11 @@ function pendingUnverified(users, matrix) {
     }
     return out
 }
+
+/// The page a mention for this room goes to: the topmost room or thread page of
+/// it with a composer. Each such page asks, and only the one named acts.
+function mentionHost(pageStack, roomId) {
+    return pageStack.find(function(page) {
+        return page.takesMentions === true && page.roomId === roomId
+    })
+}

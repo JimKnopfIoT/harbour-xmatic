@@ -17,6 +17,7 @@ public:
         PowerRole,
         IsSelfRole,
         CanRemoveRole,
+        CanBanRole,
         AvatarRole,
     };
 

@@ -14,6 +14,7 @@ QHash<int, QByteArray> MemberModel::roleNames() const
     names.insert(PowerRole, "power");
     names.insert(IsSelfRole, "isSelf");
     names.insert(CanRemoveRole, "canRemove");
+    names.insert(CanBanRole, "canBan");
     names.insert(AvatarRole, "avatar");
     return names;
 }

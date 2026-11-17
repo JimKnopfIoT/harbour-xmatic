@@ -22,10 +22,12 @@ public:
 
     /// Votes, or changes the vote: `answers` is the whole selection, because
     /// only the latest response per person counts.
-    Q_INVOKABLE void vote(const QString &eventId, const QStringList &answers);
+    Q_INVOKABLE void vote(const QString &eventId, const QStringList &answers,
+                          const QString &threadRoot = QString());
 
     /// Ends a poll. `text` is what clients without poll support show.
-    Q_INVOKABLE void end(const QString &eventId, const QString &text);
+    Q_INVOKABLE void end(const QString &eventId, const QString &text,
+                         const QString &threadRoot = QString());
 
     /// The core refused a command; `command` is which of the three.
     void reportFailure(const QString &command);

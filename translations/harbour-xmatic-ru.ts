@@ -357,6 +357,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Это некорректный адрес Matrix. Он выглядит так: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Ты не можешь заблокировать самого себя.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Причина слишком длинная.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Адрес Matrix выглядит так: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Причина (необязательно)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Этот человек больше не сможет войти в эту комнату. Если он сейчас участник, его удалят. Все в комнате видят блокировку и её причину.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Заблокировать кого-нибудь…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Заблокированные</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Твоя роль в этой комнате не позволяет блокировать и снимать блокировку. Список доступен только для чтения.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Причина: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Заблокировал(а): %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Никто не заблокирован</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -449,6 +506,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Входы, приглашения, удаления и блокировки показываются всегда.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Уведомления</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Правила уведомлений</translation>
     </message>
 </context>
 <context>
@@ -1422,6 +1487,10 @@
         <source>The people in this room show up here.</source>
         <translation>Люди в этой комнате появляются здесь.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Заблокировать…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1650,6 +1719,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Звонок</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 вошёл</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 вышел</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 пригласил %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 удалил %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 заблокировал %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 разблокировал %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 отозвал приглашение для %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 отклонил приглашение</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 попросил о входе</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 изменил участие</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 сменил(а) фото профиля</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 изменил(а) отображаемое имя на %2 и фото профиля</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 удалил(а) отображаемое имя и изменил(а) фото профиля</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 сменил(а) отображаемое имя на %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 удалил(а) отображаемое имя</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Открыть ссылку?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Копировать ссылку</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Переслать ссылку</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Отменить</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Закрепить</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Ответить в теме</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Отправить снова</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Преобразовать в текст</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Копировать</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Переслать</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Изменить</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Отреагировать</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Ответить</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Ещё…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Цитируемое сообщение не удалось загрузить: его больше нет или у тебя нет прав его видеть.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Не показывается на этом устройстве. Нажми, чтобы открыть.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Не удалось загрузить. Нажми, чтобы попробовать снова.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Нажми, чтобы загрузить</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Голосовое сообщение</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Преобразование в текст…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Распознано автоматически, возможны ошибки</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Свернуть</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Показать больше</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Что означают эти знаки?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Тема · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>В теме</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Эта реакция скрывает текст и не была отправлена</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>не отправлено</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>удаление не отправлено</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>правка не отправлена</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>изменено</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1677,6 +1951,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Другая сторона получит приглашение, а чат сразу появится в твоём списке. Сообщения шифруются с самого начала.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Правила уведомлений</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Личные сообщения</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Групповые сообщения</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Упоминания тебя</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Упоминания всей комнаты</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Приглашения</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Звонки</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Выкл.</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Сервер отклонил изменение: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Без звука</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Со звуком</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Хранятся в твоей учётной записи, поэтому им следует каждый клиент. «Со звуком» звенит, «Без звука» показывает уведомление и мигает светодиодом, «Выкл.» только увеличивает счётчик непрочитанных в комнате. Комната со своей настройкой в сведениях сохраняет её. Упоминание с настройкой «Выкл.» считается обычным сообщением своей комнаты.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Ожидание сервера…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Частично настроено по-разному. Выбери уровень, чтобы применить его везде.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Не удалось прочитать правила с сервера: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Сервер не ответил вовремя.</translation>
     </message>
 </context>
 <context>
@@ -2745,89 +3086,8 @@
         <translation>Начало беседы</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Звонок</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 вошёл</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 вышел</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 отклонил приглашение</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 попросил о входе</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 изменил участие</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Копировать</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Ответить</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Сохранить</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Переслать</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Изменить</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Закрепить</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Удалить</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Ещё…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Цитируемое сообщение не удалось загрузить: его больше нет или у тебя нет прав его видеть.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Голосовое сообщение</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Сообщение удалено</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Тема · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>В теме</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>не отправлено</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>изменено</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2862,52 +3122,12 @@
         <translation>Этого сообщения нет в загруженной истории</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Отменить</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Отправить снова</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Отреагировать</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Ответить в теме</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Копировать ссылку на комнату</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Ссылка на комнату скопирована</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Отправлено без шифрования</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Отправлено не тем аккаунтом, который указан</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Ключи отправителя изменились</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>С непроверенного устройства</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>От непроверённого человека</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Подлинность не подтверждена</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2918,20 +3138,12 @@
         <translation>Удаление</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Эта реакция скрывает текст и не была отправлена</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Изображение</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Искать в сообщениях</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Что означают эти знаки?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2974,43 +3186,6 @@
         <translation>Твой голос не был отправлен</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 пригласил %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 удалил %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 заблокировал %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 разблокировал %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 отозвал приглашение для %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Преобразовать в текст</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Преобразование в текст…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Распознано автоматически, возможны ошибки</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Запись… %1 с. Нажми на микрофон, чтобы отправить.</translation>
     </message>
@@ -3019,40 +3194,12 @@
         <translation>Ничего не было сказано, поэтому ничего не отправлено.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Сохранено в галерею</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Не удалось сохранить</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Сохранено в «Загрузки»</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Свернуть</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Показать больше</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Не удалось записать текст в файл</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Поделиться местоположением</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>удаление не отправлено</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>правка не отправлена</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3069,50 +3216,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Это больше не ждёт отправки.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Не удалось загрузить. Нажми, чтобы попробовать снова.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Нажми, чтобы загрузить</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Открыть ссылку?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Копировать ссылку</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Переслать ссылку</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 сменил(а) отображаемое имя на %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 удалил(а) отображаемое имя</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 сменил(а) фото профиля</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 изменил(а) отображаемое имя на %2 и фото профиля</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 удалил(а) отображаемое имя и изменил(а) фото профиля</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Не показывается на этом устройстве. Нажми, чтобы открыть.</translation>
     </message>
 </context>
 <context>
@@ -3970,6 +4073,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Выбрать файлы</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3978,10 +4088,6 @@
     <message>
         <source>Thread</source>
         <translation>Тема</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Событие</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3999,6 +4105,33 @@
         <source>Reply in thread</source>
         <translation>Ответить в теме</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Отклонение</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Удаление</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Ответ %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Изменение сообщения</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Новый текст</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Нет сообщений</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Отправлено без шифрования</translation>
@@ -4024,28 +4157,16 @@
         <translation>Подлинность не подтверждена</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Открыть этот адрес?</translation>
+        <source>Saved to gallery</source>
+        <translation>Сохранено в галерею</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Открыть</translation>
+        <source>Could not save</source>
+        <translation>Не удалось сохранить</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Открыть ссылку?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Копировать ссылку</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Переслать ссылку</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Закрепить</translation>
+        <source>Saved to Downloads</source>
+        <translation>Сохранено в «Загрузки»</translation>
     </message>
 </context>
 <context>

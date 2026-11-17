@@ -357,6 +357,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Toto není platná adresa Matrix. Vypadá takto: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Nemůžeš zablokovat sám sebe.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Důvod je příliš dlouhý.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Adresa Matrix vypadá takto: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Důvod (nepovinné)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Tato osoba už nebude moci vstoupit do této místnosti. Pokud je nyní členem, bude odebrána. Všichni v místnosti uvidí blokaci a její důvod.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Zablokovat někoho…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Zablokované osoby</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Tvoje role v této místnosti nedovoluje blokovat ani rušit blokace. Seznam je jen pro čtení.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Důvod: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Zablokováno uživatelem %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Nikdo není zablokován</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -449,6 +506,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Příchody, pozvánky, odebrání a zákazy se zobrazují vždy.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Oznámení</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Pravidla oznámení</translation>
     </message>
 </context>
 <context>
@@ -1422,6 +1487,10 @@
         <source>The people in this room show up here.</source>
         <translation>Lidé v této místnosti se objeví tady.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Zablokovat…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1650,6 +1719,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Hovor</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 vstoupil</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 odešel</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 pozval %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 odebral %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 zablokoval %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 odblokoval %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 zrušil pozvánku pro %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 odmítl pozvání</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 požádal o vstup</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 změnil členství</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 změnil(a) profilový obrázek</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 změnil zobrazované jméno na %2 a profilový obrázek</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 odstranil zobrazované jméno a změnil profilový obrázek</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 změnil(a) zobrazované jméno na %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 odstranil(a) zobrazované jméno</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Otevřít odkaz?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopírovat odkaz</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Přeposlat odkaz</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Zahodit</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Připnout</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Odpovědět ve vlákně</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Odeslat znovu</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Uložit</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Převést na text</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopírovat</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Přeposlat</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Upravit</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagovat</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Odpovědět</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Více…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Citovanou zprávu nelze načíst: už neexistuje, nebo ji nesmíš vidět.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Na tomto zařízení se nezobrazuje. Klepnutím otevřeš.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Nepodařilo se načíst. Klepni pro nový pokus.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Klepni pro načtení</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Hlasová zpráva</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Převádí se na text…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Rozpoznáno automaticky, může obsahovat chyby</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Zobrazit méně</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Zobrazit více</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Co znamenají tyto značky?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Vlákno · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Ve vlákně</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Tato reakce skrývá text a nebyla odeslána</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>neodesláno</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>smazání neodesláno</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>úprava neodeslána</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>upraveno</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1677,6 +1951,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Druhá strana dostane pozvání a rozhovor se hned objeví ve tvém seznamu. Zprávy jsou šifrované od začátku.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Pravidla oznámení</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Přímé zprávy</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Skupinové zprávy</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Zmínky o tobě</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Zmínky celé místnosti</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Pozvánky</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Hovory</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Vypnuto</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Server změnu odmítl: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Bez zvuku</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Se zvukem</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Uložena ve tvém účtu, takže se jimi řídí každý klient. Se zvukem zazvoní, Bez zvuku zobrazí oznámení a rozbliká LED, Vypnuto jen zvýší počítadlo nepřečtených v místnosti. Místnost s vlastním nastavením v podrobnostech si ho ponechá. Zmínka nastavená na Vypnuto se počítá jako běžná zpráva své místnosti.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Čekám na server…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Zčásti nastaveno různě. Vyber úroveň, aby platila všude.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Pravidla se nepodařilo načíst ze serveru: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Server neodpověděl včas.</translation>
     </message>
 </context>
 <context>
@@ -2745,89 +3086,8 @@
         <translation>Začátek rozhovoru</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Hovor</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 vstoupil</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 odešel</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 odmítl pozvání</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 požádal o vstup</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 změnil členství</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopírovat</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Odpovědět</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Uložit</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Přeposlat</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Upravit</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Připnout</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Smazat</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Více…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Citovanou zprávu nelze načíst: už neexistuje, nebo ji nesmíš vidět.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Hlasová zpráva</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Zpráva smazána</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Vlákno · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Ve vlákně</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>neodesláno</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>upraveno</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2862,52 +3122,12 @@
         <translation>Tato zpráva není v načtené historii</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Zahodit</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Odeslat znovu</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagovat</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Odpovědět ve vlákně</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopírovat odkaz na místnost</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Odkaz na místnost zkopírován</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Odesláno nešifrovaně</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Neodeslal to účet, který je uveden</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Klíče odesílatele se změnily</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Z neověřeného zařízení</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Od neověřené osoby</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Pravost nepotvrzena</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2918,20 +3138,12 @@
         <translation>Maže se</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Tato reakce skrývá text a nebyla odeslána</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Obrázek</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Hledat ve zprávách</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Co znamenají tyto značky?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2974,43 +3186,6 @@
         <translation>Tvůj hlas nebyl odeslán</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 pozval %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 odebral %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 zablokoval %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 odblokoval %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 zrušil pozvánku pro %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Převést na text</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Převádí se na text…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Rozpoznáno automaticky, může obsahovat chyby</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Nahrávám… %1 s. Klepni na mikrofon pro odeslání.</translation>
     </message>
@@ -3019,40 +3194,12 @@
         <translation>Nic nebylo řečeno, takže nic nebylo odesláno.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Uloženo do galerie</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Nepodařilo se uložit</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Uloženo do složky Stažené</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Zobrazit méně</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Zobrazit více</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Text se nepodařilo zapsat jako soubor</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Sdílet polohu</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>smazání neodesláno</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>úprava neodeslána</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3069,50 +3216,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Už to nečeká na odeslání.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Nepodařilo se načíst. Klepni pro nový pokus.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Klepni pro načtení</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Otevřít odkaz?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopírovat odkaz</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Přeposlat odkaz</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 změnil(a) zobrazované jméno na %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 odstranil(a) zobrazované jméno</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 změnil(a) profilový obrázek</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 změnil zobrazované jméno na %2 a profilový obrázek</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 odstranil zobrazované jméno a změnil profilový obrázek</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Na tomto zařízení se nezobrazuje. Klepnutím otevřeš.</translation>
     </message>
 </context>
 <context>
@@ -3970,6 +4073,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Vybrat soubory</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3978,10 +4088,6 @@
     <message>
         <source>Thread</source>
         <translation>Vlákno</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Událost</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3999,6 +4105,33 @@
         <source>Reply in thread</source>
         <translation>Odpovědět ve vlákně</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Zahazuje se</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Maže se</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Odpověď pro %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Upravuji zprávu</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Nový text</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Žádné příspěvky</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Odesláno nešifrovaně</translation>
@@ -4024,28 +4157,16 @@
         <translation>Pravost nepotvrzena</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Otevřít tuto adresu?</translation>
+        <source>Saved to gallery</source>
+        <translation>Uloženo do galerie</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Otevřít</translation>
+        <source>Could not save</source>
+        <translation>Nepodařilo se uložit</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Otevřít odkaz?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopírovat odkaz</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Přeposlat odkaz</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Připnout</translation>
+        <source>Saved to Downloads</source>
+        <translation>Uloženo do složky Stažené</translation>
     </message>
 </context>
 <context>

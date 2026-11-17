@@ -356,6 +356,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Ce n'est pas une adresse Matrix valide. Elle a la forme @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Tu ne peux pas te bannir toi-même.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Le motif est trop long.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Une adresse Matrix a la forme @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Motif (facultatif)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Cette personne ne pourra plus entrer dans ce salon. Si elle en est membre, elle en est retirée. Tout le monde dans le salon voit le bannissement et son motif.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Bannir quelqu'un…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Personnes bannies</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Ton rôle dans ce salon ne permet ni de bannir ni de lever un bannissement. La liste est en lecture seule.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Motif : %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Bannissement par %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Aucune personne bannie</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -448,6 +505,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Les arrivées, invitations, retraits et bannissements sont toujours affichés.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Notifications</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Règles de notification</translation>
     </message>
 </context>
 <context>
@@ -1420,6 +1485,10 @@
         <source>The people in this room show up here.</source>
         <translation>Les personnes de ce salon apparaissent ici.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Bannir…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1648,6 +1717,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Appel</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 a rejoint</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 est parti</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 a invité %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 a retiré %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 a banni %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 a levé le bannissement de %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 a retiré l’invitation de %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 a refusé l&apos;invitation</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 a demandé à rejoindre</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 a changé d&apos;appartenance</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 a changé sa photo de profil</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 a changé son nom d&apos;affichage en %2 et sa photo de profil</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 a supprimé son nom d&apos;affichage et changé sa photo de profil</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 a changé son nom d’affichage en %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 a supprimé son nom d’affichage</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1&#xa0;: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Ouvrir le lien ?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Copier le lien</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Transférer le lien</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Abandonner</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Épingler</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Répondre dans le fil</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Renvoyer</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Convertir en texte</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Copier</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Transférer</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Modifier</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Réagir</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Répondre</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Plus…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Le message cité ne peut pas être chargé : il n&apos;existe plus ou tu n&apos;as pas le droit de le voir.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Non affiché sur cet appareil. Touche pour ouvrir.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Impossible de charger. Touche pour réessayer.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Touche pour charger</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Message vocal</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Conversion en texte…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Reconnu automatiquement, peut contenir des erreurs</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Afficher moins</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Afficher plus</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Que signifient ces marques ?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Fil · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Dans le fil</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Cette réaction cache du texte et n&apos;a pas été envoyée</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>non envoyé</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>suppression non envoyée</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>modification non envoyée</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>modifié</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1675,6 +1949,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>L&apos;autre côté reçoit une invitation et la conversation apparaît aussitôt dans ta liste. Les messages sont chiffrés dès le départ.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Règles de notification</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Messages directs</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Messages de groupe</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Mentions de toi</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Mentions de tout le salon</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Invitations</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Appels</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Désactivé</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Le serveur a refusé la modification : %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Sans son</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Avec son</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Enregistrées dans ton compte, donc tous les clients les suivent. Avec son fait sonner, Sans son affiche une notification et fait clignoter la LED, Désactivé augmente seulement le compteur de non-lus du salon. Un salon avec son propre réglage dans ses détails le garde. Une mention réglée sur Désactivé compte comme un message ordinaire de son salon.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>En attente du serveur…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Réglé différemment en partie. Choisis un niveau pour l’appliquer partout.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Impossible de lire les règles sur le serveur : %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Le serveur n’a pas répondu à temps.</translation>
     </message>
 </context>
 <context>
@@ -2741,89 +3082,8 @@
         <translation>Début de la conversation</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Appel</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 a rejoint</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 est parti</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 a refusé l&apos;invitation</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 a demandé à rejoindre</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 a changé d&apos;appartenance</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Copier</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Répondre</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Enregistrer</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Transférer</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Modifier</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Épingler</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Plus…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Le message cité ne peut pas être chargé : il n&apos;existe plus ou tu n&apos;as pas le droit de le voir.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Message vocal</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Message supprimé</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Fil · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Dans le fil</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>non envoyé</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>modifié</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2858,52 +3118,12 @@
         <translation>Ce message n&apos;est pas dans l&apos;historique chargé</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Abandonner</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Renvoyer</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Réagir</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Répondre dans le fil</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Copier le lien du salon</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Lien du salon copié</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Envoyé en clair</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Envoyé par un autre compte que celui indiqué</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Les clés de l&apos;expéditeur ont changé</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Depuis un appareil non vérifié</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>D&apos;une personne non vérifiée</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Authenticité non confirmée</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2914,20 +3134,12 @@
         <translation>Suppression</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Cette réaction cache du texte et n&apos;a pas été envoyée</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Image</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Rechercher dans les messages</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Que signifient ces marques ?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2970,43 +3182,6 @@
         <translation>Ton vote n&apos;a pas été envoyé</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 a invité %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 a retiré %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 a banni %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 a levé le bannissement de %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 a retiré l’invitation de %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1 : %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Convertir en texte</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Conversion en texte…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Reconnu automatiquement, peut contenir des erreurs</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Enregistrement… %1 s. Touche le micro pour envoyer.</translation>
     </message>
@@ -3015,40 +3190,12 @@
         <translation>Rien n’a été dit, donc rien n’a été envoyé.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Enregistré dans la galerie</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Échec de l&apos;enregistrement</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Enregistré dans Téléchargements</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Afficher moins</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Afficher plus</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Le texte n’a pas pu être écrit dans un fichier</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Partager la position</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>suppression non envoyée</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>modification non envoyée</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3065,50 +3212,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Ce n&apos;est plus en attente d&apos;envoi.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Impossible de charger. Touche pour réessayer.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Touche pour charger</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Ouvrir le lien ?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Copier le lien</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Transférer le lien</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 a changé son nom d’affichage en %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 a supprimé son nom d’affichage</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 a changé sa photo de profil</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 a changé son nom d&apos;affichage en %2 et sa photo de profil</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 a supprimé son nom d&apos;affichage et changé sa photo de profil</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Non affiché sur cet appareil. Touche pour ouvrir.</translation>
     </message>
 </context>
 <context>
@@ -3650,7 +3753,7 @@
     </message>
     <message>
         <source>xmatic keeps trying on its own. Do not sign in again: that would start a new device and cost the keys to your encrypted history.</source>
-        <translation>xmatic continue d&apos;essayer tout seul. Ne te reconnecte pas : cela créerait un nouvel appareil et coûterait les clés de ton historique chiffré.</translation>
+        <translation>xmatic continue d&apos;essayer tout seul. Ne te reconnecte pas&#xa0;: cela créerait un nouvel appareil et coûterait les clés de ton historique chiffré.</translation>
     </message>
     <message>
         <source>Try again</source>
@@ -3965,6 +4068,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Choisir des fichiers</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3973,10 +4083,6 @@
     <message>
         <source>Thread</source>
         <translation>Fil</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Événement</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3994,6 +4100,33 @@
         <source>Reply in thread</source>
         <translation>Répondre dans le fil</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Abandon</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Suppression</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Répondre à %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Modification du message</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Nouveau texte</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Aucun message</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Envoyé en clair</translation>
@@ -4019,28 +4152,16 @@
         <translation>Authenticité non confirmée</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Ouvrir cette adresse ?</translation>
+        <source>Saved to gallery</source>
+        <translation>Enregistré dans la galerie</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Ouvrir</translation>
+        <source>Could not save</source>
+        <translation>Échec de l&apos;enregistrement</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Ouvrir le lien ?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Copier le lien</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Transférer le lien</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Épingler</translation>
+        <source>Saved to Downloads</source>
+        <translation>Enregistré dans Téléchargements</translation>
     </message>
 </context>
 <context>

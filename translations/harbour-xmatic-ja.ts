@@ -355,6 +355,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>有効な Matrix アドレスではありません。形式は @name:server です。</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>自分自身を追放することはできません。</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>理由が長すぎます。</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Matrix アドレスの形式は @name:server です。</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>理由（任意）</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>この人はこのルームに入れなくなります。現在メンバーの場合は削除されます。ルームの全員に追放とその理由が表示されます。</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>誰かを追放…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>追放された人</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>このルームでのあなたの役割では、追放も追放の解除もできません。リストは閲覧のみです。</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>理由: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>追放した人: %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>追放された人はいません</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -447,6 +504,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>参加、招待、削除、追放は常に表示されます。</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>通知</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>通知ルール</translation>
     </message>
 </context>
 <context>
@@ -1418,6 +1483,10 @@
         <source>The people in this room show up here.</source>
         <translation>このルームの人がここに表示されます。</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>追放…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1646,6 +1715,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>通話</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 が参加しました</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 が退出しました</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 が %2 を招待しました</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 が %2 を外しました</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 が %2 を追放しました</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 が %2 の追放を解除しました</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 が %2 への招待を取り消しました</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 が招待を断りました</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 が参加を申し込みました</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 のメンバー状態が変わりました</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 がプロフィール画像を変更しました</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 が表示名を %2 に、プロフィール画像も変更しました</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 が表示名を削除し、プロフィール画像を変更しました</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 が表示名を %2 に変更しました</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 が表示名を削除しました</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1：%2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>リンクを開きますか？</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>リンクをコピー</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>リンクを転送</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>破棄</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>削除</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>ピン留め</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>スレッドで返信</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>再送信</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>テキストに変換</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>コピー</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>転送</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>編集</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>リアクション</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>返信</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>もっと見る…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>引用されたメッセージを読み込めません: すでに存在しないか、閲覧が許可されていません。</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>このデバイスでは表示されません。タップして開きます。</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>読み込めませんでした。タップしてもう一度試してね。</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>タップして読み込む</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>ボイスメッセージ</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>テキストに変換しています…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>自動認識のため、誤りを含む場合があります</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>折りたたむ</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>もっと見る</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>このマークの意味は?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>スレッド · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>スレッド内</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>このリアクションは文字を隠すため、送信しませんでした</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>未送信</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>削除未送信</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>編集未送信</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>編集済み</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1673,6 +1947,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>相手には招待が届き、チャットはすぐにあなたの一覧に現れます。メッセージは最初から暗号化されます。</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>通知ルール</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>ダイレクトメッセージ</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>グループメッセージ</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>あなたへのメンション</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>ルーム全体へのメンション</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>招待</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>通話</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>オフ</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>サーバーが変更を拒否しました: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>音なし</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>音あり</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>アカウントに保存されるため、すべてのクライアントが従います。音ありは音を鳴らし、音なしは通知を表示して LED を点滅させ、オフはルームの未読数だけを増やします。詳細で独自の設定を持つルームはその設定を保ちます。オフにした言及は、そのルームの通常のメッセージとして扱われます。</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>サーバーを待っています…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>一部の設定が異なります。レベルを選ぶとすべてに適用されます。</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>サーバーからルールを読み込めませんでした: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>サーバーが時間内に応答しませんでした。</translation>
     </message>
 </context>
 <context>
@@ -2761,117 +3102,12 @@
         <translation>会話の始まり</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>通話</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 が参加しました</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 が退出しました</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 が招待を断りました</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 が参加を申し込みました</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 のメンバー状態が変わりました</translation>
-    </message>
-    <message>
-        <source>Discard</source>
-        <translation>破棄</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>削除</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>ピン留め</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>スレッドで返信</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>再送信</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>保存</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>コピー</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>転送</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>編集</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>リアクション</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>返信</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>もっと見る…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>引用されたメッセージを読み込めません: すでに存在しないか、閲覧が許可されていません。</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>ボイスメッセージ</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>メッセージは削除されました</translation>
     </message>
     <message>
         <source>Picture</source>
         <translation>画像</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>このマークの意味は?</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>スレッド · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>スレッド内</translation>
-    </message>
-    <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>このリアクションは文字を隠すため、送信しませんでした</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>未送信</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>編集済み</translation>
     </message>
     <message>
         <source>The conversation could not be loaded</source>
@@ -2914,30 +3150,6 @@
         <translation>ファイルを選ぶ</translation>
     </message>
     <message>
-        <source>Sent unencrypted</source>
-        <translation>暗号化されずに送信されました</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>名乗っているアカウントからは送られていません</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>送信者の鍵が変わりました</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>未検証のデバイスから</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>未検証の相手から</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>真正性は確認されていません</translation>
-    </message>
-    <message>
         <source>Open this address?</source>
         <translation>このアドレスを開きますか?</translation>
     </message>
@@ -2966,43 +3178,6 @@
         <translation>あなたの票は送信されませんでした</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 が %2 を招待しました</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 が %2 を外しました</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 が %2 を追放しました</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 が %2 の追放を解除しました</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 が %2 への招待を取り消しました</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1：%2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>テキストに変換</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>テキストに変換しています…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>自動認識のため、誤りを含む場合があります</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>録音中… %1 秒。送信するにはマイクをタップします。</translation>
     </message>
@@ -3011,40 +3186,12 @@
         <translation>何も話されなかったため、何も送信されませんでした。</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>ギャラリーに保存しました</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>保存できませんでした</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>ダウンロードに保存しました</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>折りたたむ</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>もっと見る</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>テキストをファイルとして書き込めませんでした</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>位置情報を共有</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>削除未送信</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>編集未送信</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3061,50 +3208,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>送信待ちではなくなりました。</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>読み込めませんでした。タップしてもう一度試してね。</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>タップして読み込む</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>リンクを開きますか？</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>リンクをコピー</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>リンクを転送</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 が表示名を %2 に変更しました</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 が表示名を削除しました</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 がプロフィール画像を変更しました</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 が表示名を %2 に、プロフィール画像も変更しました</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 が表示名を削除し、プロフィール画像を変更しました</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>このデバイスでは表示されません。タップして開きます。</translation>
     </message>
 </context>
 <context>
@@ -3960,7 +4063,65 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>ファイルを選ぶ</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
+    <message>
+        <source>Load older posts</source>
+        <translation>古い投稿を読み込む</translation>
+    </message>
+    <message>
+        <source>Thread</source>
+        <translation>スレッド</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>添付</translation>
+    </message>
+    <message>
+        <source>Thread unavailable</source>
+        <translation>スレッドを利用できません</translation>
+    </message>
+    <message>
+        <source>Loading thread</source>
+        <translation>スレッドを読み込んでいます</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>スレッドで返信</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>破棄しています</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>削除しています</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>%1 への返信</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>メッセージを編集中</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>新しい本文</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>投稿はありません</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>暗号化されずに送信されました</translation>
@@ -3986,56 +4147,16 @@
         <translation>真正性は確認されていません</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>このアドレスを開きますか?</translation>
+        <source>Saved to gallery</source>
+        <translation>ギャラリーに保存しました</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>開く</translation>
+        <source>Could not save</source>
+        <translation>保存できませんでした</translation>
     </message>
     <message>
-        <source>Load older posts</source>
-        <translation>古い投稿を読み込む</translation>
-    </message>
-    <message>
-        <source>Thread</source>
-        <translation>スレッド</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>イベント</translation>
-    </message>
-    <message>
-        <source>Attachment</source>
-        <translation>添付</translation>
-    </message>
-    <message>
-        <source>Thread unavailable</source>
-        <translation>スレッドを利用できません</translation>
-    </message>
-    <message>
-        <source>Loading thread</source>
-        <translation>スレッドを読み込んでいます</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>スレッドで返信</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>リンクを開きますか？</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>リンクをコピー</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>リンクを転送</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>ピン留め</translation>
+        <source>Saved to Downloads</source>
+        <translation>ダウンロードに保存しました</translation>
     </message>
 </context>
 <context>

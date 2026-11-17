@@ -13,6 +13,7 @@
 #include <QSharedPointer>
 #include <QString>
 #include <QVariantList>
+#include <QVector>
 
 #include "camerasource.h"
 #include "callaudiorouter.h"
@@ -22,6 +23,8 @@
 typedef struct _GstElement GstElement;
 typedef struct _GstPromise GstPromise;
 typedef struct _GstPad GstPad;
+
+struct PipelineContext;
 
 /// The media half of a call: Matrix carries only the negotiation, the audio
 /// goes directly over WebRTC. This object owns no signalling.
@@ -108,14 +111,21 @@ public:
     void setTurnServers(const QVariantList &servers, int ttl);
     /// The relay answer failed: a waiting call goes on without.
     void relayUnavailable();
+    /// Drops the relay credentials; on sign-out.
+    void forgetRelays();
 
     // Fed from the core's signalling events.
+    /// `show`/`audible`: the push rules' verdict. A hidden call takes no state;
+    /// its id is kept for `lifetimeMs` so what follows it is dropped.
     void onRemoteInvite(const QString &roomId,
                         bool videoAllowed,
                         bool videoOffered,
                         const QString &sender,
                         const QString &callId,
-                        const QString &sdp);
+                        const QString &sdp,
+                        bool show,
+                        bool audible,
+                        qint64 lifetimeMs);
     /// Another device of this account picked the call up. The party id says
     /// which one, so this device can tell it apart from its own answer.
     void onAnsweredElsewhere(const QString &roomId, const QString &callId,
@@ -165,7 +175,8 @@ signals:
                            const QString &selectedPartyId);
 
     /// Someone is calling; the UI should show the incoming call screen.
-    void incomingCall(const QString &roomId, const QString &peer);
+    /// `audible`: whether the push rules want a ringtone.
+    void incomingCall(const QString &roomId, const QString &peer, bool audible);
     /// The relay credentials are expired or were never read.
     void relayRefreshNeeded();
 
@@ -209,6 +220,10 @@ private:
     bool buildPipeline();
     void applyTurnServers();
     bool relayStale() const;
+    /// Renews the credentials before they expire, only while a call rings or runs.
+    void armRelayRefresh();
+    int cameraFrames() const;
+    int remotePackets() const;
     /// Holds a call until fresh credentials arrive, bounded by `m_relayWait`.
     bool waitForRelay(int next);
     void resumeAfterRelay();
@@ -228,6 +243,8 @@ private:
     void startOutgoing(bool withVideo);
     bool sendPadsReady() const;
     void setState(const QString &state);
+    void pruneHiddenCalls();
+    bool isHiddenCall(const QString &roomId, const QString &callId);
     bool current(int generation) const { return generation == m_generation.load(); }
 
     GstElement *m_pipeline = nullptr;
@@ -265,6 +282,15 @@ private:
     QString m_pendingRemoteOffer;
     /// Candidates that came while it rang: the pipeline exists only once answered.
     QVariantList m_earlyCandidates;
+    /// The caller's own candidates until an answer: none reach the room before.
+    QVariantList m_heldCandidates;
+    /// Calls the push rules hid: no state, no reply, their events dropped.
+    struct HiddenCall {
+        QString roomId;
+        QString callId;
+        qint64 until;
+    };
+    QVector<HiddenCall> m_hiddenCalls;
     QVariantList m_turnServers;
     bool m_relayKnown = false;
     /// Wall clock: a monotonic one stops while the phone sleeps.
@@ -280,8 +306,8 @@ private:
     VideoStream m_remoteVideo;
     VideoStream m_selfVideo;
     CallAudioRouter m_audioRouter;
-    /// One per pipeline: its state belongs to one pair of streams.
-    std::unique_ptr<EchoCanceller> m_echo;
+    /// The running pipeline's context; its callbacks hold their own copies.
+    std::shared_ptr<PipelineContext> m_ctx;
     QVariantList m_pendingCandidates;
     QTimer m_candidateTimer;
     CameraSource m_camera;
@@ -290,7 +316,6 @@ private:
     QTimer m_cameraRetry;
     /// The other side gone without a hangup: nothing arrives, and ICE does not notice.
     QTimer m_mediaWatch;
-    QAtomicInt m_remotePackets;
     int m_lastRemotePackets = 0;
     int m_silentTicks = 0;
     GstElement *m_cameraFeed = nullptr;
@@ -306,10 +331,7 @@ private:
     /// The bus watch's source id, so it can be taken off the main context
     /// again. Zero when none is attached.
     unsigned int m_busWatch = 0;
-    /// Frames the camera delivered; zero means it never ran. Written on the
-    /// camera's thread, read on the Qt one - a stale zero tears a call down.
-    QAtomicInt m_cameraFrames;
-    /// Raised once a pipeline is gone; GStreamer threads stamp what they queue.
+    /// Raised once a pipeline is gone; its context stamps what it queues.
     QAtomicInt m_generation;
 };
 

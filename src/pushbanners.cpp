@@ -109,10 +109,12 @@ void publishPushBanner(const QString &dataDirectory, const QString &roomId,
                        bool audible, qint64 timestamp, int count)
 {
     QVariantMap hints;
-    // Tone, vibration and LED hang off the category. Left off where the push
-    // rules call this one quiet - the preview hints still show the banner.
+    // Tone, vibration and LED hang off the category. A quiet message keeps the
+    // LED (`im.received`); a notice without a room gets none.
     if (audible) {
         hints.insert(QStringLiteral("category"), QStringLiteral("x-nemo.messaging.im"));
+    } else if (!roomId.isEmpty()) {
+        hints.insert(QStringLiteral("category"), QStringLiteral("im.received"));
     }
     // Summary and body alone only fill the event feed. The banner that slides
     // in over whatever is on screen is this pair.

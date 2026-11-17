@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.47.8
+Version:    0.47.43
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -72,7 +72,6 @@ BuildRequires: pkgconfig(gstreamer-sdp-1.0)
 BuildRequires: pkgconfig(gstreamer-webrtc-1.0)
 BuildRequires: pkgconfig(nice)
 BuildRequires: pkgconfig(libpulse)
-BuildRequires: pkgconfig(speexdsp)
 BuildRequires: pkgconfig(keepalive)
 BuildRequires: desktop-file-utils
 
@@ -108,6 +107,9 @@ strip %{buildroot}%{_bindir}/%{name}
 # copied figure went out of date twice while the generated list stayed right.
 # A binary that carries them carries their notices.
 %license THIRD-PARTY.md
+# The echo canceller's two C++ libraries, linked statically.
+%license licenses/webrtc-audio-processing-COPYING licenses/webrtc-PATENTS licenses/abseil-LICENSE
+%license licenses/pffft-LICENSE licenses/rnnoise-COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
@@ -125,6 +127,57 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Nov 17 2026 harbour-xmatic contributors 0.47.43-1
+- Banned people: a room's details list everyone banned there, with reason and
+  who banned them, and lift a ban with a long press. Anyone can be banned by
+  their Matrix address, also someone who is not in the room, and a member
+  straight from the member list.
+- Notification rules under Behaviour: per kind of message (direct, group,
+  mentions, room mentions, invitations, calls) with tone, without tone (banner
+  and LED) or off (the unread count only), stored in the account so every
+  client follows them.
+- A notification now follows these rules, also while the app runs. Under the
+  server's default rules group messages arrive without a tone, where every
+  message used to ring while the app was open; set group messages to "With
+  tone" to keep that - it is stored in the account, so your other clients ring
+  for every group message as well.
+- Pictures, videos and files can be sent in a thread, with a caption, and
+  pictures and video stills show in the thread instead of a line naming them.
+- A post in a thread can be deleted from the thread itself, by its author or
+  where the room lets moderators delete others' messages.
+- A thread works like the room: the same message rows with pictures, voice,
+  quotes, reactions, polls and read marks, and replying, editing, reacting,
+  forwarding, saving and copying from a post in the thread. Locations, polls
+  and voice messages are started in the room, not in a thread.
+- A thread opened again shows its posts at once, where it stayed empty until
+  "Load older posts" was pulled; an empty thread says so.
+- A reply inside a thread shows the message it answers, as in the room.
+- Calls cancel the echo with WebRTC's AEC3 (webrtc-audio-processing, built
+  in), in place of speexdsp, the learnt delay and the feedback notch: two
+  phones on loudspeaker no longer howl, and the other side no longer hears
+  itself.
+- Security updates of the encryption and TLS libraries: a malformed key
+  published by another user or server can no longer crash the app
+  (vodozemac 0.11.2), and rustls 0.23.46 / webpki 0.103.17.
+- The echo canceller's libraries are built hardened and without build paths;
+  their licence texts (with PFFFT and RNNoise) ship in the package.
+- Notification rules: Off for mentions disables the rule, so a reply in a
+  direct chat still rings there; rules are read from the server, written one
+  at a time and shown as "set differently in parts" when a write was cut short;
+  the page keeps its levels after an error and offers "Try again".
+- A call while the app runs follows the call rule: Off shows nothing and keeps
+  the phone free for other calls, Without tone shows the call page without
+  ringing; a muted room shows a call silently instead of swallowing it.
+- The caller's network candidates go out only once the call is answered: an
+  unanswered call leaves no address in the room. Relay credentials are only
+  refreshed around a call and forgotten on sign-out.
+- Hanging up while the first audio arrives no longer races the teardown.
+- Threads: every way in opens the right thread, also from the actions page in
+  landscape; loading older posts runs out with an error and "Try again"
+  instead of loading for good; a thread left for another room reopens on the
+  way back and keeps a typed reply; mentions, maps, replies with attachments
+  and hidden system rows work there as in the room.
+
 * Wed Nov 11 2026 harbour-xmatic contributors 0.47.8-1
 - One notification per conversation: a new message replaces only its own
   room's banner, and a banner goes once its room is read - here, in another
@@ -204,7 +257,7 @@ strip %{buildroot}%{_bindir}/%{name}
   one for every relay address the server lists, so it fits a server with
   few relay ports.
 
-* Tue Oct 13 2026 harbour-xmatic contributors 0.46.8-1
+* Mon Oct 12 2026 harbour-xmatic contributors 0.46.8-1
 - Leaving a room, declining an invitation or forgetting a left room no longer
   empties the stored history of every other room.
 - Push: only this device's pushers are touched, so two devices on one
@@ -254,8 +307,12 @@ strip %{buildroot}%{_bindir}/%{name}
   distributor does not answer; a pusher left behind is removed at the next
   sign-in of that account; the woken app no longer reads the key for a
   distributor's own messages.
+
+* Mon Oct 12 2026 harbour-xmatic contributors 0.46.7-1
 - A Matrix link that starts the app opens again: a call newer than the
   platform's Qt stopped the start-up handler before it reached the link.
+
+* Mon Oct 12 2026 harbour-xmatic contributors 0.46.6-1
 - The room count above the chat list shows only while the list is still
   loading; the server's number includes spaces and left rooms, which the
   list never shows, and read as rooms gone missing.
@@ -273,13 +330,15 @@ strip %{buildroot}%{_bindir}/%{name}
   after a restart. Forwarded messages and files go through the queue too.
 
 * Sat Oct 10 2026 harbour-xmatic contributors 0.46.2-1
+- A caption's formatting and mentions show: links, names and markup in the
+  text under a picture, a video or a voice message render as in a message
+  instead of as plain text.
+
+* Sat Oct 10 2026 harbour-xmatic contributors 0.46.1-1
 - Mentions work in an attachment's caption: `@` and `#` offer members and
   rooms there as in the message line, and the caption carries the pill and
   `m.mentions` that make the mention ping. Mentions typed before the file was
   picked travel with the text into the caption.
-- A caption's formatting and mentions show: links, names and markup in the
-  text under a picture, a video or a voice message render as in a message
-  instead of as plain text.
 
 * Fri Oct 09 2026 harbour-xmatic contributors 0.46.0-1
 - Push notifications go through Leghorn, a UnifiedPush connector: the Matrix

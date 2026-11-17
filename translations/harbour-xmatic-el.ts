@@ -356,6 +356,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Αυτή δεν είναι έγκυρη διεύθυνση Matrix. Έχει τη μορφή @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Δεν μπορείς να αποκλείσεις τον εαυτό σου.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Ο λόγος είναι πολύ μεγάλος.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Μια διεύθυνση Matrix έχει τη μορφή @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Λόγος (προαιρετικά)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Το άτομο δεν θα μπορεί πλέον να μπει σε αυτό το δωμάτιο. Αν είναι τώρα μέλος, αφαιρείται. Όλοι στο δωμάτιο βλέπουν τον αποκλεισμό και τον λόγο του.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Αποκλεισμός ατόμου…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Αποκλεισμένα άτομα</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Ο ρόλος σου σε αυτό το δωμάτιο δεν επιτρέπει αποκλεισμούς ούτε άρση αποκλεισμού. Η λίστα είναι μόνο για ανάγνωση.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Λόγος: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Αποκλεισμός από %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Κανείς δεν είναι αποκλεισμένος</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -448,6 +505,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Οι είσοδοι, οι προσκλήσεις, οι αφαιρέσεις και οι αποκλεισμοί εμφανίζονται πάντα.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Ειδοποιήσεις</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Κανόνες ειδοποιήσεων</translation>
     </message>
 </context>
 <context>
@@ -1420,6 +1485,10 @@
         <source>The people in this room show up here.</source>
         <translation>Τα άτομα αυτού του δωματίου εμφανίζονται εδώ.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Αποκλεισμός…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1648,6 +1717,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Κλήση</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>Ο/Η %1 μπήκε</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>Ο/Η %1 έφυγε</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>Ο/Η %1 προσκάλεσε τον/την %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>Ο/Η %1 αφαίρεσε τον/την %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>Ο/Η %1 απέκλεισε τον/την %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>Ο/Η %1 ήρε τον αποκλεισμό του/της %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>Ο/Η %1 απέσυρε την πρόσκληση για %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>Ο/Η %1 απέρριψε την πρόσκληση</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>Ο/Η %1 ζήτησε να μπει</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>Ο/Η %1 άλλαξε συμμετοχή</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 άλλαξε την εικόνα προφίλ</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 άλλαξε το εμφανιζόμενο όνομα σε %2 και την εικόνα προφίλ</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 αφαίρεσε το εμφανιζόμενο όνομα και άλλαξε την εικόνα προφίλ</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 άλλαξε το εμφανιζόμενο όνομα σε %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 αφαίρεσε το εμφανιζόμενο όνομα</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Άνοιγμα του συνδέσμου;</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Αντίγραψε τον σύνδεσμο</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Προώθησε τον σύνδεσμο</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Απόρριψη</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Διαγραφή</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Καρφίτσωμα</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Απάντηση στο νήμα</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Αποστολή ξανά</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Αποθήκευση</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Μετατροπή σε κείμενο</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Αντιγραφή</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Προώθηση</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Επεξεργασία</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Αντίδραση</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Απάντηση</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Περισσότερα…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Το μήνυμα που παρατίθεται δεν φορτώνεται: δεν υπάρχει πια ή δεν επιτρέπεται να το δεις.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Δεν εμφανίζεται σε αυτή τη συσκευή. Πάτησε για άνοιγμα.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Δεν ήταν δυνατή η φόρτωση. Πάτα για να δοκιμάσεις ξανά.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Πάτα για φόρτωση</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Φωνητικό μήνυμα</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Μετατροπή σε κείμενο…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Αναγνωρίστηκε αυτόματα, μπορεί να έχει λάθη</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Εμφάνιση λιγότερων</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Εμφάνιση περισσότερων</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Τι σημαίνουν αυτά τα σημάδια;</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Νήμα · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Στο νήμα</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Αυτή η αντίδραση κρύβει κείμενο και δεν στάλθηκε</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>δεν στάλθηκε</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>η διαγραφή δεν στάλθηκε</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>η επεξεργασία δεν στάλθηκε</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>επεξεργάστηκε</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1675,6 +1949,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Η άλλη πλευρά λαμβάνει πρόσκληση και η συνομιλία εμφανίζεται αμέσως στη λίστα σου. Τα μηνύματα είναι κρυπτογραφημένα από την αρχή.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Κανόνες ειδοποιήσεων</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Άμεσα μηνύματα</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Ομαδικά μηνύματα</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Αναφορές σε σένα</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Αναφορές σε όλο το δωμάτιο</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Προσκλήσεις</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Κλήσεις</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Ανενεργό</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Ο διακομιστής απέρριψε την αλλαγή: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Χωρίς ήχο</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Με ήχο</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Αποθηκεύονται στον λογαριασμό σου, οπότε τους ακολουθεί κάθε εφαρμογή. Το Με ήχο χτυπά, το Χωρίς ήχο εμφανίζει ειδοποίηση και αναβοσβήνει το LED, το Ανενεργό απλώς αυξάνει τον μετρητή μη αναγνωσμένων του δωματίου. Ένα δωμάτιο με δική του ρύθμιση στις λεπτομέρειές του την κρατά. Μια αναφορά ρυθμισμένη σε Ανενεργό μετρά ως συνηθισμένο μήνυμα του δωματίου της.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Αναμονή για τον διακομιστή…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Ρυθμισμένο εν μέρει διαφορετικά. Διάλεξε επίπεδο για να ισχύσει παντού.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Δεν ήταν δυνατή η ανάγνωση των κανόνων από τον διακομιστή: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Ο διακομιστής δεν απάντησε εγκαίρως.</translation>
     </message>
 </context>
 <context>
@@ -2741,89 +3082,8 @@
         <translation>Αρχή της συνομιλίας</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Κλήση</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>Ο/Η %1 μπήκε</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>Ο/Η %1 έφυγε</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>Ο/Η %1 απέρριψε την πρόσκληση</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>Ο/Η %1 ζήτησε να μπει</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>Ο/Η %1 άλλαξε συμμετοχή</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Αντιγραφή</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Απάντηση</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Αποθήκευση</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Προώθηση</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Επεξεργασία</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Καρφίτσωμα</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Διαγραφή</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Περισσότερα…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Το μήνυμα που παρατίθεται δεν φορτώνεται: δεν υπάρχει πια ή δεν επιτρέπεται να το δεις.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Φωνητικό μήνυμα</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Το μήνυμα διαγράφηκε</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Νήμα · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Στο νήμα</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>δεν στάλθηκε</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>επεξεργάστηκε</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2858,52 +3118,12 @@
         <translation>Αυτό το μήνυμα δεν είναι στο φορτωμένο ιστορικό</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Απόρριψη</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Αποστολή ξανά</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Αντίδραση</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Απάντηση στο νήμα</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Αντιγραφή συνδέσμου δωματίου</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Ο σύνδεσμος δωματίου αντιγράφηκε</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Στάλθηκε χωρίς κρυπτογράφηση</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Δεν στάλθηκε από τον λογαριασμό που αναφέρεται</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Τα κλειδιά του αποστολέα άλλαξαν</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Από μη επαληθευμένη συσκευή</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Από μη επαληθευμένο άτομο</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Η γνησιότητα δεν επιβεβαιώθηκε</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2914,20 +3134,12 @@
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Αυτή η αντίδραση κρύβει κείμενο και δεν στάλθηκε</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Εικόνα</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Αναζήτηση μηνυμάτων</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Τι σημαίνουν αυτά τα σημάδια;</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2970,43 +3182,6 @@
         <translation>Η ψήφος σου δεν στάλθηκε</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>Ο/Η %1 προσκάλεσε τον/την %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>Ο/Η %1 αφαίρεσε τον/την %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>Ο/Η %1 απέκλεισε τον/την %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>Ο/Η %1 ήρε τον αποκλεισμό του/της %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>Ο/Η %1 απέσυρε την πρόσκληση για %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Μετατροπή σε κείμενο</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Μετατροπή σε κείμενο…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Αναγνωρίστηκε αυτόματα, μπορεί να έχει λάθη</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Εγγραφή… %1 δ. Πάτα το μικρόφωνο για αποστολή.</translation>
     </message>
@@ -3015,40 +3190,12 @@
         <translation>Δεν ειπώθηκε τίποτα, οπότε δεν στάλθηκε τίποτα.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Αποθηκεύτηκε στη συλλογή</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Η αποθήκευση απέτυχε</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Αποθηκεύτηκε στις Λήψεις</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Εμφάνιση λιγότερων</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Εμφάνιση περισσότερων</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Το κείμενο δεν μπόρεσε να γραφτεί ως αρχείο</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Κοινοποίηση τοποθεσίας</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>η διαγραφή δεν στάλθηκε</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>η επεξεργασία δεν στάλθηκε</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3065,50 +3212,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Δεν περιμένει πια να σταλεί.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Δεν ήταν δυνατή η φόρτωση. Πάτα για να δοκιμάσεις ξανά.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Πάτα για φόρτωση</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Άνοιγμα του συνδέσμου;</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Αντίγραψε τον σύνδεσμο</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Προώθησε τον σύνδεσμο</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 άλλαξε το εμφανιζόμενο όνομα σε %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 αφαίρεσε το εμφανιζόμενο όνομα</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 άλλαξε την εικόνα προφίλ</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 άλλαξε το εμφανιζόμενο όνομα σε %2 και την εικόνα προφίλ</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 αφαίρεσε το εμφανιζόμενο όνομα και άλλαξε την εικόνα προφίλ</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Δεν εμφανίζεται σε αυτή τη συσκευή. Πάτησε για άνοιγμα.</translation>
     </message>
 </context>
 <context>
@@ -3965,6 +4068,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Επιλογή αρχείων</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3973,10 +4083,6 @@
     <message>
         <source>Thread</source>
         <translation>Νήμα</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Συμβάν</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3994,6 +4100,33 @@
         <source>Reply in thread</source>
         <translation>Απάντηση στο νήμα</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Απόρριψη</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Διαγραφή</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Απάντηση σε %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Επεξεργασία μηνύματος</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Νέο κείμενο</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Δεν υπάρχουν αναρτήσεις</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Στάλθηκε χωρίς κρυπτογράφηση</translation>
@@ -4019,28 +4152,16 @@
         <translation>Η γνησιότητα δεν επιβεβαιώθηκε</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Άνοιγμα αυτής της διεύθυνσης;</translation>
+        <source>Saved to gallery</source>
+        <translation>Αποθηκεύτηκε στη συλλογή</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Άνοιγμα</translation>
+        <source>Could not save</source>
+        <translation>Η αποθήκευση απέτυχε</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Άνοιγμα του συνδέσμου;</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Αντίγραψε τον σύνδεσμο</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Προώθησε τον σύνδεσμο</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Καρφίτσωμα</translation>
+        <source>Saved to Downloads</source>
+        <translation>Αποθηκεύτηκε στις Λήψεις</translation>
     </message>
 </context>
 <context>

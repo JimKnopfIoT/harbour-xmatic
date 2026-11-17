@@ -18,10 +18,13 @@ use matrix_sdk::{
                 select_answer::{CallSelectAnswerEventContent, SyncCallSelectAnswerEvent},
                 SessionDescription,
             },
-            AnyMessageLikeEventContent,
+            AnyMessageLikeEventContent, AnySyncTimelineEvent,
         },
-        MilliSecondsSinceUnixEpoch, OwnedVoipId, RoomId, UInt, VoipVersionId,
+        push::{Action, AnyPushRuleRef, PushConditionRoomCtx, RuleKind, Ruleset},
+        serde::Raw,
+        MilliSecondsSinceUnixEpoch, OwnedVoipId, RoomId, UInt, UserId, VoipVersionId,
     },
+    event_handler::RawEvent,
     Client, HttpError, Room, RoomMemberships,
 };
 use serde_json::{json, Value};
@@ -69,6 +72,18 @@ fn offers_active_video(sdp: &str) -> bool {
     in_video && !port_zero
 }
 
+/// The offer without its candidate lines: the caller's addresses go out only
+/// after an answer, in the held candidates, never in the invite itself.
+fn without_candidates(sdp: &str) -> String {
+    sdp.split('\n')
+        .filter(|line| {
+            let line = line.trim_end_matches('\r');
+            !line.starts_with("a=candidate:") && line != "a=end-of-candidates"
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
 /// Rings the other side, offering the local session description.
 pub async fn invite(
     client: &Client,
@@ -88,7 +103,7 @@ pub async fn invite(
     let mut content = CallInviteEventContent::new(
         OwnedVoipId::from(call_id.to_owned()),
         UInt::new(INVITE_LIFETIME).unwrap_or(UInt::MAX),
-        SessionDescription::new("offer".to_owned(), sdp),
+        SessionDescription::new("offer".to_owned(), without_candidates(&sdp)),
         VoipVersionId::V1,
     );
     content.party_id = Some(OwnedVoipId::from(party_id.to_owned()));
@@ -379,12 +394,78 @@ fn may_ring(sender: &str, room: &Room) -> bool {
     }
 }
 
-/// As everywhere else, the work is spawned: matrix-sdk runs event handlers
-/// inline while processing a sync response, and blocking there stops the sync.
+/// How a ringing call is presented: the call page at all, and with a tone.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+struct Ring {
+    show: bool,
+    audible: bool,
+}
+
+/// Rules that cannot be read ring: a call silenced by mistake is the harmful failure.
+const UNKNOWN_RING: Ring = Ring { show: true, audible: true };
+
+const CALL_RULE: &str = ".m.rule.call";
+
+fn rings(actions: &[Action]) -> bool {
+    actions.iter().any(Action::should_notify) && actions.iter().any(|action| action.sound().is_some())
+}
+
+/// "Calls: off" hides a call unless a rule ahead of it asks for a notification (a room
+/// set to all messages); a silent rule shows the page mute; none rings past the call level.
+async fn ring_mode<T>(rules: &Ruleset, event: &Raw<T>, context: &PushConditionRoomCtx) -> Ring {
+    let call = rules.get(RuleKind::Underride, CALL_RULE);
+    let call_disabled = call.is_some_and(|rule| !rule.enabled());
+    let call_off = call.is_some_and(|rule| !rule.enabled() || !rule.triggers_notification());
+    let matched = rules.get_match(event, context).await;
+    // Underride is the call rule or what a switched-off one falls through to.
+    let notified_ahead = match matched {
+        Some(AnyPushRuleRef::Underride(_)) | None => false,
+        Some(rule) => rule.triggers_notification(),
+    };
+    // A server without the call rule has no call level to cap with.
+    let call_rings = call.is_none_or(|rule| rule.enabled() && rings(rule.actions()));
+    Ring {
+        show: !(call_off && !notified_ahead),
+        audible: call_rings && matched.is_some_and(|rule| rings(rule.actions())),
+    }
+}
+
+/// Bounded: this runs inside the sync, and the candidates behind the invite wait.
+const PUSH_BOUND: Duration = Duration::from_secs(2);
+
+/// The account's rules on this invite, from the store; `None` where they cannot be read.
+async fn invite_ring(client: &Client, room: &Room, raw: &RawEvent) -> Option<Ring> {
+    let event = Raw::<AnySyncTimelineEvent>::from_json(raw.0.clone());
+    let read = async {
+        let context = room.push_condition_room_ctx().await.ok()??;
+        let rules = client.account().push_rules().await.ok()?;
+        Some(ring_mode(&rules, &event, &context).await)
+    };
+    tokio::time::timeout(PUSH_BOUND, read).await.ok().flatten()
+}
+
+/// In a room of two only the other member answers; the engine's peer may still be
+/// unset when the answer comes. A store that cannot tell leaves it to the engine.
+async fn answer_may_come_from(room: &Room, sender: &UserId) -> bool {
+    let own = room.own_user_id().to_owned();
+    let read = tokio::time::timeout(PUSH_BOUND, room.members_no_sync(RoomMemberships::JOIN)).await;
+    let Ok(Ok(members)) = read else {
+        return true;
+    };
+    let others: Vec<_> = members
+        .iter()
+        .map(|member| member.user_id())
+        .filter(|user| *user != own)
+        .collect();
+    others.len() != 1 || others[0] == sender
+}
+
+/// Handlers run inline in the sync: every wait here is bounded, and the invite's
+/// keeps its candidates behind it.
 pub fn install(client: &Client, sink: Arc<Sink>) {
     client.add_event_handler({
         let sink = sink.clone();
-        move |ev: SyncCallInviteEvent, room: Room, client: Client| {
+        move |ev: SyncCallInviteEvent, room: Room, client: Client, raw: RawEvent| {
             let sink = sink.clone();
             async move {
                 let Some(ev) = ev.as_original() else { return };
@@ -457,6 +538,23 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                     }),
                 ));
 
+                // Inline, not spawned: the caller's candidates must not overtake the invite.
+                let read = invite_ring(&client, &room, &raw).await;
+                let ring = read.unwrap_or(UNKNOWN_RING);
+                sink.emit(event(
+                    "core.log",
+                    json!({
+                        "level": "info",
+                        "target": "xmatic",
+                        "message": format!(
+                            "incoming call push rules {}: show {}, audible {}",
+                            if read.is_some() { "read" } else { "unknown" },
+                            ring.show,
+                            ring.audible
+                        ),
+                    }),
+                ));
+
                 // How old the invitation is by the time this device rings.
                 // Says whether a late ring was made here or on the way.
                 sink.emit(event(
@@ -471,6 +569,9 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                         "video": offers_video && policy().video,
                         "videoOffered": offers_video,
                         "ageMs": now.saturating_sub(sent),
+                        "lifetimeMs": u64::from(ev.content.lifetime),
+                        "show": ring.show,
+                        "audible": ring.audible,
                     }),
                 ));
             }
@@ -495,6 +596,14 @@ pub fn install(client: &Client, sink: Arc<Sink>) {
                             "callId": ev.content.call_id.as_str(),
                             "partyId": ev.content.party_id.as_ref().map(|id| id.as_str()),
                         }),
+                    ));
+                    return;
+                }
+                if !answer_may_come_from(&room, &ev.sender).await {
+                    sink.emit(event(
+                        "core.log",
+                        json!({ "level": "warn", "target": "xmatic",
+                                "message": "call answer from outside the two-person room dropped" }),
                     ));
                     return;
                 }
@@ -648,6 +757,142 @@ mod video_offer_tests {
     fn a_later_section_does_not_rescue_it() {
         let sdp = "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\nm=video 0 UDP/TLS/RTP/SAVPF 96\r\nm=application 0 UDP/DTLS/SCTP webrtc-datachannel\r\na=bundle-only\r\n";
         assert!(!offers_active_video(sdp));
+    }
+}
+
+#[cfg(test)]
+mod ring_mode_tests {
+    use super::{ring_mode, without_candidates, Ring, CALL_RULE, UNKNOWN_RING};
+    use matrix_sdk::ruma::events::AnySyncTimelineEvent;
+    use matrix_sdk::ruma::push::{
+        Action, EventMatchConditionData, NewConditionalPushRule, NewPushRule, NewSimplePushRule,
+        PushCondition, PushConditionRoomCtx, RuleKind, Ruleset, Tweak,
+    };
+    use matrix_sdk::ruma::serde::Raw;
+    use matrix_sdk::ruma::{owned_room_id, uint, user_id};
+
+    const ROOM: &str = "!r:example.org";
+
+    async fn verdict(rules: &Ruleset) -> Ring {
+        let user = user_id!("@a:example.org");
+        let context = PushConditionRoomCtx::new(
+            owned_room_id!("!r:example.org"),
+            uint!(2),
+            user.to_owned(),
+            "a".to_owned(),
+        );
+        let invite: Raw<AnySyncTimelineEvent> = serde_json::from_str(
+            r#"{"type":"m.call.invite","sender":"@b:example.org","event_id":"$e",
+                "origin_server_ts":1,"content":{"call_id":"c","lifetime":60000,
+                "version":"1","offer":{"type":"offer","sdp":"v=0"}}}"#,
+        )
+        .unwrap();
+        ring_mode(rules, &invite, &context).await
+    }
+
+    fn defaults() -> Ruleset {
+        Ruleset::server_default(user_id!("@a:example.org"))
+    }
+
+    fn noisy() -> Vec<Action> {
+        vec![Action::Notify, Action::SetTweak(Tweak::Sound("default".into()))]
+    }
+
+    fn with_call(mut rules: Ruleset, actions: Vec<Action>) -> Ruleset {
+        rules.set_actions(RuleKind::Underride, CALL_RULE, actions).unwrap();
+        rules
+    }
+
+    fn with_room_rule(mut rules: Ruleset, actions: Vec<Action>) -> Ruleset {
+        let rule = NewSimplePushRule::new(owned_room_id!("!r:example.org"), actions);
+        rules.insert(NewPushRule::Room(rule), None, None).unwrap();
+        rules
+    }
+
+    const SHOW_MUTE: Ring = Ring { show: true, audible: false };
+    const HIDDEN: Ring = Ring { show: false, audible: false };
+
+    #[tokio::test]
+    async fn the_server_default_rings() {
+        assert_eq!(verdict(&defaults()).await, Ring { show: true, audible: true });
+    }
+
+    #[tokio::test]
+    async fn calls_off_hide_the_call() {
+        assert_eq!(verdict(&with_call(defaults(), Vec::new())).await, Ring { show: false, audible: false });
+    }
+
+    #[tokio::test]
+    async fn a_disabled_call_rule_is_calls_off() {
+        let mut rules = defaults();
+        rules.set_enabled(RuleKind::Underride, CALL_RULE, false).unwrap();
+        assert_eq!(verdict(&rules).await, Ring { show: false, audible: false });
+    }
+
+    #[tokio::test]
+    async fn calls_without_tone_show_silently() {
+        assert_eq!(verdict(&with_call(defaults(), vec![Action::Notify])).await, SHOW_MUTE);
+    }
+
+    #[tokio::test]
+    async fn a_muted_room_shows_silently() {
+        let mut rules = defaults();
+        let condition = PushCondition::EventMatch(EventMatchConditionData::new(
+            "room_id".to_owned(),
+            ROOM.to_owned(),
+        ));
+        let rule = NewConditionalPushRule::new(ROOM.to_owned(), vec![condition], Vec::new());
+        rules.insert(NewPushRule::Override(rule), None, None).unwrap();
+        assert_eq!(verdict(&rules).await, SHOW_MUTE);
+    }
+
+    #[tokio::test]
+    async fn mentions_only_shows_silently() {
+        assert_eq!(verdict(&with_room_rule(defaults(), Vec::new())).await, SHOW_MUTE);
+    }
+
+    #[tokio::test]
+    async fn the_master_rule_shows_silently() {
+        let mut rules = defaults();
+        rules.set_enabled(RuleKind::Override, ".m.rule.master", true).unwrap();
+        assert_eq!(verdict(&rules).await, SHOW_MUTE);
+    }
+
+    #[tokio::test]
+    async fn calls_off_stays_hidden_in_a_silent_room() {
+        let off = |rules| with_call(rules, Vec::new());
+        assert_eq!(verdict(&off(with_room_rule(defaults(), Vec::new()))).await, HIDDEN);
+        let mut master = off(defaults());
+        master.set_enabled(RuleKind::Override, ".m.rule.master", true).unwrap();
+        assert_eq!(verdict(&master).await, HIDDEN);
+    }
+
+    #[tokio::test]
+    async fn a_noisy_room_is_not_louder_than_calls() {
+        let quiet = with_call(with_room_rule(defaults(), noisy()), vec![Action::Notify]);
+        assert_eq!(verdict(&quiet).await, SHOW_MUTE);
+        let off = with_call(with_room_rule(defaults(), noisy()), Vec::new());
+        assert_eq!(verdict(&off).await, SHOW_MUTE);
+        let loud = with_room_rule(defaults(), noisy());
+        assert_eq!(verdict(&loud).await, Ring { show: true, audible: true });
+    }
+
+    #[test]
+    fn unknown_rings() {
+        assert_eq!(UNKNOWN_RING, Ring { show: true, audible: true });
+    }
+
+    #[test]
+    fn the_offer_loses_its_candidates() {
+        let sdp = "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\na=mid:0\r\n\
+                   a=candidate:1 1 UDP 2015363327 192.0.2.7 50000 typ host\r\n\
+                   a=end-of-candidates\r\na=sendrecv\r\n";
+        assert_eq!(
+            without_candidates(sdp),
+            "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\na=mid:0\r\na=sendrecv\r\n"
+        );
+        let bare = "v=0\nm=audio 9 RTP/AVP 0\na=candidate:2 1 UDP 1 198.51.100.1 9 typ host";
+        assert_eq!(without_candidates(bare), "v=0\nm=audio 9 RTP/AVP 0");
     }
 }
 

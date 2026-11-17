@@ -1,12 +1,10 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import Sailfish.Silica 1.0
-import "MatrixLinks.js" as MatrixLinks
-import "LinkMarks.js" as LinkMarks
-import "MessageBody.js" as MessageBody
+import QtMultimedia 5.6
 import "Composing.js" as Composing
 
-// One thread of a room: root first, replies below, own composer. Text-focused,
-// attachments render as their kind.
+// One thread of a room: root first, replies below, own composer. The rows are
+// the room's own (MessageRow); this page is their host on the thread's view.
 Page {
     id: page
 
@@ -26,6 +24,10 @@ Page {
     // Page-local: matrix.lastError is global and would show a stray failure
     // from anywhere as this thread's.
     property string error: ""
+    // The error came from a post: its text is back in the field, nothing to retry.
+    property bool sendFailed: false
+    // The first page came back at the thread's start: empty now means empty.
+    property bool reachedStart: false
 
     // Whether the view follows the newest post. True until the hand says
     // otherwise, exactly as in the room.
@@ -35,17 +37,189 @@ Page {
     // keeps it: what was on screen has to stay on screen.
     property real lastViewHeight: 0
 
+    // What MessageRow asks of its host, answered as the room answers it.
+    readonly property bool inThread: true
+    /// A mention from the member page lands here when this is the room's topmost page.
+    readonly property bool takesMentions: true
+    readonly property bool inSlice: false
+    readonly property string markerEventId: ""
+    readonly property real avatarSize: Theme.iconSizeMedium
+    readonly property string messageLayout: settings.messageLayout
+    readonly property bool flatLayout: messageLayout === "flat"
+    readonly property real systemAvatarSize: Theme.iconSizeExtraSmall
+    readonly property var animatableFormats: matrix.animatableImageFormats()
+    readonly property bool canRedactOthers: matrix.roomPermissions.redactOthers === true
+    property int openMenus: 0
+    property var expandedRows: ({})
+    property int expandedRevision: 0
+    property alias timelineActions: threadActions
+
+    // Set while a post is being rewritten, or answered.
+    property string editingEventId: ""
+    property string replyingEventId: ""
+    property string replyingTo: ""
+    /// The quoted text, for the quote on the send page.
+    property string replyingBody: ""
+
+    // What the actions page chose, applied once this page is on top again.
+    property var pendingAction: null
+
+    property string noticeText: ""
+
+    function systemShown(kind) {
+        return threadActions.systemShown(kind)
+    }
+
+    function toggleExpanded(rowId) {
+        if (page.expandedRows[rowId]) {
+            delete page.expandedRows[rowId]
+        } else {
+            page.expandedRows[rowId] = true
+        }
+        page.expandedRevision++
+    }
+
+    // A quote tapped in the thread: its row, where the thread has it.
+    function jumpToEvent(eventId) {
+        var index = matrix.threadTimeline.indexOfEvent(eventId || "")
+        if (index < 0) {
+            return
+        }
+        page.followTail = false
+        threadView.positionViewAtIndex(index, ListView.Center)
+    }
+
+    function beginReply(eventId, sender, body) {
+        page.replyingEventId = eventId
+        page.replyingTo = sender && sender.length > 0 ? sender : body
+        page.replyingBody = body || ""
+        page.editingEventId = ""
+        composer.focusField()
+    }
+
+    function cancelReply() {
+        page.clearReplyState()
+        composer.clearField()
+    }
+
+    // After an attachment went out as a reply: the composer stays as it is.
+    function clearReplyState() {
+        page.replyingEventId = ""
+        page.replyingTo = ""
+        page.replyingBody = ""
+    }
+
+    // The thread again, and its room first where another one is open.
+    function reopen() {
+        page.error = ""
+        page.sendFailed = false
+        page.reachedStart = false
+        matrix.openThread(page.roomId, page.rootEventId)
+    }
+
+    // What failed, again: the open where the thread is not open, else the page.
+    function retry() {
+        if (!matrix.threadOpen(page.rootEventId)) {
+            page.reopen()
+            return
+        }
+        page.error = ""
+        page.sendFailed = false
+        matrix.threadLoadOlder(page.rootEventId)
+    }
+
+    function beginEdit(eventId, body) {
+        page.replyingEventId = ""
+        page.editingEventId = eventId
+        composer.clearMentions()
+        composer.text = body
+        composer.focusField()
+    }
+
+    function cancelEdit() {
+        page.editingEventId = ""
+        composer.clearField()
+        composer.clearMentions()
+        composer.releaseField()
+    }
+
+    function showNotice(text) {
+        page.noticeText = text
+        noticeTimer.restart()
+    }
+
+    function pickEmoji() {
+        var dialog = pageStack.push(Qt.resolvedUrl("ReactionDialog.qml"),
+                                    { forMessage: true })
+        dialog.accepted.connect(function() {
+            if (dialog.key.length > 0) {
+                composer.insertAtCursor(dialog.key)
+            }
+            composer.focusField()
+        })
+    }
+
+    // Extra work goes inside this handler: a second `onStatusChanged` makes the page unloadable.
+    onStatusChanged: {
+        if (status !== PageStatus.Active) {
+            return
+        }
+        // A room opened further up (a link) closed this thread.
+        if (!matrix.threadOpen(page.rootEventId)) {
+            page.reopen()
+        }
+        if (!pendingAction) {
+            return
+        }
+        var action = pendingAction
+        pendingAction = null
+        if (action.kind === "reply") {
+            beginReply(action.eventId, action.senderName, action.body)
+        } else if (action.kind === "edit") {
+            beginEdit(action.eventId, action.body)
+        } else if (action.kind === "react") {
+            threadActions.pickReaction(action.eventId)
+        } else if (action.kind === "forwardAttachment") {
+            threadActions.forwardAttachment(action.item)
+        } else if (action.kind === "transcribe") {
+            matrix.transcripts.transcribe(action.item.id, action.eventId, action.item.media)
+        } else if (action.kind === "delete") {
+            confirmDelete(action.eventId, action.txnId, action.unsent)
+        } else if (action.kind === "mention") {
+            composer.insertMember(action.userId, action.displayName)
+        }
+    }
+
     allowedOrientations: Orientation.All
 
     Component.onCompleted: {
         matrix.openThread(roomId, rootEventId)
         refreshRecipients()
     }
-    Component.onDestruction: matrix.closeThread()
+    Component.onDestruction: matrix.closeThread(page.rootEventId)
 
     Connections {
         target: matrix
-        onThreadFailed: page.error = message
+        onThreadFailed: {
+            if (root !== page.rootEventId) {
+                return
+            }
+            // No message: an older open's refused post, only its text comes back.
+            if (message.length > 0) {
+                page.error = message
+                // Read after the bridge's own bookkeeping: a closed thread is reopened, not resent.
+                page.sendFailed = unsent.length > 0 && matrix.threadOpen(page.rootEventId)
+            }
+            // A refused post comes back into an empty field rather than being lost.
+            if (unsent.length > 0 && composer.text.length === 0) {
+                composer.text = unsent
+            }
+        }
+        onThreadPaged: {
+            if (root === page.rootEventId) {
+                page.reachedStart = atStart
+            }
+        }
         onRecipientsChecked: {
             if (roomId === page.roomId) {
                 page.unverifiedUsers = users
@@ -56,23 +230,6 @@ Page {
     function refreshRecipients() {
         if (page.encrypted) {
             matrix.checkRecipients(page.roomId)
-        }
-    }
-
-    /// The line a message carries when its authenticity is in doubt, same wording
-    /// as the room: a thread must not say less about a message.
-    function shieldText(shield) {
-        if (!shield) {
-            return ""
-        }
-        switch (shield.reason) {
-        case "sentInClear": return qsTr("Sent unencrypted")
-        case "mismatchedSender": return qsTr("Not sent by the account it names")
-        case "identityChanged": return qsTr("The sender's keys changed")
-        case "unsignedDevice":
-        case "unknownDevice": return qsTr("From an unverified device")
-        case "unverifiedIdentity": return qsTr("From an unverified person")
-        default: return qsTr("Authenticity not confirmed")
         }
     }
 
@@ -92,8 +249,48 @@ Page {
         doSubmit()
     }
 
+    // Leaving the foreground aborts a running countdown, as in the room.
+    property var activeRemorse: null
+    readonly property bool appForeground: Qt.application.active
+    onAppForegroundChanged: {
+        if (!appForeground && activeRemorse && activeRemorse.pending) {
+            activeRemorse.cancel()
+        }
+    }
+
+    // The room's countdown, with its guard: Silica runs it when the page goes.
+    function confirmDelete(eventId, txnId, unsent) {
+        page.activeRemorse = Remorse.popupAction(page, unsent ? qsTr("Discarding") : qsTr("Deleting"), function() {
+            if (page.status !== PageStatus.Active || !Qt.application.active) {
+                return
+            }
+            matrix.deleteMessage(eventId, txnId, page.rootEventId)
+        })
+    }
+
     function doSubmit() {
-        matrix.sendThreadMessage(composer.text, composer.mentionIds())
+        // Closed under the page (another room was opened): the text stays, the thread comes back.
+        if (!matrix.threadOpen(page.rootEventId)) {
+            page.reopen()
+            return
+        }
+        var mentions = composer.mentionIds()
+        // A new post or edit replaces the old one's failure.
+        if (page.sendFailed) {
+            page.error = ""
+            page.sendFailed = false
+        }
+        if (page.editingEventId.length > 0) {
+            matrix.editMessage(page.editingEventId, composer.text, mentions, page.rootEventId)
+            page.cancelEdit()
+            return
+        }
+        if (page.replyingEventId.length > 0) {
+            matrix.replyToMessage(page.replyingEventId, composer.text, mentions, page.rootEventId)
+            page.clearReplyState()
+        } else if (!matrix.sendThreadMessage(page.rootEventId, composer.text, mentions)) {
+            return
+        }
         composer.clearField()
         composer.clearMentions()
         // The same rule as in the room below: with the setting on, the
@@ -107,56 +304,29 @@ Page {
         composer.focusField()
     }
 
-    // A tapped link, as in the room below: a Matrix address is answered inside
-    // the app, anything else is a web address.
-    function followLink(link) {
-        var target = MatrixLinks.decide(link)
-        if (target.kind === "none") {
-            return
-        }
-        if (target.kind === "web") {
-            // The address before it is opened: what a link says and where it
-            // goes are two strings a stranger writes.
-            var dialog = pageStack.push(Qt.resolvedUrl("ConfirmDialog.qml"), {
-                                            question: qsTr("Open this address?"),
-                                            subject: link,
-                                            acceptLabel: qsTr("Open"),
-                                            plainCancel: true
-                                        })
-            dialog.accepted.connect(function() { Qt.openUrlExternally(link) })
-            return
-        }
-        if (target.kind === "user") {
-            pageStack.push(Qt.resolvedUrl("NewChatDialog.qml"), { prefill: target.id })
-            return
-        }
-        page.pendingAddress = target.id
-        matrix.resolveRoom(target.id)
+    // A tapped link, the room's own handling: `TimelineActions.followLink`.
+    function followLink(link, map) {
+        threadActions.followLink(link, map)
     }
 
-    property string pendingAddress: ""
-
+    // The member page's "Mention", when this is the room's topmost page with a composer.
     Connections {
-        target: matrix
+        target: matrix.mentions
 
-        onRoomResolved: {
-            if (local || page.pendingAddress.length === 0
-                    || address !== page.pendingAddress.trim()) {
+        onInsertRequested: {
+            if (roomId !== page.roomId || Composing.mentionHost(pageStack, roomId) !== page) {
                 return
             }
-            page.pendingAddress = ""
-            if (joined) {
-                pageStack.push(Qt.resolvedUrl("RoomPage.qml"),
-                               { roomId: roomId, roomName: "" })
+            if (page.status === PageStatus.Active) {
+                composer.insertMember(userId, displayName)
                 return
             }
-            pageStack.push(Qt.resolvedUrl("JoinRoomDialog.qml"), { prefill: address })
-        }
-
-        onRoomResolveFailed: {
-            if (!local && address === page.pendingAddress.trim()) {
-                page.pendingAddress = ""
+            page.pendingAction = {
+                "kind": "mention",
+                "userId": userId,
+                "displayName": displayName
             }
+            pageStack.pop(page)
         }
     }
 
@@ -167,7 +337,7 @@ Page {
             left: parent.left
             right: parent.right
             top: parent.top
-            bottom: composer.top
+            bottom: composerColumn.top
         }
         clip: true
         model: matrix.threadTimeline
@@ -223,8 +393,17 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("Load older posts")
-                onClicked: matrix.threadLoadOlder()
+                text: qsTranslate("SessionOfflinePage", "Try again")
+                visible: page.error.length > 0 && !page.sendFailed
+                onClicked: page.retry()
+            }
+
+            // At the start it says so instead of offering what is not there.
+            MenuItem {
+                text: page.reachedStart ? qsTranslate("RoomPage", "Beginning of the conversation")
+                                        : qsTr("Load older posts")
+                enabled: !page.reachedStart
+                onClicked: matrix.threadLoadOlder(page.rootEventId)
             }
         }
 
@@ -248,218 +427,10 @@ Page {
             }
         }
 
-        delegate: ListItem {
-            id: threadRow
-
-            // "system" covers calls, membership and profile changes: without a row of
-            // their own a thread made of those renders as an empty page.
-            readonly property bool isSystem: model.kind === "system"
-            // The link a press is holding, while its menu is open; the room's link menu.
-            property string heldLink: ""
-            property var linkMarks: []
-
-            function holdLink(link, x, y) {
-                var origin = bodyText.mapToItem(threadRow, 0, 0)
-                linkHighlight.x = origin.x
-                linkHighlight.y = origin.y
-                threadRow.heldLink = link
-                // From the preview card there is no press in the text, and nothing to mark.
-                threadRow.linkMarks = x === undefined ? []
-                                                  : LinkMarks.sweep(bodyText, threadRow, link, x, y)
-                threadRow.openMenu()
-            }
-
-            width: threadView.width
-            enabled: model.kind === "message"
-            showMenuOnPressAndHold: false
-            _showPress: false
-            onClicked: {
-                var link = LinkMarks.linkAt(bodyText, threadRow, mouse.x, mouse.y)
-                if (link.length > 0) {
-                    threadRow.holdLink(link, mouse.x, mouse.y)
-                }
-            }
-            onPressAndHold: {
-                var link = LinkMarks.linkAt(bodyText, threadRow, mouse.x, mouse.y)
-                if (link.length > 0 && threadRow.down) {
-                    threadRow.holdLink(link, mouse.x, mouse.y)
-                }
-            }
-            onMenuOpenChanged: {
-                if (!menuOpen) {
-                    threadRow.heldLink = ""
-                    threadRow.linkMarks = []
-                }
-            }
-
-            menu: ContextMenu {
-                MenuItem {
-                    text: qsTr("Open link?")
-                    onClicked: page.followLink(threadRow.heldLink)
-                }
-
-                MenuItem {
-                    text: qsTr("Copy link")
-                    onClicked: Clipboard.text = threadRow.heldLink
-                }
-
-                MenuItem {
-                    text: qsTr("Forward link")
-                    onClicked: pageStack.push(Qt.resolvedUrl("ForwardPage.qml"),
-                                              { body: threadRow.heldLink })
-                }
-
-                MenuItem {
-                    text: qsTr("Pin")
-                    visible: (model.eventId || "").length > 0
-                             && matrix.roomPermissions.pin !== false
-                    onClicked: matrix.pinMessage(model.eventId, true)
-                }
-            }
-
-            contentHeight: {
-                if (model.kind === "date") {
-                    return dateLabel.height + Theme.paddingMedium
-                }
-                if (threadRow.isSystem) {
-                    return systemLabel.height + Theme.paddingMedium
-                }
-                if (rowColumn.visible) {
-                    return rowColumn.height + Theme.paddingMedium
-                }
-                return 0
-            }
-
-            Label {
-                id: systemLabel
-
-                visible: threadRow.isSystem
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeExtraSmall
-                font.italic: true
-                color: Theme.secondaryColor
-                textFormat: Text.PlainText
-                text: threadRow.isSystem
-                      ? (model.name ? model.name + " · " : "") + qsTr("Event")
-                      : ""
-            }
-
-            Label {
-                id: dateLabel
-
-                visible: model.kind === "date"
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: Theme.secondaryColor
-                text: model.kind === "date"
-                      ? Format.formatDate(new Date(model.timestamp), Formatter.DateMedium)
-                      : ""
-            }
-
-            Column {
-                id: rowColumn
-
-                visible: model.kind === "message"
-                         || model.kind === "undecryptable"
-                         || model.kind === "redacted"
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                spacing: Theme.paddingSmall / 2
-                // A held link is marked alone: the post steps back with the rest of the page.
-                opacity: threadRow.linkMarks.length > 0 ? Theme.opacityLow : 1.0
-
-                Label {
-                    width: parent.width
-                    truncationMode: TruncationMode.Fade
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    color: Theme.highlightColor
-                    textFormat: Text.PlainText
-                    text: (model.senderName || model.sender || "")
-                          + " · "
-                          + Format.formatDate(new Date(model.timestamp), Formatter.TimeValue)
-                }
-
-                Label {
-                    id: bodyText
-
-                    width: parent.width
-                    wrapMode: Text.Wrap
-                    font.pixelSize: Theme.fontSizeSmall
-                    font.italic: model.kind !== "message"
-                    color: model.kind === "message" ? Theme.primaryColor
-                                                    : Theme.secondaryColor
-                    readonly property string captionText: model.caption || ""
-                    // The room's own rule and settings: links, emoji pictures, the core's markup.
-                    // A file row has only its caption to render.
-                    readonly property string richBody: model.kind === "message"
-                                                       && (!model.media || captionText.length > 0)
-                                                       ? MessageBody.rich(!!model.media ? captionText
-                                                                                        : model.body,
-                                                                          model.formatted,
-                                                                          settings,
-                                                                          Theme.highlightColor,
-                                                                          Math.round(Theme.fontSizeSmall * 1.3),
-                                                                          function(key) { return matrix.emojiSource(key) })
-                                                       : ""
-                    textFormat: richBody.length > 0 ? Text.StyledText : Text.PlainText
-                    linkColor: Theme.highlightColor
-                    // The room's rule; a thread draws no picture, so every file is a line.
-                    text: MessageBody.rowText({
-                        "kind": model.kind,
-                        "utdCause": model.utdCause || "",
-                        "body": model.body || "",
-                        "caption": captionText,
-                        "media": model.kind === "message" && !!model.media,
-                        "image": model.msgtype === "m.image",
-                        "drawn": false,
-                        "rich": richBody
-                    })
-                }
-
-                // The linked page, under the same Privacy setting as in the room.
-                Loader {
-                    id: previewLoader
-
-                    readonly property string url: model.kind === "message" && !model.media
-                                                  && !model.poll && !model.location
-                                                  ? MessageBody.previewUrl(model.body,
-                                                                           settings.linkPreviews,
-                                                                           page.encrypted
-                                                                           || !page.encryptionKnown)
-                                                  : ""
-                    active: url.length > 0
-                    visible: active && !!item && item.available
-                    sourceComponent: LinkPreviewCard {
-                        availableWidth: rowColumn.width
-                        url: previewLoader.url
-                        tappable: settings.clickableLinks
-                        onActivated: threadRow.holdLink(link)
-                    }
-                }
-
-                // What the SDK will not vouch for: red is not what it claims to be, grey
-                // cannot be checked. Silent otherwise.
-                Label {
-                    width: parent.width
-                    visible: !!model.shield
-                    wrapMode: Text.Wrap
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    color: model.shield && model.shield.level === "red"
-                           ? Theme.errorColor : Theme.secondaryColor
-                    textFormat: Text.PlainText
-                    text: page.shieldText(model.shield)
-                }
-            }
-
-            LinkHighlight {
-                id: linkHighlight
-
-                label: bodyText
-                marks: threadRow.linkMarks
-            }
+        delegate: MessageRow {
+            host: page
+            listView: threadView
+            player: threadPlayer
         }
 
         // Without the error state this would say "loading" for good when the
@@ -467,16 +438,17 @@ Page {
         ViewPlaceholder {
             enabled: threadView.count === 0
             text: page.error.length > 0 ? qsTr("Thread unavailable")
-                                        : qsTr("Loading thread")
+                                        : page.reachedStart ? qsTr("No posts")
+                                                            : qsTr("Loading thread")
         }
 
         VerticalScrollDecorator { }
     }
 
     // Sending on the thread timeline threads automatically. The same composer
-    // the room below uses, without the offers a thread has no room for.
-    Composer {
-        id: composer
+    // the room below uses, with what is being answered or rewritten above it.
+    Column {
+        id: composerColumn
 
         anchors {
             left: parent.left
@@ -484,8 +456,139 @@ Page {
             bottom: parent.bottom
         }
 
+        Row {
+            x: Theme.horizontalPageMargin
+            width: parent.width - Theme.horizontalPageMargin
+            visible: page.replyingEventId.length > 0
+            spacing: Theme.paddingSmall
+
+            Label {
+                width: parent.width - parent.spacing - cancelReplyButton.width
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.highlightColor
+                truncationMode: TruncationMode.Fade
+                text: qsTr("Reply to %1").arg(page.replyingTo)
+            }
+
+            IconButton {
+                id: cancelReplyButton
+
+                icon.source: "image://theme/icon-m-clear"
+                onClicked: page.cancelReply()
+            }
+        }
+
+        Row {
+            x: Theme.horizontalPageMargin
+            width: parent.width - Theme.horizontalPageMargin
+            visible: page.editingEventId.length > 0
+            spacing: Theme.paddingSmall
+
+            Label {
+                width: parent.width - parent.spacing - cancelEditButton.width
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.highlightColor
+                truncationMode: TruncationMode.Fade
+                text: qsTr("Editing message")
+            }
+
+            IconButton {
+                id: cancelEditButton
+
+                icon.source: "image://theme/icon-m-clear"
+                onClicked: page.cancelEdit()
+            }
+        }
+
+        Composer {
+            id: composer
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
+            roomId: page.roomId
+            attachments: true
+            emoji: true
+            editing: page.editingEventId.length > 0
+            placeholderText: page.editingEventId.length > 0 ? qsTr("New text")
+                                                            : qsTr("Reply in thread")
+            onSubmitted: page.submit()
+            onAttachRequested: threadAttachments.pick()
+            onEmojiRequested: page.pickEmoji()
+        }
+    }
+
+    // The thread's own player; `TimelineActions.play` stops the room's.
+    Audio {
+        id: threadPlayer
+
+        onStopped: {
+            if (status === Audio.EndOfMedia) {
+                threadActions.playingId = ""
+            }
+        }
+    }
+
+    // Media, reactions, names and shields on the thread's own view and media keys.
+    TimelineActions {
+        id: threadActions
+
+        page: page
+        player: threadPlayer
+        threadRoot: page.rootEventId
+        mediaPrefix: "thread:"
+        timelineModel: matrix.threadTimeline
+    }
+
+    Rectangle {
+        id: notice
+
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: composerColumn.top
+            bottomMargin: Theme.paddingLarge
+        }
+        width: noticeLabel.width + 2 * Theme.paddingLarge
+        height: noticeLabel.height + 2 * Theme.paddingMedium
+        radius: Theme.paddingMedium
+        color: Theme.rgba(Theme.highlightDimmerColor, 0.9)
+        opacity: 0
+
+        Label {
+            id: noticeLabel
+
+            anchors.centerIn: parent
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.primaryColor
+            text: page.noticeText
+        }
+
+        Behavior on opacity { FadeAnimation { } }
+    }
+
+    Timer {
+        id: noticeTimer
+
+        interval: 2500
+        onTriggered: notice.opacity = 0
+        onRunningChanged: {
+            if (running) {
+                notice.opacity = 1
+            }
+        }
+    }
+
+    ThreadAttachments {
+        id: threadAttachments
+
+        page: page
+        composer: composer
         roomId: page.roomId
-        placeholderText: qsTr("Reply in thread")
-        onSubmitted: page.submit()
+        threadRoot: page.rootEventId
+        unverifiedUsers: page.unverifiedUsers
     }
 }

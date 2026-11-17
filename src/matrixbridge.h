@@ -29,7 +29,9 @@
 #include "locationactions.h"
 #include "camerashots.h"
 #include "roomsettings.h"
+#include "banlist.h"
 #include "leftrooms.h"
+#include "pushrules.h"
 #include "crosssigning.h"
 #include "spacemarkers.h"
 #include "voicetranscripts.h"
@@ -128,6 +130,8 @@ class MatrixBridge : public QObject
     Q_PROPERTY(QObject *linkPreviews READ linkPreviews CONSTANT)
     Q_PROPERTY(QObject *roomSettings READ roomSettings CONSTANT)
     Q_PROPERTY(QObject *leftRooms READ leftRooms CONSTANT)
+    Q_PROPERTY(QObject *bans READ bans CONSTANT)
+    Q_PROPERTY(QObject *pushRules READ pushRules CONSTANT)
     Q_PROPERTY(QObject *crossSigning READ crossSigning CONSTANT)
     Q_PROPERTY(QObject *mentions READ mentions CONSTANT)
     Q_PROPERTY(QObject *transcripts READ transcripts CONSTANT)
@@ -260,6 +264,8 @@ public:
     QObject *linkPreviews() { return m_linkPreviews; }
     QObject *roomSettings() { return m_roomSettings; }
     QObject *leftRooms() { return m_leftRooms; }
+    QObject *bans() { return m_bans; }
+    QObject *pushRules() { return m_pushRules; }
     QObject *crossSigning() { return m_crossSigning; }
     QObject *mentions() { return m_mentions; }
     QObject *transcripts() { return m_transcripts; }
@@ -548,18 +554,21 @@ public:
     Q_INVOKABLE void loadNewer();
 
     /// Opens one thread's timeline next to the room's; rows stream into
-    /// `threadTimeline`.
+    /// `threadTimeline`. Another room open: that room first, the thread on its answer.
     Q_INVOKABLE void openThread(const QString &roomId, const QString &rootEventId);
 
-    /// Closes the open thread and empties its model.
-    Q_INVOKABLE void closeThread();
+    /// Closes the open thread and empties its model; a root names which.
+    Q_INVOKABLE void closeThread(const QString &rootEventId = QString());
 
-    /// Sends a text message into the open thread.
-    Q_INVOKABLE void sendThreadMessage(const QString &body,
+    /// Whether this thread is the one open, or opening.
+    Q_INVOKABLE bool threadOpen(const QString &rootEventId) const;
+
+    /// Sends a text message into this thread. False: not sent, nothing went out.
+    Q_INVOKABLE bool sendThreadMessage(const QString &rootEventId, const QString &body,
                                        const QStringList &mentions = QStringList());
 
-    /// Loads older events of the open thread.
-    Q_INVOKABLE void threadLoadOlder();
+    /// Loads older events of this thread.
+    Q_INVOKABLE void threadLoadOlder(const QString &rootEventId);
 
     /// Sends a plain text message to the open room.
     Q_INVOKABLE void sendMessage(const QString &body,
@@ -602,7 +611,7 @@ public:
 
     /// Asks who has read up to this message. Answered by readersReady(); the
     /// rows carry only the count, names are fetched when they are wanted.
-    Q_INVOKABLE void loadReaders(const QString &eventId);
+    Q_INVOKABLE void loadReaders(const QString &eventId, const QString &threadRoot = QString());
 
     /// Empties the last error. The field is global, and a page wants what happened
     /// there rather than what another command left behind.
@@ -610,7 +619,8 @@ public:
 
     /// Asks who reacted with this key; answered by reactorsReady(). The rows carry
     /// a count only, so the people are fetched on a long press.
-    Q_INVOKABLE void loadReactors(const QString &eventId, const QString &key);
+    Q_INVOKABLE void loadReactors(const QString &eventId, const QString &key,
+                                  const QString &threadRoot = QString());
 
     /// Accepts an invitation or joins a known room.
     Q_INVOKABLE void joinRoom(const QString &roomId);
@@ -666,17 +676,21 @@ public:
     Q_INVOKABLE void fetchRoomKeys(const QString &roomId);
 
     /// Sends a reply to an earlier message.
+    /// `threadRoot`, on this and the row actions below: the open thread's view.
     Q_INVOKABLE void replyToMessage(const QString &eventId, const QString &body,
-                                    const QStringList &mentions = QStringList());
+                                    const QStringList &mentions = QStringList(),
+                                    const QString &threadRoot = QString());
 
     /// Replaces the body of a message that was already sent. `mentions` are the
     /// ones picked while editing; the core keeps the original's that are still named.
     Q_INVOKABLE void editMessage(const QString &eventId, const QString &body,
-                                 const QStringList &mentions = QStringList());
+                                 const QStringList &mentions = QStringList(),
+                                 const QString &threadRoot = QString());
 
     /// Deletes a sent message, or discards one that never left: a send that failed
     /// for good has no event id and can only be named by its transaction id.
-    Q_INVOKABLE void deleteMessage(const QString &eventId, const QString &txnId = QString());
+    Q_INVOKABLE void deleteMessage(const QString &eventId, const QString &txnId = QString(),
+                                   const QString &threadRoot = QString());
 
     /// Puts a message the send queue parked back in line. Only for one that
     /// never reached the server.
@@ -684,18 +698,21 @@ public:
 
     /// Adds a reaction to a message, or takes ours back if it is already
     /// there. The key is the reaction itself - usually one emoji character.
-    Q_INVOKABLE void toggleReaction(const QString &eventId, const QString &key);
+    Q_INVOKABLE void toggleReaction(const QString &eventId, const QString &key,
+                                    const QString &threadRoot = QString());
 
     /// Sends a file as an attachment; `caption` and `replyTo` may be empty and
     /// cannot be added later. `voiceDuration` above zero marks a voice message.
     /// `original` keeps a picture as it lies; without it, it is re-encoded
-    /// towards a size a mobile line can carry. `mentions` are the caption's.
+    /// towards a size a mobile line can carry. `mentions` are the caption's;
+    /// `threadRoot` sends it into that thread, which must be the open one.
     Q_INVOKABLE void sendMedia(const QString &path, const QString &mimeType,
                                const QString &caption = QString(),
                                const QString &replyTo = QString(),
                                qint64 voiceDuration = 0,
                                bool original = false,
-                               const QStringList &mentions = QStringList());
+                               const QStringList &mentions = QStringList(),
+                               const QString &threadRoot = QString());
 
     /// A draft too long for a bubble, sent as a text file. False where the file
     /// could not be written; the caller then sends it as a message.
@@ -870,8 +887,10 @@ signals:
     void memberProfileFailed(const QString &message);
 
     /// A thread could not be opened, paginated or posted to. Same reason:
-    /// `lastError` is global, and the page must not sit on "loading".
-    void threadFailed(const QString &message);
+    /// `lastError` is global, and the page must not sit on "loading". `unsent`: a refused post.
+    void threadFailed(const QString &root, const QString &message, const QString &unsent);
+    /// A page of the thread arrived; `atStart`: nothing older exists.
+    void threadPaged(const QString &root, bool atStart);
 
     /// The account's ignored users, for the ignore list page.
     void ignoredUsersReady(const QStringList &users);
@@ -882,7 +901,7 @@ signals:
 
     /// Unread messages in a room that is not on screen. `previewKind` names the
     /// event's kind, `previewText` is set for text and emote only. `audible`:
-    /// the push rules call it noisy, or the sync's count rose.
+    /// the matching push rule carries a sound.
     void roomActivity(const QString &roomId,
                       const QString &roomName,
                       int unread,
@@ -1064,6 +1083,8 @@ private:
     LinkPreviews *m_linkPreviews = nullptr;
     RoomSettings *m_roomSettings = nullptr;
     LeftRooms *m_leftRooms = nullptr;
+    BanList *m_bans = nullptr;
+    PushRules *m_pushRules = nullptr;
     CrossSigning *m_crossSigning = nullptr;
     Mentions *m_mentions = nullptr;
     VoiceTranscripts *m_transcripts = nullptr;
@@ -1082,6 +1103,8 @@ private:
     /// Counts thread opens, so diffs of a previous open of the *same* thread
     /// can be told apart from this one's.
     quint64 m_threadGeneration = 0;
+    // The core confirmed this generation's open; before that "no thread" is not a loss.
+    bool m_threadInstalled = false;
     /// Which open a `timeline.diff` belongs to. The room id alone cannot say:
     /// the pinned view is the same room under another focus.
     quint64 m_timelineGeneration = 0;
@@ -1193,9 +1216,25 @@ private:
     bool sendInFlight() const;
     /// Removes the two directories an upload reads from, once nothing does.
     void wipeOutgoingCopies();
+    /// Sends `thread.open` and remembers which thread it is about.
+    void sendThreadOpen(const QJsonObject &arguments);
 
     /// Which message a pending `timeline.readers` request is about.
     QHash<quint64, QString> m_readerRequests;
+    /// The thread a pending `thread.*` command is about, a post's text, and the
+    /// open it was asked under: a reopen of the same root must not take its answer.
+    struct ThreadRequest {
+        QString root;
+        QString unsent;
+        quint64 generation = 0;
+    };
+    QHash<quint64, ThreadRequest> m_threadRequests;
+    /// Records a `thread.*` command against the current open.
+    void rememberThreadRequest(quint64 id, const QString &root, const QString &unsent);
+    /// The thread is not open in the core any more: `threadOpen` answers false.
+    void forgetOpenThread();
+    /// A `thread.open` waiting for its room's `timeline.open`; empty when none.
+    QJsonObject m_threadAfterRoom;
     /// Which message and key a pending `timeline.reactors` request is about.
     /// The core answers with both, so this only says the request was ours.
     QSet<quint64> m_reactorRequests;

@@ -11,6 +11,7 @@ use matrix_sdk::deserialized_responses::{SyncOrStrippedState, TimelineEventKind}
 use matrix_sdk::latest_events::LatestEventValue;
 use matrix_sdk::room::Receipts;
 use matrix_sdk::ruma::events::marked_unread::MarkedUnreadEventContent;
+use matrix_sdk::ruma::push::Action;
 use matrix_sdk::ruma::events::poll::unstable_start::UnstablePollStartEventContent;
 use matrix_sdk::ruma::events::room::message::{MessageType, Relation};
 use matrix_sdk::ruma::events::{
@@ -292,6 +293,50 @@ pub async fn permalink(client: &Client, room_id: &str) -> Result<String, String>
         .map_err(|error| format!("no link for this room: {}", scrub_ids(&error.to_string())))
 }
 
+/// Whether the rule that matched the latest event asks for a tone. `None` where the
+/// SDK computed no actions: unknown, and the banner keeps its tone.
+fn latest_sound(item: &RoomListItem) -> Option<bool> {
+    let LatestEventValue::Remote(event) = item.latest_event() else {
+        return None;
+    };
+    event.push_actions().map(actions_sound)
+}
+
+/// The account's message rules as the journal line on a silent banner needs them.
+async fn log_sound_rules(client: &Client, sink: &Arc<Sink>) {
+    use matrix_sdk::ruma::push::RuleKind;
+    let Ok(rules) = client.account().push_rules().await else {
+        return;
+    };
+    let parts: Vec<String> = [
+        ".m.rule.room_one_to_one",
+        ".m.rule.encrypted_room_one_to_one",
+        ".m.rule.message",
+        ".m.rule.encrypted",
+    ]
+    .iter()
+    .map(|id| {
+        let state = match rules.get(RuleKind::Underride, id) {
+            None => "missing",
+            Some(rule) if !rule.enabled() => "disabled",
+            Some(rule) if actions_sound(rule.actions()) => "sound",
+            Some(rule) if rule.actions().iter().any(Action::should_notify) => "quiet",
+            Some(_) => "silent",
+        };
+        format!("{} {state}", id.trim_start_matches(".m.rule."))
+    })
+    .collect();
+    sink.emit(event(
+        "core.log",
+        json!({ "level": "info", "target": "xmatic", "message": format!("push rules: {}", parts.join(", ")) }),
+    ));
+}
+
+/// Group rooms default to "notify" without a tone; a badge, not a ring.
+fn actions_sound(actions: &[Action]) -> bool {
+    actions.iter().any(|action| action.sound().is_some())
+}
+
 fn latest_preview(item: &RoomListItem) -> (Option<&'static str>, Option<String>, Option<String>) {
     let LatestEventValue::Remote(event) = item.latest_event() else {
         return (None, None, None);
@@ -484,6 +529,9 @@ fn summarize(item: &RoomListItem, sink: &Arc<Sink>) -> Value {
         "previewKind": preview_kind,
         "previewText": preview_text,
         "previewSender": preview_sender,
+        "sound": latest_sound(item),
+        // The one-to-one rules match exactly two; the banner log names it.
+        "members": item.active_members_count(),
     })
 }
 
@@ -958,6 +1006,13 @@ fn spawn_sync_state(
                     let limit = client.clone();
                     let handle = tokio::spawn(async move {
                         crate::media::prefetch_upload_limit(&limit).await;
+                    });
+                    track_side_task(handle.abort_handle());
+
+                    let rules = client.clone();
+                    let rules_sink = sink.clone();
+                    let handle = tokio::spawn(async move {
+                        log_sound_rules(&rules, &rules_sink).await;
                     });
                     track_side_task(handle.abort_handle());
 
@@ -1656,6 +1711,17 @@ mod tests {
         assert!(!pages.has_more(PAGE_SIZE + 1, None));
         // The adapter will not grow past the server count.
         assert!(!pages.has_more(PAGE_SIZE + 1, Some(PAGE_SIZE as u32)));
+    }
+
+    #[test]
+    fn only_a_sound_tweak_rings() {
+        use matrix_sdk::ruma::push::{SoundTweakValue, Tweak};
+        assert!(!actions_sound(&[]));
+        assert!(!actions_sound(&[Action::Notify]));
+        assert!(actions_sound(&[
+            Action::Notify,
+            Action::SetTweak(Tweak::Sound(SoundTweakValue::Default)),
+        ]));
     }
 
     #[test]

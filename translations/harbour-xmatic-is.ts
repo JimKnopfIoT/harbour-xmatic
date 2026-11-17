@@ -356,6 +356,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Þetta er ekki gilt Matrix-vistfang. Það lítur svona út: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Þú getur ekki bannað sjálfan þig.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Ástæðan er of löng.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Matrix-vistfang lítur svona út: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Ástæða (valfrjálst)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Viðkomandi kemst ekki lengur inn í þetta herbergi. Ef viðkomandi er meðlimur núna er viðkomandi fjarlægður. Allir í herberginu sjá bannið og ástæðu þess.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Banna einhvern…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Bannaðir aðilar</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Hlutverk þitt í þessu herbergi leyfir hvorki að banna né að aflétta banni. Listinn er aðeins til lestrar.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Ástæða: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Bannað af %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Enginn er bannaður</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -448,6 +505,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Innkomur, boð, fjarlægingar og bönn eru alltaf sýnd.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Tilkynningar</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Tilkynningareglur</translation>
     </message>
 </context>
 <context>
@@ -1420,6 +1485,10 @@
         <source>The people in this room show up here.</source>
         <translation>Fólkið í þessu herbergi birtist hér.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Banna…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1648,6 +1717,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Símtal</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 gekk inn</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 fór</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 bauð %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 fjarlægði %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 bannaði %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 aflétti banni á %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 dró boðið til %2 til baka</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 hafnaði boðinu</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 bað um að komast inn</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 breytti aðild</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 breytti notandamynd sinni</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 breytti birtingarnafni í %2 og prófílmynd</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 fjarlægði birtingarnafn og breytti prófílmynd</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 breytti birtingarnafni sínu í %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 fjarlægði birtingarnafn sitt</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Opna tengil?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Afrita tengil</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Áframsenda tengil</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Henda</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Eyða</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Festa</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svara í þræðinum</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Senda aftur</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Vista</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Breyta í texta</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Afrita</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Áframsenda</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Breyta</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Bregðast við</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Svara</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Meira…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Ekki er hægt að hlaða tilvitnuðu skilaboðunum: þau eru ekki lengur til eða þú mátt ekki sjá þau.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ekki sýnt á þessu tæki. Ýttu til að opna.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Ekki tókst að hlaða. Ýttu til að reyna aftur.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Ýttu til að hlaða</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Raddskilaboð</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Breyti í texta…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Greint sjálfvirkt, getur innihaldið villur</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Sýna minna</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Sýna meira</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Hvað þýða þessi merki?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Þráður · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Í þræðinum</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Þessi viðbrögð fela texta og voru ekki send</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>ekki sent</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>eyðing ekki send</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>breyting ekki send</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>breytt</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1675,6 +1949,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Hinn aðilinn fær boð og samtalið birtist strax í listanum þínum. Skilaboð eru dulkóðuð frá byrjun.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Tilkynningareglur</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Bein skilaboð</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Hópskilaboð</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Minnst á þig</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Minnst á alla spjallrásina</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Boð</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Símtöl</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Slökkt</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Þjónninn hafnaði breytingunni: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Án hljóðs</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Með hljóði</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Vistaðar á aðganginum þínum, svo öll forrit fylgja þeim. Með hljóði hringir, Án hljóðs sýnir tilkynningu og lætur ljósið blikka, Slökkt hækkar aðeins teljara ólesinna í spjallrásinni. Spjallrás með eigin stillingu í upplýsingum sínum heldur henni. Minnst á sem stillt er á Slökkt telst venjuleg skilaboð í sinni spjallrás.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Bíð eftir þjóninum…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Stillt á mismunandi hátt að hluta. Veldu stig til að beita því alls staðar.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Ekki tókst að lesa reglurnar af þjóninum: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Þjónninn svaraði ekki í tæka tíð.</translation>
     </message>
 </context>
 <context>
@@ -2741,89 +3082,8 @@
         <translation>Upphaf samtalsins</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Símtal</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 gekk inn</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 fór</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 hafnaði boðinu</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 bað um að komast inn</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 breytti aðild</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Afrita</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Svara</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Vista</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Áframsenda</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Breyta</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Festa</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Eyða</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Meira…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Ekki er hægt að hlaða tilvitnuðu skilaboðunum: þau eru ekki lengur til eða þú mátt ekki sjá þau.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Raddskilaboð</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Skilaboðum eytt</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Þráður · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Í þræðinum</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>ekki sent</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>breytt</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2858,52 +3118,12 @@
         <translation>Þessi skilaboð eru ekki í hlaðnu sögunni</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Henda</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Senda aftur</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Bregðast við</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Svara í þræðinum</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Afrita hlekk spjallrásar</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Hlekkur spjallrásar afritaður</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Sent ódulkóðað</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Ekki sent af reikningnum sem er nefndur</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Lyklar sendanda breyttust</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Úr óstaðfestu tæki</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Frá óstaðfestum aðila</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Áreiðanleiki óstaðfestur</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2914,20 +3134,12 @@
         <translation>Eyði</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Þessi viðbrögð fela texta og voru ekki send</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Mynd</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Leita í skilaboðum</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Hvað þýða þessi merki?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2970,43 +3182,6 @@
         <translation>Atkvæði þitt var ekki sent</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 bauð %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 fjarlægði %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 bannaði %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 aflétti banni á %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 dró boðið til %2 til baka</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Breyta í texta</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Breyti í texta…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Greint sjálfvirkt, getur innihaldið villur</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Tek upp… %1 s. Ýttu á hljóðnemann til að senda.</translation>
     </message>
@@ -3015,40 +3190,12 @@
         <translation>Ekkert var sagt, svo ekkert var sent.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Vistað í myndasafn</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Ekki tókst að vista</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Vistað í Niðurhal</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Sýna minna</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Sýna meira</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Ekki tókst að skrifa textann sem skrá</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Deila staðsetningu</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>eyðing ekki send</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>breyting ekki send</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3065,50 +3212,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Það bíður ekki lengur eftir að verða sent.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Ekki tókst að hlaða. Ýttu til að reyna aftur.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Ýttu til að hlaða</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Opna tengil?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Afrita tengil</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Áframsenda tengil</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 breytti birtingarnafni sínu í %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 fjarlægði birtingarnafn sitt</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 breytti notandamynd sinni</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 breytti birtingarnafni í %2 og prófílmynd</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 fjarlægði birtingarnafn og breytti prófílmynd</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Ekki sýnt á þessu tæki. Ýttu til að opna.</translation>
     </message>
 </context>
 <context>
@@ -3965,6 +4068,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Velja skrár</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3973,10 +4083,6 @@
     <message>
         <source>Thread</source>
         <translation>Þráður</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Atburður</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3994,6 +4100,33 @@
         <source>Reply in thread</source>
         <translation>Svara í þræðinum</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Fleygi</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Eyði</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Svar til %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Breyti skilaboðum</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Nýr texti</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Engin innlegg</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Sent ódulkóðað</translation>
@@ -4019,28 +4152,16 @@
         <translation>Áreiðanleiki óstaðfestur</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Opna þetta vistfang?</translation>
+        <source>Saved to gallery</source>
+        <translation>Vistað í myndasafn</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Opna</translation>
+        <source>Could not save</source>
+        <translation>Ekki tókst að vista</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Opna tengil?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Afrita tengil</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Áframsenda tengil</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Festa</translation>
+        <source>Saved to Downloads</source>
+        <translation>Vistað í Niðurhal</translation>
     </message>
 </context>
 <context>

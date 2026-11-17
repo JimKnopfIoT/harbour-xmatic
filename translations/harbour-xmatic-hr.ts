@@ -357,6 +357,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Ovo nije valjana Matrix adresa. Izgleda ovako: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Ne možeš zabraniti samog sebe.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Razlog je predug.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Matrix adresa izgleda ovako: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Razlog (neobavezno)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Osoba više neće moći ući u ovu sobu. Ako je sada član, bit će uklonjena. Svi u sobi vide zabranu i njezin razlog.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Zabrani nekoga…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Zabranjene osobe</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Tvoja uloga u ovoj sobi ne dopušta zabranu ni ukidanje zabrane. Popis je samo za čitanje.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Razlog: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Zabranu izrekao/la %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Nitko nije zabranjen</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -449,6 +506,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Pridruživanja, pozivnice, uklanjanja i zabrane uvijek se prikazuju.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Obavijesti</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Pravila obavijesti</translation>
     </message>
 </context>
 <context>
@@ -1422,6 +1487,10 @@
         <source>The people in this room show up here.</source>
         <translation>Osobe u ovoj sobi pojavljuju se ovdje.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Zabrani…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1650,6 +1719,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Poziv</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 je ušao</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 je otišao</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 je pozvao %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 je uklonio %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 je zabranio %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 je ukinuo zabranu za %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 je povukao poziv za %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 je odbio pozivnicu</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 je zatražio ulazak</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 je promijenio članstvo</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 je promijenio/la profilnu sliku</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 je promijenio prikazno ime u %2 i profilnu sliku</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 je uklonio prikazno ime i promijenio profilnu sliku</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 je promijenio/la prikazno ime u %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 je uklonio/la prikazno ime</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Otvoriti poveznicu?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopiraj poveznicu</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Proslijedi poveznicu</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Odbaci</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Obriši</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Prikvači</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Odgovori u niti</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Pošalji ponovno</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Spremi</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Pretvori u tekst</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopiraj</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Proslijedi</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Uredi</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagiraj</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Odgovori</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Više…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Citirana poruka ne može se učitati: više ne postoji ili je ne smiješ vidjeti.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ne prikazuje se na ovom uređaju. Dodirni za otvaranje.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Učitavanje nije uspjelo. Dodirni za novi pokušaj.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Dodirni za učitavanje</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Glasovna poruka</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Pretvaranje u tekst…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Prepoznato automatski, može sadržavati pogreške</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Prikaži manje</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Prikaži više</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Što znače ovi znakovi?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Nit · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>U niti</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Ova reakcija skriva tekst i nije poslana</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>nije poslano</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>brisanje nije poslano</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>uređivanje nije poslano</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>uređeno</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1677,6 +1951,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Druga strana dobiva pozivnicu, a razgovor se odmah pojavljuje na tvom popisu. Poruke su šifrirane od početka.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Pravila obavijesti</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Izravne poruke</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Grupne poruke</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Spominjanja tebe</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Spominjanja cijele sobe</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Pozivnice</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Pozivi</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Isključeno</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Poslužitelj je odbio promjenu: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Bez zvuka</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Sa zvukom</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Spremljena na tvom računu, pa ih slijedi svaki klijent. Sa zvukom zvoni, Bez zvuka prikazuje obavijest i trepće LED-om, Isključeno samo povećava brojač nepročitanih u sobi. Soba s vlastitom postavkom u pojedinostima zadržava je. Spominjanje postavljeno na Isključeno računa se kao obična poruka svoje sobe.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Čekam poslužitelj…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Djelomično različito postavljeno. Odaberi razinu da je primijeniš posvuda.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Pravila se nisu mogla pročitati s poslužitelja: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Poslužitelj nije odgovorio na vrijeme.</translation>
     </message>
 </context>
 <context>
@@ -2745,89 +3086,8 @@
         <translation>Početak razgovora</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Poziv</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 je ušao</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 je otišao</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 je odbio pozivnicu</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 je zatražio ulazak</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 je promijenio članstvo</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopiraj</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Odgovori</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Spremi</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Proslijedi</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Uredi</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Prikvači</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Obriši</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Više…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Citirana poruka ne može se učitati: više ne postoji ili je ne smiješ vidjeti.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Glasovna poruka</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Poruka obrisana</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Nit · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>U niti</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>nije poslano</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>uređeno</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2862,52 +3122,12 @@
         <translation>Ta poruka nije u učitanoj povijesti</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Odbaci</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Pošalji ponovno</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagiraj</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Odgovori u niti</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopiraj poveznicu sobe</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Poveznica sobe kopirana</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Poslano nešifrirano</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Nije poslao navedeni račun</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Ključevi pošiljatelja su se promijenili</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>S neprovjerenog uređaja</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Od neprovjerene osobe</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Vjerodostojnost nije potvrđena</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2918,20 +3138,12 @@
         <translation>Brisanje</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Ova reakcija skriva tekst i nije poslana</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Slika</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Pretraži poruke</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Što znače ovi znakovi?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2974,43 +3186,6 @@
         <translation>Tvoj glas nije poslan</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 je pozvao %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 je uklonio %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 je zabranio %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 je ukinuo zabranu za %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 je povukao poziv za %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Pretvori u tekst</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Pretvaranje u tekst…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Prepoznato automatski, može sadržavati pogreške</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Snimanje… %1 s. Dodirni mikrofon za slanje.</translation>
     </message>
@@ -3019,40 +3194,12 @@
         <translation>Ništa nije rečeno, pa ništa nije poslano.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Spremljeno u galeriju</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Spremanje nije uspjelo</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Spremljeno u Preuzimanja</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Prikaži manje</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Prikaži više</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Tekst se nije mogao zapisati kao datoteka</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Podijeli lokaciju</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>brisanje nije poslano</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>uređivanje nije poslano</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3069,50 +3216,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>To više ne čeka na slanje.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Učitavanje nije uspjelo. Dodirni za novi pokušaj.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Dodirni za učitavanje</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Otvoriti poveznicu?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopiraj poveznicu</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Proslijedi poveznicu</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 je promijenio/la prikazno ime u %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 je uklonio/la prikazno ime</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 je promijenio/la profilnu sliku</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 je promijenio prikazno ime u %2 i profilnu sliku</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 je uklonio prikazno ime i promijenio profilnu sliku</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Ne prikazuje se na ovom uređaju. Dodirni za otvaranje.</translation>
     </message>
 </context>
 <context>
@@ -3970,6 +4073,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Odaberi datoteke</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3978,10 +4088,6 @@
     <message>
         <source>Thread</source>
         <translation>Nit</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Događaj</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3999,6 +4105,33 @@
         <source>Reply in thread</source>
         <translation>Odgovori u niti</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Odbacivanje</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Brisanje</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Odgovor za %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Uređivanje poruke</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Novi tekst</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Nema objava</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Poslano nešifrirano</translation>
@@ -4024,28 +4157,16 @@
         <translation>Vjerodostojnost nije potvrđena</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Otvoriti ovu adresu?</translation>
+        <source>Saved to gallery</source>
+        <translation>Spremljeno u galeriju</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Otvori</translation>
+        <source>Could not save</source>
+        <translation>Spremanje nije uspjelo</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Otvoriti poveznicu?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopiraj poveznicu</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Proslijedi poveznicu</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Prikvači</translation>
+        <source>Saved to Downloads</source>
+        <translation>Spremljeno u Preuzimanja</translation>
     </message>
 </context>
 <context>

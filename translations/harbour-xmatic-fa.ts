@@ -355,6 +355,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>این یک نشانی معتبر Matrix نیست. شکل آن این است: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>نمی‌توانی خودت را محروم کنی.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>دلیل بیش از حد طولانی است.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>نشانی Matrix این شکلی است: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>دلیل (اختیاری)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>این شخص دیگر نمی‌تواند وارد این اتاق شود. اگر اکنون عضو باشد، حذف می‌شود. همه در اتاق محرومیت و دلیل آن را می‌بینند.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>محروم‌کردن کسی…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>افراد محروم</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>نقش تو در این اتاق اجازهٔ محروم‌کردن یا برداشتن محرومیت را نمی‌دهد. فهرست فقط خواندنی است.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>دلیل: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>محروم‌شده توسط %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>هیچ‌کس محروم نیست</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -447,6 +504,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>پیوستن‌ها، دعوت‌ها، حذف‌ها و مسدودسازی‌ها همیشه نمایش داده می‌شوند.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>اعلان‌ها</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>قواعد اعلان</translation>
     </message>
 </context>
 <context>
@@ -1418,6 +1483,10 @@
         <source>The people in this room show up here.</source>
         <translation>کسانی که در این اتاق‌اند این‌جا دیده می‌شوند.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>محروم‌کردن…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1646,6 +1715,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>تماس</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 پیوست</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 ترک کرد</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 کاربر %2 را دعوت کرد</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 کاربر %2 را حذف کرد</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 کاربر %2 را محروم کرد</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 محرومیت %2 را برداشت</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 دعوت %2 را پس گرفت</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 دعوت را رد کرد</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 درخواست پیوستن داد</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>عضویت %1 تغییر کرد</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 تصویر نمایه خود را تغییر داد</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 نام نمایشی را به %2 و تصویر نمایه را تغییر داد</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 نام نمایشی را حذف کرد و تصویر نمایه را تغییر داد</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 نام نمایشی خود را به %2 تغییر داد</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 نام نمایشی خود را حذف کرد</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>پیوند باز شود؟</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>کپی پیوند</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>هدایت پیوند</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>دورانداختن</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>حذف</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>سنجاق</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>پاسخ در رشته</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>ارسال دوباره</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>ذخیره</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>تبدیل به متن</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>رونوشت</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>هدایت</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>ویرایش</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>واکنش</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>پاسخ</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>بیشتر…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>پیام نقل‌شده بارگیری نمی‌شود: دیگر وجود ندارد یا اجازهٔ دیدنش را نداری.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>روی این دستگاه نمایش داده نمی‌شود. برای باز کردن بزن.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>بارگیری نشد. برای تلاش دوباره ضربه بزن.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>برای بارگیری ضربه بزن</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>پیام صوتی</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>در حال تبدیل به متن…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>به‌طور خودکار تشخیص داده شد، ممکن است اشتباه داشته باشد</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>نمایش کمتر</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>نمایش بیشتر</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>این نشانه‌ها چه معنایی دارند؟</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>رشته · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>در رشته</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>این واکنش متن را پنهان می‌کند و فرستاده نشد</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>فرستاده نشد</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>حذف فرستاده نشد</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>ویرایش فرستاده نشد</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>ویرایش‌شده</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1673,6 +1947,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>طرف مقابل دعوتی می‌گیرد و گفت‌وگو بی‌درنگ در فهرست تو پدیدار می‌شود. پیام‌ها از همان آغاز رمزگذاری‌شده‌اند.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>قواعد اعلان</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>پیام‌های مستقیم</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>پیام‌های گروهی</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>اشاره به تو</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>اشاره به کل اتاق</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>دعوت‌ها</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>تماس‌ها</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>خاموش</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>سرور تغییر را رد کرد: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>بی‌صدا</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>با صدا</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>در حسابت ذخیره می‌شوند، پس همهٔ کلاینت‌ها از آن‌ها پیروی می‌کنند. «با صدا» زنگ می‌زند، «بی‌صدا» اعلان نشان می‌دهد و LED را چشمک‌زن می‌کند، «خاموش» فقط شمارندهٔ نخوانده‌های اتاق را بالا می‌برد. اتاقی که در جزئیاتش تنظیم خودش را دارد، آن را نگه می‌دارد. اشاره‌ای که روی «خاموش» تنظیم شده، پیام عادی اتاقش حساب می‌شود.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>در انتظار سرور…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>بخشی از آن متفاوت تنظیم شده. سطحی را انتخاب کن تا همه‌جا اعمال شود.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>خواندن قوانین از سرور ممکن نشد: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>سرور به‌موقع پاسخ نداد.</translation>
     </message>
 </context>
 <context>
@@ -2761,117 +3102,12 @@
         <translation>آغاز گفت‌وگو</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>تماس</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 پیوست</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 ترک کرد</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 دعوت را رد کرد</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 درخواست پیوستن داد</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>عضویت %1 تغییر کرد</translation>
-    </message>
-    <message>
-        <source>Discard</source>
-        <translation>دورانداختن</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>حذف</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>سنجاق</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>پاسخ در رشته</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>ارسال دوباره</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>ذخیره</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>رونوشت</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>هدایت</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>ویرایش</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>واکنش</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>پاسخ</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>بیشتر…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>پیام نقل‌شده بارگیری نمی‌شود: دیگر وجود ندارد یا اجازهٔ دیدنش را نداری.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>پیام صوتی</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>پیام حذف شد</translation>
     </message>
     <message>
         <source>Picture</source>
         <translation>تصویر</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>این نشانه‌ها چه معنایی دارند؟</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>رشته · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>در رشته</translation>
-    </message>
-    <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>این واکنش متن را پنهان می‌کند و فرستاده نشد</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>فرستاده نشد</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>ویرایش‌شده</translation>
     </message>
     <message>
         <source>The conversation could not be loaded</source>
@@ -2914,30 +3150,6 @@
         <translation>گزینش پرونده‌ها</translation>
     </message>
     <message>
-        <source>Sent unencrypted</source>
-        <translation>رمزگذاری‌نشده فرستاده شد</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>از حسابی که نام می‌برد فرستاده نشده</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>کلیدهای فرستنده تغییر کرد</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>از دستگاهی تأییدنشده</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>از شخصی تأییدنشده</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>اصالت تأیید نشده</translation>
-    </message>
-    <message>
         <source>Open this address?</source>
         <translation>این نشانی باز شود؟</translation>
     </message>
@@ -2966,43 +3178,6 @@
         <translation>رأی تو فرستاده نشد</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 کاربر %2 را دعوت کرد</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 کاربر %2 را حذف کرد</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 کاربر %2 را محروم کرد</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 محرومیت %2 را برداشت</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 دعوت %2 را پس گرفت</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>تبدیل به متن</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>در حال تبدیل به متن…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>به‌طور خودکار تشخیص داده شد، ممکن است اشتباه داشته باشد</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>در حال ضبط… %1 ثانیه. برای فرستادن روی میکروفون بزن.</translation>
     </message>
@@ -3011,40 +3186,12 @@
         <translation>چیزی گفته نشد، پس چیزی فرستاده نشد.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>در نگارخانه ذخیره شد</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>ذخیره نشد</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>در بارگیری‌ها ذخیره شد</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>نمایش کمتر</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>نمایش بیشتر</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>نوشتن متن به‌صورت فایل ممکن نشد</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>اشتراک‌گذاری موقعیت</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>حذف فرستاده نشد</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>ویرایش فرستاده نشد</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3061,50 +3208,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>دیگر در انتظار فرستادن نیست.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>بارگیری نشد. برای تلاش دوباره ضربه بزن.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>برای بارگیری ضربه بزن</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>پیوند باز شود؟</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>کپی پیوند</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>هدایت پیوند</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 نام نمایشی خود را به %2 تغییر داد</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 نام نمایشی خود را حذف کرد</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 تصویر نمایه خود را تغییر داد</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 نام نمایشی را به %2 و تصویر نمایه را تغییر داد</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 نام نمایشی را حذف کرد و تصویر نمایه را تغییر داد</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>روی این دستگاه نمایش داده نمی‌شود. برای باز کردن بزن.</translation>
     </message>
 </context>
 <context>
@@ -3960,7 +4063,65 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>گزینش پرونده‌ها</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
+    <message>
+        <source>Load older posts</source>
+        <translation>بارگیری نوشته‌های قدیمی‌تر</translation>
+    </message>
+    <message>
+        <source>Thread</source>
+        <translation>رشته</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>پیوست</translation>
+    </message>
+    <message>
+        <source>Thread unavailable</source>
+        <translation>رشته در دسترس نیست</translation>
+    </message>
+    <message>
+        <source>Loading thread</source>
+        <translation>در حال بارگیری رشته</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>پاسخ در رشته</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>در حال دورانداختن</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>در حال حذف</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>پاسخ به %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>ویرایش پیام</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>متن تازه</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>پستی وجود ندارد</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>رمزگذاری‌نشده فرستاده شد</translation>
@@ -3986,56 +4147,16 @@
         <translation>اصالت تأیید نشده</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>این نشانی باز شود؟</translation>
+        <source>Saved to gallery</source>
+        <translation>در نگارخانه ذخیره شد</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>باز کردن</translation>
+        <source>Could not save</source>
+        <translation>ذخیره نشد</translation>
     </message>
     <message>
-        <source>Load older posts</source>
-        <translation>بارگیری نوشته‌های قدیمی‌تر</translation>
-    </message>
-    <message>
-        <source>Thread</source>
-        <translation>رشته</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>رویداد</translation>
-    </message>
-    <message>
-        <source>Attachment</source>
-        <translation>پیوست</translation>
-    </message>
-    <message>
-        <source>Thread unavailable</source>
-        <translation>رشته در دسترس نیست</translation>
-    </message>
-    <message>
-        <source>Loading thread</source>
-        <translation>در حال بارگیری رشته</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>پاسخ در رشته</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>پیوند باز شود؟</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>کپی پیوند</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>هدایت پیوند</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>سنجاق</translation>
+        <source>Saved to Downloads</source>
+        <translation>در بارگیری‌ها ذخیره شد</translation>
     </message>
 </context>
 <context>

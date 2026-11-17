@@ -301,6 +301,9 @@ pub enum Command {
         body: String,
         #[serde(default)]
         mentions: Vec<String>,
+        /// Set where the row belongs to a thread's own view.
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
     /// Reply to an earlier message.
@@ -312,6 +315,9 @@ pub enum Command {
         body: String,
         #[serde(default)]
         mentions: Vec<String>,
+        /// Set where the row belongs to a thread's own view.
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
     /// Delete a message.
@@ -322,6 +328,9 @@ pub enum Command {
         #[serde(rename = "eventId")]
         event_id: String,
         key: String,
+        /// Set where the row belongs to a thread's own view.
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
     #[serde(rename = "timeline.redact")]
@@ -333,6 +342,9 @@ pub enum Command {
         event_id: String,
         #[serde(default, rename = "txnId")]
         txn_id: String,
+        /// Set where the message is deleted from a thread's own view.
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
     /// Send a file as an attachment. `caption` and `replyTo` are decidable only
@@ -373,6 +385,10 @@ pub enum Command {
         /// open timeline may be another room's.
         #[serde(rename = "roomId", default)]
         room_id: String,
+        /// The thread's root where it goes into a thread; empty for the room. Checked
+        /// against the open thread for the same reason as the room.
+        #[serde(rename = "threadRoot", default)]
+        thread_root: String,
     },
 
     /// Send a copy of something to another room.
@@ -473,6 +489,9 @@ pub enum Command {
         id: u64,
         #[serde(rename = "eventId")]
         event_id: String,
+        /// Set where the row belongs to a thread's own view.
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
     /// Who reacted with this key. Asked on a long press, like the readers: the
@@ -483,6 +502,9 @@ pub enum Command {
         #[serde(rename = "eventId")]
         event_id: String,
         key: String,
+        /// Set where the row belongs to a thread's own view.
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
     /// Report the state of key backup and recovery.
@@ -777,6 +799,14 @@ pub enum Command {
     #[serde(rename = "leftRooms.list")]
     LeftRoomsList { id: u64 },
 
+    /// The account's notification level per kind of message.
+    #[serde(rename = "pushRules.get")]
+    PushRulesGet { id: u64 },
+
+    /// Set one kind to `off`, `on` or `noisy`.
+    #[serde(rename = "pushRules.set")]
+    PushRulesSet { id: u64, category: String, level: String },
+
     /// Forget a left room, so the server stops counting it.
     #[serde(rename = "leftRooms.forget")]
     LeftRoomsForget {
@@ -911,6 +941,9 @@ pub enum Command {
         #[serde(rename = "eventId")]
         event_id: String,
         answers: Vec<String>,
+        /// Set where the row belongs to a thread's own view.
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
     /// End a poll. `text` is the fallback other clients show.
@@ -921,6 +954,9 @@ pub enum Command {
         event_id: String,
         #[serde(default)]
         text: String,
+        /// Set where the row belongs to a thread's own view.
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
     /// The requests a room's send queue parked, first the one blocking the rest.
@@ -1111,6 +1147,39 @@ pub enum Command {
         user_id: String,
     },
 
+    /// A room's ban list plus whether this account may ban there.
+    /// Replies `{ roomId, canBan, bans: [{ userId, displayName, reason, bannedBy,
+    /// bannedByName, sinceMs, canUnban }] }`.
+    #[serde(rename = "bans.list")]
+    BansList {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+    },
+
+    /// Ban by address, member or not, with an optional reason. Replies
+    /// `{ roomId, userId, row }`, the row shaped like a `bans.list` entry.
+    #[serde(rename = "bans.add")]
+    BansAdd {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "userId")]
+        user_id: String,
+        #[serde(default)]
+        reason: String,
+    },
+
+    /// Lift a ban. Replies `{ roomId, userId }`.
+    #[serde(rename = "bans.lift")]
+    BansLift {
+        id: u64,
+        #[serde(rename = "roomId")]
+        room_id: String,
+        #[serde(rename = "userId")]
+        user_id: String,
+    },
+
     /// Set a member's power level: any integer up to one's own.
     #[serde(rename = "member.setPower")]
     MemberSetPower {
@@ -1185,18 +1254,26 @@ pub enum Command {
         root_event_id: String,
     },
 
-    /// Send a text message into the open thread.
+    /// Send a text message into the open thread. `threadRoot` names it; another
+    /// open thread refuses, empty means whichever is open.
     #[serde(rename = "thread.send")]
     ThreadSend {
         id: u64,
         body: String,
         #[serde(default)]
         mentions: Vec<String>,
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
     },
 
-    /// Load older events of the open thread.
+    /// Load older events of the open thread; `threadRoot` as for `thread.send`.
+    /// The reply carries the root and `reachedStart`.
     #[serde(rename = "thread.paginate")]
-    ThreadPaginate { id: u64 },
+    ThreadPaginate {
+        id: u64,
+        #[serde(default, rename = "threadRoot")]
+        thread_root: String,
+    },
 }
 
 impl Command {
@@ -1332,6 +1409,9 @@ impl Command {
             | Command::MemberProfile { id, .. }
             | Command::MemberBan { id, .. }
             | Command::MemberUnban { id, .. }
+            | Command::BansList { id, .. }
+            | Command::BansAdd { id, .. }
+            | Command::BansLift { id, .. }
             | Command::MemberSetPower { id, .. }
             | Command::MemberSetIgnored { id, .. }
             | Command::MemberWithdrawVerification { id, .. }
@@ -1340,13 +1420,15 @@ impl Command {
             | Command::RoomCreate { id, .. }
             | Command::RoomLeave { id, .. }
             | Command::LeftRoomsList { id }
+            | Command::PushRulesGet { id }
+            | Command::PushRulesSet { id, .. }
             | Command::LeftRoomsForget { id, .. }
             | Command::RoomInvite { id, .. }
             | Command::SpaceHierarchy { id, .. }
             | Command::ThreadOpen { id, .. }
             | Command::ThreadClose { id, .. }
             | Command::ThreadSend { id, .. }
-            | Command::ThreadPaginate { id } => *id,
+            | Command::ThreadPaginate { id, .. } => *id,
             Command::SearchRoom { id, .. } => *id,
             Command::SearchIndex { id, .. } => *id,
         }

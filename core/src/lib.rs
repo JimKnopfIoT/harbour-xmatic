@@ -5,6 +5,7 @@
 // future to one enum — which overruns the default limit while computing layout.
 #![recursion_limit = "512"]
 
+mod bans;
 mod call;
 mod compose;
 mod directory;
@@ -19,6 +20,7 @@ mod mention;
 mod netwatch;
 mod profile;
 mod push;
+mod pushrules;
 mod poll;
 mod roomsettings;
 mod private;

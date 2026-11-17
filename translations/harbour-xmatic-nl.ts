@@ -356,6 +356,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Dit is geen geldig Matrix-adres. Het ziet eruit als @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Je kunt jezelf niet verbannen.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>De reden is te lang.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Een Matrix-adres ziet eruit als @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Reden (optioneel)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Deze persoon kan deze kamer niet meer binnenkomen. Is die nu lid, dan wordt die verwijderd. Iedereen in de kamer ziet de ban en de reden.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Iemand verbannen…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Verbannen personen</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Met je rol in deze kamer kun je niemand verbannen en geen ban opheffen. De lijst is alleen-lezen.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Reden: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Verbannen door %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Niemand is verbannen</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -448,6 +505,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Binnenkomst, uitnodigingen, verwijderingen en verbanningen worden altijd getoond.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Meldingen</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Meldingsregels</translation>
     </message>
 </context>
 <context>
@@ -1420,6 +1485,10 @@
         <source>The people in this room show up here.</source>
         <translation>De mensen in deze kamer verschijnen hier.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Verbannen…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1648,6 +1717,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Oproep</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 nam deel</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 is vertrokken</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 heeft %2 uitgenodigd</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 heeft %2 verwijderd</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 heeft %2 verbannen</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 heeft de verbanning van %2 opgeheven</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 heeft de uitnodiging voor %2 ingetrokken</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 heeft de uitnodiging geweigerd</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 vroeg om deel te nemen</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 wijzigde het lidmaatschap</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 heeft de profielfoto gewijzigd</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 heeft de weergavenaam gewijzigd in %2 en de profielfoto gewijzigd</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 heeft de weergavenaam verwijderd en de profielfoto gewijzigd</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 heeft de weergavenaam gewijzigd in %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 heeft de weergavenaam verwijderd</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Link openen?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Link kopiëren</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Link doorsturen</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Weggooien</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Vastmaken</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>In draad antwoorden</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Opnieuw versturen</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Opslaan</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Omzetten naar tekst</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopiëren</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Doorsturen</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Bewerken</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reageren</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Beantwoorden</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Meer…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Het geciteerde bericht kan niet worden geladen: het bestaat niet meer of je mag het niet zien.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Niet getoond op dit apparaat. Tik om te openen.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Laden is mislukt. Tik om het opnieuw te proberen.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Tik om te laden</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Spraakbericht</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Bezig met omzetten naar tekst…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Automatisch herkend, kan fouten bevatten</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Minder tonen</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Meer tonen</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Wat betekenen deze tekens?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Draad · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>In draad</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Deze reactie verbergt tekst en is niet verzonden</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>niet verzonden</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>verwijdering niet verzonden</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>bewerking niet verzonden</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>bewerkt</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1675,6 +1949,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>De andere kant krijgt een uitnodiging en het gesprek verschijnt meteen in je lijst. Berichten zijn vanaf het begin versleuteld.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Meldingsregels</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Directe berichten</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Groepsberichten</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Vermeldingen van jou</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Vermeldingen van de hele ruimte</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Uitnodigingen</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Oproepen</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Uit</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>De server heeft de wijziging geweigerd: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Zonder geluid</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Met geluid</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Opgeslagen in je account, dus elke client volgt ze. Met geluid laat een geluid horen, Zonder geluid toont een melding en laat de led knipperen, Uit verhoogt alleen de teller van ongelezen berichten van de ruimte. Een ruimte met een eigen instelling in de details houdt die. Een vermelding op Uit telt als een gewoon bericht van de ruimte.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Wachten op de server…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Deels anders ingesteld. Kies een niveau om het overal toe te passen.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>De regels konden niet van de server worden gelezen: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>De server antwoordde niet op tijd.</translation>
     </message>
 </context>
 <context>
@@ -2741,89 +3082,8 @@
         <translation>Begin van het gesprek</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Oproep</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 nam deel</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 is vertrokken</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 heeft de uitnodiging geweigerd</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 vroeg om deel te nemen</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 wijzigde het lidmaatschap</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopiëren</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Beantwoorden</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Opslaan</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Doorsturen</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Bewerken</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Vastmaken</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Verwijderen</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Meer…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Het geciteerde bericht kan niet worden geladen: het bestaat niet meer of je mag het niet zien.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Spraakbericht</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Bericht verwijderd</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Draad · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>In draad</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>niet verzonden</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>bewerkt</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2858,52 +3118,12 @@
         <translation>Dat bericht staat niet in de geladen geschiedenis</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Weggooien</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Opnieuw versturen</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reageren</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>In draad antwoorden</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kamerlink kopiëren</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Kamerlink gekopieerd</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Onversleuteld verzonden</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Niet verzonden door het genoemde account</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>De sleutels van de afzender zijn veranderd</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Van een niet-geverifieerd apparaat</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Van een niet-geverifieerd persoon</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Echtheid niet bevestigd</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2914,20 +3134,12 @@
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Deze reactie verbergt tekst en is niet verzonden</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Afbeelding</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Berichten doorzoeken</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Wat betekenen deze tekens?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2970,43 +3182,6 @@
         <translation>Je stem is niet verzonden</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 heeft %2 uitgenodigd</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 heeft %2 verwijderd</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 heeft %2 verbannen</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 heeft de verbanning van %2 opgeheven</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 heeft de uitnodiging voor %2 ingetrokken</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Omzetten naar tekst</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Bezig met omzetten naar tekst…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Automatisch herkend, kan fouten bevatten</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Opnemen… %1 s. Tik op de microfoon om te versturen.</translation>
     </message>
@@ -3015,40 +3190,12 @@
         <translation>Er is niets gezegd, dus er is niets verstuurd.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>In galerij opgeslagen</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Opslaan mislukt</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>In Downloads opgeslagen</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Minder tonen</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Meer tonen</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>De tekst kon niet als bestand worden weggeschreven</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Locatie delen</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>verwijdering niet verzonden</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>bewerking niet verzonden</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3065,50 +3212,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Het wacht niet meer om verzonden te worden.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Laden is mislukt. Tik om het opnieuw te proberen.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Tik om te laden</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Link openen?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Link kopiëren</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Link doorsturen</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 heeft de weergavenaam gewijzigd in %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 heeft de weergavenaam verwijderd</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 heeft de profielfoto gewijzigd</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 heeft de weergavenaam gewijzigd in %2 en de profielfoto gewijzigd</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 heeft de weergavenaam verwijderd en de profielfoto gewijzigd</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Niet getoond op dit apparaat. Tik om te openen.</translation>
     </message>
 </context>
 <context>
@@ -3965,6 +4068,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Bestanden kiezen</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3973,10 +4083,6 @@
     <message>
         <source>Thread</source>
         <translation>Draad</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Gebeurtenis</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3994,6 +4100,33 @@
         <source>Reply in thread</source>
         <translation>In draad antwoorden</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Weggooien</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Antwoord aan %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Bericht bewerken</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Nieuwe tekst</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Geen berichten</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Onversleuteld verzonden</translation>
@@ -4019,28 +4152,16 @@
         <translation>Echtheid niet bevestigd</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Dit adres openen?</translation>
+        <source>Saved to gallery</source>
+        <translation>In galerij opgeslagen</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Openen</translation>
+        <source>Could not save</source>
+        <translation>Opslaan mislukt</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Link openen?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Link kopiëren</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Link doorsturen</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Vastmaken</translation>
+        <source>Saved to Downloads</source>
+        <translation>In Downloads opgeslagen</translation>
     </message>
 </context>
 <context>

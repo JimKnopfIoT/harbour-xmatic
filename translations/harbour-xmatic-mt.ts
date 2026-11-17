@@ -358,6 +358,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Dan mhuwiex indirizz Matrix validu. Jidher hekk: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Ma tistax timblokka lilek innifsek.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Ir-raġuni hija twila wisq.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Indirizz Matrix jidher hekk: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Raġuni (mhux obbligatorja)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Il-persuna ma tkunx tista' tidħol aktar f'din il-kamra. Jekk bħalissa hija membru, titneħħa. Kulħadd fil-kamra jara l-imblokk u r-raġuni tiegħu.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Imblokka lil xi ħadd…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Persuni mblukkati</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Ir-rwol tiegħek f'din il-kamra ma jippermettilekx timblokka jew tneħħi imblokk. Il-lista hija biss għall-qari.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Raġuni: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Imblukkat minn %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Ħadd mhu mblukkat</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -450,6 +507,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Id-dħul, l-istediniet, it-tneħħijiet u l-projbizzjonijiet jintwerew dejjem.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Notifiki</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Regoli tan-notifiki</translation>
     </message>
 </context>
 <context>
@@ -1424,6 +1489,10 @@
         <source>The people in this room show up here.</source>
         <translation>In-nies f&apos;din il-kamra jidhru hawn.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Imblokka…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1652,6 +1721,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Sejħa</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 daħal</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 telaq</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 stieden lil %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 neħħa lil %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 imblokka lil %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 neħħa l-imblokk ta’ %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 irtira l-istedina għal %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 irrifjuta l-istedina</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 talab li jidħol</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 biddel is-sħubija</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 biddel l-istampa tal-profil</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 biddel l-isem tiegħu għal %2 u l-istampa tal-profil</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 neħħa l-isem tiegħu u biddel l-istampa tal-profil</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 biddel l-isem muri għal %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 neħħa l-isem muri</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Tiftaħ il-link?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Ikkopja l-link</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Ibgħat il-link &apos;il quddiem</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Warrab</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Ħassar</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Waħħal</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Wieġeb fil-fjul</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Ibgħat mill-ġdid</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Issejvja</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Ikkonverti f’test</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Ikkopja</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Għaddi</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editja</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Irreaġixxi</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Wieġeb</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Aktar…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Il-messaġġ ikkwotat ma jistax jitniżżel: m&apos;għadux jeżisti jew m&apos;għandekx permess tarah.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ma jintweriex fuq dan l-apparat. Agħfas biex tiftaħ.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Ma setax jitgħabba. Agħfas biex terġa’ tipprova.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Agħfas biex tgħabbi</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Messaġġ bil-vuċi</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Qed jikkonverti f’test…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Magħruf awtomatikament, jista’ jkun fih żbalji</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Uri inqas</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Uri aktar</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Xi jfissru dawn il-marki?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Fjul · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Fil-fjul</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Din ir-reazzjoni taħbi test u ma ntbagħtitx</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>mhux mibgħut</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>tħassir mhux mibgħut</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>editjar mhux mibgħut</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>editjat</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1679,6 +1953,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>In-naħa l-oħra tirċievi stedina u l-konversazzjoni tidher mill-ewwel fil-lista tiegħek. Il-messaġġi huma ċċifrati mill-bidu.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Regoli tan-notifiki</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Messaġġi diretti</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Messaġġi tal-grupp</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Referenzi għalik</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Referenzi għall-kamra kollha</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Stediniet</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Sejħiet</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Mitfi</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Is-server irrifjuta l-bidla: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Mingħajr ħoss</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Bil-ħoss</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Maħżuna fil-kont tiegħek, allura kull klijent isegwihom. Bil-ħoss idoqq, Mingħajr ħoss juri notifika u jteptep l-LED, Mitfi jżid biss il-għadd ta&apos; mhux moqrija tal-kamra. Kamra b&apos;issettjar tagħha fid-dettalji żżommu. Isem imsemmi ssettjat fuq Mitfi jgħodd bħala messaġġ normali tal-kamra tiegħu.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Qed nistenna s-server…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Issettjat b&apos;mod differenti f&apos;partijiet. Agħżel livell biex tapplikah kullimkien.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Ma setgħux jinqraw ir-regoli mis-server: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Is-server ma wieġebx fil-ħin.</translation>
     </message>
 </context>
 <context>
@@ -2749,89 +3090,8 @@
         <translation>Il-bidu tal-konversazzjoni</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Sejħa</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 daħal</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 telaq</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 irrifjuta l-istedina</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 talab li jidħol</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 biddel is-sħubija</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Ikkopja</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Wieġeb</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Issejvja</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Għaddi</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Editja</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Waħħal</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Ħassar</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Aktar…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Il-messaġġ ikkwotat ma jistax jitniżżel: m&apos;għadux jeżisti jew m&apos;għandekx permess tarah.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Messaġġ bil-vuċi</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Messaġġ imħassar</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Fjul · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Fil-fjul</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>mhux mibgħut</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>editjat</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2866,52 +3126,12 @@
         <translation>Dak il-messaġġ mhux fl-istorja mniżżla</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Warrab</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Ibgħat mill-ġdid</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Irreaġixxi</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Wieġeb fil-fjul</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Ikkopja l-link tal-kamra</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Il-link tal-kamra ġie kkupjat</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Mibgħut mhux kriptat</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Ma ntbagħatx mill-kont imsemmi</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Iċ-ċwievet ta&apos; min bagħat inbidlu</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Minn apparat mhux verifikat</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Minn persuna mhux verifikata</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>L-awtentiċità mhix ikkonfermata</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2922,20 +3142,12 @@
         <translation>Qed jitħassar</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Din ir-reazzjoni taħbi test u ma ntbagħtitx</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Ritratt</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Fittex fil-messaġġi</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Xi jfissru dawn il-marki?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2978,43 +3190,6 @@
         <translation>Il-vot tiegħek ma ntbagħatx</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 stieden lil %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 neħħa lil %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 imblokka lil %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 neħħa l-imblokk ta’ %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 irtira l-istedina għal %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Ikkonverti f’test</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Qed jikkonverti f’test…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Magħruf awtomatikament, jista’ jkun fih żbalji</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Qed jirrekordja… %1 s. Agħfas il-mikrofonu biex tibgħat.</translation>
     </message>
@@ -3023,40 +3198,12 @@
         <translation>Ma ntqal xejn, allura ma ntbagħat xejn.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Issejvjat fil-gallerija</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Ma setax jiġi ssejvjat</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Issejvjat f&apos;Niżżlin</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Uri inqas</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Uri aktar</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>It-test ma setax jinkiteb bħala fajl</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Aqsam il-post</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>tħassir mhux mibgħut</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>editjar mhux mibgħut</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3073,50 +3220,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>M&apos;għadux qed jistenna li jintbagħat.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Ma setax jitgħabba. Agħfas biex terġa’ tipprova.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Agħfas biex tgħabbi</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Tiftaħ il-link?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Ikkopja l-link</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Ibgħat il-link &apos;il quddiem</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 biddel l-isem muri għal %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 neħħa l-isem muri</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 biddel l-istampa tal-profil</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 biddel l-isem tiegħu għal %2 u l-istampa tal-profil</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 neħħa l-isem tiegħu u biddel l-istampa tal-profil</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Ma jintweriex fuq dan l-apparat. Agħfas biex tiftaħ.</translation>
     </message>
 </context>
 <context>
@@ -3975,6 +4078,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Agħżel fajls</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3983,10 +4093,6 @@
     <message>
         <source>Thread</source>
         <translation>Fjul</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Avveniment</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -4004,6 +4110,33 @@
         <source>Reply in thread</source>
         <translation>Wieġeb fil-fjul</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Qed jintrema</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Qed jitħassar</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Tweġiba lil %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Qed jiġi editjat il-messaġġ</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Test ġdid</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>L-ebda post</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Mibgħut mhux kriptat</translation>
@@ -4029,28 +4162,16 @@
         <translation>L-awtentiċità mhix ikkonfermata</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Tiftaħ dan l-indirizz?</translation>
+        <source>Saved to gallery</source>
+        <translation>Issejvjat fil-gallerija</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Iftaħ</translation>
+        <source>Could not save</source>
+        <translation>Ma setax jiġi ssejvjat</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Tiftaħ il-link?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Ikkopja l-link</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Ibgħat il-link &apos;il quddiem</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Waħħal</translation>
+        <source>Saved to Downloads</source>
+        <translation>Issejvjat f&apos;Niżżlin</translation>
     </message>
 </context>
 <context>

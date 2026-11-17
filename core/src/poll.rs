@@ -398,10 +398,10 @@ pub async fn handle(command: Command, timeline: Option<Arc<Timeline>>, sink: &Ar
         Command::PollStart { id, question, answers, undisclosed, max_selections } => {
             (id, start(&timeline, &question, &answers, undisclosed, max_selections).await)
         }
-        Command::PollVote { id, event_id, answers } => {
+        Command::PollVote { id, event_id, answers, .. } => {
             (id, vote(&timeline, sink, &event_id, answers).await)
         }
-        Command::PollEnd { id, event_id, text } => (id, end(&timeline, sink, &event_id, &text).await),
+        Command::PollEnd { id, event_id, text, .. } => (id, end(&timeline, sink, &event_id, &text).await),
         // Unreachable by construction: the runtime routes these three by name.
         other => (other.id(), Err("not a poll command".to_owned())),
     };

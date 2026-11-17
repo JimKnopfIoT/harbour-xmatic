@@ -356,6 +356,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Това не е валиден Matrix адрес. Изглежда така: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Не можеш да блокираш себе си.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Причината е твърде дълга.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Matrix адресът изглежда така: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Причина (по избор)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Човекът вече няма да може да влезе в тази стая. Ако в момента е член, ще бъде премахнат. Всички в стаята виждат блокирането и причината за него.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Блокирай някого…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Блокирани хора</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Ролята ти в тази стая не позволява блокиране или вдигане на блокиране. Списъкът е само за четене.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Причина: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Блокиран от %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Никой не е блокиран</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -448,6 +505,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Присъединяванията, поканите, премахванията и забраните се показват винаги.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Известия</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Правила за известия</translation>
     </message>
 </context>
 <context>
@@ -1420,6 +1485,10 @@
         <source>The people in this room show up here.</source>
         <translation>Хората в тази стая се появяват тук.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Блокирай…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1648,6 +1717,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Разговор</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 влезе</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 излезе</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 покани %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 премахна %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 блокира %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 отблокира %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 оттегли поканата за %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 отказа поканата</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 поиска да влезе</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 промени членството</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 смени профилната си снимка</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 смени показваното си име на %2 и профилната си снимка</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 премахна показваното си име и смени профилната си снимка</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 смени показваното си име на %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 премахна показваното си име</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Да се отвори ли връзката?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Копирай връзката</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Препрати връзката</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Отхвърли</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Изтрий</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Закачи</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Отговори в темата</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Изпрати отново</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Запази</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Преобразувай в текст</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Копирай</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Препрати</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Редактирай</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Реагирай</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Отговори</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Още…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Цитираното съобщение не може да се зареди: вече не съществува или нямаш право да го видиш.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Не се показва на това устройство. Докосни, за да отвориш.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Не можа да се зареди. Докосни, за да опиташ отново.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Докосни, за да заредиш</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Гласово съобщение</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Преобразуване в текст…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Разпознато автоматично, може да съдържа грешки</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Покажи по-малко</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Покажи още</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Какво означават тези знаци?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Тема · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>В темата</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Тази реакция крие текст и не беше изпратена</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>неизпратено</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>изтриването не е изпратено</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>редакцията не е изпратена</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>редактирано</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1675,6 +1949,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Другата страна получава покана, а разговорът се появява веднага в списъка ти. Съобщенията са шифровани от самото начало.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Правила за известия</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Директни съобщения</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Групови съобщения</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Споменавания за теб</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Споменавания на цялата стая</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Покани</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Обаждания</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Изключено</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Сървърът отказа промяната: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Без звук</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Със звук</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Съхраняват се в профила ти, затова всеки клиент ги следва. Със звук звъни, Без звук показва известие и мига със светодиода, Изключено само увеличава брояча на непрочетените в стаята. Стая със собствена настройка в подробностите си я запазва. Споменаване, зададено на Изключено, се брои за обикновено съобщение в стаята си.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Изчаква се сървърът…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Частично настроено различно. Избери ниво, за да го приложиш навсякъде.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Правилата не можаха да бъдат прочетени от сървъра: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Сървърът не отговори навреме.</translation>
     </message>
 </context>
 <context>
@@ -2741,89 +3082,8 @@
         <translation>Начало на разговора</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Разговор</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 влезе</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 излезе</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 отказа поканата</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 поиска да влезе</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 промени членството</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Копирай</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Отговори</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Запази</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Препрати</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Редактирай</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Закачи</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Изтрий</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Още…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Цитираното съобщение не може да се зареди: вече не съществува или нямаш право да го видиш.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Гласово съобщение</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Съобщението е изтрито</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Тема · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>В темата</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>неизпратено</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>редактирано</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2858,52 +3118,12 @@
         <translation>Това съобщение не е в заредената история</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Отхвърли</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Изпрати отново</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Реагирай</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Отговори в темата</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Копиране на връзката към стаята</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Връзката към стаята е копирана</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Изпратено нешифровано</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Не е изпратено от посочения акаунт</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Ключовете на подателя са променени</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>От непроверено устройство</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>От непроверен човек</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Автентичността не е потвърдена</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2914,20 +3134,12 @@
         <translation>Изтриване</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Тази реакция крие текст и не беше изпратена</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Изображение</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Търсене в съобщенията</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Какво означават тези знаци?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2970,43 +3182,6 @@
         <translation>Гласът ти не беше изпратен</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 покани %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 премахна %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 блокира %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 отблокира %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 оттегли поканата за %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Преобразувай в текст</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Преобразуване в текст…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Разпознато автоматично, може да съдържа грешки</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Записване… %1 с. Докосни микрофона, за да изпратиш.</translation>
     </message>
@@ -3015,40 +3190,12 @@
         <translation>Нищо не беше казано, затова нищо не беше изпратено.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Запазено в галерията</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Неуспешно запазване</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Запазено в „Изтегляния“</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Покажи по-малко</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Покажи още</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Текстът не можа да бъде записан като файл</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Сподели местоположение</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>изтриването не е изпратено</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>редакцията не е изпратена</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3065,50 +3212,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Вече не чака да бъде изпратено.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Не можа да се зареди. Докосни, за да опиташ отново.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Докосни, за да заредиш</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Да се отвори ли връзката?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Копирай връзката</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Препрати връзката</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 смени показваното си име на %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 премахна показваното си име</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 смени профилната си снимка</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 смени показваното си име на %2 и профилната си снимка</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 премахна показваното си име и смени профилната си снимка</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Не се показва на това устройство. Докосни, за да отвориш.</translation>
     </message>
 </context>
 <context>
@@ -3965,6 +4068,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Избор на файлове</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3973,10 +4083,6 @@
     <message>
         <source>Thread</source>
         <translation>Тема</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Събитие</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3994,6 +4100,33 @@
         <source>Reply in thread</source>
         <translation>Отговори в темата</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Отхвърляне</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Изтриване</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Отговор на %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Редактиране на съобщение</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Нов текст</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Няма публикации</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Изпратено нешифровано</translation>
@@ -4019,28 +4152,16 @@
         <translation>Автентичността не е потвърдена</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Да се отвори ли този адрес?</translation>
+        <source>Saved to gallery</source>
+        <translation>Запазено в галерията</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Отвори</translation>
+        <source>Could not save</source>
+        <translation>Неуспешно запазване</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Да се отвори ли връзката?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Копирай връзката</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Препрати връзката</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Закачи</translation>
+        <source>Saved to Downloads</source>
+        <translation>Запазено в „Изтегляния“</translation>
     </message>
 </context>
 <context>

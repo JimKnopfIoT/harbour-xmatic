@@ -289,6 +289,28 @@ MatrixBridge::MatrixBridge(const QString &dataDirectory,
             [this](const QString &command, const QJsonObject &arguments) {
                 m_leftRooms->sent(send(command, arguments), command, arguments);
             });
+    // src/banlist.cpp: a room's ban list. A ban drops the row from the member
+    // list here, since no diff brings it.
+    m_bans = new BanList(this);
+    connect(m_bans, &BanList::commandReady, this,
+            [this](const QString &command, const QJsonObject &arguments) {
+                m_bans->sent(send(command, arguments), command, arguments);
+            });
+    connect(m_bans, &BanList::banned, this,
+            [this](const QString &roomId, const QString &userId) {
+                if (roomId == m_membersRoomId) {
+                    m_members.removeUser(userId);
+                }
+                emit memberChanged(userId);
+            });
+    connect(m_bans, &BanList::unbanned, this,
+            [this](const QString &, const QString &userId) { emit memberChanged(userId); });
+    // src/pushrules.cpp: the account's levels per kind of message.
+    m_pushRules = new PushRules(this);
+    connect(m_pushRules, &PushRules::commandReady, this,
+            [this](const QString &command, const QJsonObject &arguments) {
+                m_pushRules->sent(send(command, arguments), command);
+            });
     connect(m_roomSettings, &RoomSettings::rowChanged, this,
             [this](const QString &roomId, const QJsonObject &fields) {
                 m_rooms.setFields(roomId, fields);
@@ -591,6 +613,12 @@ void MatrixBridge::checkStalledCommands()
         if (it.key() == m_openTimelineId) {
             m_openTimelineId = 0;
             setTimelineReady(true);
+            // A thread that waited for this room would wait for good.
+            if (!m_threadAfterRoom.isEmpty()) {
+                const QString root = m_threadAfterRoom.value(QStringLiteral("rootEventId")).toString();
+                forgetOpenThread();
+                emit threadFailed(root, QStringLiteral("the room did not open in time"), QString());
+            }
         }
         if (it->command.startsWith(QLatin1String("login."))) {
             setLoginRunning(false);
@@ -852,6 +880,7 @@ void MatrixBridge::logout()
 {
     // Before the core drops the client: afterwards the goodbye has nobody to send it.
     m_calls->hangUp();
+    m_calls->forgetRelays();
     m_push->forget();
     send(QStringLiteral("logout"));
 }
@@ -1105,6 +1134,7 @@ void MatrixBridge::closeRoom()
     m_timeline.clear();
     // The core closes the thread with the room; only the model remains.
     m_openThreadRoot.clear();
+    m_threadAfterRoom = QJsonObject();
     m_threadTimeline.clear();
     QJsonObject arguments;
     arguments.insert(QStringLiteral("roomId"), closing);
@@ -1161,9 +1191,17 @@ void MatrixBridge::openThread(const QString &roomId, const QString &rootEventId)
         qWarning("xmatic: open thread requested without ids");
         return;
     }
+    // Commands run concurrently, and a room's open drops its thread: the room's
+    // answer has to be there first, also for an open of this room still in flight.
+    const bool otherRoom = roomId != m_openRoomId;
+    if (otherRoom) {
+        openRoom(roomId);
+    }
+    const bool roomFirst = otherRoom || m_openTimelineId != 0;
     setLastError(QString());
     m_threadTimeline.clear();
     m_openThreadRoot = rootEventId;
+    m_threadInstalled = false;
     // Reopening the same thread has to be told from the one before: the aborted
     // task's diffs can still be in the Qt queue. The root alone does not.
     ++m_threadGeneration;
@@ -1171,21 +1209,45 @@ void MatrixBridge::openThread(const QString &roomId, const QString &rootEventId)
     arguments.insert(QStringLiteral("roomId"), roomId);
     arguments.insert(QStringLiteral("rootEventId"), rootEventId);
     arguments.insert(QStringLiteral("token"), QString::number(m_threadGeneration));
-    send(QStringLiteral("thread.open"), arguments);
-}
-
-void MatrixBridge::closeThread()
-{
-    if (m_openThreadRoot.isEmpty()) {
+    if (roomFirst) {
+        m_threadAfterRoom = arguments;
         return;
     }
-    // Named, because commands are independent tasks: a close and an open issued
-    // back to back can arrive in either order.
-    QJsonObject arguments;
-    arguments.insert(QStringLiteral("rootEventId"), m_openThreadRoot);
+    m_threadAfterRoom = QJsonObject();
+    sendThreadOpen(arguments);
+}
+
+void MatrixBridge::sendThreadOpen(const QJsonObject &arguments)
+{
+    const quint64 id = send(QStringLiteral("thread.open"), arguments);
+    if (id != 0) {
+        ThreadRequest request;
+        request.root = arguments.value(QStringLiteral("rootEventId")).toString();
+        request.generation = arguments.value(QStringLiteral("token")).toString().toULongLong();
+        m_threadRequests.insert(id, request);
+    }
+}
+
+void MatrixBridge::rememberThreadRequest(quint64 id, const QString &root, const QString &unsent)
+{
+    if (id == 0) {
+        return;
+    }
+    ThreadRequest request;
+    request.root = root;
+    request.unsent = unsent;
+    request.generation = m_threadGeneration;
+    m_threadRequests.insert(id, request);
+}
+
+void MatrixBridge::forgetOpenThread()
+{
     m_openThreadRoot.clear();
+    m_threadInstalled = false;
+    m_threadAfterRoom = QJsonObject();
+    // Late diffs of that open are dropped by the generation.
+    ++m_threadGeneration;
     m_threadTimeline.clear();
-    send(QStringLiteral("thread.close"), arguments);
     if (!m_rebuildAfterThread.isEmpty()) {
         const QString room = m_rebuildAfterThread;
         m_rebuildAfterThread.clear();
@@ -1196,6 +1258,25 @@ void MatrixBridge::closeThread()
             }
         });
     }
+}
+
+bool MatrixBridge::threadOpen(const QString &rootEventId) const
+{
+    return !rootEventId.isEmpty() && rootEventId == m_openThreadRoot;
+}
+
+void MatrixBridge::closeThread(const QString &rootEventId)
+{
+    if (m_openThreadRoot.isEmpty()
+        || (!rootEventId.isEmpty() && rootEventId != m_openThreadRoot)) {
+        return;
+    }
+    // Named, because commands are independent tasks: a close and an open issued
+    // back to back can arrive in either order.
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("rootEventId"), m_openThreadRoot);
+    forgetOpenThread();
+    send(QStringLiteral("thread.close"), arguments);
 }
 
 /// The picked mentions as the core takes them. Never the names: those are
@@ -1211,20 +1292,32 @@ static QJsonArray mentionArray(const QStringList &mentions)
     return array;
 }
 
-void MatrixBridge::sendThreadMessage(const QString &body, const QStringList &mentions)
+bool MatrixBridge::sendThreadMessage(const QString &rootEventId, const QString &body,
+                                     const QStringList &mentions)
 {
-    if (body.trimmed().isEmpty()) {
-        return;
+    if (body.trimmed().isEmpty() || !threadOpen(rootEventId)) {
+        return false;
     }
     QJsonObject arguments;
     arguments.insert(QStringLiteral("body"), body);
     arguments.insert(QStringLiteral("mentions"), mentionArray(mentions));
-    send(QStringLiteral("thread.send"), arguments);
+    arguments.insert(QStringLiteral("threadRoot"), rootEventId);
+    const quint64 id = send(QStringLiteral("thread.send"), arguments);
+    if (id == 0) {
+        return false;
+    }
+    rememberThreadRequest(id, rootEventId, body);
+    return true;
 }
 
-void MatrixBridge::threadLoadOlder()
+void MatrixBridge::threadLoadOlder(const QString &rootEventId)
 {
-    send(QStringLiteral("thread.paginate"));
+    if (!threadOpen(rootEventId)) {
+        return;
+    }
+    QJsonObject arguments;
+    arguments.insert(QStringLiteral("threadRoot"), rootEventId);
+    rememberThreadRequest(send(QStringLiteral("thread.paginate"), arguments), rootEventId, QString());
 }
 
 void MatrixBridge::pinMessage(const QString &eventId, bool pin)
@@ -1369,6 +1462,7 @@ void MatrixBridge::forgetRequest(quint64 id)
     m_removeRequests.remove(id);
     m_readerRequests.remove(id);
     m_reactorRequests.remove(id);
+    m_threadRequests.remove(id);
     m_throwawaySends.remove(id);
     // A repair whose answer never came was not an attempt. Left set, the flag
     // spends the only try of this run on nothing. The id stays: a late answer
@@ -1892,18 +1986,22 @@ void MatrixBridge::loadRoomLink(const QString &roomId)
     send(QStringLiteral("room.permalink"), arguments);
 }
 
-void MatrixBridge::loadReaders(const QString &eventId)
+void MatrixBridge::loadReaders(const QString &eventId, const QString &threadRoot)
 {
     if (eventId.isEmpty()) {
         return;
     }
     QJsonObject arguments;
     arguments.insert(QStringLiteral("eventId"), eventId);
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     const quint64 id = send(QStringLiteral("timeline.readers"), arguments);
     m_readerRequests.insert(id, eventId);
 }
 
-void MatrixBridge::loadReactors(const QString &eventId, const QString &key)
+void MatrixBridge::loadReactors(const QString &eventId, const QString &key,
+                                const QString &threadRoot)
 {
     if (eventId.isEmpty() || key.isEmpty()) {
         return;
@@ -1911,6 +2009,9 @@ void MatrixBridge::loadReactors(const QString &eventId, const QString &key)
     QJsonObject arguments;
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("key"), key);
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     m_reactorRequests.insert(send(QStringLiteral("timeline.reactors"), arguments));
 }
 
@@ -2094,7 +2195,7 @@ void MatrixBridge::fetchRoomKeys(const QString &roomId)
 }
 
 void MatrixBridge::replyToMessage(const QString &eventId, const QString &body,
-                                  const QStringList &mentions)
+                                  const QStringList &mentions, const QString &threadRoot)
 {
     if (eventId.isEmpty() || body.trimmed().isEmpty()) {
         return;
@@ -2103,11 +2204,14 @@ void MatrixBridge::replyToMessage(const QString &eventId, const QString &body,
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("body"), body);
     arguments.insert(QStringLiteral("mentions"), mentionArray(mentions));
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     send(QStringLiteral("timeline.reply"), arguments);
 }
 
 void MatrixBridge::editMessage(const QString &eventId, const QString &body,
-                               const QStringList &mentions)
+                               const QStringList &mentions, const QString &threadRoot)
 {
     if (eventId.isEmpty() || body.trimmed().isEmpty()) {
         return;
@@ -2116,10 +2220,14 @@ void MatrixBridge::editMessage(const QString &eventId, const QString &body,
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("body"), body);
     arguments.insert(QStringLiteral("mentions"), mentionArray(mentions));
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     send(QStringLiteral("timeline.edit"), arguments);
 }
 
-void MatrixBridge::toggleReaction(const QString &eventId, const QString &key)
+void MatrixBridge::toggleReaction(const QString &eventId, const QString &key,
+                                  const QString &threadRoot)
 {
     if (eventId.isEmpty() || key.isEmpty()) {
         return;
@@ -2127,6 +2235,9 @@ void MatrixBridge::toggleReaction(const QString &eventId, const QString &key)
     QJsonObject arguments;
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("key"), key);
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     send(QStringLiteral("timeline.react"), arguments);
 }
 
@@ -2136,7 +2247,8 @@ void MatrixBridge::retryMessage(const QString &txnId)
     m_sendQueue->retry(txnId);
 }
 
-void MatrixBridge::deleteMessage(const QString &eventId, const QString &txnId)
+void MatrixBridge::deleteMessage(const QString &eventId, const QString &txnId,
+                                 const QString &threadRoot)
 {
     if (eventId.isEmpty() && txnId.isEmpty()) {
         return;
@@ -2149,6 +2261,9 @@ void MatrixBridge::deleteMessage(const QString &eventId, const QString &txnId)
     QJsonObject arguments;
     arguments.insert(QStringLiteral("eventId"), eventId);
     arguments.insert(QStringLiteral("txnId"), txnId);
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     send(QStringLiteral("timeline.redact"), arguments);
 }
 
@@ -2298,11 +2413,12 @@ QString MatrixBridge::metadataRefusal() const
 void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
                              const QString &caption, const QString &replyTo,
                              qint64 voiceDuration, bool original,
-                             const QStringList &mentions)
+                             const QStringList &mentions, const QString &threadRoot)
 {
     // The type, never the name: a file name carries whatever the user called
     // it, and the log is not the place for that.
-    qInfo("xmatic: sending an attachment of type %s", qPrintable(mimeType));
+    qInfo("xmatic: sending an attachment of type %s%s", qPrintable(mimeType),
+          threadRoot.isEmpty() ? "" : " into a thread");
 
     QJsonObject arguments;
     // The picker hands out URLs; the core wants a plain path.
@@ -2329,6 +2445,9 @@ void MatrixBridge::sendMedia(const QString &path, const QString &mimeType,
     // The room as it is now, not as it will be when the command goes: a video's
     // still is decoded first, and the core refuses a room that moved on.
     arguments.insert(QStringLiteral("roomId"), m_openRoomId);
+    if (!threadRoot.isEmpty()) {
+        arguments.insert(QStringLiteral("threadRoot"), threadRoot);
+    }
     insertDimensions(arguments, outgoing.path, outgoing.mimeType);
     // A video's frame is decoded off this thread and the command goes when it is
     // there: on the UI thread a file the decoders stumble over parks the whole
@@ -2660,11 +2779,24 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         // Replaced by a later open or stopped by a close: nobody waits for it.
         if ((command == QLatin1String("timeline.open") || command == QLatin1String("thread.open"))
                 && error.startsWith(QLatin1String("superseded"))) {
+            // The thread this open was meant for is not open: the page may open it anew.
+            QString lostThread;
             if (id != 0 && id == m_openTimelineId) {
                 m_openTimelineId = 0;
                 setTimelineReady(true);
+                lostThread = m_threadAfterRoom.value(QStringLiteral("rootEventId")).toString();
+            }
+            if (m_threadRequests.contains(id)) {
+                const ThreadRequest asked = m_threadRequests.value(id);
+                if (asked.generation == m_threadGeneration && asked.root == m_openThreadRoot) {
+                    lostThread = asked.root;
+                }
             }
             forgetRequest(id);
+            if (!lostThread.isEmpty()) {
+                forgetOpenThread();
+                emit threadFailed(lostThread, error, QString());
+            }
             return;
         }
         if (command == QLatin1String("login.start")
@@ -2698,10 +2830,21 @@ void MatrixBridge::handleReply(const QJsonObject &message)
             emit searchingChanged();
             emit searchFailed(error);
         }
-        if (command == QLatin1String("thread.open")
-            || command == QLatin1String("thread.paginate")
-            || command == QLatin1String("thread.send")) {
-            emit threadFailed(error);
+        if (m_threadRequests.contains(id)) {
+            const ThreadRequest asked = m_threadRequests.take(id);
+            const bool current = asked.generation == m_threadGeneration
+                    && asked.root == m_openThreadRoot;
+            // A failed open, or a core that lost the thread it had confirmed: closed here too.
+            const bool lost = m_threadInstalled
+                    && (error == QLatin1String("no thread is open")
+                        || error == QLatin1String("the thread is no longer open"));
+            if (current && (command == QLatin1String("thread.open") || lost)) {
+                forgetOpenThread();
+            }
+            // An older open's failure is not this one's; a refused post's text still comes back.
+            if (current || !asked.unsent.isEmpty()) {
+                emit threadFailed(asked.root, current ? error : QString(), asked.unsent);
+            }
         }
         // A failed open answers nothing, and the id filter below drops every
         // *older* answer - so without this the room keeps a spinner for good.
@@ -2709,6 +2852,12 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         if (id != 0 && id == m_openTimelineId) {
             m_openTimelineId = 0;
             setTimelineReady(true);
+            // The thread that waited for this room has no room to open in.
+            if (!m_threadAfterRoom.isEmpty()) {
+                const QString root = m_threadAfterRoom.value(QStringLiteral("rootEventId")).toString();
+                forgetOpenThread();
+                emit threadFailed(root, error, QString());
+            }
         }
         // A failed media fetch has to say so, or the row keeps a spinner over a
         // download that will never arrive - refused oversized ones included.
@@ -2770,7 +2919,9 @@ void MatrixBridge::handleReply(const QJsonObject &message)
         }
         // Shown on the page, not in the banner.
         if (m_roomSettings->reportFailure(id, error)
-            || m_leftRooms->reportFailure(id, error)) {
+            || m_leftRooms->reportFailure(id, error)
+            || m_bans->reportFailure(id, error)
+            || m_pushRules->reportFailure(id, error)) {
             return;
         }
         const bool tokenRotated = error.contains(QLatin1String("M_UNKNOWN_TOKEN"));
@@ -2951,7 +3102,8 @@ bool MatrixBridge::replyAccount(const QString &command, const QJsonObject &data)
 /// Replies about rooms and spaces.
 bool MatrixBridge::replyRoom(quint64 id, const QString &command, const QJsonObject &data)
 {
-    if (m_roomSettings->deliver(id, data) || m_leftRooms->deliver(id, data)) {
+    if (m_roomSettings->deliver(id, data) || m_leftRooms->deliver(id, data)
+            || m_pushRules->deliver(id, data)) {
         return true;
     }
 
@@ -3080,6 +3232,9 @@ bool MatrixBridge::replySearch(quint64 id, const QString &command, const QJsonOb
 /// Replies about members and moderation.
 bool MatrixBridge::replyMember(quint64 id, const QString &command, const QJsonObject &data)
 {
+    if (m_bans->deliver(id, data)) {
+        return true;
+    }
     if (command == QLatin1String("mention.candidates")) {
         m_mentions->deliver(data);
         return true;
@@ -3139,6 +3294,20 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
 
     if (command == QLatin1String("link.preview")) {
         m_linkPreviews->deliver(data);
+        return true;
+    }
+
+    if (command == QLatin1String("thread.open") || command == QLatin1String("thread.send")
+        || command == QLatin1String("thread.paginate")) {
+        const ThreadRequest asked = m_threadRequests.take(id);
+        if (command == QLatin1String("thread.open") && asked.root == m_openThreadRoot
+            && asked.generation == m_threadGeneration) {
+            m_threadInstalled = true;
+        }
+        if (command == QLatin1String("thread.paginate") && !asked.root.isEmpty()
+            && asked.root == m_openThreadRoot && asked.generation == m_threadGeneration) {
+            emit threadPaged(asked.root, data.value(QStringLiteral("reachedStart")).toBool());
+        }
         return true;
     }
 
@@ -3309,6 +3478,12 @@ bool MatrixBridge::replyTimeline(quint64 id, const QString &command, const QJson
         }
         m_openTimelineId = 0;
         setTimelineReady(true);
+        if (!m_threadAfterRoom.isEmpty()
+            && m_threadAfterRoom.value(QStringLiteral("roomId")).toString() == m_openRoomId) {
+            const QJsonObject waiting = m_threadAfterRoom;
+            m_threadAfterRoom = QJsonObject();
+            sendThreadOpen(waiting);
+        }
         // Permissions so menus ask instead of offering what the server will refuse.
         // Thread roots only on a rebuilt timeline - a kept one keeps its own.
         if (data.value(QStringLiteral("rebuilt")).toBool()) {
@@ -3408,6 +3583,11 @@ bool MatrixBridge::replyCall(const QString &command, const QJsonObject &data)
 
 
     if (command == QLatin1String("call.turnServers")) {
+        // A late answer must not bring a signed-out session's credentials back.
+        if (m_sessionState != QLatin1String("signed-in")) {
+            m_calls->relayUnavailable();
+            return true;
+        }
         QVariantList servers;
         QStringList kinds;
         const QJsonArray uris = data.value(QStringLiteral("uris")).toArray();
@@ -3470,7 +3650,11 @@ bool MatrixBridge::eventCall(const QString &name, const QJsonObject &data)
                                 data.value(QStringLiteral("videoOffered")).toBool(),
                                 data.value(QStringLiteral("sender")).toString(),
                                 data.value(QStringLiteral("callId")).toString(),
-                                data.value(QStringLiteral("sdp")).toString());
+                                data.value(QStringLiteral("sdp")).toString(),
+                                // Missing means unknown, and unknown rings.
+                                data.value(QStringLiteral("show")).toBool(true),
+                                data.value(QStringLiteral("audible")).toBool(true),
+                                qint64(data.value(QStringLiteral("lifetimeMs")).toDouble(60000)));
         m_calls->noteInviteVersion(data.value(QStringLiteral("callId")).toString(),
                                    data.value(QStringLiteral("version")).toString());
     } else if (name == QLatin1String("call.answeredElsewhere")) {
@@ -3627,12 +3811,21 @@ bool MatrixBridge::eventTimeline(const QString &name, const QJsonObject &data)
             const QJsonArray ops = data.value(QStringLiteral("ops")).toArray();
             m_threadTimeline.applyOperations(ops);
             qInfo("xmatic: thread diff -> %d rows", m_threadTimeline.count());
+        } else {
+            qInfo("xmatic: thread diff of a closed view dropped");
         }
     } else if (name == QLatin1String("thread.error")) {
-        if (data.value(QStringLiteral("root")).toString() == m_openThreadRoot) {
+        // By token too: a reopen of the same root must not take the old open's page.
+        if (data.value(QStringLiteral("root")).toString() == m_openThreadRoot
+            && data.value(QStringLiteral("token")).toString() == QString::number(m_threadGeneration)) {
             const QString message = data.value(QStringLiteral("message")).toString();
             qWarning("xmatic: thread could not be loaded: %s", qPrintable(message));
-            emit threadFailed(message);
+            emit threadFailed(m_openThreadRoot, message, QString());
+        }
+    } else if (name == QLatin1String("thread.paged")) {
+        if (data.value(QStringLiteral("root")).toString() == m_openThreadRoot
+            && data.value(QStringLiteral("token")).toString() == QString::number(m_threadGeneration)) {
+            emit threadPaged(m_openThreadRoot, data.value(QStringLiteral("atStart")).toBool());
         }
     } else if (name == QLatin1String("send.stuck")) {
         m_sendQueue->reportRoomStuck(data.value(QStringLiteral("roomId")).toString());
@@ -3897,6 +4090,7 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
             m_spaces.clear();
             m_spaceRooms.clear();
             m_leftRooms->setCount(0);
+            m_bans->clear();
             m_unread.clear();
             m_notified.clear();
             m_spaceChildRooms.clear();
@@ -3919,6 +4113,7 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
             m_transcripts->clear();
             m_spaceMarkers->clear();
             m_crossSigning->reset();
+            m_pushRules->clear();
         }
         // A rebuild restarts only what a standing page asked for; a new session's pages ask anew.
         if (data.value(QStringLiteral("state")).toString() == QLatin1String("none")) {
@@ -3950,9 +4145,14 @@ bool MatrixBridge::eventSession(const QString &name, const QJsonObject &data)
         // the last line of a failure is rarely its cause.
         const QString message = data.value(QStringLiteral("message")).toString();
         const QString target = data.value(QStringLiteral("target")).toString();
-        const bool error = data.value(QStringLiteral("level")).toString() == QLatin1String("error");
-        qWarning("xmatic: sdk %s %s: %s", error ? "error" : "warning", qPrintable(target),
-                 qPrintable(message));
+        const QString level = data.value(QStringLiteral("level")).toString();
+        const bool error = level == QLatin1String("error");
+        if (level == QLatin1String("info")) {
+            qInfo("xmatic: %s", qPrintable(message));
+        } else {
+            qWarning("xmatic: sdk %s %s: %s", error ? "error" : "warning", qPrintable(target),
+                     qPrintable(message));
+        }
         if (error) {
             noteError(target, message);
         }
@@ -4082,13 +4282,7 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
             pending.mentions = room.value(QStringLiteral("mentions")).toInt();
             pending.timestamp = timestamp;
 
-            // Without the message text there is nothing to wait for: the
-            // banner says how many arrived, and that number is right already.
-            if (!m_settings || !m_settings->notificationPreview()) {
-                publishBanner(id, pending, room);
-                continue;
-            }
-
+            // Waits even without the text: the tone follows the new event's rule.
             m_pendingBanners.insert(id, pending);
             if (!m_bannerTimeout.isActive()) {
                 m_bannerTimeout.start();
@@ -4110,6 +4304,12 @@ void MatrixBridge::publishBanner(const QString &roomId, const PendingBanner &pen
         return;
     }
     m_push->noteSyncBanner(roomId, timestamp);
+    // The rule's sound tweak, as other clients play it; unknown keeps the tone.
+    const QJsonValue sound = room.value(QStringLiteral("sound"));
+    const bool audible = !sound.isBool() || sound.toBool();
+    qInfo("xmatic: banner, rule sound %s, members %d",
+          sound.isBool() ? (sound.toBool() ? "yes" : "no") : "unknown",
+          room.value(QStringLiteral("members")).toInt(-1));
     emit roomActivity(roomId,
                       pending.name,
                       pending.notifications,
@@ -4117,7 +4317,7 @@ void MatrixBridge::publishBanner(const QString &roomId, const PendingBanner &pen
                       room.value(QStringLiteral("previewKind")).toString(),
                       room.value(QStringLiteral("previewText")).toString(),
                       room.value(QStringLiteral("previewSender")).toString(),
-                      true);
+                      audible);
 }
 
 void MatrixBridge::updateSpaceChildren(const QJsonObject &spaces)
@@ -4196,6 +4396,8 @@ void MatrixBridge::applySession(const QJsonObject &data)
     // to it, and its microphone would stay open.
     if (m_sessionState == QLatin1String("signed-in") && state != QLatin1String("signed-in")) {
         m_calls->hangUp();
+        // The relay password belongs to the session.
+        m_calls->forgetRelays();
     }
     m_sessionState = state;
     m_userId = user;

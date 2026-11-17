@@ -17,6 +17,7 @@ use serde_json::{json, Value};
 use tokio::sync::{broadcast::error::RecvError, mpsc, Mutex};
 
 use crate::call;
+use crate::bans;
 use crate::directory;
 use crate::gate::{self, Entry, LoginKind, Phase, Slot};
 use crate::login;
@@ -25,6 +26,7 @@ use crate::linkpreview;
 use crate::location;
 use crate::leftrooms;
 use crate::poll;
+use crate::pushrules;
 use crate::roomsettings;
 use crate::sendqueue;
 use crate::private;
@@ -372,6 +374,27 @@ impl State {
 
     async fn thread(&self) -> Option<Arc<TimelineHandle>> {
         self.thread.lock().await.clone()
+    }
+
+    /// The open thread if it is the one named; empty names whichever is open.
+    async fn named_thread(&self, thread_root: &str) -> Result<Arc<TimelineHandle>, String> {
+        match self.thread().await {
+            Some(handle) if thread_root.is_empty() || handle.thread_root() == thread_root => {
+                Ok(handle)
+            }
+            Some(_) => Err("the thread is no longer open".to_owned()),
+            None => Err("no thread is open".to_owned()),
+        }
+    }
+
+    /// The view a row's action runs on: the room's, or the open thread with this
+    /// root. The SDK finds an item only in the timeline that holds it.
+    async fn view(&self, thread_root: &str) -> Option<Arc<TimelineHandle>> {
+        if thread_root.is_empty() {
+            self.timeline().await
+        } else {
+            self.thread().await.filter(|handle| handle.thread_root() == thread_root)
+        }
     }
 
     fn slot(&self) -> Slot {
@@ -752,8 +775,8 @@ async fn handle(state: Arc<State>, command: Command) {
             }
         }
 
-        Command::TimelineReaders { event_id, .. } => {
-            let outcome = match state.timeline().await {
+        Command::TimelineReaders { event_id, thread_root, .. } => {
+            let outcome = match state.view(&thread_root).await {
                 Some(handle) => handle.readers(&event_id).await,
                 None => Err("no timeline is open".to_owned()),
             };
@@ -764,8 +787,8 @@ async fn handle(state: Arc<State>, command: Command) {
                 Err(message) => state.sink.emit(reply_error(id, message)),
             }
         }
-        Command::TimelineReactors { event_id, key, .. } => {
-            let outcome = match state.timeline().await {
+        Command::TimelineReactors { event_id, key, thread_root, .. } => {
+            let outcome = match state.view(&thread_root).await {
                 Some(handle) => handle.reactors(&event_id, &key).await,
                 None => Err("no timeline is open".to_owned()),
             };
@@ -777,13 +800,15 @@ async fn handle(state: Arc<State>, command: Command) {
                 Err(message) => state.sink.emit(reply_error(id, message)),
             }
         }
-        Command::TimelineReply { event_id, body, mentions, .. } => {
-            reply_message(&state, id, event_id, body, mentions).await
+        Command::TimelineReply { event_id, body, mentions, thread_root, .. } => {
+            reply_message(&state, id, event_id, body, mentions, thread_root).await
         }
-        Command::TimelineEdit { event_id, body, mentions, .. } => {
-            edit_message(&state, id, event_id, body, mentions).await
+        Command::TimelineEdit { event_id, body, mentions, thread_root, .. } => {
+            edit_message(&state, id, event_id, body, mentions, thread_root).await
         }
-        Command::TimelineReact { event_id, key, .. } => react(&state, id, event_id, key).await,
+        Command::TimelineReact { event_id, key, thread_root, .. } => {
+            react(&state, id, event_id, key, thread_root).await
+        }
         Command::LinkPreview { url, .. } => {
             linkpreview::handle(state.client().await, &state.sink, id, url).await
         }
@@ -799,14 +824,18 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::LeftRoomsList { .. } | Command::LeftRoomsForget { .. } => {
             leftrooms::handle(command, state.client().await, &state.sink).await
         }
+        // core/src/pushrules.rs.
+        Command::PushRulesGet { .. } | Command::PushRulesSet { .. } => {
+            pushrules::handle(command, state.client().await, &state.sink).await
+        }
         // Routed, not handled: the poll rules live in core/src/poll.rs.
         // A new poll could take a slice's thread; vote and end carry their relation.
         Command::PollStart { .. } => match state.sendable_timeline().await {
             Ok(handle) => poll::handle(command, Some(handle.timeline()), &state.sink).await,
             Err(message) => state.sink.emit(reply_error(id, message)),
         },
-        Command::PollVote { .. } | Command::PollEnd { .. } => {
-            let timeline = state.timeline().await.map(|handle| handle.timeline());
+        Command::PollVote { ref thread_root, .. } | Command::PollEnd { ref thread_root, .. } => {
+            let timeline = state.view(thread_root).await.map(|handle| handle.timeline());
             poll::handle(command, timeline, &state.sink).await
         }
         // Routed, not handled: core/src/sendqueue.rs.
@@ -830,8 +859,11 @@ async fn handle(state: Arc<State>, command: Command) {
             location::handle(command, state.client().await, timeline, tiles, &state.sink).await
         }
         Command::TimelineRedact {
-            event_id, txn_id, ..
-        } => redact_message(&state, id, event_id, txn_id).await,
+            event_id,
+            txn_id,
+            thread_root,
+            ..
+        } => redact_message(&state, id, event_id, txn_id, thread_root).await,
         Command::TimelineSendMedia {
             path,
             mime_type,
@@ -844,11 +876,12 @@ async fn handle(state: Arc<State>, command: Command) {
             height,
             thumbnail,
             room_id,
+            thread_root,
             ..
         } => {
             send_media(
                 &state, id, path, mime_type, caption, mentions, reply_to, voice, duration, width,
-                height, thumbnail, room_id,
+                height, thumbnail, room_id, thread_root,
             )
             .await
         }
@@ -1082,12 +1115,12 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::MemberProfile { room_id, user_id, .. } => {
             member_profile(&state, id, room_id, user_id).await
         }
-        Command::MemberBan { room_id, user_id, .. } => {
-            member_ban(&state, id, room_id, user_id).await
-        }
-        Command::MemberUnban { room_id, user_id, .. } => {
-            member_unban(&state, id, room_id, user_id).await
-        }
+        // Routed, not handled: core/src/bans.rs.
+        Command::MemberBan { .. }
+        | Command::MemberUnban { .. }
+        | Command::BansList { .. }
+        | Command::BansAdd { .. }
+        | Command::BansLift { .. } => bans::handle(command, state.client().await, &state.sink).await,
         Command::MemberSetPower {
             room_id,
             user_id,
@@ -1112,10 +1145,15 @@ async fn handle(state: Arc<State>, command: Command) {
         Command::ThreadClose { root_event_id, .. } => {
             close_thread(&state, id, root_event_id).await
         }
-        Command::ThreadSend { body, mentions, .. } => {
-            send_thread_message(&state, id, body, mentions).await
+        Command::ThreadSend {
+            body,
+            mentions,
+            thread_root,
+            ..
+        } => send_thread_message(&state, id, body, mentions, thread_root).await,
+        Command::ThreadPaginate { thread_root, .. } => {
+            paginate_thread(&state, id, thread_root).await
         }
-        Command::ThreadPaginate { .. } => paginate_thread(&state, id).await,
     }
 }
 

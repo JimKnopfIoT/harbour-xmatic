@@ -119,7 +119,7 @@ Page {
 
             ListItem {
                 contentHeight: Theme.itemSizeSmall
-                visible: page.eventId.length > 0
+                visible: page.eventId.length > 0 && roomPage.inThread !== true
                 onClicked: page.handBack("thread")
                 Label {
                     anchors {
@@ -154,7 +154,7 @@ Page {
                 contentHeight: Theme.itemSizeSmall
                 visible: page.canSave
                 onClicked: {
-                    roomPage.saveAttachment(page.item)
+                    roomPage.timelineActions.saveAttachment(page.item)
                     pageStack.pop()
                 }
                 Label {

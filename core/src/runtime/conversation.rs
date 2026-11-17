@@ -416,37 +416,50 @@ pub(super) async fn close_thread(state: &Arc<State>, id: u64, root_event_id: Str
     drop(open);
     state.sink.emit(reply_ok(id, json!({ "open": false })));
 }
-pub(super) async fn send_thread_message(state: &Arc<State>, id: u64, body: String, mentions: Vec<String>) {
+pub(super) async fn send_thread_message(
+    state: &Arc<State>,
+    id: u64,
+    body: String,
+    mentions: Vec<String>,
+    thread_root: String,
+) {
     if body.trim().is_empty() {
         state.sink.emit(reply_error(id, "nothing to send"));
         return;
     }
 
-    let outcome = match state.thread().await {
-        Some(handle) => {
+    let outcome = match state.named_thread(&thread_root).await {
+        Ok(handle) => {
             let content = mention_content(state, handle.room_id(), body, &mentions).await;
             handle.send_content(content).await
         }
-        None => Err("no thread is open".to_owned()),
+        Err(message) => Err(message),
     };
 
     match outcome {
         Ok(()) => state.sink.emit(reply_ok(id, json!({ "sent": true }))),
-        Err(message) => state.sink.emit(reply_error(id, message)),
+        Err(message) => state.sink.emit(reply_error(id, crate::text::scrub_ids(&message))),
     }
 }
-pub(super) async fn paginate_thread(state: &Arc<State>, id: u64) {
-    let outcome = match state.thread().await {
-        Some(handle) => handle.paginate().await,
-        None => Err("no thread is open".to_owned()),
+pub(super) async fn paginate_thread(state: &Arc<State>, id: u64, thread_root: String) {
+    // On the view's own tasks: closing the thread ends the pagination with it.
+    let outcome = match state.named_thread(&thread_root).await {
+        Ok(handle) => handle
+            .paginate_thread_tracked()
+            .await
+            .map(|paginated| (handle.thread_root().to_owned(), paginated)),
+        Err(message) => Err(message),
     };
 
     match outcome {
-        Ok(paginated) => state.sink.emit(reply_ok(
+        Ok((root, paginated)) => state.sink.emit(reply_ok(
             id,
-            json!({ "reachedStart": matches!(paginated, timeline::Paginated::Start) }),
+            json!({
+                "root": root,
+                "reachedStart": matches!(paginated, timeline::Paginated::Start),
+            }),
         )),
-        Err(message) => state.sink.emit(reply_error(id, message)),
+        Err(message) => state.sink.emit(reply_error(id, crate::text::scrub_ids(&message))),
     }
 }
 pub(super) async fn paginate_timeline(state: &Arc<State>, id: u64, room_id: String, forwards: bool) {
@@ -523,13 +536,20 @@ pub(super) async fn reply_message(
     event_id: String,
     body: String,
     mentions: Vec<String>,
+    thread_root: String,
 ) {
     if body.trim().is_empty() {
         state.sink.emit(reply_error(id, "a reply cannot be empty"));
         return;
     }
 
-    let outcome = match state.sendable_timeline().await {
+    // In a thread the reply stays there: the thread's view infers the relation.
+    let handle = if thread_root.is_empty() {
+        state.sendable_timeline().await
+    } else {
+        state.view(&thread_root).await.ok_or_else(|| "the thread is no longer open".to_owned())
+    };
+    let outcome = match handle {
         Ok(handle) => {
             let content = mention_content(state, handle.room_id(), body, &mentions).await;
             handle.reply_content(&event_id, content).await
@@ -548,13 +568,14 @@ pub(super) async fn edit_message(
     event_id: String,
     body: String,
     mentions: Vec<String>,
+    thread_root: String,
 ) {
     if body.trim().is_empty() {
         state.sink.emit(reply_error(id, "an edit cannot be empty"));
         return;
     }
 
-    let outcome = match state.timeline().await {
+    let outcome = match state.view(&thread_root).await {
         Some(handle) => {
             let client = state.client().await;
             handle.edit(client.as_ref(), &event_id, body, &mentions).await
@@ -567,8 +588,14 @@ pub(super) async fn edit_message(
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
-pub(super) async fn react(state: &Arc<State>, id: u64, event_id: String, key: String) {
-    let outcome = match state.timeline().await {
+pub(super) async fn react(
+    state: &Arc<State>,
+    id: u64,
+    event_id: String,
+    key: String,
+    thread_root: String,
+) {
+    let outcome = match state.view(&thread_root).await {
         Some(handle) => handle.toggle_reaction(&event_id, &key).await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -577,8 +604,15 @@ pub(super) async fn react(state: &Arc<State>, id: u64, event_id: String, key: St
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
-pub(super) async fn redact_message(state: &Arc<State>, id: u64, event_id: String, txn_id: String) {
-    let outcome = match state.timeline().await {
+pub(super) async fn redact_message(
+    state: &Arc<State>,
+    id: u64,
+    event_id: String,
+    txn_id: String,
+    thread_root: String,
+) {
+    // The SDK redacts only items of the timeline it is asked on.
+    let outcome = match state.view(&thread_root).await {
         Some(handle) => handle.redact(&event_id, &txn_id).await,
         None => Err("no timeline is open".to_owned()),
     };
@@ -612,11 +646,22 @@ pub(super) async fn send_media(
     height: u64,
     still: MediaStill,
     room_id: String,
+    thread_root: String,
 ) {
     // Cloned out of the guard: the attachment upload takes a while and must
     // not hold the lock. The room is read from the same handle, under the same
     // guard, so the check below and the send cannot be about two rooms.
-    let (open_room, timeline) = match state.sendable_timeline().await {
+    let open = if thread_root.is_empty() {
+        state.sendable_timeline().await
+    } else {
+        // The thread's own timeline: the SDK threads what is sent on it.
+        match state.thread().await {
+            Some(handle) if handle.thread_root() == thread_root => Ok(handle),
+            Some(_) => Err("the thread this attachment was meant for is no longer open".to_owned()),
+            None => Err("no thread is open".to_owned()),
+        }
+    };
+    let (open_room, timeline) = match open {
         Ok(handle) => (handle.room_id.clone(), handle.timeline()),
         Err(message) => {
             state.sink.emit(reply_error(id, message));

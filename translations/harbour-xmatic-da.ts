@@ -356,6 +356,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Det er ikke en gyldig Matrix-adresse. Den ser sådan ud: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Du kan ikke bortvise dig selv.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Begrundelsen er for lang.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>En Matrix-adresse ser sådan ud: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Begrundelse (valgfri)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Personen kan ikke længere komme ind i rummet. Er vedkommende medlem nu, bliver vedkommende fjernet. Alle i rummet kan se bortvisningen og begrundelsen.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Bortvis en person…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Bortviste personer</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Din rolle i rummet tillader hverken at bortvise eller at ophæve en bortvisning. Listen kan kun læses.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Begrundelse: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Bortvist af %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Ingen er bortvist</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -448,6 +505,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Indmeldinger, invitationer, fjernelser og udelukkelser vises altid.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Notifikationer</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Notifikationsregler</translation>
     </message>
 </context>
 <context>
@@ -1420,6 +1485,10 @@
         <source>The people in this room show up here.</source>
         <translation>Personerne i dette rum vises her.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Bortvis…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1648,6 +1717,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Opkald</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 kom ind</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 gik</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 inviterede %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 fjernede %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 bortviste %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 ophævede bortvisningen af %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 trak invitationen til %2 tilbage</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 afslog invitationen</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 bad om at komme ind</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 ændrede medlemskab</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 ændrede sit profilbillede</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 ændrede sit visningsnavn til %2 og sit profilbillede</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 fjernede sit visningsnavn og ændrede sit profilbillede</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 ændrede sit visningsnavn til %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 fjernede sit visningsnavn</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Åbn link?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopiér link</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Videresend link</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Kassér</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Slet</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Fastgør</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Svar i tråden</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Send igen</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Gem</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Konvertér til tekst</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopier</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Videresend</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Rediger</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagér</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Svar</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Mere…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Den citerede besked kan ikke indlæses: den findes ikke længere, eller du må ikke se den.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Vises ikke på denne enhed. Tryk for at åbne.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Kunne ikke indlæses. Tryk for at prøve igen.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Tryk for at indlæse</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Talebesked</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Konverterer til tekst…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Genkendt automatisk, kan indeholde fejl</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Vis mindre</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Vis mere</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Hvad betyder disse mærker?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Tråd · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>I tråden</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Denne reaktion skjuler tekst og blev ikke sendt</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>ikke sendt</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>sletning ikke sendt</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>redigering ikke sendt</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>redigeret</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1675,6 +1949,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Modparten får en invitation, og samtalen vises straks på din liste. Beskeder er krypteret fra begyndelsen.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Notifikationsregler</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Direkte beskeder</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Gruppebeskeder</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Omtaler af dig</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Omtaler af hele rummet</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Invitationer</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Opkald</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Fra</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Serveren afviste ændringen: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Uden lyd</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Med lyd</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Gemt på din konto, så alle klienter følger dem. Med lyd ringer, Uden lyd viser en notifikation og får LED&apos;en til at blinke, Fra hæver kun rummets tæller for ulæste. Et rum med sin egen indstilling i detaljerne beholder den. En omtale sat til Fra tæller som en almindelig besked i sit rum.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Venter på serveren…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Delvist indstillet forskelligt. Vælg et niveau for at bruge det overalt.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Reglerne kunne ikke læses fra serveren: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Serveren svarede ikke i tide.</translation>
     </message>
 </context>
 <context>
@@ -2741,89 +3082,8 @@
         <translation>Samtalens begyndelse</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Opkald</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 kom ind</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 gik</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 afslog invitationen</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 bad om at komme ind</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 ændrede medlemskab</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopier</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Svar</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Gem</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Videresend</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Rediger</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Fastgør</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Slet</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Mere…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Den citerede besked kan ikke indlæses: den findes ikke længere, eller du må ikke se den.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Talebesked</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Besked slettet</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Tråd · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>I tråden</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>ikke sendt</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>redigeret</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2858,52 +3118,12 @@
         <translation>Den besked er ikke i den indlæste historik</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Kassér</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Send igen</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagér</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Svar i tråden</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopiér rumlink</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Rumlink kopieret</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Sendt ukrypteret</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Ikke sendt af den konto der nævnes</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Afsenderens nøgler er ændret</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Fra en ikke-verificeret enhed</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Fra en ikke-verificeret person</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Ægthed ikke bekræftet</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2914,20 +3134,12 @@
         <translation>Sletter</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Denne reaktion skjuler tekst og blev ikke sendt</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Billede</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Søg i beskeder</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Hvad betyder disse mærker?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2970,43 +3182,6 @@
         <translation>Din stemme blev ikke sendt</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 inviterede %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 fjernede %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 bortviste %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 ophævede bortvisningen af %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 trak invitationen til %2 tilbage</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Konvertér til tekst</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Konverterer til tekst…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Genkendt automatisk, kan indeholde fejl</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Optager… %1 s. Tryk på mikrofonen for at sende.</translation>
     </message>
@@ -3015,40 +3190,12 @@
         <translation>Der blev ikke sagt noget, så der blev ikke sendt noget.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Gemt i galleriet</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Kunne ikke gemmes</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Gemt i Downloads</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Vis mindre</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Vis mere</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Teksten kunne ikke skrives som en fil</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Del placering</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>sletning ikke sendt</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>redigering ikke sendt</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3065,50 +3212,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Den venter ikke længere på at blive sendt.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Kunne ikke indlæses. Tryk for at prøve igen.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Tryk for at indlæse</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Åbn link?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopiér link</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Videresend link</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 ændrede sit visningsnavn til %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 fjernede sit visningsnavn</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 ændrede sit profilbillede</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 ændrede sit visningsnavn til %2 og sit profilbillede</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 fjernede sit visningsnavn og ændrede sit profilbillede</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Vises ikke på denne enhed. Tryk for at åbne.</translation>
     </message>
 </context>
 <context>
@@ -3965,6 +4068,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Vælg filer</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3973,10 +4083,6 @@
     <message>
         <source>Thread</source>
         <translation>Tråd</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Hændelse</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3994,6 +4100,33 @@
         <source>Reply in thread</source>
         <translation>Svar i tråden</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Kasserer</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Sletter</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Svar til %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Redigerer beskeden</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Ny tekst</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Ingen indlæg</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Sendt ukrypteret</translation>
@@ -4019,28 +4152,16 @@
         <translation>Ægthed ikke bekræftet</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Åbn denne adresse?</translation>
+        <source>Saved to gallery</source>
+        <translation>Gemt i galleriet</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Åbn</translation>
+        <source>Could not save</source>
+        <translation>Kunne ikke gemmes</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Åbn link?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopiér link</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Videresend link</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Fastgør</translation>
+        <source>Saved to Downloads</source>
+        <translation>Gemt i Downloads</translation>
     </message>
 </context>
 <context>

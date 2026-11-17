@@ -17,7 +17,7 @@ QT += network dbus multimedia concurrent positioning
 # entry, which silently drops -lsailfishapp from the link line.
 GST_MODULES = gstreamer-1.0 gstreamer-sdp-1.0 gstreamer-webrtc-1.0 gstreamer-video-1.0 nice
 QMAKE_CXXFLAGS += $$system(pkg-config --cflags $$GST_MODULES)
-QMAKE_CXXFLAGS += $$system(pkg-config --cflags libpulse speexdsp)
+QMAKE_CXXFLAGS += $$system(pkg-config --cflags libpulse)
 
 # The store key lives in Sailfish Secrets; same direct pkg-config route as
 # GStreamer, for the same sailfishapp.prf reason.
@@ -35,7 +35,7 @@ QMAKE_CXXFLAGS += -ffile-prefix-map=$$PWD=/build
 QMAKE_CXXFLAGS += -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 QMAKE_LFLAGS += -Wl,-z,relro -Wl,-z,now
 LIBS += $$system(pkg-config --libs $$GST_MODULES)
-LIBS += $$system(pkg-config --libs libpulse speexdsp)
+LIBS += $$system(pkg-config --libs libpulse)
 LIBS += $$system(pkg-config --libs sailfishsecrets)
 
 SOURCES += \
@@ -63,7 +63,9 @@ SOURCES += \
     src/camerashots.cpp \
     src/readingpositions.cpp \
     src/roomsettings.cpp \
+    src/banlist.cpp \
     src/leftrooms.cpp \
+    src/pushrules.cpp \
     src/crosssigning.cpp \
     src/spacemarkers.cpp \
     src/linkpreviews.cpp \
@@ -79,8 +81,6 @@ SOURCES += \
     src/callengine.cpp \
     src/camerasource.cpp \
     src/callaudiorouter.cpp \
-    src/echocanceller.cpp \
-    src/feedbacksuppressor.cpp \
     src/videostream.cpp \
     src/voicerecorder.cpp \
     src/secretskeeper.cpp
@@ -106,7 +106,9 @@ HEADERS += \
     src/camerashots.h \
     src/readingpositions.h \
     src/roomsettings.h \
+    src/banlist.h \
     src/leftrooms.h \
+    src/pushrules.h \
     src/crosssigning.h \
     src/spacemarkers.h \
     src/linkpreviews.h \
@@ -127,7 +129,6 @@ HEADERS += \
     src/camerasource.h \
     src/callaudiorouter.h \
     src/echocanceller.h \
-    src/feedbacksuppressor.h \
     src/videostream.h \
     src/voicerecorder.h
 
@@ -190,6 +191,23 @@ TREE_SOURCE = $$system(cd $$PWD/core && find src Cargo.toml Cargo.lock -type f |
 
 LIBS += $$CORE_LIB -lpthread -ldl -lm -lrt
 PRE_TARGETDEPS += $$CORE_LIB
+
+# --- echo canceller ---------------------------------------------------------
+# webrtc-audio-processing (AEC3) and its abseil, cross-built on the host like the
+# core; the targets carry neither. Its one source file needs C++17.
+AEC_PRI = $$PWD/core/target/aec/$$RUST_TARGET/aec.pri
+!exists($$AEC_PRI) {
+    error("Echo canceller not built: $$AEC_PRI is missing. Run scripts/build-aec.sh first.")
+}
+include($$AEC_PRI)
+
+AEC_SOURCES = src/echocanceller.cpp
+aec.input = AEC_SOURCES
+aec.output = ${QMAKE_FILE_BASE}.o
+aec.commands = $(CXX) -c $(CXXFLAGS) -std=gnu++17 $(DEFINES) $(INCPATH) -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
+aec.depends = $$PWD/src/echocanceller.h $$AEC_PRI
+aec.variable_out = OBJECTS
+QMAKE_EXTRA_COMPILERS += aec
 
 # Installed to /usr/share/icons/hicolor/<size>/apps/ (see sailfishapp.prf).
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
@@ -389,6 +407,8 @@ DISTFILES += \
     qml/pages/PowerLevelDialog.qml \
     qml/pages/IgnoredUsersPage.qml \
     qml/pages/LeftRoomsPage.qml \
+    qml/pages/BannedMembersPage.qml \
+    qml/pages/BanUserDialog.qml \
     qml/pages/ThreadPage.qml \
     qml/pages/CallPage.qml \
     qml/pages/SendMediaPage.qml

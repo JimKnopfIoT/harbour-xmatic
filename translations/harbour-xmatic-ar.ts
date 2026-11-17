@@ -360,6 +360,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>هذا ليس عنوان Matrix صالحًا. يبدو هكذا: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>لا يمكنك حظر نفسك.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>السبب طويل جدًا.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>يبدو عنوان Matrix هكذا: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>السبب (اختياري)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>لن يتمكن هذا الشخص من دخول هذه الغرفة بعد الآن. وإن كان عضوًا الآن فسيُزال. يرى كل من في الغرفة الحظر وسببه.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>حظر شخص…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>الأشخاص المحظورون</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>دورك في هذه الغرفة لا يسمح بالحظر ولا برفعه. القائمة للقراءة فقط.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>السبب: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>حظره %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>لا أحد محظور</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -452,6 +509,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>تُعرض دائمًا عمليات الانضمام والدعوات والإزالة والحظر.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>الإشعارات</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>قواعد الإشعارات</translation>
     </message>
 </context>
 <context>
@@ -1428,6 +1493,10 @@
         <source>The people in this room show up here.</source>
         <translation>يظهر هنا من في هذه الغرفة.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>حظر…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1656,6 +1725,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>مكالمة</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>انضم %1</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>غادر %1</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>دعا %1 المستخدم %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>أزال %1 المستخدم %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>حظر %1 المستخدم %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>رفع %1 الحظر عن %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>سحب %1 الدعوة الموجّهة إلى %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>رفض %1 الدعوة</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>طلب %1 الانضمام</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>تغيّرت عضوية %1</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>غيّر %1 صورة ملفه الشخصي</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>غيّر %1 اسم العرض إلى %2 وغيّر صورة الملف الشخصي</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>أزال %1 اسم العرض وغيّر صورة الملف الشخصي</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>غيّر %1 اسمه المعروض إلى %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>أزال %1 اسمه المعروض</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>فتح الرابط؟</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>نسخ الرابط</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>إعادة توجيه الرابط</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>إسقاط</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>حذف</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>تثبيت</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>الرد في الخيط</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>إرسال مجددًا</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>حفظ</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>تحويل إلى نص</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>نسخ</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>إعادة توجيه</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>تحرير</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>تفاعل</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>رد</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>المزيد…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>تتعذّر قراءة الرسالة المقتبسة: لم تعد موجودة أو لا يُسمح لك برؤيتها.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>لا يُعرض على هذا الجهاز. انقر للفتح.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>تعذّر التحميل. اضغط للمحاولة مجددًا.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>اضغط للتحميل</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>رسالة صوتية</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>جارٍ التحويل إلى نص…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>تم التعرّف عليه تلقائيًا، وقد يحتوي على أخطاء</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>عرض أقل</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>عرض المزيد</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>ماذا تعني هذه العلامات؟</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>خيط · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>في الخيط</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>يخفي هذا التفاعل نصًا ولم يُرسل</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>لم تُرسل</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>لم يُرسل الحذف</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>لم يُرسل التعديل</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>مُحرَّرة</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1683,6 +1957,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>يتلقى الطرف الآخر دعوة وتظهر المحادثة في قائمتك فورًا. الرسائل مُعمّاة منذ البداية.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>قواعد الإشعارات</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>الرسائل المباشرة</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>رسائل المجموعات</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>الإشارات إليك</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>الإشارات إلى الغرفة كلها</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>الدعوات</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>المكالمات</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>إيقاف</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>رفض الخادم التغيير: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>بدون صوت</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>مع صوت</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>تُحفظ في حسابك، لذا يتبعها كل تطبيق. «مع صوت» يرنّ، و«بدون صوت» يعرض إشعارًا ويجعل ضوء LED يومض، و«إيقاف» يزيد عدّاد غير المقروءة في الغرفة فقط. الغرفة التي لها إعداد خاص في تفاصيلها تحتفظ به. الإشارة المضبوطة على «إيقاف» تُعامل كرسالة عادية في غرفتها.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>بانتظار الخادم…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>مضبوط بشكل مختلف في أجزاء منه. اختر مستوى لتطبيقه على الكل.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>تعذّرت قراءة القواعد من الخادم: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>لم يستجب الخادم في الوقت المناسب.</translation>
     </message>
 </context>
 <context>
@@ -2781,117 +3122,12 @@
         <translation>بداية المحادثة</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>مكالمة</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>انضم %1</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>غادر %1</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>رفض %1 الدعوة</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>طلب %1 الانضمام</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>تغيّرت عضوية %1</translation>
-    </message>
-    <message>
-        <source>Discard</source>
-        <translation>إسقاط</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>حذف</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>تثبيت</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>الرد في الخيط</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>إرسال مجددًا</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>حفظ</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>نسخ</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>إعادة توجيه</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>تحرير</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>تفاعل</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>رد</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>المزيد…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>تتعذّر قراءة الرسالة المقتبسة: لم تعد موجودة أو لا يُسمح لك برؤيتها.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>رسالة صوتية</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>حُذفت الرسالة</translation>
     </message>
     <message>
         <source>Picture</source>
         <translation>صورة</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>ماذا تعني هذه العلامات؟</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>خيط · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>في الخيط</translation>
-    </message>
-    <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>يخفي هذا التفاعل نصًا ولم يُرسل</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>لم تُرسل</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>مُحرَّرة</translation>
     </message>
     <message>
         <source>The conversation could not be loaded</source>
@@ -2934,30 +3170,6 @@
         <translation>اختيار ملفات</translation>
     </message>
     <message>
-        <source>Sent unencrypted</source>
-        <translation>أُرسلت دون تعمية</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>لم تُرسل من الحساب الذي تسمّيه</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>تغيّرت مفاتيح المرسِل</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>من جهاز غير مُتحقَّق منه</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>من شخص غير مُتحقَّق منه</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>لم تتأكد الأصالة</translation>
-    </message>
-    <message>
         <source>Open this address?</source>
         <translation>أتريد فتح هذا العنوان؟</translation>
     </message>
@@ -2986,43 +3198,6 @@
         <translation>لم يُرسَل صوتك</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>دعا %1 المستخدم %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>أزال %1 المستخدم %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>حظر %1 المستخدم %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>رفع %1 الحظر عن %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>سحب %1 الدعوة الموجّهة إلى %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>تحويل إلى نص</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>جارٍ التحويل إلى نص…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>تم التعرّف عليه تلقائيًا، وقد يحتوي على أخطاء</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>يجري التسجيل… %1 ثانية. المس الميكروفون للإرسال.</translation>
     </message>
@@ -3031,40 +3206,12 @@
         <translation>لم يُقل شيء، لذا لم يُرسل شيء.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>حُفظ في المعرض</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>تعذّر الحفظ</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>حُفظ في التنزيلات</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>عرض أقل</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>عرض المزيد</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>تعذّر كتابة النص كملف</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>مشاركة الموقع</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>لم يُرسل الحذف</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>لم يُرسل التعديل</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3081,50 +3228,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>لم يعد بانتظار الإرسال.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>تعذّر التحميل. اضغط للمحاولة مجددًا.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>اضغط للتحميل</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>فتح الرابط؟</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>نسخ الرابط</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>إعادة توجيه الرابط</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>غيّر %1 اسمه المعروض إلى %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>أزال %1 اسمه المعروض</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>غيّر %1 صورة ملفه الشخصي</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>غيّر %1 اسم العرض إلى %2 وغيّر صورة الملف الشخصي</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>أزال %1 اسم العرض وغيّر صورة الملف الشخصي</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>لا يُعرض على هذا الجهاز. انقر للفتح.</translation>
     </message>
 </context>
 <context>
@@ -3985,7 +4088,65 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>اختيار ملفات</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
+    <message>
+        <source>Load older posts</source>
+        <translation>تحميل مشاركات أقدم</translation>
+    </message>
+    <message>
+        <source>Thread</source>
+        <translation>خيط</translation>
+    </message>
+    <message>
+        <source>Attachment</source>
+        <translation>مرفق</translation>
+    </message>
+    <message>
+        <source>Thread unavailable</source>
+        <translation>الخيط غير متاح</translation>
+    </message>
+    <message>
+        <source>Loading thread</source>
+        <translation>يجري تحميل الخيط</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>الرد في الخيط</translation>
+    </message>
+    <message>
+        <source>Discarding</source>
+        <translation>جارٍ الإسقاط</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>جارٍ الحذف</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>رد على %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>تحرير الرسالة</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>نص جديد</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>لا توجد منشورات</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>أُرسلت دون تعمية</translation>
@@ -4011,56 +4172,16 @@
         <translation>لم تتأكد الأصالة</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>أتريد فتح هذا العنوان؟</translation>
+        <source>Saved to gallery</source>
+        <translation>حُفظ في المعرض</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>فتح</translation>
+        <source>Could not save</source>
+        <translation>تعذّر الحفظ</translation>
     </message>
     <message>
-        <source>Load older posts</source>
-        <translation>تحميل مشاركات أقدم</translation>
-    </message>
-    <message>
-        <source>Thread</source>
-        <translation>خيط</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>حدث</translation>
-    </message>
-    <message>
-        <source>Attachment</source>
-        <translation>مرفق</translation>
-    </message>
-    <message>
-        <source>Thread unavailable</source>
-        <translation>الخيط غير متاح</translation>
-    </message>
-    <message>
-        <source>Loading thread</source>
-        <translation>يجري تحميل الخيط</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>الرد في الخيط</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>فتح الرابط؟</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>نسخ الرابط</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>إعادة توجيه الرابط</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>تثبيت</translation>
+        <source>Saved to Downloads</source>
+        <translation>حُفظ في التنزيلات</translation>
     </message>
 </context>
 <context>

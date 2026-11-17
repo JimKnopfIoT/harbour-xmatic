@@ -356,6 +356,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Tämä ei ole kelvollinen Matrix-osoite. Se on muotoa @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Et voi asettaa itseäsi porttikieltoon.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Syy on liian pitkä.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Matrix-osoite on muotoa @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Syy (valinnainen)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Henkilö ei pääse enää tähän huoneeseen. Jos hän on nyt jäsen, hänet poistetaan. Kaikki huoneessa näkevät porttikiellon ja sen syyn.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Aseta joku porttikieltoon…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Porttikiellossa olevat</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Roolisi tässä huoneessa ei salli porttikieltojen asettamista eikä purkamista. Luettelo on vain luettavissa.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Syy: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Porttikiellon asetti %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Kukaan ei ole porttikiellossa</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -448,6 +505,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Liittymiset, kutsut, poistot ja estot näytetään aina.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Ilmoitukset</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Ilmoitussäännöt</translation>
     </message>
 </context>
 <context>
@@ -1420,6 +1485,10 @@
         <source>The people in this room show up here.</source>
         <translation>Tämän huoneen ihmiset näkyvät täällä.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Porttikielto…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1648,6 +1717,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Puhelu</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 liittyi</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 poistui</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 kutsui käyttäjän %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 poisti käyttäjän %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 asetti käyttäjän %2 porttikieltoon</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 poisti käyttäjän %2 porttikiellon</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 peruutti kutsun käyttäjälle %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 hylkäsi kutsun</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 pyysi päästä sisään</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 muutti jäsenyyttä</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 vaihtoi profiilikuvansa</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 vaihtoi näyttönimekseen %2 ja vaihtoi profiilikuvansa</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 poisti näyttönimensä ja vaihtoi profiilikuvansa</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 vaihtoi näyttönimekseen %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 poisti näyttönimensä</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Avataanko linkki?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopioi linkki</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Välitä linkki</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Hylkää</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kiinnitä</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Vastaa ketjussa</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Lähetä uudelleen</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Muunna tekstiksi</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopioi</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Välitä</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Muokkaa</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagoi</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Vastaa</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Lisää…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Lainattua viestiä ei voi ladata: sitä ei enää ole tai sinulla ei ole lupaa nähdä sitä.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ei näytetä tällä laitteella. Avaa napauttamalla.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Lataus epäonnistui. Napauta yrittääksesi uudelleen.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Napauta ladataksesi</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Ääniviesti</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Muunnetaan tekstiksi…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Tunnistettu automaattisesti, voi sisältää virheitä</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Näytä vähemmän</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Näytä lisää</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Mitä nämä merkit tarkoittavat?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Ketju · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Ketjussa</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Tämä reaktio kätkee tekstiä eikä sitä lähetetty</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>ei lähetetty</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>poistoa ei lähetetty</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>muokkausta ei lähetetty</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>muokattu</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1675,6 +1949,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Toinen osapuoli saa kutsun ja keskustelu ilmestyy heti luetteloosi. Viestit on salattu alusta alkaen.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Ilmoitussäännöt</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Yksityisviestit</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Ryhmäviestit</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Maininnat sinusta</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Koko huoneen maininnat</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Kutsut</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Puhelut</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Pois</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Palvelin hylkäsi muutoksen: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Ilman ääntä</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Äänellä</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Tallennettu tiliisi, joten jokainen asiakasohjelma noudattaa niitä. Äänellä soi, Ilman ääntä näyttää ilmoituksen ja vilkuttaa merkkivaloa, Pois vain kasvattaa huoneen lukemattomien laskuria. Huone, jolla on oma asetus tiedoissaan, pitää sen. Pois-tilaan asetettu maininta lasketaan huoneensa tavalliseksi viestiksi.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Odotetaan palvelinta…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Osittain eri tavoin asetettu. Valitse taso, niin se otetaan käyttöön kaikkialla.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Sääntöjä ei voitu lukea palvelimelta: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Palvelin ei vastannut ajoissa.</translation>
     </message>
 </context>
 <context>
@@ -2741,89 +3082,8 @@
         <translation>Keskustelun alku</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Puhelu</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 liittyi</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 poistui</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 hylkäsi kutsun</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 pyysi päästä sisään</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 muutti jäsenyyttä</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopioi</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Vastaa</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Tallenna</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Välitä</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Muokkaa</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Kiinnitä</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Poista</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Lisää…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Lainattua viestiä ei voi ladata: sitä ei enää ole tai sinulla ei ole lupaa nähdä sitä.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Ääniviesti</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Viesti poistettu</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Ketju · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Ketjussa</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>ei lähetetty</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>muokattu</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2858,52 +3118,12 @@
         <translation>Kyseinen viesti ei ole ladatussa historiassa</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Hylkää</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Lähetä uudelleen</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagoi</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Vastaa ketjussa</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopioi huoneen linkki</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Huoneen linkki kopioitu</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Lähetetty salaamattomana</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Ei lähettänyt mainittu tili</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Lähettäjän avaimet muuttuivat</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Vahvistamattomalta laitteelta</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Vahvistamattomalta henkilöltä</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Aitoutta ei vahvistettu</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2914,20 +3134,12 @@
         <translation>Poistetaan</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Tämä reaktio kätkee tekstiä eikä sitä lähetetty</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Kuva</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Etsi viesteistä</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Mitä nämä merkit tarkoittavat?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2970,43 +3182,6 @@
         <translation>Ääntäsi ei lähetetty</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 kutsui käyttäjän %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 poisti käyttäjän %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 asetti käyttäjän %2 porttikieltoon</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 poisti käyttäjän %2 porttikiellon</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 peruutti kutsun käyttäjälle %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Muunna tekstiksi</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Muunnetaan tekstiksi…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Tunnistettu automaattisesti, voi sisältää virheitä</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Nauhoitetaan… %1 s. Lähetä napauttamalla mikrofonia.</translation>
     </message>
@@ -3015,40 +3190,12 @@
         <translation>Mitään ei sanottu, joten mitään ei lähetetty.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Tallennettu galleriaan</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Tallennus ei onnistunut</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Tallennettu Lataukset-kansioon</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Näytä vähemmän</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Näytä lisää</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Tekstiä ei voitu kirjoittaa tiedostoksi</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Jaa sijainti</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>poistoa ei lähetetty</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>muokkausta ei lähetetty</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3065,50 +3212,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Se ei enää odota lähettämistä.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Lataus epäonnistui. Napauta yrittääksesi uudelleen.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Napauta ladataksesi</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Avataanko linkki?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopioi linkki</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Välitä linkki</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 vaihtoi näyttönimekseen %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 poisti näyttönimensä</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 vaihtoi profiilikuvansa</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 vaihtoi näyttönimekseen %2 ja vaihtoi profiilikuvansa</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 poisti näyttönimensä ja vaihtoi profiilikuvansa</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Ei näytetä tällä laitteella. Avaa napauttamalla.</translation>
     </message>
 </context>
 <context>
@@ -3965,6 +4068,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Valitse tiedostot</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3973,10 +4083,6 @@
     <message>
         <source>Thread</source>
         <translation>Ketju</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Tapahtuma</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3994,6 +4100,33 @@
         <source>Reply in thread</source>
         <translation>Vastaa ketjussa</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Hylätään</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Poistetaan</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Vastaus käyttäjälle %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Muokataan viestiä</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Uusi teksti</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Ei viestejä</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Lähetetty salaamattomana</translation>
@@ -4019,28 +4152,16 @@
         <translation>Aitoutta ei vahvistettu</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Avataanko tämä osoite?</translation>
+        <source>Saved to gallery</source>
+        <translation>Tallennettu galleriaan</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Avaa</translation>
+        <source>Could not save</source>
+        <translation>Tallennus ei onnistunut</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Avataanko linkki?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopioi linkki</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Välitä linkki</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Kiinnitä</translation>
+        <source>Saved to Downloads</source>
+        <translation>Tallennettu Lataukset-kansioon</translation>
     </message>
 </context>
 <context>

@@ -357,6 +357,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Šī nav derīga Matrix adrese. Tā izskatās šādi: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Tu nevari liegt pats sevi.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Iemesls ir pārāk garš.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Matrix adrese izskatās šādi: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Iemesls (neobligāts)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Persona vairs nevarēs ieiet šajā istabā. Ja tā pašlaik ir dalībnieks, tā tiek izņemta. Visi istabā redz liegumu un tā iemeslu.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Liegt kādu…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Liegtās personas</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Tava loma šajā istabā neļauj ne liegt, ne atcelt liegumu. Saraksts ir tikai lasāms.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Iemesls: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Liedza %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Neviens nav liegts</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -449,6 +506,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Pievienošanās, ielūgumi, izņemšanas un aizliegumi vienmēr tiek rādīti.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Paziņojumi</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Paziņojumu noteikumi</translation>
     </message>
 </context>
 <context>
@@ -1422,6 +1487,10 @@
         <source>The people in this room show up here.</source>
         <translation>Šīs istabas cilvēki parādās šeit.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Liegt…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1650,6 +1719,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Zvans</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 pievienojās</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 aizgāja</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 ielūdza %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 noņēma %2</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 liedza %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 atcēla liegumu %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 atsauca ielūgumu %2</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 noraidīja ielūgumu</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 lūdza pievienoties</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 mainīja dalību</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 nomainīja profila attēlu</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 nomainīja attēlojamo vārdu uz %2 un profila attēlu</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 noņēma attēlojamo vārdu un nomainīja profila attēlu</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 nomainīja attēlojamo vārdu uz %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 noņēma attēlojamo vārdu</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Atvērt saiti?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Kopēt saiti</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Pārsūtīt saiti</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Atmest</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Dzēst</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Piespraust</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Atbildēt pavedienā</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Sūtīt vēlreiz</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Saglabāt</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Pārvērst tekstā</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopēt</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Pārsūtīt</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Rediģēt</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reaģēt</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Atbildēt</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Vairāk…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Citēto ziņu nevar ielādēt: tās vairs nav vai tev nav atļauts to redzēt.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Šajā ierīcē netiek rādīts. Pieskaries, lai atvērtu.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Neizdevās ielādēt. Pieskaries, lai mēģinātu vēlreiz.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Pieskaries, lai ielādētu</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Balss ziņa</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Pārvērš tekstā…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Atpazīts automātiski, var saturēt kļūdas</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Rādīt mazāk</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Rādīt vairāk</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Ko nozīmē šīs zīmes?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Pavediens · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Pavedienā</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Šī reakcija slēpj tekstu un netika nosūtīta</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>nav nosūtīts</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>dzēšana nav nosūtīta</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>labojums nav nosūtīts</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>rediģēts</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1677,6 +1951,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Otra puse saņem ielūgumu, un saruna uzreiz parādās tavā sarakstā. Ziņas ir šifrētas no paša sākuma.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Paziņojumu noteikumi</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Tiešās ziņas</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Grupas ziņas</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Tevis pieminēšana</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Visas istabas pieminēšana</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Ielūgumi</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Zvani</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Izslēgts</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Serveris noraidīja izmaiņas: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Bez skaņas</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Ar skaņu</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Saglabāti tavā kontā, tāpēc tiem seko visi klienti. Ar skaņu zvana, Bez skaņas rāda paziņojumu un mirgo ar LED, Izslēgts tikai palielina istabas nelasīto skaitītāju. Istaba ar savu iestatījumu tās informācijā to saglabā. Pieminēšana, kas iestatīta uz Izslēgts, skaitās kā parasta savas istabas ziņa.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Gaida serveri…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Daļēji iestatīts atšķirīgi. Izvēlies līmeni, lai to piemērotu visur.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Neizdevās nolasīt noteikumus no servera: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Serveris neatbildēja laikā.</translation>
     </message>
 </context>
 <context>
@@ -2745,89 +3086,8 @@
         <translation>Sarunas sākums</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Zvans</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 pievienojās</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 aizgāja</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 noraidīja ielūgumu</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 lūdza pievienoties</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 mainīja dalību</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopēt</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Atbildēt</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Saglabāt</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Pārsūtīt</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Rediģēt</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Piespraust</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Dzēst</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Vairāk…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Citēto ziņu nevar ielādēt: tās vairs nav vai tev nav atļauts to redzēt.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Balss ziņa</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Ziņa izdzēsta</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Pavediens · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Pavedienā</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>nav nosūtīts</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>rediģēts</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2862,52 +3122,12 @@
         <translation>Šī ziņa nav ielādētajā vēsturē</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Atmest</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Sūtīt vēlreiz</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reaģēt</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Atbildēt pavedienā</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Kopēt istabas saiti</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Istabas saite nokopēta</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Nosūtīts nešifrēts</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Nosūtīja nevis nosauktais konts</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Sūtītāja atslēgas ir mainījušās</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>No neapstiprinātas ierīces</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>No neapstiprinātas personas</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Autentiskums nav apstiprināts</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2918,20 +3138,12 @@
         <translation>Dzēš</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Šī reakcija slēpj tekstu un netika nosūtīta</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Attēls</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Meklēt ziņās</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Ko nozīmē šīs zīmes?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2974,43 +3186,6 @@
         <translation>Tava balss netika nosūtīta</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 ielūdza %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 noņēma %2</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 liedza %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 atcēla liegumu %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 atsauca ielūgumu %2</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Pārvērst tekstā</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Pārvērš tekstā…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Atpazīts automātiski, var saturēt kļūdas</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Ieraksta… %1 s. Pieskaries mikrofonam, lai sūtītu.</translation>
     </message>
@@ -3019,40 +3194,12 @@
         <translation>Nekas netika pateikts, tāpēc nekas netika nosūtīts.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Saglabāts galerijā</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Neizdevās saglabāt</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Saglabāts mapē Lejupielādes</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Rādīt mazāk</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Rādīt vairāk</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Tekstu neizdevās ierakstīt kā failu</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Kopīgot atrašanās vietu</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>dzēšana nav nosūtīta</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>labojums nav nosūtīts</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3069,50 +3216,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Tas vairs negaida nosūtīšanu.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Neizdevās ielādēt. Pieskaries, lai mēģinātu vēlreiz.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Pieskaries, lai ielādētu</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Atvērt saiti?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopēt saiti</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Pārsūtīt saiti</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 nomainīja attēlojamo vārdu uz %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 noņēma attēlojamo vārdu</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 nomainīja profila attēlu</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 nomainīja attēlojamo vārdu uz %2 un profila attēlu</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 noņēma attēlojamo vārdu un nomainīja profila attēlu</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Šajā ierīcē netiek rādīts. Pieskaries, lai atvērtu.</translation>
     </message>
 </context>
 <context>
@@ -3970,6 +4073,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Izvēlēties failus</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3978,10 +4088,6 @@
     <message>
         <source>Thread</source>
         <translation>Pavediens</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Notikums</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3999,6 +4105,33 @@
         <source>Reply in thread</source>
         <translation>Atbildēt pavedienā</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Atmet</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Dzēš</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Atbilde %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Rediģē ziņu</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Jauns teksts</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Nav ierakstu</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Nosūtīts nešifrēts</translation>
@@ -4024,28 +4157,16 @@
         <translation>Autentiskums nav apstiprināts</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Vai atvērt šo adresi?</translation>
+        <source>Saved to gallery</source>
+        <translation>Saglabāts galerijā</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Atvērt</translation>
+        <source>Could not save</source>
+        <translation>Neizdevās saglabāt</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Atvērt saiti?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Kopēt saiti</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Pārsūtīt saiti</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Piespraust</translation>
+        <source>Saved to Downloads</source>
+        <translation>Saglabāts mapē Lejupielādes</translation>
     </message>
 </context>
 <context>

@@ -5,19 +5,20 @@
 
 #include <memory>
 
-/// Echo cancellation (the system's speexdsp) between the call's playback and microphone.
-/// Both sides run S16LE, 48 kHz, mono; the pipeline pins that with caps. The
-/// delay between them is learnt from the audio, since the device misreports it.
-/// Without it two loudspeaker phones feed each other until they howl.
+/// Echo cancellation (WebRTC's AEC3) between the call's playback and microphone.
+/// Both sides run S16LE, 48 kHz, mono, in 10 ms buffers; the pipeline pins that. The
+/// canceller finds the echo path's delay itself; without it two loudspeaker
+/// phones feed each other until they howl.
 class EchoCanceller
 {
 public:
     EchoCanceller();
     ~EchoCanceller();
 
-    /// Playback, read only: the far end the canceller subtracts.
+    /// Playback, read only, as it enters the sink: the far end the canceller subtracts.
+    /// The first pad only; later ones are ignored.
     void watchPlayback(GstPad *pad);
-    /// Microphone, rewritten in place, ten milliseconds late.
+    /// Microphone, rewritten in place.
     void processCapture(GstPad *pad);
 
     bool available() const;

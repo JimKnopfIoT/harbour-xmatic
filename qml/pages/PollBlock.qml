@@ -22,6 +22,8 @@ Column {
 
     /// Still a local echo: no event id, so nothing to vote on yet.
     property bool pending: false
+    /// Set in a thread: the vote goes to the thread's own view.
+    property string threadRoot: ""
 
     readonly property bool ended: !!poll && poll.ended === true
     /// An undisclosed poll that is still running: the core sends no counts at
@@ -97,7 +99,7 @@ Column {
         }
         block.localMine = next
         localMineTimer.restart()
-        matrix.polls.vote(block.eventId, next)
+        matrix.polls.vote(block.eventId, next, block.threadRoot)
     }
 
     Label {
@@ -249,7 +251,7 @@ Column {
             anchors.fill: parent
             anchors.margins: -Theme.paddingMedium
             enabled: !block.pending
-            onClicked: matrix.polls.end(block.eventId, block.endedText)
+            onClicked: matrix.polls.end(block.eventId, block.endedText, block.threadRoot)
         }
     }
 }

@@ -257,6 +257,25 @@ Page {
                 width: parent.width
                 height: visible ? Theme.itemSizeSmall : 0
                 visible: !page.invited
+                onClicked: pageStack.push(Qt.resolvedUrl("BannedMembersPage.qml"), {
+                                              roomId: page.roomId,
+                                              roomName: page.roomName
+                                          })
+
+                Label {
+                    x: Theme.horizontalPageMargin
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    wrapMode: Text.NoWrap
+                    truncationMode: TruncationMode.Fade
+                    text: qsTranslate("BannedMembersPage", "Banned people")
+                }
+            }
+
+            BackgroundItem {
+                width: parent.width
+                height: visible ? Theme.itemSizeSmall : 0
+                visible: !page.invited
                 onClicked: pageStack.push(Qt.resolvedUrl("PinnedMessagesPage.qml"), {
                                               roomId: page.roomId,
                                               roomName: page.roomName

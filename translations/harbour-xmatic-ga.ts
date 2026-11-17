@@ -357,6 +357,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Ní seoladh bailí Matrix é seo. Is cosúil é le @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Ní féidir leat toirmeasc a chur ort féin.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Tá an chúis rófhada.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Is cosúil seoladh Matrix le @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Cúis (roghnach)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>Ní bheidh an duine in ann dul isteach sa seomra seo a thuilleadh. Má tá sé ina bhall anois, bainfear amach é. Feiceann gach duine sa seomra an toirmeasc agus a chúis.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Cuir toirmeasc ar dhuine…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Daoine faoi thoirmeasc</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>Ní cheadaíonn do ról sa seomra seo toirmeasc a chur ná a ardú. Is le léamh amháin an liosta.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Cúis: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Toirmeasc ó %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Níl aon duine faoi thoirmeasc</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -449,6 +506,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>Taispeántar teacht isteach, cuirí, bainteacha agus coisc i gcónaí.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Fógraí</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Rialacha fógraí</translation>
     </message>
 </context>
 <context>
@@ -1422,6 +1487,10 @@
         <source>The people in this room show up here.</source>
         <translation>Taispeántar daoine an tseomra seo anseo.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Cuir toirmeasc…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1650,6 +1719,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Glao</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>Tháinig %1 isteach</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>D&apos;fhág %1</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>Thug %1 cuireadh do %2</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>Bhain %1 %2 amach</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>Chuir %1 toirmeasc ar %2</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>Bhain %1 an toirmeasc de %2</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>Tharraing %1 an cuireadh do %2 siar</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>Dhiúltaigh %1 don chuireadh</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>D&apos;iarr %1 teacht isteach</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>D&apos;athraigh %1 a bhallraíocht</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>D’athraigh %1 an pictiúr próifíle</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>D&apos;athraigh %1 a ainm taispeána go %2 agus a phictiúr próifíle</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>Bhain %1 a ainm taispeána agus d&apos;athraigh sé a phictiúr próifíle</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>D’athraigh %1 an t-ainm taispeána go %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>Bhain %1 an t-ainm taispeána</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>An nasc a oscailt?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Cóipeáil an nasc</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Seol an nasc ar aghaidh</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Caith uait</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Scrios</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Pionnáil</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Freagair sa snáithe</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Seol arís</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Sábháil</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Tiontaigh go téacs</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Cóipeáil</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Cuir ar aghaidh</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Cuir in eagar</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Freagair</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Freagair</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Tuilleadh…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Ní féidir an teachtaireacht luaite a luchtú: níl sí ann a thuilleadh nó níl cead agat í a fheiceáil.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ní thaispeántar ar an ngléas seo. Tapáil chun é a oscailt.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Níorbh fhéidir é a lódáil. Tapáil chun triail eile a bhaint as.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Tapáil chun lódáil</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Teachtaireacht ghutha</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Á thiontú go téacs…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Aitheanta go huathoibríoch, d’fhéadfadh botúin a bheith ann</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Taispeáin níos lú</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Taispeáin níos mó</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Cad is brí leis na marcanna seo?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Snáithe · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>Sa snáithe</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Cuireann an freagairt seo téacs i bhfolach agus níor seoladh í</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>gan seoladh</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>scriosadh gan seoladh</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>eagarthóireacht gan seoladh</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>curtha in eagar</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1677,6 +1951,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>Faigheann an taobh eile cuireadh agus tagann an comhrá chun cinn i do liosta láithreach. Tá na teachtaireachtaí criptithe ón tús.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Rialacha fógraí</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Teachtaireachtaí díreacha</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Teachtaireachtaí grúpa</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Tagairtí duit</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Tagairtí don seomra ar fad</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Cuirí</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Glaonna</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>As</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>Dhiúltaigh an freastalaí don athrú: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Gan fuaim</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Le fuaim</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>Stóráilte i do chuntas, mar sin leanann gach cliant iad. Buaileann Le fuaim, taispeánann Gan fuaim fógra agus caochann an LED, ní dhéanann As ach áireamh neamhléite an tseomra a ardú. Coinníonn seomra a bhfuil a shocrú féin ina shonraí é. Áirítear lua atá socraithe ar As mar ghnáth-theachtaireacht a sheomra.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Ag fanacht leis an bhfreastalaí…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Socraithe go difriúil i bpáirt. Roghnaigh leibhéal chun é a chur i bhfeidhm i ngach áit.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Níorbh fhéidir na rialacha a léamh ón bhfreastalaí: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>Níor fhreagair an freastalaí in am.</translation>
     </message>
 </context>
 <context>
@@ -2745,89 +3086,8 @@
         <translation>Tús an chomhrá</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Glao</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>Tháinig %1 isteach</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>D&apos;fhág %1</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>Dhiúltaigh %1 don chuireadh</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>D&apos;iarr %1 teacht isteach</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>D&apos;athraigh %1 a bhallraíocht</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Cóipeáil</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Freagair</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Sábháil</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Cuir ar aghaidh</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Cuir in eagar</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Pionnáil</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Scrios</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Tuilleadh…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Ní féidir an teachtaireacht luaite a luchtú: níl sí ann a thuilleadh nó níl cead agat í a fheiceáil.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Teachtaireacht ghutha</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Teachtaireacht scriosta</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Snáithe · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>Sa snáithe</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>gan seoladh</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>curtha in eagar</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2862,52 +3122,12 @@
         <translation>Níl an teachtaireacht sin sa stair luchtaithe</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Caith uait</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Seol arís</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Freagair</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Freagair sa snáithe</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Cóipeáil nasc an tseomra</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Nasc an tseomra cóipeáilte</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Seoladh gan chriptiú</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Níorbh é an cuntas atá luaite a sheol é</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>Athraigh eochracha an tseoltóra</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Ó ghléas neamhfhíoraithe</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Ó dhuine neamhfhíoraithe</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>Barántúlacht gan deimhniú</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2918,20 +3138,12 @@
         <translation>Á scriosadh</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Cuireann an freagairt seo téacs i bhfolach agus níor seoladh í</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Pictiúr</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Cuardaigh teachtaireachtaí</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Cad is brí leis na marcanna seo?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2974,43 +3186,6 @@
         <translation>Níor seoladh do vóta</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>Thug %1 cuireadh do %2</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>Bhain %1 %2 amach</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>Chuir %1 toirmeasc ar %2</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>Bhain %1 an toirmeasc de %2</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>Tharraing %1 an cuireadh do %2 siar</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Tiontaigh go téacs</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Á thiontú go téacs…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Aitheanta go huathoibríoch, d’fhéadfadh botúin a bheith ann</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Ag taifeadadh… %1 s. Tapáil an micreafón chun seoladh.</translation>
     </message>
@@ -3019,40 +3194,12 @@
         <translation>Níor dúradh aon rud, mar sin níor seoladh aon rud.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Sábháilte sa ghailearaí</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Níorbh fhéidir é a shábháil</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Sábháilte in Íoslódálacha</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Taispeáin níos lú</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Taispeáin níos mó</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>Níorbh fhéidir an téacs a scríobh mar chomhad</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Comhroinn suíomh</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>scriosadh gan seoladh</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>eagarthóireacht gan seoladh</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3069,50 +3216,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Níl sé ag fanacht le seoladh a thuilleadh.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Níorbh fhéidir é a lódáil. Tapáil chun triail eile a bhaint as.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Tapáil chun lódáil</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>An nasc a oscailt?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Cóipeáil an nasc</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Seol an nasc ar aghaidh</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>D’athraigh %1 an t-ainm taispeána go %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>Bhain %1 an t-ainm taispeána</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>D’athraigh %1 an pictiúr próifíle</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>D&apos;athraigh %1 a ainm taispeána go %2 agus a phictiúr próifíle</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>Bhain %1 a ainm taispeána agus d&apos;athraigh sé a phictiúr próifíle</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Ní thaispeántar ar an ngléas seo. Tapáil chun é a oscailt.</translation>
     </message>
 </context>
 <context>
@@ -3970,6 +4073,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Roghnaigh comhaid</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3978,10 +4088,6 @@
     <message>
         <source>Thread</source>
         <translation>Snáithe</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Teagmhas</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3999,6 +4105,33 @@
         <source>Reply in thread</source>
         <translation>Freagair sa snáithe</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Á chaitheamh</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Á scriosadh</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Freagra ar %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Teachtaireacht á cur in eagar</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Téacs nua</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Gan aon phostáil</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Seoladh gan chriptiú</translation>
@@ -4024,28 +4157,16 @@
         <translation>Barántúlacht gan deimhniú</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>An oscail an seoladh seo?</translation>
+        <source>Saved to gallery</source>
+        <translation>Sábháilte sa ghailearaí</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Oscail</translation>
+        <source>Could not save</source>
+        <translation>Níorbh fhéidir é a shábháil</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>An nasc a oscailt?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Cóipeáil an nasc</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Seol an nasc ar aghaidh</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Pionnáil</translation>
+        <source>Saved to Downloads</source>
+        <translation>Sábháilte in Íoslódálacha</translation>
     </message>
 </context>
 <context>

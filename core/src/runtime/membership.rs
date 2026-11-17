@@ -50,32 +50,6 @@ pub(super) async fn member_profile(state: &Arc<State>, id: u64, room_id: String,
         Err(message) => state.sink.emit(reply_error(id, message)),
     }
 }
-pub(super) async fn member_ban(state: &Arc<State>, id: u64, room_id: String, user_id: String) {
-    let Some(client) = state.client().await else {
-        state.sink.emit(reply_error(id, "not signed in"));
-        return;
-    };
-    match members::ban(&client, &room_id, &user_id).await {
-        Ok(()) => state.sink.emit(reply_ok(
-            id,
-            json!({ "roomId": room_id, "userId": user_id }),
-        )),
-        Err(message) => state.sink.emit(reply_error(id, message)),
-    }
-}
-pub(super) async fn member_unban(state: &Arc<State>, id: u64, room_id: String, user_id: String) {
-    let Some(client) = state.client().await else {
-        state.sink.emit(reply_error(id, "not signed in"));
-        return;
-    };
-    match members::unban(&client, &room_id, &user_id).await {
-        Ok(()) => state.sink.emit(reply_ok(
-            id,
-            json!({ "roomId": room_id, "userId": user_id }),
-        )),
-        Err(message) => state.sink.emit(reply_error(id, message)),
-    }
-}
 pub(super) async fn member_set_power(state: &Arc<State>, id: u64, room_id: String, user_id: String, power: i64) {
     let Some(client) = state.client().await else {
         state.sink.emit(reply_error(id, "not signed in"));

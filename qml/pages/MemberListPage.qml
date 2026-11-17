@@ -1,17 +1,43 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// The members of one room, name over address. A row opens the profile page,
-// where all actions live; the order comes from the core.
+// The members of one room, name over address. A row opens the profile page;
+// a long press bans where the power levels allow. The order comes from the core.
 Page {
     id: page
 
     property string roomId
     property string roomName
+    property string banError: ""
 
     allowedOrientations: Orientation.All
 
     Component.onCompleted: matrix.loadMembers(roomId)
+
+    // The same confirmation as the profile page's; the row leaves on the answer.
+    function confirmBan(userId, name) {
+        var dialog = pageStack.push(
+                    Qt.resolvedUrl("ConfirmDialog.qml"),
+                    {
+                        question: qsTranslate("MemberProfilePage", "Really ban this member?"),
+                        subject: name.length > 0 ? name : userId,
+                        explanation: qsTranslate("MemberProfilePage", "%1 is removed from the room and cannot come back until the ban is lifted.").arg(userId),
+                        acceptLabel: qsTranslate("MemberProfilePage", "Ban")
+                    })
+        dialog.accepted.connect(function() {
+            page.banError = ""
+            matrix.bans.ban(page.roomId, userId, "")
+        })
+    }
+
+    Connections {
+        target: matrix.bans
+        onFailed: {
+            if (action === "ban" && roomId === page.roomId) {
+                page.banError = message
+            }
+        }
+    }
 
     SilicaListView {
         id: memberList
@@ -37,15 +63,38 @@ Page {
                 visible: matrix.lastError.length > 0
                 text: matrix.lastError
             }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.errorColor
+                textFormat: Text.PlainText
+                visible: page.banError.length > 0
+                text: page.banError
+            }
         }
 
         delegate: ListItem {
             id: memberItem
 
             contentHeight: memberColumn.height + 2 * Theme.paddingMedium
+            menu: model.canBan ? banMenu : null
 
             onClicked: pageStack.push(Qt.resolvedUrl("MemberProfilePage.qml"),
                                       { roomId: page.roomId, userId: model.userId })
+
+            Component {
+                id: banMenu
+
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr("Ban…")
+                        onClicked: page.confirmBan(model.userId, model.displayName)
+                    }
+                }
+            }
 
             Avatar {
                 id: memberAvatar

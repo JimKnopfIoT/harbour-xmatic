@@ -355,6 +355,63 @@
     </message>
 </context>
 <context>
+    <name>BanList</name>
+    <message>
+        <source>This is not a valid Matrix address. It looks like @name:server.</source>
+        <translation>Ez nem érvényes Matrix-cím. Így néz ki: @name:server.</translation>
+    </message>
+    <message>
+        <source>You cannot ban yourself.</source>
+        <translation>Saját magadat nem tilthatod ki.</translation>
+    </message>
+    <message>
+        <source>The reason is too long.</source>
+        <translation>Az indoklás túl hosszú.</translation>
+    </message>
+</context>
+<context>
+    <name>BanUserDialog</name>
+    <message>
+        <source>A Matrix address looks like @name:server.</source>
+        <translation>Egy Matrix-cím így néz ki: @name:server.</translation>
+    </message>
+    <message>
+        <source>Reason (optional)</source>
+        <translation>Indoklás (nem kötelező)</translation>
+    </message>
+    <message>
+        <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
+        <translation>A személy többé nem léphet be ebbe a szobába. Ha most tag, eltávolításra kerül. A szobában mindenki látja a kitiltást és az indoklását.</translation>
+    </message>
+</context>
+<context>
+    <name>BannedMembersPage</name>
+    <message>
+        <source>Ban someone…</source>
+        <translation>Valaki kitiltása…</translation>
+    </message>
+    <message>
+        <source>Banned people</source>
+        <translation>Kitiltott személyek</translation>
+    </message>
+    <message>
+        <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
+        <translation>A szerepköröd ebben a szobában nem engedi a kitiltást és a tiltás feloldását. A lista csak olvasható.</translation>
+    </message>
+    <message>
+        <source>Reason: %1</source>
+        <translation>Indoklás: %1</translation>
+    </message>
+    <message>
+        <source>Banned by %1</source>
+        <translation>Kitiltotta: %1</translation>
+    </message>
+    <message>
+        <source>Nobody is banned</source>
+        <translation>Senki sincs kitiltva</translation>
+    </message>
+</context>
+<context>
     <name>BehaviourPage</name>
     <message>
         <source>Behaviour</source>
@@ -447,6 +504,14 @@
     <message>
         <source>Joins, invitations, removals and bans are always shown.</source>
         <translation>A belépések, meghívások, eltávolítások és kitiltások mindig megjelennek.</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Értesítések</translation>
+    </message>
+    <message>
+        <source>Notification rules</source>
+        <translation>Értesítési szabályok</translation>
     </message>
 </context>
 <context>
@@ -1418,6 +1483,10 @@
         <source>The people in this room show up here.</source>
         <translation>Ennek a szobának a tagjai itt jelennek meg.</translation>
     </message>
+    <message>
+        <source>Ban…</source>
+        <translation>Kitiltás…</translation>
+    </message>
 </context>
 <context>
     <name>MemberProfilePage</name>
@@ -1646,6 +1715,211 @@
     </message>
 </context>
 <context>
+    <name>MessageRow</name>
+    <message>
+        <source>Call</source>
+        <comment>timeline system line, a noun</comment>
+        <translation>Hívás</translation>
+    </message>
+    <message>
+        <source>%1 joined</source>
+        <translation>%1 belépett</translation>
+    </message>
+    <message>
+        <source>%1 left</source>
+        <translation>%1 kilépett</translation>
+    </message>
+    <message>
+        <source>%1 invited %2</source>
+        <translation>%1 meghívta %2 felhasználót</translation>
+    </message>
+    <message>
+        <source>%1 removed %2</source>
+        <translation>%1 eltávolította %2 felhasználót</translation>
+    </message>
+    <message>
+        <source>%1 banned %2</source>
+        <translation>%1 kitiltotta %2 felhasználót</translation>
+    </message>
+    <message>
+        <source>%1 unbanned %2</source>
+        <translation>%1 feloldotta %2 felhasználó kitiltását</translation>
+    </message>
+    <message>
+        <source>%1 withdrew the invitation for %2</source>
+        <translation>%1 visszavonta %2 meghívását</translation>
+    </message>
+    <message>
+        <source>%1 declined the invitation</source>
+        <translation>%1 elutasította a meghívót</translation>
+    </message>
+    <message>
+        <source>%1 asked to join</source>
+        <translation>%1 belépést kért</translation>
+    </message>
+    <message>
+        <source>%1 changed membership</source>
+        <translation>%1 tagsága megváltozott</translation>
+    </message>
+    <message>
+        <source>%1 changed their profile picture</source>
+        <translation>%1 megváltoztatta a profilképét</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2 and their profile picture</source>
+        <translation>%1 megváltoztatta a megjelenítendő nevét erre: %2, és a profilképét</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name and changed their profile picture</source>
+        <translation>%1 eltávolította a megjelenítendő nevét, és megváltoztatta a profilképét</translation>
+    </message>
+    <message>
+        <source>%1 changed their display name to %2</source>
+        <translation>%1 megjelenítendő nevét erre változtatta: %2</translation>
+    </message>
+    <message>
+        <source>%1 removed their display name</source>
+        <translation>%1 eltávolította a megjelenítendő nevét</translation>
+    </message>
+    <message>
+        <source>%1: %2</source>
+        <comment>system line and the reason given for it</comment>
+        <translation>%1: %2</translation>
+    </message>
+    <message>
+        <source>Open link?</source>
+        <translation>Megnyitod a hivatkozást?</translation>
+    </message>
+    <message>
+        <source>Copy link</source>
+        <translation>Hivatkozás másolása</translation>
+    </message>
+    <message>
+        <source>Forward link</source>
+        <translation>Hivatkozás továbbítása</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Elvetés</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation>Kitűzés</translation>
+    </message>
+    <message>
+        <source>Reply in thread</source>
+        <translation>Válasz a szálban</translation>
+    </message>
+    <message>
+        <source>Send again</source>
+        <translation>Küldés újra</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Mentés</translation>
+    </message>
+    <message>
+        <source>Convert to text</source>
+        <translation>Átalakítás szöveggé</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Másolás</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation>Továbbítás</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Szerkesztés</translation>
+    </message>
+    <message>
+        <source>React</source>
+        <translation>Reagálás</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation>Válasz</translation>
+    </message>
+    <message>
+        <source>More…</source>
+        <translation>Több…</translation>
+    </message>
+    <message>
+        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
+        <translation>Az idézett üzenet nem tölthető be: már nem létezik, vagy nincs jogod látni.</translation>
+    </message>
+    <message>
+        <source>Not shown on this device. Tap to open.</source>
+        <translation>Ezen az eszközön nem jelenik meg. Koppints a megnyitáshoz.</translation>
+    </message>
+    <message>
+        <source>Could not load. Tap to try again.</source>
+        <translation>Nem sikerült betölteni. Koppints az újrapróbáláshoz.</translation>
+    </message>
+    <message>
+        <source>Tap to load</source>
+        <translation>Koppints a betöltéshez</translation>
+    </message>
+    <message>
+        <source>Voice message</source>
+        <translation>Hangüzenet</translation>
+    </message>
+    <message>
+        <source>Converting to text…</source>
+        <translation>Átalakítás szöveggé…</translation>
+    </message>
+    <message>
+        <source>Recognised automatically, may contain mistakes</source>
+        <translation>Automatikusan felismerve, hibákat tartalmazhat</translation>
+    </message>
+    <message>
+        <source>Show less</source>
+        <translation>Kevesebb megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Több megjelenítése</translation>
+    </message>
+    <message>
+        <source>What do these marks mean?</source>
+        <translation>Mit jelentenek ezek a jelek?</translation>
+    </message>
+    <message>
+        <source>Thread · %1</source>
+        <translation>Szál · %1</translation>
+    </message>
+    <message>
+        <source>In thread</source>
+        <translation>A szálban</translation>
+    </message>
+    <message>
+        <source>This reaction hides text and was not sent</source>
+        <translation>Ez a reakció szöveget rejt, ezért nem lett elküldve</translation>
+    </message>
+    <message>
+        <source>not sent</source>
+        <translation>nincs elküldve</translation>
+    </message>
+    <message>
+        <source>deletion not sent</source>
+        <translation>a törlés nincs elküldve</translation>
+    </message>
+    <message>
+        <source>edit not sent</source>
+        <translation>a szerkesztés nincs elküldve</translation>
+    </message>
+    <message>
+        <source>edited</source>
+        <translation>szerkesztve</translation>
+    </message>
+</context>
+<context>
     <name>MoveToSpacePage</name>
     <message>
         <source>Move to space</source>
@@ -1673,6 +1947,73 @@
     <message>
         <source>The other side receives an invitation and the chat appears in your list right away. Messages are encrypted from the start.</source>
         <translation>A másik fél meghívót kap, és a beszélgetés azonnal megjelenik a listádban. Az üzenetek kezdettől titkosítottak.</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationRulesPage</name>
+    <message>
+        <source>Notification rules</source>
+        <translation>Értesítési szabályok</translation>
+    </message>
+    <message>
+        <source>Direct messages</source>
+        <translation>Közvetlen üzenetek</translation>
+    </message>
+    <message>
+        <source>Group messages</source>
+        <translation>Csoportos üzenetek</translation>
+    </message>
+    <message>
+        <source>Mentions of you</source>
+        <translation>Rólad szóló említések</translation>
+    </message>
+    <message>
+        <source>Mentions of the whole room</source>
+        <translation>Az egész szoba említése</translation>
+    </message>
+    <message>
+        <source>Invitations</source>
+        <translation>Meghívások</translation>
+    </message>
+    <message>
+        <source>Calls</source>
+        <translation>Hívások</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Ki</translation>
+    </message>
+    <message>
+        <source>The server refused the change: %1</source>
+        <translation>A kiszolgáló elutasította a módosítást: %1</translation>
+    </message>
+    <message>
+        <source>Without tone</source>
+        <translation>Hang nélkül</translation>
+    </message>
+    <message>
+        <source>With tone</source>
+        <translation>Hanggal</translation>
+    </message>
+    <message>
+        <source>Stored in your account, so every client follows them. With tone rings, Without tone shows a notification and blinks the LED, Off only raises the room&apos;s unread count; a mention set to Off counts as an ordinary message of its room. A room with its own setting in its details keeps it.</source>
+        <translation>A fiókodban tárolódnak, így minden kliens követi őket. A Hanggal megszólal, a Hang nélkül értesítést mutat és villogtatja a LED-et, a Ki csak a szoba olvasatlan-számlálóját növeli. Az a szoba, amelynek a részleteiben saját beállítás van, megtartja azt. A Ki értékre állított említés a szobája szokásos üzenetének számít.</translation>
+    </message>
+    <message>
+        <source>Waiting for the server…</source>
+        <translation>Várakozás a szerverre…</translation>
+    </message>
+    <message>
+        <source>Set differently in parts. Pick a level to apply it throughout.</source>
+        <translation>Részben eltérően beállítva. Válassz egy szintet, hogy mindenhol érvényes legyen.</translation>
+    </message>
+    <message>
+        <source>Could not read the rules from the server: %1</source>
+        <translation>Nem sikerült beolvasni a szabályokat a szerverről: %1</translation>
+    </message>
+    <message>
+        <source>The server did not answer in time.</source>
+        <translation>A szerver nem válaszolt időben.</translation>
     </message>
 </context>
 <context>
@@ -2737,89 +3078,8 @@
         <translation>A beszélgetés eleje</translation>
     </message>
     <message>
-        <source>Call</source>
-        <comment>timeline system line, a noun</comment>
-        <translation>Hívás</translation>
-    </message>
-    <message>
-        <source>%1 joined</source>
-        <translation>%1 belépett</translation>
-    </message>
-    <message>
-        <source>%1 left</source>
-        <translation>%1 kilépett</translation>
-    </message>
-    <message>
-        <source>%1 declined the invitation</source>
-        <translation>%1 elutasította a meghívót</translation>
-    </message>
-    <message>
-        <source>%1 asked to join</source>
-        <translation>%1 belépést kért</translation>
-    </message>
-    <message>
-        <source>%1 changed membership</source>
-        <translation>%1 tagsága megváltozott</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Másolás</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation>Válasz</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Mentés</translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation>Továbbítás</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Szerkesztés</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Kitűzés</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Törlés</translation>
-    </message>
-    <message>
-        <source>More…</source>
-        <translation>Több…</translation>
-    </message>
-    <message>
-        <source>The quoted message cannot be loaded: it no longer exists or you are not allowed to see it.</source>
-        <translation>Az idézett üzenet nem tölthető be: már nem létezik, vagy nincs jogod látni.</translation>
-    </message>
-    <message>
-        <source>Voice message</source>
-        <translation>Hangüzenet</translation>
-    </message>
-    <message>
         <source>Message deleted</source>
         <translation>Üzenet törölve</translation>
-    </message>
-    <message>
-        <source>Thread · %1</source>
-        <translation>Szál · %1</translation>
-    </message>
-    <message>
-        <source>In thread</source>
-        <translation>A szálban</translation>
-    </message>
-    <message>
-        <source>not sent</source>
-        <translation>nincs elküldve</translation>
-    </message>
-    <message>
-        <source>edited</source>
-        <translation>szerkesztve</translation>
     </message>
     <message>
         <source>No messages</source>
@@ -2854,52 +3114,12 @@
         <translation>Ez az üzenet nincs a betöltött előzményekben</translation>
     </message>
     <message>
-        <source>Discard</source>
-        <translation>Elvetés</translation>
-    </message>
-    <message>
-        <source>Send again</source>
-        <translation>Küldés újra</translation>
-    </message>
-    <message>
-        <source>React</source>
-        <translation>Reagálás</translation>
-    </message>
-    <message>
-        <source>Reply in thread</source>
-        <translation>Válasz a szálban</translation>
-    </message>
-    <message>
         <source>Copy room link</source>
         <translation>Szobahivatkozás másolása</translation>
     </message>
     <message>
         <source>Room link copied</source>
         <translation>Szobahivatkozás másolva</translation>
-    </message>
-    <message>
-        <source>Sent unencrypted</source>
-        <translation>Titkosítás nélkül küldve</translation>
-    </message>
-    <message>
-        <source>Not sent by the account it names</source>
-        <translation>Nem a megnevezett fiók küldte</translation>
-    </message>
-    <message>
-        <source>The sender&apos;s keys changed</source>
-        <translation>A feladó kulcsai megváltoztak</translation>
-    </message>
-    <message>
-        <source>From an unverified device</source>
-        <translation>Nem ellenőrzött eszközről</translation>
-    </message>
-    <message>
-        <source>From an unverified person</source>
-        <translation>Nem ellenőrzött személytől</translation>
-    </message>
-    <message>
-        <source>Authenticity not confirmed</source>
-        <translation>A hitelesség nincs megerősítve</translation>
     </message>
     <message>
         <source>Discarding</source>
@@ -2910,20 +3130,12 @@
         <translation>Törlés</translation>
     </message>
     <message>
-        <source>This reaction hides text and was not sent</source>
-        <translation>Ez a reakció szöveget rejt, ezért nem lett elküldve</translation>
-    </message>
-    <message>
         <source>Picture</source>
         <translation>Kép</translation>
     </message>
     <message>
         <source>Search messages</source>
         <translation>Üzenetek keresése</translation>
-    </message>
-    <message>
-        <source>What do these marks mean?</source>
-        <translation>Mit jelentenek ezek a jelek?</translation>
     </message>
     <message>
         <source>Verify contact</source>
@@ -2966,43 +3178,6 @@
         <translation>A szavazatod nem lett elküldve</translation>
     </message>
     <message>
-        <source>%1 invited %2</source>
-        <translation>%1 meghívta %2 felhasználót</translation>
-    </message>
-    <message>
-        <source>%1 removed %2</source>
-        <translation>%1 eltávolította %2 felhasználót</translation>
-    </message>
-    <message>
-        <source>%1 banned %2</source>
-        <translation>%1 kitiltotta %2 felhasználót</translation>
-    </message>
-    <message>
-        <source>%1 unbanned %2</source>
-        <translation>%1 feloldotta %2 felhasználó kitiltását</translation>
-    </message>
-    <message>
-        <source>%1 withdrew the invitation for %2</source>
-        <translation>%1 visszavonta %2 meghívását</translation>
-    </message>
-    <message>
-        <source>%1: %2</source>
-        <comment>system line and the reason given for it</comment>
-        <translation>%1: %2</translation>
-    </message>
-    <message>
-        <source>Convert to text</source>
-        <translation>Átalakítás szöveggé</translation>
-    </message>
-    <message>
-        <source>Converting to text…</source>
-        <translation>Átalakítás szöveggé…</translation>
-    </message>
-    <message>
-        <source>Recognised automatically, may contain mistakes</source>
-        <translation>Automatikusan felismerve, hibákat tartalmazhat</translation>
-    </message>
-    <message>
         <source>Recording… %1 s. Tap the microphone to send.</source>
         <translation>Felvétel… %1 mp. Koppints a mikrofonra a küldéshez.</translation>
     </message>
@@ -3011,40 +3186,12 @@
         <translation>Semmi sem hangzott el, így semmi sem lett elküldve.</translation>
     </message>
     <message>
-        <source>Saved to gallery</source>
-        <translation>Mentve a galériába</translation>
-    </message>
-    <message>
-        <source>Could not save</source>
-        <translation>Nem sikerült menteni</translation>
-    </message>
-    <message>
-        <source>Saved to Downloads</source>
-        <translation>Mentve a Letöltések mappába</translation>
-    </message>
-    <message>
-        <source>Show less</source>
-        <translation>Kevesebb megjelenítése</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Több megjelenítése</translation>
-    </message>
-    <message>
         <source>The text could not be written as a file</source>
         <translation>A szöveget nem sikerült fájlba írni</translation>
     </message>
     <message>
         <source>Share location</source>
         <translation>Hely megosztása</translation>
-    </message>
-    <message>
-        <source>deletion not sent</source>
-        <translation>a törlés nincs elküldve</translation>
-    </message>
-    <message>
-        <source>edit not sent</source>
-        <translation>a szerkesztés nincs elküldve</translation>
     </message>
     <message>
         <source>That did not work. Try again in a moment.</source>
@@ -3061,50 +3208,6 @@
     <message>
         <source>It is no longer waiting to be sent.</source>
         <translation>Már nem vár elküldésre.</translation>
-    </message>
-    <message>
-        <source>Could not load. Tap to try again.</source>
-        <translation>Nem sikerült betölteni. Koppints az újrapróbáláshoz.</translation>
-    </message>
-    <message>
-        <source>Tap to load</source>
-        <translation>Koppints a betöltéshez</translation>
-    </message>
-    <message>
-        <source>Open link?</source>
-        <translation>Megnyitod a hivatkozást?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Hivatkozás másolása</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Hivatkozás továbbítása</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2</source>
-        <translation>%1 megjelenítendő nevét erre változtatta: %2</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name</source>
-        <translation>%1 eltávolította a megjelenítendő nevét</translation>
-    </message>
-    <message>
-        <source>%1 changed their profile picture</source>
-        <translation>%1 megváltoztatta a profilképét</translation>
-    </message>
-    <message>
-        <source>%1 changed their display name to %2 and their profile picture</source>
-        <translation>%1 megváltoztatta a megjelenítendő nevét erre: %2, és a profilképét</translation>
-    </message>
-    <message>
-        <source>%1 removed their display name and changed their profile picture</source>
-        <translation>%1 eltávolította a megjelenítendő nevét, és megváltoztatta a profilképét</translation>
-    </message>
-    <message>
-        <source>Not shown on this device. Tap to open.</source>
-        <translation>Ezen az eszközön nem jelenik meg. Koppints a megnyitáshoz.</translation>
     </message>
 </context>
 <context>
@@ -3960,6 +4063,13 @@
     </message>
 </context>
 <context>
+    <name>ThreadAttachments</name>
+    <message>
+        <source>Select files</source>
+        <translation>Fájlok kiválasztása</translation>
+    </message>
+</context>
+<context>
     <name>ThreadPage</name>
     <message>
         <source>Load older posts</source>
@@ -3968,10 +4078,6 @@
     <message>
         <source>Thread</source>
         <translation>Szál</translation>
-    </message>
-    <message>
-        <source>Event</source>
-        <translation>Esemény</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3989,6 +4095,33 @@
         <source>Reply in thread</source>
         <translation>Válasz a szálban</translation>
     </message>
+    <message>
+        <source>Discarding</source>
+        <translation>Elvetés</translation>
+    </message>
+    <message>
+        <source>Deleting</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>Reply to %1</source>
+        <translation>Válasz neki: %1</translation>
+    </message>
+    <message>
+        <source>Editing message</source>
+        <translation>Üzenet szerkesztése</translation>
+    </message>
+    <message>
+        <source>New text</source>
+        <translation>Új szöveg</translation>
+    </message>
+    <message>
+        <source>No posts</source>
+        <translation>Nincsenek bejegyzések</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineActions</name>
     <message>
         <source>Sent unencrypted</source>
         <translation>Titkosítás nélkül küldve</translation>
@@ -4014,28 +4147,16 @@
         <translation>A hitelesség nincs megerősítve</translation>
     </message>
     <message>
-        <source>Open this address?</source>
-        <translation>Megnyitja ezt a címet?</translation>
+        <source>Saved to gallery</source>
+        <translation>Mentve a galériába</translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation>Megnyitás</translation>
+        <source>Could not save</source>
+        <translation>Nem sikerült menteni</translation>
     </message>
     <message>
-        <source>Open link?</source>
-        <translation>Megnyitod a hivatkozást?</translation>
-    </message>
-    <message>
-        <source>Copy link</source>
-        <translation>Hivatkozás másolása</translation>
-    </message>
-    <message>
-        <source>Forward link</source>
-        <translation>Hivatkozás továbbítása</translation>
-    </message>
-    <message>
-        <source>Pin</source>
-        <translation>Kitűzés</translation>
+        <source>Saved to Downloads</source>
+        <translation>Mentve a Letöltések mappába</translation>
     </message>
 </context>
 <context>

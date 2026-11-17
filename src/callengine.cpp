@@ -7,10 +7,15 @@
 #include <QDateTime>
 #include <QFile>
 #include <QMetaObject>
+#include <QMutex>
+#include <QMutexLocker>
 #include <QUrl>
 #include <QVariantMap>
 
+#include <atomic>
+#include <climits>
 #include <cstring>
+#include <utility>
 
 #include <gst/gst.h>
 #include <gst/sdp/sdp.h>
@@ -28,13 +33,18 @@
 
 namespace {
 
-/// Audio only. The volume element sits before the encoder, so a muted call
-/// keeps sending silence rather than stopping. The caps are the echo canceller's.
+/// Audio only. The microphone in the echo canceller's 10 ms frames, nothing
+/// dropped before it; the volume element after it, so a muted call sends silence.
+/// No role: the stored recording level is per app name, a role has none.
+#define XMATIC_MIC_BRANCH \
+    "pulsesrc ! audioconvert ! audioresample ! " \
+    "audio/x-raw,format=S16LE,rate=48000,channels=1 ! audiobuffersplit output-buffer-duration=1/100 ! " \
+    "identity name=aec ! volume name=micvolume ! queue ! " \
+    "opusenc audio-type=voice bitrate-type=cbr bitrate=32000 frame-size=20 inband-fec=true ! " \
+    "rtpopuspay pt=111 ! application/x-rtp,media=audio,encoding-name=OPUS,payload=111 ! sendrecv. "
+
 const char *kAudioPipeline =
-    "webrtcbin name=sendrecv bundle-policy=max-bundle latency=100 "
-    "autoaudiosrc ! queue leaky=downstream max-size-time=200000000 ! audioconvert ! audioresample ! "
-    "audio/x-raw,format=S16LE,rate=48000,channels=1 ! volume name=micvolume ! opusenc ! rtpopuspay pt=111 ! "
-    "application/x-rtp,media=audio,encoding-name=OPUS,payload=111 ! sendrecv.";
+    "webrtcbin name=sendrecv bundle-policy=max-bundle latency=100 " XMATIC_MIC_BRANCH;
 
 /// The same plus a camera, VP8: the device has no H.264 encoder and Matrix
 /// negotiates VP8. A 32-bit build means an old SoC - QVGA at 15 fps.
@@ -55,10 +65,7 @@ const int kCallBitrate = 512000;
 QByteArray videoPipelineDescription()
 {
     return QStringLiteral(
-               "webrtcbin name=sendrecv bundle-policy=max-bundle latency=100 "
-               "autoaudiosrc ! queue leaky=downstream max-size-time=200000000 ! audioconvert ! audioresample ! "
-               "audio/x-raw,format=S16LE,rate=48000,channels=1 ! volume name=micvolume ! opusenc ! rtpopuspay pt=111 ! "
-               "application/x-rtp,media=audio,encoding-name=OPUS,payload=111 ! sendrecv. "
+               "webrtcbin name=sendrecv bundle-policy=max-bundle latency=100 " XMATIC_MIC_BRANCH
                "appsrc name=camsrc is-live=true do-timestamp=true format=time "
                "max-bytes=2000000 ! "
                // max-rate on the element, not a fixed rate in the caps: the camera declares
@@ -119,6 +126,11 @@ gint chooseDecoder(GstElement *, GstPad *, GstCaps *, GstElementFactory *factory
 const int kMaximumRemoteWidth = 1920;
 const int kMaximumRemoteHeight = 1920;
 
+/// Candidates held before an answer, either side. A call gathers a few dozen.
+const int kHeldCandidates = 100;
+/// Hidden calls remembered at once; the oldest goes first.
+const int kHiddenCalls = 16;
+
 /// A random call id from the kernel, not from a clock: everybody in the room
 /// sees it, and a guessable id is one somebody else can answer.
 QString freshId(const QString &prefix)
@@ -162,54 +174,151 @@ QString describeKinds(const QMap<QString, int> &kinds)
     return out.join(QStringLiteral(", "));
 }
 
+} // namespace
+
+/// One pipeline's share of the engine, and the user data of every callback it runs.
+/// A released pipeline outlives its call: its threads reach this, never the engine.
+struct PipelineContext
+{
+    PipelineContext(CallEngine *engine, GstElement *bin, int generation, bool withVideo)
+        : generation(generation), withVideo(withVideo), m_engine(engine), m_bin(bin)
+    {
+    }
+    ~PipelineContext() { release(); }
+
+    const int generation;
+    const bool withVideo;
+    /// Set before the pipeline runs, read-only after.
+    std::shared_ptr<EchoCanceller> echo;
+    QAtomicInt remotePackets;
+    QAtomicInt cameraFrames;
+
+    /// Takes over the reference.
+    void adoptWebrtc(GstElement *webrtc)
+    {
+        QMutexLocker locker(&m_lock);
+        m_webrtc = webrtc;
+    }
+    /// A new reference, or null once released.
+    GstElement *bin() { return referenced(m_bin); }
+    GstElement *webrtc() { return referenced(m_webrtc); }
+
+    /// Runs `deliver` with the engine while this pipeline is the current one.
+    template <typename Deliver>
+    void post(Deliver deliver)
+    {
+        QMutexLocker locker(&m_lock);
+        if (m_engine) {
+            deliver(m_engine);
+        }
+    }
+    void detach()
+    {
+        QMutexLocker locker(&m_lock);
+        m_engine = nullptr;
+    }
+    bool attached()
+    {
+        QMutexLocker locker(&m_lock);
+        return m_engine != nullptr;
+    }
+
+    /// Stops the pipeline and drops its references; idempotent, any thread.
+    void release()
+    {
+        GstElement *bin = nullptr;
+        GstElement *webrtc = nullptr;
+        {
+            QMutexLocker locker(&m_lock);
+            m_engine = nullptr;
+            std::swap(bin, m_bin);
+            std::swap(webrtc, m_webrtc);
+        }
+        // Outside the lock: NULL joins threads that may be waiting for it.
+        if (webrtc) {
+            gst_object_unref(webrtc);
+        }
+        if (bin) {
+            gst_element_set_state(bin, GST_STATE_NULL);
+            gst_object_unref(bin);
+        }
+    }
+
+    // User data for GLib: a heap copy of the shared pointer, freed with the handler.
+    static gpointer share(const std::shared_ptr<PipelineContext> &context)
+    {
+        return new std::shared_ptr<PipelineContext>(context);
+    }
+    static const std::shared_ptr<PipelineContext> &shared(gpointer data)
+    {
+        return *static_cast<std::shared_ptr<PipelineContext> *>(data);
+    }
+    static PipelineContext *of(gpointer data) { return shared(data).get(); }
+    static void unshare(gpointer data) { delete static_cast<std::shared_ptr<PipelineContext> *>(data); }
+    static void unshareClosure(gpointer data, GClosure *) { unshare(data); }
+
+private:
+    GstElement *referenced(GstElement *const &element)
+    {
+        QMutexLocker locker(&m_lock);
+        return element ? GST_ELEMENT(gst_object_ref(element)) : nullptr;
+    }
+
+    QMutex m_lock;
+    CallEngine *m_engine;
+    GstElement *m_bin;
+    GstElement *m_webrtc = nullptr;
+};
+
+namespace {
+
+void connectContext(GstElement *element, const char *signal, GCallback callback,
+                    const std::shared_ptr<PipelineContext> &context)
+{
+    g_signal_connect_data(element, signal, callback, PipelineContext::share(context),
+                          PipelineContext::unshareClosure, GConnectFlags(0));
+}
+
 /// A pipeline kept alive until its TURN allocations are given back; dropped
 /// at once they hold the server's relay ports until they time out.
 struct RelayRelease
 {
-    GstElement *pipeline = nullptr;
-    guint timer = 0;
-    int pending = 2;
+    std::shared_ptr<PipelineContext> context;
+    GSource *timer = nullptr;
+    /// The agent's answer and the timer's teardown; the last one frees.
+    std::atomic<int> pending{2};
 };
 
-void finishRelease(RelayRelease *release)
+void dropRelease(gpointer user)
 {
-    if (release->pipeline) {
-        gst_element_set_state(release->pipeline, GST_STATE_NULL);
-        gst_object_unref(release->pipeline);
-        release->pipeline = nullptr;
+    auto *release = static_cast<RelayRelease *>(user);
+    if (release->pending.fetch_sub(1) == 1) {
+        g_source_unref(release->timer);
+        delete release;
     }
 }
 
+// The agent answers on its own thread, the timer fires on the main one.
 void relaysReleased(GObject *, GAsyncResult *, gpointer user)
 {
     auto *release = static_cast<RelayRelease *>(user);
-    finishRelease(release);
-    if (release->timer != 0) {
-        g_source_remove(release->timer);
-        release->timer = 0;
-        --release->pending;
-    }
-    if (--release->pending == 0) {
-        delete release;
-    }
+    release->context->release();
+    g_source_destroy(release->timer);
+    dropRelease(release);
 }
 
 gboolean relayReleaseTimedOut(gpointer user)
 {
-    auto *release = static_cast<RelayRelease *>(user);
-    release->timer = 0;
-    finishRelease(release);
-    if (--release->pending == 0) {
-        delete release;
-    }
+    static_cast<RelayRelease *>(user)->context->release();
     return G_SOURCE_REMOVE;
 }
 
-/// Takes the pipeline's reference. The agent is reached through properties
-/// older GStreamer lacks; there the pipeline simply stops.
-void releaseRelays(GstElement *pipeline, GstElement *webrtc)
+/// The agent is reached through properties older GStreamer lacks; there the
+/// pipeline simply stops.
+void releaseRelays(const std::shared_ptr<PipelineContext> &context)
 {
     NiceAgent *agent = nullptr;
+    GstElement *webrtc = context->webrtc();
     if (webrtc && g_object_class_find_property(G_OBJECT_GET_CLASS(webrtc), "ice-agent")) {
         GObject *ice = nullptr;
         g_object_get(webrtc, "ice-agent", &ice, nullptr);
@@ -220,17 +329,24 @@ void releaseRelays(GstElement *pipeline, GstElement *webrtc)
             g_object_unref(ice);
         }
     }
+    if (webrtc) {
+        gst_object_unref(webrtc);
+    }
     if (!agent) {
-        gst_element_set_state(pipeline, GST_STATE_NULL);
-        gst_object_unref(pipeline);
+        context->release();
         return;
     }
 
     // Paused: no more sound either way while the agent says goodbye.
-    gst_element_set_state(pipeline, GST_STATE_PAUSED);
+    if (GstElement *bin = context->bin()) {
+        gst_element_set_state(bin, GST_STATE_PAUSED);
+        gst_object_unref(bin);
+    }
     auto *release = new RelayRelease;
-    release->pipeline = pipeline;
-    release->timer = g_timeout_add(3000, relayReleaseTimedOut, release);
+    release->context = context;
+    release->timer = g_timeout_source_new(3000);
+    g_source_set_callback(release->timer, relayReleaseTimedOut, release, dropRelease);
+    g_source_attach(release->timer, nullptr);
     nice_agent_close_async(agent, relaysReleased, release);
     g_object_unref(agent);
 }
@@ -243,9 +359,11 @@ CallEngine::CallEngine(QObject *parent)
     m_ringTimeout.setSingleShot(true);
     m_ringTimeout.setInterval(45000);
     connect(&m_ringTimeout, &QTimer::timeout, this, [this]() {
-        if (m_state == QLatin1String("ringing")) {
-            hangUp();
+        if (m_state != QLatin1String("ringing")) {
+            return;
         }
+        // Unanswered is not declined: the caller's own lifetime ends it.
+        stopQuietly();
     });
 
     // Queued on purpose: frames arrive on the camera's thread, and pushing
@@ -260,7 +378,7 @@ CallEngine::CallEngine(QObject *parent)
     m_cameraWatchdog.setSingleShot(true);
     m_cameraWatchdog.setInterval(7000);
     connect(&m_cameraWatchdog, &QTimer::timeout, this, [this]() {
-        if (!m_withVideo || m_cameraFrames.load() > 0 || m_state == QLatin1String("idle")) {
+        if (!m_withVideo || cameraFrames() > 0 || m_state == QLatin1String("idle")) {
             return;
         }
         qWarning("xmatic: the camera produced nothing, falling back to a voice call");
@@ -292,7 +410,7 @@ CallEngine::CallEngine(QObject *parent)
         if (m_state != QLatin1String("active")) {
             return;
         }
-        const int seen = m_remotePackets.load();
+        const int seen = remotePackets();
         m_silentTicks = seen == m_lastRemotePackets ? m_silentTicks + 1 : 0;
         m_lastRemotePackets = seen;
         if (m_silentTicks >= 3) {
@@ -380,7 +498,13 @@ void CallEngine::setState(const QString &state)
     if (m_state == state) {
         return;
     }
+    const bool wasIdle = m_state == QLatin1String("idle");
     m_state = state;
+    if (state == QLatin1String("idle")) {
+        m_relayRefresh.stop();
+    } else if (wasIdle) {
+        armRelayRefresh();
+    }
     qInfo("xmatic: call state: %s", qPrintable(state));
     emit callChanged();
 }
@@ -390,15 +514,45 @@ void CallEngine::setTurnServers(const QVariantList &servers, int ttl)
     m_turnServers = servers;
     m_relayKnown = true;
     m_relayExpiresAt = ttl > 0 ? QDateTime::currentMSecsSinceEpoch() + qint64(ttl) * 1000 : 0;
-    if (ttl > 0) {
-        m_relayRefresh.start(qMax(60, ttl * 3 / 4) * 1000);
-    }
+    armRelayRefresh();
     resumeAfterRelay();
+}
+
+void CallEngine::armRelayRefresh()
+{
+    if (m_state == QLatin1String("idle") || m_relayExpiresAt == 0) {
+        m_relayRefresh.stop();
+        return;
+    }
+    const qint64 left = m_relayExpiresAt - QDateTime::currentMSecsSinceEpoch();
+    m_relayRefresh.start(int(qMin<qint64>(qMax<qint64>(60000, left * 3 / 4), INT_MAX)));
 }
 
 void CallEngine::relayUnavailable()
 {
     resumeAfterRelay();
+    // Asked again while a call rings or runs; idle stops the timer.
+    if (m_state != QLatin1String("idle")) {
+        m_relayRefresh.start(60000);
+    }
+}
+
+void CallEngine::forgetRelays()
+{
+    m_turnServers.clear();
+    m_relayKnown = false;
+    m_relayExpiresAt = 0;
+    m_relayRefresh.stop();
+}
+
+int CallEngine::cameraFrames() const
+{
+    return m_ctx ? m_ctx->cameraFrames.load() : 0;
+}
+
+int CallEngine::remotePackets() const
+{
+    return m_ctx ? m_ctx->remotePackets.load() : 0;
 }
 
 bool CallEngine::relayStale() const
@@ -460,19 +614,28 @@ void CallEngine::tearDown()
     }
     m_grab.reset();
     m_grabPending = false;
-    m_cameraFeed = nullptr;
-    m_cameraFlip = nullptr;
+    // References from gst_bin_get_by_name; the bin keeps its own.
+    if (m_cameraFeed) {
+        gst_object_unref(m_cameraFeed);
+        m_cameraFeed = nullptr;
+    }
+    if (m_cameraFlip) {
+        gst_object_unref(m_cameraFlip);
+        m_cameraFlip = nullptr;
+    }
     m_afterRelay = 0;
     m_relayWait.stop();
     m_iceGrace.stop();
-    if (m_pipeline) {
-        releaseRelays(m_pipeline, m_webrtc);
-        m_pipeline = nullptr;
+    m_heldCandidates.clear();
+    if (m_ctx) {
+        m_ctx->detach();
+        releaseRelays(m_ctx);
+        m_ctx.reset();
     }
+    m_pipeline = nullptr;
     m_webrtc = nullptr;
     m_audioSource = nullptr;
-    m_echo.reset();
-    // After NULL: its threads are joined, whatever they queued is stale now.
+    // Detached: its threads queue nothing more, and what is in flight carries the old generation.
     m_generation.ref();
 }
 
@@ -493,15 +656,22 @@ bool CallEngine::buildPipeline()
         reportFailure(tr("pipeline failed: %1").arg(message));
         return false;
     }
+    if (error) {
+        g_error_free(error);
+    }
 
+    // The context owns the pipeline's and webrtcbin's references.
+    m_ctx = std::make_shared<PipelineContext>(this, m_pipeline, m_generation.load(), m_withVideo);
     m_webrtc = gst_bin_get_by_name(GST_BIN(m_pipeline), "sendrecv");
+    m_ctx->adoptWebrtc(m_webrtc);
     m_audioSource = gst_bin_get_by_name(GST_BIN(m_pipeline), "micvolume");
-    m_echo.reset(new EchoCanceller);
-    if (m_audioSource) {
-        if (GstPad *mic = gst_element_get_static_pad(m_audioSource, "sink")) {
-            m_echo->processCapture(mic);
+    m_ctx->echo = std::make_shared<EchoCanceller>();
+    if (GstElement *tap = gst_bin_get_by_name(GST_BIN(m_pipeline), "aec")) {
+        if (GstPad *mic = gst_element_get_static_pad(tap, "src")) {
+            m_ctx->echo->processCapture(mic);
             gst_object_unref(mic);
         }
+        gst_object_unref(tap);
     }
     if (!m_webrtc) {
         reportFailure(tr("webrtcbin is missing"));
@@ -523,25 +693,20 @@ bool CallEngine::buildPipeline()
         this);
     gst_object_unref(bus);
 
-    g_signal_connect(m_webrtc, "on-negotiation-needed", G_CALLBACK(negotiationNeeded), this);
-    g_signal_connect(m_webrtc, "on-ice-candidate", G_CALLBACK(iceCandidate), this);
-    g_signal_connect(m_webrtc, "pad-added", G_CALLBACK(streamAdded), this);
-    g_signal_connect(m_webrtc,
-                     "notify::connection-state",
-                     G_CALLBACK(connectionStateChanged),
-                     this);
-    g_signal_connect(m_webrtc, "notify::ice-connection-state", G_CALLBACK(iceStateChanged), this);
-    g_signal_connect(m_webrtc, "notify::ice-gathering-state", G_CALLBACK(iceStateChanged), this);
+    connectContext(m_webrtc, "on-negotiation-needed", G_CALLBACK(negotiationNeeded), m_ctx);
+    connectContext(m_webrtc, "on-ice-candidate", G_CALLBACK(iceCandidate), m_ctx);
+    connectContext(m_webrtc, "pad-added", G_CALLBACK(streamAdded), m_ctx);
+    connectContext(m_webrtc, "notify::connection-state", G_CALLBACK(connectionStateChanged), m_ctx);
+    g_signal_connect(m_webrtc, "notify::ice-connection-state", G_CALLBACK(iceStateChanged), nullptr);
+    g_signal_connect(m_webrtc, "notify::ice-gathering-state", G_CALLBACK(iceStateChanged), nullptr);
 
-    // Our reference is no longer needed; the bin owns the elements.
-    gst_object_unref(m_webrtc);
+    // The bin owns the element; the raw pointer lives as long as the context.
     if (m_audioSource) {
         gst_object_unref(m_audioSource);
     }
 
-    // Count what the camera actually delivers: a video call that never connects
+    // The context counts what the camera delivers: a video call that never connects
     // looks the same whether the sensor or the negotiation failed.
-    m_cameraFrames.store(0);
     m_cameraFormat.clear();
     m_cameraFeed = m_withVideo ? gst_bin_get_by_name(GST_BIN(m_pipeline), "camsrc") : nullptr;
     m_cameraFlip = m_withVideo ? gst_bin_get_by_name(GST_BIN(m_pipeline), "camflip") : nullptr;
@@ -551,7 +716,7 @@ bool CallEngine::buildPipeline()
     if (m_withVideo) {
         GstElement *selfSink = gst_bin_get_by_name(GST_BIN(m_pipeline), "selfsink");
         if (selfSink) {
-            g_signal_connect(selfSink, "new-sample", G_CALLBACK(selfFrameArrived), this);
+            connectContext(selfSink, "new-sample", G_CALLBACK(selfFrameArrived), m_ctx);
             gst_object_unref(selfSink);
         }
         GstElement *camQueue = gst_bin_get_by_name(GST_BIN(m_pipeline), "camqueue");
@@ -564,8 +729,8 @@ bool CallEngine::buildPipeline()
                     [](GstPad *p, GstPadProbeInfo *i, gpointer u) -> GstPadProbeReturn {
                         return static_cast<GstPadProbeReturn>(CallEngine::cameraProbe(p, i, u));
                     },
-                    this,
-                    nullptr);
+                    PipelineContext::share(m_ctx),
+                    PipelineContext::unshare);
                 gst_object_unref(pad);
             }
             gst_object_unref(camQueue);
@@ -671,7 +836,7 @@ void CallEngine::pushCameraFrame(const QByteArray &data,
     g_signal_emit_by_name(m_cameraFeed, "push-buffer", buffer, &flow);
     gst_buffer_unref(buffer);
 
-    if (flow != GST_FLOW_OK && m_cameraFrames.load() < 2) {
+    if (flow != GST_FLOW_OK && cameraFrames() < 2) {
         qWarning("xmatic: camera frame rejected by the pipeline (%d)", int(flow));
     }
 }
@@ -735,9 +900,23 @@ void CallEngine::onRemoteInvite(const QString &roomId,
                                 bool videoOffered,
                                 const QString &sender,
                                 const QString &callId,
-                                const QString &sdp)
+                                const QString &sdp,
+                                bool show,
+                                bool audible,
+                                qint64 lifetimeMs)
 {
     if (!m_available) {
+        return;
+    }
+    // "Calls: off" takes no state: no busy reply to others, nothing sent at all.
+    if (!show && callId != m_callId) {
+        pruneHiddenCalls();
+        if (m_hiddenCalls.size() >= kHiddenCalls) {
+            m_hiddenCalls.removeFirst();
+        }
+        const qint64 lifetime = qBound<qint64>(10000, lifetimeMs, 120000);
+        m_hiddenCalls.append({roomId, callId, QDateTime::currentMSecsSinceEpoch() + lifetime});
+        qInfo("xmatic: incoming call hidden by the push rules");
         return;
     }
     if (m_state != QLatin1String("idle")) {
@@ -768,6 +947,7 @@ void CallEngine::onRemoteInvite(const QString &roomId,
     m_withVideo = false;
     m_pendingRemoteOffer = sdp;
     m_earlyCandidates.clear();
+    qInfo("xmatic: incoming call, sound %d", audible ? 1 : 0);
     emit callChanged();
 
     setState(QStringLiteral("ringing"));
@@ -778,7 +958,28 @@ void CallEngine::onRemoteInvite(const QString &roomId,
     // A ring that nobody answers ends by itself. Without this the ringtone
     // loops until the caller gives up - and a caller can choose not to.
     m_ringTimeout.start();
-    emit incomingCall(roomId, sender);
+    emit incomingCall(roomId, sender, audible);
+}
+
+void CallEngine::pruneHiddenCalls()
+{
+    const qint64 now = QDateTime::currentMSecsSinceEpoch();
+    for (int index = m_hiddenCalls.size() - 1; index >= 0; --index) {
+        if (m_hiddenCalls.at(index).until <= now) {
+            m_hiddenCalls.removeAt(index);
+        }
+    }
+}
+
+bool CallEngine::isHiddenCall(const QString &roomId, const QString &callId)
+{
+    pruneHiddenCalls();
+    for (const HiddenCall &call : m_hiddenCalls) {
+        if (call.callId == callId && call.roomId == roomId) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void CallEngine::setExpectedPeer(const QString &peer)
@@ -836,6 +1037,9 @@ void CallEngine::answerOffer()
 void CallEngine::onAnsweredElsewhere(const QString &roomId, const QString &callId,
                                      const QString &partyId, bool declined)
 {
+    if (isHiddenCall(roomId, callId)) {
+        return;
+    }
     // Only while this device is still offering to answer, and only for the call
     // it is ringing about. Our own answer carries our own party id and must not
     // stop us.
@@ -854,6 +1058,9 @@ void CallEngine::onAnsweredElsewhere(const QString &roomId, const QString &callI
 void CallEngine::onSelectAnswer(const QString &roomId, const QString &sender,
                                 const QString &callId, const QString &selectedPartyId)
 {
+    if (isHiddenCall(roomId, callId)) {
+        return;
+    }
     // Callee side only, and only the caller may choose: the call id is public.
     if (m_isCaller || callId != m_callId || roomId != m_roomId || m_state == QLatin1String("idle")
         || sender.isEmpty() || sender != m_peer
@@ -882,6 +1089,7 @@ void CallEngine::stopQuietly()
     m_roomId.clear();
     m_peer.clear();
     m_pendingRemoteOffer.clear();
+    m_earlyCandidates.clear();
     setState(QStringLiteral("idle"));
     emit callChanged();
 }
@@ -897,6 +1105,8 @@ void CallEngine::onRemoteAnswer(const QString &roomId,
     if (callId != m_callId || !m_isCaller || roomId != m_roomId) {
         return;
     }
+    // Unset peer: a group room, or the reply not in yet; the core holds a room
+    // of two to its other member, and this account's answers never come here.
     if (!m_peer.isEmpty() && sender != m_peer) {
         return;
     }
@@ -911,6 +1121,14 @@ void CallEngine::onRemoteAnswer(const QString &roomId,
     }
     setState(QStringLiteral("connecting"));
     applyRemoteDescription(sdp, false);
+
+    if (!m_heldCandidates.isEmpty()) {
+        qInfo("xmatic: %d own candidates sent after the answer", m_heldCandidates.size());
+        m_pendingCandidates.append(m_heldCandidates);
+        m_heldCandidates.clear();
+        m_candidateTimer.stop();
+        flushCandidates();
+    }
 }
 
 void CallEngine::applyRemoteDescription(const QString &sdp, bool isOffer)
@@ -986,7 +1204,8 @@ void CallEngine::applyRemoteDescription(const QString &sdp, bool isOffer)
 
     if (isOffer) {
         // Now that their offer is known, ask for our answer.
-        GstPromise *answer = gst_promise_new_with_change_func(descriptionCreated, this, nullptr);
+        GstPromise *answer = gst_promise_new_with_change_func(
+            descriptionCreated, PipelineContext::share(m_ctx), PipelineContext::unshare);
         g_signal_emit_by_name(m_webrtc, "create-answer", nullptr, answer);
     }
 }
@@ -996,6 +1215,9 @@ void CallEngine::onRemoteCandidates(const QString &roomId,
                                    const QString &callId,
                                    const QVariantList &candidates)
 {
+    if (isHiddenCall(roomId, callId)) {
+        return;
+    }
     // Same rule as the answer: an injected candidate makes this device probe an
     // address of somebody else's choosing. Before the party is known, the room is the check.
     if (callId != m_callId || roomId != m_roomId) {
@@ -1007,8 +1229,9 @@ void CallEngine::onRemoteCandidates(const QString &roomId,
     // The caller sends them right after the invite; dropped, only a peer that
     // can reach this one directly ever connects - the same Wi-Fi, never two carriers.
     if (!m_webrtc) {
-        if (!m_isCaller && m_state != QLatin1String("idle")) {
-            m_earlyCandidates.append(candidates);
+        const int room = kHeldCandidates - m_earlyCandidates.size();
+        if (!m_isCaller && m_state != QLatin1String("idle") && room > 0) {
+            m_earlyCandidates.append(candidates.mid(0, room));
         }
         return;
     }
@@ -1036,6 +1259,9 @@ void CallEngine::onRemoteHangup(const QString &roomId,
                                const QString &partyId,
                                bool reject)
 {
+    if (isHiddenCall(roomId, callId)) {
+        return;
+    }
     // Once an answer is taken, a reject is void and only that device may hang up.
     if (m_isCaller && !m_selectedParty.isEmpty() && callId == m_callId) {
         if (reject) {
@@ -1074,6 +1300,8 @@ void CallEngine::onRemoteHangup(const QString &roomId,
     m_callId.clear();
     m_roomId.clear();
     m_peer.clear();
+    m_pendingRemoteOffer.clear();
+    m_earlyCandidates.clear();
     setState(QStringLiteral("idle"));
     emit callChanged();
 }
@@ -1103,6 +1331,7 @@ void CallEngine::hangUp()
     m_roomId.clear();
     m_peer.clear();
     m_pendingRemoteOffer.clear();
+    m_earlyCandidates.clear();
     m_withVideo = false;
     m_remoteVideo.stop();
     setState(QStringLiteral("idle"));
@@ -1199,11 +1428,11 @@ void CallEngine::setSpeaker(bool on)
 
 void CallEngine::negotiationNeeded(GstElement *, void *user)
 {
-    auto *engine = static_cast<CallEngine *>(user);
-    QMetaObject::invokeMethod(engine,
-                              "handleNegotiationNeeded",
-                              Qt::QueuedConnection,
-                              Q_ARG(int, engine->m_generation.load()));
+    const int generation = PipelineContext::of(user)->generation;
+    PipelineContext::of(user)->post([generation](CallEngine *engine) {
+        QMetaObject::invokeMethod(engine, "handleNegotiationNeeded", Qt::QueuedConnection,
+                                  Q_ARG(int, generation));
+    });
 }
 
 void CallEngine::handleNegotiationNeeded(int generation)
@@ -1301,13 +1530,16 @@ void CallEngine::requestOffer()
     }
     m_offerDeferred = false;
 
-    GstPromise *promise = gst_promise_new_with_change_func(descriptionCreated, this, nullptr);
+    GstPromise *promise = gst_promise_new_with_change_func(
+        descriptionCreated, PipelineContext::share(m_ctx), PipelineContext::unshare);
     g_signal_emit_by_name(m_webrtc, "create-offer", nullptr, promise);
 }
 
 void CallEngine::descriptionCreated(GstPromise *promise, void *user)
 {
-    auto *engine = static_cast<CallEngine *>(user);
+    // A copy: unreferencing the promise can free `user`.
+    const std::shared_ptr<PipelineContext> context = PipelineContext::shared(user);
+    const int generation = context->generation;
 
     const GstStructure *reply = gst_promise_get_reply(promise);
     if (!reply) {
@@ -1326,20 +1558,26 @@ void CallEngine::descriptionCreated(GstPromise *promise, void *user)
     gst_promise_unref(promise);
 
     if (!description) {
-        QMetaObject::invokeMethod(engine,
-                                  "reportFailureFor",
-                                  Qt::QueuedConnection,
-                                  Q_ARG(int, engine->m_generation.load()),
-                                  Q_ARG(QString, QObject::tr("no session description")));
+        context->post([generation](CallEngine *engine) {
+            QMetaObject::invokeMethod(engine, "reportFailureFor", Qt::QueuedConnection,
+                                      Q_ARG(int, generation),
+                                      Q_ARG(QString, QObject::tr("no session description")));
+        });
         return;
     }
 
     // Ours has to be applied locally before it is sent, or the candidates
-    // gathered afterwards belong to nothing.
+    // gathered afterwards belong to nothing. Its own webrtcbin, never the next call's.
+    GstElement *webrtc = context->attached() ? context->webrtc() : nullptr;
+    if (!webrtc) {
+        gst_webrtc_session_description_free(description);
+        return;
+    }
     GstPromise *applied = gst_promise_new();
-    g_signal_emit_by_name(engine->m_webrtc, "set-local-description", description, applied);
+    g_signal_emit_by_name(webrtc, "set-local-description", description, applied);
     gst_promise_interrupt(applied);
     gst_promise_unref(applied);
+    gst_object_unref(webrtc);
 
     gchar *text = gst_sdp_message_as_text(description->sdp);
     const QString sdp = QString::fromUtf8(text);
@@ -1377,29 +1615,35 @@ void CallEngine::descriptionCreated(GstPromise *promise, void *user)
               qPrintable(shape.join(QStringLiteral(" | "))));
     }
 
-    QMetaObject::invokeMethod(engine,
-                              "deliverLocalDescription",
-                              Qt::QueuedConnection,
-                              Q_ARG(int, engine->m_generation.load()),
-                              Q_ARG(QString, sdp),
-                              Q_ARG(bool, isOffer));
+    context->post([generation, sdp, isOffer](CallEngine *engine) {
+        QMetaObject::invokeMethod(engine, "deliverLocalDescription", Qt::QueuedConnection,
+                                  Q_ARG(int, generation), Q_ARG(QString, sdp),
+                                  Q_ARG(bool, isOffer));
+    });
 }
 
 void CallEngine::iceCandidate(GstElement *, unsigned index, char *candidate, void *user)
 {
-    auto *engine = static_cast<CallEngine *>(user);
-    QMetaObject::invokeMethod(engine,
-                              "deliverCandidate",
-                              Qt::QueuedConnection,
-                              Q_ARG(int, engine->m_generation.load()),
-                              Q_ARG(QString, QString::fromUtf8(candidate)),
-                              Q_ARG(int, static_cast<int>(index)));
+    PipelineContext *context = PipelineContext::of(user);
+    const int generation = context->generation;
+    const QString line = QString::fromUtf8(candidate);
+    context->post([generation, line, index](CallEngine *engine) {
+        QMetaObject::invokeMethod(engine, "deliverCandidate", Qt::QueuedConnection,
+                                  Q_ARG(int, generation), Q_ARG(QString, line),
+                                  Q_ARG(int, static_cast<int>(index)));
+    });
 }
 
 void CallEngine::streamAdded(GstElement *, GstPad *pad, void *user)
 {
-    auto *engine = static_cast<CallEngine *>(user);
-    if (!engine->m_pipeline || GST_PAD_DIRECTION(pad) != GST_PAD_SRC) {
+    const std::shared_ptr<PipelineContext> &context = PipelineContext::shared(user);
+    if (GST_PAD_DIRECTION(pad) != GST_PAD_SRC || !context->attached()) {
+        return;
+    }
+    // Its own bin: a released pipeline's stream must not land in the next call's.
+    std::unique_ptr<GstElement, void (*)(gpointer)> hold(context->bin(), gst_object_unref);
+    GstElement *bin = hold.get();
+    if (!bin) {
         return;
     }
 
@@ -1414,10 +1658,10 @@ void CallEngine::streamAdded(GstElement *, GstPad *pad, void *user)
     g_object_set(decode, "force-sw-decoders", TRUE, nullptr);
     g_signal_connect(decode, "autoplug-select", G_CALLBACK(chooseDecoder), nullptr);
 
-    gst_bin_add(GST_BIN(engine->m_pipeline), decode);
+    gst_bin_add(GST_BIN(bin), decode);
     // Connect the handler and link the incoming pad BEFORE decodebin starts,
     // then sync it to PLAYING last — same not-linked race as the branches.
-    g_signal_connect(decode, "pad-added", G_CALLBACK(decodedPadAdded), engine);
+    connectContext(decode, "pad-added", G_CALLBACK(decodedPadAdded), context);
 
     gst_pad_add_probe(
         pad,
@@ -1425,8 +1669,8 @@ void CallEngine::streamAdded(GstElement *, GstPad *pad, void *user)
         [](GstPad *p, GstPadProbeInfo *i, gpointer u) -> GstPadProbeReturn {
             return static_cast<GstPadProbeReturn>(CallEngine::remoteProbe(p, i, u));
         },
-        engine,
-        nullptr);
+        PipelineContext::share(context),
+        PipelineContext::unshare);
 
     GstPad *decodeSink = gst_element_get_static_pad(decode, "sink");
     if (decodeSink) {
@@ -1439,8 +1683,13 @@ void CallEngine::streamAdded(GstElement *, GstPad *pad, void *user)
 
 void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
 {
-    auto *engine = static_cast<CallEngine *>(user);
-    if (!engine->m_pipeline) {
+    const std::shared_ptr<PipelineContext> &context = PipelineContext::shared(user);
+    if (!context->attached()) {
+        return;
+    }
+    std::unique_ptr<GstElement, void (*)(gpointer)> hold(context->bin(), gst_object_unref);
+    GstElement *bin = hold.get();
+    if (!bin) {
         return;
     }
 
@@ -1460,19 +1709,19 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
     // takes the whole call down, audio included. Measured on the device, three
     // times, always a second after the call went active. So it is drained
     // instead of dropped: a fakesink is a destination, a missing link is not.
-    if (isVideo && !engine->m_withVideo) {
+    if (isVideo && !context->withVideo) {
         GstElement *drain = gst_element_factory_make("fakesink", nullptr);
         if (!drain) {
             return;
         }
         g_object_set(drain, "sync", FALSE, "async", FALSE, nullptr);
-        gst_bin_add(GST_BIN(engine->m_pipeline), drain);
+        gst_bin_add(GST_BIN(bin), drain);
         GstPad *sink = gst_element_get_static_pad(drain, "sink");
         if (!sink || gst_pad_link(pad, sink) != GST_PAD_LINK_OK) {
             if (sink) {
                 gst_object_unref(sink);
             }
-            gst_bin_remove(GST_BIN(engine->m_pipeline), drain);
+            gst_bin_remove(GST_BIN(bin), drain);
             return;
         }
         gst_object_unref(sink);
@@ -1485,7 +1734,7 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
     GstElement *last = nullptr;
     // The branch elements, started only after everything is linked: pushing into
     // an unlinked pad surfaces as "internal data stream error" and kills the call.
-    GstElement *chain[5] = {nullptr, nullptr, nullptr, nullptr, nullptr};
+    GstElement *chain[7] = {};
     int chainN = 0;
 
     if (isVideo) {
@@ -1519,9 +1768,9 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
                      "drop", TRUE, nullptr);
         gst_caps_unref(wanted);
 
-        g_signal_connect(sink, "new-sample", G_CALLBACK(videoFrameArrived), engine);
+        connectContext(sink, "new-sample", G_CALLBACK(videoFrameArrived), context);
 
-        gst_bin_add_many(GST_BIN(engine->m_pipeline), queue, convert, sink, nullptr);
+        gst_bin_add_many(GST_BIN(bin), queue, convert, sink, nullptr);
         gst_element_link_many(queue, convert, sink, nullptr);
 
         first = queue;
@@ -1535,38 +1784,40 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
         GstElement *queue = gst_element_factory_make("queue", nullptr);
         GstElement *convert = gst_element_factory_make("audioconvert", nullptr);
         GstElement *resample = gst_element_factory_make("audioresample", nullptr);
-        // The echo canceller's format; it reads what leaves this filter.
+        // The echo canceller's format and frames; it reads what enters the sink.
         GstElement *format = gst_element_factory_make("capsfilter", nullptr);
         if (format) {
             GstCaps *caps = gst_caps_from_string("audio/x-raw,format=S16LE,rate=48000,channels=1");
             g_object_set(format, "caps", caps, nullptr);
             gst_caps_unref(caps);
         }
+        GstElement *split = gst_element_factory_make("audiobuffersplit", nullptr);
+        if (split) {
+            gst_util_set_object_arg(G_OBJECT(split), "output-buffer-duration", "1/100");
+        }
+        GstElement *tap = gst_element_factory_make("identity", nullptr);
         // pulsesink, not autoaudiosink: the default sink on these devices is
         // sink.null, so received audio played into nothing.
         GstElement *sink = gst_element_factory_make("pulsesink", nullptr);
-        // And bypass module-stream-restore: the "x-maemo" role was remembered as
-        // muted, so every received call inherited that mute.
+        // The name lets the router find the stream; the role is the call's and
+        // bypasses the muted "x-maemo" entry of stream-restore.
         if (sink) {
-            GstStructure *props = gst_structure_new("stream-properties",
-                                                    "application.name",
-                                                    G_TYPE_STRING,
-                                                    "xmatic call",
+            GstStructure *props = gst_structure_new("props",
+                                                    "application.name", G_TYPE_STRING, "xmatic call",
+                                                    "media.role", G_TYPE_STRING, "phone",
                                                     nullptr);
             g_object_set(sink, "stream-properties", props, nullptr);
             gst_structure_free(props);
-            // Its drift correction skips or repeats tens of milliseconds at a
-            // time, and every jump throws the echo canceller off.
-            gst_util_set_object_arg(G_OBJECT(sink), "slave-method", "none");
         }
-        if (!queue || !convert || !resample || !format || !sink) {
+        if (!queue || !convert || !resample || !format || !split || !tap || !sink) {
             return;
         }
-        gst_bin_add_many(GST_BIN(engine->m_pipeline), queue, convert, resample, format, sink, nullptr);
-        gst_element_link_many(queue, convert, resample, format, sink, nullptr);
-        if (engine->m_echo) {
-            if (GstPad *played = gst_element_get_static_pad(format, "src")) {
-                engine->m_echo->watchPlayback(played);
+        gst_bin_add_many(GST_BIN(bin), queue, convert, resample, format, split, tap,
+                         sink, nullptr);
+        gst_element_link_many(queue, convert, resample, format, split, tap, sink, nullptr);
+        if (context->echo) {
+            if (GstPad *played = gst_element_get_static_pad(tap, "src")) {
+                context->echo->watchPlayback(played);
                 gst_object_unref(played);
             }
         }
@@ -1577,6 +1828,8 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
         chain[chainN++] = convert;
         chain[chainN++] = resample;
         chain[chainN++] = format;
+        chain[chainN++] = split;
+        chain[chainN++] = tap;
         chain[chainN++] = sink;
     }
 
@@ -1598,7 +1851,8 @@ void CallEngine::decodedPadAdded(GstElement *, GstPad *pad, void *user)
 
 int CallEngine::videoFrameArrived(void *sink, void *user)
 {
-    auto *engine = static_cast<CallEngine *>(user);
+    PipelineContext *context = PipelineContext::of(user);
+    const int generation = context->generation;
 
     GstSample *sample = nullptr;
     g_signal_emit_by_name(static_cast<GstElement *>(sink), "pull-sample", &sample);
@@ -1641,13 +1895,11 @@ int CallEngine::videoFrameArrived(void *sink, void *user)
                 }
             }
             gst_video_frame_unmap(&frame);
-            QMetaObject::invokeMethod(engine,
-                                      "deliverVideoYuv",
-                                      Qt::QueuedConnection,
-                                      Q_ARG(int, engine->m_generation.load()),
-                                      Q_ARG(QByteArray, tight),
-                                      Q_ARG(int, width),
-                                      Q_ARG(int, height));
+            context->post([generation, &tight, width, height](CallEngine *engine) {
+                QMetaObject::invokeMethod(engine, "deliverVideoYuv", Qt::QueuedConnection,
+                                          Q_ARG(int, generation), Q_ARG(QByteArray, tight),
+                                          Q_ARG(int, width), Q_ARG(int, height));
+            });
         }
     }
 
@@ -1686,7 +1938,8 @@ void CallEngine::deliverSelfYuv(int generation, const QByteArray &planes, int wi
 
 int CallEngine::selfFrameArrived(void *sink, void *user)
 {
-    auto *engine = static_cast<CallEngine *>(user);
+    PipelineContext *context = PipelineContext::of(user);
+    const int generation = context->generation;
 
     GstSample *sample = nullptr;
     g_signal_emit_by_name(static_cast<GstElement *>(sink), "pull-sample", &sample);
@@ -1725,13 +1978,11 @@ int CallEngine::selfFrameArrived(void *sink, void *user)
                 }
             }
             gst_video_frame_unmap(&frame);
-            QMetaObject::invokeMethod(engine,
-                                      "deliverSelfYuv",
-                                      Qt::QueuedConnection,
-                                      Q_ARG(int, engine->m_generation.load()),
-                                      Q_ARG(QByteArray, tight),
-                                      Q_ARG(int, width),
-                                      Q_ARG(int, height));
+            context->post([generation, &tight, width, height](CallEngine *engine) {
+                QMetaObject::invokeMethod(engine, "deliverSelfYuv", Qt::QueuedConnection,
+                                          Q_ARG(int, generation), Q_ARG(QByteArray, tight),
+                                          Q_ARG(int, width), Q_ARG(int, height));
+            });
         }
     }
 
@@ -1749,40 +2000,33 @@ void CallEngine::connectionStateChanged(GstElement *webrtc, void *, void *user)
     GstWebRTCPeerConnectionState state = GST_WEBRTC_PEER_CONNECTION_STATE_NEW;
     g_object_get(webrtc, "connection-state", &state, nullptr);
 
-    auto *engine = static_cast<CallEngine *>(user);
-
-    if (state == GST_WEBRTC_PEER_CONNECTION_STATE_CONNECTED) {
-        QMetaObject::invokeMethod(engine, "markConnected", Qt::QueuedConnection,
-                                  Q_ARG(int, engine->m_generation.load()));
-        return;
-    }
-
-    if (state == GST_WEBRTC_PEER_CONNECTION_STATE_FAILED) {
-        QMetaObject::invokeMethod(engine, "markFailed", Qt::QueuedConnection,
-                                  Q_ARG(int, engine->m_generation.load()));
-        return;
-    }
     // A failed or closed connection has to return the engine to idle, or the call
     // never ends here and every later one is refused as busy.
-    if (state == GST_WEBRTC_PEER_CONNECTION_STATE_CLOSED) {
-        QMetaObject::invokeMethod(engine, "markDisconnected", Qt::QueuedConnection,
-                                  Q_ARG(int, engine->m_generation.load()));
+    const char *slot = state == GST_WEBRTC_PEER_CONNECTION_STATE_CONNECTED ? "markConnected"
+        : state == GST_WEBRTC_PEER_CONNECTION_STATE_FAILED                 ? "markFailed"
+        : state == GST_WEBRTC_PEER_CONNECTION_STATE_CLOSED                 ? "markDisconnected"
+                                                                           : nullptr;
+    if (!slot) {
+        return;
     }
+    PipelineContext *context = PipelineContext::of(user);
+    const int generation = context->generation;
+    context->post([slot, generation](CallEngine *engine) {
+        QMetaObject::invokeMethod(engine, slot, Qt::QueuedConnection, Q_ARG(int, generation));
+    });
 }
 
 unsigned CallEngine::remoteProbe(GstPad *, void *, void *user)
 {
-    static_cast<CallEngine *>(user)->m_remotePackets.ref();
+    PipelineContext::of(user)->remotePackets.ref();
     return GST_PAD_PROBE_OK;
 }
 
 unsigned CallEngine::cameraProbe(GstPad *, void *, void *user)
 {
-    auto *engine = static_cast<CallEngine *>(user);
-
     // Only the first few are worth reporting; after that the camera clearly
     // works and the log would drown.
-    const int seen = engine->m_cameraFrames.fetchAndAddOrdered(1) + 1;
+    const int seen = PipelineContext::of(user)->cameraFrames.fetchAndAddOrdered(1) + 1;
     if (seen == 1 || seen == 30) {
         qInfo("xmatic: camera delivered %u frames", seen);
     }
@@ -1891,14 +2135,14 @@ void CallEngine::markConnected(int generation)
         return;
     }
     m_iceGrace.stop();
-    if (m_withVideo && m_cameraFrames.load() == 0) {
+    if (m_withVideo && cameraFrames() == 0) {
         qWarning("xmatic: connected but the camera has produced nothing");
     }
 
     logCandidates("connected");
     m_audioRouter.start();
     m_silentTicks = 0;
-    m_lastRemotePackets = m_remotePackets.load();
+    m_lastRemotePackets = remotePackets();
     m_mediaWatch.start();
     setState(QStringLiteral("active"));
     setStatus(tr("connected"));
@@ -1929,6 +2173,15 @@ void CallEngine::deliverCandidate(int generation, const QString &candidate,
     QVariantMap entry;
     entry.insert(QStringLiteral("candidate"), candidate);
     entry.insert(QStringLiteral("sdpMLineIndex"), mediaLineIndex);
+
+    // The caller's addresses wait for an answer: an unanswered call leaves none in
+    // the room, and they cannot overtake the invite.
+    if (m_isCaller && m_selectedParty.isEmpty()) {
+        if (m_heldCandidates.size() < kHeldCandidates) {
+            m_heldCandidates.append(entry);
+        }
+        return;
+    }
 
     // Batched: ICE produces bursts, and one room event per candidate runs into the
     // rate limit - the tail is rejected and the call never connects.
@@ -1980,6 +2233,7 @@ void CallEngine::reportFailure(const QString &message)
         emit hangupReady(m_roomId, m_callId, m_partyId);
     }
     tearDown();
+    m_earlyCandidates.clear();
     // Without this the last frame stays "active", and the page keeps drawing the
     // video layout - which hides both the reason and the way out.
     m_remoteVideo.stop();
