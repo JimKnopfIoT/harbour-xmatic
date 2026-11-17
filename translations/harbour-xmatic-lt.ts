@@ -2019,6 +2019,98 @@
         <source>The server did not answer in time.</source>
         <translation>Serveris neatsakė laiku.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>Šiame įrenginyje</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Rodyti pranešimus be garso</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Tik šis telefonas; tavo paskyra ir kitos programos nesikeičia.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Išjungta: žinutė be garso nepalieka nieko, net įrašo įvykių rodinyje; didėja tik kambario neperskaitytų skaitiklis.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Taikoma</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Visoms žinutėms</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Tik žinutėms be garso</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Iššokantis pranešimas</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Išjungta: pranešimas patenka tik į įvykių rodinį ir neiššoka virš ekrano.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Garsas</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Išjungta: šiame telefone niekada nėra garso, net jei tavo paskyros taisyklė jį nustato.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibracija</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Išjungta: šiame telefone niekada nėra vibracijos, net jei tavo paskyros taisyklė ją nustato.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Žinutė be garso neturi nei garso, nei vibracijos.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Skaičiuoti žinutes</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Skaičiai kambarių sąraše, erdvėse ir viršelyje. Kambarys su neperskaitytomis neskaičiuojamomis žinutėmis išlaiko žymą be skaičiaus.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Tik žinutes, kurios praneša</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nė vienos</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Kuriuos žinučių pranešimus keičia kiti penki jungikliai. Skambučiai nesikeičia.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Įrašas įvykių rodinyje</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Išjungta: jokio pranešimo; didėja tik kambario neperskaitytų skaitiklis. Žemiau esantys jungikliai tada nieko nekeičia.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Išjungta: LED nemirksi dėl žinutės. Žinutė su garsu ją vis tiek įjungia: Sailfish garsą ir LED paleidžia kartu.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

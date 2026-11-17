@@ -102,24 +102,47 @@ QString pushRoomMark(const QString &salt, const QString &roomId)
     return QString::fromLatin1(hash.result().toHex());
 }
 
-/// Without Qt Quick - the woken process has no QML engine. The category is what
-/// makes it audible; a banner with a room opens it, one without opens the app.
+/// Tone, vibration and LED as category plus hints; a hint overrides its category's.
+/// The one place that maps them, so a finding on the device changes only this.
+static void feedbackHints(QVariantMap &hints, const PushFeedback &feedback)
+{
+    // Measured on the J2: `suppress-sound` silences the vibration too, and no
+    // event plays the message tone without the LED - with a tone the LED stays.
+    if (feedback.sound) {
+        hints.insert(QStringLiteral("category"), QStringLiteral("x-nemo.messaging.im"));
+        if (!feedback.vibration) {
+            hints.insert(QStringLiteral("x-nemo-vibrate"), false);
+        }
+        return;
+    }
+    hints.insert(QStringLiteral("category"), QStringLiteral("im.received"));
+    if (feedback.vibration) {
+        hints.insert(QStringLiteral("x-nemo-feedback"),
+                     feedback.led ? QStringLiteral("vibra,communication_led")
+                                  : QStringLiteral("vibra"));
+    } else if (!feedback.led) {
+        // An empty feedback is none at all.
+        hints.insert(QStringLiteral("x-nemo-feedback"), QString());
+    }
+}
+
+/// Without Qt Quick - the woken process has no QML engine. A banner with a room
+/// opens it, one without opens the app.
 void publishPushBanner(const QString &dataDirectory, const QString &roomId,
                        const QString &slot, const QString &summary, const QString &body,
-                       bool audible, qint64 timestamp, int count)
+                       const PushFeedback &feedback, qint64 timestamp, int count)
 {
     QVariantMap hints;
-    // Tone, vibration and LED hang off the category. A quiet message keeps the
-    // LED (`im.received`); a notice without a room gets none.
-    if (audible) {
-        hints.insert(QStringLiteral("category"), QStringLiteral("x-nemo.messaging.im"));
-    } else if (!roomId.isEmpty()) {
-        hints.insert(QStringLiteral("category"), QStringLiteral("im.received"));
+    if (!roomId.isEmpty()) {
+        feedbackHints(hints, feedback);
     }
-    // Summary and body alone only fill the event feed. The banner that slides
-    // in over whatever is on screen is this pair.
     hints.insert(QStringLiteral("x-nemo-preview-summary"), summary);
     hints.insert(QStringLiteral("x-nemo-preview-body"), body);
+    // lipstick pops a banner up for any text; low urgency keeps it in the event
+    // view and leaves tone and vibration alone (measured on the J2).
+    if (!roomId.isEmpty() && !feedback.popup) {
+        hints.insert(QStringLiteral("urgency"), QVariant::fromValue(uchar(0)));
+    }
     hints.insert(QStringLiteral("x-nemo-owner"), QStringLiteral("xmatic"));
     if (count > 0) {
         hints.insert(QStringLiteral("x-nemo-item-count"), count);
@@ -255,7 +278,7 @@ void publishPushNotice(const QString &dataDirectory)
                       QCoreApplication::translate(
                           "PushWake",
                           "The push distributor dropped xmatic. Turn push back on under Account."),
-                      false, 0);
+                      PushFeedback(), 0);
 }
 
 void publishStoreBusyNotice(const QString &dataDirectory)
@@ -265,7 +288,7 @@ void publishStoreBusyNotice(const QString &dataDirectory)
                       QCoreApplication::translate(
                           "PushWake",
                           "xmatic is still handling a notification. Open it again in a moment."),
-                      false, 0);
+                      PushFeedback(), 0);
 }
 
 void publishPushMigrationNotice(const QString &dataDirectory)
@@ -275,5 +298,5 @@ void publishPushMigrationNotice(const QString &dataDirectory)
                       QCoreApplication::translate(
                           "PushWake",
                           "Open xmatic once to finish setting up push notifications."),
-                      false, 0);
+                      PushFeedback(), 0);
 }

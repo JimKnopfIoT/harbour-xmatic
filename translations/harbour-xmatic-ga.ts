@@ -2019,6 +2019,98 @@
         <source>The server did not answer in time.</source>
         <translation>Níor fhreagair an freastalaí in am.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>Ar an ngléas seo</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Taispeáin fógraí gan fuaim</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>An fón seo amháin; fanann do chuntas agus cliaint eile mar atá.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>As: ní fhágann teachtaireacht gan fuaim aon rud, fiú iontráil san amharc imeachtaí; ní ardaíonn ach áireamh neamhléite an tseomra.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Baineann le</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Gach teachtaireacht</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Teachtaireachtaí gan fuaim amháin</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Meirge aníos</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>As: ní théann an fógra ach chuig an amharc imeachtaí agus ní thagann sé aníos thar an scáileán.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Fuaim</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>As: ní bhíonn fuaim riamh ar an bhfón seo, fiú nuair a shocraíonn riail do chuntais ceann.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Crith</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>As: ní bhíonn crith riamh ar an bhfón seo, fiú nuair a shocraíonn riail do chuntais ceann.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Níl fuaim ná crith ag teachtaireacht gan fuaim.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Comhair teachtaireachtaí</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Na huimhreacha i liosta na seomraí, sna spásanna agus ar an gclúdach. Coinníonn seomra a bhfuil teachtaireachtaí neamhléite nach gcomhairtear ann marc gan uimhir.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Teachtaireachtaí a thugann fógra amháin</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Dada</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Na fógraí teachtaireachta a athraíonn na cúig lasc seo a leanas. Fanann glaonna mar atá.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Iontráil san amharc imeachtaí</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>As: fógra ar bith; ní ardaíonn ach áireamh neamhléite an tseomra. Níl aon rud le hathrú ag na lasca thíos ansin.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>As: ní chaochann an LED do theachtaireacht. Lasann teachtaireacht le fuaim é mar sin féin: seinneann Sailfish an fhuaim agus an LED le chéile.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

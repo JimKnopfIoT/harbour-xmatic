@@ -145,6 +145,114 @@ Page {
                 text: qsTranslate("SessionOfflinePage", "Try again")
                 onClicked: matrix.pushRules.load()
             }
+
+            SectionHeader {
+                text: qsTr("On this device")
+            }
+
+            Label {
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryHighlightColor
+                text: qsTr("Only this phone; your account and other clients stay as they are.")
+            }
+
+            TextSwitch {
+                text: qsTr("Show notifications without tone")
+                description: qsTr("Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room's unread count rises.")
+                checked: behaviour.showSilentNotifications
+                automaticCheck: false
+                onClicked: behaviour.showSilentNotifications = !behaviour.showSilentNotifications
+            }
+
+            // Scope of the four switches below; calls and the count stay outside it.
+            ComboBox {
+                width: parent.width
+                label: qsTr("Applies to")
+                description: qsTr("Which message notifications the next five switches change. Calls stay as they are.")
+                currentIndex: behaviour.notificationScope === "quiet" ? 1 : 0
+
+                menu: ContextMenu {
+                    MenuItem { text: qsTr("All messages") }
+                    MenuItem { text: qsTr("Only messages without tone") }
+                }
+
+                onCurrentIndexChanged: behaviour.notificationScope = currentIndex === 1 ? "quiet" : "all"
+            }
+
+            TextSwitch {
+                text: qsTr("Entry in the event view")
+                description: qsTr("Off: no notification at all; only the room's unread count rises. The switches below then have nothing to change.")
+                checked: behaviour.notificationEntry
+                automaticCheck: false
+                onClicked: behaviour.notificationEntry = !behaviour.notificationEntry
+            }
+
+            TextSwitch {
+                text: qsTr("Pop-up banner")
+                description: qsTr("Off: the notification goes to the event view only and does not pop up over the screen.")
+                checked: behaviour.notificationPopup
+                automaticCheck: false
+                onClicked: behaviour.notificationPopup = !behaviour.notificationPopup
+            }
+
+            TextSwitch {
+                text: qsTr("LED")
+                description: qsTr("Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.")
+                checked: behaviour.notificationLed
+                automaticCheck: false
+                onClicked: behaviour.notificationLed = !behaviour.notificationLed
+            }
+
+            // A message without tone has neither, so these two have nothing to change there.
+            TextSwitch {
+                text: qsTr("Sound")
+                description: behaviour.notificationScope === "quiet"
+                             ? qsTr("A message without tone has neither tone nor vibration.")
+                             : qsTr("Off: no tone on this phone, even where your account's rule sets one.")
+                enabled: behaviour.notificationScope !== "quiet"
+                checked: behaviour.notificationSound
+                automaticCheck: false
+                onClicked: behaviour.notificationSound = !behaviour.notificationSound
+            }
+
+            TextSwitch {
+                text: qsTr("Vibration")
+                description: behaviour.notificationScope === "quiet"
+                             ? qsTr("A message without tone has neither tone nor vibration.")
+                             : qsTr("Off: no vibration on this phone, even where your account's rule sets one.")
+                enabled: behaviour.notificationScope !== "quiet"
+                checked: behaviour.notificationVibration
+                automaticCheck: false
+                onClicked: behaviour.notificationVibration = !behaviour.notificationVibration
+            }
+
+            ComboBox {
+                id: countChoice
+
+                readonly property var counts: ["all", "notifying", "none"]
+
+                label: qsTr("Count messages")
+                description: qsTr("The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.")
+                currentIndex: Math.max(0, counts.indexOf(behaviour.unreadCount))
+
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("All messages")
+                        onClicked: behaviour.unreadCount = "all"
+                    }
+                    MenuItem {
+                        text: qsTr("Only messages that notify")
+                        onClicked: behaviour.unreadCount = "notifying"
+                    }
+                    MenuItem {
+                        text: qsTr("None")
+                        onClicked: behaviour.unreadCount = "none"
+                    }
+                }
+            }
         }
     }
 }

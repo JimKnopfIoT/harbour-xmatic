@@ -2017,6 +2017,98 @@
         <source>The server did not answer in time.</source>
         <translation>Сървърът не отговори навреме.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>На това устройство</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Показвай известия без звук</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Само този телефон; профилът ти и другите клиенти остават непроменени.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Изключено: съобщение без звук не оставя нищо, дори запис в изгледа със събития; расте само броячът на непрочетените в стаята.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Важи за</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Всички съобщения</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Само съобщения без звук</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Изскачащ банер</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Изключено: известието отива само в изгледа със събития и не изскача над екрана.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>Светодиод</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Звук</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Изключено: никога звук на този телефон, дори когато правилото на профила ти задава такъв.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Вибрация</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Изключено: никога вибрация на този телефон, дори когато правилото на профила ти задава такава.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Съобщение без звук няма нито звук, нито вибрация.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Броене на съобщенията</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Числата в списъка със стаи, в пространствата и на корицата. Стая с непрочетени съобщения, които не се броят, запазва знак без число.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Само съобщения, които известяват</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Никакви</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Кои известия за съобщения променят следващите пет превключвателя. Обажданията остават непроменени.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Запис в изгледа на събитията</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Изключено: никакво известие; расте само броячът на непрочетените в стаята. Превключвателите по-долу тогава нямат какво да променят.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Изключено: светодиодът не мига при съобщение. Съобщение със звук все пак го включва: Sailfish възпроизвежда звука и светодиода заедно.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

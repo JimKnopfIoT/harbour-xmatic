@@ -2019,6 +2019,98 @@
         <source>The server did not answer in time.</source>
         <translation>Сервер не ответил вовремя.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>На этом устройстве</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Показывать уведомления без звука</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Только этот телефон; твоя учётная запись и другие клиенты не меняются.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Выкл.: сообщение без звука не оставляет ничего, даже записи в ленте событий; растёт только счётчик непрочитанных в комнате.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Применяется к</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Все сообщения</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Только сообщения без звука</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Всплывающий баннер</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Выкл.: уведомление попадает только в ленту событий и не всплывает поверх экрана.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>Светодиод</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Звук</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Выкл.: на этом телефоне никогда нет звука, даже если правило твоей учётной записи его задаёт.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Вибрация</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Выкл.: на этом телефоне никогда нет вибрации, даже если правило твоей учётной записи её задаёт.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>У сообщения без звука нет ни звука, ни вибрации.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Считать сообщения</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Числа в списке комнат, в пространствах и на обложке. Комната с непрочитанными сообщениями, которые не считаются, сохраняет метку без числа.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Только сообщения с уведомлением</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Никакие</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Какие уведомления о сообщениях меняют следующие пять переключателей. Звонки не меняются.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Запись в ленте событий</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Выкл.: никаких уведомлений; растёт только счётчик непрочитанных в комнате. Переключателям ниже тогда нечего менять.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Выкл.: светодиод не мигает при сообщении. Сообщение со звуком всё равно его включает: Sailfish воспроизводит звук и светодиод вместе.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

@@ -2017,6 +2017,98 @@
         <source>The server did not answer in time.</source>
         <translation>Palvelin ei vastannut ajoissa.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>Tällä laitteella</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Näytä ilmoitukset ilman ääntä</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Vain tämä puhelin; tilisi ja muut asiakasohjelmat pysyvät ennallaan.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Pois: viesti ilman ääntä ei jätä mitään, ei edes merkintää tapahtumanäkymään; vain huoneen lukemattomien laskuri kasvaa.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Koskee</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Kaikkia viestejä</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Vain viestejä ilman ääntä</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Ponnahdusilmoitus</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Pois: ilmoitus menee vain tapahtumanäkymään eikä ponnahda näytön päälle.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>Merkkivalo</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Ääni</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Pois: ei koskaan ääntä tällä puhelimella, vaikka tilisi sääntö asettaisi sen.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Värinä</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Pois: ei koskaan värinää tällä puhelimella, vaikka tilisi sääntö asettaisi sen.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Viestillä ilman ääntä ei ole ääntä eikä värinää.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Laske viestit</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Huoneluettelon, tilojen ja kannen luvut. Huone, jossa on lukemattomia viestejä, joita ei lasketa, saa merkin ilman lukua.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Vain ilmoittavat viestit</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Ei mitään</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Mitä viesti-ilmoituksia seuraavat viisi kytkintä muuttavat. Puhelut pysyvät ennallaan.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Merkintä tapahtumanäkymässä</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Pois: ei ilmoitusta lainkaan; vain huoneen lukemattomien laskuri kasvaa. Alla olevilla kytkimillä ei silloin ole mitään muutettavaa.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Pois: merkkivalo ei vilku viestin kohdalla. Äänellinen viesti sytyttää sen silti: Sailfish toistaa äänen ja merkkivalon yhdessä.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

@@ -2015,6 +2015,98 @@
         <source>The server did not answer in time.</source>
         <translation>サーバーが時間内に応答しませんでした。</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>このデバイス上</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>音なしの通知を表示</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>この電話のみ。アカウントや他のクライアントは変わりません。</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>オフ: 音なしのメッセージは何も残さず、イベントビューの項目さえ作りません。ルームの未読数だけが増えます。</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>適用対象</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>すべてのメッセージ</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>音なしのメッセージのみ</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>ポップアップバナー</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>オフ: 通知はイベントビューにのみ入り、画面の上にポップアップしません。</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>音</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>オフ: アカウントのルールが音を設定していても、この電話では音を鳴らしません。</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>バイブレーション</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>オフ: アカウントのルールが設定していても、この電話ではバイブレーションしません。</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>音なしのメッセージには音もバイブレーションもありません。</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>メッセージを数える</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>ルーム一覧、スペース、カバーの数字。数えない未読メッセージがあるルームには数字なしの印が残ります。</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>通知するメッセージのみ</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>数えない</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>次の 5 つのスイッチが変更するメッセージ通知。通話は変わりません。</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>イベントビューの項目</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>オフ: 通知を一切出さず、ルームの未読数だけが増えます。その場合、下のスイッチで変えるものはありません。</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>オフ: メッセージで LED が点滅しません。音ありのメッセージでは点灯します。Sailfish は音と LED を一緒に再生します。</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

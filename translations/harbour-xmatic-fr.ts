@@ -359,7 +359,7 @@
     <name>BanList</name>
     <message>
         <source>This is not a valid Matrix address. It looks like @name:server.</source>
-        <translation>Ce n'est pas une adresse Matrix valide. Elle a la forme @name:server.</translation>
+        <translation>Ce n&apos;est pas une adresse Matrix valide. Elle a la forme @name:server.</translation>
     </message>
     <message>
         <source>You cannot ban yourself.</source>
@@ -389,7 +389,7 @@
     <name>BannedMembersPage</name>
     <message>
         <source>Ban someone…</source>
-        <translation>Bannir quelqu'un…</translation>
+        <translation>Bannir quelqu&apos;un…</translation>
     </message>
     <message>
         <source>Banned people</source>
@@ -2016,6 +2016,98 @@
     <message>
         <source>The server did not answer in time.</source>
         <translation>Le serveur n’a pas répondu à temps.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Sur cet appareil</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Afficher les notifications sans son</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Ce téléphone seulement ; ton compte et les autres clients restent inchangés.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Désactivé : un message sans son ne laisse aucune trace, pas même une entrée dans la vue des événements ; seul le compteur de non-lus du salon augmente.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>S’applique à</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Tous les messages</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Seulement les messages sans son</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Bannière contextuelle</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Désactivé : la notification va seulement dans la vue des événements et ne s’affiche pas par-dessus l’écran.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Son</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Désactivé : jamais de son sur ce téléphone, même si la règle de ton compte en prévoit un.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibration</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Désactivé : jamais de vibration sur ce téléphone, même si la règle de ton compte en prévoit une.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Un message sans son n’a ni son ni vibration.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Compter les messages</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Les nombres dans la liste des salons, les espaces et sur la couverture. Un salon avec des messages non lus non comptés garde une marque sans nombre.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Seulement les messages qui notifient</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Les notifications de messages que modifient les cinq interrupteurs suivants. Les appels restent inchangés.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Entrée dans la vue des événements</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Désactivé : aucune notification ; seul le compteur de non-lus du salon augmente. Les interrupteurs ci-dessous n’ont alors plus rien à changer.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Désactivé : la LED ne clignote pas pour un message. Un message avec son l’allume quand même : Sailfish joue le son et la LED ensemble.</translation>
     </message>
 </context>
 <context>

@@ -29,13 +29,13 @@ void RoomListModel::recountUnread()
                    != QLatin1String("joined")) {
             continue;
         }
-        const int unread = row.value(QStringLiteral("unread")).toInt();
+        const int unread = counted(row, m_countMode);
         if (unread <= 0) {
             continue;
         }
         ++roomsWithNews;
         messages += unread;
-        capped = capped || row.value(QStringLiteral("unreadCapped")).toBool();
+        capped = capped || countedCapped(row, m_countMode);
     }
     if (roomsWithNews == m_unreadRooms && messages == m_unreadMessages
             && capped == m_unreadCapped) {
@@ -45,6 +45,40 @@ void RoomListModel::recountUnread()
     m_unreadMessages = messages;
     m_unreadCapped = capped;
     emit unreadTotalsChanged();
+}
+
+int RoomListModel::counted(const QJsonObject &row, CountMode mode)
+{
+    if (mode == CountAll) {
+        return row.value(QStringLiteral("unread")).toInt();
+    }
+    if (mode == CountNone) {
+        return 0;
+    }
+    return qMax(row.value(QStringLiteral("notified")).toInt(),
+                row.value(QStringLiteral("mentions")).toInt());
+}
+
+bool RoomListModel::countedCapped(const QJsonObject &row, CountMode mode)
+{
+    if (mode == CountNone) {
+        return false;
+    }
+    return row.value(mode == CountAll ? QStringLiteral("unreadCapped")
+                                      : QStringLiteral("notifiedCapped")).toBool();
+}
+
+void RoomListModel::setCountMode(CountMode mode)
+{
+    if (mode == m_countMode) {
+        return;
+    }
+    m_countMode = mode;
+    if (!rows().isEmpty()) {
+        emit dataChanged(index(0), index(rows().count() - 1),
+                         { UnreadRole, UnreadCappedRole, UncountedRole });
+    }
+    recountUnread();
 }
 
 bool RoomListModel::isInvite(const QString &roomId) const
@@ -81,6 +115,8 @@ QHash<int, QByteArray> RoomListModel::roleNames() const
     names.insert(PreviewTextRole, "previewText");
     // Marked unread by hand, here or elsewhere: unread with nothing counted.
     names.insert(MarkedUnreadRole, "markedUnread");
+    // Unread, but nothing in it is counted: marked like a room marked by hand.
+    names.insert(UncountedRole, "uncounted");
     return names;
 }
 
@@ -143,12 +179,14 @@ void RoomListModel::clearUnread(const QString &roomId)
         }
         if (row.value(QStringLiteral("unread")).toInt() == 0
             && row.value(QStringLiteral("notifications")).toInt() == 0
+            && row.value(QStringLiteral("notified")).toInt() == 0
             && row.value(QStringLiteral("mentions")).toInt() == 0
             && !row.value(QStringLiteral("markedUnread")).toBool()) {
             return;
         }
         row.insert(QStringLiteral("unread"), 0);
         row.insert(QStringLiteral("notifications"), 0);
+        row.insert(QStringLiteral("notified"), 0);
         row.insert(QStringLiteral("mentions"), 0);
         row.insert(QStringLiteral("markedUnread"), false);
 
@@ -168,6 +206,15 @@ QVariant RoomListModel::valueFor(const QJsonObject &row, int role) const
         // that happens while the first sync is still filling state in.
         const QString name = row.value(QStringLiteral("name")).toString();
         return name.isEmpty() ? row.value(QStringLiteral("id")).toString() : name;
+    }
+    if (role == UnreadRole) {
+        return counted(row, m_countMode);
+    }
+    if (role == UnreadCappedRole) {
+        return countedCapped(row, m_countMode);
+    }
+    if (role == UncountedRole) {
+        return row.value(QStringLiteral("unread")).toInt() > 0 && counted(row, m_countMode) == 0;
     }
     return DiffListModel::valueFor(row, role);
 }

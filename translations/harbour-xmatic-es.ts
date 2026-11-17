@@ -2017,6 +2017,98 @@
         <source>The server did not answer in time.</source>
         <translation>El servidor no respondió a tiempo.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>En este dispositivo</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Mostrar notificaciones sin sonido</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Solo este teléfono; tu cuenta y los demás clientes no cambian.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Desactivado: un mensaje sin sonido no deja nada, ni siquiera una entrada en la vista de eventos; solo sube el contador de no leídos de la sala.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Se aplica a</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Todos los mensajes</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Solo mensajes sin sonido</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Banner emergente</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Desactivado: la notificación va solo a la vista de eventos y no aparece sobre la pantalla.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Sonido</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Desactivado: nunca suena en este teléfono, aunque la regla de tu cuenta ponga sonido.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibración</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Desactivado: nunca vibra en este teléfono, aunque la regla de tu cuenta ponga vibración.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Un mensaje sin sonido no tiene ni sonido ni vibración.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Contar mensajes</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Los números de la lista de salas, los espacios y la portada. Una sala con mensajes sin leer que no se cuentan conserva una marca sin número.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Solo los mensajes que notifican</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Ninguno</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Qué notificaciones de mensajes cambian los cinco interruptores siguientes. Las llamadas no cambian.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Entrada en la vista de eventos</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Desactivado: ninguna notificación; solo sube el contador de no leídos de la sala. Los interruptores de abajo ya no tienen nada que cambiar.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Desactivado: el LED no parpadea por un mensaje. Un mensaje con sonido la enciende igualmente: Sailfish reproduce el sonido y el LED juntos.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

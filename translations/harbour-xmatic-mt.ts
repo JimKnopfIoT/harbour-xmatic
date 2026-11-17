@@ -384,7 +384,7 @@
     </message>
     <message>
         <source>The person can no longer enter this room. If they are a member now, they are removed. Everyone in the room sees the ban and its reason.</source>
-        <translation>Il-persuna ma tkunx tista' tidħol aktar f'din il-kamra. Jekk bħalissa hija membru, titneħħa. Kulħadd fil-kamra jara l-imblokk u r-raġuni tiegħu.</translation>
+        <translation>Il-persuna ma tkunx tista&apos; tidħol aktar f&apos;din il-kamra. Jekk bħalissa hija membru, titneħħa. Kulħadd fil-kamra jara l-imblokk u r-raġuni tiegħu.</translation>
     </message>
 </context>
 <context>
@@ -399,7 +399,7 @@
     </message>
     <message>
         <source>Your role in this room does not allow banning or lifting bans. The list is for reading only.</source>
-        <translation>Ir-rwol tiegħek f'din il-kamra ma jippermettilekx timblokka jew tneħħi imblokk. Il-lista hija biss għall-qari.</translation>
+        <translation>Ir-rwol tiegħek f&apos;din il-kamra ma jippermettilekx timblokka jew tneħħi imblokk. Il-lista hija biss għall-qari.</translation>
     </message>
     <message>
         <source>Reason: %1</source>
@@ -2020,6 +2020,98 @@
     <message>
         <source>The server did not answer in time.</source>
         <translation>Is-server ma wieġebx fil-ħin.</translation>
+    </message>
+    <message>
+        <source>On this device</source>
+        <translation>Fuq dan l-apparat</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Uri notifiki mingħajr ħoss</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Dan it-telefon biss; il-kont tiegħek u klijenti oħra jibqgħu kif inhuma.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Mitfi: messaġġ mingħajr ħoss ma jħalli xejn, lanqas entrata fil-veduta tal-avvenimenti; jiżdied biss il-għadd ta&apos; mhux moqrija tal-kamra.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Japplika għal</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Il-messaġġi kollha</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Messaġġi mingħajr ħoss biss</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Banner pop-up</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Mitfi: in-notifika tmur biss fil-veduta tal-avvenimenti u ma titlax fuq l-iskrin.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Ħoss</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Mitfi: qatt ħoss fuq dan it-telefon, anke fejn ir-regola tal-kont tiegħek tissettja wieħed.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibrazzjoni</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Mitfi: qatt vibrazzjoni fuq dan it-telefon, anke fejn ir-regola tal-kont tiegħek tissettja waħda.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Messaġġ mingħajr ħoss la għandu ħoss u lanqas vibrazzjoni.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Għodd il-messaġġi</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>In-numri fil-lista tal-kmamar, fl-ispazji u fuq il-qoxra. Kamra b&apos;messaġġi mhux moqrija li ma jingħaddux iżżomm marka mingħajr numru.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Messaġġi li jinnotifikaw biss</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Xejn</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Liema notifiki tal-messaġġi jibdlu il-ħames swiċċijiet li ġejjin. It-telefonati jibqgħu kif inhuma.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Daħla fil-veduta tal-avvenimenti</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Mitfi: l-ebda notifika; jogħla biss l-għadd ta&apos; mhux moqrija tal-kamra. Is-swiċċijiet t&apos;hawn taħt imbagħad m&apos;għandhom xejn x&apos;jibdlu.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Mitfi: l-LED ma jteptipx għal messaġġ. Messaġġ bil-ħoss jixgħelha xorta: Sailfish idoqq il-ħoss u l-LED flimkien.</translation>
     </message>
 </context>
 <context>

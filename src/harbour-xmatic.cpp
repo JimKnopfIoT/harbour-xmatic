@@ -219,6 +219,7 @@ int main(int argc, char *argv[])
         if (auto *spaces = qobject_cast<RoomSortModel *>(bridge.spaces())) {
             spaces->setOrder(behaviour.spaceOrder() == QLatin1String("name"), false);
         }
+        bridge.setUnreadCount(behaviour.unreadCount());
     };
     applyOrder();
     QObject::connect(&behaviour, &BehaviourSettings::changed, &behaviour, applyOrder);

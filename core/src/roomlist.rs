@@ -482,7 +482,8 @@ fn summarize(item: &RoomListItem, sink: &Arc<Sink>) -> Value {
     // Held to what the window can show: at the ceiling the count is a floor, and
     // the UI adds the "+". Above it the number would be arbitrary anyway.
     let cap = u64::from(LIST_TIMELINE_LIMIT);
-    let unread = item.num_unread_messages().max(item.num_unread_notifications());
+    let notified = item.num_unread_notifications();
+    let unread = item.num_unread_messages().max(notified);
     let mentions = item.num_unread_mentions();
     json!({
         "id": item.room_id().as_str(),
@@ -494,7 +495,10 @@ fn summarize(item: &RoomListItem, sink: &Arc<Sink>) -> Value {
         "unreadCapped": unread >= cap || mentions >= cap,
         // Counted client-side against the push rules: the number a banner may follow.
         // `unread` counts everything and would ignore a mentions-only room.
-        "notifications": item.num_unread_notifications(),
+        "notifications": notified,
+        // The badge where messages that notify nobody are not counted.
+        "notified": notified.min(cap),
+        "notifiedCapped": notified >= cap || mentions >= cap,
         "mentions": mentions.min(cap),
         // Set by hand (`m.marked_unread`), here or in another client: unread with
         // nothing counted, so the badge shows a dot.

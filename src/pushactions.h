@@ -8,6 +8,9 @@
 #include <QSet>
 #include <QVariantMap>
 
+#include "behavioursettings.h"
+#include "pushbanners.h"
+
 class AppSettings;
 
 /// Push as QML reads it: `matrix.push`. Status, the switch, the gateway and
@@ -26,9 +29,13 @@ public:
     /// One rule for the app and the woken process.
     struct Banner {
         bool show = false;
+        /// As the push rule has it, before this device's switches.
         bool audible = false;
+        PushFeedback feedback;
     };
     static Banner decide(const QVariantMap &notification);
+    /// The rule's tone through this device's switches.
+    static Banner judge(bool audible, const BehaviourSettings::DeviceNotifications &device);
 
     PushActions(const QString &dataDirectory, AppSettings *settings, QObject *parent = nullptr);
 

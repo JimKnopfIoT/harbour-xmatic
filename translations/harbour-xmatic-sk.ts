@@ -2019,6 +2019,98 @@
         <source>The server did not answer in time.</source>
         <translation>Server neodpovedal včas.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>V tomto zariadení</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Zobrazovať upozornenia bez zvuku</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Len tento telefón; tvoj účet a ostatní klienti zostávajú bez zmeny.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Vypnuté: správa bez zvuku nezanechá vôbec nič, ani záznam v zobrazení udalostí; zvýši sa len počítadlo neprečítaných v miestnosti.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Platí pre</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Všetky správy</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Len správy bez zvuku</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Vyskakovací banner</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Vypnuté: upozornenie ide len do zobrazenia udalostí a nevyskočí cez obrazovku.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Zvuk</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Vypnuté: na tomto telefóne nikdy zvuk, ani keď ho pravidlo tvojho účtu nastavuje.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibrácie</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Vypnuté: na tomto telefóne nikdy vibrácie, ani keď ich pravidlo tvojho účtu nastavuje.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Správa bez zvuku nemá zvuk ani vibrácie.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Počítať správy</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Čísla v zozname miestností, v priestoroch a na obálke. Miestnosť s neprečítanými správami, ktoré sa nepočítajú, si ponechá značku bez čísla.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Len správy, ktoré upozorňujú</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Žiadne</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Ktoré upozornenia na správy menia ďalšie päť prepínače. Hovory zostávajú bez zmeny.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Záznam v prehľade udalostí</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Vypnuté: žiadne upozornenie; rastie len počítadlo neprečítaných v miestnosti. Prepínače nižšie potom nemajú čo meniť.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Vypnuté: LED pri správe nebliká. Správa so zvukom ju aj tak rozsvieti: Sailfish prehráva zvuk a LED spolu.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

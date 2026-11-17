@@ -2017,6 +2017,98 @@
         <source>The server did not answer in time.</source>
         <translation>De server antwoordde niet op tijd.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>Op dit apparaat</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Meldingen zonder geluid tonen</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Alleen deze telefoon; je account en andere clients blijven zoals ze zijn.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Uit: een bericht zonder geluid laat helemaal niets achter, zelfs geen item in de gebeurtenissenweergave; alleen de teller van ongelezen berichten van de ruimte stijgt.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Geldt voor</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Alle berichten</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Alleen berichten zonder geluid</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Pop-upbanner</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Uit: de melding komt alleen in de gebeurtenissenweergave en verschijnt niet boven het scherm.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>Led</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Geluid</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Uit: nooit geluid op deze telefoon, ook als de regel van je account het instelt.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Trillen</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Uit: nooit trillen op deze telefoon, ook als de regel van je account het instelt.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Een bericht zonder geluid heeft geen geluid en geen trilling.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Berichten tellen</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>De getallen in de ruimtelijst, de spaces en op de cover. Een ruimte met ongelezen berichten die niet worden geteld, houdt een markering zonder getal.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Alleen berichten die een melding geven</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Geen</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Welke berichtmeldingen de volgende vijf schakelaars veranderen. Oproepen blijven zoals ze zijn.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Item in het gebeurtenissenoverzicht</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Uit: helemaal geen melding; alleen de teller van ongelezen berichten van de ruimte stijgt. De schakelaars hieronder hebben dan niets meer te veranderen.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Uit: de led knippert niet bij een bericht. Een bericht met geluid laat hem toch branden: Sailfish speelt geluid en led samen af.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

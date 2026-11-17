@@ -2017,6 +2017,98 @@
         <source>The server did not answer in time.</source>
         <translation>Ο διακομιστής δεν απάντησε εγκαίρως.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>Σε αυτή τη συσκευή</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Εμφάνιση ειδοποιήσεων χωρίς ήχο</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Μόνο αυτό το τηλέφωνο· ο λογαριασμός σου και οι άλλες εφαρμογές μένουν ως έχουν.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Ανενεργό: ένα μήνυμα χωρίς ήχο δεν αφήνει τίποτα, ούτε καν καταχώριση στην προβολή συμβάντων· αυξάνεται μόνο ο μετρητής μη αναγνωσμένων του δωματίου.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Ισχύει για</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Όλα τα μηνύματα</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Μόνο μηνύματα χωρίς ήχο</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Αναδυόμενο πλαίσιο</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Ανενεργό: η ειδοποίηση πηγαίνει μόνο στην προβολή συμβάντων και δεν αναδύεται πάνω από την οθόνη.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Ήχος</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Ανενεργό: ποτέ ήχος σε αυτό το τηλέφωνο, ακόμη κι όπου ο κανόνας του λογαριασμού σου ορίζει.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Δόνηση</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Ανενεργό: ποτέ δόνηση σε αυτό το τηλέφωνο, ακόμη κι όπου ο κανόνας του λογαριασμού σου ορίζει.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Ένα μήνυμα χωρίς ήχο δεν έχει ούτε ήχο ούτε δόνηση.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Μέτρηση μηνυμάτων</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Οι αριθμοί στη λίστα δωματίων, στους χώρους και στο εξώφυλλο. Ένα δωμάτιο με μη αναγνωσμένα μηνύματα που δεν μετρώνται κρατά ένα σημάδι χωρίς αριθμό.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Μόνο μηνύματα που ειδοποιούν</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Κανένα</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Ποιες ειδοποιήσεις μηνυμάτων αλλάζουν οι επόμενοι πέντε διακόπτες. Οι κλήσεις μένουν ως έχουν.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Καταχώριση στην προβολή συμβάντων</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Ανενεργό: καμία ειδοποίηση· αυξάνεται μόνο ο μετρητής μη αναγνωσμένων του δωματίου. Οι διακόπτες παρακάτω δεν έχουν τότε τίποτα να αλλάξουν.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Ανενεργό: το LED δεν αναβοσβήνει για ένα μήνυμα. Ένα μήνυμα με ήχο το ανάβει παρ’ όλα αυτά: το Sailfish παίζει μαζί τον ήχο και το LED.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

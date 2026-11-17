@@ -2025,6 +2025,98 @@
         <source>The server did not answer in time.</source>
         <translation>لم يستجب الخادم في الوقت المناسب.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>على هذا الجهاز</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>إظهار الإشعارات بدون صوت</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>هذا الهاتف فقط؛ يبقى حسابك والتطبيقات الأخرى كما هي.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>إيقاف: الرسالة بدون صوت لا تترك شيئًا، ولا حتى إدخالًا في عرض الأحداث؛ يزيد فقط عدّاد غير المقروءة في الغرفة.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>ينطبق على</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>كل الرسائل</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>الرسائل بدون صوت فقط</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>شريط منبثق</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>إيقاف: يذهب الإشعار إلى عرض الأحداث فقط ولا ينبثق فوق الشاشة.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>ضوء LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>الصوت</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>إيقاف: لا صوت أبدًا على هذا الهاتف، حتى إن ضبطت قاعدة حسابك صوتًا.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>الاهتزاز</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>إيقاف: لا اهتزاز أبدًا على هذا الهاتف، حتى إن ضبطت قاعدة حسابك اهتزازًا.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>الرسالة بدون صوت ليس لها صوت ولا اهتزاز.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>عدّ الرسائل</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>الأرقام في قائمة الغرف والمساحات وعلى الغلاف. الغرفة التي فيها رسائل غير مقروءة لا تُعدّ تحتفظ بعلامة بلا رقم.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>الرسائل التي تُشعر فقط</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>لا شيء</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>إشعارات الرسائل التي تغيّرها المفاتيح الخمسة التالية. تبقى المكالمات كما هي.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>إدخال في عرض الأحداث</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>إيقاف: لا إشعار إطلاقًا؛ يرتفع عدّاد غير المقروءة في الغرفة فقط. لا يبقى للمفاتيح أدناه ما تغيّره.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>إيقاف: لا يومض ضوء LED عند وصول رسالة. الرسالة ذات الصوت تشغّله مع ذلك: يشغّل Sailfish الصوت وضوء LED معًا.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

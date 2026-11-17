@@ -224,6 +224,7 @@ Page {
                     // Read without opening it, unread as a reminder on every client.
                     readonly property bool unread: model.unread > 0 || model.mentions > 0
                                                    || model.markedUnread === true
+                                                   || model.uncounted === true
                     text: unread ? qsTr("Mark as read") : qsTr("Mark as unread")
                     visible: model.membership === "joined"
                     onClicked: unread ? matrix.markRoomRead(model.id)

@@ -4,7 +4,7 @@
 Name:       harbour-xmatic
 Summary:    Matrix client for Sailfish OS
 # Kept in sync with the last published release; dev builds append +main.<date>.
-Version:    0.47.43
+Version:    0.48.0
 Release:    1
 License:    ASL 2.0 and MIT and MPLv2.0 and BSD and ISC and zlib and Unicode and Boost and CC0 and CDLA-Permissive and Unlicense
 URL:        https://github.com/JimKnopfIoT/harbour-xmatic
@@ -127,6 +127,15 @@ strip %{buildroot}%{_bindir}/%{name}
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Nov 17 2026 harbour-xmatic contributors 0.48.0-1
+- Under the notification rules, "On this device" - this phone only, the account
+  and other clients stay as they are: whether messages without tone notify at
+  all; the entry in the event view, pop-up banner, LED, sound and vibration,
+  each on its own, for all messages or only those without tone; and what the
+  unread numbers count (all messages, only those that notify, or none - a room
+  then keeps a mark without a number). A message with a tone always lights the
+  LED: Sailfish plays the two together.
+
 * Tue Nov 17 2026 harbour-xmatic contributors 0.47.43-1
 - Banned people: a room's details list everyone banned there, with reason and
   who banned them, and lift a ban with a long press. Anyone can be banned by

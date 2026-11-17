@@ -585,7 +585,7 @@ ApplicationWindow {
                     : mentions > 0
                       ? qsTr("%n mention(s)", "", mentions)
                       : qsTr("%n new message(s)", "", unread)
-            // One banner per room; tone, vibration and LED only where `audible`.
+            // One banner per room; `audible` is the rule's, the device switches apply after.
             matrix.push.raiseBanner(roomId, summary, body, audible, unread)
         }
 

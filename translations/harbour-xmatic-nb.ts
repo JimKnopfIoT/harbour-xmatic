@@ -2017,6 +2017,98 @@
         <source>The server did not answer in time.</source>
         <translation>Serveren svarte ikke i tide.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>På denne enheten</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Vis varsler uten lyd</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Bare denne telefonen; kontoen din og andre klienter forblir uendret.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Av: en melding uten lyd etterlater ingenting, ikke engang en oppføring i hendelsesvisningen; bare rommets teller for uleste øker.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Gjelder for</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Alle meldinger</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Bare meldinger uten lyd</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Popup-banner</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Av: varselet havner bare i hendelsesvisningen og dukker ikke opp over skjermen.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Lyd</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Av: aldri lyd på denne telefonen, selv der regelen i kontoen din setter lyd.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibrasjon</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Av: aldri vibrasjon på denne telefonen, selv der regelen i kontoen din setter vibrasjon.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>En melding uten lyd har verken lyd eller vibrasjon.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Tell meldinger</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Tallene i romlisten, spacene og på coveret. Et rom med uleste meldinger som ikke telles, beholder en markering uten tall.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Bare meldinger som varsler</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Ingen</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Hvilke meldingsvarsler de neste fem bryterne endrer. Anrop forblir uendret.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Oppføring i hendelsesvisningen</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Av: ingen varsler i det hele tatt; bare rommets teller for uleste øker. Bryterne nedenfor har da ingenting å endre.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Av: LED-lampen blinker ikke for en melding. En melding med lyd tenner den likevel: Sailfish spiller av lyd og LED sammen.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

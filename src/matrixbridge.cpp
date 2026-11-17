@@ -921,6 +921,21 @@ void MatrixBridge::loadMoreRooms()
     send(QStringLiteral("roomlist.more"));
 }
 
+void MatrixBridge::setUnreadCount(const QString &count)
+{
+    const RoomListModel::CountMode mode = count == QLatin1String("none")
+            ? RoomListModel::CountNone
+            : count == QLatin1String("notifying") ? RoomListModel::CountNotifying
+                                                  : RoomListModel::CountAll;
+    m_rooms.setCountMode(mode);
+    m_spaces.setCountMode(mode);
+    m_spaceRooms.setCountMode(mode);
+    if (count != m_unreadCount) {
+        m_unreadCount = count;
+        bumpSpaceCounts();
+    }
+}
+
 void MatrixBridge::setRoomOrder(bool byName, bool unreadFirst)
 {
     QJsonObject arguments;
@@ -4221,8 +4236,10 @@ void MatrixBridge::reportNewMessages(const QJsonArray &operations)
         if (id.isEmpty()) {
             continue;
         }
-        const int unread = room.value(QStringLiteral("unread")).toInt();
-        m_unread.insert(id, unread);
+        UnreadCounts counts;
+        counts.all = RoomListModel::counted(room, RoomListModel::CountAll);
+        counts.notifying = RoomListModel::counted(room, RoomListModel::CountNotifying);
+        m_unread.insert(id, counts);
         // A tapped push banner may be waiting for this room.
         m_push->noteRoom(id);
 
@@ -4354,7 +4371,12 @@ QString MatrixBridge::spaceBadge(const QString &spaceId) const
     int messages = 0;
     const QStringList rooms = m_spaceChildRooms.value(spaceId);
     for (const QString &roomId : rooms) {
-        messages += m_unread.value(roomId, 0);
+        const UnreadCounts counts = m_unread.value(roomId);
+        if (m_unreadCount == QLatin1String("all")) {
+            messages += counts.all;
+        } else if (m_unreadCount == QLatin1String("notifying")) {
+            messages += counts.notifying;
+        }
     }
 
     if (subspaces > 0) {

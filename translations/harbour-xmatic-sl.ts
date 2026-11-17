@@ -2021,6 +2021,98 @@
         <source>The server did not answer in time.</source>
         <translation>Strežnik ni odgovoril pravočasno.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>V tej napravi</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Prikaži obvestila brez zvoka</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Samo ta telefon; tvoj račun in drugi odjemalci ostanejo nespremenjeni.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Izklopljeno: sporočilo brez zvoka ne pusti ničesar, niti vnosa v pogledu dogodkov; naraste le števec neprebranih v sobi.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Velja za</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Vsa sporočila</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Samo sporočila brez zvoka</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Pojavna pasica</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Izklopljeno: obvestilo gre samo v pogled dogodkov in se ne pojavi čez zaslon.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Zvok</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Izklopljeno: na tem telefonu nikoli zvoka, tudi kjer ga pravilo tvojega računa nastavi.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibriranje</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Izklopljeno: na tem telefonu nikoli vibriranja, tudi kjer ga pravilo tvojega računa nastavi.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Sporočilo brez zvoka nima ne zvoka ne vibriranja.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Štej sporočila</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Števila na seznamu sob, v prostorih in na naslovnici. Soba z neprebranimi sporočili, ki se ne štejejo, obdrži oznako brez števila.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Samo sporočila, ki obveščajo</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nobenih</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Katera obvestila o sporočilih spremenijo naslednjih pet stikal. Klici ostanejo nespremenjeni.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Vnos v pogledu dogodkov</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Izklopljeno: nobenega obvestila; narašča le števec neprebranih v sobi. Stikala spodaj potem nimajo ničesar spremeniti.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Izklopljeno: lučka LED ob sporočilu ne utripa. Sporočilo z zvokom jo vseeno prižge: Sailfish predvaja zvok in lučko skupaj.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

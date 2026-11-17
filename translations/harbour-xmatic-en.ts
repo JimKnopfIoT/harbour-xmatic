@@ -2017,6 +2017,98 @@
         <source>The server did not answer in time.</source>
         <translation>The server did not answer in time.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>On this device</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Show notifications without tone</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Only this phone; your account and other clients stay as they are.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Applies to</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>All messages</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Only messages without tone</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Pop-up banner</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Off: the notification goes to the event view only and does not pop up over the screen.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Sound</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Off: no tone on this phone, even where your account&apos;s rule sets one.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibration</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Off: no vibration on this phone, even where your account&apos;s rule sets one.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>A message without tone has neither tone nor vibration.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Count messages</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Only messages that notify</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>None</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Which message notifications the next five switches change. Calls stay as they are.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Entry in the event view</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

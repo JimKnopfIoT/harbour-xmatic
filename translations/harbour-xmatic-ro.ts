@@ -2019,6 +2019,98 @@
         <source>The server did not answer in time.</source>
         <translation>Serverul nu a răspuns la timp.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>Pe acest dispozitiv</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>Afișează notificările fără sunet</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>Doar acest telefon; contul tău și ceilalți clienți rămân neschimbați.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>Dezactivat: un mesaj fără sunet nu lasă nimic, nici măcar o intrare în vizualizarea evenimentelor; crește doar contorul de necitite al camerei.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>Se aplică la</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>Toate mesajele</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>Doar mesajele fără sunet</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>Banner pop-up</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>Dezactivat: notificarea ajunge doar în vizualizarea evenimentelor și nu apare peste ecran.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>Sunet</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Dezactivat: niciodată sunet pe acest telefon, chiar dacă regula contului tău setează unul.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>Vibrație</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>Dezactivat: niciodată vibrație pe acest telefon, chiar dacă regula contului tău setează una.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>Un mesaj fără sunet nu are nici sunet, nici vibrație.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>Numără mesajele</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>Numerele din lista de camere, din spații și de pe copertă. O cameră cu mesaje necitite care nu sunt numărate păstrează un semn fără număr.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>Doar mesajele care notifică</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Niciunul</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>Ce notificări de mesaje schimbă următoarele cinci comutatoare. Apelurile rămân neschimbate.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>Intrare în vizualizarea evenimentelor</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>Dezactivat: nicio notificare; crește doar contorul de necitite al camerei. Comutatoarele de mai jos nu mai au nimic de schimbat.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>Dezactivat: LED-ul nu clipește pentru un mesaj. Un mesaj cu sunet îl aprinde totuși: Sailfish redă sunetul și LED-ul împreună.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

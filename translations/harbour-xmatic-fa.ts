@@ -2015,6 +2015,98 @@
         <source>The server did not answer in time.</source>
         <translation>سرور به‌موقع پاسخ نداد.</translation>
     </message>
+    <message>
+        <source>On this device</source>
+        <translation>روی این دستگاه</translation>
+    </message>
+    <message>
+        <source>Show notifications without tone</source>
+        <translation>نمایش اعلان‌های بی‌صدا</translation>
+    </message>
+    <message>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>فقط این گوشی؛ حسابت و کلاینت‌های دیگر همان‌طور می‌مانند.</translation>
+    </message>
+    <message>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>خاموش: پیام بی‌صدا هیچ اثری نمی‌گذارد، حتی مدخلی در نمای رویدادها؛ فقط شمارندهٔ نخوانده‌های اتاق بالا می‌رود.</translation>
+    </message>
+    <message>
+        <source>Applies to</source>
+        <translation>اعمال روی</translation>
+    </message>
+    <message>
+        <source>All messages</source>
+        <translation>همهٔ پیام‌ها</translation>
+    </message>
+    <message>
+        <source>Only messages without tone</source>
+        <translation>فقط پیام‌های بی‌صدا</translation>
+    </message>
+    <message>
+        <source>Pop-up banner</source>
+        <translation>بنر بازشو</translation>
+    </message>
+    <message>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>خاموش: اعلان فقط به نمای رویدادها می‌رود و روی صفحه باز نمی‌شود.</translation>
+    </message>
+    <message>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Sound</source>
+        <translation>صدا</translation>
+    </message>
+    <message>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>خاموش: هرگز صدایی روی این گوشی نیست، حتی اگر قاعدهٔ حسابت صدا تنظیم کند.</translation>
+    </message>
+    <message>
+        <source>Vibration</source>
+        <translation>لرزش</translation>
+    </message>
+    <message>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>خاموش: هرگز لرزشی روی این گوشی نیست، حتی اگر قاعدهٔ حسابت لرزش تنظیم کند.</translation>
+    </message>
+    <message>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>پیام بی‌صدا نه صدا دارد و نه لرزش.</translation>
+    </message>
+    <message>
+        <source>Count messages</source>
+        <translation>شمارش پیام‌ها</translation>
+    </message>
+    <message>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>عددها در فهرست اتاق‌ها، فضاها و روی جلد. اتاقی که پیام‌های نخوانده‌ی شمرده‌نشده دارد، نشانی بدون عدد نگه می‌دارد.</translation>
+    </message>
+    <message>
+        <source>Only messages that notify</source>
+        <translation>فقط پیام‌هایی که اعلان می‌دهند</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>هیچ</translation>
+    </message>
+    <message>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>اینکه پنج کلید بعدی کدام اعلان‌های پیام را تغییر می‌دهند. تماس‌ها همان‌طور می‌مانند.</translation>
+    </message>
+    <message>
+        <source>Entry in the event view</source>
+        <translation>مدخل در نمای رویدادها</translation>
+    </message>
+    <message>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>خاموش: هیچ اعلانی نمی‌آید؛ فقط شمارندهٔ نخوانده‌های اتاق بالا می‌رود. کلیدهای پایین آن‌وقت چیزی برای تغییر ندارند.</translation>
+    </message>
+    <message>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>خاموش: LED برای پیام چشمک نمی‌زند. پیام صدادار با این حال آن را روشن می‌کند: Sailfish صدا و LED را با هم پخش می‌کند.</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>

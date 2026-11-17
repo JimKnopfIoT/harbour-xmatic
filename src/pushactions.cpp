@@ -1,5 +1,7 @@
 #include "pushactions.h"
 
+#include "behavioursettings.h"
+
 #include <QCoreApplication>
 #include <QStringList>
 
@@ -25,12 +27,33 @@ QString tagged(const QString &salt, const QString &mark)
 
 PushActions::Banner PushActions::decide(const QVariantMap &notification)
 {
-    Banner banner;
     // Low priority keeps its badge and never notifies, as in the room list.
-    banner.show = !notification.value(QStringLiteral("roomId")).toString().isEmpty()
-            && !notification.value(QStringLiteral("lowPriority")).toBool();
+    if (notification.value(QStringLiteral("roomId")).toString().isEmpty()
+        || notification.value(QStringLiteral("lowPriority")).toBool()) {
+        return Banner();
+    }
     // The push rules decided the sound; not judged a second time.
-    banner.audible = banner.show && notification.value(QStringLiteral("noisy")).toBool();
+    return judge(notification.value(QStringLiteral("noisy")).toBool(),
+                 BehaviourSettings::deviceNotifications());
+}
+
+PushActions::Banner PushActions::judge(bool audible,
+                                       const BehaviourSettings::DeviceNotifications &device)
+{
+    Banner banner;
+    banner.audible = audible;
+    // Without a tone only where this device shows those.
+    banner.show = audible || device.showSilent;
+    banner.feedback.sound = audible;
+    banner.feedback.vibration = audible;
+    // "Only without tone" leaves a ringing message as the rule made it.
+    if (!device.quietOnly || !audible) {
+        banner.feedback.sound = audible && device.sound;
+        banner.feedback.vibration = audible && device.vibration;
+        banner.feedback.led = device.led;
+        banner.feedback.popup = device.popup;
+        banner.show = banner.show && device.entry;
+    }
     return banner;
 }
 
@@ -131,9 +154,13 @@ void PushActions::raiseBanner(const QString &roomId, const QString &summary,
     if (roomId.isEmpty()) {
         return;
     }
+    const Banner banner = judge(audible, BehaviourSettings::deviceNotifications());
+    if (!banner.show) {
+        return;
+    }
     const qint64 timestamp = qMax(m_synced.value(roomId), m_pushed.value(roomId));
-    publishPushBanner(m_dataDirectory, roomId, QString(), summary, body, audible, timestamp,
-                      count);
+    publishPushBanner(m_dataDirectory, roomId, QString(), summary, body, banner.feedback,
+                      timestamp, count);
     readBanners();
 }
 

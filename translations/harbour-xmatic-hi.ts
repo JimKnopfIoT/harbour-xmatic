@@ -444,17 +444,17 @@
 <context>
     <name>BanList</name>
     <message>
-        <location filename="../src/banlist.cpp" line="145"/>
+        <location filename="../src/banlist.cpp" line="152"/>
         <source>This is not a valid Matrix address. It looks like @name:server.</source>
         <translation>यह मान्य Matrix पता नहीं है। यह ऐसा दिखता है: @name:server.</translation>
     </message>
     <message>
-        <location filename="../src/banlist.cpp" line="148"/>
+        <location filename="../src/banlist.cpp" line="155"/>
         <source>You cannot ban yourself.</source>
         <translation>तुम खुद को प्रतिबंधित नहीं कर सकते।</translation>
     </message>
     <message>
-        <location filename="../src/banlist.cpp" line="151"/>
+        <location filename="../src/banlist.cpp" line="158"/>
         <source>The reason is too long.</source>
         <translation>कारण बहुत लंबा है।</translation>
     </message>
@@ -1731,94 +1731,94 @@
     <message>
         <location filename="../qml/pages/SpaceColourPage.qml" line="57"/>
         <location filename="../src/matrixbridge.cpp" line="258"/>
-        <location filename="../src/matrixbridge.cpp" line="1915"/>
         <location filename="../src/matrixbridge.cpp" line="1930"/>
+        <location filename="../src/matrixbridge.cpp" line="1945"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>सहेजी सूचियाँ अभी पढ़ी नहीं जा सकतीं।</translation>
     </message>
     <message>
-        <location filename="../src/pushactions.cpp" line="72"/>
+        <location filename="../src/pushactions.cpp" line="95"/>
         <source>The gateway must be an https URL.</source>
         <translation>गेटवे एक https URL होना चाहिए।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2172"/>
+        <location filename="../src/matrixbridge.cpp" line="2187"/>
         <source>Enter your recovery key first.</source>
         <translation>पहले अपनी रिकवरी कुंजी दर्ज करो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2408"/>
+        <location filename="../src/matrixbridge.cpp" line="2423"/>
         <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
         <translation>यह तस्वीर छोटी नहीं की जा सकी और इसमें मेटाडेटा है, जैसे यह कहाँ ली गई, इसलिए इसे नहीं भेजा गया। इसे जैसी है वैसी भेजने के लिए मूल रिज़ॉल्यूशन में भेजो।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2561"/>
-        <location filename="../src/matrixbridge.cpp" line="2589"/>
+        <location filename="../src/matrixbridge.cpp" line="2576"/>
+        <location filename="../src/matrixbridge.cpp" line="2604"/>
         <source>The file could not be saved.</source>
         <translation>फ़ाइल सहेजी नहीं जा सकी।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3003"/>
+        <location filename="../src/matrixbridge.cpp" line="3018"/>
         <source>The homeserver did not return a login page.</source>
         <translation>होमसर्वर ने कोई लॉगिन पृष्ठ नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3028"/>
+        <location filename="../src/matrixbridge.cpp" line="3043"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>होमसर्वर ने कोई साइन-इन कोड नहीं लौटाया।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4005"/>
+        <location filename="../src/matrixbridge.cpp" line="4020"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>आपका सत्र समाप्त हो गया। फिर से साइन इन करें।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4161"/>
+        <location filename="../src/matrixbridge.cpp" line="4176"/>
         <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
         <translation>पुश पंजीकरण होमसर्वर से हटाया नहीं जा सका। अगली बार जब यह खाता यहाँ साइन इन करेगा, तब इसे हटा दिया जाएगा।</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4431"/>
+        <location filename="../src/matrixbridge.cpp" line="4453"/>
         <source>Picture</source>
         <translation>चित्र</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4434"/>
+        <location filename="../src/matrixbridge.cpp" line="4456"/>
         <source>Video</source>
         <translation>वीडियो</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4437"/>
+        <location filename="../src/matrixbridge.cpp" line="4459"/>
         <source>Voice message</source>
         <translation>वॉइस संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4440"/>
+        <location filename="../src/matrixbridge.cpp" line="4462"/>
         <source>File</source>
         <translation>फ़ाइल</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4443"/>
+        <location filename="../src/matrixbridge.cpp" line="4465"/>
         <source>Location</source>
         <translation>स्थान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4446"/>
+        <location filename="../src/matrixbridge.cpp" line="4468"/>
         <source>Poll</source>
         <translation>मतदान</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4446"/>
+        <location filename="../src/matrixbridge.cpp" line="4468"/>
         <source>Poll: %1</source>
         <translation>मतदान: %1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4449"/>
+        <location filename="../src/matrixbridge.cpp" line="4471"/>
         <source>Encrypted message</source>
         <translation>एन्क्रिप्टेड संदेश</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4452"/>
+        <location filename="../src/matrixbridge.cpp" line="4474"/>
         <source>Invitation</source>
         <translation>निमंत्रण</translation>
     </message>
@@ -2523,6 +2523,123 @@
         <source>Could not read the rules from the server: %1</source>
         <translation>सर्वर से नियम नहीं पढ़े जा सके: %1</translation>
     </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="150"/>
+        <source>On this device</source>
+        <translation>इस उपकरण पर</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="159"/>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>केवल यह फ़ोन; तुम्हारा खाता और दूसरे क्लाइंट वैसे ही रहते हैं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="163"/>
+        <source>Show notifications without tone</source>
+        <translation>बिना ध्वनि वाली सूचनाएँ दिखाओ</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="164"/>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>बंद: बिना ध्वनि वाला संदेश कुछ भी नहीं छोड़ता, इवेंट दृश्य में प्रविष्टि भी नहीं; केवल रूम की अपठित गिनती बढ़ती है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="173"/>
+        <source>Applies to</source>
+        <translation>लागू होता है</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="174"/>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>अगले पाँच स्विच कौन-सी संदेश सूचनाएँ बदलते हैं। कॉल वैसे ही रहते हैं।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="178"/>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="243"/>
+        <source>All messages</source>
+        <translation>सभी संदेशों पर</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="179"/>
+        <source>Only messages without tone</source>
+        <translation>केवल बिना ध्वनि वाले संदेशों पर</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="186"/>
+        <source>Entry in the event view</source>
+        <translation>इवेंट दृश्य में प्रविष्टि</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="187"/>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>बंद: कोई सूचना नहीं; केवल रूम की अपठित गिनती बढ़ती है। नीचे के स्विच तब कुछ नहीं बदलते।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="194"/>
+        <source>Pop-up banner</source>
+        <translation>पॉप-अप बैनर</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="195"/>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>बंद: सूचना केवल इवेंट दृश्य में जाती है और स्क्रीन के ऊपर पॉप-अप नहीं होती।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="202"/>
+        <source>LED</source>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="203"/>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>बंद: संदेश आने पर LED नहीं झपकता। ध्वनि वाला संदेश फिर भी इसे जलाता है: Sailfish ध्वनि और LED साथ चलाता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="211"/>
+        <source>Sound</source>
+        <translation>ध्वनि</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="213"/>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="224"/>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>बिना ध्वनि वाले संदेश में न ध्वनि होती है, न कंपन।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="214"/>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>बंद: इस फ़ोन पर कभी ध्वनि नहीं, भले ही तुम्हारे खाते का नियम ध्वनि सेट करे।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="222"/>
+        <source>Vibration</source>
+        <translation>कंपन</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="225"/>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>बंद: इस फ़ोन पर कभी कंपन नहीं, भले ही तुम्हारे खाते का नियम कंपन सेट करे।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="237"/>
+        <source>Count messages</source>
+        <translation>संदेश गिनो</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="238"/>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>रूम सूची, स्पेस और कवर पर संख्याएँ। जिस रूम में ऐसे अपठित संदेश हैं जो गिने नहीं जाते, उस पर बिना संख्या का निशान रहता है।</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="247"/>
+        <source>Only messages that notify</source>
+        <translation>केवल सूचना देने वाले संदेश</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="251"/>
+        <source>None</source>
+        <translation>कोई नहीं</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>
@@ -3184,17 +3301,17 @@
         <translation>नया संदेश</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="255"/>
+        <location filename="../src/pushbanners.cpp" line="278"/>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>पुश वितरक ने xmatic को हटा दिया। खाता में जाकर पुश फिर से चालू करो।</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="265"/>
+        <location filename="../src/pushbanners.cpp" line="288"/>
         <source>xmatic is still handling a notification. Open it again in a moment.</source>
         <translation>xmatic अभी भी एक सूचना संभाल रहा है। थोड़ी देर में इसे फिर से खोलो।</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="275"/>
+        <location filename="../src/pushbanners.cpp" line="298"/>
         <source>Open xmatic once to finish setting up push notifications.</source>
         <translation>पुश सूचनाओं की सेटिंग पूरी करने के लिए xmatic एक बार खोलो।</translation>
     </message>
@@ -3553,7 +3670,7 @@
     </message>
     <message>
         <location filename="../qml/pages/RoomListPage.qml" line="98"/>
-        <location filename="../qml/pages/RoomListPage.qml" line="285"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="286"/>
         <source>Rooms</source>
         <translation>कक्ष</translation>
     </message>
@@ -3603,77 +3720,77 @@
         <translation>कक्ष खोजें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="228"/>
         <source>Mark as read</source>
         <translation>पढ़ा हुआ चिह्नित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="228"/>
         <source>Mark as unread</source>
         <translation>अपठित चिह्नित करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="236"/>
         <source>Remove from favourites</source>
         <translation>पसंदीदा से हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="236"/>
         <source>Favourite</source>
         <translation>पसंदीदा</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="244"/>
         <source>Normal priority</source>
         <translation>सामान्य प्राथमिकता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="244"/>
         <source>Low priority</source>
         <translation>कम प्राथमिकता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="251"/>
         <source>Unmute</source>
         <translation>मौन हटाएँ</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="251"/>
         <source>Mute</source>
         <translation>मौन करें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="259"/>
         <source>Decline invitation</source>
         <translation>निमंत्रण अस्वीकारें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="259"/>
         <source>Leave room</source>
         <translation>कक्ष छोड़ें</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="267"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="268"/>
         <source>No rooms</source>
         <translation>कोई कक्ष नहीं</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="268"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="269"/>
         <source>Rooms you join show up here once the first sync is through.</source>
         <translation>पहला सिंक पूरा होते ही तुम्हारे जुड़े कक्ष यहाँ दिखते हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="273"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="274"/>
         <source>About xmatic</source>
         <translation>xmatic के बारे में</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="291"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="292"/>
         <source>Account</source>
         <translation>खाता</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="278"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="279"/>
         <source>Verify user</source>
         <translation>उपयोगकर्ता सत्यापित करें</translation>
     </message>

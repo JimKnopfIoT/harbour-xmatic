@@ -244,7 +244,7 @@ int runPushWake(int argc, char *argv[])
                 const QString roomId = data.value(QStringLiteral("roomId")).toString();
                 if (data.value(QStringLiteral("generic")).toBool() || roomId.isEmpty()) {
                     publishPushBanner(dataDirectory, QString(), QStringLiteral("*"),
-                                      generic, generic, false, 0);
+                                      generic, generic, PushFeedback(), 0);
                     continue;
                 }
                 const QVariantMap notification = data.toVariantMap();
@@ -260,7 +260,7 @@ int runPushWake(int argc, char *argv[])
                 publishPushBanner(dataDirectory, roomId, QString(),
                                   preview && !room.isEmpty() ? room : generic,
                                   preview && !body.isEmpty() ? body : generic,
-                                  banner.audible,
+                                  banner.feedback,
                                   qint64(data.value(QStringLiteral("timestamp")).toDouble()));
             } else if (name == QLatin1String("push.state")
                        && data.value(QStringLiteral("state")).toString()

@@ -7,6 +7,14 @@
 // One banner per room, from the woken process or the app, recorded in the data
 // directory so either can replace or close it. Rooms appear only as salted marks.
 
+/// What a room's banner may do on this device; a notice without a room ignores it.
+struct PushFeedback {
+    bool sound = false;
+    bool vibration = false;
+    bool led = true;
+    bool popup = true;
+};
+
 /// A room as the record names it.
 QString pushRoomMark(const QString &salt, const QString &roomId);
 
@@ -14,7 +22,7 @@ QString pushRoomMark(const QString &salt, const QString &roomId);
 /// `slot` names it. `timestamp` is the announced message's, 0 where unknown.
 void publishPushBanner(const QString &dataDirectory, const QString &roomId,
                        const QString &slot, const QString &summary, const QString &body,
-                       bool audible, qint64 timestamp, int count = 0);
+                       const PushFeedback &feedback, qint64 timestamp, int count = 0);
 
 /// What the standing banners announced.
 struct PushBannerRecord {

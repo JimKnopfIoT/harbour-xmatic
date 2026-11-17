@@ -231,8 +231,9 @@ ListItem {
         }
         y: infoColumn.y + previewLabel.y
            + Math.round((previewLabel.height - height) / 2)
-        // Marked unread by hand with nothing counted: the pill without a number.
+        // Unread with nothing counted - by hand, or by the counting switch: no number.
         visible: model.unread > 0 || model.mentions > 0 || model.markedUnread === true
+                 || model.uncounted === true
         // Sized from the number so pill and digits grow together: the fixed-height
         // form kept the count near the smallest font and read as a speck.
         width: Math.max(height, badgeLabel.implicitWidth + Theme.paddingMedium)

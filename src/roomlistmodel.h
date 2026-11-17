@@ -36,6 +36,7 @@ public:
         PreviewKindRole,
         PreviewTextRole,
         MarkedUnreadRole,
+        UncountedRole,
     };
 
     explicit RoomListModel(QObject *parent = nullptr);
@@ -55,6 +56,16 @@ public:
     /// hold answers false: the ways in that ask carry no membership themselves.
     bool isInvite(const QString &roomId) const;
 
+    /// Whether messages that notify nobody count; off, the badge counts the
+    /// notifying ones and mentions, and the rest only marks the room.
+    /// What a room's number counts; `None` leaves only the unread mark.
+    enum CountMode { CountAll, CountNotifying, CountNone };
+    void setCountMode(CountMode mode);
+
+    /// A row's badge number and whether it is a floor, under that switch.
+    static int counted(const QJsonObject &row, CountMode mode);
+    static bool countedCapped(const QJsonObject &row, CountMode mode);
+
     int unreadRooms() const { return m_unreadRooms; }
     int unreadMessages() const { return m_unreadMessages; }
     bool unreadCapped() const { return m_unreadCapped; }
@@ -68,6 +79,7 @@ protected:
 private:
     void recountUnread();
 
+    CountMode m_countMode = CountAll;
     int m_unreadRooms = 0;
     int m_unreadMessages = 0;
     bool m_unreadCapped = false;

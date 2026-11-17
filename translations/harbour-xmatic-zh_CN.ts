@@ -443,17 +443,17 @@
 <context>
     <name>BanList</name>
     <message>
-        <location filename="../src/banlist.cpp" line="145"/>
+        <location filename="../src/banlist.cpp" line="152"/>
         <source>This is not a valid Matrix address. It looks like @name:server.</source>
         <translation>这不是有效的 Matrix 地址。格式为 @name:server。</translation>
     </message>
     <message>
-        <location filename="../src/banlist.cpp" line="148"/>
+        <location filename="../src/banlist.cpp" line="155"/>
         <source>You cannot ban yourself.</source>
         <translation>你不能封禁自己。</translation>
     </message>
     <message>
-        <location filename="../src/banlist.cpp" line="151"/>
+        <location filename="../src/banlist.cpp" line="158"/>
         <source>The reason is too long.</source>
         <translation>原因太长。</translation>
     </message>
@@ -1729,94 +1729,94 @@
     <message>
         <location filename="../qml/pages/SpaceColourPage.qml" line="57"/>
         <location filename="../src/matrixbridge.cpp" line="258"/>
-        <location filename="../src/matrixbridge.cpp" line="1915"/>
         <location filename="../src/matrixbridge.cpp" line="1930"/>
+        <location filename="../src/matrixbridge.cpp" line="1945"/>
         <source>The stored lists cannot be read right now.</source>
         <translation>暂时无法读取已保存的名单。</translation>
     </message>
     <message>
-        <location filename="../src/pushactions.cpp" line="72"/>
+        <location filename="../src/pushactions.cpp" line="95"/>
         <source>The gateway must be an https URL.</source>
         <translation>网关必须是 https URL。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2172"/>
+        <location filename="../src/matrixbridge.cpp" line="2187"/>
         <source>Enter your recovery key first.</source>
         <translation>请先输入你的恢复密钥。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2408"/>
+        <location filename="../src/matrixbridge.cpp" line="2423"/>
         <source>This picture could not be made smaller, and it carries metadata such as where it was taken, so it was not sent. Send it at original resolution to send it as it is.</source>
         <translation>这张图片无法缩小，且包含元数据（例如拍摄地点），因此未发送。若要按原样发送，请以原始分辨率发送。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="2561"/>
-        <location filename="../src/matrixbridge.cpp" line="2589"/>
+        <location filename="../src/matrixbridge.cpp" line="2576"/>
+        <location filename="../src/matrixbridge.cpp" line="2604"/>
         <source>The file could not be saved.</source>
         <translation>文件无法保存。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3003"/>
+        <location filename="../src/matrixbridge.cpp" line="3018"/>
         <source>The homeserver did not return a login page.</source>
         <translation>主服务器没有返回登录页面。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="3028"/>
+        <location filename="../src/matrixbridge.cpp" line="3043"/>
         <source>The homeserver did not return a sign-in code.</source>
         <translation>主服务器没有返回登录代码。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4005"/>
+        <location filename="../src/matrixbridge.cpp" line="4020"/>
         <source>Your session has ended. Please sign in again.</source>
         <translation>你的会话已结束，请重新登录。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4161"/>
+        <location filename="../src/matrixbridge.cpp" line="4176"/>
         <source>The push registration could not be removed from the homeserver. It is removed the next time this account signs in here.</source>
         <translation>无法从主服务器移除推送注册。此账户下次在这里登录时会将其移除。</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4431"/>
+        <location filename="../src/matrixbridge.cpp" line="4453"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4434"/>
+        <location filename="../src/matrixbridge.cpp" line="4456"/>
         <source>Video</source>
         <translation>视频</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4437"/>
+        <location filename="../src/matrixbridge.cpp" line="4459"/>
         <source>Voice message</source>
         <translation>语音消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4440"/>
+        <location filename="../src/matrixbridge.cpp" line="4462"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4443"/>
+        <location filename="../src/matrixbridge.cpp" line="4465"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4446"/>
+        <location filename="../src/matrixbridge.cpp" line="4468"/>
         <source>Poll</source>
         <translation>投票</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4446"/>
+        <location filename="../src/matrixbridge.cpp" line="4468"/>
         <source>Poll: %1</source>
         <translation>投票：%1</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4449"/>
+        <location filename="../src/matrixbridge.cpp" line="4471"/>
         <source>Encrypted message</source>
         <translation>加密消息</translation>
     </message>
     <message>
-        <location filename="../src/matrixbridge.cpp" line="4452"/>
+        <location filename="../src/matrixbridge.cpp" line="4474"/>
         <source>Invitation</source>
         <translation>邀请</translation>
     </message>
@@ -2521,6 +2521,123 @@
         <source>Could not read the rules from the server: %1</source>
         <translation>无法从服务器读取规则：%1</translation>
     </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="150"/>
+        <source>On this device</source>
+        <translation>在本设备上</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="159"/>
+        <source>Only this phone; your account and other clients stay as they are.</source>
+        <translation>仅此手机；你的账户和其他客户端保持不变。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="163"/>
+        <source>Show notifications without tone</source>
+        <translation>显示无提示音的通知</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="164"/>
+        <source>Off: a message without tone leaves nothing at all, not even an entry in the event view; only the room&apos;s unread count rises.</source>
+        <translation>关闭：无提示音的消息不留下任何内容，连事件视图中的条目都没有；只增加房间的未读计数。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="173"/>
+        <source>Applies to</source>
+        <translation>适用于</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="174"/>
+        <source>Which message notifications the next five switches change. Calls stay as they are.</source>
+        <translation>接下来五个开关会改变哪些消息通知。通话保持不变。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="178"/>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="243"/>
+        <source>All messages</source>
+        <translation>所有消息</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="179"/>
+        <source>Only messages without tone</source>
+        <translation>仅无提示音的消息</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="186"/>
+        <source>Entry in the event view</source>
+        <translation>事件视图中的条目</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="187"/>
+        <source>Off: no notification at all; only the room&apos;s unread count rises. The switches below then have nothing to change.</source>
+        <translation>关闭：完全不发通知；只增加房间的未读计数。下面的开关此时不再起作用。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="194"/>
+        <source>Pop-up banner</source>
+        <translation>弹出横幅</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="195"/>
+        <source>Off: the notification goes to the event view only and does not pop up over the screen.</source>
+        <translation>关闭：通知只进入事件视图，不会在屏幕上方弹出。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="202"/>
+        <source>LED</source>
+        <translation>指示灯</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="203"/>
+        <source>Off: the LED does not blink for a message. A message with a tone still lights it: Sailfish plays the tone and the LED together.</source>
+        <translation>关闭：收到消息时指示灯不闪烁。带提示音的消息仍会点亮它：Sailfish 会同时播放提示音和指示灯。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="211"/>
+        <source>Sound</source>
+        <translation>声音</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="213"/>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="224"/>
+        <source>A message without tone has neither tone nor vibration.</source>
+        <translation>无提示音的消息既没有声音也没有振动。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="214"/>
+        <source>Off: no tone on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>关闭：此手机上从不发出声音，即使你账户的规则设置了声音。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="222"/>
+        <source>Vibration</source>
+        <translation>振动</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="225"/>
+        <source>Off: no vibration on this phone, even where your account&apos;s rule sets one.</source>
+        <translation>关闭：此手机上从不振动，即使你账户的规则设置了振动。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="237"/>
+        <source>Count messages</source>
+        <translation>统计消息</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="238"/>
+        <source>The numbers in the room list, the spaces and on the cover. A room with unread messages that are not counted keeps a mark without a number.</source>
+        <translation>房间列表、空间和封面上的数字。包含未计数的未读消息的房间会保留一个不带数字的标记。</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="247"/>
+        <source>Only messages that notify</source>
+        <translation>仅统计会通知的消息</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/NotificationRulesPage.qml" line="251"/>
+        <source>None</source>
+        <translation>不统计</translation>
+    </message>
 </context>
 <context>
     <name>PinnedMessagesPage</name>
@@ -3181,17 +3298,17 @@
         <translation>新消息</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="255"/>
+        <location filename="../src/pushbanners.cpp" line="278"/>
         <source>The push distributor dropped xmatic. Turn push back on under Account.</source>
         <translation>推送分发器移除了 xmatic。请在“账户”中重新开启推送。</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="265"/>
+        <location filename="../src/pushbanners.cpp" line="288"/>
         <source>xmatic is still handling a notification. Open it again in a moment.</source>
         <translation>xmatic 仍在处理一条通知。请稍后再打开。</translation>
     </message>
     <message>
-        <location filename="../src/pushbanners.cpp" line="275"/>
+        <location filename="../src/pushbanners.cpp" line="298"/>
         <source>Open xmatic once to finish setting up push notifications.</source>
         <translation>打开 xmatic 一次以完成推送通知的设置。</translation>
     </message>
@@ -3550,7 +3667,7 @@
     </message>
     <message>
         <location filename="../qml/pages/RoomListPage.qml" line="98"/>
-        <location filename="../qml/pages/RoomListPage.qml" line="285"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="286"/>
         <source>Rooms</source>
         <translation>聊天室</translation>
     </message>
@@ -3600,77 +3717,77 @@
         <translation>搜索聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="228"/>
         <source>Mark as read</source>
         <translation>标记为已读</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="227"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="228"/>
         <source>Mark as unread</source>
         <translation>标记为未读</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="236"/>
         <source>Remove from favourites</source>
         <translation>取消收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="235"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="236"/>
         <source>Favourite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="244"/>
         <source>Normal priority</source>
         <translation>普通优先级</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="243"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="244"/>
         <source>Low priority</source>
         <translation>低优先级</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="251"/>
         <source>Unmute</source>
         <translation>取消静音</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="250"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="251"/>
         <source>Mute</source>
         <translation>静音</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="259"/>
         <source>Decline invitation</source>
         <translation>拒绝邀请</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="258"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="259"/>
         <source>Leave room</source>
         <translation>离开聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="267"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="268"/>
         <source>No rooms</source>
         <translation>没有聊天室</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="268"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="269"/>
         <source>Rooms you join show up here once the first sync is through.</source>
         <translation>首次同步完成后，你加入的聊天室会显示在这里。</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="273"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="274"/>
         <source>About xmatic</source>
         <translation>关于 xmatic</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="291"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="292"/>
         <source>Account</source>
         <translation>账户</translation>
     </message>
     <message>
-        <location filename="../qml/pages/RoomListPage.qml" line="278"/>
+        <location filename="../qml/pages/RoomListPage.qml" line="279"/>
         <source>Verify user</source>
         <translation>验证用户</translation>
     </message>

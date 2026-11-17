@@ -375,6 +375,9 @@ public:
     /// request; harmless once everything is loaded.
     Q_INVOKABLE void loadMoreRooms();
 
+    /// Whether the unread counts include messages that notify nobody (this device).
+    /// "all", "notifying" or "none", as the behaviour setting names it.
+    void setUnreadCount(const QString &count);
     /// Tells the core how the chat list is sorted: any order but recency needs
     /// every room loaded, not the first pages.
     void setRoomOrder(bool byName, bool unreadFirst);
@@ -1156,8 +1159,13 @@ private:
     QHash<QString, QString> m_media;
     QHash<quint64, QString> m_mediaRequests;
 
-    /// Last seen unread count per room, for spotting new activity.
-    QHash<QString, int> m_unread;
+    /// Per room, the badge with and without messages that notify nobody.
+    struct UnreadCounts {
+        int all = 0;
+        int notifying = 0;
+    };
+    QHash<QString, UnreadCounts> m_unread;
+    QString m_unreadCount = QStringLiteral("all");
 
     /// Last seen notifying-events count per room. The banner follows this, not
     /// `m_unread` - see reportNewMessages.
